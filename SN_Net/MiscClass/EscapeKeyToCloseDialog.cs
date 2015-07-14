@@ -14,14 +14,14 @@ namespace SN_Net.MiscClass
     {
         private Form form;
 
-        public EscapeKeyToCloseDialog(Form form)
+        private EscapeKeyToCloseDialog(Control root_control)
         {
-            this.form = form;
+            this.form = root_control.FindForm();
             this.Attach(form);
         }
 
-        public static void ActiveEscToClose(Form form){
-            EscapeKeyToCloseDialog es = new EscapeKeyToCloseDialog(form);
+        public static void ActiveEscToClose(Control root_control){
+            EscapeKeyToCloseDialog es = new EscapeKeyToCloseDialog(root_control);
         }
 
         /// <summary>
@@ -30,16 +30,10 @@ namespace SN_Net.MiscClass
         /// <param name="ct">Root control that start to find all controls in it</param>
         private void Attach(Control ct)
         {
+            ct.KeyDown += new KeyEventHandler(this.escapeToClose);
             foreach (Control c in ct.Controls)
             {
-                if (c is GroupBox)
-                {
-                    this.Attach(c);
-                }
-                else
-                {
-                    c.KeyDown += new KeyEventHandler(this.escapeToClose);
-                }
+                this.Attach(c);
             }
 
         }
@@ -47,8 +41,8 @@ namespace SN_Net.MiscClass
         private void escapeToClose(object sender, KeyEventArgs e){
             if (e.KeyCode == Keys.Escape)
             {
-                form.DialogResult = DialogResult.Cancel;
-                form.Close();
+                this.form.DialogResult = DialogResult.Cancel;
+                this.form.Close();
             }
         }
     }

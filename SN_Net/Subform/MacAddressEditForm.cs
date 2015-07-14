@@ -26,6 +26,7 @@ namespace SN_Net.Subform
         public MacAddressEditForm()
         {
             InitializeComponent();
+            EscapeKeyToCloseDialog.ActiveEscToClose(this);
         }
 
         private void MacAddressEditForm_Load(object sender, EventArgs e)
@@ -64,37 +65,6 @@ namespace SN_Net.Subform
             {
                 MessageBox.Show(sr.message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            /*
-            string check_exist = ApiActions.GET(ApiConfig.API_SITE + "macallowed/check_exist?id=" + this.editing_mac_id + "&mac_address=" + this.txtMacAddress.Text);
-            MacAllowed mac_exist = JsonConvert.DeserializeObject<MacAllowed>(check_exist);
-            Console.WriteLine(mac_exist.id.ToString());
-            if (mac_exist.id > 0)
-            {
-                //Console.WriteLine("is exist");
-                MessageBox.Show("MAC Address " + this.txtMacAddress.Text + " นี้มีอยู่แล้วในระบบ", "MAC Address editing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                //Console.WriteLine("is not exist");
-                string json_data = "{\"mac_address\":\"" + this.txtMacAddress.Text + "\",";
-                json_data += "\"create_by\":\"" + this.G.loged_in_user_name + "\"}";
-                Console.WriteLine(json_data);
-
-                string result = ApiActions.PATCH(ApiConfig.API_SITE + "macallowed/" + this.editing_mac_id.ToString(), json_data);
-                MacAllowed res = JsonConvert.DeserializeObject<MacAllowed>(result);
-
-                if (res.id == this.editing_mac_id && res.mac_address == this.txtMacAddress.Text)
-                {
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("MAC Address : " + this.txtMacAddress.Text + " นี้มีอยู่แล้วในระบบ", "MAC Address editing", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            */
         }
 
         private void txtMacAddress_KeyDown(object sender, KeyEventArgs e)
@@ -103,11 +73,6 @@ namespace SN_Net.Subform
             {
                 case 13:
                     this.submitChangeMacAddress();
-                    break;
-
-                case 27:
-                    this.DialogResult = DialogResult.Cancel;
-                    this.Close();
                     break;
 
                 default:

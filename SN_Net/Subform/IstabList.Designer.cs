@@ -61,6 +61,7 @@
             this.splitContainer1.Size = new System.Drawing.Size(465, 210);
             this.splitContainer1.SplitterDistance = 160;
             this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.TabStop = false;
             // 
             // dgvIstab
             // 
@@ -77,6 +78,9 @@
             this.dgvIstab.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvIstab.Size = new System.Drawing.Size(455, 150);
             this.dgvIstab.TabIndex = 0;
+            this.dgvIstab.TabStop = false;
+            this.dgvIstab.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvIstab_CellDoubleClick);
+            this.dgvIstab.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvIstab_KeyDown);
             // 
             // textBox1
             // 
@@ -119,6 +123,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TabData";
             this.Load += new System.EventHandler(this.IstabList_Load);
+            this.Shown += new System.EventHandler(this.IstabList_Shown);
             this.Resize += new System.EventHandler(this.IstabList_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -132,10 +137,10 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dgvIstab;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dgvIstab;
 
     }
 }

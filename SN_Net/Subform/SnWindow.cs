@@ -151,7 +151,8 @@ namespace SN_Net.Subform
             this.txtTelnum.Text = serial.telnum;
             this.txtTelnum2.Text = serial.telnum;
             this.txtFaxnum.Text = serial.faxnum;
-            //this.cbBusityp
+            this.txtBusityp.Text = serial.busityp;
+            this.lblBusityp.Text = Istab.getIstabByTypcod(Istab.TABTYP.BUSITYP, serial.busityp).typdes_th;
             this.txtBusides.Text = serial.busides;
             //this.dpPurdat
             //this.dpExpdat
@@ -260,8 +261,12 @@ namespace SN_Net.Subform
 
         private void btnBrowseBusityp_Click(object sender, EventArgs e)
         {
-            IstabList wind = new IstabList(IstabList.TITLE.BUSITYP);
-            wind.ShowDialog();
+            IstabList wind = new IstabList(IstabList.TITLE.BUSITYP, this.txtBusityp.Text);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.txtBusityp.Text = wind.istab.typcod;
+                this.lblBusityp.Text = wind.istab.typdes_th;
+            }
         }
     }
 }

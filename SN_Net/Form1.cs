@@ -17,6 +17,8 @@ namespace SN_Net
 {
     public partial class MainForm : Form
     {
+        private SnWindow sn_wind = null;
+
         public string my_mac = string.Empty;
         private GlobalVar G;
         
@@ -27,10 +29,17 @@ namespace SN_Net
 
         private void sNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SnWindow wind = new SnWindow();
-            wind.MdiParent = this;
-            wind.WindowState = FormWindowState.Maximized;
-            wind.Show();
+            if (this.sn_wind == null)
+            {
+                this.sn_wind = new SnWindow();
+                this.sn_wind.MdiParent = this;
+                this.sn_wind.WindowState = FormWindowState.Maximized;
+                this.sn_wind.Show();
+            }
+            else
+            {
+                this.sn_wind.Activate();
+            }
         }
 
         private void dealerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -58,10 +67,10 @@ namespace SN_Net
                     this.macAddressAllowedToolStripMenuItem.Visible = false;
                 }
 
-                SnWindow wind = new SnWindow();
-                wind.MdiParent = this;
-                wind.WindowState = FormWindowState.Maximized;
-                wind.Show();
+                this.sn_wind = new SnWindow();
+                this.sn_wind.MdiParent = this;
+                this.sn_wind.WindowState = FormWindowState.Maximized;
+                this.sn_wind.Show();
             }
         }
 

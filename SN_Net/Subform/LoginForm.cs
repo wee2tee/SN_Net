@@ -33,6 +33,7 @@ namespace SN_Net.Subform
         public LoginForm()
         {
             InitializeComponent();
+            EscapeKeyToCloseDialog.ActiveEscToClose(this);
         }
 
         private void LoginForm_Shown(object sender, EventArgs e)
@@ -50,13 +51,11 @@ namespace SN_Net.Subform
 
         private void submitLogin()
         {
-            //CRUDResult result = ApiActions.GET(ApiConfig.API_MAIN_URL + "users/validate_login&username=" + this.txtUser.Text.cleanString() + "&userpassword=" + this.txtPassword.Text.cleanString() + "&mac_address=" + this.G.current_mac_address);
             string json_data = "{\"username\":\"" + this.txtUser.Text.cleanString() + "\",";
             json_data += "\"userpassword\":\"" + this.txtPassword.Text.cleanString() + "\",";
             json_data += "\"mac_address\":\"" + this.G.current_mac_address + "\"}";
+
             CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "users/validate_login", json_data);
-            Console.WriteLine(post.data);
-            
             ServerResult res = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
             switch (res.result)
