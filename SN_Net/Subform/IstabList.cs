@@ -135,16 +135,6 @@ namespace SN_Net.Subform
 
             foreach (Istab istab in istabs)
             {
-                DataGridViewCell cell = new DataGridViewCell();
-                cell.Style = new DataGridViewCellStyle()
-                {
-                    BackColor = Color.White,
-                    Font = new Font("Tahoma", 8F),
-                    ForeColor = SystemColors.WindowText,
-                    SelectionBackColor = Color.Red,
-                    SelectionForeColor = SystemColors.HighlightText
-                };
-
                 int r = this.dgvIstab.Rows.Add();
                 this.dgvIstab.Rows[r].Tag = (int)istab.id;
 
@@ -159,6 +149,14 @@ namespace SN_Net.Subform
                 this.dgvIstab.Rows[r].Cells[2].ValueType = typeof(string);
                 this.dgvIstab.Rows[r].Cells[2].Value = istab.typdes;
                 this.dgvIstab.Rows[r].Cells[2].Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                this.dgvIstab.Rows[r].Cells[2].Style = new DataGridViewCellStyle()
+                {
+                    BackColor = Color.White,
+                    Font = new Font("Tahoma", 9.75f),
+                    ForeColor = SystemColors.WindowText,
+                    SelectionBackColor = Color.Blue,
+                    SelectionForeColor = Color.White,
+                };
             }
         }
 
