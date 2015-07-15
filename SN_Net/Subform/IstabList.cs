@@ -19,36 +19,36 @@ namespace SN_Net.Subform
         private const string SORT_TYPCOD = "typcod";
         private const string SORT_TYPDES = "typdes";
         private string sort_by;
-        private string tabtyp;
-        private string selected_code;
+        private Istab.TABTYP tabtyp;
         public Istab istab;
+        private Istab selected_istab;
 
-        public enum TITLE
-        {
-            AREA,
-            BUSITYP,
-            HOWKNOWN,
-            PURCHASE_FROM,
-            VEREXT
-        }
+        //public enum TITLE
+        //{
+        //    AREA,
+        //    BUSITYP,
+        //    HOWKNOWN,
+        //    PURCHASE_FROM,
+        //    VEREXT
+        //}
 
-        public IstabList(TITLE title_text, string selected_code)
+        public IstabList(Istab istab_data, Istab.TABTYP tabtyp)
         {
             InitializeComponent();
-            
-            this.setTitleText(title_text);
-            this.setTabTyp(title_text);
+            this.tabtyp = tabtyp;
+            this.istab = istab_data;
+            this.selected_istab = istab_data;
+            this.setTitleText();
             this.sort_by = SORT_TYPCOD;
-            this.selected_code = selected_code;
         }
 
         private void setSelectedItem(){
-            Console.WriteLine("selected_code is " + this.selected_code);
             foreach (DataGridViewRow row in this.dgvIstab.Rows)
 	        {
-                if ((string)row.Cells[1].Value == this.selected_code)
+                if (((Istab)row.Tag).id == this.selected_istab.id)
                 {
                     row.Cells[1].Selected = true;
+                    break;
                 }
 	        }
             this.dgvIstab.Focus();
@@ -60,48 +60,23 @@ namespace SN_Net.Subform
             EscapeKeyToCloseDialog.ActiveEscToClose(this);
         }
 
-        private void setTabTyp(TITLE title_text)
+        private void setTitleText()
         {
-            switch (title_text)
+            switch (this.tabtyp)
             {
-                case TITLE.AREA:
-                    this.tabtyp = "01";
-                    break;
-                case TITLE.BUSITYP:
-                    this.tabtyp = "02";
-                    break;
-                case TITLE.HOWKNOWN:
-                    this.tabtyp = "03";
-                    break;
-                case TITLE.PURCHASE_FROM:
-                    this.tabtyp = "04";
-                    break;
-                case TITLE.VEREXT:
-                    this.tabtyp = "05";
-                    break;
-                default:
-                    this.tabtyp = "00";
-                    break;
-            }
-        }
-
-        private void setTitleText(TITLE title_text)
-        {
-            switch (title_text)
-            {
-                case TITLE.AREA:
+                case Istab.TABTYP.AREA:
                     this.Text = "Sales area";
                     break;
-                case TITLE.BUSITYP:
+                case Istab.TABTYP.BUSITYP:
                     this.Text = "Business type";
                     break;
-                case TITLE.HOWKNOWN:
+                case Istab.TABTYP.HOWKNOWN:
                     this.Text = "How to know Express";
                     break;
-                case TITLE.PURCHASE_FROM:
+                case Istab.TABTYP.PURCHASE_FROM:
                     this.Text = "Purchase from";
                     break;
-                case TITLE.VEREXT:
+                case Istab.TABTYP.VEREXT:
                     this.Text = "Software Version(Extension)";
                     break;
                 default:
@@ -117,17 +92,16 @@ namespace SN_Net.Subform
 
         private List<Istab> loadIstabData(string sort_by)
         {
-            List<Istab> istab = new List<Istab>();
-            string url = ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + this.tabtyp + "&sort=" + sort_by;
-            Console.WriteLine(url);
-            CRUDResult get = ApiActions.GET(url);
+            List<Istab> istabs = new List<Istab>();
+            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + Istab.getTabtypString(this.tabtyp) + "&sort=" + sort_by);
+            Console.WriteLine(ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + this.tabtyp + "&sort=" + sort_by);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
-                istab = sr.istab;
+                istabs = sr.istab;
             }
 
-            return istab;
+            return istabs;
         }
 
         private void fillInDataGrid(List<Istab> istabs)
@@ -177,7 +151,7 @@ namespace SN_Net.Subform
             foreach (Istab istab in istabs)
             {
                 int r = this.dgvIstab.Rows.Add();
-                this.dgvIstab.Rows[r].Tag = (int)istab.id;
+                this.dgvIstab.Rows[r].Tag = (Istab)istab;
 
                 this.dgvIstab.Rows[r].Cells[0].ValueType = typeof(int);
                 this.dgvIstab.Rows[r].Cells[0].Value = istab.id;
@@ -215,12 +189,33 @@ namespace SN_Net.Subform
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            IstabAddEditForm wind = new IstabAddEditForm(Istab.TABTYP.BUSITYP);
+            IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.ADD, Istab.TABTYP.BUSITYP);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.selected_code = wind.txtTypcod.Text;
+                this.selected_istab = wind.istab;
                 this.fillInDataGrid(this.loadIstabData(this.sort_by));
             }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            Istab istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
+            this.showEditForm(istab);
+        }
+
+        private void returnSelectedResult()
+        {
+            /*
+            this.istab = new Istab();
+            this.istab.id = (int)this.dgvIstab.Rows[row_index].Cells[0].Value;
+            this.istab.tabtyp = this.tabtyp;
+            this.istab.typcod = (string)this.dgvIstab.Rows[row_index].Cells[1].Value;
+            this.istab.typdes_th = (string)this.dgvIstab.Rows[row_index].Cells[2].Value;
+            */
+            this.istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void dgvIstab_KeyDown(object sender, KeyEventArgs e)
@@ -232,26 +227,72 @@ namespace SN_Net.Subform
             }
             else if (e.KeyCode == Keys.Enter)
             {
-                int current_row_index = this.dgvIstab.CurrentCell.RowIndex;
-                this.returnResultID(current_row_index);
+                this.returnSelectedResult();
             }
-        }
+            else if (e.KeyCode == Keys.E && e.Modifiers == Keys.Alt)
+            {
+                //this.showEditForm(id);
+            }
+            else if (e.KeyCode == Keys.D && e.Modifiers == Keys.Alt)
+            {
 
-        private void returnResultID(int row_index)
-        {
-            this.istab = new Istab();
-            this.istab.id = (int)this.dgvIstab.Rows[row_index].Cells[0].Value;
-            this.istab.tabtyp = this.tabtyp;
-            this.istab.typcod = (string)this.dgvIstab.Rows[row_index].Cells[1].Value;
-            this.istab.typdes_th = (string)this.dgvIstab.Rows[row_index].Cells[2].Value;
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            }
         }
 
         private void dgvIstab_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.returnResultID(e.RowIndex);
+            this.returnSelectedResult();
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.returnSelectedResult();
+        }
+
+        private void dgvIstab_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = this.dgvIstab.HitTest(e.X, e.Y).RowIndex;
+                this.dgvIstab.Rows[currentMouseOverRow].Selected = true;
+
+                ContextMenu m = new ContextMenu();
+                MenuItem mnu_edit = new MenuItem("แก้ไข");
+                mnu_edit.Tag = (Istab)this.dgvIstab.Rows[currentMouseOverRow].Tag;
+                mnu_edit.Click += this.performEdit;
+                m.MenuItems.Add(mnu_edit);
+
+                MenuItem mnu_delete = new MenuItem("ลบ");
+                mnu_delete.Tag = (Istab)this.dgvIstab.Rows[currentMouseOverRow].Tag;
+                mnu_delete.Click += this.performDelete;
+                m.MenuItems.Add(mnu_delete);
+
+                m.Show(this.dgvIstab, new Point(e.X, e.Y));
+            }
+        }
+
+        private void performDelete(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            MessageBox.Show("delete");
+        }
+
+        private void performEdit(object sender, EventArgs e)
+        {
+            Istab istab = (Istab)((MenuItem)sender).Tag;
+            this.showEditForm(istab);
+        }
+
+        private void showEditForm(Istab istab)
+        {
+            IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.EDIT, Istab.TABTYP.BUSITYP, istab);
+            
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.selected_istab = wind.istab;
+                this.fillInDataGrid(this.loadIstabData(this.sort_by));
+            }
+        }
+        
     }
 }

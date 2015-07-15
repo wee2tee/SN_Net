@@ -195,6 +195,7 @@
             this.Name = "IstabAddEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "IstabAddEditForm";
+            this.Load += new System.EventHandler(this.IstabAddEditForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

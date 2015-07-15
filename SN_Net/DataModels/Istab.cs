@@ -29,47 +29,84 @@ namespace SN_Net.DataModels
             VEREXT
         }
 
-        public static Istab getIstabByTypcod(TABTYP tabtyp, string typcod)
+        public static string getTabtypString(Istab.TABTYP tabtyp)
         {
-            string tab_typ = string.Empty;
+            switch (tabtyp)
+            {
+                case Istab.TABTYP.AREA:
+                    return "01";
+                case Istab.TABTYP.BUSITYP:
+                    return "02";
+                case Istab.TABTYP.HOWKNOWN:
+                    return "03";
+                case Istab.TABTYP.PURCHASE_FROM:
+                    return "04";
+                case Istab.TABTYP.VEREXT:
+                    return "05";
+                default:
+                    return "00";
+            }
+        }
+
+        public static string getTabtypTitle(Istab.TABTYP tabtyp)
+        {
             switch (tabtyp)
             {
                 case TABTYP.AREA:
-                    tab_typ = "01";
-                    break;
+                    return "Sales area";
                 case TABTYP.BUSITYP:
-                    tab_typ = "02";
-                    break;
+                    return "Business type";
                 case TABTYP.HOWKNOWN:
-                    tab_typ = "03";
-                    break;
+                    return "How to know";
                 case TABTYP.PURCHASE_FROM:
-                    tab_typ = "04";
-                    break;
+                    return "Purchase from";
                 case TABTYP.VEREXT:
-                    tab_typ = "05";
-                    break;
+                    return "Software version(extension)";
                 default:
-                    tab_typ = "00";
-                    break;
+                    return "Istab";
             }
-
-            Istab istab = new Istab();
-
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_by_typcod&tabtyp=" + tab_typ + "&typcod=" + typcod);
-            Console.WriteLine(get.data);
-            
-            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-            
-            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-            {
-                if (sr.istab != null)
-                {
-                    istab = sr.istab.First<Istab>();
-                }
-            }
-
-            return istab;
         }
+        //public static Istab getIstabByTypcod(TABTYP tabtyp, string typcod)
+        //{
+        //    string tab_typ = string.Empty;
+        //    switch (tabtyp)
+        //    {
+        //        case TABTYP.AREA:
+        //            tab_typ = "01";
+        //            break;
+        //        case TABTYP.BUSITYP:
+        //            tab_typ = "02";
+        //            break;
+        //        case TABTYP.HOWKNOWN:
+        //            tab_typ = "03";
+        //            break;
+        //        case TABTYP.PURCHASE_FROM:
+        //            tab_typ = "04";
+        //            break;
+        //        case TABTYP.VEREXT:
+        //            tab_typ = "05";
+        //            break;
+        //        default:
+        //            tab_typ = "00";
+        //            break;
+        //    }
+
+        //    Istab istab = new Istab();
+
+        //    CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_by_typcod&tabtyp=" + tab_typ + "&typcod=" + typcod);
+        //    Console.WriteLine(get.data);
+            
+        //    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+            
+        //    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+        //    {
+        //        if (sr.istab != null)
+        //        {
+        //            istab = sr.istab.First<Istab>();
+        //        }
+        //    }
+
+        //    return istab;
+        //}
     }
 }

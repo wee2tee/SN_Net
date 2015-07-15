@@ -23,7 +23,7 @@ namespace SN_Net.DataModels
         public string area { get; set; }
         public string remark { get; set; }
         public string chgdat { get; set; }
-        public int users_id { get; set; }
+        //public int users_id { get; set; }
         public string users_name { get; set; }
     }
 }

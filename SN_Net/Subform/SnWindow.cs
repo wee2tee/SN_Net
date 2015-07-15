@@ -16,6 +16,17 @@ namespace SN_Net.Subform
 {
     public partial class SnWindow : Form
     {
+        #region declare Data Model
+        
+        private Serial serial;
+        private Istab busityp;
+        private Dealer dealer;
+
+        private Istab busityp_not_found = new Istab();
+        private Dealer dealer_not_found = new Dealer();
+
+        #endregion declare Data Model
+
         public int id;
         public string State;
         
@@ -46,8 +57,18 @@ namespace SN_Net.Subform
         private void SnWindow_Load(object sender, EventArgs e)
         {
             this.sortMode = SORT_SN;
-            this.fillSerialInForm(this.getSerial(LAST_ROW, 0, sortMode));
+            this.getSerial(LAST_ROW, 0, this.sortMode);
+            this.fillSerialInForm();
             this.setFormState(FormState.FORM_STATE_READY);
+
+            // Pairing control to activate F6 pressed
+            List<TextBox> list_tb = new List<TextBox>();
+            list_tb.Add(this.txtBusityp);
+            list_tb.Add(this.txtDealer_dealer);
+            List<Button> list_btn = new List<Button>();
+            list_btn.Add(this.btnBrowseBusityp);
+            list_btn.Add(this.btnBrowseDealer);
+            F6Actions.Attach(list_tb, list_btn);
         }
 
         private void SnWindow_Activated(object sender, EventArgs e)
@@ -58,7 +79,7 @@ namespace SN_Net.Subform
         #region Get Serial data from server
         private Serial getSerial(int row_id, int find_direction = 0, string sort_by = SORT_ID)
         {
-            Serial serial = new Serial();
+            //Serial serial = new Serial();
             CRUDResult get;
             ServerResult sr;
 
@@ -68,31 +89,36 @@ namespace SN_Net.Subform
                 {
                     case FIRST_ROW:
                         get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_first&sort=" + sort_by);
-                        Console.WriteLine(get.data);
                         sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
-                            serial = sr.serial[0];
+                            this.serial = sr.serial[0];
+                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
 
                     case LAST_ROW:
                         get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last&sort=" + sort_by);
+                        Console.WriteLine(ApiConfig.API_MAIN_URL + "serial/get_last&sort=" + sort_by);
                         Console.WriteLine(get.data);
                         sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
-                            serial = sr.serial[0];
+                            this.serial = sr.serial[0];
+                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
 
                     default:
                         get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last&sort=" + sort_by);
-                        Console.WriteLine(get.data);
                         sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
-                            serial = sr.serial[0];
+                            this.serial = sr.serial[0];
+                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
                 }
@@ -103,31 +129,34 @@ namespace SN_Net.Subform
                 {
                     case FIND_NEXT:
                         get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_next&sort=" + sort_by + "&id=" + row_id);
-                        Console.WriteLine(get.data);
                         sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
-                            serial = sr.serial[0];
+                            this.serial = sr.serial[0];
+                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
 
                     case FIND_PREV:
                         get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_prev&sort=" + sort_by + "&id=" + row_id);
-                        Console.WriteLine(get.data);
                         sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
-                            serial = sr.serial[0];
+                            this.serial = sr.serial[0];
+                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
 
                     default:
                         get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_at&sort=" + sort_by + "&id=" + row_id);
-                        Console.WriteLine(get.data);
                         sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
-                            serial = sr.serial[0];
+                            this.serial = sr.serial[0];
+                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
                 }
@@ -137,22 +166,22 @@ namespace SN_Net.Subform
         }
         #endregion Get Serial data from server
 
-        private void fillSerialInForm(Serial serial)
+        private void fillSerialInForm()
         {
-            this.id = serial.id;
-            this.txtSerNum.Text = serial.sernum;
-            this.txtVersion.Text = serial.version;
-            this.txtPrenam.Text = serial.prenam;
-            this.txtCompnam.Text = serial.compnam;
-            this.txtAddr01.Text = serial.addr01;
-            this.txtAddr02.Text = serial.addr02;
-            this.txtAddr03.Text = serial.addr03;
-            this.txtZipcod.Text = serial.zipcod;
-            this.txtTelnum.Text = serial.telnum;
-            this.txtTelnum2.Text = serial.telnum;
-            this.txtFaxnum.Text = serial.faxnum;
-            this.txtBusityp.Text = serial.busityp;
-            this.lblBusityp.Text = Istab.getIstabByTypcod(Istab.TABTYP.BUSITYP, serial.busityp).typdes_th;
+            this.id = this.serial.id;
+            this.txtSerNum.Text = this.serial.sernum;
+            this.txtVersion.Text = this.serial.version;
+            this.txtPrenam.Text = this.serial.prenam;
+            this.txtCompnam.Text = this.serial.compnam;
+            this.txtAddr01.Text = this.serial.addr01;
+            this.txtAddr02.Text = this.serial.addr02;
+            this.txtAddr03.Text = this.serial.addr03;
+            this.txtZipcod.Text = this.serial.zipcod;
+            this.txtTelnum.Text = this.serial.telnum;
+            this.txtTelnum2.Text = this.serial.telnum;
+            this.txtFaxnum.Text = this.serial.faxnum;
+            this.txtBusityp.Text = this.serial.busityp;
+            this.lblBusityp.Text = this.busityp.typdes_th; //Istab.getIstabByTypcod(Istab.TABTYP.BUSITYP, serial.busityp).typdes_th;
             this.txtBusides.Text = serial.busides;
             //this.dpPurdat
             //this.dpExpdat
@@ -164,7 +193,8 @@ namespace SN_Net.Subform
             this.txtRemark.Text = serial.remark;
             //this.cbVerext
             //this.dpVerextdat
-            //this.cbDealer_Dealer
+            this.txtDealer_dealer.Text = this.serial.dealer_dealer;//this.dealer.dealer;
+            this.lblDealer_Dealer.Text = this.dealer.prenam + " " + this.dealer.compnam;
 
         }
 
@@ -225,22 +255,26 @@ namespace SN_Net.Subform
 
         private void toolStripFirst_Click(object sender, EventArgs e)
         {
-            this.fillSerialInForm(this.getSerial(FIRST_ROW, 0, sortMode));
+            this.getSerial(FIRST_ROW, 0, sortMode);
+            this.fillSerialInForm();
         }
 
         private void toolStripLast_Click(object sender, EventArgs e)
         {
-            this.fillSerialInForm(this.getSerial(LAST_ROW, 0, sortMode));
+            this.getSerial(LAST_ROW, 0, sortMode);
+            this.fillSerialInForm();
         }
 
         private void toolStripPrevious_Click(object sender, EventArgs e)
         {
-            this.fillSerialInForm(this.getSerial(this.id, FIND_PREV, this.sortMode));
+            this.getSerial(this.id, FIND_PREV, this.sortMode);
+            this.fillSerialInForm();
         }
 
         private void toolStripNext_Click(object sender, EventArgs e)
         {
-            this.fillSerialInForm(this.getSerial(this.id, FIND_NEXT, this.sortMode));
+            this.getSerial(this.id, FIND_NEXT, this.sortMode);
+            this.fillSerialInForm();
         }
 
 
@@ -261,12 +295,19 @@ namespace SN_Net.Subform
 
         private void btnBrowseBusityp_Click(object sender, EventArgs e)
         {
-            IstabList wind = new IstabList(IstabList.TITLE.BUSITYP, this.txtBusityp.Text);
+            IstabList wind = new IstabList(this.busityp, Istab.TABTYP.BUSITYP);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.txtBusityp.Text = wind.istab.typcod;
-                this.lblBusityp.Text = wind.istab.typdes_th;
+                this.busityp = wind.istab;
+                this.txtBusityp.Text = this.busityp.typcod;
+                this.lblBusityp.Text = this.busityp.typdes_th;
             }
+        }
+
+        private void btnBrowseDealer_Click(object sender, EventArgs e)
+        {
+            DealerList wind = new DealerList();
+            wind.ShowDialog();
         }
     }
 }

@@ -33,5 +33,6 @@ namespace SN_Net.MiscClass
         public List<Problem> problem { get; set; }
         public List<Serial> serial { get; set; }
         public List<Istab> istab { get; set; }
+        public List<Istab> busityp { get; set; }
     }
 }

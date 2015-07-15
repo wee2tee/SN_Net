@@ -16,40 +16,60 @@ namespace SN_Net.Subform
 {
     public partial class IstabAddEditForm : Form
     {
-        private string tabtyp;
-        public int id;
+        private Istab.TABTYP tabtyp;
+        public Istab istab;
+        private FORM_MODE mode;
 
-        public IstabAddEditForm(Istab.TABTYP tabtyp)
+        public enum FORM_MODE
+        {
+            ADD,
+            EDIT
+        }
+        /// <summary>
+        /// Form for Add/Edit istab data
+        /// </summary>
+        /// <param name="mode">Specify mode (add or edit)</param>
+        /// <param name="tabtyp">Tabtyp value</param>
+        /// <param name="istab_data">istab data to edit(for edit mode only)</param>
+        public IstabAddEditForm(FORM_MODE mode, Istab.TABTYP tabtyp, Istab istab_data = null)
         {
             InitializeComponent();
-            this.setTabTyp(tabtyp);
+            this.istab = istab_data;
+            this.tabtyp = tabtyp;
+
             EscapeKeyToCloseDialog.ActiveEscToClose(this);
             EnterKeyManager.Active(this);
-            this.txtTypcod.Focus();
+
+            this.mode = mode;
         }
 
-        private void setTabTyp(Istab.TABTYP tabtyp)
+        private void IstabAddEditForm_Load(object sender, EventArgs e)
         {
-            switch (tabtyp)
+            if (this.mode == FORM_MODE.ADD)
             {
-                case Istab.TABTYP.AREA:
-                    this.tabtyp = "01";
-                    break;
-                case Istab.TABTYP.BUSITYP:
-                    this.tabtyp = "02";
-                    break;
-                case Istab.TABTYP.HOWKNOWN:
-                    this.tabtyp = "03";
-                    break;
-                case Istab.TABTYP.PURCHASE_FROM:
-                    this.tabtyp = "04";
-                    break;
-                case Istab.TABTYP.VEREXT:
-                    this.tabtyp = "05";
-                    break;
-                default:
-                    this.tabtyp = "00";
-                    break;
+                this.Text = "Add data : " + Istab.getTabtypTitle(this.tabtyp);
+                this.txtTypcod.Focus();
+            }
+            else
+            {
+                this.Text = "Edit data : " + Istab.getTabtypTitle(this.tabtyp);
+                this.txtTypcod.Enabled = false;
+                this.txtAbbreviate_th.Focus();
+
+                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_by_id&id=" + this.istab.id);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    if (sr.istab != null)
+                    {
+                        this.istab = sr.istab.First<Istab>();
+                        this.txtTypcod.Text = this.istab.typcod;
+                        this.txtAbbreviate_en.Text = this.istab.abbreviate_en;
+                        this.txtAbbreviate_th.Text = this.istab.abbreviate_th;
+                        this.txtTypdes_en.Text = this.istab.typdes_en;
+                        this.txtTypdes_th.Text = this.istab.typdes_th;
+                    }
+                }
             }
         }
 
@@ -57,22 +77,42 @@ namespace SN_Net.Subform
         {
             if (this.txtTypcod.Text.Length > 0)
             {
-                string json_data = "{\"tabtyp\":\"" + this.tabtyp + "\",";
-                json_data += "\"typcod\":\"" + this.txtTypcod.Text.cleanString() + "\",";
-                json_data += "\"abbreviate_en\":\"" + this.txtAbbreviate_en.Text.cleanString() + "\",";
-                json_data += "\"abbreviate_th\":\"" + this.txtAbbreviate_th.Text.cleanString() + "\",";
-                json_data += "\"typdes_en\":\"" + this.txtTypdes_en.Text.cleanString() + "\",";
-                json_data += "\"typdes_th\":\"" + this.txtTypdes_th.Text.cleanString() + "\"}";
+                CRUDResult post;
+                if (this.mode == FORM_MODE.ADD) // Add
+                {
+                    string json_data = "{\"tabtyp\":\"" + Istab.getTabtypString(this.tabtyp) + "\",";
+                    json_data += "\"typcod\":\"" + this.txtTypcod.Text.cleanString() + "\",";
+                    json_data += "\"abbreviate_en\":\"" + this.txtAbbreviate_en.Text.cleanString() + "\",";
+                    json_data += "\"abbreviate_th\":\"" + this.txtAbbreviate_th.Text.cleanString() + "\",";
+                    json_data += "\"typdes_en\":\"" + this.txtTypdes_en.Text.cleanString() + "\",";
+                    json_data += "\"typdes_th\":\"" + this.txtTypdes_th.Text.cleanString() + "\"}";
 
-                Console.WriteLine(json_data);
-                CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "istab/create", json_data);
+                    Console.WriteLine(json_data);
+                    post = ApiActions.POST(ApiConfig.API_MAIN_URL + "istab/create", json_data);
+                }
+                else // Edit
+                {
+                    string json_data = "{\"id\":" + this.istab.id.ToString() + ",";
+                    json_data += "\"tabtyp\":\"" + this.tabtyp + "\",";
+                    json_data += "\"typcod\":\"" + this.txtTypcod.Text.cleanString() + "\",";
+                    json_data += "\"abbreviate_en\":\"" + this.txtAbbreviate_en.Text.cleanString() + "\",";
+                    json_data += "\"abbreviate_th\":\"" + this.txtAbbreviate_th.Text.cleanString() + "\",";
+                    json_data += "\"typdes_en\":\"" + this.txtTypdes_en.Text.cleanString() + "\",";
+                    json_data += "\"typdes_th\":\"" + this.txtTypdes_th.Text.cleanString() + "\"}";
+
+                    Console.WriteLine(json_data);
+                    post = ApiActions.POST(ApiConfig.API_MAIN_URL + "istab/submit_change", json_data);
+                }
+                
+                
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
                 Console.WriteLine(post.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {
-                    //this.id = Convert.ToInt32(sr.message);
-                    //Console.WriteLine("Last insert id is " + this.id.ToString());
-
+                    if (sr.istab != null)
+                    {
+                        this.istab = sr.istab[0];
+                    }
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

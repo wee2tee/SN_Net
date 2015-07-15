@@ -84,6 +84,12 @@
     <Compile Include="Subform\ChangePasswordForm.Designer.cs">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\DealerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\DealerList.Designer.cs">
+      <DependentUpon>DealerList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\DealerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,12 @@
     </Compile>
     <Compile Include="Subform\MessageAlert.Designer.cs">
       <DependentUpon>MessageAlert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\SearchBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SearchBox.Designer.cs">
+      <DependentUpon>SearchBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\SnWindow.cs">
       <SubType>Form</SubType>
@@ -160,6 +172,9 @@
     <EmbeddedResource Include="Subform\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\DealerList.resx">
+      <DependentUpon>DealerList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\DealerWindow.resx">
       <DependentUpon>DealerWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -177,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\MessageAlert.resx">
       <DependentUpon>MessageAlert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SearchBox.resx">
+      <DependentUpon>SearchBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\SnWindow.resx">
       <DependentUpon>SnWindow.cs</DependentUpon>
