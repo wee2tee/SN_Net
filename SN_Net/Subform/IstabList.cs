@@ -23,15 +23,6 @@ namespace SN_Net.Subform
         public Istab istab;
         private Istab selected_istab;
 
-        //public enum TITLE
-        //{
-        //    AREA,
-        //    BUSITYP,
-        //    HOWKNOWN,
-        //    PURCHASE_FROM,
-        //    VEREXT
-        //}
-
         public IstabList(Istab istab_data, Istab.TABTYP tabtyp)
         {
             InitializeComponent();
@@ -94,7 +85,6 @@ namespace SN_Net.Subform
         {
             List<Istab> istabs = new List<Istab>();
             CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + Istab.getTabtypString(this.tabtyp) + "&sort=" + sort_by);
-            Console.WriteLine(ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + this.tabtyp + "&sort=" + sort_by);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -133,7 +123,8 @@ namespace SN_Net.Subform
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter,
-                Padding = new Padding(0, 3, 0, 3)
+                Padding = new Padding(0, 3, 0, 3),
+                //BackColor = Color.ForestGreen
             };
             this.dgvIstab.Columns.Add(text_col2);
 
@@ -205,13 +196,6 @@ namespace SN_Net.Subform
 
         private void returnSelectedResult()
         {
-            /*
-            this.istab = new Istab();
-            this.istab.id = (int)this.dgvIstab.Rows[row_index].Cells[0].Value;
-            this.istab.tabtyp = this.tabtyp;
-            this.istab.typcod = (string)this.dgvIstab.Rows[row_index].Cells[1].Value;
-            this.istab.typdes_th = (string)this.dgvIstab.Rows[row_index].Cells[2].Value;
-            */
             this.istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
 
             this.DialogResult = DialogResult.OK;
@@ -237,11 +221,22 @@ namespace SN_Net.Subform
             {
 
             }
+            else
+            {
+                /*
+                SearchBox sb = new SearchBox();
+                sb.txtKeyword.Text = e.KeyValue.ToString();//Convert.ToChar(e.KeyValue).ToString();
+                sb.ShowDialog();
+                 * */
+            }
         }
 
         private void dgvIstab_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.returnSelectedResult();
+            if (e.RowIndex >= 0)
+            {
+                this.returnSelectedResult();
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -273,7 +268,6 @@ namespace SN_Net.Subform
 
         private void performDelete(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
             MessageBox.Show("delete");
         }
 
@@ -293,6 +287,41 @@ namespace SN_Net.Subform
                 this.fillInDataGrid(this.loadIstabData(this.sort_by));
             }
         }
-        
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            SearchBox s = new SearchBox();
+            if (s.ShowDialog() == DialogResult.OK)
+            {
+                this.performSearch(s.txtKeyword.Text);
+            }
+        }
+
+        private void performSearch(string keyword)
+        {
+            switch (this.sort_by)
+            {
+                case SORT_TYPCOD:
+                    this.dgvIstab.Search(keyword, 1);
+                    break;
+
+                case SORT_TYPDES:
+                    this.dgvIstab.Search(keyword, 2);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void dgvIstab_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                this.sort_by = SORT_TYPCOD;
+            }
+            else if(e.ColumnIndex == 2){
+                this.sort_by = SORT_TYPDES;
+            }
+        }
     }
 }

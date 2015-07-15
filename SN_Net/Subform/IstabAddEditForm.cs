@@ -104,7 +104,6 @@ namespace SN_Net.Subform
                     post = ApiActions.POST(ApiConfig.API_MAIN_URL + "istab/submit_change", json_data);
                 }
                 
-                
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
                 Console.WriteLine(post.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)

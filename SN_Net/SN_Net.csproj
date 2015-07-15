@@ -74,6 +74,7 @@
     <Compile Include="MiscClass\F6Actions.cs" />
     <Compile Include="MiscClass\FormState.cs" />
     <Compile Include="MiscClass\GlobalVar.cs" />
+    <Compile Include="MiscClass\SearchInDatagridviewColumn.cs" />
     <Compile Include="MiscClass\ServerResult.cs" />
     <Compile Include="MiscClass\StringResource.cs" />
     <Compile Include="Program.cs" />
