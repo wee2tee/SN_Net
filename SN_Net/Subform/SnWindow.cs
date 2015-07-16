@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 using SN_Net.MiscClass;
 using SN_Net.DataModels;
 using WebAPI;
@@ -20,9 +21,13 @@ namespace SN_Net.Subform
         
         private Serial serial;
         private Istab busityp;
+        private Istab area;
+        private Istab howknown;
         private Dealer dealer;
 
         private Istab busityp_not_found = new Istab();
+        private Istab area_not_found = new Istab();
+        private Istab howknown_not_found = new Istab();
         private Dealer dealer_not_found = new Dealer();
 
         #endregion declare Data Model
@@ -43,6 +48,8 @@ namespace SN_Net.Subform
         private const string SORT_BUSITYP = "busityp";
         private const string SORT_AREA = "area";
         private string sortMode;
+        private CultureInfo cinfo_us = new CultureInfo("en-US");
+        private CultureInfo cinfo_th = new CultureInfo("th-TH");
 
         public SnWindow()
         {
@@ -94,6 +101,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = sr.serial[0];
                             this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
                             this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
@@ -107,6 +116,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = sr.serial[0];
                             this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
                             this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
@@ -118,6 +129,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = sr.serial[0];
                             this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
                             this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
@@ -134,6 +147,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = sr.serial[0];
                             this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
                             this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
@@ -145,6 +160,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = sr.serial[0];
                             this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
                             this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
@@ -156,6 +173,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = sr.serial[0];
                             this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
                             this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                         }
                         break;
@@ -181,21 +200,40 @@ namespace SN_Net.Subform
             this.txtTelnum2.Text = this.serial.telnum;
             this.txtFaxnum.Text = this.serial.faxnum;
             this.txtBusityp.Text = this.serial.busityp;
-            this.lblBusityp.Text = this.busityp.typdes_th; //Istab.getIstabByTypcod(Istab.TABTYP.BUSITYP, serial.busityp).typdes_th;
+            this.lblBusityp.Text = this.busityp.typdes_th;
             this.txtBusides.Text = serial.busides;
-            //this.dpPurdat
-            //this.dpExpdat
-            //this.txtExpdat.Text
-            //this.cbHowKnow
-            //this.cbArea
-            //this.dpManual
+
+            this.mskPurdat.pickedDate(this.serial.purdat);
+            this.dpPurdat.pickedDate(this.serial.purdat);
+            
+            this.dpExpdat.pickedDate(this.serial.expdat);
+            this.mskExpdat.pickedDate(this.serial.expdat);
+            this.txtExpdat.pickedDate(this.serial.expdat);
+
+            this.dpManual.pickedDate(this.serial.manual);
+            this.mskManual.pickedDate(this.serial.manual);
+
+            this.dpVerextdat.pickedDate(this.serial.verextdat);
+            this.mskVerextdat.pickedDate(this.serial.verextdat);
+
+            this.txtHowknown.Text = this.serial.howknown;
+            this.lblHowknown.Text = this.howknown.typdes_th;
+            this.txtArea.Text = this.serial.area;
+            this.lblArea.Text = this.area.typdes_th;
+            
+            //Manual
+            if (this.serial.manual != null)
+            {
+                DateTime _manual = Convert.ToDateTime(this.serial.manual, cinfo_us);
+                this.dpManual.Value = _manual;
+            }
+
             this.txtRefnum.Text = serial.refnum;
             this.txtRemark.Text = serial.remark;
             //this.cbVerext
             //this.dpVerextdat
             this.txtDealer_dealer.Text = this.serial.dealer_dealer;//this.dealer.dealer;
             this.lblDealer_Dealer.Text = this.dealer.prenam + " " + this.dealer.compnam;
-
         }
 
         private void setFormState(string form_state)
@@ -219,6 +257,7 @@ namespace SN_Net.Subform
                     break;
 
                 case FormState.FORM_STATE_EDIT:
+                    this.State = FormState.FORM_STATE_EDIT;
                     exclusion_control = new List<Control>();
                     exclusion_control.Add(this.txtTelnum2);
                     exclusion_control.Add(this.txtContact2);
@@ -252,6 +291,8 @@ namespace SN_Net.Subform
             /// Find dummyTextBox again when change tab
             FormState.tabChangeHandle(this, this.tabControl1.SelectedTab);
         }
+
+        #region toolStrip
 
         private void toolStripFirst_Click(object sender, EventArgs e)
         {
@@ -292,6 +333,7 @@ namespace SN_Net.Subform
         {
             
         }
+        #endregion toolStrip
 
         private void btnBrowseBusityp_Click(object sender, EventArgs e)
         {
@@ -304,10 +346,59 @@ namespace SN_Net.Subform
             }
         }
 
+        private void btnBrowseArea_Click(object sender, EventArgs e)
+        {
+            IstabList wind = new IstabList(this.area, Istab.TABTYP.AREA);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.area = wind.istab;
+                this.txtArea.Text = this.area.typcod;
+                this.lblArea.Text = this.area.typdes_th;
+            }
+        }
+
+        private void btnBrowseHowknown_Click(object sender, EventArgs e)
+        {
+            IstabList wind = new IstabList(this.howknown, Istab.TABTYP.HOWKNOWN);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.howknown = wind.istab;
+                this.txtHowknown.Text = this.howknown.typcod;
+                this.lblHowknown.Text = this.howknown.typdes_th;
+            }
+        }
+
         private void btnBrowseDealer_Click(object sender, EventArgs e)
         {
-            DealerList wind = new DealerList();
-            wind.ShowDialog();
+            DealerList wind = new DealerList(this.dealer);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.dealer = wind.dealer;
+                this.txtDealer_dealer.Text = this.dealer.dealer;
+                this.lblDealer_Dealer.Text = this.dealer.prenam + " " + this.dealer.compnam;
+            }
+        }
+
+        private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
+            {
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
+                {
+                    MainForm main_form = this.MdiParent as MainForm;
+                    main_form.sn_wind = null;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else
+            {
+                MainForm main_form = this.MdiParent as MainForm;
+                main_form.sn_wind = null;
+            }
+
         }
     }
 }

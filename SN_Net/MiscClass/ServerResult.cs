@@ -34,5 +34,7 @@ namespace SN_Net.MiscClass
         public List<Serial> serial { get; set; }
         public List<Istab> istab { get; set; }
         public List<Istab> busityp { get; set; }
+        public List<Istab> area { get; set; }
+        public List<Istab> howknown { get; set; }
     }
 }

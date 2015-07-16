@@ -68,6 +68,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\Clean.cs" />
+    <Compile Include="MiscClass\DateTimeBindingControl.cs" />
     <Compile Include="MiscClass\EnterKeyManager.cs" />
     <Compile Include="MiscClass\EscapeKeyToCloseDialog.cs" />
     <Compile Include="MiscClass\ComboboxItem.cs" />

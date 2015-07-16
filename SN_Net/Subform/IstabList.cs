@@ -124,7 +124,7 @@ namespace SN_Net.Subform
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter,
                 Padding = new Padding(0, 3, 0, 3),
-                //BackColor = Color.ForestGreen
+                BackColor = Color.OliveDrab
             };
             this.dgvIstab.Columns.Add(text_col2);
 
@@ -180,7 +180,7 @@ namespace SN_Net.Subform
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.ADD, Istab.TABTYP.BUSITYP);
+            IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.ADD, this.tabtyp);
             if (wind.ShowDialog() == DialogResult.OK)
             {
                 this.selected_istab = wind.istab;
@@ -213,21 +213,23 @@ namespace SN_Net.Subform
             {
                 this.returnSelectedResult();
             }
+            else if (e.KeyCode == Keys.A && e.Modifiers == Keys.Alt)
+            {
+                this.btnAdd.PerformClick();
+            }
             else if (e.KeyCode == Keys.E && e.Modifiers == Keys.Alt)
             {
-                //this.showEditForm(id);
+                Istab istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
+                this.showEditForm(istab);
             }
             else if (e.KeyCode == Keys.D && e.Modifiers == Keys.Alt)
             {
-
+                Istab istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
+                this.showConfirmDelete(istab);
             }
-            else
+            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.Alt)
             {
-                /*
-                SearchBox sb = new SearchBox();
-                sb.txtKeyword.Text = e.KeyValue.ToString();//Convert.ToChar(e.KeyValue).ToString();
-                sb.ShowDialog();
-                 * */
+                this.btnSearch.PerformClick();
             }
         }
 
@@ -268,7 +270,8 @@ namespace SN_Net.Subform
 
         private void performDelete(object sender, EventArgs e)
         {
-            MessageBox.Show("delete");
+            Istab istab = (Istab)((MenuItem)sender).Tag;
+            this.showConfirmDelete(istab);
         }
 
         private void performEdit(object sender, EventArgs e)
@@ -279,12 +282,29 @@ namespace SN_Net.Subform
 
         private void showEditForm(Istab istab)
         {
-            IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.EDIT, Istab.TABTYP.BUSITYP, istab);
+            IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.EDIT, this.tabtyp, istab);
             
             if (wind.ShowDialog() == DialogResult.OK)
             {
                 this.selected_istab = wind.istab;
                 this.fillInDataGrid(this.loadIstabData(this.sort_by));
+            }
+        }
+
+        private void showConfirmDelete(Istab istab)
+        {
+            if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
+            {
+                CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "istab/delete&id=" + istab.id);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    this.fillInDataGrid(this.loadIstabData(sort_by));
+                }
+                else
+                {
+                    MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
             }
         }
 
@@ -308,6 +328,7 @@ namespace SN_Net.Subform
                 case SORT_TYPDES:
                     this.dgvIstab.Search(keyword, 2);
                     break;
+
                 default:
                     break;
             }
@@ -315,6 +336,12 @@ namespace SN_Net.Subform
 
         private void dgvIstab_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            foreach (DataGridViewColumn col in ((DataGridView)sender).Columns)
+            {
+                col.HeaderCell.Style.BackColor = Color.YellowGreen;
+            }
+            ((DataGridView)sender).Columns[e.ColumnIndex].HeaderCell.Style.BackColor = Color.OliveDrab;
+
             if (e.ColumnIndex == 1)
             {
                 this.sort_by = SORT_TYPCOD;
@@ -323,5 +350,6 @@ namespace SN_Net.Subform
                 this.sort_by = SORT_TYPDES;
             }
         }
+
     }
 }

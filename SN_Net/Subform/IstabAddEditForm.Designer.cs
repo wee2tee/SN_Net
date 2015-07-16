@@ -46,11 +46,12 @@
             // 
             // txtTypcod
             // 
+            this.txtTypcod.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTypcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txtTypcod.Location = new System.Drawing.Point(69, 13);
-            this.txtTypcod.MaxLength = 20;
+            this.txtTypcod.MaxLength = 6;
             this.txtTypcod.Name = "txtTypcod";
-            this.txtTypcod.Size = new System.Drawing.Size(59, 23);
+            this.txtTypcod.Size = new System.Drawing.Size(80, 23);
             this.txtTypcod.TabIndex = 0;
             this.txtTypcod.Tag = "require";
             // 

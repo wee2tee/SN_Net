@@ -80,6 +80,7 @@ namespace SN_Net.Subform
                 CRUDResult post;
                 if (this.mode == FORM_MODE.ADD) // Add
                 {
+                    Console.WriteLine("current tabtyp = " + Istab.getTabtypString(this.tabtyp));
                     string json_data = "{\"tabtyp\":\"" + Istab.getTabtypString(this.tabtyp) + "\",";
                     json_data += "\"typcod\":\"" + this.txtTypcod.Text.cleanString() + "\",";
                     json_data += "\"abbreviate_en\":\"" + this.txtAbbreviate_en.Text.cleanString() + "\",";
@@ -93,8 +94,8 @@ namespace SN_Net.Subform
                 else // Edit
                 {
                     string json_data = "{\"id\":" + this.istab.id.ToString() + ",";
-                    json_data += "\"tabtyp\":\"" + this.tabtyp + "\",";
-                    json_data += "\"typcod\":\"" + this.txtTypcod.Text.cleanString() + "\",";
+                    json_data += "\"tabtyp\":\"" + this.istab.tabtyp + "\",";
+                    json_data += "\"typcod\":\"" + this.istab.typcod + "\",";
                     json_data += "\"abbreviate_en\":\"" + this.txtAbbreviate_en.Text.cleanString() + "\",";
                     json_data += "\"abbreviate_th\":\"" + this.txtAbbreviate_th.Text.cleanString() + "\",";
                     json_data += "\"typdes_en\":\"" + this.txtTypdes_en.Text.cleanString() + "\",";

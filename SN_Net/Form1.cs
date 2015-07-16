@@ -17,7 +17,8 @@ namespace SN_Net
 {
     public partial class MainForm : Form
     {
-        private SnWindow sn_wind = null;
+        public SnWindow sn_wind = null;
+        public DealerWindow dealer_wind = null;
 
         public string my_mac = string.Empty;
         private GlobalVar G;

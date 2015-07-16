@@ -105,6 +105,15 @@ namespace SN_Net.MiscClass
                 tb.Leave += new EventHandler(this.textBoxLostFocus);
 
             }
+            if (root_control is MaskedTextBox)
+            {
+                ((MaskedTextBox)root_control).ReadOnly = true;
+                ((MaskedTextBox)root_control).BackColor = Color.White;
+                ((MaskedTextBox)root_control).ForeColor = Color.Black;
+                ((MaskedTextBox)root_control).Cursor = Cursors.Default;
+                ((MaskedTextBox)root_control).Enter += new EventHandler(this.textBoxHasFocus);
+                ((MaskedTextBox)root_control).Leave += new EventHandler(this.textBoxLostFocus);
+            }
             if (root_control is ComboBox)
             {
                 ComboBox cb = root_control as ComboBox;
@@ -134,6 +143,15 @@ namespace SN_Net.MiscClass
                 tb.Enter += new EventHandler(this.textBoxHasFocus);
                 tb.Leave += new EventHandler(this.textBoxLostFocus);
 
+            }
+            if (root_control is MaskedTextBox)
+            {
+                ((MaskedTextBox)root_control).ReadOnly = false;
+                ((MaskedTextBox)root_control).BackColor = Color.White;
+                ((MaskedTextBox)root_control).ForeColor = Color.Black;
+                ((MaskedTextBox)root_control).Cursor = Cursors.IBeam;
+                ((MaskedTextBox)root_control).Enter += new EventHandler(this.textBoxHasFocus);
+                ((MaskedTextBox)root_control).Leave += new EventHandler(this.textBoxLostFocus);
             }
             if (root_control is ComboBox)
             {
@@ -219,22 +237,47 @@ namespace SN_Net.MiscClass
 
         private void textBoxHasFocus(object sender, EventArgs e)
         {
-            TextBox tb = sender as TextBox;
-            if (!tb.ReadOnly)
+            if (sender is TextBox)
             {
-                tb.BackColor = Color.LawnGreen;
-                this.focusedControl = tb;
+                TextBox tb = sender as TextBox;
+                if (!tb.ReadOnly)
+                {
+                    tb.BackColor = Color.LawnGreen;
+                    this.focusedControl = tb;
+                }
+                else
+                {
+                    this.dummyControl.Focus();
+                    tb.BackColor = Color.White;
+                }
             }
-            else
+            else if (sender is MaskedTextBox)
             {
-                this.dummyControl.Focus();
-                tb.BackColor = Color.White;
+                MaskedTextBox mt = sender as MaskedTextBox;
+                if (!mt.ReadOnly)
+                {
+                    mt.BackColor = Color.LawnGreen;
+                    this.focusedControl = mt;
+                }
+                else
+                {
+                    this.dummyControl.Focus();
+                    mt.BackColor = Color.White;
+                }
             }
+            
         }
 
         private void textBoxLostFocus(object sender, EventArgs e)
         {
-            ((TextBox)sender).BackColor = Color.White;
+            if (sender is TextBox)
+            {
+                ((TextBox)sender).BackColor = Color.White;
+            }
+            else if(sender is MaskedTextBox)
+            {
+                ((MaskedTextBox)sender).BackColor = Color.White;
+            }
         }
     }
 }

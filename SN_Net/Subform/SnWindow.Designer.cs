@@ -32,8 +32,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnBrowseDealer = new System.Windows.Forms.Button();
             this.txtDealer_dealer = new System.Windows.Forms.TextBox();
             this.lblBusityp = new System.Windows.Forms.Label();
+            this.btnBrowseBusityp = new System.Windows.Forms.Button();
             this.txtBusityp = new System.Windows.Forms.TextBox();
             this.dpVerextdat = new System.Windows.Forms.DateTimePicker();
             this.cbVerext = new System.Windows.Forms.ComboBox();
@@ -45,8 +47,6 @@
             this.label25 = new System.Windows.Forms.Label();
             this.dpPurdat = new System.Windows.Forms.DateTimePicker();
             this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.cbHowKnow = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.lblDealer_Dealer = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -86,32 +86,17 @@
             this.label6 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtSerNum = new System.Windows.Forms.TextBox();
-            this.txtPrenam = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtVersion = new System.Windows.Forms.TextBox();
-            this.txtCompnam = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtRefnum = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.txtArea = new System.Windows.Forms.TextBox();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripTrash = new System.Windows.Forms.ToolStripButton();
             this.toolStripStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripFirst = new System.Windows.Forms.ToolStripButton();
             this.toolStripPrevious = new System.Windows.Forms.ToolStripButton();
             this.toolStripNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripLast = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripUpgrade = new System.Windows.Forms.ToolStripButton();
             this.toolStripBook = new System.Windows.Forms.ToolStripButton();
@@ -127,9 +112,30 @@
             this.searchOldSerialAlt5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchBusinessTypeAlt6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAreaAlt7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button5 = new System.Windows.Forms.Button();
-            this.btnBrowseDealer = new System.Windows.Forms.Button();
-            this.btnBrowseBusityp = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSerNum = new System.Windows.Forms.TextBox();
+            this.txtPrenam = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtVersion = new System.Windows.Forms.TextBox();
+            this.txtCompnam = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtRefnum = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lblArea = new System.Windows.Forms.Label();
+            this.btnBrowseArea = new System.Windows.Forms.Button();
+            this.txtArea = new System.Windows.Forms.TextBox();
+            this.lblHowknown = new System.Windows.Forms.Label();
+            this.btnBrowseHowknown = new System.Windows.Forms.Button();
+            this.txtHowknown = new System.Windows.Forms.TextBox();
+            this.mskPurdat = new System.Windows.Forms.MaskedTextBox();
+            this.mskExpdat = new System.Windows.Forms.MaskedTextBox();
+            this.mskManual = new System.Windows.Forms.MaskedTextBox();
+            this.mskVerextdat = new System.Windows.Forms.MaskedTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -173,6 +179,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.mskVerextdat);
+            this.groupBox2.Controls.Add(this.mskManual);
+            this.groupBox2.Controls.Add(this.mskExpdat);
+            this.groupBox2.Controls.Add(this.mskPurdat);
+            this.groupBox2.Controls.Add(this.lblHowknown);
+            this.groupBox2.Controls.Add(this.btnBrowseHowknown);
+            this.groupBox2.Controls.Add(this.txtHowknown);
             this.groupBox2.Controls.Add(this.btnBrowseDealer);
             this.groupBox2.Controls.Add(this.txtDealer_dealer);
             this.groupBox2.Controls.Add(this.lblBusityp);
@@ -188,8 +201,6 @@
             this.groupBox2.Controls.Add(this.label25);
             this.groupBox2.Controls.Add(this.dpPurdat);
             this.groupBox2.Controls.Add(this.label24);
-            this.groupBox2.Controls.Add(this.label23);
-            this.groupBox2.Controls.Add(this.cbHowKnow);
             this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.lblDealer_Dealer);
             this.groupBox2.Controls.Add(this.label20);
@@ -204,6 +215,16 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             // 
+            // btnBrowseDealer
+            // 
+            this.btnBrowseDealer.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnBrowseDealer.Location = new System.Drawing.Point(248, 106);
+            this.btnBrowseDealer.Name = "btnBrowseDealer";
+            this.btnBrowseDealer.Size = new System.Drawing.Size(25, 25);
+            this.btnBrowseDealer.TabIndex = 53;
+            this.btnBrowseDealer.UseVisualStyleBackColor = true;
+            this.btnBrowseDealer.Click += new System.EventHandler(this.btnBrowseDealer_Click);
+            // 
             // txtDealer_dealer
             // 
             this.txtDealer_dealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -217,11 +238,21 @@
             // 
             this.lblBusityp.AutoSize = true;
             this.lblBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusityp.Location = new System.Drawing.Point(197, 82);
+            this.lblBusityp.Location = new System.Drawing.Point(207, 82);
             this.lblBusityp.Name = "lblBusityp";
             this.lblBusityp.Size = new System.Drawing.Size(76, 16);
             this.lblBusityp.TabIndex = 51;
             this.lblBusityp.Text = "istab.typdes";
+            // 
+            // btnBrowseBusityp
+            // 
+            this.btnBrowseBusityp.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnBrowseBusityp.Location = new System.Drawing.Point(179, 78);
+            this.btnBrowseBusityp.Name = "btnBrowseBusityp";
+            this.btnBrowseBusityp.Size = new System.Drawing.Size(25, 25);
+            this.btnBrowseBusityp.TabIndex = 50;
+            this.btnBrowseBusityp.UseVisualStyleBackColor = true;
+            this.btnBrowseBusityp.Click += new System.EventHandler(this.btnBrowseBusityp_Click);
             // 
             // txtBusityp
             // 
@@ -229,15 +260,15 @@
             this.txtBusityp.Location = new System.Drawing.Point(110, 79);
             this.txtBusityp.MaxLength = 4;
             this.txtBusityp.Name = "txtBusityp";
-            this.txtBusityp.Size = new System.Drawing.Size(60, 23);
+            this.txtBusityp.Size = new System.Drawing.Size(70, 23);
             this.txtBusityp.TabIndex = 49;
             // 
             // dpVerextdat
             // 
             this.dpVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpVerextdat.Location = new System.Drawing.Point(668, 173);
+            this.dpVerextdat.Location = new System.Drawing.Point(749, 173);
             this.dpVerextdat.Name = "dpVerextdat";
-            this.dpVerextdat.Size = new System.Drawing.Size(155, 23);
+            this.dpVerextdat.Size = new System.Drawing.Size(18, 23);
             this.dpVerextdat.TabIndex = 48;
             this.dpVerextdat.Value = new System.DateTime(2015, 7, 10, 16, 52, 55, 0);
             // 
@@ -254,9 +285,9 @@
             // dpManual
             // 
             this.dpManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpManual.Location = new System.Drawing.Point(668, 147);
+            this.dpManual.Location = new System.Drawing.Point(749, 146);
             this.dpManual.Name = "dpManual";
-            this.dpManual.Size = new System.Drawing.Size(155, 23);
+            this.dpManual.Size = new System.Drawing.Size(18, 23);
             this.dpManual.TabIndex = 46;
             this.dpManual.Value = new System.DateTime(2015, 7, 10, 16, 52, 55, 0);
             // 
@@ -292,11 +323,11 @@
             // dpExpdat
             // 
             this.dpExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpExpdat.Location = new System.Drawing.Point(367, 172);
+            this.dpExpdat.Location = new System.Drawing.Point(450, 174);
             this.dpExpdat.Name = "dpExpdat";
-            this.dpExpdat.Size = new System.Drawing.Size(155, 23);
+            this.dpExpdat.Size = new System.Drawing.Size(18, 23);
             this.dpExpdat.TabIndex = 43;
-            this.dpExpdat.Value = new System.DateTime(2015, 7, 10, 16, 52, 55, 0);
+            this.dpExpdat.Value = new System.DateTime(2015, 7, 16, 0, 0, 0, 0);
             // 
             // label25
             // 
@@ -311,9 +342,9 @@
             // dpPurdat
             // 
             this.dpPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpPurdat.Location = new System.Drawing.Point(110, 173);
+            this.dpPurdat.Location = new System.Drawing.Point(191, 174);
             this.dpPurdat.Name = "dpPurdat";
-            this.dpPurdat.Size = new System.Drawing.Size(155, 23);
+            this.dpPurdat.Size = new System.Drawing.Size(18, 23);
             this.dpPurdat.TabIndex = 41;
             this.dpPurdat.Value = new System.DateTime(2015, 7, 10, 0, 0, 0, 0);
             // 
@@ -326,26 +357,6 @@
             this.label24.Size = new System.Drawing.Size(90, 16);
             this.label24.TabIndex = 40;
             this.label24.Text = "Purchase Date";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label23.Location = new System.Drawing.Point(180, 149);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(69, 16);
-            this.label23.TabIndex = 39;
-            this.label23.Text = "howknown";
-            // 
-            // cbHowKnow
-            // 
-            this.cbHowKnow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHowKnow.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbHowKnow.FormattingEnabled = true;
-            this.cbHowKnow.Location = new System.Drawing.Point(110, 146);
-            this.cbHowKnow.Name = "cbHowKnow";
-            this.cbHowKnow.Size = new System.Drawing.Size(64, 24);
-            this.cbHowKnow.TabIndex = 38;
             // 
             // label22
             // 
@@ -773,172 +784,6 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 43);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 43);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(21, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 16);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Serial No.";
-            // 
-            // txtSerNum
-            // 
-            this.txtSerNum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSerNum.Location = new System.Drawing.Point(91, 55);
-            this.txtSerNum.MaxLength = 20;
-            this.txtSerNum.Name = "txtSerNum";
-            this.txtSerNum.Size = new System.Drawing.Size(118, 23);
-            this.txtSerNum.TabIndex = 3;
-            // 
-            // txtPrenam
-            // 
-            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPrenam.Location = new System.Drawing.Point(91, 82);
-            this.txtPrenam.MaxLength = 30;
-            this.txtPrenam.Name = "txtPrenam";
-            this.txtPrenam.Size = new System.Drawing.Size(118, 23);
-            this.txtPrenam.TabIndex = 5;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(21, 85);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 16);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Company";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(228, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 16);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Version";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label4.Location = new System.Drawing.Point(361, 58);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 16);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Area";
-            // 
-            // txtVersion
-            // 
-            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtVersion.Location = new System.Drawing.Point(282, 55);
-            this.txtVersion.MaxLength = 4;
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(60, 23);
-            this.txtVersion.TabIndex = 8;
-            // 
-            // txtCompnam
-            // 
-            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtCompnam.Location = new System.Drawing.Point(213, 82);
-            this.txtCompnam.MaxLength = 100;
-            this.txtCompnam.Name = "txtCompnam";
-            this.txtCompnam.Size = new System.Drawing.Size(370, 23);
-            this.txtCompnam.TabIndex = 10;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(598, 58);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 16);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Ref. S/N";
-            // 
-            // txtRefnum
-            // 
-            this.txtRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRefnum.Location = new System.Drawing.Point(656, 55);
-            this.txtRefnum.MaxLength = 20;
-            this.txtRefnum.Name = "txtRefnum";
-            this.txtRefnum.Size = new System.Drawing.Size(118, 23);
-            this.txtRefnum.TabIndex = 12;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(774, 55);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(18, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "?";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button2.Location = new System.Drawing.Point(608, 82);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 23);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "CO=IM only";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button3.Location = new System.Drawing.Point(702, 82);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(91, 23);
-            this.button3.TabIndex = 15;
-            this.button3.Text = "Lost + Renew";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer2.IsSplitterFixed = true;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.MinimumSize = new System.Drawing.Size(854, 555);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.button5);
-            this.splitContainer2.Panel1.Controls.Add(this.txtArea);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(854, 591);
-            this.splitContainer2.SplitterDistance = 107;
-            this.splitContainer2.TabIndex = 16;
-            this.splitContainer2.TabStop = false;
-            // 
-            // txtArea
-            // 
-            this.txtArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtArea.Location = new System.Drawing.Point(400, 55);
-            this.txtArea.MaxLength = 20;
-            this.txtArea.Name = "txtArea";
-            this.txtArea.Size = new System.Drawing.Size(118, 23);
-            this.txtArea.TabIndex = 17;
-            // 
             // toolStripAdd
             // 
             this.toolStripAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -997,6 +842,11 @@
             this.toolStripSave.Size = new System.Drawing.Size(36, 40);
             this.toolStripSave.Text = "Save <F9>";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 43);
+            // 
             // toolStripFirst
             // 
             this.toolStripFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1040,6 +890,11 @@
             this.toolStripLast.Size = new System.Drawing.Size(36, 40);
             this.toolStripLast.Text = "Last record <Alt+B>";
             this.toolStripLast.Click += new System.EventHandler(this.toolStripLast_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 43);
             // 
             // toolStripItem
             // 
@@ -1165,34 +1020,246 @@
             this.searchAreaAlt7ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.searchAreaAlt7ToolStripMenuItem.Text = "Search Area <Alt+7>";
             // 
-            // button5
+            // label1
             // 
-            this.button5.Image = global::SN_Net.Properties.Resources.zoom;
-            this.button5.Location = new System.Drawing.Point(517, 54);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(25, 25);
-            this.button5.TabIndex = 54;
-            this.button5.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label1.Location = new System.Drawing.Point(21, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Serial No.";
             // 
-            // btnBrowseDealer
+            // txtSerNum
             // 
-            this.btnBrowseDealer.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseDealer.Location = new System.Drawing.Point(248, 106);
-            this.btnBrowseDealer.Name = "btnBrowseDealer";
-            this.btnBrowseDealer.Size = new System.Drawing.Size(25, 25);
-            this.btnBrowseDealer.TabIndex = 53;
-            this.btnBrowseDealer.UseVisualStyleBackColor = true;
-            this.btnBrowseDealer.Click += new System.EventHandler(this.btnBrowseDealer_Click);
+            this.txtSerNum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSerNum.Location = new System.Drawing.Point(91, 55);
+            this.txtSerNum.MaxLength = 20;
+            this.txtSerNum.Name = "txtSerNum";
+            this.txtSerNum.Size = new System.Drawing.Size(118, 23);
+            this.txtSerNum.TabIndex = 3;
             // 
-            // btnBrowseBusityp
+            // txtPrenam
             // 
-            this.btnBrowseBusityp.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseBusityp.Location = new System.Drawing.Point(169, 78);
-            this.btnBrowseBusityp.Name = "btnBrowseBusityp";
-            this.btnBrowseBusityp.Size = new System.Drawing.Size(25, 25);
-            this.btnBrowseBusityp.TabIndex = 50;
-            this.btnBrowseBusityp.UseVisualStyleBackColor = true;
-            this.btnBrowseBusityp.Click += new System.EventHandler(this.btnBrowseBusityp_Click);
+            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtPrenam.Location = new System.Drawing.Point(91, 82);
+            this.txtPrenam.MaxLength = 30;
+            this.txtPrenam.Name = "txtPrenam";
+            this.txtPrenam.Size = new System.Drawing.Size(118, 23);
+            this.txtPrenam.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.Location = new System.Drawing.Point(21, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(61, 16);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Company";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label3.Location = new System.Drawing.Point(228, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 16);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Version";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label4.Location = new System.Drawing.Point(361, 58);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 16);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Area";
+            // 
+            // txtVersion
+            // 
+            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtVersion.Location = new System.Drawing.Point(282, 55);
+            this.txtVersion.MaxLength = 4;
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(60, 23);
+            this.txtVersion.TabIndex = 8;
+            // 
+            // txtCompnam
+            // 
+            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtCompnam.Location = new System.Drawing.Point(213, 82);
+            this.txtCompnam.MaxLength = 100;
+            this.txtCompnam.Name = "txtCompnam";
+            this.txtCompnam.Size = new System.Drawing.Size(370, 23);
+            this.txtCompnam.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(646, 58);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 16);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Ref. S/N";
+            // 
+            // txtRefnum
+            // 
+            this.txtRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtRefnum.Location = new System.Drawing.Point(704, 55);
+            this.txtRefnum.MaxLength = 20;
+            this.txtRefnum.Name = "txtRefnum";
+            this.txtRefnum.Size = new System.Drawing.Size(118, 23);
+            this.txtRefnum.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(822, 55);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(18, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button2.Location = new System.Drawing.Point(656, 82);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(91, 23);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "CO=IM only";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button3.Location = new System.Drawing.Point(750, 82);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(91, 23);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Lost + Renew";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.MinimumSize = new System.Drawing.Size(854, 555);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.lblArea);
+            this.splitContainer2.Panel1.Controls.Add(this.btnBrowseArea);
+            this.splitContainer2.Panel1.Controls.Add(this.txtArea);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer2.Size = new System.Drawing.Size(854, 591);
+            this.splitContainer2.SplitterDistance = 107;
+            this.splitContainer2.TabIndex = 16;
+            this.splitContainer2.TabStop = false;
+            // 
+            // lblArea
+            // 
+            this.lblArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblArea.Location = new System.Drawing.Point(496, 58);
+            this.lblArea.Name = "lblArea";
+            this.lblArea.Size = new System.Drawing.Size(134, 16);
+            this.lblArea.TabIndex = 55;
+            this.lblArea.Text = "istab.typdes";
+            // 
+            // btnBrowseArea
+            // 
+            this.btnBrowseArea.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnBrowseArea.Location = new System.Drawing.Point(469, 54);
+            this.btnBrowseArea.Name = "btnBrowseArea";
+            this.btnBrowseArea.Size = new System.Drawing.Size(25, 25);
+            this.btnBrowseArea.TabIndex = 54;
+            this.btnBrowseArea.UseVisualStyleBackColor = true;
+            this.btnBrowseArea.Click += new System.EventHandler(this.btnBrowseArea_Click);
+            // 
+            // txtArea
+            // 
+            this.txtArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtArea.Location = new System.Drawing.Point(400, 55);
+            this.txtArea.MaxLength = 20;
+            this.txtArea.Name = "txtArea";
+            this.txtArea.Size = new System.Drawing.Size(70, 23);
+            this.txtArea.TabIndex = 17;
+            // 
+            // lblHowknown
+            // 
+            this.lblHowknown.AutoSize = true;
+            this.lblHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblHowknown.Location = new System.Drawing.Point(207, 149);
+            this.lblHowknown.Name = "lblHowknown";
+            this.lblHowknown.Size = new System.Drawing.Size(76, 16);
+            this.lblHowknown.TabIndex = 56;
+            this.lblHowknown.Text = "istab.typdes";
+            // 
+            // btnBrowseHowknown
+            // 
+            this.btnBrowseHowknown.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnBrowseHowknown.Location = new System.Drawing.Point(179, 145);
+            this.btnBrowseHowknown.Name = "btnBrowseHowknown";
+            this.btnBrowseHowknown.Size = new System.Drawing.Size(25, 25);
+            this.btnBrowseHowknown.TabIndex = 55;
+            this.btnBrowseHowknown.UseVisualStyleBackColor = true;
+            this.btnBrowseHowknown.Click += new System.EventHandler(this.btnBrowseHowknown_Click);
+            // 
+            // txtHowknown
+            // 
+            this.txtHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtHowknown.Location = new System.Drawing.Point(110, 146);
+            this.txtHowknown.MaxLength = 4;
+            this.txtHowknown.Name = "txtHowknown";
+            this.txtHowknown.Size = new System.Drawing.Size(70, 23);
+            this.txtHowknown.TabIndex = 54;
+            // 
+            // mskPurdat
+            // 
+            this.mskPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskPurdat.Location = new System.Drawing.Point(110, 174);
+            this.mskPurdat.Mask = "00/00/0000";
+            this.mskPurdat.Name = "mskPurdat";
+            this.mskPurdat.Size = new System.Drawing.Size(82, 23);
+            this.mskPurdat.TabIndex = 58;
+            // 
+            // mskExpdat
+            // 
+            this.mskExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskExpdat.Location = new System.Drawing.Point(369, 174);
+            this.mskExpdat.Mask = "00/00/0000";
+            this.mskExpdat.Name = "mskExpdat";
+            this.mskExpdat.Size = new System.Drawing.Size(82, 23);
+            this.mskExpdat.TabIndex = 59;
+            // 
+            // mskManual
+            // 
+            this.mskManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskManual.Location = new System.Drawing.Point(668, 146);
+            this.mskManual.Mask = "00/00/0000";
+            this.mskManual.Name = "mskManual";
+            this.mskManual.Size = new System.Drawing.Size(82, 23);
+            this.mskManual.TabIndex = 60;
+            // 
+            // mskVerextdat
+            // 
+            this.mskVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskVerextdat.Location = new System.Drawing.Point(668, 173);
+            this.mskVerextdat.Mask = "00/00/0000";
+            this.mskVerextdat.Name = "mskVerextdat";
+            this.mskVerextdat.Size = new System.Drawing.Size(82, 23);
+            this.mskVerextdat.TabIndex = 61;
             // 
             // SnWindow
             // 
@@ -1220,6 +1287,7 @@
             this.Name = "SnWindow";
             this.Text = "Serial Number";
             this.Activated += new System.EventHandler(this.SnWindow_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SnWindow_FormClosing);
             this.Load += new System.EventHandler(this.SnWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -1325,8 +1393,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.DateTimePicker dpPurdat;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox cbHowKnow;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label lblDealer_Dealer;
         private System.Windows.Forms.Label label20;
@@ -1345,7 +1411,15 @@
         private System.Windows.Forms.Label lblBusityp;
         private System.Windows.Forms.Button btnBrowseDealer;
         private System.Windows.Forms.TextBox txtDealer_dealer;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnBrowseArea;
         private System.Windows.Forms.TextBox txtArea;
+        private System.Windows.Forms.Label lblArea;
+        private System.Windows.Forms.Label lblHowknown;
+        private System.Windows.Forms.Button btnBrowseHowknown;
+        private System.Windows.Forms.TextBox txtHowknown;
+        private System.Windows.Forms.MaskedTextBox mskPurdat;
+        private System.Windows.Forms.MaskedTextBox mskVerextdat;
+        private System.Windows.Forms.MaskedTextBox mskManual;
+        private System.Windows.Forms.MaskedTextBox mskExpdat;
     }
 }

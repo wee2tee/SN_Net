@@ -30,7 +30,9 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvDealer = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -40,6 +42,8 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -51,8 +55,10 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button1);
-            this.splitContainer1.Size = new System.Drawing.Size(480, 207);
+            this.splitContainer1.Panel2.Controls.Add(this.btnOK);
+            this.splitContainer1.Panel2.Controls.Add(this.btnSearch);
+            this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
+            this.splitContainer1.Size = new System.Drawing.Size(556, 207);
             this.splitContainer1.SplitterDistance = 160;
             this.splitContainer1.TabIndex = 99;
             this.splitContainer1.TabStop = false;
@@ -61,34 +67,67 @@
             // 
             this.dgvDealer.AllowUserToAddRows = false;
             this.dgvDealer.AllowUserToDeleteRows = false;
+            this.dgvDealer.AllowUserToResizeRows = false;
             this.dgvDealer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDealer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDealer.Location = new System.Drawing.Point(5, 5);
+            this.dgvDealer.MultiSelect = false;
             this.dgvDealer.Name = "dgvDealer";
             this.dgvDealer.ReadOnly = true;
-            this.dgvDealer.Size = new System.Drawing.Size(470, 150);
+            this.dgvDealer.RowHeadersVisible = false;
+            this.dgvDealer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDealer.Size = new System.Drawing.Size(546, 150);
             this.dgvDealer.TabIndex = 0;
+            this.dgvDealer.TabStop = false;
+            this.dgvDealer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDealer_CellDoubleClick);
+            this.dgvDealer.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDealer_ColumnHeaderMouseClick);
+            this.dgvDealer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDealer_KeyDown);
             // 
-            // button1
+            // btnOK
             // 
-            this.button1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button1.Location = new System.Drawing.Point(224, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnOK.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnOK.Location = new System.Drawing.Point(6, 7);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(62, 29);
+            this.btnOK.TabIndex = 3;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSearch.Location = new System.Drawing.Point(134, 7);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(121, 29);
+            this.btnSearch.TabIndex = 5;
+            this.btnSearch.Text = "Search <Alt+S>";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnCancel.Location = new System.Drawing.Point(70, 7);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(62, 29);
+            this.btnCancel.TabIndex = 4;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // DealerList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 207);
+            this.ClientSize = new System.Drawing.Size(556, 207);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "DealerList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Dealer";
+            this.Shown += new System.EventHandler(this.DealerList_Shown);
+            this.Resize += new System.EventHandler(this.DealerList_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -101,6 +140,8 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dgvDealer;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

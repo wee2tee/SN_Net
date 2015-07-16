@@ -13,18 +13,33 @@ namespace SN_Net.MiscClass
 
             foreach (DataGridViewRow row in datagrid.Rows)
             {
-                string typcod = (string)row.Cells[col_index].Value;
-                if (typcod.Length >= keyword.Length)
+                int compare_result;
+                string str_source = (string)row.Cells[col_index].Value;
+                
+                if (str_source.Length > keyword.Length)
                 {
-                    if (typcod.Substring(0, keyword.Length) == keyword)
-                    {
-                        row.Cells[col_index].Selected = true;
-                        datagrid.Focus();
-                        break;
-                    }
+                    compare_result = str_source.Substring(0, keyword.Length).CompareTo(keyword);
                 }
                 else
                 {
+                    compare_result = str_source.CompareTo(keyword);
+                }
+                
+                if(compare_result == 0)
+                {
+                    row.Cells[col_index].Selected = true;
+                    datagrid.Focus();
+                    break;
+                }
+                else if(compare_result > 0)
+                {
+                    row.Cells[col_index].Selected = true;
+                    datagrid.Focus();
+                    break;
+                }
+                else
+                {
+                    datagrid.Rows[0].Cells[col_index].Selected = true;
                     continue;
                 }
             }

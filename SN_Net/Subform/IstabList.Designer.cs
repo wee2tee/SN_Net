@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.dgvIstab = new System.Windows.Forms.DataGridView();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -66,39 +66,6 @@
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.TabStop = false;
             // 
-            // btnEdit
-            // 
-            this.btnEdit.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnEdit.Location = new System.Drawing.Point(354, 8);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(106, 29);
-            this.btnEdit.TabIndex = 4;
-            this.btnEdit.Text = "Edit <Alt+E>";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnAdd.Location = new System.Drawing.Point(245, 8);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(106, 29);
-            this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "Add <Alt+A>";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnCancel.Location = new System.Drawing.Point(64, 9);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(58, 29);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
             // dgvIstab
             // 
             this.dgvIstab.AllowUserToAddRows = false;
@@ -123,9 +90,9 @@
             // btnOK
             // 
             this.btnOK.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnOK.Location = new System.Drawing.Point(4, 9);
+            this.btnOK.Location = new System.Drawing.Point(4, 8);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(58, 29);
+            this.btnOK.Size = new System.Drawing.Size(62, 29);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -134,13 +101,46 @@
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSearch.Location = new System.Drawing.Point(135, 9);
+            this.btnSearch.Location = new System.Drawing.Point(132, 8);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(58, 29);
+            this.btnSearch.Size = new System.Drawing.Size(121, 29);
             this.btnSearch.TabIndex = 2;
-            this.btnSearch.Text = "Search";
+            this.btnSearch.Text = "Search <Alt+S>";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEdit.Location = new System.Drawing.Point(365, 8);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(94, 29);
+            this.btnEdit.TabIndex = 4;
+            this.btnEdit.Text = "Edit <Alt+E>";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAdd.Location = new System.Drawing.Point(270, 8);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(94, 29);
+            this.btnAdd.TabIndex = 3;
+            this.btnAdd.Text = "Add <Alt+A>";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnCancel.Location = new System.Drawing.Point(68, 8);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(62, 29);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // IstabList
             // 
