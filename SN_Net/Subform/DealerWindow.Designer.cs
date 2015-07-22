@@ -179,6 +179,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "DealerWindow";
             this.Text = "DealerWindow";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DealerWindow_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

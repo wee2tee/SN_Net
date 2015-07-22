@@ -57,8 +57,8 @@ namespace SN_Net.Subform
                 default:
                     break;
             }
-            m.ShowDialog();
-            return m.DialogResult;
+            return m.ShowDialog();
+            //return m.DialogResult;
         }
         
         public static DialogResult Show(string message, string caption, MessageAlertButtons button)

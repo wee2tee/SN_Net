@@ -108,6 +108,10 @@ namespace SN_Net.Subform
                 this.dgvDealer.Rows[r].Cells[0].Style = new DataGridViewCellStyle()
                 {
                     Font = new Font("Tahoma", 9.75f),
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    SelectionBackColor = Color.White,
+                    SelectionForeColor = Color.Black,
                     Alignment = DataGridViewContentAlignment.MiddleRight
                 };
 
@@ -116,6 +120,11 @@ namespace SN_Net.Subform
                 this.dgvDealer.Rows[r].Cells[1].Style = new DataGridViewCellStyle()
                 {
                     Font = new Font("Tahoma", 9.75f),
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    SelectionBackColor = Color.White,
+                    SelectionForeColor = Color.Black,
+
                     Alignment = DataGridViewContentAlignment.MiddleLeft
                 };
 
@@ -125,6 +134,11 @@ namespace SN_Net.Subform
                 this.dgvDealer.Rows[r].Cells[2].Style = new DataGridViewCellStyle()
                 {
                     Font = new Font("Tahoma", 9.75f),
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    SelectionBackColor = Color.White,
+                    SelectionForeColor = Color.Black,
+
                     Alignment = DataGridViewContentAlignment.MiddleLeft
                 };
             }
@@ -202,6 +216,11 @@ namespace SN_Net.Subform
             ((DataGridView)sender).Columns[e.ColumnIndex].HeaderCell.Style.BackColor = Color.OliveDrab;
 
             this.sort_col = e.ColumnIndex;
+        }
+
+        private void dgvDealer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            ((DataGridView)sender).SetRowSelectedBorder(e);
         }
     }
 }

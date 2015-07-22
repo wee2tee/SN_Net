@@ -23,10 +23,10 @@ namespace SN_Net.DataModels
         public enum TABTYP
         {
             AREA,
-            BUSITYP,
+            VEREXT,
             HOWKNOWN,
-            PURCHASE_FROM,
-            VEREXT
+            BUSITYP,
+            PROBLEM_CODE,
         }
 
         public static string getTabtypString(Istab.TABTYP tabtyp)
@@ -35,13 +35,13 @@ namespace SN_Net.DataModels
             {
                 case Istab.TABTYP.AREA:
                     return "01";
-                case Istab.TABTYP.BUSITYP:
+                case Istab.TABTYP.VEREXT:
                     return "02";
                 case Istab.TABTYP.HOWKNOWN:
                     return "03";
-                case Istab.TABTYP.PURCHASE_FROM:
+                case Istab.TABTYP.BUSITYP:
                     return "04";
-                case Istab.TABTYP.VEREXT:
+                case Istab.TABTYP.PROBLEM_CODE:
                     return "05";
                 default:
                     return "00";
@@ -53,15 +53,15 @@ namespace SN_Net.DataModels
             switch (tabtyp)
             {
                 case TABTYP.AREA:
-                    return "Sales area";
-                case TABTYP.BUSITYP:
-                    return "Business type";
-                case TABTYP.HOWKNOWN:
-                    return "How to know";
-                case TABTYP.PURCHASE_FROM:
-                    return "Purchase from";
+                    return "Sales Area";
                 case TABTYP.VEREXT:
-                    return "Software version(extension)";
+                    return "Version Extension";
+                case TABTYP.HOWKNOWN:
+                    return "How to Know";
+                case TABTYP.BUSITYP:
+                    return "Business Type";
+                case TABTYP.PROBLEM_CODE:
+                    return "Problem Code";
                 default:
                     return "Istab";
             }

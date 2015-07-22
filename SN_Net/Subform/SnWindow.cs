@@ -63,19 +63,74 @@ namespace SN_Net.Subform
 
         private void SnWindow_Load(object sender, EventArgs e)
         {
-            this.sortMode = SORT_SN;
-            this.getSerial(LAST_ROW, 0, this.sortMode);
-            this.fillSerialInForm();
-            this.setFormState(FormState.FORM_STATE_READY);
-
-            // Pairing control to activate F6 pressed
+            #region pairing TextBox with Browse Button
+            // TextBox
             List<TextBox> list_tb = new List<TextBox>();
             list_tb.Add(this.txtBusityp);
             list_tb.Add(this.txtDealer_dealer);
+            list_tb.Add(this.txtHowknown);
+            // Browse Button
             List<Button> list_btn = new List<Button>();
             list_btn.Add(this.btnBrowseBusityp);
             list_btn.Add(this.btnBrowseDealer);
-            F6Actions.Attach(list_tb, list_btn);
+            list_btn.Add(this.btnBrowseHowknown);
+            // Pairing
+            PairTextBoxWithBrowseButton.Attach(list_tb, list_btn);
+            #endregion pairing TextBox with Browse Button
+
+            #region pairing MaskedTextBox with DateTimePicker
+            // MaskedTextBox
+            List<MaskedTextBox> list_mt = new List<MaskedTextBox>();
+            list_mt.Add(this.mskPurdat);
+            list_mt.Add(this.mskExpdat);
+            list_mt.Add(this.mskManual);
+            list_mt.Add(this.mskVerextdat);
+            // DateTimePicker
+            List<DateTimePicker> list_dp = new List<DateTimePicker>();
+            list_dp.Add(this.dpPurdat);
+            list_dp.Add(this.dpExpdat);
+            list_dp.Add(this.dpManual);
+            list_dp.Add(this.dpVerextdat);
+            // Pairing
+            PairDatePickerWithMaskedTextBox.Attach(list_mt, list_dp);
+            #endregion pairing MaskedTextBox with DateTimePicker
+
+            #region configure formcontrolsequence
+            // Form control
+            List<Control> list_ct = new List<Control>();
+            list_ct.Add(this.txtSerNum);
+            list_ct.Add(this.txtVersion);
+            list_ct.Add(this.txtArea);
+            list_ct.Add(this.txtRefnum);
+            list_ct.Add(this.txtPrenam);
+            list_ct.Add(this.txtCompnam);
+            list_ct.Add(this.txtAddr01);
+            list_ct.Add(this.txtAddr02);
+            list_ct.Add(this.txtAddr03);
+            list_ct.Add(this.txtZipcod);
+            list_ct.Add(this.txtTelnum);
+            list_ct.Add(this.txtFaxnum);
+            list_ct.Add(this.txtContact);
+            list_ct.Add(this.txtPosition);
+            list_ct.Add(this.txtOldnum);
+            list_ct.Add(this.txtRemark);
+            list_ct.Add(this.txtBusides);
+            list_ct.Add(this.txtBusityp);
+            list_ct.Add(this.txtDealer_dealer);
+            list_ct.Add(this.txtHowknown);
+            list_ct.Add(this.mskPurdat);
+            list_ct.Add(this.txtReg);
+            list_ct.Add(this.mskExpdat);
+            list_ct.Add(this.mskManual);
+            list_ct.Add(this.cbVerext);
+            list_ct.Add(this.mskVerextdat);
+            FormControlSequence.Attach(list_ct);
+            #endregion configure formcontrolsequence
+
+            this.sortMode = SORT_SN;
+            this.getSerial(LAST_ROW, 0, this.sortMode);
+            this.fillSerialInForm();
+            //this.setFormState(FormState.FORM_STATE_READY);
         }
 
         private void SnWindow_Activated(object sender, EventArgs e)
@@ -203,17 +258,17 @@ namespace SN_Net.Subform
             this.lblBusityp.Text = this.busityp.typdes_th;
             this.txtBusides.Text = serial.busides;
 
+            //this.dpPurdat.pickedDate(this.serial.purdat);
             this.mskPurdat.pickedDate(this.serial.purdat);
-            this.dpPurdat.pickedDate(this.serial.purdat);
             
-            this.dpExpdat.pickedDate(this.serial.expdat);
+            //this.dpExpdat.pickedDate(this.serial.expdat);
             this.mskExpdat.pickedDate(this.serial.expdat);
             this.txtExpdat.pickedDate(this.serial.expdat);
 
-            this.dpManual.pickedDate(this.serial.manual);
+            //this.dpManual.pickedDate(this.serial.manual);
             this.mskManual.pickedDate(this.serial.manual);
 
-            this.dpVerextdat.pickedDate(this.serial.verextdat);
+            //this.dpVerextdat.pickedDate(this.serial.verextdat);
             this.mskVerextdat.pickedDate(this.serial.verextdat);
 
             this.txtHowknown.Text = this.serial.howknown;
@@ -232,59 +287,60 @@ namespace SN_Net.Subform
             this.txtRemark.Text = serial.remark;
             //this.cbVerext
             //this.dpVerextdat
-            this.txtDealer_dealer.Text = this.serial.dealer_dealer;//this.dealer.dealer;
+            this.txtDealer_dealer.Text = this.serial.dealer_dealer;
             this.lblDealer_Dealer.Text = this.dealer.prenam + " " + this.dealer.compnam;
+            
         }
 
-        private void setFormState(string form_state)
-        {
-            List<Control> exclusion_control;
-            List<int> disabled_btn;
+        //private void setFormState(string form_state)
+        //{
+        //    List<Control> exclusion_control;
+        //    List<int> disabled_btn;
 
-            switch (form_state)
-            {
-                case FormState.FORM_STATE_READY:
-                    disabled_btn = new List<int>();
-                    disabled_btn.Add(3);
-                    disabled_btn.Add(4);
+        //    switch (form_state)
+        //    {
+        //        case FormState.FORM_STATE_READY:
+        //            disabled_btn = new List<int>();
+        //            disabled_btn.Add(3);
+        //            disabled_btn.Add(4);
 
-                    FormState.Ready(this, this.tabControl1.SelectedTab, null, this.toolStrip1, disabled_btn);
-                    this.State = FormState.FORM_STATE_READY;
-                    break;
+        //            FormState.Ready(this, this.tabControl1.SelectedTab, null, this.toolStrip1, disabled_btn);
+        //            this.State = FormState.FORM_STATE_READY;
+        //            break;
 
-                case FormState.FORM_STATE_ADD:
+        //        case FormState.FORM_STATE_ADD:
 
-                    break;
+        //            break;
 
-                case FormState.FORM_STATE_EDIT:
-                    this.State = FormState.FORM_STATE_EDIT;
-                    exclusion_control = new List<Control>();
-                    exclusion_control.Add(this.txtTelnum2);
-                    exclusion_control.Add(this.txtContact2);
-                    exclusion_control.Add(this.txtExpdat);
-                    exclusion_control.Add(this.txtReg2);
+        //        case FormState.FORM_STATE_EDIT:
+        //            this.State = FormState.FORM_STATE_EDIT;
+        //            exclusion_control = new List<Control>();
+        //            exclusion_control.Add(this.txtTelnum2);
+        //            exclusion_control.Add(this.txtContact2);
+        //            exclusion_control.Add(this.txtExpdat);
+        //            exclusion_control.Add(this.txtReg2);
                     
-                    disabled_btn = new List<int>();
-                    disabled_btn.Add(0);
-                    disabled_btn.Add(1);
-                    disabled_btn.Add(2);
-                    disabled_btn.Add(6);
-                    disabled_btn.Add(7);
-                    disabled_btn.Add(8);
-                    disabled_btn.Add(9);
-                    disabled_btn.Add(11);
-                    disabled_btn.Add(12);
-                    disabled_btn.Add(13);
-                    disabled_btn.Add(14);
-                    disabled_btn.Add(15);
+        //            disabled_btn = new List<int>();
+        //            disabled_btn.Add(0);
+        //            disabled_btn.Add(1);
+        //            disabled_btn.Add(2);
+        //            disabled_btn.Add(6);
+        //            disabled_btn.Add(7);
+        //            disabled_btn.Add(8);
+        //            disabled_btn.Add(9);
+        //            disabled_btn.Add(11);
+        //            disabled_btn.Add(12);
+        //            disabled_btn.Add(13);
+        //            disabled_btn.Add(14);
+        //            disabled_btn.Add(15);
                     
-                    FormState.Edit(this, this.tabControl1.SelectedTab, exclusion_control, this.toolStrip1, disabled_btn);
-                    break;
+        //            FormState.Edit(this, this.tabControl1.SelectedTab, exclusion_control, this.toolStrip1, disabled_btn);
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -321,12 +377,12 @@ namespace SN_Net.Subform
 
         private void toolStripEdit_Click(object sender, EventArgs e)
         {
-            this.setFormState(FormState.FORM_STATE_EDIT);
+            //this.setFormState(FormState.FORM_STATE_EDIT);
         }
 
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
-            this.setFormState(FormState.FORM_STATE_ADD);
+            //this.setFormState(FormState.FORM_STATE_ADD);
         }
 
         private void toolStripStop_Click(object sender, EventArgs e)
@@ -381,23 +437,27 @@ namespace SN_Net.Subform
 
         private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
-            {
-                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
-                {
-                    MainForm main_form = this.MdiParent as MainForm;
-                    main_form.sn_wind = null;
-                }
-                else
-                {
-                    e.Cancel = true;
-                }
-            }
-            else
-            {
-                MainForm main_form = this.MdiParent as MainForm;
-                main_form.sn_wind = null;
-            }
+            //if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
+            //{
+            //    if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
+            //    {
+            //        MainForm main_form = this.MdiParent as MainForm;
+            //        main_form.sn_wind = null;
+            //        e.Cancel = false;
+            //    }
+            //    else
+            //    {
+            //        e.Cancel = true;
+            //    }
+            //}
+            //else
+            //{
+            //    MainForm main_form = this.MdiParent as MainForm;
+            //    main_form.sn_wind = null;
+            //}
+
+            MainForm main_form = this.MdiParent as MainForm;
+            main_form.sn_wind = null;
 
         }
     }

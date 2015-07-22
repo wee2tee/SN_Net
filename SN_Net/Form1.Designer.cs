@@ -37,10 +37,20 @@
             this.userInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.macAddressAllowedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUserLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToKnowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.businessTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.problemCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.salesAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +62,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(952, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(864, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -61,8 +71,13 @@
             this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sNToolStripMenuItem,
             this.dealerToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.tableToolStripMenuItem,
+            this.toolStripSeparator1,
             this.userManagementToolStripMenuItem,
-            this.macAddressAllowedToolStripMenuItem});
+            this.macAddressAllowedToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.exitToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
             this.modeToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.modeToolStripMenuItem.Text = "File";
@@ -111,6 +126,13 @@
             this.macAddressAllowedToolStripMenuItem.Text = "MAC address allowed";
             this.macAddressAllowedToolStripMenuItem.Click += new System.EventHandler(this.macAddressAllowedToolStripMenuItem_Click);
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -123,7 +145,7 @@
             this.toolStripStatusUserLogin});
             this.statusStrip1.Location = new System.Drawing.Point(0, 619);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(952, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(864, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -139,15 +161,73 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(952, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(864, 0);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tableToolStripMenuItem
+            // 
+            this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.salesAreaToolStripMenuItem,
+            this.versionExtensionToolStripMenuItem,
+            this.howToKnowToolStripMenuItem,
+            this.businessTypeToolStripMenuItem,
+            this.problemCodeToolStripMenuItem});
+            this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
+            this.tableToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.tableToolStripMenuItem.Text = "Table";
+            // 
+            // howToKnowToolStripMenuItem
+            // 
+            this.howToKnowToolStripMenuItem.Name = "howToKnowToolStripMenuItem";
+            this.howToKnowToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.howToKnowToolStripMenuItem.Text = "03 - How to Know";
+            this.howToKnowToolStripMenuItem.Click += new System.EventHandler(this.howToKnowToolStripMenuItem_Click);
+            // 
+            // businessTypeToolStripMenuItem
+            // 
+            this.businessTypeToolStripMenuItem.Name = "businessTypeToolStripMenuItem";
+            this.businessTypeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.businessTypeToolStripMenuItem.Text = "04 - Business Type";
+            // 
+            // problemCodeToolStripMenuItem
+            // 
+            this.problemCodeToolStripMenuItem.Name = "problemCodeToolStripMenuItem";
+            this.problemCodeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.problemCodeToolStripMenuItem.Text = "05 - Problem Code";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(185, 6);
+            // 
+            // salesAreaToolStripMenuItem
+            // 
+            this.salesAreaToolStripMenuItem.Name = "salesAreaToolStripMenuItem";
+            this.salesAreaToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.salesAreaToolStripMenuItem.Text = "01 - Sales Area";
+            // 
+            // versionExtensionToolStripMenuItem
+            // 
+            this.versionExtensionToolStripMenuItem.Name = "versionExtensionToolStripMenuItem";
+            this.versionExtensionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.versionExtensionToolStripMenuItem.Text = "02 - Version Extension";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(952, 641);
+            this.ClientSize = new System.Drawing.Size(864, 641);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -158,6 +238,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SN";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.MdiChildActivate += new System.EventHandler(this.MainForm_MdiChildActivate);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.menuStrip1.ResumeLayout(false);
@@ -183,6 +264,16 @@
         private System.Windows.Forms.ToolStripMenuItem userInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem tableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem howToKnowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem businessTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem problemCodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem salesAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem versionExtensionToolStripMenuItem;
     }
 }
 

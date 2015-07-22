@@ -17,8 +17,9 @@ namespace SN_Net
 {
     public partial class MainForm : Form
     {
-        public SnWindow sn_wind = null;
-        public DealerWindow dealer_wind = null;
+        public SnWindow sn_wind;
+        public DealerWindow dealer_wind;
+        public IstabWindow howknown_wind;
 
         public string my_mac = string.Empty;
         private GlobalVar G;
@@ -26,29 +27,6 @@ namespace SN_Net
         public MainForm()
         {
             InitializeComponent();
-        }
-
-        private void sNToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.sn_wind == null)
-            {
-                this.sn_wind = new SnWindow();
-                this.sn_wind.MdiParent = this;
-                this.sn_wind.WindowState = FormWindowState.Maximized;
-                this.sn_wind.Show();
-            }
-            else
-            {
-                this.sn_wind.Activate();
-            }
-        }
-
-        private void dealerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DealerWindow wind = new DealerWindow();
-            wind.MdiParent = this;
-            wind.WindowState = FormWindowState.Maximized;
-            wind.Show();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -68,10 +46,55 @@ namespace SN_Net
                     this.macAddressAllowedToolStripMenuItem.Visible = false;
                 }
 
+                this.sNToolStripMenuItem.PerformClick();
+                //this.dealerToolStripMenuItem.PerformClick();
+
+                this.MinimumSize = new Size(100, 100);
+            }
+        }
+
+        private void sNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.sn_wind == null)
+            {
                 this.sn_wind = new SnWindow();
                 this.sn_wind.MdiParent = this;
                 this.sn_wind.WindowState = FormWindowState.Maximized;
                 this.sn_wind.Show();
+            }
+            else
+            {
+                this.sn_wind.Activate();
+            }
+        }
+
+        private void dealerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.dealer_wind == null)
+            {
+                this.dealer_wind = new DealerWindow();
+                this.dealer_wind.MdiParent = this;
+                this.dealer_wind.WindowState = FormWindowState.Maximized;
+                this.dealer_wind.Show();
+            }
+            else
+            {
+                this.dealer_wind.Activate();
+            }
+        }
+
+        private void howToKnowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.howknown_wind == null)
+            {
+                this.howknown_wind = new IstabWindow(Istab.TABTYP.HOWKNOWN);
+                this.howknown_wind.MdiParent = this;
+                //this.howknown_wind.WindowState = FormWindowState.Maximized;
+                this.howknown_wind.Show();
+            }
+            else
+            {
+                this.howknown_wind.Activate();
             }
         }
 
@@ -145,5 +168,45 @@ namespace SN_Net
             //    this.toolStrip1.SetBounds(this.toolStrip1.Location.X, this.toolStrip1.Location.Y, this.toolStrip1.ClientSize.Width, 0);
             //}
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Console.WriteLine()
+
+            //e.Cancel = true;
+            //if (((MainForm)sender).MdiChildren.Count() > 0)
+            //{
+            //    foreach (Form mdichild in ((MainForm)sender).MdiChildren)
+            //    {
+            //        if (mdichild is SnWindow)
+            //        {
+            //            if (((SnWindow)mdichild).State != FormState.FORM_STATE_READY)
+            //            {
+            //                mdichild.Activate();
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    e.Cancel = false;
+            //}
+        }
+
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == 0x10)
+        //    {
+        //        //if(this.dealer_wind.State != FormState.FORM_STATE_READY)
+
+        //        //Application.Exit();
+        //    }
+        //    base.WndProc(ref m);
+        //}
     }
 }

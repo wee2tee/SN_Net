@@ -72,12 +72,17 @@
     <Compile Include="MiscClass\EnterKeyManager.cs" />
     <Compile Include="MiscClass\EscapeKeyToCloseDialog.cs" />
     <Compile Include="MiscClass\ComboboxItem.cs" />
-    <Compile Include="MiscClass\F6Actions.cs" />
+    <Compile Include="MiscClass\FormControlSequence.cs" />
+    <Compile Include="MiscClass\PairTextBoxWithBrowseButton.cs" />
     <Compile Include="MiscClass\FormState.cs" />
     <Compile Include="MiscClass\GlobalVar.cs" />
-    <Compile Include="MiscClass\SearchInDatagridviewColumn.cs" />
+    <Compile Include="MiscClass\PairDatePickerWithMaskedTextBox.cs" />
+    <Compile Include="MiscClass\DataGridViewHelper.cs" />
     <Compile Include="MiscClass\ServerResult.cs" />
     <Compile Include="MiscClass\StringResource.cs" />
+    <Compile Include="MiscClass\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subform\ChangePasswordForm.cs">
@@ -103,6 +108,12 @@
     </Compile>
     <Compile Include="Subform\IstabAddEditForm.Designer.cs">
       <DependentUpon>IstabAddEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\IstabWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\IstabWindow.Designer.cs">
+      <DependentUpon>IstabWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\LoginForm.cs">
       <SubType>Form</SubType>
@@ -146,6 +157,12 @@
     <Compile Include="Subform\IstabList.Designer.cs">
       <DependentUpon>IstabList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\Test.Designer.cs">
+      <DependentUpon>Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\UsersEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +200,9 @@
     <EmbeddedResource Include="Subform\IstabAddEditForm.resx">
       <DependentUpon>IstabAddEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\IstabWindow.resx">
+      <DependentUpon>IstabWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\IstabList.resx">
       <DependentUpon>IstabList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\Test.resx">
+      <DependentUpon>Test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UsersEditForm.resx">
       <DependentUpon>UsersEditForm.cs</DependentUpon>

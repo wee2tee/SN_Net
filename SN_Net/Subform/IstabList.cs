@@ -53,27 +53,7 @@ namespace SN_Net.Subform
 
         private void setTitleText()
         {
-            switch (this.tabtyp)
-            {
-                case Istab.TABTYP.AREA:
-                    this.Text = "Sales area";
-                    break;
-                case Istab.TABTYP.BUSITYP:
-                    this.Text = "Business type";
-                    break;
-                case Istab.TABTYP.HOWKNOWN:
-                    this.Text = "How to know Express";
-                    break;
-                case Istab.TABTYP.PURCHASE_FROM:
-                    this.Text = "Purchase from";
-                    break;
-                case Istab.TABTYP.VEREXT:
-                    this.Text = "Software Version(Extension)";
-                    break;
-                default:
-                    this.Text = "Istab";
-                    break;
-            }
+            Istab.getTabtypTitle(this.tabtyp);
         }
 
         private void IstabList_Load(object sender, EventArgs e)
@@ -149,6 +129,10 @@ namespace SN_Net.Subform
                 this.dgvIstab.Rows[r].Cells[0].Style = new DataGridViewCellStyle()
                 {
                     Font = new Font("Tahoma", 9.75f),
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    SelectionBackColor = Color.White,
+                    SelectionForeColor = Color.Black,
                     Alignment = DataGridViewContentAlignment.MiddleRight
                 };
 
@@ -157,6 +141,10 @@ namespace SN_Net.Subform
                 this.dgvIstab.Rows[r].Cells[1].Style = new DataGridViewCellStyle()
                 {
                     Font = new Font("Tahoma", 9.75f),
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    SelectionBackColor = Color.White,
+                    SelectionForeColor = Color.Black,
                     Alignment = DataGridViewContentAlignment.MiddleLeft
                 };
 
@@ -166,6 +154,10 @@ namespace SN_Net.Subform
                 this.dgvIstab.Rows[r].Cells[2].Style = new DataGridViewCellStyle()
                 {
                     Font = new Font("Tahoma", 9.75f),
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    SelectionBackColor = Color.White,
+                    SelectionForeColor = Color.Black,
                     Alignment = DataGridViewContentAlignment.MiddleLeft
                 };
             }
@@ -349,6 +341,11 @@ namespace SN_Net.Subform
             else if(e.ColumnIndex == 2){
                 this.sort_by = SORT_TYPDES;
             }
+        }
+
+        private void dgvIstab_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            ((DataGridView)sender).SetRowSelectedBorder(e);
         }
 
     }

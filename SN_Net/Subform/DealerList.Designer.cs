@@ -80,6 +80,7 @@
             this.dgvDealer.TabIndex = 0;
             this.dgvDealer.TabStop = false;
             this.dgvDealer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDealer_CellDoubleClick);
+            this.dgvDealer.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvDealer_CellPainting);
             this.dgvDealer.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvDealer_ColumnHeaderMouseClick);
             this.dgvDealer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvDealer_KeyDown);
             // 
