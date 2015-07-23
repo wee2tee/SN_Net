@@ -19,7 +19,11 @@ namespace SN_Net
     {
         public SnWindow sn_wind;
         public DealerWindow dealer_wind;
+        public IstabWindow area_wind;
+        public IstabWindow verext_wind;
         public IstabWindow howknown_wind;
+        public IstabWindow busityp_wind;
+        public IstabWindow probcode_wind;
 
         public string my_mac = string.Empty;
         private GlobalVar G;
@@ -83,18 +87,73 @@ namespace SN_Net
             }
         }
 
+        private void salesAreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.area_wind == null)
+            {
+                this.area_wind = new IstabWindow(Istab.TABTYP.AREA);
+                this.area_wind.MdiParent = this;
+                this.area_wind.Show();
+            }
+            else
+            {
+                this.area_wind.Activate();
+            }
+        }
+
+        private void versionExtensionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.verext_wind == null)
+            {
+                this.verext_wind = new IstabWindow(Istab.TABTYP.VEREXT);
+                this.verext_wind.MdiParent = this;
+                this.verext_wind.Show();
+            }
+            else
+            {
+                this.verext_wind.Activate();
+            }
+        }
+
         private void howToKnowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.howknown_wind == null)
             {
                 this.howknown_wind = new IstabWindow(Istab.TABTYP.HOWKNOWN);
                 this.howknown_wind.MdiParent = this;
-                //this.howknown_wind.WindowState = FormWindowState.Maximized;
                 this.howknown_wind.Show();
             }
             else
             {
                 this.howknown_wind.Activate();
+            }
+        }
+
+        private void businessTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.busityp_wind == null)
+            {
+                this.busityp_wind = new IstabWindow(Istab.TABTYP.BUSITYP);
+                this.busityp_wind.MdiParent = this;
+                this.busityp_wind.Show();
+            }
+            else
+            {
+                this.busityp_wind.Activate();
+            }
+        }
+
+        private void problemCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.probcode_wind == null)
+            {
+                this.probcode_wind = new IstabWindow(Istab.TABTYP.PROBLEM_CODE);
+                this.probcode_wind.MdiParent = this;
+                this.probcode_wind.Show();
+            }
+            else
+            {
+                this.probcode_wind.Activate();
             }
         }
 

@@ -33,24 +33,24 @@
             this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.salesAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.howToKnowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.businessTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.problemCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.macAddressAllowedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUserLogin = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.howToKnowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.businessTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.problemCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.salesAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.versionExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -96,6 +96,63 @@
             this.dealerToolStripMenuItem.Text = "Dealer";
             this.dealerToolStripMenuItem.Click += new System.EventHandler(this.dealerToolStripMenuItem_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
+            // 
+            // tableToolStripMenuItem
+            // 
+            this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.salesAreaToolStripMenuItem,
+            this.versionExtensionToolStripMenuItem,
+            this.howToKnowToolStripMenuItem,
+            this.businessTypeToolStripMenuItem,
+            this.problemCodeToolStripMenuItem});
+            this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
+            this.tableToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.tableToolStripMenuItem.Text = "Table";
+            // 
+            // salesAreaToolStripMenuItem
+            // 
+            this.salesAreaToolStripMenuItem.Name = "salesAreaToolStripMenuItem";
+            this.salesAreaToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.salesAreaToolStripMenuItem.Text = "01 - Sales Area";
+            this.salesAreaToolStripMenuItem.Click += new System.EventHandler(this.salesAreaToolStripMenuItem_Click);
+            // 
+            // versionExtensionToolStripMenuItem
+            // 
+            this.versionExtensionToolStripMenuItem.Name = "versionExtensionToolStripMenuItem";
+            this.versionExtensionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.versionExtensionToolStripMenuItem.Text = "02 - Version Extension";
+            this.versionExtensionToolStripMenuItem.Click += new System.EventHandler(this.versionExtensionToolStripMenuItem_Click);
+            // 
+            // howToKnowToolStripMenuItem
+            // 
+            this.howToKnowToolStripMenuItem.Name = "howToKnowToolStripMenuItem";
+            this.howToKnowToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.howToKnowToolStripMenuItem.Text = "03 - How to Know";
+            this.howToKnowToolStripMenuItem.Click += new System.EventHandler(this.howToKnowToolStripMenuItem_Click);
+            // 
+            // businessTypeToolStripMenuItem
+            // 
+            this.businessTypeToolStripMenuItem.Name = "businessTypeToolStripMenuItem";
+            this.businessTypeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.businessTypeToolStripMenuItem.Text = "04 - Business Type";
+            this.businessTypeToolStripMenuItem.Click += new System.EventHandler(this.businessTypeToolStripMenuItem_Click);
+            // 
+            // problemCodeToolStripMenuItem
+            // 
+            this.problemCodeToolStripMenuItem.Name = "problemCodeToolStripMenuItem";
+            this.problemCodeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.problemCodeToolStripMenuItem.Text = "05 - Problem Code";
+            this.problemCodeToolStripMenuItem.Click += new System.EventHandler(this.problemCodeToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
+            // 
             // userManagementToolStripMenuItem
             // 
             this.userManagementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -125,6 +182,11 @@
             this.macAddressAllowedToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.macAddressAllowedToolStripMenuItem.Text = "MAC address allowed";
             this.macAddressAllowedToolStripMenuItem.Click += new System.EventHandler(this.macAddressAllowedToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(185, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -165,64 +227,6 @@
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // tableToolStripMenuItem
-            // 
-            this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.salesAreaToolStripMenuItem,
-            this.versionExtensionToolStripMenuItem,
-            this.howToKnowToolStripMenuItem,
-            this.businessTypeToolStripMenuItem,
-            this.problemCodeToolStripMenuItem});
-            this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
-            this.tableToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.tableToolStripMenuItem.Text = "Table";
-            // 
-            // howToKnowToolStripMenuItem
-            // 
-            this.howToKnowToolStripMenuItem.Name = "howToKnowToolStripMenuItem";
-            this.howToKnowToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.howToKnowToolStripMenuItem.Text = "03 - How to Know";
-            this.howToKnowToolStripMenuItem.Click += new System.EventHandler(this.howToKnowToolStripMenuItem_Click);
-            // 
-            // businessTypeToolStripMenuItem
-            // 
-            this.businessTypeToolStripMenuItem.Name = "businessTypeToolStripMenuItem";
-            this.businessTypeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.businessTypeToolStripMenuItem.Text = "04 - Business Type";
-            // 
-            // problemCodeToolStripMenuItem
-            // 
-            this.problemCodeToolStripMenuItem.Name = "problemCodeToolStripMenuItem";
-            this.problemCodeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.problemCodeToolStripMenuItem.Text = "05 - Problem Code";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(185, 6);
-            // 
-            // salesAreaToolStripMenuItem
-            // 
-            this.salesAreaToolStripMenuItem.Name = "salesAreaToolStripMenuItem";
-            this.salesAreaToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.salesAreaToolStripMenuItem.Text = "01 - Sales Area";
-            // 
-            // versionExtensionToolStripMenuItem
-            // 
-            this.versionExtensionToolStripMenuItem.Name = "versionExtensionToolStripMenuItem";
-            this.versionExtensionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.versionExtensionToolStripMenuItem.Text = "02 - Version Extension";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,7 +256,6 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sNToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dealerToolStripMenuItem;
@@ -274,6 +277,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem salesAreaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem versionExtensionToolStripMenuItem;
+        public System.Windows.Forms.MenuStrip menuStrip1;
     }
 }
 
