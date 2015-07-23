@@ -20,5 +20,10 @@ namespace SN_Net.Subform
         {
 
         }
+
+        private void Test_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
