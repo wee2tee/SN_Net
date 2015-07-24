@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Globalization;
 
 namespace SN_Net.MiscClass
@@ -34,6 +35,10 @@ namespace SN_Net.MiscClass
                 tb.PromptChar = ' ';
 
                 tb.Leave += new EventHandler(this.maskedTextBoxLeaveHandler);
+                tb.EnabledChanged += new EventHandler(this.EnableChangeHandler);
+                tb.ReadOnlyChanged += new EventHandler(this.ReadOnlyChangeHandler);
+                tb.GotFocus += new EventHandler(this.GotFocusHandler);
+                tb.Click += new EventHandler(this.ClickToFocusHandler);
             }
         }
 
@@ -95,6 +100,48 @@ namespace SN_Net.MiscClass
             {
                 ((DateTimePicker)sender).Value = out_datevalue;
             }
+        }
+
+        private void EnableChangeHandler(object sender, EventArgs e)
+        {
+            int ndx = this.list_tb.FindIndex(t => t.Equals((MaskedTextBox)sender));
+
+            if (((MaskedTextBox)sender).Enabled)
+            {
+                ((MaskedTextBox)sender).BackColor = Color.White;
+                this.list_dt[ndx].Enabled = true;
+            }
+            else
+            {
+                this.list_dt[ndx].Enabled = false;
+            }
+        }
+
+        private void ReadOnlyChangeHandler(object sender, EventArgs e)
+        {
+            int ndx = this.list_tb.FindIndex(t => t.Equals((MaskedTextBox)sender));
+
+            if (((MaskedTextBox)sender).ReadOnly)
+            {
+                ((MaskedTextBox)sender).BackColor = Color.White;
+                this.list_dt[ndx].Enabled = false;
+            }
+            else
+            {
+                this.list_dt[ndx].Enabled = true;
+            }
+        }
+
+        private void GotFocusHandler(object sender, EventArgs e)
+        {
+            //((MaskedTextBox)sender).SelectionStart = 0;
+            ((MaskedTextBox)sender).SelectAll();
+        }
+
+        private void ClickToFocusHandler(object sender, EventArgs e)
+        {
+            //((MaskedTextBox)sender).SelectionStart = 0;
+            ((MaskedTextBox)sender).SelectAll();
         }
     }
 }

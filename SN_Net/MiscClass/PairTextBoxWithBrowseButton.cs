@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace SN_Net.MiscClass
 {
@@ -28,6 +29,8 @@ namespace SN_Net.MiscClass
             foreach (TextBox tb in this.list_tb)
             {
                 tb.KeyDown += new KeyEventHandler(this.F6eventHandler);
+                tb.EnabledChanged += new EventHandler(this.EnableChangeHandler);
+                tb.ReadOnlyChanged += new EventHandler(this.ReadOnlyChangeHandler);
             }
 
             foreach (Button btn in this.list_btn)
@@ -45,9 +48,39 @@ namespace SN_Net.MiscClass
                 //int ndx = this.list_tb.FindIndex(new System.Predicate<TextBox>((value) => { return value == tb; }));
                 //int ndx = this.list_tb.FindIndex(new Predicate<TextBox>((value) => { return value == tb; }));
                 int ndx = this.list_tb.FindIndex( t => t.Equals(control));
-                Console.WriteLine("this index : " + ndx.ToString());
                 this.list_btn[ndx].PerformClick();
             }
         }
+
+        private void EnableChangeHandler(object sender, EventArgs e)
+        {
+            int ndx = this.list_tb.FindIndex(t => t.Equals((Control)sender));
+
+            if (((TextBox)sender).Enabled)
+            {
+                this.list_btn[ndx].Enabled = true;
+            }
+            else
+            {
+                ((TextBox)sender).BackColor = Color.White;
+                this.list_btn[ndx].Enabled = false;
+            }
+        }
+
+        private void ReadOnlyChangeHandler(object sender, EventArgs e)
+        {
+            int ndx = this.list_tb.FindIndex(t => t.Equals((Control)sender));
+
+            if (((TextBox)sender).ReadOnly)
+            {
+                ((TextBox)sender).BackColor = Color.White;
+                this.list_btn[ndx].Enabled = false;
+            }
+            else
+            {
+                this.list_btn[ndx].Enabled = true;
+            }
+        }
+
     }
 }

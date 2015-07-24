@@ -68,17 +68,20 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\Clean.cs" />
+    <Compile Include="MiscClass\ColorResource.cs" />
     <Compile Include="MiscClass\DateTimeBindingControl.cs" />
     <Compile Include="MiscClass\EnterKeyManager.cs" />
     <Compile Include="MiscClass\EscapeKeyToCloseDialog.cs" />
     <Compile Include="MiscClass\ComboboxItem.cs" />
     <Compile Include="MiscClass\FormControlSequence.cs" />
+    <Compile Include="MiscClass\HelperClass.cs" />
     <Compile Include="MiscClass\PairTextBoxWithBrowseButton.cs" />
     <Compile Include="MiscClass\FormState.cs" />
     <Compile Include="MiscClass\GlobalVar.cs" />
     <Compile Include="MiscClass\PairDatePickerWithMaskedTextBox.cs" />
     <Compile Include="MiscClass\DataGridViewHelper.cs" />
     <Compile Include="MiscClass\ServerResult.cs" />
+    <Compile Include="MiscClass\SetFormMode.cs" />
     <Compile Include="MiscClass\StringResource.cs" />
     <Compile Include="MiscClass\TransparentPanel.cs">
       <SubType>Component</SubType>

@@ -36,5 +36,7 @@ namespace SN_Net.MiscClass
         public List<Istab> busityp { get; set; }
         public List<Istab> area { get; set; }
         public List<Istab> howknown { get; set; }
+        public List<Istab> verext { get; set; }
+        public List<Istab> problem_code { get; set; }
     }
 }

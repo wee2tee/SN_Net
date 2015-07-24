@@ -41,6 +41,22 @@ namespace SN_Net.MiscClass
             }
         }
 
+        public static void pickedDate(this Label label, string str_date)
+        {
+            CultureInfo cinfo_us = new CultureInfo("en-US");
+            CultureInfo cinfo_th = new CultureInfo("th-TH");
+
+            if (str_date != null)
+            {
+                DateTime dt = Convert.ToDateTime(str_date, cinfo_us);
+                label.Text = dt.ToString("dd/MM/yyyy", cinfo_th.DateTimeFormat);
+            }
+            else
+            {
+                label.Text = "  /  /    ";
+            }
+        }
+
         public static void pickedDate(this DateTimePicker dateTimePicker, string str_date)
         {
             CultureInfo cinfo_us = new CultureInfo("en-US");

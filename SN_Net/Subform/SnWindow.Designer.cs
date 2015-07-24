@@ -83,13 +83,9 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtDummyControl2 = new System.Windows.Forms.TextBox();
-            this.txtReg2 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtContact2 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtTelnum2 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtExpdat = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -119,6 +115,7 @@
             this.searchOldSerialAlt5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchBusinessTypeAlt6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAreaAlt7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripReload = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSerNum = new System.Windows.Forms.TextBox();
             this.txtPrenam = new System.Windows.Forms.TextBox();
@@ -136,6 +133,11 @@
             this.lblArea = new System.Windows.Forms.Label();
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblTelnum = new System.Windows.Forms.Label();
+            this.lblExpdat = new System.Windows.Forms.Label();
+            this.lblContact = new System.Windows.Forms.Label();
+            this.lblReg = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -163,7 +165,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(854, 480);
             this.tabControl1.TabIndex = 99;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -343,9 +344,9 @@
             this.cbVerext.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbVerext.FormattingEnabled = true;
-            this.cbVerext.Location = new System.Drawing.Point(554, 172);
+            this.cbVerext.Location = new System.Drawing.Point(543, 172);
             this.cbVerext.Name = "cbVerext";
-            this.cbVerext.Size = new System.Drawing.Size(113, 24);
+            this.cbVerext.Size = new System.Drawing.Size(124, 24);
             this.cbVerext.TabIndex = 47;
             // 
             // dpManual
@@ -504,7 +505,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtDummyControl);
             this.groupBox1.Controls.Add(this.txtFaxnum);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.txtOldnum);
@@ -529,9 +529,9 @@
             // 
             // txtDummyControl
             // 
-            this.txtDummyControl.Location = new System.Drawing.Point(711, 11);
+            this.txtDummyControl.Location = new System.Drawing.Point(764, 75);
             this.txtDummyControl.Name = "txtDummyControl";
-            this.txtDummyControl.Size = new System.Drawing.Size(77, 21);
+            this.txtDummyControl.Size = new System.Drawing.Size(77, 20);
             this.txtDummyControl.TabIndex = 0;
             this.txtDummyControl.Tag = "dummyControl";
             this.txtDummyControl.Text = "dummy_control";
@@ -709,14 +709,14 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lblReg);
+            this.splitContainer1.Panel1.Controls.Add(this.lblContact);
+            this.splitContainer1.Panel1.Controls.Add(this.lblExpdat);
+            this.splitContainer1.Panel1.Controls.Add(this.lblTelnum);
             this.splitContainer1.Panel1.Controls.Add(this.txtDummyControl2);
-            this.splitContainer1.Panel1.Controls.Add(this.txtReg2);
             this.splitContainer1.Panel1.Controls.Add(this.label9);
-            this.splitContainer1.Panel1.Controls.Add(this.txtContact2);
             this.splitContainer1.Panel1.Controls.Add(this.label8);
-            this.splitContainer1.Panel1.Controls.Add(this.txtTelnum2);
             this.splitContainer1.Panel1.Controls.Add(this.label7);
-            this.splitContainer1.Panel1.Controls.Add(this.txtExpdat);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             // 
             // splitContainer1.Panel2
@@ -728,21 +728,12 @@
             // 
             // txtDummyControl2
             // 
-            this.txtDummyControl2.Location = new System.Drawing.Point(784, 3);
+            this.txtDummyControl2.Location = new System.Drawing.Point(786, 3);
             this.txtDummyControl2.Name = "txtDummyControl2";
             this.txtDummyControl2.Size = new System.Drawing.Size(19, 21);
             this.txtDummyControl2.TabIndex = 0;
             this.txtDummyControl2.Tag = "dummyControl";
             this.txtDummyControl2.Text = "dummy_control";
-            // 
-            // txtReg2
-            // 
-            this.txtReg2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtReg2.Location = new System.Drawing.Point(764, 2);
-            this.txtReg2.MaxLength = 1;
-            this.txtReg2.Name = "txtReg2";
-            this.txtReg2.Size = new System.Drawing.Size(19, 23);
-            this.txtReg2.TabIndex = 21;
             // 
             // label9
             // 
@@ -754,15 +745,6 @@
             this.label9.TabIndex = 20;
             this.label9.Text = "Reg.";
             // 
-            // txtContact2
-            // 
-            this.txtContact2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtContact2.Location = new System.Drawing.Point(563, 2);
-            this.txtContact2.MaxLength = 100;
-            this.txtContact2.Name = "txtContact2";
-            this.txtContact2.Size = new System.Drawing.Size(162, 23);
-            this.txtContact2.TabIndex = 19;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -773,15 +755,6 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Contact";
             // 
-            // txtTelnum2
-            // 
-            this.txtTelnum2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTelnum2.Location = new System.Drawing.Point(209, 2);
-            this.txtTelnum2.MaxLength = 40;
-            this.txtTelnum2.Name = "txtTelnum2";
-            this.txtTelnum2.Size = new System.Drawing.Size(293, 23);
-            this.txtTelnum2.TabIndex = 16;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -791,15 +764,6 @@
             this.label7.Size = new System.Drawing.Size(30, 16);
             this.label7.TabIndex = 17;
             this.label7.Text = "Tel.";
-            // 
-            // txtExpdat
-            // 
-            this.txtExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtExpdat.Location = new System.Drawing.Point(80, 2);
-            this.txtExpdat.MaxLength = 10;
-            this.txtExpdat.Name = "txtExpdat";
-            this.txtExpdat.Size = new System.Drawing.Size(90, 23);
-            this.txtExpdat.TabIndex = 16;
             // 
             // label6
             // 
@@ -842,7 +806,9 @@
             this.toolStripUpgrade,
             this.toolStripBook,
             this.toolStripSet2,
-            this.toolStripSearch});
+            this.toolStripSearch,
+            this.toolStripSeparator4,
+            this.toolStripReload});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -1086,6 +1052,17 @@
             this.searchAreaAlt7ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.searchAreaAlt7ToolStripMenuItem.Text = "Search Area <Alt+7>";
             // 
+            // toolStripReload
+            // 
+            this.toolStripReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripReload.Image = global::SN_Net.Properties.Resources.refresh;
+            this.toolStripReload.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripReload.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
+            this.toolStripReload.Name = "toolStripReload";
+            this.toolStripReload.Size = new System.Drawing.Size(36, 40);
+            this.toolStripReload.Text = "Reload data <F5>";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1222,6 +1199,7 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.txtDummyControl);
             this.splitContainer2.Panel1.Controls.Add(this.lblArea);
             this.splitContainer2.Panel1.Controls.Add(this.btnBrowseArea);
             this.splitContainer2.Panel1.Controls.Add(this.txtArea);
@@ -1261,6 +1239,55 @@
             this.txtArea.Name = "txtArea";
             this.txtArea.Size = new System.Drawing.Size(70, 23);
             this.txtArea.TabIndex = 17;
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 43);
+            // 
+            // lblTelnum
+            // 
+            this.lblTelnum.BackColor = System.Drawing.Color.White;
+            this.lblTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblTelnum.Location = new System.Drawing.Point(212, 2);
+            this.lblTelnum.Name = "lblTelnum";
+            this.lblTelnum.Padding = new System.Windows.Forms.Padding(2);
+            this.lblTelnum.Size = new System.Drawing.Size(288, 23);
+            this.lblTelnum.TabIndex = 22;
+            // 
+            // lblExpdat
+            // 
+            this.lblExpdat.BackColor = System.Drawing.Color.White;
+            this.lblExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblExpdat.Location = new System.Drawing.Point(84, 2);
+            this.lblExpdat.Name = "lblExpdat";
+            this.lblExpdat.Padding = new System.Windows.Forms.Padding(2);
+            this.lblExpdat.Size = new System.Drawing.Size(90, 23);
+            this.lblExpdat.TabIndex = 23;
+            // 
+            // lblContact
+            // 
+            this.lblContact.BackColor = System.Drawing.Color.White;
+            this.lblContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblContact.Location = new System.Drawing.Point(565, 2);
+            this.lblContact.Name = "lblContact";
+            this.lblContact.Padding = new System.Windows.Forms.Padding(2);
+            this.lblContact.Size = new System.Drawing.Size(162, 23);
+            this.lblContact.TabIndex = 24;
+            // 
+            // lblReg
+            // 
+            this.lblReg.BackColor = System.Drawing.Color.White;
+            this.lblReg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblReg.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblReg.Location = new System.Drawing.Point(764, 2);
+            this.lblReg.Name = "lblReg";
+            this.lblReg.Padding = new System.Windows.Forms.Padding(2);
+            this.lblReg.Size = new System.Drawing.Size(20, 23);
+            this.lblReg.TabIndex = 25;
             // 
             // SnWindow
             // 
@@ -1360,13 +1387,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox txtReg2;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtContact2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtTelnum2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtExpdat;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1422,5 +1445,11 @@
         private System.Windows.Forms.MaskedTextBox mskVerextdat;
         private System.Windows.Forms.MaskedTextBox mskManual;
         private System.Windows.Forms.MaskedTextBox mskExpdat;
+        private System.Windows.Forms.ToolStripButton toolStripReload;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.Label lblTelnum;
+        private System.Windows.Forms.Label lblReg;
+        private System.Windows.Forms.Label lblContact;
+        private System.Windows.Forms.Label lblExpdat;
     }
 }
