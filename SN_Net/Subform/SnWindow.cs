@@ -142,6 +142,7 @@ namespace SN_Net.Subform
             this.sortMode = SORT_SN;
             this.getSerial(LAST_ROW, 0, this.sortMode);
             this.fillSerialInForm();
+            this.AttachToolstripKeyPair(this);
 
             this.FormReady();
         }
@@ -456,7 +457,7 @@ namespace SN_Net.Subform
 
         private void toolStripStop_Click(object sender, EventArgs e)
         {
-            
+            // cancel add/edit
         }
         #endregion toolStrip
 
@@ -550,6 +551,56 @@ namespace SN_Net.Subform
             MainForm main_form = this.MdiParent as MainForm;
             main_form.sn_wind = null;
 
+        }
+
+        
+        private void AttachToolstripKeyPair(Control form)
+        {
+            foreach (Control ct in form.Controls)
+            {
+                ct.KeyDown += new KeyEventHandler(this.ControlKeyDownToolstrip);
+                this.AttachToolstripKeyPair(ct);
+            }
+        }
+
+        private void ControlKeyDownToolstrip(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.PageUp)
+            {
+                this.toolStripPrevious.PerformClick();
+            }
+            if (e.KeyCode == Keys.PageDown)
+            {
+                this.toolStripNext.PerformClick();
+            }
+            if (e.KeyCode == Keys.T && e.Modifiers == Keys.Control)
+            {
+                this.toolStripFirst.PerformClick();
+            }
+            if (e.KeyCode == Keys.B && e.Modifiers == Keys.Control)
+            {
+                this.toolStripLast.PerformClick();
+            }
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.toolStripStop.PerformClick();
+            }
+            if (e.KeyCode == Keys.F9)
+            {
+                this.toolStripSave.PerformClick();
+            }
+            if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
+            {
+                this.toolStripAdd.PerformClick();
+            }
+            if (e.KeyCode == Keys.E && e.Modifiers == Keys.Control)
+            {
+                this.toolStripEdit.PerformClick();
+            }
+            if (e.KeyCode == Keys.D && e.Modifiers == Keys.Control)
+            {
+                this.toolStripDelete.PerformClick();
+            }
         }
     }
 }

@@ -63,7 +63,6 @@
             this.txtRemark = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtDummyControl = new System.Windows.Forms.TextBox();
             this.txtFaxnum = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.txtOldnum = new System.Windows.Forms.TextBox();
@@ -82,16 +81,21 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblReg = new System.Windows.Forms.Label();
+            this.lblContact = new System.Windows.Forms.Label();
+            this.lblExpdat = new System.Windows.Forms.Label();
+            this.lblTelnum = new System.Windows.Forms.Label();
             this.txtDummyControl2 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txtDummyControl = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripEdit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripTrash = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -115,6 +119,7 @@
             this.searchOldSerialAlt5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchBusinessTypeAlt6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAreaAlt7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripReload = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSerNum = new System.Windows.Forms.TextBox();
@@ -133,11 +138,6 @@
             this.lblArea = new System.Windows.Forms.Label();
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblTelnum = new System.Windows.Forms.Label();
-            this.lblExpdat = new System.Windows.Forms.Label();
-            this.lblContact = new System.Windows.Forms.Label();
-            this.lblReg = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -527,15 +527,6 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             // 
-            // txtDummyControl
-            // 
-            this.txtDummyControl.Location = new System.Drawing.Point(764, 75);
-            this.txtDummyControl.Name = "txtDummyControl";
-            this.txtDummyControl.Size = new System.Drawing.Size(77, 20);
-            this.txtDummyControl.TabIndex = 0;
-            this.txtDummyControl.Tag = "dummyControl";
-            this.txtDummyControl.Text = "dummy_control";
-            // 
             // txtFaxnum
             // 
             this.txtFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -726,6 +717,50 @@
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 99;
             // 
+            // lblReg
+            // 
+            this.lblReg.BackColor = System.Drawing.Color.White;
+            this.lblReg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblReg.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblReg.Location = new System.Drawing.Point(764, 2);
+            this.lblReg.Name = "lblReg";
+            this.lblReg.Padding = new System.Windows.Forms.Padding(2);
+            this.lblReg.Size = new System.Drawing.Size(20, 23);
+            this.lblReg.TabIndex = 25;
+            // 
+            // lblContact
+            // 
+            this.lblContact.BackColor = System.Drawing.Color.White;
+            this.lblContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblContact.Location = new System.Drawing.Point(565, 2);
+            this.lblContact.Name = "lblContact";
+            this.lblContact.Padding = new System.Windows.Forms.Padding(2);
+            this.lblContact.Size = new System.Drawing.Size(162, 23);
+            this.lblContact.TabIndex = 24;
+            // 
+            // lblExpdat
+            // 
+            this.lblExpdat.BackColor = System.Drawing.Color.White;
+            this.lblExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblExpdat.Location = new System.Drawing.Point(84, 2);
+            this.lblExpdat.Name = "lblExpdat";
+            this.lblExpdat.Padding = new System.Windows.Forms.Padding(2);
+            this.lblExpdat.Size = new System.Drawing.Size(90, 23);
+            this.lblExpdat.TabIndex = 23;
+            // 
+            // lblTelnum
+            // 
+            this.lblTelnum.BackColor = System.Drawing.Color.White;
+            this.lblTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblTelnum.Location = new System.Drawing.Point(212, 2);
+            this.lblTelnum.Name = "lblTelnum";
+            this.lblTelnum.Padding = new System.Windows.Forms.Padding(2);
+            this.lblTelnum.Size = new System.Drawing.Size(288, 23);
+            this.lblTelnum.TabIndex = 22;
+            // 
             // txtDummyControl2
             // 
             this.txtDummyControl2.Location = new System.Drawing.Point(786, 3);
@@ -787,13 +822,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(840, 417);
             this.dataGridView1.TabIndex = 0;
             // 
+            // txtDummyControl
+            // 
+            this.txtDummyControl.Location = new System.Drawing.Point(589, 84);
+            this.txtDummyControl.Name = "txtDummyControl";
+            this.txtDummyControl.Size = new System.Drawing.Size(52, 20);
+            this.txtDummyControl.TabIndex = 0;
+            this.txtDummyControl.Tag = "dummyControl";
+            this.txtDummyControl.Text = "dummy_control";
+            // 
             // toolStrip1
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripAdd,
             this.toolStripEdit,
-            this.toolStripTrash,
+            this.toolStripDelete,
             this.toolStripStop,
             this.toolStripSave,
             this.toolStripSeparator1,
@@ -840,16 +884,16 @@
             this.toolStripEdit.Text = "Edit <Alt+E>";
             this.toolStripEdit.Click += new System.EventHandler(this.toolStripEdit_Click);
             // 
-            // toolStripTrash
+            // toolStripDelete
             // 
-            this.toolStripTrash.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripTrash.Image = global::SN_Net.Properties.Resources.trash;
-            this.toolStripTrash.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripTrash.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripTrash.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
-            this.toolStripTrash.Name = "toolStripTrash";
-            this.toolStripTrash.Size = new System.Drawing.Size(36, 40);
-            this.toolStripTrash.Text = "Delete <Alt+D>";
+            this.toolStripDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDelete.Image = global::SN_Net.Properties.Resources.trash;
+            this.toolStripDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDelete.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
+            this.toolStripDelete.Name = "toolStripDelete";
+            this.toolStripDelete.Size = new System.Drawing.Size(36, 40);
+            this.toolStripDelete.Text = "Delete <Alt+D>";
             // 
             // toolStripStop
             // 
@@ -1052,6 +1096,11 @@
             this.searchAreaAlt7ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.searchAreaAlt7ToolStripMenuItem.Text = "Search Area <Alt+7>";
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 43);
+            // 
             // toolStripReload
             // 
             this.toolStripReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1143,7 +1192,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(599, 58);
+            this.label5.Location = new System.Drawing.Point(636, 58);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 16);
             this.label5.TabIndex = 11;
@@ -1152,7 +1201,7 @@
             // txtRefnum
             // 
             this.txtRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRefnum.Location = new System.Drawing.Point(657, 55);
+            this.txtRefnum.Location = new System.Drawing.Point(694, 55);
             this.txtRefnum.MaxLength = 20;
             this.txtRefnum.Name = "txtRefnum";
             this.txtRefnum.Size = new System.Drawing.Size(118, 23);
@@ -1160,9 +1209,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(775, 55);
+            this.button1.Location = new System.Drawing.Point(812, 54);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(18, 23);
+            this.button1.Size = new System.Drawing.Size(18, 25);
             this.button1.TabIndex = 13;
             this.button1.Text = "?";
             this.button1.UseVisualStyleBackColor = true;
@@ -1170,7 +1219,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button2.Location = new System.Drawing.Point(609, 82);
+            this.button2.Location = new System.Drawing.Point(646, 82);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 23);
             this.button2.TabIndex = 14;
@@ -1180,7 +1229,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button3.Location = new System.Drawing.Point(703, 82);
+            this.button3.Location = new System.Drawing.Point(740, 82);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(91, 23);
             this.button3.TabIndex = 15;
@@ -1217,7 +1266,7 @@
             this.lblArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblArea.Location = new System.Drawing.Point(496, 58);
             this.lblArea.Name = "lblArea";
-            this.lblArea.Size = new System.Drawing.Size(134, 16);
+            this.lblArea.Size = new System.Drawing.Size(131, 16);
             this.lblArea.TabIndex = 55;
             this.lblArea.Text = "istab.typdes";
             // 
@@ -1239,55 +1288,6 @@
             this.txtArea.Name = "txtArea";
             this.txtArea.Size = new System.Drawing.Size(70, 23);
             this.txtArea.TabIndex = 17;
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 43);
-            // 
-            // lblTelnum
-            // 
-            this.lblTelnum.BackColor = System.Drawing.Color.White;
-            this.lblTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblTelnum.Location = new System.Drawing.Point(212, 2);
-            this.lblTelnum.Name = "lblTelnum";
-            this.lblTelnum.Padding = new System.Windows.Forms.Padding(2);
-            this.lblTelnum.Size = new System.Drawing.Size(288, 23);
-            this.lblTelnum.TabIndex = 22;
-            // 
-            // lblExpdat
-            // 
-            this.lblExpdat.BackColor = System.Drawing.Color.White;
-            this.lblExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblExpdat.Location = new System.Drawing.Point(84, 2);
-            this.lblExpdat.Name = "lblExpdat";
-            this.lblExpdat.Padding = new System.Windows.Forms.Padding(2);
-            this.lblExpdat.Size = new System.Drawing.Size(90, 23);
-            this.lblExpdat.TabIndex = 23;
-            // 
-            // lblContact
-            // 
-            this.lblContact.BackColor = System.Drawing.Color.White;
-            this.lblContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblContact.Location = new System.Drawing.Point(565, 2);
-            this.lblContact.Name = "lblContact";
-            this.lblContact.Padding = new System.Windows.Forms.Padding(2);
-            this.lblContact.Size = new System.Drawing.Size(162, 23);
-            this.lblContact.TabIndex = 24;
-            // 
-            // lblReg
-            // 
-            this.lblReg.BackColor = System.Drawing.Color.White;
-            this.lblReg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblReg.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblReg.Location = new System.Drawing.Point(764, 2);
-            this.lblReg.Name = "lblReg";
-            this.lblReg.Padding = new System.Windows.Forms.Padding(2);
-            this.lblReg.Size = new System.Drawing.Size(20, 23);
-            this.lblReg.TabIndex = 25;
             // 
             // SnWindow
             // 
@@ -1347,7 +1347,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStripButton toolStripAdd;
         private System.Windows.Forms.ToolStripButton toolStripEdit;
-        private System.Windows.Forms.ToolStripButton toolStripTrash;
+        private System.Windows.Forms.ToolStripButton toolStripDelete;
         private System.Windows.Forms.ToolStripButton toolStripStop;
         private System.Windows.Forms.ToolStripButton toolStripSave;
         private System.Windows.Forms.ToolStripButton toolStripFirst;

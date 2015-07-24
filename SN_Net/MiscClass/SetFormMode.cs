@@ -24,14 +24,14 @@ namespace SN_Net.MiscClass
             EDIT
         }
 
-        private SetFormMode(Form form, List<Control> controls, Control focused_control, MODE mode)
+        private SetFormMode(Form form, List<Control> controls, Control dummy_control, MODE mode)
         {
             if (mode == MODE.READY)
             {
                 this.mode = mode;
                 this.form = form;
                 this.list_controls = controls;
-                this.dummy_control = focused_control;
+                this.dummy_control = dummy_control;
                 this.manageControl();
             }
         }
@@ -79,6 +79,7 @@ namespace SN_Net.MiscClass
             {
                 case MODE.READY:
                     Console.WriteLine("start in ready mode at " + DateTime.Now.ToString());
+                    this.dummy_control.SetBounds(0, 0, 0, 0);
                     foreach (Control ct in this.list_controls)
                     {
                         ct.Cursor = Cursors.Default;
@@ -177,6 +178,10 @@ namespace SN_Net.MiscClass
             {
                 ((Control)sender).Focus();
                 ((Control)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                if (sender is TextBox)
+                {
+                    ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
+                }
                 this.current_control_focused = ((Control)sender);
             }
         }
