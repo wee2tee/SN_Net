@@ -75,6 +75,7 @@
     <Compile Include="MiscClass\ComboboxItem.cs" />
     <Compile Include="MiscClass\FormControlSequence.cs" />
     <Compile Include="MiscClass\HelperClass.cs" />
+    <Compile Include="MiscClass\DataResource.cs" />
     <Compile Include="MiscClass\PairTextBoxWithBrowseButton.cs" />
     <Compile Include="MiscClass\FormState.cs" />
     <Compile Include="MiscClass\GlobalVar.cs" />

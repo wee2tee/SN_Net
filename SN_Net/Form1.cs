@@ -24,9 +24,10 @@ namespace SN_Net
         public IstabWindow howknown_wind;
         public IstabWindow busityp_wind;
         public IstabWindow probcode_wind;
-
+        
         public string my_mac = string.Empty;
         private GlobalVar G;
+        private DataResource data_resource;
         
         public MainForm()
         {
@@ -62,6 +63,7 @@ namespace SN_Net
             if (this.sn_wind == null)
             {
                 this.sn_wind = new SnWindow();
+                this.sn_wind.G = this.G;
                 this.sn_wind.MdiParent = this;
                 this.sn_wind.WindowState = FormWindowState.Maximized;
                 this.sn_wind.Show();
@@ -257,15 +259,9 @@ namespace SN_Net
             //}
         }
 
-        //protected override void WndProc(ref Message m)
-        //{
-        //    if (m.Msg == 0x10)
-        //    {
-        //        //if(this.dealer_wind.State != FormState.FORM_STATE_READY)
-
-        //        //Application.Exit();
-        //    }
-        //    base.WndProc(ref m);
-        //}
+        private void loadDataResource()
+        {
+            this.data_resource = new DataResource();
+        }
     }
 }

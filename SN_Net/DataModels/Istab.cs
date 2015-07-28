@@ -66,47 +66,5 @@ namespace SN_Net.DataModels
                     return "Istab";
             }
         }
-        //public static Istab getIstabByTypcod(TABTYP tabtyp, string typcod)
-        //{
-        //    string tab_typ = string.Empty;
-        //    switch (tabtyp)
-        //    {
-        //        case TABTYP.AREA:
-        //            tab_typ = "01";
-        //            break;
-        //        case TABTYP.BUSITYP:
-        //            tab_typ = "02";
-        //            break;
-        //        case TABTYP.HOWKNOWN:
-        //            tab_typ = "03";
-        //            break;
-        //        case TABTYP.PURCHASE_FROM:
-        //            tab_typ = "04";
-        //            break;
-        //        case TABTYP.VEREXT:
-        //            tab_typ = "05";
-        //            break;
-        //        default:
-        //            tab_typ = "00";
-        //            break;
-        //    }
-
-        //    Istab istab = new Istab();
-
-        //    CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_by_typcod&tabtyp=" + tab_typ + "&typcod=" + typcod);
-        //    Console.WriteLine(get.data);
-            
-        //    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-            
-        //    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-        //    {
-        //        if (sr.istab != null)
-        //        {
-        //            istab = sr.istab.First<Istab>();
-        //        }
-        //    }
-
-        //    return istab;
-        //}
     }
 }

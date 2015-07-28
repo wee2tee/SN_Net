@@ -13,9 +13,9 @@ namespace SN_Net.DataModels
         public string date { get; set; }
         public string time { get; set; }
         public string name { get; set; }
-        public int users_id { get; set; }
+        //public int users_id { get; set; }
         public string users_name { get; set; }
-        public int serial_id { get; set; }
+        //public int serial_id { get; set; }
         public string serial_sernum { get; set; }
     }
 }
