@@ -32,6 +32,18 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblVerext = new System.Windows.Forms.Label();
+            this.cbVerext = new System.Windows.Forms.ComboBox();
+            this.lblVerextdat = new System.Windows.Forms.Label();
+            this.lblManual = new System.Windows.Forms.Label();
+            this.lblReg = new System.Windows.Forms.Label();
+            this.lblExpdat = new System.Windows.Forms.Label();
+            this.lblPurdat = new System.Windows.Forms.Label();
+            this.lblHowknown = new System.Windows.Forms.Label();
+            this.lblDealer_dealer = new System.Windows.Forms.Label();
+            this.lblBusityp = new System.Windows.Forms.Label();
+            this.lblBusides = new System.Windows.Forms.Label();
+            this.lblRemark = new System.Windows.Forms.Label();
             this.mskVerextdat = new System.Windows.Forms.MaskedTextBox();
             this.mskManual = new System.Windows.Forms.MaskedTextBox();
             this.mskExpdat = new System.Windows.Forms.MaskedTextBox();
@@ -45,7 +57,6 @@
             this.btnBrowseBusityp = new System.Windows.Forms.Button();
             this.txtBusityp = new System.Windows.Forms.TextBox();
             this.dpVerextdat = new System.Windows.Forms.DateTimePicker();
-            this.cbVerext = new System.Windows.Forms.ComboBox();
             this.dpManual = new System.Windows.Forms.DateTimePicker();
             this.label27 = new System.Windows.Forms.Label();
             this.txtReg = new System.Windows.Forms.TextBox();
@@ -63,6 +74,15 @@
             this.txtRemark = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblOldnum = new System.Windows.Forms.Label();
+            this.lblPosition = new System.Windows.Forms.Label();
+            this.lblContact = new System.Windows.Forms.Label();
+            this.lblFaxnum = new System.Windows.Forms.Label();
+            this.lblTelnum = new System.Windows.Forms.Label();
+            this.lblZipcod = new System.Windows.Forms.Label();
+            this.lblAddr03 = new System.Windows.Forms.Label();
+            this.lblAddr02 = new System.Windows.Forms.Label();
+            this.lblAddr01 = new System.Windows.Forms.Label();
             this.txtFaxnum = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.txtOldnum = new System.Windows.Forms.TextBox();
@@ -129,38 +149,20 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lblAreaTypdes = new System.Windows.Forms.Label();
+            this.txtDummy = new System.Windows.Forms.TextBox();
+            this.lblCompnam = new System.Windows.Forms.Label();
+            this.txtCompnam = new System.Windows.Forms.TextBox();
+            this.lblPrenam = new System.Windows.Forms.Label();
+            this.txtPrenam = new System.Windows.Forms.TextBox();
+            this.lblRefnum = new System.Windows.Forms.Label();
+            this.txtRefnum = new System.Windows.Forms.TextBox();
+            this.lblArea = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
+            this.txtVersion = new System.Windows.Forms.TextBox();
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
             this.lblSerNum = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.txtVersion = new System.Windows.Forms.TextBox();
-            this.lblArea = new System.Windows.Forms.Label();
-            this.lblRefnum = new System.Windows.Forms.Label();
-            this.txtRefnum = new System.Windows.Forms.TextBox();
-            this.lblPrenam = new System.Windows.Forms.Label();
-            this.txtPrenam = new System.Windows.Forms.TextBox();
-            this.lblCompnam = new System.Windows.Forms.Label();
-            this.txtCompnam = new System.Windows.Forms.TextBox();
-            this.lblAddr01 = new System.Windows.Forms.Label();
-            this.lblAddr02 = new System.Windows.Forms.Label();
-            this.lblAddr03 = new System.Windows.Forms.Label();
-            this.lblZipcod = new System.Windows.Forms.Label();
-            this.lblTelnum = new System.Windows.Forms.Label();
-            this.lblFaxnum = new System.Windows.Forms.Label();
-            this.lblContact = new System.Windows.Forms.Label();
-            this.lblPosition = new System.Windows.Forms.Label();
-            this.lblOldnum = new System.Windows.Forms.Label();
-            this.lblRemark = new System.Windows.Forms.Label();
-            this.lblBusides = new System.Windows.Forms.Label();
-            this.lblBusityp = new System.Windows.Forms.Label();
-            this.lblDealer_dealer = new System.Windows.Forms.Label();
-            this.lblHowknown = new System.Windows.Forms.Label();
-            this.lblPurdat = new System.Windows.Forms.Label();
-            this.lblExpdat = new System.Windows.Forms.Label();
-            this.lblReg = new System.Windows.Forms.Label();
-            this.lblManual = new System.Windows.Forms.Label();
-            this.lblVerextdat = new System.Windows.Forms.Label();
+            this.lblAreaTypdes = new System.Windows.Forms.Label();
             this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
             this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
             this.dpEditDate = new System.Windows.Forms.DateTimePicker();
@@ -211,6 +213,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblVerext);
+            this.groupBox2.Controls.Add(this.cbVerext);
             this.groupBox2.Controls.Add(this.lblVerextdat);
             this.groupBox2.Controls.Add(this.lblManual);
             this.groupBox2.Controls.Add(this.lblReg);
@@ -234,7 +238,6 @@
             this.groupBox2.Controls.Add(this.btnBrowseBusityp);
             this.groupBox2.Controls.Add(this.txtBusityp);
             this.groupBox2.Controls.Add(this.dpVerextdat);
-            this.groupBox2.Controls.Add(this.cbVerext);
             this.groupBox2.Controls.Add(this.dpManual);
             this.groupBox2.Controls.Add(this.label27);
             this.groupBox2.Controls.Add(this.txtReg);
@@ -256,6 +259,137 @@
             this.groupBox2.Size = new System.Drawing.Size(829, 205);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
+            // 
+            // lblVerext
+            // 
+            this.lblVerext.BackColor = System.Drawing.Color.White;
+            this.lblVerext.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblVerext.Location = new System.Drawing.Point(499, 174);
+            this.lblVerext.Name = "lblVerext";
+            this.lblVerext.Size = new System.Drawing.Size(168, 24);
+            this.lblVerext.TabIndex = 85;
+            this.lblVerext.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbVerext
+            // 
+            this.cbVerext.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cbVerext.FormattingEnabled = true;
+            this.cbVerext.Location = new System.Drawing.Point(505, 166);
+            this.cbVerext.Name = "cbVerext";
+            this.cbVerext.Size = new System.Drawing.Size(168, 24);
+            this.cbVerext.TabIndex = 25;
+            // 
+            // lblVerextdat
+            // 
+            this.lblVerextdat.BackColor = System.Drawing.Color.White;
+            this.lblVerextdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblVerextdat.Location = new System.Drawing.Point(676, 174);
+            this.lblVerextdat.Name = "lblVerextdat";
+            this.lblVerextdat.Size = new System.Drawing.Size(82, 23);
+            this.lblVerextdat.TabIndex = 84;
+            this.lblVerextdat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblManual
+            // 
+            this.lblManual.BackColor = System.Drawing.Color.White;
+            this.lblManual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblManual.Location = new System.Drawing.Point(676, 146);
+            this.lblManual.Name = "lblManual";
+            this.lblManual.Size = new System.Drawing.Size(82, 23);
+            this.lblManual.TabIndex = 83;
+            this.lblManual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblReg
+            // 
+            this.lblReg.BackColor = System.Drawing.Color.White;
+            this.lblReg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblReg.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblReg.Location = new System.Drawing.Point(676, 121);
+            this.lblReg.Name = "lblReg";
+            this.lblReg.Size = new System.Drawing.Size(20, 23);
+            this.lblReg.TabIndex = 82;
+            this.lblReg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblExpdat
+            // 
+            this.lblExpdat.BackColor = System.Drawing.Color.White;
+            this.lblExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblExpdat.Location = new System.Drawing.Point(375, 174);
+            this.lblExpdat.Name = "lblExpdat";
+            this.lblExpdat.Size = new System.Drawing.Size(82, 23);
+            this.lblExpdat.TabIndex = 81;
+            this.lblExpdat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblPurdat
+            // 
+            this.lblPurdat.BackColor = System.Drawing.Color.White;
+            this.lblPurdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblPurdat.Location = new System.Drawing.Point(118, 174);
+            this.lblPurdat.Name = "lblPurdat";
+            this.lblPurdat.Size = new System.Drawing.Size(82, 23);
+            this.lblPurdat.TabIndex = 80;
+            this.lblPurdat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblHowknown
+            // 
+            this.lblHowknown.BackColor = System.Drawing.Color.White;
+            this.lblHowknown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblHowknown.Location = new System.Drawing.Point(118, 146);
+            this.lblHowknown.Name = "lblHowknown";
+            this.lblHowknown.Size = new System.Drawing.Size(70, 23);
+            this.lblHowknown.TabIndex = 79;
+            this.lblHowknown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblDealer_dealer
+            // 
+            this.lblDealer_dealer.BackColor = System.Drawing.Color.White;
+            this.lblDealer_dealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblDealer_dealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblDealer_dealer.Location = new System.Drawing.Point(118, 107);
+            this.lblDealer_dealer.Name = "lblDealer_dealer";
+            this.lblDealer_dealer.Size = new System.Drawing.Size(139, 23);
+            this.lblDealer_dealer.TabIndex = 78;
+            this.lblDealer_dealer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblBusityp
+            // 
+            this.lblBusityp.BackColor = System.Drawing.Color.White;
+            this.lblBusityp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblBusityp.Location = new System.Drawing.Point(118, 79);
+            this.lblBusityp.Name = "lblBusityp";
+            this.lblBusityp.Size = new System.Drawing.Size(70, 23);
+            this.lblBusityp.TabIndex = 77;
+            this.lblBusityp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblBusides
+            // 
+            this.lblBusides.BackColor = System.Drawing.Color.White;
+            this.lblBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblBusides.Location = new System.Drawing.Point(118, 52);
+            this.lblBusides.Name = "lblBusides";
+            this.lblBusides.Size = new System.Drawing.Size(501, 23);
+            this.lblBusides.TabIndex = 76;
+            this.lblBusides.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblRemark
+            // 
+            this.lblRemark.BackColor = System.Drawing.Color.White;
+            this.lblRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblRemark.Location = new System.Drawing.Point(118, 25);
+            this.lblRemark.Name = "lblRemark";
+            this.lblRemark.Size = new System.Drawing.Size(501, 23);
+            this.lblRemark.TabIndex = 75;
+            this.lblRemark.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // mskVerextdat
             // 
@@ -380,21 +514,11 @@
             // dpVerextdat
             // 
             this.dpVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpVerextdat.Location = new System.Drawing.Point(757, 173);
+            this.dpVerextdat.Location = new System.Drawing.Point(757, 174);
             this.dpVerextdat.Name = "dpVerextdat";
             this.dpVerextdat.Size = new System.Drawing.Size(18, 23);
             this.dpVerextdat.TabIndex = 48;
             this.dpVerextdat.Value = new System.DateTime(2015, 7, 10, 16, 52, 55, 0);
-            // 
-            // cbVerext
-            // 
-            this.cbVerext.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbVerext.FormattingEnabled = true;
-            this.cbVerext.Location = new System.Drawing.Point(499, 172);
-            this.cbVerext.Name = "cbVerext";
-            this.cbVerext.Size = new System.Drawing.Size(168, 24);
-            this.cbVerext.TabIndex = 25;
             // 
             // dpManual
             // 
@@ -582,6 +706,105 @@
             this.groupBox1.Size = new System.Drawing.Size(829, 228);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
+            // 
+            // lblOldnum
+            // 
+            this.lblOldnum.BackColor = System.Drawing.Color.White;
+            this.lblOldnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblOldnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblOldnum.Location = new System.Drawing.Point(663, 187);
+            this.lblOldnum.Name = "lblOldnum";
+            this.lblOldnum.Size = new System.Drawing.Size(118, 23);
+            this.lblOldnum.TabIndex = 74;
+            this.lblOldnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblPosition
+            // 
+            this.lblPosition.BackColor = System.Drawing.Color.White;
+            this.lblPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblPosition.Location = new System.Drawing.Point(118, 187);
+            this.lblPosition.Name = "lblPosition";
+            this.lblPosition.Size = new System.Drawing.Size(442, 23);
+            this.lblPosition.TabIndex = 73;
+            this.lblPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblContact
+            // 
+            this.lblContact.BackColor = System.Drawing.Color.White;
+            this.lblContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblContact.Location = new System.Drawing.Point(118, 160);
+            this.lblContact.Name = "lblContact";
+            this.lblContact.Size = new System.Drawing.Size(442, 23);
+            this.lblContact.TabIndex = 72;
+            this.lblContact.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblFaxnum
+            // 
+            this.lblFaxnum.BackColor = System.Drawing.Color.White;
+            this.lblFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblFaxnum.Location = new System.Drawing.Point(118, 133);
+            this.lblFaxnum.Name = "lblFaxnum";
+            this.lblFaxnum.Size = new System.Drawing.Size(442, 23);
+            this.lblFaxnum.TabIndex = 71;
+            this.lblFaxnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblTelnum
+            // 
+            this.lblTelnum.BackColor = System.Drawing.Color.White;
+            this.lblTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblTelnum.Location = new System.Drawing.Point(118, 106);
+            this.lblTelnum.Name = "lblTelnum";
+            this.lblTelnum.Size = new System.Drawing.Size(442, 23);
+            this.lblTelnum.TabIndex = 70;
+            this.lblTelnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblZipcod
+            // 
+            this.lblZipcod.BackColor = System.Drawing.Color.White;
+            this.lblZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblZipcod.Location = new System.Drawing.Point(491, 79);
+            this.lblZipcod.Name = "lblZipcod";
+            this.lblZipcod.Size = new System.Drawing.Size(69, 23);
+            this.lblZipcod.TabIndex = 69;
+            this.lblZipcod.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblAddr03
+            // 
+            this.lblAddr03.BackColor = System.Drawing.Color.White;
+            this.lblAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblAddr03.Location = new System.Drawing.Point(118, 79);
+            this.lblAddr03.Name = "lblAddr03";
+            this.lblAddr03.Size = new System.Drawing.Size(271, 23);
+            this.lblAddr03.TabIndex = 68;
+            this.lblAddr03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblAddr02
+            // 
+            this.lblAddr02.BackColor = System.Drawing.Color.White;
+            this.lblAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblAddr02.Location = new System.Drawing.Point(118, 52);
+            this.lblAddr02.Name = "lblAddr02";
+            this.lblAddr02.Size = new System.Drawing.Size(442, 23);
+            this.lblAddr02.TabIndex = 67;
+            this.lblAddr02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblAddr01
+            // 
+            this.lblAddr01.BackColor = System.Drawing.Color.White;
+            this.lblAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblAddr01.Location = new System.Drawing.Point(118, 25);
+            this.lblAddr01.Name = "lblAddr01";
+            this.lblAddr01.Size = new System.Drawing.Size(442, 23);
+            this.lblAddr01.TabIndex = 66;
+            this.lblAddr01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtFaxnum
             // 
@@ -772,6 +995,7 @@
             this.splitContainer1.Size = new System.Drawing.Size(840, 448);
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 99;
+            this.splitContainer1.TabStop = false;
             // 
             // lblReg2
             // 
@@ -964,6 +1188,7 @@
             this.toolStripSave.Name = "toolStripSave";
             this.toolStripSave.Size = new System.Drawing.Size(36, 40);
             this.toolStripSave.Text = "Save <F9>";
+            this.toolStripSave.Click += new System.EventHandler(this.toolStripSave_Click);
             // 
             // toolStripSeparator1
             // 
@@ -1159,6 +1384,7 @@
             this.toolStripReload.Name = "toolStripReload";
             this.toolStripReload.Size = new System.Drawing.Size(36, 40);
             this.toolStripReload.Text = "Reload current data <F5>";
+            this.toolStripReload.Click += new System.EventHandler(this.toolStripReload_Click);
             // 
             // label1
             // 
@@ -1263,6 +1489,7 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.txtDummy);
             this.splitContainer2.Panel1.Controls.Add(this.lblCompnam);
             this.splitContainer2.Panel1.Controls.Add(this.txtCompnam);
             this.splitContainer2.Panel1.Controls.Add(this.lblPrenam);
@@ -1286,14 +1513,106 @@
             this.splitContainer2.TabIndex = 16;
             this.splitContainer2.TabStop = false;
             // 
-            // lblAreaTypdes
+            // txtDummy
             // 
-            this.lblAreaTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblAreaTypdes.Location = new System.Drawing.Point(496, 58);
-            this.lblAreaTypdes.Name = "lblAreaTypdes";
-            this.lblAreaTypdes.Size = new System.Drawing.Size(131, 16);
-            this.lblAreaTypdes.TabIndex = 55;
-            this.lblAreaTypdes.Text = "istab.typdes";
+            this.txtDummy.Location = new System.Drawing.Point(589, 49);
+            this.txtDummy.Name = "txtDummy";
+            this.txtDummy.Size = new System.Drawing.Size(0, 20);
+            this.txtDummy.TabIndex = 69;
+            this.txtDummy.TabStop = false;
+            this.txtDummy.Text = "***";
+            // 
+            // lblCompnam
+            // 
+            this.lblCompnam.BackColor = System.Drawing.Color.White;
+            this.lblCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblCompnam.Location = new System.Drawing.Point(211, 82);
+            this.lblCompnam.Name = "lblCompnam";
+            this.lblCompnam.Size = new System.Drawing.Size(370, 23);
+            this.lblCompnam.TabIndex = 67;
+            this.lblCompnam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtCompnam
+            // 
+            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtCompnam.Location = new System.Drawing.Point(219, 75);
+            this.txtCompnam.MaxLength = 100;
+            this.txtCompnam.Name = "txtCompnam";
+            this.txtCompnam.Size = new System.Drawing.Size(370, 23);
+            this.txtCompnam.TabIndex = 68;
+            // 
+            // lblPrenam
+            // 
+            this.lblPrenam.BackColor = System.Drawing.Color.White;
+            this.lblPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblPrenam.Location = new System.Drawing.Point(91, 82);
+            this.lblPrenam.Name = "lblPrenam";
+            this.lblPrenam.Size = new System.Drawing.Size(118, 23);
+            this.lblPrenam.TabIndex = 65;
+            this.lblPrenam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtPrenam
+            // 
+            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtPrenam.Location = new System.Drawing.Point(96, 75);
+            this.txtPrenam.MaxLength = 30;
+            this.txtPrenam.Name = "txtPrenam";
+            this.txtPrenam.Size = new System.Drawing.Size(118, 23);
+            this.txtPrenam.TabIndex = 66;
+            // 
+            // lblRefnum
+            // 
+            this.lblRefnum.BackColor = System.Drawing.Color.White;
+            this.lblRefnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblRefnum.Location = new System.Drawing.Point(694, 55);
+            this.lblRefnum.Name = "lblRefnum";
+            this.lblRefnum.Size = new System.Drawing.Size(118, 23);
+            this.lblRefnum.TabIndex = 63;
+            this.lblRefnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtRefnum
+            // 
+            this.txtRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtRefnum.Location = new System.Drawing.Point(701, 46);
+            this.txtRefnum.MaxLength = 20;
+            this.txtRefnum.Name = "txtRefnum";
+            this.txtRefnum.Size = new System.Drawing.Size(118, 23);
+            this.txtRefnum.TabIndex = 64;
+            // 
+            // lblArea
+            // 
+            this.lblArea.BackColor = System.Drawing.Color.White;
+            this.lblArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblArea.Location = new System.Drawing.Point(400, 55);
+            this.lblArea.Name = "lblArea";
+            this.lblArea.Size = new System.Drawing.Size(70, 23);
+            this.lblArea.TabIndex = 59;
+            this.lblArea.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.BackColor = System.Drawing.Color.White;
+            this.lblVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblVersion.Location = new System.Drawing.Point(282, 55);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(60, 23);
+            this.lblVersion.TabIndex = 57;
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtVersion
+            // 
+            this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtVersion.Location = new System.Drawing.Point(290, 46);
+            this.txtVersion.MaxLength = 4;
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(60, 23);
+            this.txtVersion.TabIndex = 58;
             // 
             // btnBrowseArea
             // 
@@ -1325,332 +1644,16 @@
             this.lblSerNum.Name = "lblSerNum";
             this.lblSerNum.Size = new System.Drawing.Size(118, 23);
             this.lblSerNum.TabIndex = 56;
-            this.lblSerNum.Text = "lblSerNum";
             this.lblSerNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblVersion
+            // lblAreaTypdes
             // 
-            this.lblVersion.BackColor = System.Drawing.Color.White;
-            this.lblVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblVersion.Location = new System.Drawing.Point(282, 55);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(60, 23);
-            this.lblVersion.TabIndex = 57;
-            this.lblVersion.Text = "lblVersion";
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtVersion
-            // 
-            this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtVersion.Location = new System.Drawing.Point(290, 46);
-            this.txtVersion.MaxLength = 4;
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(60, 23);
-            this.txtVersion.TabIndex = 58;
-            // 
-            // lblArea
-            // 
-            this.lblArea.BackColor = System.Drawing.Color.White;
-            this.lblArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblArea.Location = new System.Drawing.Point(400, 55);
-            this.lblArea.Name = "lblArea";
-            this.lblArea.Size = new System.Drawing.Size(70, 23);
-            this.lblArea.TabIndex = 59;
-            this.lblArea.Text = "lblAreaTypdes";
-            this.lblArea.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblRefnum
-            // 
-            this.lblRefnum.BackColor = System.Drawing.Color.White;
-            this.lblRefnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblRefnum.Location = new System.Drawing.Point(694, 55);
-            this.lblRefnum.Name = "lblRefnum";
-            this.lblRefnum.Size = new System.Drawing.Size(118, 23);
-            this.lblRefnum.TabIndex = 63;
-            this.lblRefnum.Text = "lblRefnum";
-            this.lblRefnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtRefnum
-            // 
-            this.txtRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRefnum.Location = new System.Drawing.Point(701, 46);
-            this.txtRefnum.MaxLength = 20;
-            this.txtRefnum.Name = "txtRefnum";
-            this.txtRefnum.Size = new System.Drawing.Size(118, 23);
-            this.txtRefnum.TabIndex = 64;
-            // 
-            // lblPrenam
-            // 
-            this.lblPrenam.BackColor = System.Drawing.Color.White;
-            this.lblPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblPrenam.Location = new System.Drawing.Point(91, 82);
-            this.lblPrenam.Name = "lblPrenam";
-            this.lblPrenam.Size = new System.Drawing.Size(118, 23);
-            this.lblPrenam.TabIndex = 65;
-            this.lblPrenam.Text = "label21";
-            this.lblPrenam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtPrenam
-            // 
-            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPrenam.Location = new System.Drawing.Point(96, 75);
-            this.txtPrenam.MaxLength = 30;
-            this.txtPrenam.Name = "txtPrenam";
-            this.txtPrenam.Size = new System.Drawing.Size(118, 23);
-            this.txtPrenam.TabIndex = 66;
-            // 
-            // lblCompnam
-            // 
-            this.lblCompnam.BackColor = System.Drawing.Color.White;
-            this.lblCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblCompnam.Location = new System.Drawing.Point(211, 82);
-            this.lblCompnam.Name = "lblCompnam";
-            this.lblCompnam.Size = new System.Drawing.Size(370, 23);
-            this.lblCompnam.TabIndex = 67;
-            this.lblCompnam.Text = "label21";
-            this.lblCompnam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtCompnam
-            // 
-            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtCompnam.Location = new System.Drawing.Point(219, 75);
-            this.txtCompnam.MaxLength = 100;
-            this.txtCompnam.Name = "txtCompnam";
-            this.txtCompnam.Size = new System.Drawing.Size(370, 23);
-            this.txtCompnam.TabIndex = 68;
-            // 
-            // lblAddr01
-            // 
-            this.lblAddr01.BackColor = System.Drawing.Color.White;
-            this.lblAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblAddr01.Location = new System.Drawing.Point(118, 25);
-            this.lblAddr01.Name = "lblAddr01";
-            this.lblAddr01.Size = new System.Drawing.Size(442, 23);
-            this.lblAddr01.TabIndex = 66;
-            this.lblAddr01.Text = "label21";
-            this.lblAddr01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblAddr02
-            // 
-            this.lblAddr02.BackColor = System.Drawing.Color.White;
-            this.lblAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblAddr02.Location = new System.Drawing.Point(118, 52);
-            this.lblAddr02.Name = "lblAddr02";
-            this.lblAddr02.Size = new System.Drawing.Size(442, 23);
-            this.lblAddr02.TabIndex = 67;
-            this.lblAddr02.Text = "label23";
-            this.lblAddr02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblAddr03
-            // 
-            this.lblAddr03.BackColor = System.Drawing.Color.White;
-            this.lblAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblAddr03.Location = new System.Drawing.Point(118, 79);
-            this.lblAddr03.Name = "lblAddr03";
-            this.lblAddr03.Size = new System.Drawing.Size(271, 23);
-            this.lblAddr03.TabIndex = 68;
-            this.lblAddr03.Text = "label28";
-            this.lblAddr03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblZipcod
-            // 
-            this.lblZipcod.BackColor = System.Drawing.Color.White;
-            this.lblZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblZipcod.Location = new System.Drawing.Point(491, 79);
-            this.lblZipcod.Name = "lblZipcod";
-            this.lblZipcod.Size = new System.Drawing.Size(69, 23);
-            this.lblZipcod.TabIndex = 69;
-            this.lblZipcod.Text = "label29";
-            this.lblZipcod.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblTelnum
-            // 
-            this.lblTelnum.BackColor = System.Drawing.Color.White;
-            this.lblTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblTelnum.Location = new System.Drawing.Point(118, 106);
-            this.lblTelnum.Name = "lblTelnum";
-            this.lblTelnum.Size = new System.Drawing.Size(442, 23);
-            this.lblTelnum.TabIndex = 70;
-            this.lblTelnum.Text = "label30";
-            this.lblTelnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblFaxnum
-            // 
-            this.lblFaxnum.BackColor = System.Drawing.Color.White;
-            this.lblFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblFaxnum.Location = new System.Drawing.Point(118, 133);
-            this.lblFaxnum.Name = "lblFaxnum";
-            this.lblFaxnum.Size = new System.Drawing.Size(442, 23);
-            this.lblFaxnum.TabIndex = 71;
-            this.lblFaxnum.Text = "label31";
-            this.lblFaxnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblContact
-            // 
-            this.lblContact.BackColor = System.Drawing.Color.White;
-            this.lblContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblContact.Location = new System.Drawing.Point(118, 160);
-            this.lblContact.Name = "lblContact";
-            this.lblContact.Size = new System.Drawing.Size(442, 23);
-            this.lblContact.TabIndex = 72;
-            this.lblContact.Text = "label32";
-            this.lblContact.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblPosition
-            // 
-            this.lblPosition.BackColor = System.Drawing.Color.White;
-            this.lblPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblPosition.Location = new System.Drawing.Point(118, 187);
-            this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(442, 23);
-            this.lblPosition.TabIndex = 73;
-            this.lblPosition.Text = "label33";
-            this.lblPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblOldnum
-            // 
-            this.lblOldnum.BackColor = System.Drawing.Color.White;
-            this.lblOldnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblOldnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblOldnum.Location = new System.Drawing.Point(663, 187);
-            this.lblOldnum.Name = "lblOldnum";
-            this.lblOldnum.Size = new System.Drawing.Size(118, 23);
-            this.lblOldnum.TabIndex = 74;
-            this.lblOldnum.Text = "label34";
-            this.lblOldnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblRemark
-            // 
-            this.lblRemark.BackColor = System.Drawing.Color.White;
-            this.lblRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblRemark.Location = new System.Drawing.Point(118, 25);
-            this.lblRemark.Name = "lblRemark";
-            this.lblRemark.Size = new System.Drawing.Size(501, 23);
-            this.lblRemark.TabIndex = 75;
-            this.lblRemark.Text = "label33";
-            this.lblRemark.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblBusides
-            // 
-            this.lblBusides.BackColor = System.Drawing.Color.White;
-            this.lblBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusides.Location = new System.Drawing.Point(118, 52);
-            this.lblBusides.Name = "lblBusides";
-            this.lblBusides.Size = new System.Drawing.Size(501, 23);
-            this.lblBusides.TabIndex = 76;
-            this.lblBusides.Text = "label33";
-            this.lblBusides.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblBusityp
-            // 
-            this.lblBusityp.BackColor = System.Drawing.Color.White;
-            this.lblBusityp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusityp.Location = new System.Drawing.Point(118, 79);
-            this.lblBusityp.Name = "lblBusityp";
-            this.lblBusityp.Size = new System.Drawing.Size(70, 23);
-            this.lblBusityp.TabIndex = 77;
-            this.lblBusityp.Text = "label33";
-            this.lblBusityp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblDealer_dealer
-            // 
-            this.lblDealer_dealer.BackColor = System.Drawing.Color.White;
-            this.lblDealer_dealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblDealer_dealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDealer_dealer.Location = new System.Drawing.Point(118, 107);
-            this.lblDealer_dealer.Name = "lblDealer_dealer";
-            this.lblDealer_dealer.Size = new System.Drawing.Size(139, 23);
-            this.lblDealer_dealer.TabIndex = 78;
-            this.lblDealer_dealer.Text = "label33";
-            this.lblDealer_dealer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblHowknown
-            // 
-            this.lblHowknown.BackColor = System.Drawing.Color.White;
-            this.lblHowknown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblHowknown.Location = new System.Drawing.Point(118, 146);
-            this.lblHowknown.Name = "lblHowknown";
-            this.lblHowknown.Size = new System.Drawing.Size(70, 23);
-            this.lblHowknown.TabIndex = 79;
-            this.lblHowknown.Text = "label33";
-            this.lblHowknown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblPurdat
-            // 
-            this.lblPurdat.BackColor = System.Drawing.Color.White;
-            this.lblPurdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblPurdat.Location = new System.Drawing.Point(118, 174);
-            this.lblPurdat.Name = "lblPurdat";
-            this.lblPurdat.Size = new System.Drawing.Size(82, 23);
-            this.lblPurdat.TabIndex = 80;
-            this.lblPurdat.Text = "label33";
-            this.lblPurdat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblExpdat
-            // 
-            this.lblExpdat.BackColor = System.Drawing.Color.White;
-            this.lblExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblExpdat.Location = new System.Drawing.Point(375, 174);
-            this.lblExpdat.Name = "lblExpdat";
-            this.lblExpdat.Size = new System.Drawing.Size(82, 23);
-            this.lblExpdat.TabIndex = 81;
-            this.lblExpdat.Text = "label33";
-            this.lblExpdat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblReg
-            // 
-            this.lblReg.BackColor = System.Drawing.Color.White;
-            this.lblReg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblReg.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblReg.Location = new System.Drawing.Point(676, 121);
-            this.lblReg.Name = "lblReg";
-            this.lblReg.Size = new System.Drawing.Size(20, 23);
-            this.lblReg.TabIndex = 82;
-            this.lblReg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblManual
-            // 
-            this.lblManual.BackColor = System.Drawing.Color.White;
-            this.lblManual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblManual.Location = new System.Drawing.Point(676, 146);
-            this.lblManual.Name = "lblManual";
-            this.lblManual.Size = new System.Drawing.Size(82, 23);
-            this.lblManual.TabIndex = 83;
-            this.lblManual.Text = "label33";
-            this.lblManual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblVerextdat
-            // 
-            this.lblVerextdat.BackColor = System.Drawing.Color.White;
-            this.lblVerextdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblVerextdat.Location = new System.Drawing.Point(676, 173);
-            this.lblVerextdat.Name = "lblVerextdat";
-            this.lblVerextdat.Size = new System.Drawing.Size(82, 23);
-            this.lblVerextdat.TabIndex = 84;
-            this.lblVerextdat.Text = "label33";
-            this.lblVerextdat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAreaTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblAreaTypdes.Location = new System.Drawing.Point(496, 58);
+            this.lblAreaTypdes.Name = "lblAreaTypdes";
+            this.lblAreaTypdes.Size = new System.Drawing.Size(131, 16);
+            this.lblAreaTypdes.TabIndex = 55;
+            this.lblAreaTypdes.Text = "istab.typdes";
             // 
             // transparentPanel1
             // 
@@ -1690,9 +1693,11 @@
             // 
             this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txtEditDesc.Location = new System.Drawing.Point(458, 28);
+            this.txtEditDesc.MaxLength = 100;
             this.txtEditDesc.Name = "txtEditDesc";
             this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
             this.txtEditDesc.TabIndex = 3;
+            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
             // 
             // txtEditCo
             // 
@@ -1707,6 +1712,7 @@
             // 
             this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txtEditName.Location = new System.Drawing.Point(149, 28);
+            this.txtEditName.MaxLength = 50;
             this.txtEditName.Name = "txtEditName";
             this.txtEditName.Size = new System.Drawing.Size(100, 23);
             this.txtEditName.TabIndex = 1;
@@ -1898,5 +1904,7 @@
         private System.Windows.Forms.Label lblBusityp;
         private System.Windows.Forms.Label lblBusides;
         private System.Windows.Forms.Label lblRemark;
+        private System.Windows.Forms.TextBox txtDummy;
+        private System.Windows.Forms.Label lblVerext;
     }
 }

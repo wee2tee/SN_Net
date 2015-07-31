@@ -50,6 +50,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUserLogin = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -204,7 +205,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusUserLogin});
+            this.toolStripStatusUserLogin,
+            this.toolStripProcessing});
             this.statusStrip1.Location = new System.Drawing.Point(0, 619);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(864, 22);
@@ -216,6 +218,22 @@
             this.toolStripStatusUserLogin.Name = "toolStripStatusUserLogin";
             this.toolStripStatusUserLogin.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusUserLogin.Text = "...";
+            // 
+            // toolStripProcessing
+            // 
+            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
+            this.toolStripProcessing.Image = global::SN_Net.Properties.Resources.processing_bar_green;
+            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
+            this.toolStripProcessing.Name = "toolStripProcessing";
+            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProcessing.Size = new System.Drawing.Size(792, 17);
+            this.toolStripProcessing.Spring = true;
+            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripProcessing.Visible = false;
             // 
             // toolStrip1
             // 
@@ -238,7 +256,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(875, 680);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SN";
@@ -278,6 +295,7 @@
         private System.Windows.Forms.ToolStripMenuItem salesAreaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem versionExtensionToolStripMenuItem;
         public System.Windows.Forms.MenuStrip menuStrip1;
+        public System.Windows.Forms.ToolStripStatusLabel toolStripProcessing;
     }
 }
 
