@@ -169,6 +169,7 @@
             this.txtEditDesc = new System.Windows.Forms.TextBox();
             this.txtEditCo = new System.Windows.Forms.TextBox();
             this.txtEditName = new System.Windows.Forms.TextBox();
+            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -990,6 +991,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.transparentPanel2);
             this.splitContainer1.Panel2.Controls.Add(this.transparentPanel1);
             this.splitContainer1.Panel2.Controls.Add(this.dgvProblem);
             this.splitContainer1.Size = new System.Drawing.Size(840, 448);
@@ -1089,13 +1091,13 @@
             this.dgvProblem.AllowUserToResizeRows = false;
             this.dgvProblem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProblem.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dgvProblem.Location = new System.Drawing.Point(48, 106);
+            this.dgvProblem.Location = new System.Drawing.Point(48, 138);
             this.dgvProblem.MultiSelect = false;
             this.dgvProblem.Name = "dgvProblem";
             this.dgvProblem.ReadOnly = true;
             this.dgvProblem.RowHeadersVisible = false;
             this.dgvProblem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProblem.Size = new System.Drawing.Size(736, 296);
+            this.dgvProblem.Size = new System.Drawing.Size(736, 264);
             this.dgvProblem.TabIndex = 0;
             this.dgvProblem.TabStop = false;
             this.dgvProblem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProblem_CellDoubleClick);
@@ -1662,9 +1664,9 @@
             this.transparentPanel1.Controls.Add(this.txtEditDesc);
             this.transparentPanel1.Controls.Add(this.txtEditCo);
             this.transparentPanel1.Controls.Add(this.txtEditName);
-            this.transparentPanel1.Location = new System.Drawing.Point(48, 32);
+            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
             this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(736, 68);
+            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
             this.transparentPanel1.TabIndex = 1;
             this.transparentPanel1.Visible = false;
             // 
@@ -1672,7 +1674,7 @@
             // 
             this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mskEditDate.Location = new System.Drawing.Point(12, 28);
+            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
             this.mskEditDate.Mask = "00/00/0000";
             this.mskEditDate.Name = "mskEditDate";
             this.mskEditDate.PromptChar = ' ';
@@ -1683,7 +1685,7 @@
             // dpEditDate
             // 
             this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpEditDate.Location = new System.Drawing.Point(92, 28);
+            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
             this.dpEditDate.Name = "dpEditDate";
             this.dpEditDate.Size = new System.Drawing.Size(18, 23);
             this.dpEditDate.TabIndex = 4;
@@ -1692,7 +1694,7 @@
             // txtEditDesc
             // 
             this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditDesc.Location = new System.Drawing.Point(458, 28);
+            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
             this.txtEditDesc.MaxLength = 100;
             this.txtEditDesc.Name = "txtEditDesc";
             this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
@@ -1702,7 +1704,7 @@
             // txtEditCo
             // 
             this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditCo.Location = new System.Drawing.Point(314, 28);
+            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
             this.txtEditCo.MaxLength = 4;
             this.txtEditCo.Name = "txtEditCo";
             this.txtEditCo.Size = new System.Drawing.Size(100, 23);
@@ -1711,11 +1713,20 @@
             // txtEditName
             // 
             this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditName.Location = new System.Drawing.Point(149, 28);
+            this.txtEditName.Location = new System.Drawing.Point(149, 13);
             this.txtEditName.MaxLength = 50;
             this.txtEditName.Name = "txtEditName";
             this.txtEditName.Size = new System.Drawing.Size(100, 23);
             this.txtEditName.TabIndex = 1;
+            // 
+            // transparentPanel2
+            // 
+            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
+            this.transparentPanel2.Name = "transparentPanel2";
+            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel2.TabIndex = 5;
+            this.transparentPanel2.Visible = false;
+            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
             // 
             // SnWindow
             // 
@@ -1906,5 +1917,6 @@
         private System.Windows.Forms.Label lblRemark;
         private System.Windows.Forms.TextBox txtDummy;
         private System.Windows.Forms.Label lblVerext;
+        private MiscClass.TransparentPanel transparentPanel2;
     }
 }

@@ -432,6 +432,7 @@ namespace SN_Net.Subform
             this.parent_form.Cursor = Cursors.Default;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
+            this.dgvProblem.Focus();
         }
 
         private void FormAddItem()
@@ -681,6 +682,9 @@ namespace SN_Net.Subform
         {
             if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
             {
+                this.transparentPanel2.Dock = DockStyle.Fill;
+                this.transparentPanel2.Visible = true;
+
                 if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
                 {
                     this.FormLoading();
@@ -689,6 +693,22 @@ namespace SN_Net.Subform
                     worker_delete.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerDeleteProblemComplete);
                     worker_delete.RunWorkerAsync();
                 }
+                else
+                {
+                    this.transparentPanel2.Visible = false;
+                }
+            }
+        }
+
+        private void drawDeleteRowSlash(object sender, PaintEventArgs e)
+        {
+            Rectangle rect = this.dgvProblem.GetRowDisplayRectangle(this.dgvProblem.CurrentCell.RowIndex, true);
+            Console.WriteLine("rect.Left : " + rect.Left.ToString() + " rect.Right : " + rect.Right.ToString() + " rect.Top : " + rect.Top.ToString() + " rect.Bottom : " + rect.Bottom.ToString());
+            Pen p = new Pen(Color.Red, 1f);
+
+            for (int i = rect.Left - 16; i < rect.Right; i += 8)
+            {
+                e.Graphics.DrawLine(p, i, rect.Bottom - 2, i + 23, rect.Top);
             }
         }
 
@@ -711,10 +731,10 @@ namespace SN_Net.Subform
 
         private void workerDeleteProblemComplete(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.transparentPanel2.Visible = false;
             this.loadProblemData();
             this.fillInDatagrid();
-            //this.setSelectedDataGridItem(this.problem.First<Problem>());
-            this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
+            this.setSelectedDataGridItem(this.problem.First<Problem>());
             this.FormReadItem();
         }
 
