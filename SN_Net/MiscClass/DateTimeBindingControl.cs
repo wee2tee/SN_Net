@@ -9,6 +9,21 @@ namespace SN_Net.MiscClass
 {
     public static class DateTimeBindingControl
     {
+        public static bool tryParseToDateTime(this String str_date)
+        {
+            CultureInfo cinfo_th = new CultureInfo("th-TH");
+
+            DateTime out_date;
+            if (DateTime.TryParse(str_date, cinfo_th, DateTimeStyles.None, out out_date))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public static void pickedDate(this MaskedTextBox maskTextBox, string str_date)
         {
             CultureInfo cinfo_us = new CultureInfo("en-US");

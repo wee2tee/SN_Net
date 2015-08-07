@@ -62,6 +62,7 @@
             this.modeToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.MdiWindowListItem = this.helpToolStripMenuItem;
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(864, 24);
             this.menuStrip1.TabIndex = 1;
@@ -228,7 +229,7 @@
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcessing.Name = "toolStripProcessing";
             this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(792, 17);
+            this.toolStripProcessing.Size = new System.Drawing.Size(823, 17);
             this.toolStripProcessing.Spring = true;
             this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;

@@ -17,19 +17,19 @@ namespace SN_Net.Subform
     public partial class DealerList : Form
     {
         public Dealer dealer; // the selected dealer
-        private Dealer focused_dealer;
+        private string selected_dealer_code;
+        //private Dealer focused_dealer;
         private List<Dealer> dealers = new List<Dealer>();
         private int sort_col = 1;
 
-        public DealerList(Dealer dealer = null)
+        public DealerList(string dealer_code)
         {
             InitializeComponent();
 
-            this.dealer = dealer;
-            this.focused_dealer = dealer;
+            this.selected_dealer_code = dealer_code;
+            //this.focused_dealer = dealer;
             this.loadDealerList();
             this.fillInDatagrid();
-            Console.WriteLine("selected_dealer : " + this.focused_dealer.dealer);
         }
 
         private void DealerList_Shown(object sender, EventArgs e)
@@ -150,7 +150,7 @@ namespace SN_Net.Subform
         {
             foreach (DataGridViewRow row in this.dgvDealer.Rows)
             {
-                if (((Dealer)row.Tag).id == this.focused_dealer.id)
+                if (((Dealer)row.Tag).dealer == this.selected_dealer_code)
                 {
                     row.Cells[1].Selected = true;
                     this.dgvDealer.Focus();

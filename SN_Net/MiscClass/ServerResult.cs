@@ -27,6 +27,7 @@ namespace SN_Net.MiscClass
 
         public int result { get; set; }
         public string message { get; set; }
+        //public List<int> serial_id_list { get; set; }
         public List<Users> users { get; set; }
         public List<MacAllowed> macallowed { get; set; }
         public List<Dealer> dealer { get; set; }
@@ -38,5 +39,6 @@ namespace SN_Net.MiscClass
         public List<Istab> howknown { get; set; }
         public List<Istab> verext { get; set; }
         public List<Istab> problem_code { get; set; }
+        public List<Serial_list> serial_list { get; set; }
     }
 }

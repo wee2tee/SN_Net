@@ -28,6 +28,7 @@ namespace SN_Net.MiscClass
                     ((MaskedTextBox)ct).BorderStyle = BorderStyle.FixedSingle;
                 }
                 label_control[ndx].Visible = true;
+                //DoubleClickHandler.Attach(form, edit_control, label_control);
             }
         }
 
@@ -38,17 +39,22 @@ namespace SN_Net.MiscClass
                 int ndx = edit_control.FindIndex(t => t.Equals(ct));
 
                 ct.SetBounds(label_control[ndx].Left, label_control[ndx].Top, ct.Width, ct.Height);
-                ct.Text = label_control[ndx].Text;
                 ct.Visible = true;
                 if (ct is TextBox)
                 {
                     ((TextBox)ct).ReadOnly = false;
                     ((TextBox)ct).BorderStyle = BorderStyle.FixedSingle;
+                    ((TextBox)ct).Text = "";
                 }
                 if (ct is MaskedTextBox)
                 {
                     ((MaskedTextBox)ct).ReadOnly = false;
                     ((MaskedTextBox)ct).BorderStyle = BorderStyle.FixedSingle;
+                    ((MaskedTextBox)ct).Text = "";
+                }
+                if (ct is ComboBox)
+                {
+                    ((ComboBox)ct).SelectedIndex = 0;
                 }
                 label_control[ndx].Visible = false;
             }
@@ -60,7 +66,7 @@ namespace SN_Net.MiscClass
             }
             if (edit_control.First() is MaskedTextBox)
             {
-                ((MaskedTextBox)edit_control.First()).SelectionStart = ((MaskedTextBox)edit_control.First()).Text.Length;
+                ((MaskedTextBox)edit_control.First()).SelectionStart = 0;
             }
         }
 
@@ -96,5 +102,7 @@ namespace SN_Net.MiscClass
                 ((MaskedTextBox)edit_control.First()).SelectionStart = ((MaskedTextBox)edit_control.First()).Text.Length;
             }
         }
+
+        
     }
 }

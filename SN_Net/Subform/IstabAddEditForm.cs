@@ -41,6 +41,8 @@ namespace SN_Net.Subform
             EnterKeyManager.Active(this);
 
             this.mode = mode;
+
+            this.initializeForm();
         }
 
         private void IstabAddEditForm_Load(object sender, EventArgs e)
@@ -70,6 +72,30 @@ namespace SN_Net.Subform
                         this.txtTypdes_th.Text = this.istab.typdes_th;
                     }
                 }
+            }
+        }
+
+        private void initializeForm()
+        {
+            switch (this.tabtyp)
+            {
+                case Istab.TABTYP.AREA:
+                    this.txtTypcod.MaxLength = 10;
+                    break;
+                case Istab.TABTYP.VEREXT:
+                    this.txtTypcod.MaxLength = 1;
+                    break;
+                case Istab.TABTYP.HOWKNOWN:
+                    this.txtTypcod.MaxLength = 4;
+                    break;
+                case Istab.TABTYP.BUSITYP:
+                    this.txtTypcod.MaxLength = 4;
+                    break;
+                case Istab.TABTYP.PROBLEM_CODE:
+                    this.txtTypcod.MaxLength = 2;
+                    break;
+                default:
+                    break;
             }
         }
 

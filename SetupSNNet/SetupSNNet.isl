@@ -1171,6 +1171,8 @@
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
 		<row><td>YOUR_COMPANY_NAME</td><td>ProgramFilesFolder</td><td>YOURCO~1|Your Company Name</td><td/><td>0</td><td/></row>
+		<row><td>expres_1._lt_express_software_group_co._ltd.</td><td>ProgramMenuFolder</td><td>EXPRES~1._LT|Express Software Group Co.,Ltd.</td><td/><td>1</td><td/></row>
+		<row><td>sn_net</td><td>expres_1._lt_express_software_group_co._ltd.</td><td>SN_Net</td><td/><td>1</td><td/></row>
 	</table>
 
 	<table name="DrLocator">
@@ -2639,7 +2641,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Express Software Group Co.,Ltd.</td><td>0</td><td/><td>463678289</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Express Software Group Co.,Ltd.</td><td>0</td><td/><td>1008986288</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION35</td><td>1033</td><td>Microsoft .NET Framework 3.5 needs to be installed for this installation to continue.</td><td>0</td><td/><td>-752667153</td></row>
@@ -3454,6 +3456,8 @@
 		<row><td>IDS_PROGMSG_XML_UPDATE_FILE</td><td>1033</td><td>Updating XML file %s...</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDS_SETUPEXE_EXPIRE_MSG</td><td>1033</td><td>This setup works until %s. The setup will now exit.</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDS_SETUPEXE_LAUNCH_COND_E</td><td>1033</td><td>This setup was built with an evaluation version of InstallShield and can only be launched from setup.exe.</td><td>0</td><td/><td>-752651026</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>1008937456</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>1008931408</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-752651026</td></row>
@@ -3743,8 +3747,11 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-752651026</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-752651026</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.ExpressSoftwareGroupCo.,Ltd..com</td><td>0</td><td/><td>463678289</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>Express Software Group Co.,Ltd.</td><td>0</td><td/><td>463678289</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.ExpressSoftwareGroupCo.,Ltd..com</td><td>0</td><td/><td>1008986288</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>Express Software Group Co.,Ltd.</td><td>0</td><td/><td>1008986288</td></row>
+		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>1008941552</td></row>
+		<row><td>ID_STRING5</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>1008935504</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>1008937552</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-752651026</td></row>
 	</table>
 
@@ -4438,6 +4445,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
+		<row><td>FileKey1</td><td>SN_Net.Primary_output</td><td/><td>expres_1._lt_express_software_group_co._ltd.</td><td>2</td></row>
+		<row><td>FileKey2</td><td>SN_Net.Primary_output</td><td/><td>sn_net</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">

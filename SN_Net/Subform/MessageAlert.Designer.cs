@@ -170,6 +170,7 @@
             this.Name = "MessageAlert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MessageAlert";
+            this.TopMost = true;
             this.panelBtn.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
             this.ResumeLayout(false);

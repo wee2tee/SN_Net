@@ -71,4 +71,12 @@ namespace SN_Net.MiscClass
             }
         }
     }
+
+    public static class DataResourceHelper
+    {
+        public static void Refresh(this DataResource data_resource)
+        {
+            data_resource = new DataResource();
+        }
+    }
 }

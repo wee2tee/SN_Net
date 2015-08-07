@@ -75,6 +75,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblOldnum = new System.Windows.Forms.Label();
+            this.mskOldnum = new System.Windows.Forms.MaskedTextBox();
             this.lblPosition = new System.Windows.Forms.Label();
             this.lblContact = new System.Windows.Forms.Label();
             this.lblFaxnum = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@
             this.lblAddr01 = new System.Windows.Forms.Label();
             this.txtFaxnum = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtOldnum = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPosition = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -109,6 +109,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
+            this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
+            this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
+            this.dpEditDate = new System.Windows.Forms.DateTimePicker();
+            this.txtEditDesc = new System.Windows.Forms.TextBox();
+            this.txtEditCo = new System.Windows.Forms.TextBox();
+            this.txtEditName = new System.Windows.Forms.TextBox();
             this.dgvProblem = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
@@ -127,20 +134,19 @@
             this.toolStripBook = new System.Windows.Forms.ToolStripButton();
             this.toolStripSet2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSearch = new System.Windows.Forms.ToolStripSplitButton();
-            this.inquiryAllCtrlLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inquiryRestAltLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripInquiryAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripInquiryRest = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchContactAlt2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchCompanyAlt3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchDealerCodeAlt4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchOldSerialAlt5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchBusinessTypeAlt6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchAreaAlt7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchSN = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchContact = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchCompany = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchDealer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchOldnum = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchBusityp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSearchArea = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripReload = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtSerNum = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -149,27 +155,21 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lblRefnum = new System.Windows.Forms.Label();
+            this.mskRefnum = new System.Windows.Forms.MaskedTextBox();
+            this.lblSerNum = new System.Windows.Forms.Label();
+            this.mskSernum = new System.Windows.Forms.MaskedTextBox();
             this.txtDummy = new System.Windows.Forms.TextBox();
             this.lblCompnam = new System.Windows.Forms.Label();
             this.txtCompnam = new System.Windows.Forms.TextBox();
             this.lblPrenam = new System.Windows.Forms.Label();
             this.txtPrenam = new System.Windows.Forms.TextBox();
-            this.lblRefnum = new System.Windows.Forms.Label();
-            this.txtRefnum = new System.Windows.Forms.TextBox();
             this.lblArea = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
             this.txtVersion = new System.Windows.Forms.TextBox();
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
-            this.lblSerNum = new System.Windows.Forms.Label();
             this.lblAreaTypdes = new System.Windows.Forms.Label();
-            this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
-            this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
-            this.dpEditDate = new System.Windows.Forms.DateTimePicker();
-            this.txtEditDesc = new System.Windows.Forms.TextBox();
-            this.txtEditCo = new System.Windows.Forms.TextBox();
-            this.txtEditName = new System.Windows.Forms.TextBox();
-            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -178,12 +178,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.transparentPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.transparentPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -433,11 +433,10 @@
             // 
             this.lblHowknownTypdes.AutoSize = true;
             this.lblHowknownTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblHowknownTypdes.Location = new System.Drawing.Point(215, 149);
+            this.lblHowknownTypdes.Location = new System.Drawing.Point(213, 149);
             this.lblHowknownTypdes.Name = "lblHowknownTypdes";
-            this.lblHowknownTypdes.Size = new System.Drawing.Size(76, 16);
+            this.lblHowknownTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblHowknownTypdes.TabIndex = 56;
-            this.lblHowknownTypdes.Text = "istab.typdes";
             // 
             // btnBrowseHowknown
             // 
@@ -485,11 +484,10 @@
             // 
             this.lblBusitypTypdes.AutoSize = true;
             this.lblBusitypTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusitypTypdes.Location = new System.Drawing.Point(215, 82);
+            this.lblBusitypTypdes.Location = new System.Drawing.Point(213, 82);
             this.lblBusitypTypdes.Name = "lblBusitypTypdes";
-            this.lblBusitypTypdes.Size = new System.Drawing.Size(76, 16);
+            this.lblBusitypTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblBusitypTypdes.TabIndex = 51;
-            this.lblBusitypTypdes.Text = "istab.typdes";
             // 
             // btnBrowseBusityp
             // 
@@ -542,6 +540,7 @@
             // 
             // txtReg
             // 
+            this.txtReg.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtReg.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txtReg.Location = new System.Drawing.Point(682, 115);
             this.txtReg.MaxLength = 1;
@@ -611,11 +610,10 @@
             // 
             this.lblDealer_DealerCompnam.AutoSize = true;
             this.lblDealer_DealerCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDealer_DealerCompnam.Location = new System.Drawing.Point(285, 110);
+            this.lblDealer_DealerCompnam.Location = new System.Drawing.Point(282, 110);
             this.lblDealer_DealerCompnam.Name = "lblDealer_DealerCompnam";
-            this.lblDealer_DealerCompnam.Size = new System.Drawing.Size(111, 16);
+            this.lblDealer_DealerCompnam.Size = new System.Drawing.Size(0, 16);
             this.lblDealer_DealerCompnam.TabIndex = 36;
-            this.lblDealer_DealerCompnam.Text = "dealer.compname";
             // 
             // label20
             // 
@@ -678,6 +676,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblOldnum);
+            this.groupBox1.Controls.Add(this.mskOldnum);
             this.groupBox1.Controls.Add(this.lblPosition);
             this.groupBox1.Controls.Add(this.lblContact);
             this.groupBox1.Controls.Add(this.lblFaxnum);
@@ -688,7 +687,6 @@
             this.groupBox1.Controls.Add(this.lblAddr01);
             this.groupBox1.Controls.Add(this.txtFaxnum);
             this.groupBox1.Controls.Add(this.label17);
-            this.groupBox1.Controls.Add(this.txtOldnum);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.txtPosition);
             this.groupBox1.Controls.Add(this.label14);
@@ -718,6 +716,17 @@
             this.lblOldnum.Size = new System.Drawing.Size(118, 23);
             this.lblOldnum.TabIndex = 74;
             this.lblOldnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // mskOldnum
+            // 
+            this.mskOldnum.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskOldnum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.mskOldnum.Location = new System.Drawing.Point(685, 188);
+            this.mskOldnum.Mask = ">A-AAA-AAAAAA";
+            this.mskOldnum.Name = "mskOldnum";
+            this.mskOldnum.PromptChar = ' ';
+            this.mskOldnum.Size = new System.Drawing.Size(118, 22);
+            this.mskOldnum.TabIndex = 15;
             // 
             // lblPosition
             // 
@@ -825,15 +834,6 @@
             this.label17.Size = new System.Drawing.Size(32, 16);
             this.label17.TabIndex = 28;
             this.label17.Text = "Fax.";
-            // 
-            // txtOldnum
-            // 
-            this.txtOldnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtOldnum.Location = new System.Drawing.Point(685, 187);
-            this.txtOldnum.MaxLength = 20;
-            this.txtOldnum.Name = "txtOldnum";
-            this.txtOldnum.Size = new System.Drawing.Size(118, 23);
-            this.txtOldnum.TabIndex = 15;
             // 
             // label15
             // 
@@ -1083,6 +1083,77 @@
             this.label6.TabIndex = 16;
             this.label6.Text = "CD Training";
             // 
+            // transparentPanel2
+            // 
+            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
+            this.transparentPanel2.Name = "transparentPanel2";
+            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel2.TabIndex = 5;
+            this.transparentPanel2.Visible = false;
+            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
+            // 
+            // transparentPanel1
+            // 
+            this.transparentPanel1.Controls.Add(this.mskEditDate);
+            this.transparentPanel1.Controls.Add(this.dpEditDate);
+            this.transparentPanel1.Controls.Add(this.txtEditDesc);
+            this.transparentPanel1.Controls.Add(this.txtEditCo);
+            this.transparentPanel1.Controls.Add(this.txtEditName);
+            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel1.TabIndex = 1;
+            this.transparentPanel1.Visible = false;
+            // 
+            // mskEditDate
+            // 
+            this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
+            this.mskEditDate.Mask = "00/00/0000";
+            this.mskEditDate.Name = "mskEditDate";
+            this.mskEditDate.PromptChar = ' ';
+            this.mskEditDate.Size = new System.Drawing.Size(82, 23);
+            this.mskEditDate.TabIndex = 0;
+            this.mskEditDate.ValidatingType = typeof(System.DateTime);
+            // 
+            // dpEditDate
+            // 
+            this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
+            this.dpEditDate.Name = "dpEditDate";
+            this.dpEditDate.Size = new System.Drawing.Size(18, 23);
+            this.dpEditDate.TabIndex = 4;
+            this.dpEditDate.TabStop = false;
+            // 
+            // txtEditDesc
+            // 
+            this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
+            this.txtEditDesc.MaxLength = 100;
+            this.txtEditDesc.Name = "txtEditDesc";
+            this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
+            this.txtEditDesc.TabIndex = 3;
+            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
+            // 
+            // txtEditCo
+            // 
+            this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
+            this.txtEditCo.MaxLength = 4;
+            this.txtEditCo.Name = "txtEditCo";
+            this.txtEditCo.Size = new System.Drawing.Size(100, 23);
+            this.txtEditCo.TabIndex = 2;
+            // 
+            // txtEditName
+            // 
+            this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditName.Location = new System.Drawing.Point(149, 13);
+            this.txtEditName.MaxLength = 50;
+            this.txtEditName.Name = "txtEditName";
+            this.txtEditName.Size = new System.Drawing.Size(100, 23);
+            this.txtEditName.TabIndex = 1;
+            // 
             // dgvProblem
             // 
             this.dgvProblem.AllowUserToAddRows = false;
@@ -1167,6 +1238,7 @@
             this.toolStripDelete.Name = "toolStripDelete";
             this.toolStripDelete.Size = new System.Drawing.Size(36, 40);
             this.toolStripDelete.Text = "Delete <Alt+D>";
+            this.toolStripDelete.Click += new System.EventHandler(this.toolStripDelete_Click);
             // 
             // toolStripStop
             // 
@@ -1205,7 +1277,7 @@
             this.toolStripFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripFirst.Name = "toolStripFirst";
             this.toolStripFirst.Size = new System.Drawing.Size(36, 40);
-            this.toolStripFirst.Text = "First record <Alt+T>";
+            this.toolStripFirst.Text = "First record <Ctrl+Home>";
             this.toolStripFirst.Click += new System.EventHandler(this.toolStripFirst_Click);
             // 
             // toolStripPrevious
@@ -1238,7 +1310,7 @@
             this.toolStripLast.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripLast.Name = "toolStripLast";
             this.toolStripLast.Size = new System.Drawing.Size(36, 40);
-            this.toolStripLast.Text = "Last record <Alt+B>";
+            this.toolStripLast.Text = "Last record <Ctrl+End>";
             this.toolStripLast.Click += new System.EventHandler(this.toolStripLast_Click);
             // 
             // toolStripSeparator2
@@ -1294,16 +1366,16 @@
             // 
             this.toolStripSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.inquiryAllCtrlLToolStripMenuItem,
-            this.inquiryRestAltLToolStripMenuItem,
+            this.toolStripInquiryAll,
+            this.toolStripInquiryRest,
             this.toolStripSeparator3,
-            this.toolStripMenuItem2,
-            this.searchContactAlt2ToolStripMenuItem,
-            this.searchCompanyAlt3ToolStripMenuItem,
-            this.searchDealerCodeAlt4ToolStripMenuItem,
-            this.searchOldSerialAlt5ToolStripMenuItem,
-            this.searchBusinessTypeAlt6ToolStripMenuItem,
-            this.searchAreaAlt7ToolStripMenuItem});
+            this.toolStripSearchSN,
+            this.toolStripSearchContact,
+            this.toolStripSearchCompany,
+            this.toolStripSearchDealer,
+            this.toolStripSearchOldnum,
+            this.toolStripSearchBusityp,
+            this.toolStripSearchArea});
             this.toolStripSearch.Image = global::SN_Net.Properties.Resources.search;
             this.toolStripSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1311,65 +1383,75 @@
             this.toolStripSearch.Name = "toolStripSearch";
             this.toolStripSearch.Size = new System.Drawing.Size(48, 40);
             this.toolStripSearch.Text = "Search by S/N <Alt+S>";
+            this.toolStripSearch.ButtonClick += new System.EventHandler(this.toolStripSearch_ButtonClick);
             // 
-            // inquiryAllCtrlLToolStripMenuItem
+            // toolStripInquiryAll
             // 
-            this.inquiryAllCtrlLToolStripMenuItem.Name = "inquiryAllCtrlLToolStripMenuItem";
-            this.inquiryAllCtrlLToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.inquiryAllCtrlLToolStripMenuItem.Text = "Inquiry All <Ctrl+L>";
+            this.toolStripInquiryAll.Name = "toolStripInquiryAll";
+            this.toolStripInquiryAll.Size = new System.Drawing.Size(265, 22);
+            this.toolStripInquiryAll.Text = "Inquiry All <Ctrl+L>";
+            this.toolStripInquiryAll.Click += new System.EventHandler(this.toolStripInquiryAll_Click);
             // 
-            // inquiryRestAltLToolStripMenuItem
+            // toolStripInquiryRest
             // 
-            this.inquiryRestAltLToolStripMenuItem.Name = "inquiryRestAltLToolStripMenuItem";
-            this.inquiryRestAltLToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.inquiryRestAltLToolStripMenuItem.Text = "Inquiry Rest <Alt+L>";
+            this.toolStripInquiryRest.Name = "toolStripInquiryRest";
+            this.toolStripInquiryRest.Size = new System.Drawing.Size(265, 22);
+            this.toolStripInquiryRest.Text = "Inquiry Rest <Alt+L>";
+            this.toolStripInquiryRest.Click += new System.EventHandler(this.toolStripInquiryRest_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(231, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(262, 6);
             // 
-            // toolStripMenuItem2
+            // toolStripSearchSN
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(234, 22);
-            this.toolStripMenuItem2.Text = "Search Serial No. <Alt+1>";
+            this.toolStripSearchSN.Name = "toolStripSearchSN";
+            this.toolStripSearchSN.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchSN.Text = "Search Serial No. <Alt+S>";
+            this.toolStripSearchSN.Click += new System.EventHandler(this.toolStripSearch_ButtonClick);
             // 
-            // searchContactAlt2ToolStripMenuItem
+            // toolStripSearchContact
             // 
-            this.searchContactAlt2ToolStripMenuItem.Name = "searchContactAlt2ToolStripMenuItem";
-            this.searchContactAlt2ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.searchContactAlt2ToolStripMenuItem.Text = "Search Contact <Alt+2>";
+            this.toolStripSearchContact.Name = "toolStripSearchContact";
+            this.toolStripSearchContact.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchContact.Text = "Search Contact <Alt+2>";
+            this.toolStripSearchContact.Click += new System.EventHandler(this.searchContactToolStripMenuItem_Click);
             // 
-            // searchCompanyAlt3ToolStripMenuItem
+            // toolStripSearchCompany
             // 
-            this.searchCompanyAlt3ToolStripMenuItem.Name = "searchCompanyAlt3ToolStripMenuItem";
-            this.searchCompanyAlt3ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.searchCompanyAlt3ToolStripMenuItem.Text = "Search Company <Alt+3>";
+            this.toolStripSearchCompany.Name = "toolStripSearchCompany";
+            this.toolStripSearchCompany.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchCompany.Text = "Search Company <Alt+3>";
+            this.toolStripSearchCompany.Click += new System.EventHandler(this.searchCompanyToolStripMenuItem_Click);
             // 
-            // searchDealerCodeAlt4ToolStripMenuItem
+            // toolStripSearchDealer
             // 
-            this.searchDealerCodeAlt4ToolStripMenuItem.Name = "searchDealerCodeAlt4ToolStripMenuItem";
-            this.searchDealerCodeAlt4ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.searchDealerCodeAlt4ToolStripMenuItem.Text = "Search Dealer Code <Alt+4>";
+            this.toolStripSearchDealer.Name = "toolStripSearchDealer";
+            this.toolStripSearchDealer.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchDealer.Text = "Search Dealer Code <Alt+4>";
+            this.toolStripSearchDealer.Click += new System.EventHandler(this.searchDealerCodeToolStripMenuItem_Click);
             // 
-            // searchOldSerialAlt5ToolStripMenuItem
+            // toolStripSearchOldnum
             // 
-            this.searchOldSerialAlt5ToolStripMenuItem.Name = "searchOldSerialAlt5ToolStripMenuItem";
-            this.searchOldSerialAlt5ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.searchOldSerialAlt5ToolStripMenuItem.Text = "Search Old Serial <Alt+5>";
+            this.toolStripSearchOldnum.Name = "toolStripSearchOldnum";
+            this.toolStripSearchOldnum.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchOldnum.Text = "Search Old Serial <Alt+5>";
+            this.toolStripSearchOldnum.Click += new System.EventHandler(this.searchOldSerialToolStripMenuItem_Click);
             // 
-            // searchBusinessTypeAlt6ToolStripMenuItem
+            // toolStripSearchBusityp
             // 
-            this.searchBusinessTypeAlt6ToolStripMenuItem.Name = "searchBusinessTypeAlt6ToolStripMenuItem";
-            this.searchBusinessTypeAlt6ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.searchBusinessTypeAlt6ToolStripMenuItem.Text = "Search Business Type <Alt+6>";
+            this.toolStripSearchBusityp.Name = "toolStripSearchBusityp";
+            this.toolStripSearchBusityp.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchBusityp.Text = "Search Business Type Code <Alt+6>";
+            this.toolStripSearchBusityp.Click += new System.EventHandler(this.searchBusinessTypeToolStripMenuItem_Click);
             // 
-            // searchAreaAlt7ToolStripMenuItem
+            // toolStripSearchArea
             // 
-            this.searchAreaAlt7ToolStripMenuItem.Name = "searchAreaAlt7ToolStripMenuItem";
-            this.searchAreaAlt7ToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-            this.searchAreaAlt7ToolStripMenuItem.Text = "Search Area <Alt+7>";
+            this.toolStripSearchArea.Name = "toolStripSearchArea";
+            this.toolStripSearchArea.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchArea.Text = "Search Area <Alt+7>";
+            this.toolStripSearchArea.Click += new System.EventHandler(this.searchAreaToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1397,16 +1479,6 @@
             this.label1.Size = new System.Drawing.Size(64, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Serial No.";
-            // 
-            // txtSerNum
-            // 
-            this.txtSerNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSerNum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSerNum.Location = new System.Drawing.Point(99, 46);
-            this.txtSerNum.MaxLength = 20;
-            this.txtSerNum.Name = "txtSerNum";
-            this.txtSerNum.Size = new System.Drawing.Size(118, 23);
-            this.txtSerNum.TabIndex = 1;
             // 
             // label2
             // 
@@ -1491,21 +1563,21 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.lblRefnum);
+            this.splitContainer2.Panel1.Controls.Add(this.mskRefnum);
+            this.splitContainer2.Panel1.Controls.Add(this.lblSerNum);
+            this.splitContainer2.Panel1.Controls.Add(this.mskSernum);
             this.splitContainer2.Panel1.Controls.Add(this.txtDummy);
             this.splitContainer2.Panel1.Controls.Add(this.lblCompnam);
             this.splitContainer2.Panel1.Controls.Add(this.txtCompnam);
             this.splitContainer2.Panel1.Controls.Add(this.lblPrenam);
             this.splitContainer2.Panel1.Controls.Add(this.txtPrenam);
-            this.splitContainer2.Panel1.Controls.Add(this.lblRefnum);
-            this.splitContainer2.Panel1.Controls.Add(this.txtRefnum);
             this.splitContainer2.Panel1.Controls.Add(this.lblArea);
             this.splitContainer2.Panel1.Controls.Add(this.lblVersion);
             this.splitContainer2.Panel1.Controls.Add(this.txtVersion);
             this.splitContainer2.Panel1.Controls.Add(this.btnBrowseArea);
             this.splitContainer2.Panel1.Controls.Add(this.txtArea);
-            this.splitContainer2.Panel1.Controls.Add(this.lblSerNum);
             this.splitContainer2.Panel1.Controls.Add(this.lblAreaTypdes);
-            this.splitContainer2.Panel1.Controls.Add(this.txtSerNum);
             // 
             // splitContainer2.Panel2
             // 
@@ -1514,6 +1586,50 @@
             this.splitContainer2.SplitterDistance = 107;
             this.splitContainer2.TabIndex = 16;
             this.splitContainer2.TabStop = false;
+            // 
+            // lblRefnum
+            // 
+            this.lblRefnum.BackColor = System.Drawing.Color.White;
+            this.lblRefnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblRefnum.Location = new System.Drawing.Point(694, 55);
+            this.lblRefnum.Name = "lblRefnum";
+            this.lblRefnum.Size = new System.Drawing.Size(118, 23);
+            this.lblRefnum.TabIndex = 63;
+            this.lblRefnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // mskRefnum
+            // 
+            this.mskRefnum.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskRefnum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.mskRefnum.Location = new System.Drawing.Point(702, 46);
+            this.mskRefnum.Mask = ">A-AAA-AAAAAA";
+            this.mskRefnum.Name = "mskRefnum";
+            this.mskRefnum.PromptChar = ' ';
+            this.mskRefnum.Size = new System.Drawing.Size(118, 22);
+            this.mskRefnum.TabIndex = 4;
+            // 
+            // lblSerNum
+            // 
+            this.lblSerNum.BackColor = System.Drawing.Color.White;
+            this.lblSerNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblSerNum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblSerNum.Location = new System.Drawing.Point(91, 55);
+            this.lblSerNum.Name = "lblSerNum";
+            this.lblSerNum.Size = new System.Drawing.Size(118, 23);
+            this.lblSerNum.TabIndex = 56;
+            this.lblSerNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // mskSernum
+            // 
+            this.mskSernum.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskSernum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.mskSernum.Location = new System.Drawing.Point(99, 48);
+            this.mskSernum.Mask = ">A-AAA-AAAAAA";
+            this.mskSernum.Name = "mskSernum";
+            this.mskSernum.PromptChar = ' ';
+            this.mskSernum.Size = new System.Drawing.Size(118, 22);
+            this.mskSernum.TabIndex = 1;
             // 
             // txtDummy
             // 
@@ -1542,7 +1658,7 @@
             this.txtCompnam.MaxLength = 100;
             this.txtCompnam.Name = "txtCompnam";
             this.txtCompnam.Size = new System.Drawing.Size(370, 23);
-            this.txtCompnam.TabIndex = 68;
+            this.txtCompnam.TabIndex = 6;
             // 
             // lblPrenam
             // 
@@ -1562,27 +1678,7 @@
             this.txtPrenam.MaxLength = 30;
             this.txtPrenam.Name = "txtPrenam";
             this.txtPrenam.Size = new System.Drawing.Size(118, 23);
-            this.txtPrenam.TabIndex = 66;
-            // 
-            // lblRefnum
-            // 
-            this.lblRefnum.BackColor = System.Drawing.Color.White;
-            this.lblRefnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblRefnum.Location = new System.Drawing.Point(694, 55);
-            this.lblRefnum.Name = "lblRefnum";
-            this.lblRefnum.Size = new System.Drawing.Size(118, 23);
-            this.lblRefnum.TabIndex = 63;
-            this.lblRefnum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtRefnum
-            // 
-            this.txtRefnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRefnum.Location = new System.Drawing.Point(701, 46);
-            this.txtRefnum.MaxLength = 20;
-            this.txtRefnum.Name = "txtRefnum";
-            this.txtRefnum.Size = new System.Drawing.Size(118, 23);
-            this.txtRefnum.TabIndex = 64;
+            this.txtPrenam.TabIndex = 5;
             // 
             // lblArea
             // 
@@ -1591,7 +1687,7 @@
             this.lblArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblArea.Location = new System.Drawing.Point(400, 55);
             this.lblArea.Name = "lblArea";
-            this.lblArea.Size = new System.Drawing.Size(70, 23);
+            this.lblArea.Size = new System.Drawing.Size(80, 23);
             this.lblArea.TabIndex = 59;
             this.lblArea.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1614,12 +1710,12 @@
             this.txtVersion.MaxLength = 4;
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.Size = new System.Drawing.Size(60, 23);
-            this.txtVersion.TabIndex = 58;
+            this.txtVersion.TabIndex = 2;
             // 
             // btnBrowseArea
             // 
             this.btnBrowseArea.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseArea.Location = new System.Drawing.Point(468, 54);
+            this.btnBrowseArea.Location = new System.Drawing.Point(478, 54);
             this.btnBrowseArea.Name = "btnBrowseArea";
             this.btnBrowseArea.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseArea.TabIndex = 54;
@@ -1634,99 +1730,17 @@
             this.txtArea.Location = new System.Drawing.Point(407, 46);
             this.txtArea.MaxLength = 20;
             this.txtArea.Name = "txtArea";
-            this.txtArea.Size = new System.Drawing.Size(70, 23);
+            this.txtArea.Size = new System.Drawing.Size(80, 23);
             this.txtArea.TabIndex = 3;
-            // 
-            // lblSerNum
-            // 
-            this.lblSerNum.BackColor = System.Drawing.Color.White;
-            this.lblSerNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblSerNum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblSerNum.Location = new System.Drawing.Point(91, 55);
-            this.lblSerNum.Name = "lblSerNum";
-            this.lblSerNum.Size = new System.Drawing.Size(118, 23);
-            this.lblSerNum.TabIndex = 56;
-            this.lblSerNum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblAreaTypdes
             // 
             this.lblAreaTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblAreaTypdes.Location = new System.Drawing.Point(496, 58);
+            this.lblAreaTypdes.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblAreaTypdes.Location = new System.Drawing.Point(504, 58);
             this.lblAreaTypdes.Name = "lblAreaTypdes";
-            this.lblAreaTypdes.Size = new System.Drawing.Size(131, 16);
+            this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
             this.lblAreaTypdes.TabIndex = 55;
-            this.lblAreaTypdes.Text = "istab.typdes";
-            // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Controls.Add(this.mskEditDate);
-            this.transparentPanel1.Controls.Add(this.dpEditDate);
-            this.transparentPanel1.Controls.Add(this.txtEditDesc);
-            this.transparentPanel1.Controls.Add(this.txtEditCo);
-            this.transparentPanel1.Controls.Add(this.txtEditName);
-            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
-            this.transparentPanel1.TabIndex = 1;
-            this.transparentPanel1.Visible = false;
-            // 
-            // mskEditDate
-            // 
-            this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
-            this.mskEditDate.Mask = "00/00/0000";
-            this.mskEditDate.Name = "mskEditDate";
-            this.mskEditDate.PromptChar = ' ';
-            this.mskEditDate.Size = new System.Drawing.Size(82, 23);
-            this.mskEditDate.TabIndex = 0;
-            this.mskEditDate.ValidatingType = typeof(System.DateTime);
-            // 
-            // dpEditDate
-            // 
-            this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
-            this.dpEditDate.Name = "dpEditDate";
-            this.dpEditDate.Size = new System.Drawing.Size(18, 23);
-            this.dpEditDate.TabIndex = 4;
-            this.dpEditDate.TabStop = false;
-            // 
-            // txtEditDesc
-            // 
-            this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
-            this.txtEditDesc.MaxLength = 100;
-            this.txtEditDesc.Name = "txtEditDesc";
-            this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
-            this.txtEditDesc.TabIndex = 3;
-            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
-            // 
-            // txtEditCo
-            // 
-            this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
-            this.txtEditCo.MaxLength = 4;
-            this.txtEditCo.Name = "txtEditCo";
-            this.txtEditCo.Size = new System.Drawing.Size(100, 23);
-            this.txtEditCo.TabIndex = 2;
-            // 
-            // txtEditName
-            // 
-            this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditName.Location = new System.Drawing.Point(149, 13);
-            this.txtEditName.MaxLength = 50;
-            this.txtEditName.Name = "txtEditName";
-            this.txtEditName.Size = new System.Drawing.Size(100, 23);
-            this.txtEditName.TabIndex = 1;
-            // 
-            // transparentPanel2
-            // 
-            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
-            this.transparentPanel2.Name = "transparentPanel2";
-            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
-            this.transparentPanel2.TabIndex = 5;
-            this.transparentPanel2.Visible = false;
-            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
             // 
             // SnWindow
             // 
@@ -1745,6 +1759,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer2);
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(860, 630);
             this.Name = "SnWindow";
             this.Text = "Serial Number";
@@ -1761,6 +1776,8 @@
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.transparentPanel1.ResumeLayout(false);
+            this.transparentPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -1768,8 +1785,6 @@
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
-            this.transparentPanel1.ResumeLayout(false);
-            this.transparentPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1794,21 +1809,20 @@
         private System.Windows.Forms.ToolStripButton toolStripItem;
         private System.Windows.Forms.ToolStripButton toolStripBook;
         private System.Windows.Forms.ToolStripSplitButton toolStripSearch;
-        private System.Windows.Forms.ToolStripMenuItem inquiryAllCtrlLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem inquiryRestAltLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem searchContactAlt2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem searchCompanyAlt3ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem searchDealerCodeAlt4ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem searchOldSerialAlt5ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem searchBusinessTypeAlt6ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem searchAreaAlt7ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripInquiryAll;
+        private System.Windows.Forms.ToolStripMenuItem toolStripInquiryRest;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchSN;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchContact;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchCompany;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchDealer;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchOldnum;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchBusityp;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSearchArea;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripSet2;
         private System.Windows.Forms.ToolStripButton toolStripUpgrade;
         public System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtSerNum;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -1833,7 +1847,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtFaxnum;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtOldnum;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtPosition;
         private System.Windows.Forms.Label label14;
@@ -1895,7 +1908,6 @@
         private System.Windows.Forms.Label lblPrenam;
         private System.Windows.Forms.TextBox txtPrenam;
         private System.Windows.Forms.Label lblRefnum;
-        private System.Windows.Forms.TextBox txtRefnum;
         private System.Windows.Forms.Label lblOldnum;
         private System.Windows.Forms.Label lblPosition;
         private System.Windows.Forms.Label lblContact;
@@ -1915,8 +1927,11 @@
         private System.Windows.Forms.Label lblBusityp;
         private System.Windows.Forms.Label lblBusides;
         private System.Windows.Forms.Label lblRemark;
-        private System.Windows.Forms.TextBox txtDummy;
         private System.Windows.Forms.Label lblVerext;
         private MiscClass.TransparentPanel transparentPanel2;
+        private System.Windows.Forms.MaskedTextBox mskSernum;
+        private System.Windows.Forms.MaskedTextBox mskOldnum;
+        private System.Windows.Forms.MaskedTextBox mskRefnum;
+        private System.Windows.Forms.TextBox txtDummy;
     }
 }

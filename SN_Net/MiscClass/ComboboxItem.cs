@@ -118,17 +118,17 @@ namespace SN_Net.MiscClass
         /// <param name="cb">the ComboBox that contained the ComboboxItem</param>
         /// <param name="name">the name(Text display in ComboBox) of the ComboboxItem</param>
         /// <returns></returns>
-        public static string Value_String(ComboBox cb, string name)
-        {
-            foreach (ComboboxItem item in cb.Items)
-            {
-                if (item.name == name)
-                {
-                    return item.string_value;
-                }
-            }
-            return string.Empty;
-        }
+        //public static string Value_String(ComboBox cb, string name)
+        //{
+        //    foreach (ComboboxItem item in cb.Items)
+        //    {
+        //        if (item.name == name)
+        //        {
+        //            return item.string_value;
+        //        }
+        //    }
+        //    return string.Empty;
+        //}
 
         /// <summary>
         /// Get the int value of the ComboboxItem
@@ -136,17 +136,17 @@ namespace SN_Net.MiscClass
         /// <param name="cb">the ComboBox that contained the ComboboxItem</param>
         /// <param name="name">the name(Text display in ComboBox) of the ComboboxItem</param>
         /// <returns></returns>
-        public static int Value_Int(ComboBox cb, string name)
-        {
+        //public static int Value_Int(ComboBox cb, string name)
+        //{
 
-            foreach (ComboboxItem item in cb.Items)
-            {
-                if (item.name == name)
-                {
-                    return item.int_value;
-                }
-            }
-            return 0;
-        }
+        //    foreach (ComboboxItem item in cb.Items)
+        //    {
+        //        if (item.name == name)
+        //        {
+        //            return item.int_value;
+        //        }
+        //    }
+        //    return 0;
+        //}
     }
 }

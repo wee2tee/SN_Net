@@ -21,14 +21,13 @@ namespace SN_Net.Subform
         private string sort_by;
         private Istab.TABTYP tabtyp;
         public Istab istab;
-        private Istab selected_istab;
+        private string selected_typcod;
 
-        public IstabList(Istab istab_data, Istab.TABTYP tabtyp)
+        public IstabList(string typcod, Istab.TABTYP tabtyp)
         {
             InitializeComponent();
             this.tabtyp = tabtyp;
-            this.istab = istab_data;
-            this.selected_istab = istab_data;
+            this.selected_typcod = typcod;
             this.setTitleText();
             this.sort_by = SORT_TYPCOD;
         }
@@ -36,7 +35,7 @@ namespace SN_Net.Subform
         private void setSelectedItem(){
             foreach (DataGridViewRow row in this.dgvIstab.Rows)
 	        {
-                if (((Istab)row.Tag).id == this.selected_istab.id)
+                if (((Istab)row.Tag).typcod == this.selected_typcod && ((Istab)row.Tag).tabtyp == this.tabtyp.ToTabtypString())
                 {
                     row.Cells[1].Selected = true;
                     break;
@@ -53,7 +52,7 @@ namespace SN_Net.Subform
 
         private void setTitleText()
         {
-            Istab.getTabtypTitle(this.tabtyp);
+            this.Text = Istab.getTabtypTitle(this.tabtyp);
         }
 
         private void IstabList_Load(object sender, EventArgs e)
@@ -80,7 +79,7 @@ namespace SN_Net.Subform
             this.dgvIstab.Columns.Clear();
             this.dgvIstab.Rows.Clear();
             this.dgvIstab.EnableHeadersVisualStyles = false;
-            this.dgvIstab.ColumnHeadersDefaultCellStyle.BackColor = Color.YellowGreen;
+            this.dgvIstab.ColumnHeadersDefaultCellStyle.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN;
 
             // Create column
             // ID
@@ -175,7 +174,7 @@ namespace SN_Net.Subform
             IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.ADD, this.tabtyp);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.selected_istab = wind.istab;
+                this.selected_typcod = wind.istab.typcod;
                 this.fillInDataGrid(this.loadIstabData(this.sort_by));
             }
         }
@@ -278,7 +277,7 @@ namespace SN_Net.Subform
             
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.selected_istab = wind.istab;
+                this.selected_typcod = wind.istab.typcod;
                 this.fillInDataGrid(this.loadIstabData(this.sort_by));
             }
         }

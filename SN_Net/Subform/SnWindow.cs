@@ -53,10 +53,6 @@ namespace SN_Net.Subform
         private MainForm parent_form;
         private FORM_MODE form_mode;
         public int id;
-        private const int FIRST_ROW = -1;
-        private const int LAST_ROW = 0;
-        private const int FIND_NEXT = 1;
-        private const int FIND_PREV = 2;
         private const string SORT_ID = "id";
         private const string SORT_SN = "sernum";
         private const string SORT_CONTACT = "contact";
@@ -68,13 +64,64 @@ namespace SN_Net.Subform
         private string sortMode;
         private CultureInfo cinfo_us = new CultureInfo("en-US");
         private CultureInfo cinfo_th = new CultureInfo("th-TH");
-        
+        private string json_data;
+        private int find_id;
+        private string find_sernum = "";
+        private string find_contact = "";
+        private string find_company = "";
+        private string find_dealer = "";
+        private string find_oldnum = "";
+        private string find_busityp = "";
+        private string find_area = "";
+        private FIND_TYPE find_type;
+        private List<Serial> serial_id_list;
+        List<Label> labels = new List<Label>();
+        List<Control> edit_controls = new List<Control>();
+
+        private enum FIND_TYPE
+        {
+            SERNUM,
+            CONTACT,
+            COMPANY,
+            DEALER,
+            OLDNUM,
+            BUSITYP,
+            AREA
+        }
+
         #endregion declare general variable
 
         public SnWindow()
         {
             InitializeComponent();
-            #region pairing TextBox with Browse Button
+
+            this.pairingTextBoxWithBrowseButton();
+
+            #region pairing MaskedTextBox with DateTimePicker
+            // MaskedTextBox
+            List<MaskedTextBox> list_mt = new List<MaskedTextBox>();
+            list_mt.Add(this.mskPurdat);
+            list_mt.Add(this.mskExpdat);
+            list_mt.Add(this.mskManual);
+            list_mt.Add(this.mskVerextdat);
+            list_mt.Add(this.mskEditDate);
+            // DateTimePicker
+            List<DateTimePicker> list_dp = new List<DateTimePicker>();
+            list_dp.Add(this.dpPurdat);
+            list_dp.Add(this.dpExpdat);
+            list_dp.Add(this.dpManual);
+            list_dp.Add(this.dpVerextdat);
+            list_dp.Add(this.dpEditDate);
+            // Pairing
+            PairDatePickerWithMaskedTextBox.Attach(list_mt, list_dp);
+            #endregion pairing MaskedTextBox with DateTimePicker
+
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(this.KeyDownShortcutKeyToolstrip);
+        }
+
+        private void pairingTextBoxWithBrowseButton()
+        {
             // TextBox
             List<TextBox> list_tb = new List<TextBox>();
             list_tb.Add(this.txtArea);
@@ -100,30 +147,7 @@ namespace SN_Net.Subform
             list_selection_data.Add(PairTextBoxWithBrowseButton.SELECTION_DATA.DEALER);
             list_selection_data.Add(PairTextBoxWithBrowseButton.SELECTION_DATA.HOWKNOWN);
             // Pairing
-            PairTextBoxWithBrowseButton.Attach(list_tb, list_btn, list_label, list_selection_data, data_resource);
-            #endregion pairing TextBox with Browse Button
-
-            #region pairing MaskedTextBox with DateTimePicker
-            // MaskedTextBox
-            List<MaskedTextBox> list_mt = new List<MaskedTextBox>();
-            list_mt.Add(this.mskPurdat);
-            list_mt.Add(this.mskExpdat);
-            list_mt.Add(this.mskManual);
-            list_mt.Add(this.mskVerextdat);
-            list_mt.Add(this.mskEditDate);
-            // DateTimePicker
-            List<DateTimePicker> list_dp = new List<DateTimePicker>();
-            list_dp.Add(this.dpPurdat);
-            list_dp.Add(this.dpExpdat);
-            list_dp.Add(this.dpManual);
-            list_dp.Add(this.dpVerextdat);
-            list_dp.Add(this.dpEditDate);
-            // Pairing
-            PairDatePickerWithMaskedTextBox.Attach(list_mt, list_dp);
-            #endregion pairing MaskedTextBox with DateTimePicker
-
-            this.KeyPreview = true;
-            this.KeyDown += new KeyEventHandler(this.ShortcutKeyToolstrip);
+            PairTextBoxWithBrowseButton.Attach(list_tb, list_btn, list_label, list_selection_data, this.data_resource);
         }
 
         private void SnWindow_Load(object sender, EventArgs e)
@@ -132,31 +156,118 @@ namespace SN_Net.Subform
             this.FormLoading();
             this.tabControl1.Selecting += new TabControlCancelEventHandler(this.preventChangeTabInEditMode);
             this.transparentPanel1.Paint += new PaintEventHandler(this.editPanelPaintHandler);
+
+            this.sortMode = SORT_SN;
+            this.catchLabelReadModeDoubleClick();
+            this.catchInlineEditKeyEvent();
+
             BackgroundWorker snWorker = new BackgroundWorker();
-            snWorker.DoWork += new DoWorkEventHandler(this.loadLastSN_Dowork);
-            snWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.loadSN_Complete);
+            snWorker.DoWork += new DoWorkEventHandler(this.workerLoadLastSN_Dowork);
+            snWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerLoadSN_Complete);
             snWorker.RunWorkerAsync();
         }
 
-        private void loadLastSN_Dowork(object sender, DoWorkEventArgs e)
+        private void workerLoadLastSN_Dowork(object sender, DoWorkEventArgs e)
         {
-            this.sortMode = SORT_SN;
-            this.getSerial(LAST_ROW, 0, this.sortMode);
-            this.transparentPanel1.Paint += new PaintEventHandler(this.editPanelPaintHandler);
+            this.getSerialIDList();
+            this.getSerial(this.serial_id_list.Last<Serial>().id);
         }
 
-        private void loadCurrentSN_Dowork(object sender, DoWorkEventArgs e)
+        private void workerLoadCurrentSN_Dowork(object sender, DoWorkEventArgs e)
         {
-            this.sortMode = SORT_SN;
-            this.getSerial(this.id, 0, this.sortMode);
+            this.getSerialIDList();
+            this.getSerial(this.id);
+            this.data_resource.Refresh();
+            foreach (Istab i in this.data_resource.LIST_HOWKNOWN)
+            {
+                Console.WriteLine("HowKnown : " + i.typcod + " => " + i.typdes_th);
+            }
+            this.pairingTextBoxWithBrowseButton();
         }
 
-        private void loadSN_Complete(object sender, RunWorkerCompletedEventArgs e)
+        private void workerLoadSN_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
             this.loadVerextComboBox();
             this.fillSerialInForm();
             this.dgvProblem.Dock = DockStyle.Fill;
             this.FormReady();
+        }
+
+        private void catchLabelReadModeDoubleClick()
+        {
+            this.labels.Add(this.lblVersion);
+            this.labels.Add(this.lblArea);
+            this.labels.Add(this.lblRefnum);
+            this.labels.Add(this.lblPrenam);
+            this.labels.Add(this.lblCompnam);
+            this.labels.Add(this.lblAddr01);
+            this.labels.Add(this.lblAddr02);
+            this.labels.Add(this.lblAddr03);
+            this.labels.Add(this.lblZipcod);
+            this.labels.Add(this.lblTelnum);
+            this.labels.Add(this.lblFaxnum);
+            this.labels.Add(this.lblContact);
+            this.labels.Add(this.lblPosition);
+            this.labels.Add(this.lblOldnum);
+            this.labels.Add(this.lblRemark);
+            this.labels.Add(this.lblBusides);
+            this.labels.Add(this.lblBusityp);
+            this.labels.Add(this.lblDealer_dealer);
+            this.labels.Add(this.lblHowknown);
+            this.labels.Add(this.lblPurdat);
+            this.labels.Add(this.lblExpdat);
+            this.labels.Add(this.lblReg);
+            this.labels.Add(this.lblManual);
+            this.labels.Add(this.lblVerext);
+            this.labels.Add(this.lblVerextdat);
+
+            this.edit_controls.Add(this.txtVersion);
+            this.edit_controls.Add(this.txtArea);
+            this.edit_controls.Add(this.mskRefnum);
+            this.edit_controls.Add(this.txtPrenam);
+            this.edit_controls.Add(this.txtCompnam);
+            this.edit_controls.Add(this.txtAddr01);
+            this.edit_controls.Add(this.txtAddr02);
+            this.edit_controls.Add(this.txtAddr03);
+            this.edit_controls.Add(this.txtZipcod);
+            this.edit_controls.Add(this.txtTelnum);
+            this.edit_controls.Add(this.txtFaxnum);
+            this.edit_controls.Add(this.txtContact);
+            this.edit_controls.Add(this.txtPosition);
+            this.edit_controls.Add(this.mskOldnum);
+            this.edit_controls.Add(this.txtRemark);
+            this.edit_controls.Add(this.txtBusides);
+            this.edit_controls.Add(this.txtBusityp);
+            this.edit_controls.Add(this.txtDealer_dealer);
+            this.edit_controls.Add(this.txtHowknown);
+            this.edit_controls.Add(this.mskPurdat);
+            this.edit_controls.Add(this.mskExpdat);
+            this.edit_controls.Add(this.txtReg);
+            this.edit_controls.Add(this.mskManual);
+            this.edit_controls.Add(this.cbVerext);
+            this.edit_controls.Add(this.mskVerextdat);
+
+            foreach (Label label in this.labels)
+            {
+                label.DoubleClick += new EventHandler(this.doubleClickToEdit);
+            }
+        }
+
+        private void doubleClickToEdit(object sender, EventArgs e)
+        {
+            this.toolStripEdit.PerformClick();
+            int ndx = this.labels.FindIndex(t => t.Equals((Label)sender));
+            this.edit_controls[ndx].Focus();
+
+            if (this.edit_controls[ndx] is TextBox)
+            {
+                ((TextBox)this.edit_controls[ndx]).SelectionStart = ((TextBox)this.edit_controls[ndx]).Text.Length;
+            }
+            if (this.edit_controls[ndx] is MaskedTextBox)
+            {
+                ((MaskedTextBox)this.edit_controls[ndx]).SelectionStart = 0;
+                ((MaskedTextBox)this.edit_controls[ndx]).SelectionLength = ((MaskedTextBox)this.edit_controls[ndx]).Text.Length;
+            }
         }
 
         #region Set form state
@@ -170,10 +281,10 @@ namespace SN_Net.Subform
             this.parent_form.menuStrip1.Enabled = false;
 
             List<Control> lct = new List<Control>();
-            lct.Add(this.txtSerNum);
+            lct.Add(this.mskSernum);
             lct.Add(this.txtVersion);
             lct.Add(this.txtArea);
-            lct.Add(this.txtRefnum);
+            lct.Add(this.mskRefnum);
             lct.Add(this.txtPrenam);
             lct.Add(this.txtCompnam);
             lct.Add(this.txtAddr01);
@@ -184,7 +295,7 @@ namespace SN_Net.Subform
             lct.Add(this.txtFaxnum);
             lct.Add(this.txtContact);
             lct.Add(this.txtPosition);
-            lct.Add(this.txtOldnum);
+            lct.Add(this.mskOldnum);
             lct.Add(this.txtRemark);
             lct.Add(this.txtBusides);
             lct.Add(this.txtBusityp);
@@ -237,10 +348,10 @@ namespace SN_Net.Subform
             this.parent_form.menuStrip1.Enabled = true;
 
             List<Control> lct = new List<Control>();
-            lct.Add(this.txtSerNum);
+            lct.Add(this.mskSernum);
             lct.Add(this.txtVersion);
             lct.Add(this.txtArea);
-            lct.Add(this.txtRefnum);
+            lct.Add(this.mskRefnum);
             lct.Add(this.txtPrenam);
             lct.Add(this.txtCompnam);
             lct.Add(this.txtAddr01);
@@ -251,7 +362,7 @@ namespace SN_Net.Subform
             lct.Add(this.txtFaxnum);
             lct.Add(this.txtContact);
             lct.Add(this.txtPosition);
-            lct.Add(this.txtOldnum);
+            lct.Add(this.mskOldnum);
             lct.Add(this.txtRemark);
             lct.Add(this.txtBusides);
             lct.Add(this.txtBusityp);
@@ -291,11 +402,16 @@ namespace SN_Net.Subform
             llb.Add(this.lblVerext);
             llb.Add(this.lblVerextdat);
             this.Ready(lct, llb);
-            this.txtDummy.Focus();
+            //this.txtDummy.Focus();
         }
 
         private void FormAdd()
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
+            this.lblAreaTypdes.Text = "";
+            this.lblBusitypTypdes.Text = "";
+            this.lblDealer_DealerCompnam.Text = "";
+            this.lblHowknownTypdes.Text = "";
             this.form_mode = FORM_MODE.ADD;
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
@@ -304,10 +420,10 @@ namespace SN_Net.Subform
             this.parent_form.menuStrip1.Enabled = true;
 
             List<Control> lct = new List<Control>();
-            lct.Add(this.txtSerNum);
+            lct.Add(this.mskSernum);
             lct.Add(this.txtVersion);
             lct.Add(this.txtArea);
-            lct.Add(this.txtRefnum);
+            lct.Add(this.mskRefnum);
             lct.Add(this.txtPrenam);
             lct.Add(this.txtCompnam);
             lct.Add(this.txtAddr01);
@@ -318,7 +434,7 @@ namespace SN_Net.Subform
             lct.Add(this.txtFaxnum);
             lct.Add(this.txtContact);
             lct.Add(this.txtPosition);
-            lct.Add(this.txtOldnum);
+            lct.Add(this.mskOldnum);
             lct.Add(this.txtRemark);
             lct.Add(this.txtBusides);
             lct.Add(this.txtBusityp);
@@ -357,11 +473,12 @@ namespace SN_Net.Subform
             llb.Add(this.lblManual);
             llb.Add(this.lblVerext);
             llb.Add(this.lblVerextdat);
-            this.Edit(lct, llb);
+            this.Add(lct, llb);
         }
 
         private void FormEdit()
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
             this.form_mode = FORM_MODE.EDIT;
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
@@ -372,7 +489,7 @@ namespace SN_Net.Subform
             List<Control> lct = new List<Control>();
             lct.Add(this.txtVersion);
             lct.Add(this.txtArea);
-            lct.Add(this.txtRefnum);
+            lct.Add(this.mskRefnum);
             lct.Add(this.txtPrenam);
             lct.Add(this.txtCompnam);
             lct.Add(this.txtAddr01);
@@ -383,7 +500,7 @@ namespace SN_Net.Subform
             lct.Add(this.txtFaxnum);
             lct.Add(this.txtContact);
             lct.Add(this.txtPosition);
-            lct.Add(this.txtOldnum);
+            lct.Add(this.mskOldnum);
             lct.Add(this.txtRemark);
             lct.Add(this.txtBusides);
             lct.Add(this.txtBusityp);
@@ -430,6 +547,7 @@ namespace SN_Net.Subform
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
             this.parent_form.Cursor = Cursors.Default;
+            this.button1.TabStop = true;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
             this.dgvProblem.Focus();
@@ -441,16 +559,19 @@ namespace SN_Net.Subform
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
             this.parent_form.Cursor = Cursors.Default;
+            this.button1.TabStop = false;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
         }
 
         private void FormEditItem()
         {
+            Console.WriteLine(" begin edit item ");
             this.form_mode = FORM_MODE.EDIT_ITEM;
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
             this.parent_form.Cursor = Cursors.Default;
+            this.button1.TabStop = false;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
         }
@@ -458,6 +579,7 @@ namespace SN_Net.Subform
 
         private void loadVerextComboBox()
         {
+            this.cbVerext.Items.Clear();
             foreach (Istab verext in this.data_resource.LIST_VEREXT)
             {
                 this.cbVerext.Items.Add(new ComboboxItem(verext.typcod + " - " + verext.typdes_th, 0, verext.typcod));
@@ -502,17 +624,13 @@ namespace SN_Net.Subform
             this.showInlineProblemForm(row_ndx, e.ColumnIndex);
         }
 
+        #endregion DataGridView Event Handler
+
+        #region Manage Problem data
         private void showInlineProblemForm(int row_index, int column_index)
         {
             this.dgvProblem.Enabled = false;
             this.dgvProblem.CurrentCell = this.dgvProblem.Rows[row_index].Cells[1];
-            
-            List<Control> lct = new List<Control>();
-            lct.Add(this.mskEditDate);
-            lct.Add(this.txtEditName);
-            lct.Add(this.txtEditCo);
-            lct.Add(this.txtEditDesc);
-            FormControlSequence.Attach(lct);
 
             Rectangle rect_date = this.dgvProblem.GetCellDisplayRectangle(1, row_index, true);
             Rectangle rect_name = this.dgvProblem.GetCellDisplayRectangle(2, row_index, true);
@@ -530,7 +648,7 @@ namespace SN_Net.Subform
             this.transparentPanel1.Visible = true;
             if (this.transparentPanel1.Tag is Problem)
             {
-                this.form_mode = FORM_MODE.EDIT_ITEM;
+                this.FormEditItem();
                 switch (column_index)
                 {
                     case 1:
@@ -555,15 +673,13 @@ namespace SN_Net.Subform
             }
             else
             {
-                this.form_mode = FORM_MODE.ADD_ITEM;
+                this.FormAddItem();
+                this.dpEditDate.Value = DateTime.Now;
                 this.mskEditDate.Focus();
             }
             this.setToolStripFormMode();
         }
 
-        #endregion DataGridView Event Handler
-
-        #region edit control in datagridview Event Handler
         private void editPanelPaintHandler(object sender, PaintEventArgs e)
         {
             Rectangle rect = this.dgvProblem.GetRowDisplayRectangle(this.dgvProblem.CurrentCell.RowIndex, false);
@@ -732,9 +848,7 @@ namespace SN_Net.Subform
         private void workerDeleteProblemComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             this.transparentPanel2.Visible = false;
-            this.loadProblemData();
             this.fillInDatagrid();
-            this.setSelectedDataGridItem(this.problem.First<Problem>());
             this.FormReadItem();
         }
 
@@ -751,7 +865,14 @@ namespace SN_Net.Subform
             this.fillInDatagrid();
             if(focused_problem_row == null)
             {
-                this.setSelectedDataGridItem((Problem)this.dgvProblem.Rows[this.problem.Count - 1].Tag);
+                if (this.problem.Count > 0)
+                {
+                    this.setSelectedDataGridItem((Problem)this.dgvProblem.Rows[this.problem.Count - 1].Tag);
+                }
+                else
+                {
+                    this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
+                }
             }
             else 
             {
@@ -760,118 +881,204 @@ namespace SN_Net.Subform
             this.form_mode = FORM_MODE.READ_ITEM;
             this.setToolStripFormMode();
         }
-        #endregion edit control in datagridview Event Handler
 
-        #region Get Serial data from server
-        private Serial getSerial(int row_id, int find_direction = 0, string sort_by = SORT_ID)
+        private void catchInlineEditKeyEvent()
         {
-            CRUDResult get;
-            ServerResult sr;
+            List<Control> lct = new List<Control>();
+            lct.Add(this.mskEditDate);
+            lct.Add(this.txtEditName);
+            lct.Add(this.txtEditCo);
+            lct.Add(this.txtEditDesc);
 
-            if (row_id < 1)
+            foreach (Control ct in lct)
             {
-                switch (row_id)
+                ct.KeyDown += new KeyEventHandler(this.validateInlineEditKeyPressed);
+                ct.GotFocus += new EventHandler(this.inlineEditGotFocusedHandler);
+                ct.Leave += new EventHandler(this.inlineEditLeaveHandler);
+            }
+
+            this.txtEditDesc.Click += new EventHandler(this.validateProbCode);
+        }
+
+        private void validateInlineEditKeyPressed(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab)
+            {
+                if (((Control)sender).Name == this.mskEditDate.Name)
                 {
-                    case FIRST_ROW:
-                        get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_first&sort=" + sort_by);
-                        sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    this.txtEditName.Focus();
+                }
+                else if (((Control)sender).Name == this.txtEditName.Name)
+                {
+                    this.txtEditCo.Focus();
+                }
+                else if (((Control)sender).Name == this.txtEditCo.Name)
+                {
+                    if (String.IsNullOrEmpty(this.txtEditCo.Text))
+                    {
+                        IstabList wind = new IstabList("", Istab.TABTYP.PROBLEM_CODE);
+                        if (wind.ShowDialog() == DialogResult.OK)
                         {
-                            this.serial = sr.serial[0];
-                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                            this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
-                            this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                            this.txtEditCo.Text = wind.istab.typcod;
+                            this.txtEditDesc.Focus();
                         }
-                        break;
+                    }
+                    else if (this.txtEditCo.Text.Trim().Length > 0)
+                    {
+                        Istab probCode = null;
+                        foreach (Istab prob in this.data_resource.LIST_PROBLEM_CODE)
+                        {
+                            if (prob.typcod == this.txtEditCo.Text)
+                            {
+                                probCode = prob;
+                                break;
+                            }
+                        }
+                        if (probCode != null)
+                        {
+                            this.txtEditCo.Text = probCode.typcod;
+                            this.txtEditDesc.Focus();
+                        }
+                        else
+                        {
+                            IstabList wind = new IstabList("", Istab.TABTYP.PROBLEM_CODE);
+                            if (wind.ShowDialog() == DialogResult.OK)
+                            {
+                                this.txtEditCo.Text = wind.istab.typcod;
+                                this.txtEditDesc.Focus();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.txtEditDesc.Focus();
+                    }
+                }
+            }
+            if (e.KeyCode == Keys.F6 && ((Control)sender).Name == this.txtEditCo.Name)
+            {
+                IstabList wind = new IstabList("", Istab.TABTYP.PROBLEM_CODE);
+                if (wind.ShowDialog() == DialogResult.OK)
+                {
+                    this.txtEditCo.Text = wind.istab.typcod;
+                }
+            }
+        }
 
-                    case LAST_ROW:
-                        get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last&sort=" + sort_by);
-                        Console.WriteLine(ApiConfig.API_MAIN_URL + "serial/get_last&sort=" + sort_by);
-                        Console.WriteLine(get.data);
-                        sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            this.serial = sr.serial[0];
-                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                            this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
-                            this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
-                        }
-                        break;
+        private void validateProbCode(object sender, EventArgs e)
+        {
+            if (this.txtEditCo.Text.Replace(" ", "").Length == 0)
+            {
+                this.txtEditCo.Focus();
+                IstabList wind = new IstabList("", Istab.TABTYP.PROBLEM_CODE);
+                if (wind.ShowDialog() == DialogResult.OK)
+                {
+                    this.txtEditCo.Text = wind.istab.typcod;
+                }
+            }
+        }
 
-                    default:
-                        get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last&sort=" + sort_by);
-                        sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+        private void inlineEditGotFocusedHandler(object sender, EventArgs e)
+        {
+            ((Control)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+            ((Control)sender).ForeColor = Color.Black;
+        }
+
+        private void inlineEditLeaveHandler(object sender, EventArgs e)
+        {
+            if (((Control)sender).Name == this.txtEditCo.Name)
+            {
+                if (String.IsNullOrEmpty(this.txtEditCo.Text) && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+                {
+                    this.txtEditCo.Focus();
+                    IstabList wind = new IstabList("", Istab.TABTYP.PROBLEM_CODE);
+                    if (wind.ShowDialog() == DialogResult.OK)
+                    {
+                        ((Control)sender).BackColor = Color.White;
+                        ((Control)sender).ForeColor = Color.Black;
+                        this.txtEditCo.Text = wind.istab.typcod;
+                        this.txtEditDesc.Focus();
+                    }
+                }
+                else if (this.txtEditCo.Text.Trim().Length > 0 && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+                {
+                    Istab probCode = null;
+                    foreach (Istab prob in this.data_resource.LIST_PROBLEM_CODE)
+                    {
+                        if (prob.typcod == this.txtEditCo.Text)
                         {
-                            this.serial = sr.serial[0];
-                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                            this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
-                            this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                            probCode = prob;
+                            break;
                         }
-                        break;
+                    }
+                    if (probCode != null)
+                    {
+                        ((Control)sender).BackColor = Color.White;
+                        ((Control)sender).ForeColor = Color.Black;
+                        this.txtEditCo.Text = probCode.typcod;
+                        this.txtEditDesc.Focus();
+                    }
+                    else
+                    {
+                        IstabList wind = new IstabList("", Istab.TABTYP.PROBLEM_CODE);
+                        if (wind.ShowDialog() == DialogResult.OK)
+                        {
+                            ((Control)sender).BackColor = Color.White;
+                            ((Control)sender).ForeColor = Color.Black;
+                            this.txtEditCo.Text = wind.istab.typcod;
+                            this.txtEditDesc.Focus();
+                        }
+                    }
+                }
+                else
+                {
+                    ((Control)sender).BackColor = Color.White;
+                    ((Control)sender).ForeColor = Color.Black;
                 }
             }
             else
             {
-                switch (find_direction)
+                ((Control)sender).BackColor = Color.White;
+                ((Control)sender).ForeColor = Color.Black;
+            }
+        }
+        #endregion Manage Problem data
+
+        #region Get Serial data from server
+        private void getSerialIDList()
+        {
+            CRUDResult get_id_list = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_id_list&sort=" + this.sortMode);
+            ServerResult sr_id_list = JsonConvert.DeserializeObject<ServerResult>(get_id_list.data);
+            if (sr_id_list.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.serial_id_list = sr_id_list.serial;
+            }
+        }
+
+        private void getSerial(int row_id)
+        {
+            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_at&id=" + row_id);
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                Console.WriteLine("sr.serial.count = " + sr.serial.Count.ToString());
+                if (sr.serial.Count > 0) 
                 {
-                    case FIND_NEXT:
-                        get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_next&sort=" + sort_by + "&id=" + row_id);
-                        sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            this.serial = sr.serial[0];
-                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                            this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
-                            this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
-                        }
-                        break;
-
-                    case FIND_PREV:
-                        get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_prev&sort=" + sort_by + "&id=" + row_id);
-                        sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            this.serial = sr.serial[0];
-                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                            this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
-                            this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
-                        }
-                        break;
-
-                    default:
-                        get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_at&sort=" + sort_by + "&id=" + row_id);
-                        sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            this.serial = sr.serial[0];
-                            this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                            this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                            this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                            this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                            this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
-                            this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
-                        }
-                        break;
+                    this.serial = sr.serial[0];
+                    this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                    this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                    this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
+                    this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
+                    this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
+                    this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                }
+                else
+                {
+                    this.getSerialIDList();
+                    this.getSerial(this.serial_id_list.Last<Serial>().id);
                 }
             }
-            
-            return serial;
+
         }
         #endregion Get Serial data from server
 
@@ -955,7 +1162,7 @@ namespace SN_Net.Subform
             col1.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
-                BackColor = ColorResource.COLUMN_HEADER,
+                BackColor = ColorResource.COLUMN_HEADER_BROWN,
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
             this.dgvProblem.Columns.Add(col1);
@@ -966,7 +1173,7 @@ namespace SN_Net.Subform
             col2.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
-                BackColor = ColorResource.COLUMN_HEADER,
+                BackColor = ColorResource.COLUMN_HEADER_BROWN,
                 Alignment = DataGridViewContentAlignment.MiddleLeft
             };
             this.dgvProblem.Columns.Add(col2);
@@ -977,7 +1184,7 @@ namespace SN_Net.Subform
             col3.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
-                BackColor = ColorResource.COLUMN_HEADER,
+                BackColor = ColorResource.COLUMN_HEADER_BROWN,
                 Alignment = DataGridViewContentAlignment.MiddleCenter
             };
             this.dgvProblem.Columns.Add(col3);
@@ -987,7 +1194,7 @@ namespace SN_Net.Subform
             col4.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
-                BackColor = ColorResource.COLUMN_HEADER,
+                BackColor = ColorResource.COLUMN_HEADER_BROWN,
                 Alignment = DataGridViewContentAlignment.MiddleLeft
             };
             this.dgvProblem.Columns.Add(col4);
@@ -1045,7 +1252,7 @@ namespace SN_Net.Subform
                     SelectionForeColor = Color.Black
                 };
             }
-
+            
             this.dgvProblem.FillLine(this.problem.Count);
             this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
             this.setGridColumnExpand();
@@ -1072,43 +1279,206 @@ namespace SN_Net.Subform
             this.txtEditDesc.Width = this.dgvProblem.Columns[4].Width;
         }
 
+        #region Manage Serial data
+        private void submitSerialData()
+        {
+
+            if (this.form_mode == FORM_MODE.ADD)
+            {
+                // Submit data in Add mode
+                this.json_data += "{\"sernum\":\"" + this.mskSernum.Text + "\",";
+                this.json_data += "\"oldnum\":\"" + this.mskOldnum.Text + "\",";
+                this.json_data += "\"version\":\"" + this.txtVersion.Text + "\",";
+                this.json_data += "\"contact\":\"" + this.txtContact.Text + "\",";
+                this.json_data += "\"position\":\"" + this.txtPosition.Text + "\",";
+                this.json_data += "\"prenam\":\"" + this.txtPrenam.Text + "\",";
+                this.json_data += "\"compnam\":\"" + this.txtCompnam.Text + "\",";
+                this.json_data += "\"addr01\":\"" + this.txtAddr01.Text + "\",";
+                this.json_data += "\"addr02\":\"" + this.txtAddr02.Text + "\",";
+                this.json_data += "\"addr03\":\"" + this.txtAddr03.Text + "\",";
+                this.json_data += "\"zipcod\":\"" + this.txtZipcod.Text + "\",";
+                this.json_data += "\"telnum\":\"" + this.txtTelnum.Text + "\",";
+                this.json_data += "\"faxnum\":\"" + this.txtFaxnum.Text + "\",";
+                this.json_data += "\"busityp\":\"" + this.txtBusityp.Text + "\",";
+                this.json_data += "\"busides\":\"" + this.txtBusides.Text + "\",";
+                this.json_data += "\"purdat\":\"" + this.mskPurdat.Text.toMySQLDate() + "\",";
+                this.json_data += "\"expdat\":\"" + this.mskExpdat.Text.toMySQLDate() + "\",";
+                this.json_data += "\"howknown\":\"" + this.txtHowknown.Text + "\",";
+                this.json_data += "\"area\":\"" + this.txtArea.Text + "\",";
+                //this.json_data += "\"branch\":\"" +  + "\",";
+                this.json_data += "\"manual\":\"" + this.mskManual.Text.toMySQLDate() + "\",";
+                //this.json_data += "\"upfree\":\"" +  + "\",";
+                this.json_data += "\"refnum\":\"" + this.mskRefnum.Text + "\",";
+                this.json_data += "\"remark\":\"" + this.txtRemark.Text + "\",";
+                this.json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.SelectedItem).string_value + "\",";
+                this.json_data += "\"verextdat\":\"" + this.mskVerextdat.Text.toMySQLDate() + "\",";
+                this.json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
+                this.json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+                this.json_data += "\"dealer_dealer\":\"" + this.txtDealer_dealer.Text + "\"}";
+                this.FormLoading();
+                BackgroundWorker workerSerialCreate = new BackgroundWorker();
+                workerSerialCreate.DoWork += new DoWorkEventHandler(this.workerSerialCreate_Dowork);
+                workerSerialCreate.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSerialCreate_Complete);
+                workerSerialCreate.RunWorkerAsync();
+            }
+            else
+            {
+                // Submit data in Edit mode
+                this.json_data += "{\"id\":" + this.id.ToString() + ",";
+                this.json_data += "\"oldnum\":\"" + this.mskOldnum.Text + "\",";
+                this.json_data += "\"version\":\"" + this.txtVersion.Text + "\",";
+                this.json_data += "\"contact\":\"" + this.txtContact.Text + "\",";
+                this.json_data += "\"position\":\"" + this.txtPosition.Text + "\",";
+                this.json_data += "\"prenam\":\"" + this.txtPrenam.Text + "\",";
+                this.json_data += "\"compnam\":\"" + this.txtCompnam.Text + "\",";
+                this.json_data += "\"addr01\":\"" + this.txtAddr01.Text + "\",";
+                this.json_data += "\"addr02\":\"" + this.txtAddr02.Text + "\",";
+                this.json_data += "\"addr03\":\"" + this.txtAddr03.Text + "\",";
+                this.json_data += "\"zipcod\":\"" + this.txtZipcod.Text + "\",";
+                this.json_data += "\"telnum\":\"" + this.txtTelnum.Text + "\",";
+                this.json_data += "\"faxnum\":\"" + this.txtFaxnum.Text + "\",";
+                this.json_data += "\"busityp\":\"" + this.txtBusityp.Text + "\",";
+                this.json_data += "\"busides\":\"" + this.txtBusides.Text + "\",";
+                this.json_data += "\"purdat\":\"" + this.mskPurdat.Text.toMySQLDate() + "\",";
+                this.json_data += "\"expdat\":\"" + this.mskExpdat.Text.toMySQLDate() + "\",";
+                this.json_data += "\"howknown\":\"" + this.txtHowknown.Text + "\",";
+                this.json_data += "\"area\":\"" + this.txtArea.Text + "\",";
+                //this.json_data += "\"branch\":\"" +  + "\",";
+                this.json_data += "\"manual\":\"" + this.mskManual.Text.toMySQLDate() + "\",";
+                //this.json_data += "\"upfree\":\"" +  + "\",";
+                this.json_data += "\"refnum\":\"" + this.mskRefnum.Text + "\",";
+                this.json_data += "\"remark\":\"" + this.txtRemark.Text + "\",";
+                this.json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.SelectedItem).string_value + "\",";
+                this.json_data += "\"verextdat\":\"" + this.mskVerextdat.Text.toMySQLDate() + "\",";
+                this.json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
+                this.json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+                this.json_data += "\"dealer_dealer\":\"" + this.txtDealer_dealer.Text + "\"}";
+                this.FormLoading();
+                BackgroundWorker workerSerialUpdate = new BackgroundWorker();
+                workerSerialUpdate.DoWork += new DoWorkEventHandler(this.workerSerialUpdate_Dowork);
+                workerSerialUpdate.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSerialUpdate_Complete);
+                workerSerialUpdate.RunWorkerAsync();
+            }
+        }
+
+        private void workerSerialCreate_Dowork(object sender, DoWorkEventArgs e)
+        {
+            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/create_new", this.json_data);
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.getSerial(Convert.ToInt32(sr.message));
+                this.getSerialIDList();
+            }
+            else
+            {
+                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+            }
+        }
+
+        private void workerSerialCreate_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
+            this.toolStripAdd.PerformClick();
+        }
+
+        private void workerSerialUpdate_Dowork(object sender, DoWorkEventArgs e)
+        {
+            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/update", this.json_data);
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.getSerial(Convert.ToInt32(sr.message));
+                this.getSerialIDList();
+            }
+            else
+            {
+                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+            }
+        }
+
+        private void workerSerialUpdate_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
+        }
+
+        private void findSerial()
+        {
+            this.FormLoading();
+            BackgroundWorker workerFind = new BackgroundWorker();
+            workerFind.DoWork += new DoWorkEventHandler(this.workerFind_Dowork);
+            workerFind.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerFind_Complete);
+            workerFind.RunWorkerAsync();
+        }
+
+        private void workerFind_Dowork(object sender, DoWorkEventArgs e)
+        {
+            this.getSerial(this.find_id);
+        }
+
+        private void workerFind_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
+        }
+        #endregion Manage Serial data
+
         #region ToolStrip click event handler
-        private void toolStripFirst_Click(object sender, EventArgs e)
-        {
-            this.getSerial(FIRST_ROW, 0, sortMode);
-            this.fillSerialInForm();
-        }
-
-        private void toolStripLast_Click(object sender, EventArgs e)
-        {
-            this.getSerial(LAST_ROW, 0, sortMode);
-            this.fillSerialInForm();
-        }
-
-        private void toolStripPrevious_Click(object sender, EventArgs e)
-        {
-            this.getSerial(this.id, FIND_PREV, this.sortMode);
-            this.fillSerialInForm();
-        }
-
-        private void toolStripNext_Click(object sender, EventArgs e)
-        {
-            this.getSerial(this.id, FIND_NEXT, this.sortMode);
-            this.fillSerialInForm();
-        }
-
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
-            this.form_mode = FORM_MODE.ADD;
-            this.setToolStripFormMode();
             this.FormAdd();
         }
 
         private void toolStripEdit_Click(object sender, EventArgs e)
         {
-            this.form_mode = FORM_MODE.EDIT;
-            this.setToolStripFormMode();
             this.FormEdit();
+        }
+
+        private void toolStripDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
+            {
+                this.FormLoading();
+
+                BackgroundWorker workerDeleteSerial = new BackgroundWorker();
+                workerDeleteSerial.DoWork += new DoWorkEventHandler(this.workerDeleteSerial_DoWork);
+                workerDeleteSerial.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerDeleteSerial_Complete);
+                workerDeleteSerial.RunWorkerAsync();
+            }
+        }
+
+        private void workerDeleteSerial_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.serial.id);
+
+            Console.WriteLine(this.serial.id.ToString());
+            CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "serial/delete&id=" + this.serial.id.ToString());
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
+
+            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.getSerialIDList();
+                if (current_ndx <= this.serial_id_list.Count)
+                {
+                    this.getSerial(current_ndx);
+                }
+                else
+                {
+                    this.getSerial(this.serial_id_list.Last<Serial>().id);
+                }
+            }
+            else
+            {
+                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+            }
+        }
+
+        private void workerDeleteSerial_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
         }
 
         private void toolStripStop_Click(object sender, EventArgs e)
@@ -1155,81 +1525,39 @@ namespace SN_Net.Subform
             }
             else
             {
-                string json_data = string.Empty;
-                if (this.form_mode == FORM_MODE.EDIT)
-                {
-                    // Submit data in Edit mode
-                    json_data += "{\"id\":" + this.id.ToString() + ",";
-                    json_data += "\"oldnum\":\"" + this.txtOldnum.Text + "\",";
-                    json_data += "\"version\":\"" + this.txtVersion.Text + "\",";
-                    json_data += "\"contact\":\"" + this.txtContact.Text + "\",";
-                    json_data += "\"position\":\"" + this.txtPosition.Text + "\",";
-                    json_data += "\"prenam\":\"" + this.txtPrenam.Text + "\",";
-                    json_data += "\"compnam\":\"" + this.txtCompnam.Text + "\",";
-                    json_data += "\"addr01\":\"" + this.txtAddr01.Text + "\",";
-                    json_data += "\"addr02\":\"" + this.txtAddr02.Text + "\",";
-                    json_data += "\"addr03\":\"" + this.txtAddr03.Text + "\",";
-                    json_data += "\"zipcod\":\"" + this.txtZipcod.Text + "\",";
-                    json_data += "\"telnum\":\"" + this.txtTelnum.Text + "\",";
-                    json_data += "\"faxnum\":\"" + this.txtFaxnum.Text + "\",";
-                    json_data += "\"busityp\":\"" + this.txtBusityp.Text + "\",";
-                    json_data += "\"busides\":\"" + this.txtBusides.Text + "\",";
-                    json_data += "\"purdat\":\"" + this.mskPurdat.Text.toMySQLDate() + "\",";
-                    json_data += "\"expdat\":\"" + this.mskExpdat.Text.toMySQLDate() + "\",";
-                    json_data += "\"howknown\":\"" + this.txtHowknown.Text + "\",";
-                    json_data += "\"area\":\"" + this.txtArea.Text + "\",";
-                    //json_data += "\"branch\":\"" +  + "\",";
-                    json_data += "\"manual\":\"" + this.mskManual.Text.toMySQLDate() + "\",";
-                    //json_data += "\"upfree\":\"" +  + "\",";
-                    json_data += "\"refnum\":\"" + this.txtRefnum.Text + "\",";
-                    json_data += "\"remark\":\"" + this.txtRemark.Text + "\",";
-                    json_data += "\"verext\":\"" + ComboboxItem.Value_String(this.cbVerext, this.cbVerext.Text) + "\",";
-                    json_data += "\"verextdat\":\"" + this.mskVerextdat.Text.toMySQLDate() + "\",";
-                    json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
-                    json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
-                    json_data += "\"dealer_dealer\":\"" + this.txtDealer_dealer.Text + "\"}";
-                }
-                else if (this.form_mode == FORM_MODE.ADD)
-                {
-                    // Submit data in Add mode
-                    json_data += "{\"sernum\":\"" + this.txtSerNum.Text + "\",";
-                    json_data += "\"oldnum\":\"" + this.txtOldnum.Text + "\",";
-                    json_data += "\"version\":\"" + this.txtVersion.Text + "\",";
-                    json_data += "\"contact\":\"" + this.txtContact.Text + "\",";
-                    json_data += "\"position\":\"" + this.txtPosition.Text + "\",";
-                    json_data += "\"prenam\":\"" + this.txtPrenam.Text + "\",";
-                    json_data += "\"compnam\":\"" + this.txtCompnam.Text + "\",";
-                    json_data += "\"addr01\":\"" + this.txtAddr01.Text + "\",";
-                    json_data += "\"addr02\":\"" + this.txtAddr02.Text + "\",";
-                    json_data += "\"addr03\":\"" + this.txtAddr03.Text + "\",";
-                    json_data += "\"zipcod\":\"" + this.txtZipcod.Text + "\",";
-                    json_data += "\"telnum\":\"" + this.txtTelnum.Text + "\",";
-                    json_data += "\"faxnum\":\"" + this.txtFaxnum.Text + "\",";
-                    json_data += "\"busityp\":\"" + this.txtBusityp.Text + "\",";
-                    json_data += "\"busides\":\"" + this.txtBusides.Text + "\",";
-                    json_data += "\"purdat\":\"" + this.mskPurdat.Text.toMySQLDate() + "\",";
-                    json_data += "\"expdat\":\"" + this.mskExpdat.Text.toMySQLDate() + "\",";
-                    json_data += "\"howknown\":\"" + this.txtHowknown.Text + "\",";
-                    json_data += "\"area\":\"" + this.txtArea.Text + "\",";
-                    //json_data += "\"branch\":\"" +  + "\",";
-                    json_data += "\"manual\":\"" + this.mskManual.Text.toMySQLDate() + "\",";
-                    //json_data += "\"upfree\":\"" +  + "\",";
-                    json_data += "\"refnum\":\"" + this.txtRefnum.Text + "\",";
-                    json_data += "\"remark\":\"" + this.txtRemark.Text + "\",";
-                    json_data += "\"verext\":\"" + ComboboxItem.Value_String(this.cbVerext, this.cbVerext.Text) + "\",";
-                    json_data += "\"verextdat\":\"" + this.mskVerextdat.Text.toMySQLDate() + "\",";
-                    json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
-                    json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
-                    json_data += "\"dealer_dealer\":\"" + this.txtDealer_dealer.Text + "\"}";
-                }
+                this.submitSerialData();
+            }
+        }
 
-                CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/create", json_data);
-                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+        private void toolStripFirst_Click(object sender, EventArgs e)
+        {
+            this.find_id = this.serial_id_list.First<Serial>().id;
+            this.findSerial();
+        }
 
-                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                {
-                    this.serial = sr.serial[0];
-                }
+        private void toolStripLast_Click(object sender, EventArgs e)
+        {
+            this.find_id = this.serial_id_list.Last<Serial>().id;
+            this.findSerial();
+        }
+
+        private void toolStripPrevious_Click(object sender, EventArgs e)
+        {
+            int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.id);
+            if (current_ndx > 0)
+            {
+                this.find_id = this.serial_id_list[current_ndx - 1].id;
+                this.findSerial();
+            }
+        }
+
+        private void toolStripNext_Click(object sender, EventArgs e)
+        {
+            int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.id);
+            if (current_ndx < this.serial_id_list.Count - 1)
+            {
+                this.find_id = this.serial_id_list[current_ndx + 1].id;
+                this.findSerial();
             }
         }
 
@@ -1243,15 +1571,385 @@ namespace SN_Net.Subform
             this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
         }
 
+        private void toolStripSearch_ButtonClick(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.SERNUM);
+            box.mskSearchKey.Text = this.find_sernum;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_sernum = box.mskSearchKey.Text;
+                this.find_type = FIND_TYPE.SERNUM;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        private void toolStripInquiryAll_Click(object sender, EventArgs e)
+        {
+            SNInquiryWindow wind = new SNInquiryWindow(SNInquiryWindow.INQUIRY_TYPE.ALL, this.sortMode, this.serial_id_list);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.getSerial(wind.selected_id);
+                this.fillSerialInForm();
+            }
+        }
+
+        private void toolStripInquiryRest_Click(object sender, EventArgs e)
+        {
+            SNInquiryWindow wind = new SNInquiryWindow(SNInquiryWindow.INQUIRY_TYPE.REST, this.sortMode, this.serial_id_list, this.serial);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.getSerial(wind.selected_id);
+                this.fillSerialInForm();
+            }
+        }
+
+        private void searchContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.CONTACT);
+            box.txtSearchKey.Text = this.find_contact;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_contact = box.txtSearchKey.Text;
+                this.find_type = FIND_TYPE.CONTACT;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        private void searchCompanyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.COMPNAM);
+            box.txtSearchKey.Text = this.find_company;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_company = box.txtSearchKey.Text;
+                this.find_type = FIND_TYPE.COMPANY;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        private void searchDealerCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.DEALER);
+            box.txtSearchKey.Text = this.find_dealer;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_dealer = box.txtSearchKey.Text;
+                this.find_type = FIND_TYPE.DEALER;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        private void searchOldSerialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.OLDNUM);
+            box.mskSearchKey.Text = this.find_oldnum;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_oldnum = box.mskSearchKey.Text;
+                this.find_type = FIND_TYPE.OLDNUM;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        private void searchBusinessTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.BUSITYP);
+            box.txtSearchKey.Text = this.find_busityp;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_busityp = box.txtSearchKey.Text;
+                this.find_type = FIND_TYPE.BUSITYP;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        private void searchAreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSerialBox box = new SearchSerialBox(SearchSerialBox.SEARCH_MODE.AREA);
+            box.txtSearchKey.Text = this.find_area;
+            if (box.ShowDialog() == DialogResult.OK)
+            {
+                this.find_area = box.txtSearchKey.Text;
+                this.find_type = FIND_TYPE.AREA;
+                this.FormLoading();
+                BackgroundWorker workerSearch = new BackgroundWorker();
+                workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
+                workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
+                workerSearch.RunWorkerAsync();
+            }
+        }
+
+        #region find by criteria
+        private void workerSearch_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string key_word = string.Empty;
+
+            switch (this.find_type)
+	        {
+		        case FIND_TYPE.SERNUM:
+                    this.sortMode = SORT_SN;
+                    this.getSerialIDList();
+                    
+                    key_word = this.find_sernum;
+                    if (key_word.Replace("-", "").Replace(" ", "").Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if (String.CompareOrdinal(s.sernum, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if (String.CompareOrdinal(s.sernum, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case FIND_TYPE.CONTACT:
+                    this.sortMode = SORT_CONTACT;
+                    this.getSerialIDList();
+
+                    key_word = this.find_contact;
+                    if (key_word.Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if (String.CompareOrdinal(s.contact, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if (String.CompareOrdinal(s.contact, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case FIND_TYPE.COMPANY:
+                    this.sortMode = SORT_COMPANY;
+                    this.getSerialIDList();
+
+                    key_word = this.find_company;
+                    if (key_word.Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if(String.CompareOrdinal(s.compnam, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if(String.CompareOrdinal(s.compnam, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case FIND_TYPE.DEALER:
+                    this.sortMode = SORT_DEALER;
+                    this.getSerialIDList();
+
+                    key_word = this.find_dealer;
+                    if (key_word.Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if (String.CompareOrdinal(s.dealer_dealer, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if (String.CompareOrdinal(s.dealer_dealer, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case FIND_TYPE.OLDNUM:
+                    this.sortMode = SORT_OLDNUM;
+                    this.getSerialIDList();
+
+                    key_word = this.find_oldnum;
+                    if (key_word.Replace("-", "").Replace(" ", "").Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if (String.CompareOrdinal(s.oldnum, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if (String.CompareOrdinal(s.oldnum, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case FIND_TYPE.BUSITYP:
+                    this.sortMode = SORT_BUSITYP;
+                    this.getSerialIDList();
+
+                    key_word = this.find_busityp;
+                    if (key_word.Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if (String.CompareOrdinal(s.busityp, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if (String.CompareOrdinal(s.busityp, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case FIND_TYPE.AREA:
+                    this.sortMode = SORT_AREA;
+                    this.getSerialIDList();
+
+                    key_word = this.find_area;
+                    if (key_word.Length > 0)
+                    {
+                        foreach (Serial s in this.serial_id_list)
+                        {
+                            if (String.CompareOrdinal(s.area, key_word) == 0)
+                            {
+                                this.getSerial(s.id);
+                                break;
+                            }
+                            else if (String.CompareOrdinal(s.area, key_word) > 0)
+                            {
+                                if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                                {
+                                    this.getSerial(s.id);
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            //CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/find&by=" + find_by + "&keyword=" + key_word);
+            //ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+            //if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            //{
+            //    if (Convert.ToInt32(sr.message) > 0)
+            //    {
+            //        this.getSerial(Convert.ToInt32(sr.message));
+            //    }
+            //    else
+            //    {
+            //        if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            //        {
+            //            // the next data record ID is return with minus value
+            //            this.getSerial(Convert.ToInt32(sr.message) * -1);
+            //        }
+            //    }
+            //}
+        }
+        private void workerSearch_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
+        }
+        #endregion find by criteria
+
         private void toolStripReload_Click(object sender, EventArgs e)
         {
             this.FormLoading();
             BackgroundWorker work = new BackgroundWorker();
-            work.DoWork += new DoWorkEventHandler(this.loadCurrentSN_Dowork);
-            work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.loadSN_Complete);
+            work.DoWork += new DoWorkEventHandler(this.workerLoadCurrentSN_Dowork);
+            work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerLoadSN_Complete);
             work.RunWorkerAsync();
         }
-
         #endregion toolStrip
 
         #region TabControl Event Handler
@@ -1267,12 +1965,12 @@ namespace SN_Net.Subform
         #region Browse button
         private void btnBrowseBusityp_Click(object sender, EventArgs e)
         {
-            IstabList wind = new IstabList(this.busityp, Istab.TABTYP.BUSITYP);
+            IstabList wind = new IstabList(this.txtBusityp.Text, Istab.TABTYP.BUSITYP);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.busityp = wind.istab;
-                this.txtBusityp.Text = this.busityp.typcod;
-                this.lblBusitypTypdes.Text = this.busityp.typdes_th;
+                this.txtBusityp.Text = wind.istab.typcod;
+                this.lblBusitypTypdes.Text = wind.istab.typdes_th;
+                this.txtDealer_dealer.Focus();
             }
             else
             {
@@ -1282,12 +1980,12 @@ namespace SN_Net.Subform
 
         private void btnBrowseArea_Click(object sender, EventArgs e)
         {
-            IstabList wind = new IstabList(this.area, Istab.TABTYP.AREA);
+            IstabList wind = new IstabList(this.txtArea.Text, Istab.TABTYP.AREA);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.area = wind.istab;
-                this.txtArea.Text = this.area.typcod;
-                this.lblAreaTypdes.Text = this.area.typdes_th;
+                this.txtArea.Text = wind.istab.typcod;
+                this.lblAreaTypdes.Text = wind.istab.typdes_th;
+                this.mskRefnum.Focus();
             }
             else
             {
@@ -1297,12 +1995,12 @@ namespace SN_Net.Subform
 
         private void btnBrowseHowknown_Click(object sender, EventArgs e)
         {
-            IstabList wind = new IstabList(this.howknown, Istab.TABTYP.HOWKNOWN);
+            IstabList wind = new IstabList(this.txtHowknown.Text, Istab.TABTYP.HOWKNOWN);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.howknown = wind.istab;
-                this.txtHowknown.Text = this.howknown.typcod;
-                this.lblHowknownTypdes.Text = this.howknown.typdes_th;
+                this.txtHowknown.Text = wind.istab.typcod;
+                this.lblHowknownTypdes.Text = wind.istab.typdes_th;
+                this.mskPurdat.Focus();
             }
             else
             {
@@ -1312,12 +2010,12 @@ namespace SN_Net.Subform
 
         private void btnBrowseDealer_Click(object sender, EventArgs e)
         {
-            DealerList wind = new DealerList(this.dealer);
+            DealerList wind = new DealerList(this.txtDealer_dealer.Text);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.dealer = wind.dealer;
-                this.txtDealer_dealer.Text = this.dealer.dealer;
-                this.lblDealer_DealerCompnam.Text = this.dealer.prenam + " " + this.dealer.compnam;
+                this.txtDealer_dealer.Text = wind.dealer.dealer;
+                this.lblDealer_DealerCompnam.Text = wind.dealer.prenam + " " + wind.dealer.compnam;
+                this.txtHowknown.Focus();
             }
             else
             {
@@ -1328,32 +2026,12 @@ namespace SN_Net.Subform
 
         private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
-            //{
-            //    if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
-            //    {
-            //        MainForm main_form = this.MdiParent as MainForm;
-            //        main_form.sn_wind = null;
-            //        e.Cancel = false;
-            //    }
-            //    else
-            //    {
-            //        e.Cancel = true;
-            //    }
-            //}
-            //else
-            //{
-            //    MainForm main_form = this.MdiParent as MainForm;
-            //    main_form.sn_wind = null;
-            //}
-
             MainForm main_form = this.MdiParent as MainForm;
             main_form.sn_wind = null;
-
         }
 
         #region Add shortcut key to ToolStripButton
-        private void ShortcutKeyToolstrip(object sender, KeyEventArgs e)
+        private void KeyDownShortcutKeyToolstrip(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.PageUp)
             {
@@ -1363,12 +2041,12 @@ namespace SN_Net.Subform
             {
                 this.toolStripNext.PerformClick();
             }
-            if (e.KeyCode == Keys.T && e.Modifiers == Keys.Control)
+            if (e.KeyCode == Keys.Home && e.Modifiers == Keys.Control)
             {
                 this.toolStripFirst.PerformClick();
                 e.Handled = true;
             }
-            if (e.KeyCode == Keys.B && e.Modifiers == Keys.Control)
+            if (e.KeyCode == Keys.End && e.Modifiers == Keys.Control)
             {
                 this.toolStripLast.PerformClick();
                 e.Handled = true;
@@ -1412,19 +2090,25 @@ namespace SN_Net.Subform
                 this.toolStripSave.PerformClick();
                 e.Handled = true;
             }
-            if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
+            if(e.KeyCode == Keys.A && e.Alt)
             {
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
+                    SplashPreventMenustripActive sp = new SplashPreventMenustripActive();
+                    sp.ShowDialog();
+
                     int col_index = this.dgvProblem.CurrentCell.ColumnIndex;
                     this.showInlineProblemForm(this.problem.Count, col_index);
                 }
                 else
                 {
+                    SplashPreventMenustripActive sp = new SplashPreventMenustripActive();
+                    sp.ShowDialog();
+                    
                     this.toolStripAdd.PerformClick();
                 }
             }
-            if (e.KeyCode == Keys.E && e.Modifiers == Keys.Control)
+            if (e.KeyCode == Keys.E && e.Alt)
             {
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
@@ -1432,6 +2116,9 @@ namespace SN_Net.Subform
                     int col_index = this.dgvProblem.CurrentCell.ColumnIndex;
                     if (this.dgvProblem.Rows[row_index].Tag is Problem)
                     {
+                        SplashPreventMenustripActive sp = new SplashPreventMenustripActive();
+                        sp.ShowDialog();
+
                         this.mskEditDate.pickedDate(((Problem)this.dgvProblem.Rows[row_index].Tag).date);
                         this.txtEditName.Text = ((Problem)this.dgvProblem.Rows[row_index].Tag).name;
                         this.txtEditCo.Text = ((Problem)this.dgvProblem.Rows[row_index].Tag).probcod;
@@ -1441,12 +2128,14 @@ namespace SN_Net.Subform
                 }
                 else
                 {
+                    SplashPreventMenustripActive sp = new SplashPreventMenustripActive();
+                    sp.ShowDialog();
+
                     this.toolStripEdit.PerformClick();
                 }
             }
-            if (e.KeyCode == Keys.D && e.Modifiers == Keys.Control)
+            if (e.KeyCode == Keys.D && e.Alt)
             {
-                Console.WriteLine("Current control is : " + ((Control)sender).Name);
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
                     this.deleteProblemData();
@@ -1455,6 +2144,42 @@ namespace SN_Net.Subform
                 {
                     this.toolStripDelete.PerformClick();
                 }
+            }
+            if (e.KeyCode == Keys.L && e.Control)
+            {
+                this.toolStripInquiryAll.PerformClick();
+            }
+            if (e.KeyCode == Keys.L && e.Alt)
+            {
+                this.toolStripInquiryRest.PerformClick();
+            }
+            if (e.KeyCode == Keys.S && e.Alt)
+            {
+                this.toolStripSearchSN.PerformClick();
+            }
+            if (e.KeyCode == Keys.D2 && e.Alt)
+            {
+                this.toolStripSearchContact.PerformClick();
+            }
+            if (e.KeyCode == Keys.D3 && e.Alt)
+            {
+                this.toolStripSearchCompany.PerformClick();
+            }
+            if (e.KeyCode == Keys.D4 && e.Alt)
+            {
+                this.toolStripSearchDealer.PerformClick();
+            }
+            if (e.KeyCode == Keys.D5 && e.Alt)
+            {
+                this.toolStripSearchOldnum.PerformClick();
+            }
+            if (e.KeyCode == Keys.D6 && e.Alt)
+            {
+                this.toolStripSearchBusityp.PerformClick();
+            }
+            if (e.KeyCode == Keys.D7 && e.Alt)
+            {
+                this.toolStripSearchArea.PerformClick();
             }
         }
         #endregion Add shortcut key to ToolStripButton
@@ -1592,6 +2317,38 @@ namespace SN_Net.Subform
                 default:
                     break;
             }
+        }
+
+        private int getMaxSerialId()
+        {
+            int max_id = 0;
+            foreach (Serial s in this.serial_id_list)
+            {
+                if (s.id > max_id)
+                {
+                    max_id = s.id;
+                }
+            }
+
+            return max_id;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Tab && this.form_mode == FORM_MODE.READ)
+            {
+                DataInfo data_info = new DataInfo();
+                data_info.lblDataTable.Text = "Serial";
+                data_info.lblExpression.Text = (this.sortMode == SORT_SN ? this.sortMode : this.sortMode + "+sernum");
+                data_info.lblRecBy.Text = this.serial.users_name;
+                data_info.lblRecDate.pickedDate(this.serial.chgdat);
+                data_info.lblRecNo.Text = this.serial.id.ToString();
+                data_info.lblTotalRec.Text = this.getMaxSerialId().ToString();
+                data_info.ShowDialog();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
