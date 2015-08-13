@@ -109,13 +109,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
-            this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
-            this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
-            this.dpEditDate = new System.Windows.Forms.DateTimePicker();
-            this.txtEditDesc = new System.Windows.Forms.TextBox();
-            this.txtEditCo = new System.Windows.Forms.TextBox();
-            this.txtEditName = new System.Windows.Forms.TextBox();
             this.dgvProblem = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
@@ -170,6 +163,13 @@
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
             this.lblAreaTypdes = new System.Windows.Forms.Label();
+            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
+            this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
+            this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
+            this.dpEditDate = new System.Windows.Forms.DateTimePicker();
+            this.txtEditDesc = new System.Windows.Forms.TextBox();
+            this.txtEditCo = new System.Windows.Forms.TextBox();
+            this.txtEditName = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -178,12 +178,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.transparentPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.transparentPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1083,77 +1083,6 @@
             this.label6.TabIndex = 16;
             this.label6.Text = "CD Training";
             // 
-            // transparentPanel2
-            // 
-            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
-            this.transparentPanel2.Name = "transparentPanel2";
-            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
-            this.transparentPanel2.TabIndex = 5;
-            this.transparentPanel2.Visible = false;
-            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
-            // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Controls.Add(this.mskEditDate);
-            this.transparentPanel1.Controls.Add(this.dpEditDate);
-            this.transparentPanel1.Controls.Add(this.txtEditDesc);
-            this.transparentPanel1.Controls.Add(this.txtEditCo);
-            this.transparentPanel1.Controls.Add(this.txtEditName);
-            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
-            this.transparentPanel1.TabIndex = 1;
-            this.transparentPanel1.Visible = false;
-            // 
-            // mskEditDate
-            // 
-            this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
-            this.mskEditDate.Mask = "00/00/0000";
-            this.mskEditDate.Name = "mskEditDate";
-            this.mskEditDate.PromptChar = ' ';
-            this.mskEditDate.Size = new System.Drawing.Size(82, 23);
-            this.mskEditDate.TabIndex = 0;
-            this.mskEditDate.ValidatingType = typeof(System.DateTime);
-            // 
-            // dpEditDate
-            // 
-            this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
-            this.dpEditDate.Name = "dpEditDate";
-            this.dpEditDate.Size = new System.Drawing.Size(18, 23);
-            this.dpEditDate.TabIndex = 4;
-            this.dpEditDate.TabStop = false;
-            // 
-            // txtEditDesc
-            // 
-            this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
-            this.txtEditDesc.MaxLength = 100;
-            this.txtEditDesc.Name = "txtEditDesc";
-            this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
-            this.txtEditDesc.TabIndex = 3;
-            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
-            // 
-            // txtEditCo
-            // 
-            this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
-            this.txtEditCo.MaxLength = 4;
-            this.txtEditCo.Name = "txtEditCo";
-            this.txtEditCo.Size = new System.Drawing.Size(100, 23);
-            this.txtEditCo.TabIndex = 2;
-            // 
-            // txtEditName
-            // 
-            this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditName.Location = new System.Drawing.Point(149, 13);
-            this.txtEditName.MaxLength = 50;
-            this.txtEditName.Name = "txtEditName";
-            this.txtEditName.Size = new System.Drawing.Size(100, 23);
-            this.txtEditName.TabIndex = 1;
-            // 
             // dgvProblem
             // 
             this.dgvProblem.AllowUserToAddRows = false;
@@ -1338,7 +1267,7 @@
             this.toolStripUpgrade.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripUpgrade.Name = "toolStripUpgrade";
             this.toolStripUpgrade.Size = new System.Drawing.Size(36, 40);
-            this.toolStripUpgrade.Text = "Upgrade";
+            this.toolStripUpgrade.Text = "Upgrade Program";
             // 
             // toolStripBook
             // 
@@ -1360,7 +1289,7 @@
             this.toolStripSet2.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
             this.toolStripSet2.Name = "toolStripSet2";
             this.toolStripSet2.Size = new System.Drawing.Size(36, 40);
-            this.toolStripSet2.Text = "Sell second package";
+            this.toolStripSet2.Text = "Sell Program #2";
             // 
             // toolStripSearch
             // 
@@ -1742,6 +1671,77 @@
             this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
             this.lblAreaTypdes.TabIndex = 55;
             // 
+            // transparentPanel2
+            // 
+            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
+            this.transparentPanel2.Name = "transparentPanel2";
+            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel2.TabIndex = 5;
+            this.transparentPanel2.Visible = false;
+            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
+            // 
+            // transparentPanel1
+            // 
+            this.transparentPanel1.Controls.Add(this.mskEditDate);
+            this.transparentPanel1.Controls.Add(this.dpEditDate);
+            this.transparentPanel1.Controls.Add(this.txtEditDesc);
+            this.transparentPanel1.Controls.Add(this.txtEditCo);
+            this.transparentPanel1.Controls.Add(this.txtEditName);
+            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel1.TabIndex = 1;
+            this.transparentPanel1.Visible = false;
+            // 
+            // mskEditDate
+            // 
+            this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
+            this.mskEditDate.Mask = "00/00/0000";
+            this.mskEditDate.Name = "mskEditDate";
+            this.mskEditDate.PromptChar = ' ';
+            this.mskEditDate.Size = new System.Drawing.Size(82, 23);
+            this.mskEditDate.TabIndex = 0;
+            this.mskEditDate.ValidatingType = typeof(System.DateTime);
+            // 
+            // dpEditDate
+            // 
+            this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
+            this.dpEditDate.Name = "dpEditDate";
+            this.dpEditDate.Size = new System.Drawing.Size(18, 23);
+            this.dpEditDate.TabIndex = 4;
+            this.dpEditDate.TabStop = false;
+            // 
+            // txtEditDesc
+            // 
+            this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
+            this.txtEditDesc.MaxLength = 100;
+            this.txtEditDesc.Name = "txtEditDesc";
+            this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
+            this.txtEditDesc.TabIndex = 3;
+            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
+            // 
+            // txtEditCo
+            // 
+            this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
+            this.txtEditCo.MaxLength = 4;
+            this.txtEditCo.Name = "txtEditCo";
+            this.txtEditCo.Size = new System.Drawing.Size(100, 23);
+            this.txtEditCo.TabIndex = 2;
+            // 
+            // txtEditName
+            // 
+            this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditName.Location = new System.Drawing.Point(149, 13);
+            this.txtEditName.MaxLength = 50;
+            this.txtEditName.Name = "txtEditName";
+            this.txtEditName.Size = new System.Drawing.Size(100, 23);
+            this.txtEditName.TabIndex = 1;
+            // 
             // SnWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1776,8 +1776,6 @@
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            this.transparentPanel1.ResumeLayout(false);
-            this.transparentPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -1785,6 +1783,8 @@
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            this.transparentPanel1.ResumeLayout(false);
+            this.transparentPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

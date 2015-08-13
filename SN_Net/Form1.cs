@@ -51,10 +51,6 @@ namespace SN_Net
                     this.macAddressAllowedToolStripMenuItem.Visible = false;
                 }
 
-                
-
-
-                
                 this.sNToolStripMenuItem.PerformClick();
                 //this.dealerToolStripMenuItem.PerformClick();
             }

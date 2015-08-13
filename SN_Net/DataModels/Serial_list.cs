@@ -13,6 +13,7 @@ namespace SN_Net.DataModels
         public string VERSION { get; set; }
         public string COMPNAM { get; set; }
         public string CONTACT { get; set; }
+        public string AREA { get; set; }
         public string DEALER { get; set; }
         public string TELNUM { get; set; }
         public string BUSITYP { get; set; }
