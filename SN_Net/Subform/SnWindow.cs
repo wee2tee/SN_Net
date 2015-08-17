@@ -19,7 +19,9 @@ namespace SN_Net.Subform
     {
         public DataResource data_resource = new DataResource();
         public GlobalVar G;
-        public List<Serial_list> serial_list = new List<Serial_list>();
+        //public List<Serial_list> serial_list = new List<Serial_list>();
+        public List<Serial> serial_id_list;
+
 
         #region declare Data Model
         public Serial serial;
@@ -54,15 +56,15 @@ namespace SN_Net.Subform
         private MainForm parent_form;
         private FORM_MODE form_mode;
         public int id;
-        private const string SORT_ID = "id";
-        private const string SORT_SN = "sernum";
-        private const string SORT_CONTACT = "contact";
-        private const string SORT_COMPANY = "compnam";
-        private const string SORT_DEALER = "dealer_dealer";
-        private const string SORT_OLDNUM = "oldnum";
-        private const string SORT_BUSITYP = "busityp";
-        private const string SORT_AREA = "area";
-        private string sortMode;
+        public const string SORT_ID = "id";
+        public const string SORT_SN = "sernum";
+        public const string SORT_CONTACT = "contact";
+        public const string SORT_COMPANY = "compnam";
+        public const string SORT_DEALER = "dealer_dealer";
+        public const string SORT_OLDNUM = "oldnum";
+        public const string SORT_BUSITYP = "busityp";
+        public const string SORT_AREA = "area";
+        public string sortMode;
         private CultureInfo cinfo_us = new CultureInfo("en-US");
         private CultureInfo cinfo_th = new CultureInfo("th-TH");
         private string json_data;
@@ -75,7 +77,6 @@ namespace SN_Net.Subform
         private string find_busityp = "";
         private string find_area = "";
         private FIND_TYPE find_type;
-        private List<Serial> serial_id_list;
         List<Label> labels = new List<Label>();
         List<Control> edit_controls = new List<Control>();
 
@@ -171,9 +172,15 @@ namespace SN_Net.Subform
         private void workerLoadLastSN_Dowork(object sender, DoWorkEventArgs e)
         {
             this.getSerialIDList();
-            this.loadSerialPart(this.sortMode, 0, 30000);
-            this.serial_list = this.serial_list.OrderBy(t => t.SERNUM).ToList<Serial_list>();
-            this.getSerial(this.serial_list.Last<Serial_list>().ID);
+            //this.KeepLog(DateTime.Now.ToString() + "\tBegin load serial part");
+            //this.loadSerialPart(this.sortMode, 0, 30000);
+            //this.KeepLog(DateTime.Now.ToString() + "\tBegin sorting serial list");
+            //this.serial_list = this.serial_list.OrderBy(t => t.SERNUM).ToList<Serial_list>();
+            //this.KeepLog(DateTime.Now.ToString() + "\tFinish sorting serial list");
+            //this.KeepLog(DateTime.Now.ToString() + "\tBegin get serial");
+            //this.getSerial(this.serial_list.Last<Serial_list>().ID);
+            this.getLastSerial();
+            //this.KeepLog(DateTime.Now.ToString() + "\tFinish get serial");
         }
 
         private void workerLoadCurrentSN_Dowork(object sender, DoWorkEventArgs e)
@@ -190,7 +197,6 @@ namespace SN_Net.Subform
 
         private void workerLoadSN_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.sortSnList();
             this.loadVerextComboBox();
             this.fillSerialInForm();
             this.dgvProblem.Dock = DockStyle.Fill;
@@ -1060,20 +1066,46 @@ namespace SN_Net.Subform
         }
 
         #region Get Serial List for Inquiry
-        private void loadSerialPart(string sortMode, int offset, int limit)
+        //private void loadSerialPart(string sortMode, int offset, int limit)
+        //{
+        //    CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + sortMode + "&offset=" + offset.ToString() + "&limit=" + limit.ToString());
+        //    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+        //    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+        //    {
+        //        this.serial_list = this.serial_list.Concat(sr.serial_list).ToList();
+        //        this.KeepLog(DateTime.Now.ToString() + "\tFinish load serial part : total row is " + this.serial_list.Count.ToString());
+        //        int totalRec = Convert.ToInt32(sr.message);
+
+
+        //        offset += this.serial_list.Count;
+        //        if (this.serial_list.Count < totalRec)
+        //        {
+        //            this.loadSerialPart(sortMode, offset, limit);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+        //    }
+        //}
+        #endregion Get Serial List for Inquiry
+
+        private void getLastSerial()
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + sortMode + "&offset=" + offset.ToString() + "&limit=" + limit.ToString());
+            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
-                this.serial_list = this.serial_list.Concat(sr.serial_list).ToList();
-                int totalRec = Convert.ToInt32(sr.message);
-
-
-                offset += this.serial_list.Count;
-                if (this.serial_list.Count < totalRec)
+                if (sr.serial.Count > 0)
                 {
-                    this.loadSerialPart(sortMode, offset, limit);
+                    this.serial = sr.serial[0];
+                    this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                    this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                    this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
+                    this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
+                    this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
+                    this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
                 }
             }
             else
@@ -1081,7 +1113,6 @@ namespace SN_Net.Subform
                 MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
             }
         }
-        #endregion Get Serial List for Inquiry
 
         private void getSerial(int row_id)
         {
@@ -1559,32 +1590,32 @@ namespace SN_Net.Subform
 
         private void toolStripFirst_Click(object sender, EventArgs e)
         {
-            this.find_id = this.serial_list.First<Serial_list>().ID;
+            this.find_id = this.serial_id_list.First<Serial>().id;
             this.findSerial();
         }
 
         private void toolStripLast_Click(object sender, EventArgs e)
         {
-            this.find_id = this.serial_list.Last<Serial_list>().ID;
+            this.find_id = this.serial_id_list.Last<Serial>().id;
             this.findSerial();
         }
 
         private void toolStripPrevious_Click(object sender, EventArgs e)
         {
-            int current_ndx = this.serial_list.FindIndex(t => t.ID == this.serial.id);
+            int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.serial.id);
             if (current_ndx > 0)
             {
-                this.find_id = this.serial_list[current_ndx - 1].ID;
+                this.find_id = this.serial_id_list[current_ndx - 1].id;
                 this.findSerial();
             }
         }
 
         private void toolStripNext_Click(object sender, EventArgs e)
         {
-            int current_ndx = this.serial_list.FindIndex(t => t.ID == this.serial.id);
-            if (current_ndx < this.serial_list.Count - 1)
+            int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.serial.id);
+            if (current_ndx < this.serial_id_list.Count - 1)
             {
-                this.find_id = this.serial_list[current_ndx + 1].ID;
+                this.find_id = this.serial_id_list[current_ndx + 1].id;
                 this.findSerial();
             }
         }
@@ -1758,33 +1789,36 @@ namespace SN_Net.Subform
             switch (this.find_type)
 	        {
 		        case FIND_TYPE.SERNUM:
-                    this.sortMode = SORT_SN;
-                    this.sortSnList();
+                    if (this.sortMode != SORT_SN)
+                    {
+                        this.sortMode = SORT_SN;
+                        this.getSerialIDList();
+                    }
 
                     key_word = this.find_sernum;
                     if (key_word.Replace("-", "").Replace(" ", "").Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.SERNUM.Length >= key_word.Length)
+                            if (s.sernum.Length >= key_word.Length)
                             {
-                                if (s.SERNUM.Substring(0, key_word.Length) == key_word)
+                                if (s.sernum.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if (String.CompareOrdinal(s.SERNUM, key_word) == 0)
+                            if (String.CompareOrdinal(s.sernum, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.SERNUM, key_word) > 0)
+                            else if (String.CompareOrdinal(s.sernum, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -1796,33 +1830,36 @@ namespace SN_Net.Subform
                     }
                     break;
                 case FIND_TYPE.CONTACT:
-                    this.sortMode = SORT_CONTACT;
-                    this.sortSnList();
+                    if (this.sortMode != SORT_CONTACT)
+                    {
+                        this.sortMode = SORT_CONTACT;
+                        this.getSerialIDList();
+                    }
 
                     key_word = this.find_contact;
                     if (key_word.Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.CONTACT.Length >= key_word.Length)
+                            if (s.contact.Length >= key_word.Length)
                             {
-                                if (s.CONTACT.Substring(0, key_word.Length) == key_word)
+                                if (s.contact.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if (String.CompareOrdinal(s.CONTACT, key_word) == 0)
+                            if (String.CompareOrdinal(s.contact, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.CONTACT, key_word) > 0)
+                            else if (String.CompareOrdinal(s.contact, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -1834,33 +1871,36 @@ namespace SN_Net.Subform
                     }
                     break;
                 case FIND_TYPE.COMPANY:
-                    this.sortMode = SORT_COMPANY;
-                    this.sortSnList();
+                    if (this.sortMode != SORT_COMPANY)
+                    {
+                        this.sortMode = SORT_COMPANY;
+                        this.getSerialIDList();
+                    }
 
                     key_word = this.find_company;
                     if (key_word.Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.COMPNAM.Length >= key_word.Length)
+                            if (s.compnam.Length >= key_word.Length)
                             {
-                                if (s.COMPNAM.Substring(0, key_word.Length) == key_word)
+                                if (s.compnam.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if(String.CompareOrdinal(s.COMPNAM, key_word) == 0)
+                            if(String.CompareOrdinal(s.compnam, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.COMPNAM, key_word) > 0)
+                            else if (String.CompareOrdinal(s.compnam, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -1872,33 +1912,36 @@ namespace SN_Net.Subform
                     }
                     break;
                 case FIND_TYPE.DEALER:
-                    this.sortMode = SORT_DEALER;
-                    this.sortSnList();
+                    if (this.sortMode != SORT_DEALER)
+                    {
+                        this.sortMode = SORT_DEALER;
+                        this.getSerialIDList();
+                    }
 
                     key_word = this.find_dealer;
                     if (key_word.Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.DEALER.Length >= key_word.Length)
+                            if (s.dealer_dealer.Length >= key_word.Length)
                             {
-                                if (s.DEALER.Substring(0, key_word.Length) == key_word)
+                                if (s.dealer_dealer.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if (String.CompareOrdinal(s.DEALER, key_word) == 0)
+                            if (String.CompareOrdinal(s.dealer_dealer, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.DEALER, key_word) > 0)
+                            else if (String.CompareOrdinal(s.dealer_dealer, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -1910,33 +1953,36 @@ namespace SN_Net.Subform
                     }
                     break;
                 case FIND_TYPE.OLDNUM:
-                    this.sortMode = SORT_OLDNUM;
-                    this.sortSnList();
+                    if (this.sortMode != SORT_OLDNUM)
+                    {
+                        this.sortMode = SORT_OLDNUM;
+                        this.getSerialIDList();
+                    }
 
                     key_word = this.find_oldnum;
                     if (key_word.Replace("-", "").Replace(" ", "").Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.OLDCOD.Length >= key_word.Length)
+                            if (s.oldnum.Length >= key_word.Length)
                             {
-                                if (s.OLDCOD.Substring(0, key_word.Length) == key_word)
+                                if (s.oldnum.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if (String.CompareOrdinal(s.OLDCOD, key_word) == 0)
+                            if (String.CompareOrdinal(s.oldnum, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.OLDCOD, key_word) > 0)
+                            else if (String.CompareOrdinal(s.oldnum, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -1948,33 +1994,36 @@ namespace SN_Net.Subform
                     }
                     break;
                 case FIND_TYPE.BUSITYP:
-                    this.sortMode = SORT_BUSITYP;
-                    this.sortSnList();
+                    if (this.sortMode != SORT_BUSITYP)
+                    {
+                        this.sortMode = SORT_BUSITYP;
+                        this.getSerialIDList();
+                    }
 
                     key_word = this.find_busityp;
                     if (key_word.Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.BUSITYP.Length >= key_word.Length)
+                            if (s.busityp.Length >= key_word.Length)
                             {
-                                if (s.BUSITYP.Substring(0, key_word.Length) == key_word)
+                                if (s.busityp.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if (String.CompareOrdinal(s.BUSITYP, key_word) == 0)
+                            if (String.CompareOrdinal(s.busityp, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.BUSITYP, key_word) > 0)
+                            else if (String.CompareOrdinal(s.busityp, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -1986,33 +2035,35 @@ namespace SN_Net.Subform
                     }
                     break;
                 case FIND_TYPE.AREA:
-                    this.sortMode = SORT_AREA;
-                    this.sortSnList();
-
+                    if (this.sortMode != SORT_AREA)
+                    {
+                        this.sortMode = SORT_AREA;
+                        this.getSerialIDList();
+                    }
                     key_word = this.find_area;
                     if (key_word.Length > 0)
                     {
-                        foreach (Serial_list s in this.serial_list)
+                        foreach (Serial s in this.serial_id_list)
                         {
-                            if (s.AREA.Length >= key_word.Length)
+                            if (s.area.Length >= key_word.Length)
                             {
-                                if (s.AREA.Substring(0, key_word.Length) == key_word)
+                                if (s.area.Substring(0, key_word.Length) == key_word)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                             }
 
-                            if (String.CompareOrdinal(s.AREA, key_word) == 0)
+                            if (String.CompareOrdinal(s.area, key_word) == 0)
                             {
-                                this.getSerial(s.ID);
+                                this.getSerial(s.id);
                                 break;
                             }
-                            else if (String.CompareOrdinal(s.AREA, key_word) > 0)
+                            else if (String.CompareOrdinal(s.area, key_word) > 0)
                             {
                                 if (MessageAlert.Show(StringResource.DATA_NOT_FOUND_GET_NEXT_DATA, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                                 {
-                                    this.getSerial(s.ID);
+                                    this.getSerial(s.id);
                                     break;
                                 }
                                 else
@@ -2028,39 +2079,39 @@ namespace SN_Net.Subform
             }
         }
 
-        private void sortSnList()
-        {
-            switch (this.sortMode)
-            {
-                case SORT_ID:
-                    this.serial_list = this.serial_list.OrderBy(t => t.ID).ToList<Serial_list>();
-                    break;
-                case SORT_SN:
-                    this.serial_list = this.serial_list.OrderBy(t => t.SERNUM).ToList<Serial_list>();
-                    break;
-                case SORT_OLDNUM:
-                    this.serial_list = this.serial_list.OrderBy(t => t.OLDCOD).ToList<Serial_list>();
-                    break;
-                case SORT_COMPANY:
-                    this.serial_list = this.serial_list.OrderBy(t => t.COMPNAM, new CompareStrings()).ToList<Serial_list>();
-                    break;
-                case SORT_AREA:
-                    this.serial_list = this.serial_list.OrderBy(t => t.AREA, new CompareStrings()).ToList<Serial_list>();
-                    break;
-                case SORT_CONTACT:
-                    this.serial_list = this.serial_list.OrderBy(t => t.CONTACT, new CompareStrings()).ToList<Serial_list>();
-                    break;
-                case SORT_DEALER:
-                    this.serial_list = this.serial_list.OrderBy(t => t.DEALER).ToList<Serial_list>();
-                    break;
-                case SORT_BUSITYP:
-                    this.serial_list = this.serial_list.OrderBy(t => t.BUSITYP).ToList<Serial_list>();
-                    break;
-                default:
-                    this.serial_list = this.serial_list.OrderBy(t => t.SERNUM).ToList<Serial_list>();
-                    break;
-            }
-        }
+        //private void sortSnList()
+        //{
+        //    switch (this.sortMode)
+        //    {
+        //        case SORT_ID:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.ID).ToList<Serial_list>();
+        //            break;
+        //        case SORT_SN:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.SERNUM).ToList<Serial_list>();
+        //            break;
+        //        case SORT_OLDNUM:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.OLDCOD).ToList<Serial_list>();
+        //            break;
+        //        case SORT_COMPANY:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.COMPNAM, new CompareStrings()).ToList<Serial_list>();
+        //            break;
+        //        case SORT_AREA:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.AREA, new CompareStrings()).ToList<Serial_list>();
+        //            break;
+        //        case SORT_CONTACT:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.CONTACT, new CompareStrings()).ToList<Serial_list>();
+        //            break;
+        //        case SORT_DEALER:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.DEALER).ToList<Serial_list>();
+        //            break;
+        //        case SORT_BUSITYP:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.BUSITYP).ToList<Serial_list>();
+        //            break;
+        //        default:
+        //            this.serial_list = this.serial_list.OrderBy(t => t.SERNUM).ToList<Serial_list>();
+        //            break;
+        //    }
+        //}
         
         private void workerSearch_Complete(object sender, RunWorkerCompletedEventArgs e)
         {

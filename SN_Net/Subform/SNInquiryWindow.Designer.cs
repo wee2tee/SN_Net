@@ -35,6 +35,10 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripSelectedID = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripLoadedRec = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripTotalRec = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSerial)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,6 +67,7 @@
             this.dgvSerial.TabIndex = 0;
             this.dgvSerial.Visible = false;
             this.dgvSerial.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSerial_CellDoubleClick);
+            this.dgvSerial.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvSerial_Scroll);
             // 
             // lblLoading
             // 
@@ -127,7 +132,11 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSelectedID});
+            this.toolStripSelectedID,
+            this.toolStripStatusLabel1,
+            this.toolStripLoadedRec,
+            this.toolStripStatusLabel3,
+            this.toolStripTotalRec});
             this.statusStrip1.Location = new System.Drawing.Point(0, 373);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(942, 22);
@@ -139,6 +148,30 @@
             this.toolStripSelectedID.Name = "toolStripSelectedID";
             this.toolStripSelectedID.Size = new System.Drawing.Size(13, 17);
             this.toolStripSelectedID.Text = "  ";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(58, 17);
+            this.toolStripStatusLabel1.Text = " , Loaded ";
+            // 
+            // toolStripLoadedRec
+            // 
+            this.toolStripLoadedRec.Name = "toolStripLoadedRec";
+            this.toolStripLoadedRec.Size = new System.Drawing.Size(10, 17);
+            this.toolStripLoadedRec.Text = " ";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(18, 17);
+            this.toolStripStatusLabel3.Text = "of";
+            // 
+            // toolStripTotalRec
+            // 
+            this.toolStripTotalRec.Name = "toolStripTotalRec";
+            this.toolStripTotalRec.Size = new System.Drawing.Size(10, 17);
+            this.toolStripTotalRec.Text = " ";
             // 
             // SNInquiryWindow
             // 
@@ -175,5 +208,9 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripSelectedID;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripLoadedRec;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripTotalRec;
     }
 }

@@ -18,6 +18,10 @@ namespace SN_Net.Subform
     {
         private SnWindow parentWindow;
         private List<Serial_list> serials = new List<Serial_list>();
+        private List<Serial> serial_id_list;
+        private string sortMode;
+        private int limit = 50;
+        private int offset = 0;
         private INQUIRY_TYPE inquiry_type;
         public enum INQUIRY_TYPE
         {
@@ -45,32 +49,168 @@ namespace SN_Net.Subform
             this.lblLoading.Dock = DockStyle.Fill;
             this.dgvSerial.Dock = DockStyle.Fill;
             this.setTitleText();
-            this.serial_list = parentWindow.serial_list;
+            this.serial_id_list = parentWindow.serial_id_list;
             this.current_serial = parentWindow.serial;
+            this.sortMode = parentWindow.sortMode;
             this.dgvSerial.RowPostPaint += new DataGridViewRowPostPaintEventHandler(this.drawRowBorder);
+            this.dgvSerial.Paint += new PaintEventHandler(this.loadPreviousWhilePaint);
+            this.dgvSerial.MouseWheel += new MouseEventHandler(this.mouseWheelHandler);
 
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_change_today");
-            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-
-            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            if (this.inquiry_type == INQUIRY_TYPE.REST)
             {
-                foreach (Serial_list sl in sr.serial_list)
-                {
-                    int target_ndx = this.serial_list.FindIndex(t => t.ID == sl.ID);
-
-                    if (target_ndx >= 0)
-                    {
-                        this.serial_list[target_ndx] = sl;
-                    }
-                    else
-                    {
-                        this.serial_list.Add(sl);
-                    }
-                }
+                this.inquiryRest();
             }
             else
             {
-                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                this.inquireAll();
+            }
+        }
+
+        private void inquireAll()
+        {
+            if (this.serial_list.Count == 0)
+            {
+                string ids = string.Empty;
+                for (int i = 0; i <= 100; i++)
+                {
+                    if (i == 0)
+                    {
+                        ids += this.serial_id_list[i].id.ToString();
+                    }
+                    else
+                    {
+                        ids += "," + this.serial_id_list[i].id.ToString();
+                    }
+                }
+
+                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    if (sr.serial_list.Count > 0)
+                    {
+                        this.serial_list = sr.serial_list;
+                    }
+                }
+            }
+        }
+
+        private void inquiryRest()
+        {
+            if (this.serial_list.Count == 0)
+            {
+                string ids = string.Empty;
+                int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.current_serial.id);
+                int start_ndx = (current_ndx - 49 < 0 ? 0 : current_ndx - 49);
+                int stop_ndx = (current_ndx + 50 > this.serial_id_list.Count - 1 ? this.serial_id_list.Count - 1 : current_ndx + 50);
+                for (int i = start_ndx; i <= stop_ndx; i++)
+                {
+                    if (i == start_ndx)
+                    {
+                        ids += this.serial_id_list[i].id.ToString();
+                    }
+                    else
+                    {
+                        ids += "," + this.serial_id_list[i].id.ToString();
+                    }
+                }
+
+                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    if (sr.serial_list.Count > 0)
+                    {
+                        this.serial_list = sr.serial_list;
+                        this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
+                        this.toolStripTotalRec.Text = this.serial_id_list.Count.ToString();
+                    }
+                }
+            }
+
+        }
+
+        private void inquiryPrevious()
+        {
+            string ids = string.Empty;
+            int first_item_id = this.serial_list.First<Serial_list>().ID;
+            int first_item_ndx = this.serial_id_list.FindIndex(t => t.id == first_item_id);
+            if (first_item_ndx > 0)
+            {
+                int rows_to_load = Convert.ToInt32(this.dgvSerial.ClientSize.Height / 25) + 10;
+
+                int start_ndx = (first_item_ndx - rows_to_load < 0 ? 0 : first_item_ndx - rows_to_load);
+                int stop_ndx = first_item_ndx - 1;
+                for (int i = start_ndx; i <= stop_ndx; i++)
+                {
+                    if (i == start_ndx)
+                    {
+                        ids += this.serial_id_list[i].id.ToString();
+                    }
+                    else
+                    {
+                        ids += "," + this.serial_id_list[i].id.ToString();
+                    }
+                }
+
+                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    if (sr.serial_list.Count > 0)
+                    {
+                        int current_item_id = (int)this.dgvSerial.Rows[this.dgvSerial.CurrentCell.RowIndex].Cells[0].Value;
+                        this.serial_list = sr.serial_list.Concat<Serial_list>(this.serial_list).ToList<Serial_list>();
+                        this.dgvSerial.DataSource = this.serial_list;
+                        int current_item_ndx = this.serial_list.FindIndex(t => t.ID == current_item_id);
+                        this.dgvSerial.Rows[current_item_ndx].Cells[1].Selected = true;
+                        this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
+                    }
+                }
+            }
+        }
+
+        private void inquiryNext()
+        {
+            string ids = string.Empty;
+            int last_item_id = this.serial_list.Last<Serial_list>().ID;
+            int last_item_ndx = this.serial_id_list.FindIndex(t => t.id == last_item_id);
+            if (last_item_ndx < this.serial_id_list.Count - 1)
+            {
+                int rows_to_load = Convert.ToInt32(this.dgvSerial.ClientSize.Height / 25) + 10;
+
+                int start_ndx = last_item_ndx + 1;
+                int stop_ndx = (start_ndx + rows_to_load > this.serial_id_list.Count - 1 ? (this.serial_id_list.Count - 1) - start_ndx : start_ndx + rows_to_load);
+                for (int i = start_ndx; i <= stop_ndx; i++)
+                {
+                    if (i == start_ndx)
+                    {
+                        ids += this.serial_id_list[i].id.ToString();
+                    }
+                    else
+                    {
+                        ids += "," + this.serial_id_list[i].id.ToString();
+                    }
+                }
+
+                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    if (sr.serial_list.Count > 0)
+                    {
+                        int current_item_id = (int)this.dgvSerial.Rows[this.dgvSerial.CurrentCell.RowIndex].Cells[0].Value;
+                        this.serial_list = this.serial_list.Concat<Serial_list>(sr.serial_list).ToList<Serial_list>();
+                        this.dgvSerial.DataSource = this.serial_list;
+                        int current_item_ndx = this.serial_list.FindIndex(t => t.ID == current_item_id);
+                        this.dgvSerial.Rows[current_item_ndx].Cells[1].Selected = true;
+                        this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
+                    }
+                }
             }
         }
 
@@ -83,10 +223,9 @@ namespace SN_Net.Subform
                 e.Graphics.DrawLine(new Pen(Color.Red, 1f), rect.Left, rect.Top, rect.Right, rect.Top);
                 e.Graphics.DrawLine(new Pen(Color.Red, 1f), rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
 
-                this.toolStripSelectedID.Text = "row id : " + this.dgvSerial.Rows[e.RowIndex].Cells[0].Value.ToString() + " of " + this.serial_list.Count.ToString();
+                this.toolStripSelectedID.Text = "Current row id : " + this.dgvSerial.Rows[e.RowIndex].Cells[0].Value.ToString();
             }
         }
-
         
         private void SNInquiryWindow_Shown(object sender, EventArgs e)
         {
@@ -100,6 +239,12 @@ namespace SN_Net.Subform
             this.btnOK.Enabled = true;
             this.dgvSerial.Focus();
             this.Cursor = Cursors.Default;
+        }
+
+        private void mouseWheelHandler(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Mouse wheel " + e.Delta.ToString());
+            
         }
 
         private void setTitleText()
@@ -131,7 +276,6 @@ namespace SN_Net.Subform
                 ForeColor = Color.Black,
                 SelectionBackColor = Color.White,
                 SelectionForeColor = Color.Black,
-                //Padding = new Padding(3),
                 WrapMode = DataGridViewTriState.False
             };
 
@@ -159,14 +303,8 @@ namespace SN_Net.Subform
             {
                 if (this.current_serial != null)
                 {
-                    foreach (DataGridViewRow row in this.dgvSerial.Rows)
-                    {
-                        if ((int)row.Cells[0].Value == this.current_serial.id)
-                        {
-                            row.Cells[1].Selected = true;
-                            break;
-                        }
-                    }
+                    int ndx = this.serial_list.FindIndex(t => t.ID == this.current_serial.id);
+                    this.dgvSerial.Rows[ndx].Cells[1].Selected = true;
                 }
                 else
                 {
@@ -198,6 +336,24 @@ namespace SN_Net.Subform
         private void dgvSerial_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.btnOK.PerformClick();
+        }
+
+        private void dgvSerial_Scroll(object sender, ScrollEventArgs e)
+        {
+            int first_displayed_ndx = this.dgvSerial.FirstDisplayedScrollingRowIndex;
+            this.dgvSerial.Rows[first_displayed_ndx].Cells[1].Selected = true;
+        }
+
+        private void loadPreviousWhilePaint(object sender, PaintEventArgs e)
+        {
+            if (this.dgvSerial.FirstDisplayedScrollingRowIndex == 0)
+            {
+                this.inquiryPrevious();
+            }
+            else if(this.dgvSerial.FirstDisplayedScrollingRowIndex > this.serial_list.Count - 60)
+            {
+                this.inquiryNext();
+            }
         }
     }
 }

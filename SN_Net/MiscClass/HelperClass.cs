@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SN_Net.DataModels;
+using System.IO;
+using System.Windows.Forms;
 
 namespace SN_Net.MiscClass
 {
@@ -27,22 +29,12 @@ namespace SN_Net.MiscClass
             }
         }
 
-        //public static Array AsArray(this Serial_list serial_list)
-        //{
-        //    string[] array = new string[10];
-
-        //    array[0] = serial_list.ID.ToString();
-        //    array[1] = serial_list.SERNUM;
-        //    array[2] = serial_list.OLDCOD;
-        //    array[3] = serial_list.VERSION;
-        //    array[4] = serial_list.COMPNAM;
-        //    array[5] = serial_list.CONTACT;
-        //    array[6] = serial_list.DEALER;
-        //    array[7] = serial_list.TELNUM;
-        //    array[8] = serial_list.BUSITYP;
-        //    array[9] = serial_list.BUSIDES;
-            
-        //    return array;
-        //}
+        public static void KeepLog(this Form form, string msg)
+        {
+            using (StreamWriter file = new StreamWriter("SN_Log.txt", true))
+            {
+                file.WriteLine(msg);
+            }
+        }
     }
 }
