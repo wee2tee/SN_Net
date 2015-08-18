@@ -92,6 +92,7 @@
     <Compile Include="MiscClass\TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MiscClass\ValidateSN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subform\ChangePasswordForm.cs">

@@ -23,6 +23,8 @@ namespace SN_Net.Subform
         private int limit = 50;
         private int offset = 0;
         private INQUIRY_TYPE inquiry_type;
+        private int h_scroll_pos = 0;
+
         public enum INQUIRY_TYPE
         {
             ALL,
@@ -91,6 +93,8 @@ namespace SN_Net.Subform
                     if (sr.serial_list.Count > 0)
                     {
                         this.serial_list = sr.serial_list;
+                        this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
+                        this.toolStripTotalRec.Text = this.serial_id_list.Count.ToString();
                     }
                 }
             }
@@ -167,6 +171,7 @@ namespace SN_Net.Subform
                         this.dgvSerial.DataSource = this.serial_list;
                         int current_item_ndx = this.serial_list.FindIndex(t => t.ID == current_item_id);
                         this.dgvSerial.Rows[current_item_ndx].Cells[1].Selected = true;
+                        this.dgvSerial.HorizontalScrollingOffset = this.h_scroll_pos;
                         this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
                     }
                 }
@@ -208,6 +213,7 @@ namespace SN_Net.Subform
                         this.dgvSerial.DataSource = this.serial_list;
                         int current_item_ndx = this.serial_list.FindIndex(t => t.ID == current_item_id);
                         this.dgvSerial.Rows[current_item_ndx].Cells[1].Selected = true;
+                        this.dgvSerial.HorizontalScrollingOffset = this.h_scroll_pos;
                         this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
                     }
                 }
@@ -223,7 +229,7 @@ namespace SN_Net.Subform
                 e.Graphics.DrawLine(new Pen(Color.Red, 1f), rect.Left, rect.Top, rect.Right, rect.Top);
                 e.Graphics.DrawLine(new Pen(Color.Red, 1f), rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
 
-                this.toolStripSelectedID.Text = "Current row id : " + this.dgvSerial.Rows[e.RowIndex].Cells[0].Value.ToString();
+                this.toolStripSelectedID.Text = "Current row ID : " + this.dgvSerial.Rows[e.RowIndex].Cells[0].Value.ToString();
             }
         }
         
@@ -340,8 +346,13 @@ namespace SN_Net.Subform
 
         private void dgvSerial_Scroll(object sender, ScrollEventArgs e)
         {
-            int first_displayed_ndx = this.dgvSerial.FirstDisplayedScrollingRowIndex;
-            this.dgvSerial.Rows[first_displayed_ndx].Cells[1].Selected = true;
+
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                int first_displayed_ndx = this.dgvSerial.FirstDisplayedScrollingRowIndex;
+                this.dgvSerial.Rows[first_displayed_ndx].Cells[1].Selected = true;
+                this.dgvSerial.HorizontalScrollingOffset = this.h_scroll_pos;
+            }
         }
 
         private void loadPreviousWhilePaint(object sender, PaintEventArgs e)
@@ -350,10 +361,15 @@ namespace SN_Net.Subform
             {
                 this.inquiryPrevious();
             }
-            else if(this.dgvSerial.FirstDisplayedScrollingRowIndex > this.serial_list.Count - 60)
+            else if (this.dgvSerial.FirstDisplayedScrollingRowIndex > this.serial_list.Count - 60)
             {
                 this.inquiryNext();
             }
+        }
+
+        private void dgvSerial_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            this.h_scroll_pos = this.dgvSerial.HorizontalScrollingOffset;
         }
     }
 }

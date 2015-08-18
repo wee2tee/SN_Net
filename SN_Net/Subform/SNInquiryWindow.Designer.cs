@@ -67,6 +67,7 @@
             this.dgvSerial.TabIndex = 0;
             this.dgvSerial.Visible = false;
             this.dgvSerial.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSerial_CellDoubleClick);
+            this.dgvSerial.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvSerial_RowPrePaint);
             this.dgvSerial.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvSerial_Scroll);
             // 
             // lblLoading

@@ -103,6 +103,19 @@ namespace SN_Net.MiscClass
             }
         }
 
-        
+        //public static void Saving(this Form form, List<Control> edit_control)
+        //{
+        //    foreach (Control ct in edit_control)
+        //    {
+        //        if (ct is TextBox)
+        //        {
+        //            ((TextBox)ct).ReadOnly = true;
+        //        }
+        //        if (ct is MaskedTextBox)
+        //        {
+        //            ((MaskedTextBox)ct).ReadOnly = true;
+        //        }
+        //    }
+        //}
     }
 }

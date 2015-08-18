@@ -145,8 +145,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnLostRenew = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.lblRefnum = new System.Windows.Forms.Label();
             this.mskRefnum = new System.Windows.Forms.MaskedTextBox();
@@ -163,6 +162,10 @@
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
             this.lblAreaTypdes = new System.Windows.Forms.Label();
+            this.chkIMOnly = new System.Windows.Forms.CheckBox();
+            this.transLayerHeader = new SN_Net.MiscClass.TransparentPanel();
+            this.transLayerBody2 = new SN_Net.MiscClass.TransparentPanel();
+            this.transLayerBody1 = new SN_Net.MiscClass.TransparentPanel();
             this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
             this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
             this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
@@ -214,6 +217,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.transLayerBody2);
             this.groupBox2.Controls.Add(this.lblVerext);
             this.groupBox2.Controls.Add(this.cbVerext);
             this.groupBox2.Controls.Add(this.lblVerextdat);
@@ -675,6 +679,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.transLayerBody1);
             this.groupBox1.Controls.Add(this.lblOldnum);
             this.groupBox1.Controls.Add(this.mskOldnum);
             this.groupBox1.Controls.Add(this.lblPosition);
@@ -1144,6 +1149,7 @@
             this.toolStripAdd.Size = new System.Drawing.Size(36, 40);
             this.toolStripAdd.Text = "Add <Alt+A>";
             this.toolStripAdd.Click += new System.EventHandler(this.toolStripAdd_Click);
+            this.toolStripAdd.EnabledChanged += new System.EventHandler(this.toolStripAdd_EnabledChanged);
             // 
             // toolStripEdit
             // 
@@ -1458,27 +1464,16 @@
             this.button1.Text = "?";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnLostRenew
             // 
-            this.button2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button2.Location = new System.Drawing.Point(646, 82);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 23);
-            this.button2.TabIndex = 14;
-            this.button2.TabStop = false;
-            this.button2.Text = "CO=IM only";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button3.Location = new System.Drawing.Point(740, 82);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(91, 23);
-            this.button3.TabIndex = 15;
-            this.button3.TabStop = false;
-            this.button3.Text = "Lost + Renew";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnLostRenew.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnLostRenew.Location = new System.Drawing.Point(740, 82);
+            this.btnLostRenew.Name = "btnLostRenew";
+            this.btnLostRenew.Size = new System.Drawing.Size(91, 23);
+            this.btnLostRenew.TabIndex = 15;
+            this.btnLostRenew.TabStop = false;
+            this.btnLostRenew.Text = "Lost + Renew";
+            this.btnLostRenew.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
             // 
@@ -1492,6 +1487,8 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.chkIMOnly);
+            this.splitContainer2.Panel1.Controls.Add(this.transLayerHeader);
             this.splitContainer2.Panel1.Controls.Add(this.lblRefnum);
             this.splitContainer2.Panel1.Controls.Add(this.mskRefnum);
             this.splitContainer2.Panel1.Controls.Add(this.lblSerNum);
@@ -1671,6 +1668,43 @@
             this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
             this.lblAreaTypdes.TabIndex = 55;
             // 
+            // chkIMOnly
+            // 
+            this.chkIMOnly.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkIMOnly.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chkIMOnly.Location = new System.Drawing.Point(646, 82);
+            this.chkIMOnly.Name = "chkIMOnly";
+            this.chkIMOnly.Size = new System.Drawing.Size(91, 23);
+            this.chkIMOnly.TabIndex = 76;
+            this.chkIMOnly.Text = "CO=IM only";
+            this.chkIMOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkIMOnly.UseVisualStyleBackColor = true;
+            this.chkIMOnly.CheckedChanged += new System.EventHandler(this.chkIMOnly_CheckedChanged);
+            // 
+            // transLayerHeader
+            // 
+            this.transLayerHeader.Location = new System.Drawing.Point(6, 47);
+            this.transLayerHeader.Name = "transLayerHeader";
+            this.transLayerHeader.Size = new System.Drawing.Size(33, 29);
+            this.transLayerHeader.TabIndex = 70;
+            this.transLayerHeader.Visible = false;
+            // 
+            // transLayerBody2
+            // 
+            this.transLayerBody2.Location = new System.Drawing.Point(7, 14);
+            this.transLayerBody2.Name = "transLayerBody2";
+            this.transLayerBody2.Size = new System.Drawing.Size(33, 29);
+            this.transLayerBody2.TabIndex = 86;
+            this.transLayerBody2.Visible = false;
+            // 
+            // transLayerBody1
+            // 
+            this.transLayerBody1.Location = new System.Drawing.Point(6, 14);
+            this.transLayerBody1.Name = "transLayerBody1";
+            this.transLayerBody1.Size = new System.Drawing.Size(33, 29);
+            this.transLayerBody1.TabIndex = 75;
+            this.transLayerBody1.Visible = false;
+            // 
             // transparentPanel2
             // 
             this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
@@ -1692,6 +1726,7 @@
             this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
             this.transparentPanel1.TabIndex = 1;
             this.transparentPanel1.Visible = false;
+            this.transparentPanel1.VisibleChanged += new System.EventHandler(this.transparentPanel1_VisibleChanged);
             // 
             // mskEditDate
             // 
@@ -1750,8 +1785,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(854, 591);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnLostRenew);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -1828,8 +1862,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnLostRenew;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dgvProblem;
         private System.Windows.Forms.Label label9;
@@ -1933,5 +1966,9 @@
         private System.Windows.Forms.MaskedTextBox mskOldnum;
         private System.Windows.Forms.MaskedTextBox mskRefnum;
         private System.Windows.Forms.TextBox txtDummy;
+        private MiscClass.TransparentPanel transLayerBody2;
+        private MiscClass.TransparentPanel transLayerBody1;
+        private MiscClass.TransparentPanel transLayerHeader;
+        private System.Windows.Forms.CheckBox chkIMOnly;
     }
 }
