@@ -63,7 +63,7 @@ namespace SN_Net.Subform
         private List<Istab> loadIstabData(string sort_by)
         {
             List<Istab> istabs = new List<Istab>();
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + Istab.getTabtypString(this.tabtyp) + "&sort=" + sort_by);
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(this.tabtyp) + "&sort=" + sort_by);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -286,7 +286,7 @@ namespace SN_Net.Subform
         {
             if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
             {
-                CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "istab/delete&id=" + istab.id);
+                CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "istab/delete&id=" + istab.id);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {

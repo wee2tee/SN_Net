@@ -63,7 +63,7 @@ namespace SN_Net.Subform
         {
             if (this.mac_data == null)
             {
-                CRUDResult res = ApiActions.GET(ApiConfig.API_MAIN_URL + "macallowed/get_all");
+                CRUDResult res = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "macallowed/get_all");
 
                 if (res.result)
                 {
@@ -146,7 +146,7 @@ namespace SN_Net.Subform
             string json_data = "{\"mac_address\":\"" + mac_address.cleanString() + "\",";
             json_data += "\"create_by\":\"" + this.G.loged_in_user_name.cleanString() + "\"}";
 
-            CRUDResult res = ApiActions.POST(ApiConfig.API_MAIN_URL + "macallowed/create", json_data);
+            CRUDResult res = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "macallowed/create", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(res.data);
             switch (sr.result)
 	        {
@@ -232,7 +232,7 @@ namespace SN_Net.Subform
 
         private void showEditForm(int mac_id)
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "macallowed/get_at&mac_id=" + mac_id.ToString());
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "macallowed/get_at&mac_id=" + mac_id.ToString());
 
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (get.result)
@@ -266,7 +266,7 @@ namespace SN_Net.Subform
         {
             if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
             {
-                CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "macallowed/delete&id=" + id.ToString());
+                CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "macallowed/delete&id=" + id.ToString());
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)

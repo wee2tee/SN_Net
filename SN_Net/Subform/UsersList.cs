@@ -92,7 +92,7 @@ namespace SN_Net.Subform
                 json_data += "\"status\":\"" + status + "\",";
                 json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\"}";
 
-                CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "users/create", json_data);
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/create", json_data);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -120,7 +120,7 @@ namespace SN_Net.Subform
         private void loadUserListData(int id = 0)
         {
             List<Users> users = new List<Users>();
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "users/get_all");
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_all");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             switch (sr.result)
             {
@@ -342,7 +342,7 @@ namespace SN_Net.Subform
         {
             if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
             {
-                CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "users/delete&id=" + id.ToString());
+                CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "users/delete&id=" + id.ToString());
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {
@@ -363,7 +363,7 @@ namespace SN_Net.Subform
             if (MessageAlert.Show("ต้องการรีเซ็ตรหัสผ่านผู้ใช้รายนี้ใช่หรือไม่?", "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
             {
                 string json_data = "{\"id\":" + id + "}";
-                CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "users/reset_password", json_data);
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/reset_password", json_data);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {

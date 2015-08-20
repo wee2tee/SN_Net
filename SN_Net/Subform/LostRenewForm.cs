@@ -159,7 +159,7 @@ namespace SN_Net.Subform
             json_data += "\"is_newrwt_job\":\"" + this.chkNewRwtJob.CheckState.ToYesOrNoString() + "\",";
             json_data += "\"is_cdtraining\":\"" + this.chkCDTraining.CheckState.ToYesOrNoString() + "\"}";
 
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/lost_renew", json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/lost_renew", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
             Console.WriteLine(sr.message);
 

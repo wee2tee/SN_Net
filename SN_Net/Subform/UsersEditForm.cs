@@ -40,8 +40,7 @@ namespace SN_Net.Subform
             this.cbWebLogin.Items.Add(new ComboboxItem("Yes", 0, "Y"));
             this.cbWebLogin.SelectedItem = this.cbWebLogin.Items[0];
 
-
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "users/get_at&id=" + this.id);
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_at&id=" + this.id);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -120,7 +119,7 @@ namespace SN_Net.Subform
             json_data += "\"status\":\"" + status + "\",";
             json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\"}";
 
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "users/update", json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/update", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)

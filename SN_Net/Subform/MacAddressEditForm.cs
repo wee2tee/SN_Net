@@ -45,7 +45,7 @@ namespace SN_Net.Subform
             json_data += "\"mac_address\":\"" + this.txtMacAddress.Text.cleanString() + "\",";
             json_data += "\"create_by\":\"" + this.G.loged_in_user_name + "\"}";
 
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "macallowed/update", json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "macallowed/update", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
             if (post.result)
             {

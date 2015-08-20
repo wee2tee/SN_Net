@@ -159,7 +159,7 @@ namespace SN_Net
 
         private void macAddressAllowedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CRUDResult res = ApiActions.GET(ApiConfig.API_MAIN_URL + "macallowed/get_all");
+            CRUDResult res = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "macallowed/get_all");
 
             if (res.result)
             {

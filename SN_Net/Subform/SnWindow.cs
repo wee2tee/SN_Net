@@ -832,7 +832,7 @@ namespace SN_Net.Subform
             json_data += "\"users_name\":\"" + users_name + "\",";
             json_data += "\"serial_sernum\":\"" + serial_sernum + "\"}";
 
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "problem/update", json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/update", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -869,7 +869,7 @@ namespace SN_Net.Subform
             json_data += "\"users_name\":\"" + users_name + "\",";
             json_data += "\"serial_sernum\":\"" + serial_sernum + "\"}";
 
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "problem/create_new", json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/create_new", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -935,7 +935,7 @@ namespace SN_Net.Subform
         {
             Problem deleted_problem = (Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag;
 
-            CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "problem/delete&id=" + deleted_problem.id.ToString());
+            CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "problem/delete&id=" + deleted_problem.id.ToString());
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -1154,7 +1154,7 @@ namespace SN_Net.Subform
         #region Get Serial data from server
         private void getSerialIDList()
         {
-            CRUDResult get_id_list = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_id_list&sort=" + this.sortMode);
+            CRUDResult get_id_list = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_id_list&sort=" + this.sortMode);
             ServerResult sr_id_list = JsonConvert.DeserializeObject<ServerResult>(get_id_list.data);
             if (sr_id_list.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -1164,7 +1164,7 @@ namespace SN_Net.Subform
 
         private void getLastSerial()
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last");
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_last");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -1189,7 +1189,7 @@ namespace SN_Net.Subform
 
         private void getSerial(int row_id)
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_at&id=" + row_id);
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_at&id=" + row_id);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -1270,7 +1270,7 @@ namespace SN_Net.Subform
 
         private void loadProblemData()
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "problem/get_for_sn&sn=" + this.serial.sernum);
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "problem/get_for_sn&sn=" + this.serial.sernum);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -1508,7 +1508,7 @@ namespace SN_Net.Subform
 
         private void workerSerialCreate_Dowork(object sender, DoWorkEventArgs e)
         {
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/create_new", this.json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/create_new", this.json_data);
             Console.WriteLine(post.data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -1550,7 +1550,7 @@ namespace SN_Net.Subform
 
         private void workerSerialUpdate_Dowork(object sender, DoWorkEventArgs e)
         {
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/update", this.json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/update", this.json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -1618,7 +1618,7 @@ namespace SN_Net.Subform
         {
             int current_ndx = this.serial_id_list.FindIndex(t => t.id == this.serial.id);
 
-            CRUDResult delete = ApiActions.DELETE(ApiConfig.API_MAIN_URL + "serial/delete&id=" + this.serial.id.ToString());
+            CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "serial/delete&id=" + this.serial.id.ToString());
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -2690,7 +2690,7 @@ namespace SN_Net.Subform
             {
                 if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
                 {
-                    CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "problem/get_info&id=" + ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).id.ToString());
+                    CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "problem/get_info&id=" + ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).id.ToString());
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)

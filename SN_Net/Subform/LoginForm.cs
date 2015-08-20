@@ -55,7 +55,7 @@ namespace SN_Net.Subform
             json_data += "\"userpassword\":\"" + this.txtPassword.Text.cleanString() + "\",";
             json_data += "\"mac_address\":\"" + this.G.current_mac_address + "\"}";
 
-            CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "users/validate_login", json_data);
+            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/validate_login", json_data);
             ServerResult res = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
             switch (res.result)

@@ -85,7 +85,7 @@ namespace SN_Net.Subform
                     }
                 }
 
-                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -120,7 +120,7 @@ namespace SN_Net.Subform
                     }
                 }
 
-                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -159,7 +159,7 @@ namespace SN_Net.Subform
                     }
                 }
 
-                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -201,7 +201,7 @@ namespace SN_Net.Subform
                     }
                 }
 
-                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
+                CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_inquiry&sort=" + this.sortMode + "&ids=" + ids);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)

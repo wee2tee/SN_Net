@@ -92,7 +92,7 @@ namespace SN_Net.Subform
                     json_data += "\"new_password1\":\"" + new_password1.cleanString() + "\",";
                     json_data += "\"new_password2\":\"" + new_password2.cleanString() + "\"}";
 
-                    CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "users/change_password", json_data);
+                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/change_password", json_data);
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SN_Net.DataModels;
 using SN_Net.MiscClass;
+using SN_Net.Subform;
 using WebAPI;
 using WebAPI.ApiResult;
 using Newtonsoft.Json;
@@ -31,7 +32,7 @@ namespace SN_Net.MiscClass
 
         private List<Istab> getIstabDataFromServer(Istab.TABTYP tabtyp)
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_all&tabtyp=" + tabtyp.ToTabtypString() + "&sort=typcod");
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + tabtyp.ToTabtypString() + "&sort=typcod");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -52,7 +53,7 @@ namespace SN_Net.MiscClass
 
         private List<Dealer> getDealerDataFromServer()
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "dealer/get_list");
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "dealer/get_list");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {

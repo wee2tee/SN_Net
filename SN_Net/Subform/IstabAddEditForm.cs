@@ -58,7 +58,7 @@ namespace SN_Net.Subform
                 this.txtTypcod.Enabled = false;
                 this.txtAbbreviate_th.Focus();
 
-                CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "istab/get_by_id&id=" + this.istab.id);
+                CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_by_id&id=" + this.istab.id);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {
@@ -115,7 +115,7 @@ namespace SN_Net.Subform
                     json_data += "\"typdes_th\":\"" + this.txtTypdes_th.Text.cleanString() + "\"}";
 
                     Console.WriteLine(json_data);
-                    post = ApiActions.POST(ApiConfig.API_MAIN_URL + "istab/create", json_data);
+                    post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "istab/create", json_data);
                 }
                 else // Edit
                 {
@@ -128,7 +128,7 @@ namespace SN_Net.Subform
                     json_data += "\"typdes_th\":\"" + this.txtTypdes_th.Text.cleanString() + "\"}";
 
                     Console.WriteLine(json_data);
-                    post = ApiActions.POST(ApiConfig.API_MAIN_URL + "istab/submit_change", json_data);
+                    post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "istab/submit_change", json_data);
                 }
                 
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);

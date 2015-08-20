@@ -40,7 +40,7 @@ namespace SN_Net.Subform
 
         private void loadDealerList()
         {
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "dealer/get_list");
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "dealer/get_list");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
