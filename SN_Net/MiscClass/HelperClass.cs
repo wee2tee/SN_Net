@@ -36,5 +36,17 @@ namespace SN_Net.MiscClass
                 file.WriteLine(msg);
             }
         }
+
+        public static string ToYesOrNoString(this CheckState check_state)
+        {
+            if (check_state == CheckState.Checked)
+            {
+                return "Y";
+            }
+            else
+            {
+                return "N";
+            }
+        }
     }
 }

@@ -50,8 +50,10 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusUserLogin = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -79,6 +81,8 @@
             this.userManagementToolStripMenuItem,
             this.macAddressAllowedToolStripMenuItem,
             this.toolStripSeparator3,
+            this.preferenceToolStripMenuItem,
+            this.toolStripSeparator4,
             this.exitToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
             this.modeToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -220,10 +224,32 @@
             this.toolStripStatusUserLogin.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusUserLogin.Text = "...";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(864, 0);
+            this.toolStrip1.TabIndex = 5;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // preferenceToolStripMenuItem
+            // 
+            this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
+            this.preferenceToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.preferenceToolStripMenuItem.Text = "Preference";
+            this.preferenceToolStripMenuItem.Click += new System.EventHandler(this.preferenceToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(185, 6);
+            // 
             // toolStripProcessing
             // 
             this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
-            this.toolStripProcessing.Image = global::SN_Net.Properties.Resources.processing_bar_green;
+            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
             this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
@@ -235,16 +261,6 @@
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripProcessing.Visible = false;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.AutoSize = false;
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(864, 0);
-            this.toolStrip1.TabIndex = 5;
-            this.toolStrip1.Text = "toolStrip1";
             // 
             // MainForm
             // 
@@ -297,6 +313,8 @@
         private System.Windows.Forms.ToolStripMenuItem versionExtensionToolStripMenuItem;
         public System.Windows.Forms.MenuStrip menuStrip1;
         public System.Windows.Forms.ToolStripStatusLabel toolStripProcessing;
+        private System.Windows.Forms.ToolStripMenuItem preferenceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

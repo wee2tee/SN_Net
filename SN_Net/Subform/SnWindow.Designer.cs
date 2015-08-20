@@ -147,6 +147,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnLostRenew = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.chkIMOnly = new System.Windows.Forms.CheckBox();
             this.lblRefnum = new System.Windows.Forms.Label();
             this.mskRefnum = new System.Windows.Forms.MaskedTextBox();
             this.lblSerNum = new System.Windows.Forms.Label();
@@ -162,7 +163,6 @@
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
             this.lblAreaTypdes = new System.Windows.Forms.Label();
-            this.chkIMOnly = new System.Windows.Forms.CheckBox();
             this.transLayerHeader = new SN_Net.MiscClass.TransparentPanel();
             this.transLayerBody2 = new SN_Net.MiscClass.TransparentPanel();
             this.transLayerBody1 = new SN_Net.MiscClass.TransparentPanel();
@@ -1262,7 +1262,7 @@
             this.toolStripItem.Margin = new System.Windows.Forms.Padding(2, 1, 2, 2);
             this.toolStripItem.Name = "toolStripItem";
             this.toolStripItem.Size = new System.Drawing.Size(36, 40);
-            this.toolStripItem.Text = "Go to item <F8>";
+            this.toolStripItem.Text = "Entrance to item <F8>";
             this.toolStripItem.Click += new System.EventHandler(this.toolStripItem_Click);
             // 
             // toolStripUpgrade
@@ -1466,6 +1466,7 @@
             // 
             // btnLostRenew
             // 
+            this.btnLostRenew.Enabled = false;
             this.btnLostRenew.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnLostRenew.Location = new System.Drawing.Point(740, 82);
             this.btnLostRenew.Name = "btnLostRenew";
@@ -1474,6 +1475,7 @@
             this.btnLostRenew.TabStop = false;
             this.btnLostRenew.Text = "Lost + Renew";
             this.btnLostRenew.UseVisualStyleBackColor = true;
+            this.btnLostRenew.Click += new System.EventHandler(this.btnLostRenew_Click);
             // 
             // splitContainer2
             // 
@@ -1512,6 +1514,20 @@
             this.splitContainer2.SplitterDistance = 107;
             this.splitContainer2.TabIndex = 16;
             this.splitContainer2.TabStop = false;
+            // 
+            // chkIMOnly
+            // 
+            this.chkIMOnly.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkIMOnly.Enabled = false;
+            this.chkIMOnly.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chkIMOnly.Location = new System.Drawing.Point(646, 82);
+            this.chkIMOnly.Name = "chkIMOnly";
+            this.chkIMOnly.Size = new System.Drawing.Size(91, 23);
+            this.chkIMOnly.TabIndex = 76;
+            this.chkIMOnly.Text = "CO=IM only";
+            this.chkIMOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkIMOnly.UseVisualStyleBackColor = true;
+            this.chkIMOnly.CheckedChanged += new System.EventHandler(this.chkIMOnly_CheckedChanged);
             // 
             // lblRefnum
             // 
@@ -1667,19 +1683,6 @@
             this.lblAreaTypdes.Name = "lblAreaTypdes";
             this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
             this.lblAreaTypdes.TabIndex = 55;
-            // 
-            // chkIMOnly
-            // 
-            this.chkIMOnly.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkIMOnly.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkIMOnly.Location = new System.Drawing.Point(646, 82);
-            this.chkIMOnly.Name = "chkIMOnly";
-            this.chkIMOnly.Size = new System.Drawing.Size(91, 23);
-            this.chkIMOnly.TabIndex = 76;
-            this.chkIMOnly.Text = "CO=IM only";
-            this.chkIMOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.chkIMOnly.UseVisualStyleBackColor = true;
-            this.chkIMOnly.CheckedChanged += new System.EventHandler(this.chkIMOnly_CheckedChanged);
             // 
             // transLayerHeader
             // 

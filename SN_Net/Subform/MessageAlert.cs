@@ -37,6 +37,7 @@ namespace SN_Net.Subform
                     m.btnOK.SetBounds(m.panelBtn.ClientSize.Width - (10 + m.btnCancel.Width + 10 + m.btnOK.Width), Convert.ToInt32((m.panelBtn.ClientSize.Height - m.btnOK.Height) / 2), m.btnOK.Width, m.btnOK.Height);
                     m.btnOK.Visible = true;
                     m.btnCancel.Visible = true;
+                    m.btnCancel.Focus();
                     break;
                 case MessageAlertButtons.YES:
                     m.btnYes.SetBounds(m.panelBtn.ClientSize.Width - (10 + m.btnYes.Width), Convert.ToInt32((m.panelBtn.ClientSize.Height - m.btnYes.Height) / 2), m.btnYes.Width, m.btnYes.Height);
@@ -53,6 +54,7 @@ namespace SN_Net.Subform
                     m.btnRetry.SetBounds(m.panelBtn.ClientSize.Width - (10 + m.btnCancel.Width + 10 + m.btnRetry.Width), Convert.ToInt32((m.panelBtn.ClientSize.Height - m.btnRetry.Height) / 2), m.btnRetry.Width, m.btnRetry.Height);
                     m.btnRetry.Visible = true;
                     m.btnCancel.Visible = true;
+                    m.btnCancel.Focus();
                     break;
                 default:
                     break;
@@ -101,8 +103,7 @@ namespace SN_Net.Subform
                 default:
                     break;
             }
-            m.ShowDialog();
-            return m.DialogResult;
+            return m.ShowDialog();
         }
         
         public static DialogResult Show(string message, string caption)
@@ -117,8 +118,7 @@ namespace SN_Net.Subform
             m.btnOK.SetBounds(m.panelBtn.ClientSize.Width - (10 + m.btnOK.Width), Convert.ToInt32((m.panelBtn.ClientSize.Height - m.btnOK.Height) / 2), m.btnOK.Width, m.btnOK.Height);
             m.btnOK.Visible = true;
 
-            m.ShowDialog();
-            return m.DialogResult;
+            return m.ShowDialog();
         }
 
         public static DialogResult Show(string message)
@@ -134,8 +134,7 @@ namespace SN_Net.Subform
             m.btnOK.SetBounds(m.panelBtn.ClientSize.Width - (10 + m.btnOK.Width), Convert.ToInt32((m.panelBtn.ClientSize.Height - m.btnOK.Height) / 2), m.btnOK.Width, m.btnOK.Height);
             m.btnOK.Visible = true;
 
-            m.ShowDialog();
-            return m.DialogResult;
+            return m.ShowDialog();
         }
 
 
@@ -179,6 +178,38 @@ namespace SN_Net.Subform
             }
         }
 
+        private void MessageAlert_Shown(object sender, EventArgs e)
+        {
+            this.btnCancel.GotFocus += new EventHandler(this.buttonGotFocusHandler);
+            this.btnNo.GotFocus += new EventHandler(this.buttonGotFocusHandler);
+            this.btnOK.GotFocus += new EventHandler(this.buttonGotFocusHandler);
+            this.btnRetry.GotFocus += new EventHandler(this.buttonGotFocusHandler);
+            this.btnYes.GotFocus += new EventHandler(this.buttonGotFocusHandler);
+            this.btnCancel.Leave += new EventHandler(this.buttonLeaveFocusHandler);
+            this.btnNo.Leave += new EventHandler(this.buttonLeaveFocusHandler);
+            this.btnOK.Leave += new EventHandler(this.buttonLeaveFocusHandler);
+            this.btnRetry.Leave += new EventHandler(this.buttonLeaveFocusHandler);
+            this.btnYes.Leave += new EventHandler(this.buttonLeaveFocusHandler);
+
+            if (this.btnNo.Visible)
+            {
+                this.btnNo.Focus();
+            }
+            if (this.btnCancel.Visible)
+            {
+                this.btnCancel.Focus();
+            }
+        }
+
+        private void buttonGotFocusHandler(object sender, EventArgs e)
+        {
+            //((Button)sender).BackColor = Color.LightCyan;
+        }
+
+        private void buttonLeaveFocusHandler(object sender, EventArgs e)
+        {
+            //((Button)sender).BackColor = Color.FromKnownColor(KnownColor.ControlLightLight);
+        }
     }
 
     public enum MessageAlertButtons

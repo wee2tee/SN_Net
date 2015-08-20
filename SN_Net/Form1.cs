@@ -195,6 +195,12 @@ namespace SN_Net
             }
         }
 
+        private void preferenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PreferenceForm wind = new PreferenceForm();
+            wind.ShowDialog();
+        }
+
         private void MainForm_MdiChildActivate(object sender, EventArgs e)
         {
             //ToolStripManager.RevertMerge(this.toolStrip1);
@@ -261,5 +267,6 @@ namespace SN_Net
         {
             this.data_resource = new DataResource();
         }
+
     }
 }

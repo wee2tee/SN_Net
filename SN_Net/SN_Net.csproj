@@ -137,6 +137,12 @@
     <Compile Include="Subform\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\LostRenewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\LostRenewForm.Designer.cs">
+      <DependentUpon>LostRenewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\MacAddressEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,12 @@
     </Compile>
     <Compile Include="Subform\MessageAlert.Designer.cs">
       <DependentUpon>MessageAlert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\PreferenceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\PreferenceForm.Designer.cs">
+      <DependentUpon>PreferenceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\SearchBox.cs">
       <SubType>Form</SubType>
@@ -243,6 +255,9 @@
     <EmbeddedResource Include="Subform\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\LostRenewForm.resx">
+      <DependentUpon>LostRenewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\MacAddressEditForm.resx">
       <DependentUpon>MacAddressEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -251,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\MessageAlert.resx">
       <DependentUpon>MessageAlert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\PreferenceForm.resx">
+      <DependentUpon>PreferenceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\SearchBox.resx">
       <DependentUpon>SearchBox.cs</DependentUpon>
@@ -373,6 +391,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\process-bar2.gif" />
+    <None Include="Resources\process-bar1.gif" />
+    <None Include="Resources\process_bar.bmp" />
+    <None Include="Resources\process-bar.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

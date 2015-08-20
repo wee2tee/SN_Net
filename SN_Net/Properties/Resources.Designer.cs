@@ -145,7 +145,7 @@ namespace SN_Net.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap loading_bar {
             get {
-                object obj = ResourceManager.GetObject("loading-bar", resourceCulture);
+                object obj = ResourceManager.GetObject("loading_bar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,6 +173,16 @@ namespace SN_Net.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap process_bar {
+            get {
+                object obj = ResourceManager.GetObject("process_bar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap processing {
             get {
                 object obj = ResourceManager.GetObject("processing", resourceCulture);
@@ -185,7 +195,7 @@ namespace SN_Net.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap processing_bar_green {
             get {
-                object obj = ResourceManager.GetObject("processing-bar-green", resourceCulture);
+                object obj = ResourceManager.GetObject("processing_bar_green", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -195,7 +205,7 @@ namespace SN_Net.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap processing_green {
             get {
-                object obj = ResourceManager.GetObject("processing-green", resourceCulture);
+                object obj = ResourceManager.GetObject("processing_green", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

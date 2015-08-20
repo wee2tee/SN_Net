@@ -166,11 +166,13 @@
             this.Controls.Add(this.panelBtn);
             this.Controls.Add(this.lblMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MessageAlert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MessageAlert";
             this.TopMost = true;
+            this.Shown += new System.EventHandler(this.MessageAlert_Shown);
             this.panelBtn.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
             this.ResumeLayout(false);

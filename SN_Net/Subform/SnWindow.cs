@@ -31,6 +31,7 @@ namespace SN_Net.Subform
         private Istab verext;
         private Dealer dealer;
         private List<Problem> problem;
+        private List<Problem> problem_im_only;
 
         private Istab busityp_not_found = new Istab();
         private Istab area_not_found = new Istab();
@@ -81,6 +82,7 @@ namespace SN_Net.Subform
         private List<Label> labels = new List<Label>();
         private List<Control> edit_controls = new List<Control>();
         private bool is_problem_im_only = false;
+        private int submit_serial_result;
 
         private enum FIND_TYPE
         {
@@ -160,6 +162,7 @@ namespace SN_Net.Subform
             this.FormLoading();
             this.tabControl1.Selecting += new TabControlCancelEventHandler(this.preventChangeTabInEditMode);
             this.transparentPanel1.Paint += new PaintEventHandler(this.editPanelPaintHandler);
+            this.dgvProblem.MouseClick += new MouseEventHandler(this.showProblemContextMenu);
             this.transLayerHeader.Dock = DockStyle.Fill;
             this.transLayerBody1.Dock = DockStyle.Fill;
             this.transLayerBody2.Dock = DockStyle.Fill;
@@ -426,6 +429,7 @@ namespace SN_Net.Subform
             this.transLayerHeader.Visible = false;
             this.transLayerBody1.Visible = false;
             this.transLayerBody2.Visible = false;
+            this.chkIMOnly.Enabled = true;
         }
 
         private void FormAdd()
@@ -636,7 +640,8 @@ namespace SN_Net.Subform
 
         private void dgvProblem_Resize(object sender, EventArgs e)
         {
-            this.dgvProblem.FillLine(this.problem.Count);
+            int line_exist = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+            this.dgvProblem.FillLine(line_exist);
             this.setGridColumnExpand();
         }
 
@@ -655,12 +660,67 @@ namespace SN_Net.Subform
             }
             else
             {
-                this.dgvProblem.CurrentCell = this.dgvProblem.Rows[this.problem.Count].Cells[1];
-                row_ndx = this.problem.Count;
+                this.dgvProblem.CurrentCell = (this.is_problem_im_only ? this.dgvProblem.Rows[this.problem_im_only.Count].Cells[1] : this.dgvProblem.Rows[this.problem.Count].Cells[1]);
+                row_ndx = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
             }
             this.showInlineProblemForm(row_ndx, e.ColumnIndex);
         }
 
+        private void showProblemContextMenu(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (this.form_mode == FORM_MODE.READ || this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    this.toolStripItem.PerformClick();
+                    int current_over_row = this.dgvProblem.HitTest(e.X, e.Y).RowIndex;
+                    this.dgvProblem.Rows[current_over_row].Cells[1].Selected = true;
+
+                    ContextMenu m = new ContextMenu();
+                    if (this.dgvProblem.Rows[current_over_row].Tag is Problem)
+                    {
+                        MenuItem m_edit = new MenuItem("Edit data <Alt+E>");
+                        m_edit.Click += new EventHandler(this.contextMenuEditHandler);
+                        m_edit.Tag = current_over_row;
+                        m.MenuItems.Add(m_edit);
+
+                        MenuItem m_delete = new MenuItem("Delete data <Alt+D>");
+                        m_delete.Click += new EventHandler(this.contextMenuDeleteHandler);
+                        m_delete.Tag = current_over_row;
+                        m.MenuItems.Add(m_delete);
+                    }
+                    else
+                    {
+                        MenuItem m_add = new MenuItem("Add data <Alt+A>");
+                        m_add.Click += new EventHandler(this.contextMenuAddHandler);
+                        m_add.Tag = current_over_row;
+                        m.MenuItems.Add(m_add);
+                    }
+                    m.Show(this.dgvProblem, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        private void contextMenuAddHandler(object sender, EventArgs e)
+        {
+            int row_ndx = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+            this.showInlineProblemForm(row_ndx, 1);
+        }
+
+        private void contextMenuEditHandler(object sender, EventArgs e)
+        {
+            int row_ndx = (int)((MenuItem)sender).Tag;
+            this.mskEditDate.pickedDate(((Problem)this.dgvProblem.Rows[row_ndx].Tag).date);
+            this.txtEditName.Text = ((Problem)this.dgvProblem.Rows[row_ndx].Tag).name;
+            this.txtEditCo.Text = ((Problem)this.dgvProblem.Rows[row_ndx].Tag).probcod;
+            this.txtEditDesc.Text = ((Problem)this.dgvProblem.Rows[row_ndx].Tag).probdesc;
+            this.showInlineProblemForm(row_ndx, 1);
+        }
+
+        private void contextMenuDeleteHandler(object sender, EventArgs e)
+        {
+            this.deleteProblemData();
+        }
         #endregion DataGridView Event Handler
 
         #region Manage Problem data
@@ -824,9 +884,16 @@ namespace SN_Net.Subform
 
         private void workerAddProblemComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            Problem last_problem = this.problem.Last<Problem>();
+            Problem last_problem = (this.is_problem_im_only ? this.problem_im_only.Last<Problem>() : this.problem.Last<Problem>());
             this.clearInlineEditForm(last_problem);
-            this.dgvProblem.Rows[this.problem.Count].Cells[1].Selected = true;
+            if (this.is_problem_im_only)
+            {
+                this.dgvProblem.Rows[this.problem_im_only.Count].Cells[1].Selected = true;
+            }
+            else
+            {
+                this.dgvProblem.Rows[this.problem.Count].Cells[1].Selected = true;
+            }
             this.showInlineProblemForm(this.dgvProblem.CurrentCell.RowIndex, 1);
             this.FormAddItem();
         }
@@ -901,9 +968,13 @@ namespace SN_Net.Subform
             this.fillInDatagrid();
             if(focused_problem_row == null)
             {
-                if (this.problem.Count > 0)
+                if (!this.is_problem_im_only && this.problem.Count > 0)
                 {
                     this.setSelectedDataGridItem((Problem)this.dgvProblem.Rows[this.problem.Count - 1].Tag);
+                }
+                else if (this.is_problem_im_only && this.problem_im_only.Count > 0)
+                {
+                    this.setSelectedDataGridItem((Problem)this.dgvProblem.Rows[this.problem_im_only.Count - 1].Tag);
                 }
                 else
                 {
@@ -1093,8 +1164,7 @@ namespace SN_Net.Subform
 
         private void getLastSerial()
         {
-            string im_only = (this.is_problem_im_only ? "Y" : "N");
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last&im_only=" + im_only);
+            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_last");
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -1108,6 +1178,7 @@ namespace SN_Net.Subform
                     this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
                     this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                     this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                    this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                 }
             }
             else
@@ -1118,8 +1189,7 @@ namespace SN_Net.Subform
 
         private void getSerial(int row_id)
         {
-            string im_only = (this.is_problem_im_only ? "Y" : "N");
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_at&id=" + row_id + "&im_only=" + im_only);
+            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "serial/get_at&id=" + row_id);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -1132,6 +1202,7 @@ namespace SN_Net.Subform
                     this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
                     this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                     this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                    this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                 }
                 else
                 {
@@ -1194,6 +1265,7 @@ namespace SN_Net.Subform
             this.lblReg2.Text = this.serial.upfree;
             this.fillInDatagrid();
             #endregion Fill second tab data
+
         }
 
         private void loadProblemData()
@@ -1202,7 +1274,8 @@ namespace SN_Net.Subform
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
-                this.problem = sr.problem;
+                this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
             }
         }
 
@@ -1261,7 +1334,9 @@ namespace SN_Net.Subform
             };
             this.dgvProblem.Columns.Add(col4);
 
-            foreach (Problem p in this.problem)
+            List<Problem> problem = (this.is_problem_im_only ? this.problem_im_only : this.problem);
+
+            foreach (Problem p in problem)
             {
                 int r = this.dgvProblem.Rows.Add();
                 this.dgvProblem.Rows[r].Height = 25;
@@ -1314,8 +1389,8 @@ namespace SN_Net.Subform
                     SelectionForeColor = Color.Black
                 };
             }
-            
-            this.dgvProblem.FillLine(this.problem.Count);
+            int line_exist = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+            this.dgvProblem.FillLine(line_exist);
             this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
             this.setGridColumnExpand();
         }
@@ -1434,6 +1509,7 @@ namespace SN_Net.Subform
         private void workerSerialCreate_Dowork(object sender, DoWorkEventArgs e)
         {
             CRUDResult post = ApiActions.POST(ApiConfig.API_MAIN_URL + "serial/create_new", this.json_data);
+            Console.WriteLine(post.data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
@@ -1442,17 +1518,34 @@ namespace SN_Net.Subform
             }
             else
             {
+                this.submit_serial_result = sr.result;
                 MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
             }
         }
 
         private void workerSerialCreate_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.fillSerialInForm();
-            this.FormReady();
-            //this.toolStripAdd.PerformClick();
-            this.toolStripItem.PerformClick();
-            this.showInlineProblemForm(0, 1);
+            if (this.submit_serial_result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.fillSerialInForm();
+                this.FormReady();
+                this.toolStripItem.PerformClick();
+                this.showInlineProblemForm(0, 1);
+            }
+            else if(this.submit_serial_result == ServerResult.SERVER_CREATE_RESULT_FAILED)
+            {
+                this.form_mode = FORM_MODE.ADD;
+                this.setToolStripFormMode();
+                this.Cursor = Cursors.Default;
+                this.parent_form.Cursor = Cursors.Default;
+                this.parent_form.toolStripProcessing.Visible = false;
+                this.parent_form.menuStrip1.Enabled = true;
+
+                this.mskSernum.Focus();
+                this.transLayerHeader.Visible = false;
+                this.transLayerBody1.Visible = false;
+                this.transLayerBody2.Visible = false;
+            }
         }
 
         private void workerSerialUpdate_Dowork(object sender, DoWorkEventArgs e)
@@ -2634,45 +2727,6 @@ namespace SN_Net.Subform
             }
         }
 
-        private void chkIMOnly_CheckedChanged(object sender, EventArgs e)
-        {
-            if (((CheckBox)sender).Checked)
-            {
-                this.is_problem_im_only = true;
-            }
-            else
-            {
-                this.is_problem_im_only = false;
-            }
-            this.FormLoading();
-            this.dgvProblem.Enabled = false;
-            BackgroundWorker workerLoadProblem = new BackgroundWorker();
-            workerLoadProblem.DoWork += new DoWorkEventHandler(this.workerLoadProblem_Dowork);
-            workerLoadProblem.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerLoadProblem_Complete);
-            workerLoadProblem.RunWorkerAsync();
-        }
-
-        private void workerLoadProblem_Dowork(object sender, DoWorkEventArgs e)
-        {
-            Console.WriteLine("start load problem at : " + DateTime.Now.ToString());
-            string im_only = (this.is_problem_im_only ? "Y" : "N");
-            CRUDResult get = ApiActions.GET(ApiConfig.API_MAIN_URL + "problem/get_for_sn&sn=" + this.serial.sernum + "&im_only=" + im_only);
-            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-
-            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-            {
-                this.problem = sr.problem;
-            }
-        }
-
-        private void workerLoadProblem_Complete(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Console.WriteLine("finish load problem at : " + DateTime.Now.ToString());
-            this.fillInDatagrid();
-            this.dgvProblem.Enabled = true;
-            this.FormReady();
-        }
-
         private void transparentPanel1_VisibleChanged(object sender, EventArgs e)
         {
             if (((TransparentPanel)sender).Visible)
@@ -2683,6 +2737,45 @@ namespace SN_Net.Subform
             {
                 this.chkIMOnly.Enabled = true;
             }
+        }
+
+        private void chkIMOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((CheckBox)sender).Checked)
+            {
+                this.is_problem_im_only = true;
+                this.fillInDatagrid();
+            }
+            else
+            {
+                this.is_problem_im_only = false;
+                this.fillInDatagrid();
+            }
+        }
+
+        private void btnLostRenew_Click(object sender, EventArgs e)
+        {
+            LostRenewForm wind = new LostRenewForm(this);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                this.FormLoading();
+                BackgroundWorker workerAfterLostRenew = new BackgroundWorker();
+                workerAfterLostRenew.DoWork += new DoWorkEventHandler(this.workerAfterLostRenew_Dowork);
+                workerAfterLostRenew.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerAfterLostRenew_Complete);
+                workerAfterLostRenew.RunWorkerAsync();
+            }
+        }
+
+        private void workerAfterLostRenew_Dowork(object sender, DoWorkEventArgs e)
+        {
+            this.getSerialIDList();
+            this.getSerial(this.serial.id);
+        }
+
+        private void workerAfterLostRenew_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
         }
     }
 
