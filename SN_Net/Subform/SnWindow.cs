@@ -1210,7 +1210,10 @@ namespace SN_Net.Subform
                     this.getSerial(this.serial_id_list.Last<Serial>().id);
                 }
             }
-
+            else
+            {
+                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+            }
         }
         #endregion Get Serial data from server
 

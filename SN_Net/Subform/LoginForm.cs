@@ -38,10 +38,26 @@ namespace SN_Net.Subform
 
         private void LoginForm_Shown(object sender, EventArgs e)
         {
-            this.txtUser.Focus();
+            if (File.Exists("SN_pref.txt"))
+            {
+                this.txtUser.Focus();
 
-            List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
-            this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
+                List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
+                this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
+            }
+            else
+            {
+                ApiMainUrlFirstSetting wind = new ApiMainUrlFirstSetting();
+                if (wind.ShowDialog() == DialogResult.OK)
+                {
+                    List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
+                    this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
         }
 
         private void btnLoginSubmit_Click(object sender, EventArgs e)
@@ -113,5 +129,10 @@ namespace SN_Net.Subform
             }
         }
 
+        private void btnPreference_Click(object sender, EventArgs e)
+        {
+            PreferenceForm wind = new PreferenceForm();
+            wind.ShowDialog();
+        }
     }
 }

@@ -95,6 +95,12 @@
     <Compile Include="MiscClass\ValidateSN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subform\ApiMainUrlFirstSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\ApiMainUrlFirstSetting.Designer.cs">
+      <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,6 +240,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Subform\ApiMainUrlFirstSetting.resx">
+      <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -391,6 +400,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\preferences.png" />
     <None Include="Resources\process-bar2.gif" />
     <None Include="Resources\process-bar1.gif" />
     <None Include="Resources\process_bar.bmp" />

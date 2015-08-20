@@ -97,6 +97,10 @@ namespace SN_Net.Subform
                         this.toolStripTotalRec.Text = this.serial_id_list.Count.ToString();
                     }
                 }
+                else
+                {
+                    MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
             }
         }
 
@@ -131,6 +135,10 @@ namespace SN_Net.Subform
                         this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
                         this.toolStripTotalRec.Text = this.serial_id_list.Count.ToString();
                     }
+                }
+                else
+                {
+                    MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 }
             }
 
@@ -175,6 +183,10 @@ namespace SN_Net.Subform
                         this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
                     }
                 }
+                else
+                {
+                    MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
             }
         }
 
@@ -216,6 +228,10 @@ namespace SN_Net.Subform
                         this.dgvSerial.HorizontalScrollingOffset = this.h_scroll_pos;
                         this.toolStripLoadedRec.Text = this.serial_list.Count.ToString();
                     }
+                }
+                else
+                {
+                    MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 }
             }
         }
@@ -307,19 +323,22 @@ namespace SN_Net.Subform
         {
             if (this.inquiry_type == INQUIRY_TYPE.REST)
             {
-                if (this.current_serial != null)
+                if (this.current_serial != null && this.serial_list.Count > 0)
                 {
                     int ndx = this.serial_list.FindIndex(t => t.ID == this.current_serial.id);
                     this.dgvSerial.Rows[ndx].Cells[1].Selected = true;
                 }
                 else
                 {
-                    this.dgvSerial.Rows[0].Cells[1].Selected = true;
+                    if (this.dgvSerial.Rows.Count > 0)
+                    {
+                        this.dgvSerial.Rows[0].Cells[1].Selected = true;
+                    }
                 }
             }
             else
             {
-                if (this.serial_list != null)
+                if (this.serial_list != null && this.serial_list.Count > 0)
                 {
                     this.dgvSerial.Rows[0].Cells[1].Selected = true;
                 }
