@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SnWindow));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.transLayerBody2 = new SN_Net.MiscClass.TransparentPanel();
             this.lblVerext = new System.Windows.Forms.Label();
             this.cbVerext = new System.Windows.Forms.ComboBox();
             this.lblVerextdat = new System.Windows.Forms.Label();
@@ -74,6 +76,7 @@
             this.txtRemark = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.transLayerBody1 = new SN_Net.MiscClass.TransparentPanel();
             this.lblOldnum = new System.Windows.Forms.Label();
             this.mskOldnum = new System.Windows.Forms.MaskedTextBox();
             this.lblPosition = new System.Windows.Forms.Label();
@@ -109,6 +112,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
+            this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
+            this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
+            this.dpEditDate = new System.Windows.Forms.DateTimePicker();
+            this.txtEditDesc = new System.Windows.Forms.TextBox();
+            this.txtEditCo = new System.Windows.Forms.TextBox();
+            this.txtEditName = new System.Windows.Forms.TextBox();
             this.dgvProblem = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
@@ -144,10 +154,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSwithToRefnum = new System.Windows.Forms.Button();
             this.btnLostRenew = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.chkIMOnly = new System.Windows.Forms.CheckBox();
+            this.transLayerHeader = new SN_Net.MiscClass.TransparentPanel();
             this.lblRefnum = new System.Windows.Forms.Label();
             this.mskRefnum = new System.Windows.Forms.MaskedTextBox();
             this.lblSerNum = new System.Windows.Forms.Label();
@@ -163,16 +174,7 @@
             this.btnBrowseArea = new System.Windows.Forms.Button();
             this.txtArea = new System.Windows.Forms.TextBox();
             this.lblAreaTypdes = new System.Windows.Forms.Label();
-            this.transLayerHeader = new SN_Net.MiscClass.TransparentPanel();
-            this.transLayerBody2 = new SN_Net.MiscClass.TransparentPanel();
-            this.transLayerBody1 = new SN_Net.MiscClass.TransparentPanel();
-            this.transparentPanel2 = new SN_Net.MiscClass.TransparentPanel();
-            this.transparentPanel1 = new SN_Net.MiscClass.TransparentPanel();
-            this.mskEditDate = new System.Windows.Forms.MaskedTextBox();
-            this.dpEditDate = new System.Windows.Forms.DateTimePicker();
-            this.txtEditDesc = new System.Windows.Forms.TextBox();
-            this.txtEditCo = new System.Windows.Forms.TextBox();
-            this.txtEditName = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -181,12 +183,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.transparentPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.transparentPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -264,6 +266,14 @@
             this.groupBox2.Size = new System.Drawing.Size(829, 205);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
+            // 
+            // transLayerBody2
+            // 
+            this.transLayerBody2.Location = new System.Drawing.Point(7, 14);
+            this.transLayerBody2.Name = "transLayerBody2";
+            this.transLayerBody2.Size = new System.Drawing.Size(33, 29);
+            this.transLayerBody2.TabIndex = 86;
+            this.transLayerBody2.Visible = false;
             // 
             // lblVerext
             // 
@@ -711,6 +721,14 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             // 
+            // transLayerBody1
+            // 
+            this.transLayerBody1.Location = new System.Drawing.Point(6, 14);
+            this.transLayerBody1.Name = "transLayerBody1";
+            this.transLayerBody1.Size = new System.Drawing.Size(33, 29);
+            this.transLayerBody1.TabIndex = 75;
+            this.transLayerBody1.Visible = false;
+            // 
             // lblOldnum
             // 
             this.lblOldnum.BackColor = System.Drawing.Color.White;
@@ -1088,6 +1106,78 @@
             this.label6.TabIndex = 16;
             this.label6.Text = "CD Training";
             // 
+            // transparentPanel2
+            // 
+            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
+            this.transparentPanel2.Name = "transparentPanel2";
+            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel2.TabIndex = 5;
+            this.transparentPanel2.Visible = false;
+            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
+            // 
+            // transparentPanel1
+            // 
+            this.transparentPanel1.Controls.Add(this.mskEditDate);
+            this.transparentPanel1.Controls.Add(this.dpEditDate);
+            this.transparentPanel1.Controls.Add(this.txtEditDesc);
+            this.transparentPanel1.Controls.Add(this.txtEditCo);
+            this.transparentPanel1.Controls.Add(this.txtEditName);
+            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
+            this.transparentPanel1.Name = "transparentPanel1";
+            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
+            this.transparentPanel1.TabIndex = 1;
+            this.transparentPanel1.Visible = false;
+            this.transparentPanel1.VisibleChanged += new System.EventHandler(this.transparentPanel1_VisibleChanged);
+            // 
+            // mskEditDate
+            // 
+            this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
+            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
+            this.mskEditDate.Mask = "00/00/0000";
+            this.mskEditDate.Name = "mskEditDate";
+            this.mskEditDate.PromptChar = ' ';
+            this.mskEditDate.Size = new System.Drawing.Size(82, 23);
+            this.mskEditDate.TabIndex = 0;
+            this.mskEditDate.ValidatingType = typeof(System.DateTime);
+            // 
+            // dpEditDate
+            // 
+            this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
+            this.dpEditDate.Name = "dpEditDate";
+            this.dpEditDate.Size = new System.Drawing.Size(18, 23);
+            this.dpEditDate.TabIndex = 4;
+            this.dpEditDate.TabStop = false;
+            // 
+            // txtEditDesc
+            // 
+            this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
+            this.txtEditDesc.MaxLength = 100;
+            this.txtEditDesc.Name = "txtEditDesc";
+            this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
+            this.txtEditDesc.TabIndex = 3;
+            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
+            // 
+            // txtEditCo
+            // 
+            this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
+            this.txtEditCo.MaxLength = 4;
+            this.txtEditCo.Name = "txtEditCo";
+            this.txtEditCo.Size = new System.Drawing.Size(100, 23);
+            this.txtEditCo.TabIndex = 2;
+            // 
+            // txtEditName
+            // 
+            this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtEditName.Location = new System.Drawing.Point(149, 13);
+            this.txtEditName.MaxLength = 50;
+            this.txtEditName.Name = "txtEditName";
+            this.txtEditName.Size = new System.Drawing.Size(100, 23);
+            this.txtEditName.TabIndex = 1;
+            // 
             // dgvProblem
             // 
             this.dgvProblem.AllowUserToAddRows = false;
@@ -1455,14 +1545,16 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Ref. S/N";
             // 
-            // button1
+            // btnSwithToRefnum
             // 
-            this.button1.Location = new System.Drawing.Point(812, 54);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(18, 25);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "?";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSwithToRefnum.Location = new System.Drawing.Point(812, 54);
+            this.btnSwithToRefnum.Name = "btnSwithToRefnum";
+            this.btnSwithToRefnum.Size = new System.Drawing.Size(18, 25);
+            this.btnSwithToRefnum.TabIndex = 27;
+            this.btnSwithToRefnum.Text = "?";
+            this.toolTip1.SetToolTip(this.btnSwithToRefnum, "Switch to reference S/N");
+            this.btnSwithToRefnum.UseVisualStyleBackColor = true;
+            this.btnSwithToRefnum.Click += new System.EventHandler(this.btnSwithToRefnum_Click);
             // 
             // btnLostRenew
             // 
@@ -1474,6 +1566,7 @@
             this.btnLostRenew.TabIndex = 15;
             this.btnLostRenew.TabStop = false;
             this.btnLostRenew.Text = "Lost + Renew";
+            this.toolTip1.SetToolTip(this.btnLostRenew, "This S/N is lost / renew S/N");
             this.btnLostRenew.UseVisualStyleBackColor = true;
             this.btnLostRenew.Click += new System.EventHandler(this.btnLostRenew_Click);
             // 
@@ -1526,8 +1619,17 @@
             this.chkIMOnly.TabIndex = 76;
             this.chkIMOnly.Text = "CO=IM only";
             this.chkIMOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.chkIMOnly, "Show only Problem Code = \"IM\"");
             this.chkIMOnly.UseVisualStyleBackColor = true;
             this.chkIMOnly.CheckedChanged += new System.EventHandler(this.chkIMOnly_CheckedChanged);
+            // 
+            // transLayerHeader
+            // 
+            this.transLayerHeader.Location = new System.Drawing.Point(6, 47);
+            this.transLayerHeader.Name = "transLayerHeader";
+            this.transLayerHeader.Size = new System.Drawing.Size(33, 29);
+            this.transLayerHeader.TabIndex = 70;
+            this.transLayerHeader.Visible = false;
             // 
             // lblRefnum
             // 
@@ -1684,102 +1786,6 @@
             this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
             this.lblAreaTypdes.TabIndex = 55;
             // 
-            // transLayerHeader
-            // 
-            this.transLayerHeader.Location = new System.Drawing.Point(6, 47);
-            this.transLayerHeader.Name = "transLayerHeader";
-            this.transLayerHeader.Size = new System.Drawing.Size(33, 29);
-            this.transLayerHeader.TabIndex = 70;
-            this.transLayerHeader.Visible = false;
-            // 
-            // transLayerBody2
-            // 
-            this.transLayerBody2.Location = new System.Drawing.Point(7, 14);
-            this.transLayerBody2.Name = "transLayerBody2";
-            this.transLayerBody2.Size = new System.Drawing.Size(33, 29);
-            this.transLayerBody2.TabIndex = 86;
-            this.transLayerBody2.Visible = false;
-            // 
-            // transLayerBody1
-            // 
-            this.transLayerBody1.Location = new System.Drawing.Point(6, 14);
-            this.transLayerBody1.Name = "transLayerBody1";
-            this.transLayerBody1.Size = new System.Drawing.Size(33, 29);
-            this.transLayerBody1.TabIndex = 75;
-            this.transLayerBody1.Visible = false;
-            // 
-            // transparentPanel2
-            // 
-            this.transparentPanel2.Location = new System.Drawing.Point(48, 83);
-            this.transparentPanel2.Name = "transparentPanel2";
-            this.transparentPanel2.Size = new System.Drawing.Size(736, 49);
-            this.transparentPanel2.TabIndex = 5;
-            this.transparentPanel2.Visible = false;
-            this.transparentPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.drawDeleteRowSlash);
-            // 
-            // transparentPanel1
-            // 
-            this.transparentPanel1.Controls.Add(this.mskEditDate);
-            this.transparentPanel1.Controls.Add(this.dpEditDate);
-            this.transparentPanel1.Controls.Add(this.txtEditDesc);
-            this.transparentPanel1.Controls.Add(this.txtEditCo);
-            this.transparentPanel1.Controls.Add(this.txtEditName);
-            this.transparentPanel1.Location = new System.Drawing.Point(48, 22);
-            this.transparentPanel1.Name = "transparentPanel1";
-            this.transparentPanel1.Size = new System.Drawing.Size(736, 49);
-            this.transparentPanel1.TabIndex = 1;
-            this.transparentPanel1.Visible = false;
-            this.transparentPanel1.VisibleChanged += new System.EventHandler(this.transparentPanel1_VisibleChanged);
-            // 
-            // mskEditDate
-            // 
-            this.mskEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskEditDate.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mskEditDate.Location = new System.Drawing.Point(12, 13);
-            this.mskEditDate.Mask = "00/00/0000";
-            this.mskEditDate.Name = "mskEditDate";
-            this.mskEditDate.PromptChar = ' ';
-            this.mskEditDate.Size = new System.Drawing.Size(82, 23);
-            this.mskEditDate.TabIndex = 0;
-            this.mskEditDate.ValidatingType = typeof(System.DateTime);
-            // 
-            // dpEditDate
-            // 
-            this.dpEditDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dpEditDate.Location = new System.Drawing.Point(92, 13);
-            this.dpEditDate.Name = "dpEditDate";
-            this.dpEditDate.Size = new System.Drawing.Size(18, 23);
-            this.dpEditDate.TabIndex = 4;
-            this.dpEditDate.TabStop = false;
-            // 
-            // txtEditDesc
-            // 
-            this.txtEditDesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditDesc.Location = new System.Drawing.Point(458, 13);
-            this.txtEditDesc.MaxLength = 100;
-            this.txtEditDesc.Name = "txtEditDesc";
-            this.txtEditDesc.Size = new System.Drawing.Size(100, 23);
-            this.txtEditDesc.TabIndex = 3;
-            this.txtEditDesc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.submitProblemOnEnterKey);
-            // 
-            // txtEditCo
-            // 
-            this.txtEditCo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditCo.Location = new System.Drawing.Point(314, 13);
-            this.txtEditCo.MaxLength = 4;
-            this.txtEditCo.Name = "txtEditCo";
-            this.txtEditCo.Size = new System.Drawing.Size(100, 23);
-            this.txtEditCo.TabIndex = 2;
-            // 
-            // txtEditName
-            // 
-            this.txtEditName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEditName.Location = new System.Drawing.Point(149, 13);
-            this.txtEditName.MaxLength = 50;
-            this.txtEditName.Name = "txtEditName";
-            this.txtEditName.Size = new System.Drawing.Size(100, 23);
-            this.txtEditName.TabIndex = 1;
-            // 
             // SnWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1789,7 +1795,7 @@
             this.ClientSize = new System.Drawing.Size(854, 591);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnLostRenew);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSwithToRefnum);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -1813,6 +1819,8 @@
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.transparentPanel1.ResumeLayout(false);
+            this.transparentPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -1820,8 +1828,6 @@
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
-            this.transparentPanel1.ResumeLayout(false);
-            this.transparentPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1864,7 +1870,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSwithToRefnum;
         private System.Windows.Forms.Button btnLostRenew;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dgvProblem;
@@ -1973,5 +1979,6 @@
         private MiscClass.TransparentPanel transLayerBody1;
         private MiscClass.TransparentPanel transLayerHeader;
         private System.Windows.Forms.CheckBox chkIMOnly;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

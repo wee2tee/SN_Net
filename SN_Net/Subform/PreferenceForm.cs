@@ -14,10 +14,14 @@ namespace SN_Net.Subform
     public partial class PreferenceForm : Form
     {
         public bool autoclick_edit = false;
+        private string system_path;
+        private string appdata_path;
 
         public PreferenceForm()
         {
             InitializeComponent();
+            system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            appdata_path = Path.Combine(system_path, "SN_Net\\");
         }
 
         private void PreferenceForm_Load(object sender, EventArgs e)
@@ -37,7 +41,7 @@ namespace SN_Net.Subform
 
         private void loadPreferenceSettings()
         {
-            if (File.Exists("SN_pref.txt"))
+            if (File.Exists(this.appdata_path + "SN_pref.txt"))
             {
                 this.mskMainURL.Text = this.readPreferenceLine(1);
             }
@@ -49,10 +53,10 @@ namespace SN_Net.Subform
 
         private string readPreferenceLine(int line_number)
         {
-            if (File.Exists("SN_pref.txt"))
+            if (File.Exists(this.appdata_path + "SN_pref.txt"))
             {
                 int line_count = 0;
-                foreach (string line in File.ReadAllLines("SN_pref.txt"))
+                foreach (string line in File.ReadAllLines(this.appdata_path + "SN_pref.txt"))
                 {
                     line_count++;
 
@@ -72,7 +76,7 @@ namespace SN_Net.Subform
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
-            using (StreamWriter file = new StreamWriter("SN_pref.txt", false))
+            using (StreamWriter file = new StreamWriter(this.appdata_path + "SN_pref.txt", false))
             {
                 file.WriteLine("MAIN URL | " + this.mskMainURL.Text);
                 this.toolStripCancel.Enabled = false;
@@ -125,7 +129,7 @@ namespace SN_Net.Subform
 
         private void PreferenceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (File.Exists("SN_pref.txt"))
+            if (File.Exists(this.appdata_path + "SN_pref.txt"))
             {
                 if (!this.toolStripEdit.Enabled)
                 {

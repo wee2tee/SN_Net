@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtUser = new System.Windows.Forms.TextBox();
@@ -36,6 +37,7 @@
             this.btnLoginSubmit = new System.Windows.Forms.Button();
             this.btnLoginCancel = new System.Windows.Forms.Button();
             this.btnPreference = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,6 +129,7 @@
             this.btnPreference.Name = "btnPreference";
             this.btnPreference.Size = new System.Drawing.Size(30, 30);
             this.btnPreference.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.btnPreference, "Preferences");
             this.btnPreference.UseVisualStyleBackColor = true;
             this.btnPreference.Click += new System.EventHandler(this.btnPreference_Click);
             // 
@@ -160,5 +163,6 @@
         private System.Windows.Forms.Button btnLoginSubmit;
         private System.Windows.Forms.Button btnLoginCancel;
         private System.Windows.Forms.Button btnPreference;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

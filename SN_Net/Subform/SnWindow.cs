@@ -580,7 +580,7 @@ namespace SN_Net.Subform
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
             this.parent_form.Cursor = Cursors.Default;
-            this.button1.TabStop = true;
+            this.btnSwithToRefnum.TabStop = true;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
             this.dgvProblem.Focus();
@@ -595,7 +595,7 @@ namespace SN_Net.Subform
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
             this.parent_form.Cursor = Cursors.Default;
-            this.button1.TabStop = false;
+            this.btnSwithToRefnum.TabStop = false;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
             this.transLayerHeader.Visible = false;
@@ -609,7 +609,7 @@ namespace SN_Net.Subform
             this.setToolStripFormMode();
             this.Cursor = Cursors.Default;
             this.parent_form.Cursor = Cursors.Default;
-            this.button1.TabStop = false;
+            this.btnSwithToRefnum.TabStop = false;
             this.parent_form.toolStripProcessing.Visible = false;
             this.parent_form.menuStrip1.Enabled = true;
             this.transLayerHeader.Visible = false;
@@ -2776,6 +2776,47 @@ namespace SN_Net.Subform
         }
 
         private void workerAfterLostRenew_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.fillSerialInForm();
+            this.FormReady();
+        }
+
+        private void btnSwithToRefnum_Click(object sender, EventArgs e)
+        {
+            this.FormLoading();
+            BackgroundWorker workerSwitchRefnum = new BackgroundWorker();
+            workerSwitchRefnum.DoWork += new DoWorkEventHandler(this.workerSwitchRefnum_Dowork);
+            workerSwitchRefnum.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSwitchRefnum_Complete);
+            workerSwitchRefnum.RunWorkerAsync();
+        }
+
+        private void workerSwitchRefnum_Dowork(object sender, DoWorkEventArgs e)
+        {
+            this.getSerialIDList();
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_by_sernum&sernum=" + this.serial.refnum);
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                if (sr.serial.Count > 0)
+                {
+                    this.serial = sr.serial[0];
+                    this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
+                    this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
+                    this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
+                    this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
+                    this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
+                    this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
+                    this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
+                }
+            }
+            else
+            {
+                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+            }
+        }
+
+        private void workerSwitchRefnum_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
             this.fillSerialInForm();
             this.FormReady();

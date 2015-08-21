@@ -31,6 +31,7 @@
             this.mskMainURL = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // mskMainURL
@@ -58,7 +59,7 @@
             // btnOK
             // 
             this.btnOK.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnOK.Location = new System.Drawing.Point(231, 44);
+            this.btnOK.Location = new System.Drawing.Point(231, 65);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(80, 28);
             this.btnOK.TabIndex = 6;
@@ -66,11 +67,20 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.Location = new System.Drawing.Point(212, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(118, 23);
+            this.label2.TabIndex = 8;
+            // 
             // ApiMainUrlFirstSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 82);
+            this.ClientSize = new System.Drawing.Size(541, 102);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.mskMainURL);
             this.Controls.Add(this.label1);
@@ -91,5 +101,6 @@
         private System.Windows.Forms.MaskedTextBox mskMainURL;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Label label2;
     }
 }

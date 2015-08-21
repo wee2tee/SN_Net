@@ -29,16 +29,22 @@ namespace SN_Net.Subform
 
         public Boolean loged_in = false;
         public GlobalVar G = new GlobalVar();
+        private string system_path;
+        private string appdata_path;
 
         public LoginForm()
         {
             InitializeComponent();
             EscapeKeyToCloseDialog.ActiveEscToClose(this);
+
+            system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            appdata_path = Path.Combine(system_path, "SN_Net\\");
+            Console.WriteLine(appdata_path);
         }
 
         private void LoginForm_Shown(object sender, EventArgs e)
         {
-            if (File.Exists("SN_pref.txt"))
+            if (File.Exists(this.appdata_path + "SN_pref.txt"))
             {
                 this.txtUser.Focus();
 
