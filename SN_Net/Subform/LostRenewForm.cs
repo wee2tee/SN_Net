@@ -16,6 +16,7 @@ namespace SN_Net.Subform
 {
     public partial class LostRenewForm : Form
     {
+        private GlobalVar G;
         private SnWindow parent_window;
         private Control current_focused_control;
         private Serial serial;
@@ -30,6 +31,7 @@ namespace SN_Net.Subform
             : this()
         {
             this.parent_window = parent_window;
+            this.G = this.parent_window.G;
             this.BackColor = ColorResource.BACKGROUND_COLOR_BEIGE;
         }
 
@@ -37,6 +39,7 @@ namespace SN_Net.Subform
         {
             this.serial = this.parent_window.serial;
             this.mskLostSernum.Text = this.serial.sernum;
+            //this.chkCDTraining.Checked = (this.serial.expdat.tryParseToDateTime() == false ? true : false);
 
             this.mskNewSernum.GotFocus += new EventHandler(this.keptCurrentFocusedControl);
             this.txtVersion.GotFocus += new EventHandler(this.keptCurrentFocusedControl);
@@ -52,6 +55,9 @@ namespace SN_Net.Subform
             this.txtVersion.Leave += new EventHandler(this.textBoxLeaveFocusHandler);
 
             this.mskNewSernum.Leave += new EventHandler(this.validateSernum);
+
+            this.chkNewRwt.CheckStateChanged += new EventHandler(this.onCheckBoxStateChange);
+            this.chkNewRwtJob.CheckStateChanged += new EventHandler(this.onCheckBoxStateChange);
         }
 
         private void LostRenewForm_Shown(object sender, EventArgs e)
@@ -77,7 +83,7 @@ namespace SN_Net.Subform
                 ((MaskedTextBox)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
                 ((MaskedTextBox)sender).ForeColor = Color.Black;
                 ((MaskedTextBox)sender).SelectionStart = 0;
-                ((MaskedTextBox)sender).SelectionLength = ((MaskedTextBox)sender).Text.Length;
+                ((MaskedTextBox)sender).SelectionLength = 0;
             }
         }
 
@@ -92,6 +98,24 @@ namespace SN_Net.Subform
             {
                 ((MaskedTextBox)sender).BackColor = Color.White;
                 ((MaskedTextBox)sender).ForeColor = Color.Black;
+            }
+        }
+
+        private void onCheckBoxStateChange(object sender, EventArgs e)
+        {
+            if ((CheckBox)sender == this.chkNewRwt)
+            {
+                if (((CheckBox)sender).Checked)
+                {
+                    this.chkNewRwtJob.CheckState = CheckState.Unchecked;
+                }
+            }
+            if ((CheckBox)sender == this.chkNewRwtJob)
+            {
+                if (((CheckBox)sender).Checked)
+                {
+                    this.chkNewRwt.CheckState = CheckState.Unchecked;
+                }
             }
         }
 
@@ -157,7 +181,8 @@ namespace SN_Net.Subform
             json_data += "\"version\":\"" + this.txtVersion.Text.cleanString() + "\",";
             json_data += "\"is_newrwt\":\"" + this.chkNewRwt.CheckState.ToYesOrNoString() + "\",";
             json_data += "\"is_newrwt_job\":\"" + this.chkNewRwtJob.CheckState.ToYesOrNoString() + "\",";
-            json_data += "\"is_cdtraining\":\"" + this.chkCDTraining.CheckState.ToYesOrNoString() + "\"}";
+            json_data += "\"is_cdtraining\":\"" + this.chkCDTraining.CheckState.ToYesOrNoString() + "\",";
+            json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\"}";
 
             CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/lost_renew", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);

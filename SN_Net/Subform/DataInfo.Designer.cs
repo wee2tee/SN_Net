@@ -29,18 +29,20 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblExpression = new System.Windows.Forms.Label();
+            this.lblDataTable = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblRecTime = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.lblRecDate = new System.Windows.Forms.Label();
+            this.lblRecBy = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.lblDataTable = new System.Windows.Forms.Label();
-            this.lblExpression = new System.Windows.Forms.Label();
-            this.lblRecBy = new System.Windows.Forms.Label();
-            this.lblRecDate = new System.Windows.Forms.Label();
             this.lblRecNo = new System.Windows.Forms.Label();
             this.lblTotalRec = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
@@ -60,87 +62,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // groupBox2
+            // lblExpression
             // 
-            this.groupBox2.Controls.Add(this.lblRecDate);
-            this.groupBox2.Controls.Add(this.lblRecBy);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(12, 92);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(376, 44);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(14, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Data table";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(11, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Expression";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(12, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 16);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Record by";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label4.Location = new System.Drawing.Point(200, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(34, 16);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Date";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(23, 152);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 16);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Record";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label6.Location = new System.Drawing.Point(204, 152);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 16);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "of";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label7.Location = new System.Drawing.Point(335, 152);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(50, 16);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Item(s)";
+            this.lblExpression.BackColor = System.Drawing.Color.White;
+            this.lblExpression.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblExpression.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblExpression.ForeColor = System.Drawing.Color.Red;
+            this.lblExpression.Location = new System.Drawing.Point(90, 45);
+            this.lblExpression.Name = "lblExpression";
+            this.lblExpression.Size = new System.Drawing.Size(252, 19);
+            this.lblExpression.TabIndex = 3;
+            this.lblExpression.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDataTable
             // 
@@ -154,29 +86,61 @@
             this.lblDataTable.TabIndex = 2;
             this.lblDataTable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblExpression
+            // label2
             // 
-            this.lblExpression.BackColor = System.Drawing.Color.White;
-            this.lblExpression.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblExpression.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblExpression.ForeColor = System.Drawing.Color.Red;
-            this.lblExpression.Location = new System.Drawing.Point(90, 45);
-            this.lblExpression.Name = "lblExpression";
-            this.lblExpression.Size = new System.Drawing.Size(252, 19);
-            this.lblExpression.TabIndex = 3;
-            this.lblExpression.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.Location = new System.Drawing.Point(11, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Expression";
             // 
-            // lblRecBy
+            // label1
             // 
-            this.lblRecBy.BackColor = System.Drawing.Color.White;
-            this.lblRecBy.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblRecBy.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblRecBy.ForeColor = System.Drawing.Color.Red;
-            this.lblRecBy.Location = new System.Drawing.Point(87, 16);
-            this.lblRecBy.Name = "lblRecBy";
-            this.lblRecBy.Size = new System.Drawing.Size(99, 19);
-            this.lblRecBy.TabIndex = 4;
-            this.lblRecBy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label1.Location = new System.Drawing.Point(14, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(66, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Data table";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblRecTime);
+            this.groupBox2.Controls.Add(this.lblTime);
+            this.groupBox2.Controls.Add(this.lblRecDate);
+            this.groupBox2.Controls.Add(this.lblRecBy);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Location = new System.Drawing.Point(12, 92);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(376, 71);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            // 
+            // lblRecTime
+            // 
+            this.lblRecTime.BackColor = System.Drawing.Color.White;
+            this.lblRecTime.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblRecTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblRecTime.ForeColor = System.Drawing.Color.Red;
+            this.lblRecTime.Location = new System.Drawing.Point(240, 43);
+            this.lblRecTime.Name = "lblRecTime";
+            this.lblRecTime.Size = new System.Drawing.Size(99, 19);
+            this.lblRecTime.TabIndex = 7;
+            this.lblRecTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblTime.Location = new System.Drawing.Point(197, 43);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(37, 16);
+            this.lblTime.TabIndex = 6;
+            this.lblTime.Text = "Time";
             // 
             // lblRecDate
             // 
@@ -190,13 +154,75 @@
             this.lblRecDate.TabIndex = 5;
             this.lblRecDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblRecBy
+            // 
+            this.lblRecBy.BackColor = System.Drawing.Color.White;
+            this.lblRecBy.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblRecBy.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblRecBy.ForeColor = System.Drawing.Color.Red;
+            this.lblRecBy.Location = new System.Drawing.Point(87, 16);
+            this.lblRecBy.Name = "lblRecBy";
+            this.lblRecBy.Size = new System.Drawing.Size(99, 19);
+            this.lblRecBy.TabIndex = 4;
+            this.lblRecBy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label4.Location = new System.Drawing.Point(200, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(34, 16);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Date";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label3.Location = new System.Drawing.Point(12, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 16);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Record by";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(23, 175);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 16);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Record";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label6.Location = new System.Drawing.Point(204, 175);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(19, 16);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "of";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label7.Location = new System.Drawing.Point(335, 175);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(50, 16);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Item(s)";
+            // 
             // lblRecNo
             // 
             this.lblRecNo.BackColor = System.Drawing.Color.White;
             this.lblRecNo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblRecNo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblRecNo.ForeColor = System.Drawing.Color.Red;
-            this.lblRecNo.Location = new System.Drawing.Point(99, 151);
+            this.lblRecNo.Location = new System.Drawing.Point(99, 174);
             this.lblRecNo.Name = "lblRecNo";
             this.lblRecNo.Size = new System.Drawing.Size(76, 19);
             this.lblRecNo.TabIndex = 5;
@@ -208,7 +234,7 @@
             this.lblTotalRec.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblTotalRec.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblTotalRec.ForeColor = System.Drawing.Color.Red;
-            this.lblTotalRec.Location = new System.Drawing.Point(252, 151);
+            this.lblTotalRec.Location = new System.Drawing.Point(252, 174);
             this.lblTotalRec.Name = "lblTotalRec";
             this.lblTotalRec.Size = new System.Drawing.Size(76, 19);
             this.lblTotalRec.TabIndex = 6;
@@ -218,9 +244,9 @@
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnOK.Location = new System.Drawing.Point(163, 191);
+            this.btnOK.Location = new System.Drawing.Point(163, 214);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(75, 25);
             this.btnOK.TabIndex = 7;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -229,7 +255,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 226);
+            this.ClientSize = new System.Drawing.Size(401, 254);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblTotalRec);
             this.Controls.Add(this.lblRecNo);
@@ -271,5 +297,7 @@
         public System.Windows.Forms.Label lblRecBy;
         public System.Windows.Forms.Label lblRecNo;
         public System.Windows.Forms.Label lblTotalRec;
+        public System.Windows.Forms.Label lblRecTime;
+        public System.Windows.Forms.Label lblTime;
     }
 }

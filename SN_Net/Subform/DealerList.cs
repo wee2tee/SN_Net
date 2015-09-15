@@ -17,43 +17,49 @@ namespace SN_Net.Subform
     public partial class DealerList : Form
     {
         public Dealer dealer; // the selected dealer
+        SnWindow parent_window;
         private string selected_dealer_code;
-        //private Dealer focused_dealer;
-        private List<Dealer> dealers = new List<Dealer>();
-        private int sort_col = 1;
+        private SORT_MODE sort_mode;
+        private enum SORT_MODE
+        {
+            DEALER,
+            COMPNAM
+        }
 
-        public DealerList(string dealer_code)
+        public DealerList()
         {
             InitializeComponent();
+        }
 
+        public DealerList(SnWindow parent_window, string dealer_code)
+            : this()
+        {
+
+            this.parent_window = parent_window;
             this.selected_dealer_code = dealer_code;
-            //this.focused_dealer = dealer;
-            this.loadDealerList();
-            this.fillInDatagrid();
+            this.sort_mode = SORT_MODE.DEALER;
+            this.FillInDatagrid();
+            this.SetSelectedItem();
         }
 
         private void DealerList_Shown(object sender, EventArgs e)
         {
             this.dgvDealer.Focus();
-            EscapeKeyToCloseDialog.ActiveEscToClose(this);
         }
 
-        private void loadDealerList()
+        private List<Dealer> PrepareDealerList()
         {
-            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "dealer/get_list");
-            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-
-            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            if (this.sort_mode == SORT_MODE.DEALER)
             {
-                this.dealers = sr.dealer;
+                return this.parent_window.main_form.data_resource.LIST_DEALER.OrderBy(t => t.dealer, new CompareStrings()).ToList<Dealer>();
             }
             else
             {
-                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                return this.parent_window.main_form.data_resource.LIST_DEALER.OrderBy(t => t.compnam, new CompareStrings()).ToList<Dealer>();
             }
         }
 
-        private void fillInDatagrid()
+        private void FillInDatagrid()
         {
             // initialize
             this.dgvDealer.Columns.Clear();
@@ -78,27 +84,30 @@ namespace SN_Net.Subform
             DataGridViewTextBoxColumn text_col2 = new DataGridViewTextBoxColumn();
             text_col2.HeaderText = "รหัส";
             text_col2.Width = 100;
+            text_col2.SortMode = DataGridViewColumnSortMode.Programmatic;
             text_col2.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter,
                 Padding = new Padding(0, 3, 0, 3),
-                BackColor = Color.OliveDrab
+                BackColor = (this.sort_mode == SORT_MODE.DEALER ? Color.OliveDrab : ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN)
             };
             this.dgvDealer.Columns.Add(text_col2);
 
             DataGridViewTextBoxColumn text_col3 = new DataGridViewTextBoxColumn();
             text_col3.HeaderText = "รายละเอียด";
             text_col3.Width = this.dgvDealer.ClientSize.Width - (text_col2.Width + 3);
+            text_col3.SortMode = DataGridViewColumnSortMode.Programmatic;
             text_col3.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter,
-                Padding = new Padding(0, 3, 0, 3)
+                Padding = new Padding(0, 3, 0, 3),
+                BackColor = (this.sort_mode == SORT_MODE.COMPNAM ? Color.OliveDrab : ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN)
             };
             this.dgvDealer.Columns.Add(text_col3);
 
-            foreach (Dealer dealer in this.dealers)
+            foreach (Dealer dealer in this.PrepareDealerList())
             {
                 int r = this.dgvDealer.Rows.Add();
                 this.dgvDealer.Rows[r].Tag = (Dealer)dealer;
@@ -143,17 +152,33 @@ namespace SN_Net.Subform
                 };
             }
 
-            this.setFocusedDealer();
+            //this.setFocusedDealer();
         }
 
-        private void setFocusedDealer()
+        private void SetSelectedItem(Dealer selected_item = null)
         {
-            foreach (DataGridViewRow row in this.dgvDealer.Rows)
+            if (selected_item != null)
             {
-                if (((Dealer)row.Tag).dealer == this.selected_dealer_code)
+                foreach (DataGridViewRow row in this.dgvDealer.Rows)
                 {
-                    row.Cells[1].Selected = true;
-                    this.dgvDealer.Focus();
+                    if (((Dealer)row.Tag).id == selected_item.id)
+                    {
+                        row.Cells[1].Selected = true;
+                        Console.WriteLine(row.Cells[1].Value.ToString());
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in this.dgvDealer.Rows)
+                {
+                    if (string.CompareOrdinal(this.selected_dealer_code, ((Dealer)row.Tag).dealer) <= 0)
+                    {
+                        row.Cells[1].Selected = true;
+                        Console.WriteLine(row.Cells[1].Value.ToString());
+                        break;
+                    }
                 }
             }
         }
@@ -167,60 +192,116 @@ namespace SN_Net.Subform
         {
             if (e.RowIndex >= 0)
             {
-                Dealer selected_dealer = (Dealer)((DataGridView)sender).Rows[e.RowIndex].Tag;
-                this.returnSelectedResult(selected_dealer);
+                this.returnSelectedResult();
             }
         }
 
-        private void returnSelectedResult(Dealer selected_dealer)
+        private void returnSelectedResult()
         {
-            this.dealer = selected_dealer;
+            this.dealer = (Dealer)this.dgvDealer.Rows[this.dgvDealer.CurrentCell.RowIndex].Tag;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void dgvDealer_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.btnOK.PerformClick();
-            }
-            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.Alt)
-            {
-                this.btnSearch.PerformClick();
-            }
-        }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Dealer selected_dealer = (Dealer)this.dgvDealer.Rows[this.dgvDealer.CurrentCell.RowIndex].Tag;
-            this.returnSelectedResult(selected_dealer);
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            SearchBox sb = new SearchBox();
-            if (sb.ShowDialog() == DialogResult.OK)
-            {
-                this.dgvDealer.Search(sb.txtKeyword.Text, this.sort_col);
-                Console.WriteLine("Keyword = " + sb.txtKeyword.Text + " , sort_col = " + this.sort_col.ToString());
-            }
+            this.returnSelectedResult();
         }
 
         private void dgvDealer_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             foreach (DataGridViewColumn col in ((DataGridView)sender).Columns)
             {
-                col.HeaderCell.Style.BackColor = Color.YellowGreen;
+                col.HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN;
             }
             ((DataGridView)sender).Columns[e.ColumnIndex].HeaderCell.Style.BackColor = Color.OliveDrab;
 
-            this.sort_col = e.ColumnIndex;
+            Dealer current_item = (Dealer)this.dgvDealer.Rows[this.dgvDealer.CurrentCell.RowIndex].Tag;
+
+            if (e.ColumnIndex == 1 && this.sort_mode == SORT_MODE.COMPNAM)
+            {
+                this.sort_mode = SORT_MODE.DEALER;
+                this.FillInDatagrid();
+                this.SetSelectedItem(current_item);
+            }
+            else if (e.ColumnIndex == 2 && this.sort_mode == SORT_MODE.DEALER)
+            {
+                this.sort_mode = SORT_MODE.COMPNAM;
+                this.FillInDatagrid();
+                this.SetSelectedItem(current_item);
+            }
         }
 
         private void dgvDealer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             ((DataGridView)sender).SetRowSelectedBorder(e);
+        }
+
+        private void DealerList_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString().Length > 0)
+            {
+                SearchBox s = new SearchBox();
+                s.txtKeyword.Text = e.KeyChar.ToString();
+                s.txtKeyword.SelectionStart = s.txtKeyword.Text.Length;
+                s.Location = new Point(this.Location.X + 8, this.Location.Y + this.ClientSize.Height - 25);
+                s.SetBounds(s.Location.X, s.Location.Y, this.ClientSize.Width, s.ClientSize.Height);
+                s.txtKeyword.SetBounds(s.txtKeyword.Location.X, s.txtKeyword.Location.Y, s.ClientSize.Width - 63, s.txtKeyword.ClientSize.Height);
+
+                if (s.ShowDialog() == DialogResult.OK)
+                {
+                    this.PerformSearch(s.txtKeyword.Text);
+                }
+            }
+        }
+
+        private void PerformSearch(string keyword)
+        {
+            switch (this.sort_mode)
+            {
+                case SORT_MODE.DEALER:
+                    this.dgvDealer.Search(keyword, 1);
+                    break;
+                case SORT_MODE.COMPNAM:
+                    this.dgvDealer.Search(keyword, 2);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.btnCancel.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.Enter)
+            {
+                this.btnOK.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.Tab)
+            {
+                Dealer current_item = (Dealer)this.dgvDealer.Rows[this.dgvDealer.CurrentCell.RowIndex].Tag;
+                if (this.sort_mode == SORT_MODE.DEALER)
+                {
+                    this.sort_mode = SORT_MODE.COMPNAM;
+                    this.dgvDealer.Columns[1].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN;
+                    this.dgvDealer.Columns[2].HeaderCell.Style.BackColor = Color.OliveDrab;
+                }
+                else
+                {
+                    this.sort_mode = SORT_MODE.DEALER;
+                    this.dgvDealer.Columns[1].HeaderCell.Style.BackColor = Color.OliveDrab;
+                    this.dgvDealer.Columns[2].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN; 
+                }
+                this.FillInDatagrid();
+                this.SetSelectedItem(current_item);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

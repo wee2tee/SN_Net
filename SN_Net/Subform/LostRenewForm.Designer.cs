@@ -39,48 +39,48 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.chkNewRwt = new System.Windows.Forms.CheckBox();
             this.toolStripProcess = new System.Windows.Forms.ToolStripStatusLabel();
+            this.chkNewRwt = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label1.Location = new System.Drawing.Point(37, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 16);
+            this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Lost S/N";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label2.Location = new System.Drawing.Point(21, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 16);
+            this.label2.Size = new System.Drawing.Size(73, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "ReNew S/N";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label3.Location = new System.Drawing.Point(44, 67);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 16);
+            this.label3.Size = new System.Drawing.Size(51, 16);
             this.label3.TabIndex = 2;
             this.label3.Text = "Version";
             // 
             // chkNewRwtJob
             // 
             this.chkNewRwtJob.AutoSize = true;
-            this.chkNewRwtJob.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkNewRwtJob.Location = new System.Drawing.Point(187, 94);
+            this.chkNewRwtJob.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chkNewRwtJob.Location = new System.Drawing.Point(168, 94);
             this.chkNewRwtJob.Name = "chkNewRwtJob";
-            this.chkNewRwtJob.Size = new System.Drawing.Size(200, 20);
+            this.chkNewRwtJob.Size = new System.Drawing.Size(183, 20);
             this.chkNewRwtJob.TabIndex = 3;
             this.chkNewRwtJob.Text = "New RWT + Job (Pink Disc)";
             this.chkNewRwtJob.UseVisualStyleBackColor = true;
@@ -88,10 +88,10 @@
             // chkCDTraining
             // 
             this.chkCDTraining.AutoSize = true;
-            this.chkCDTraining.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkCDTraining.Location = new System.Drawing.Point(187, 120);
+            this.chkCDTraining.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chkCDTraining.Location = new System.Drawing.Point(168, 120);
             this.chkCDTraining.Name = "chkCDTraining";
-            this.chkCDTraining.Size = new System.Drawing.Size(183, 20);
+            this.chkCDTraining.Size = new System.Drawing.Size(169, 20);
             this.chkCDTraining.TabIndex = 4;
             this.chkCDTraining.Text = "CD Training (Green Disc)";
             this.chkCDTraining.UseVisualStyleBackColor = true;
@@ -100,35 +100,35 @@
             // 
             this.mskLostSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mskLostSernum.Enabled = false;
-            this.mskLostSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskLostSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.mskLostSernum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.mskLostSernum.Location = new System.Drawing.Point(112, 7);
             this.mskLostSernum.Mask = ">A-AAA-AAAAAA";
             this.mskLostSernum.Name = "mskLostSernum";
             this.mskLostSernum.PromptChar = ' ';
-            this.mskLostSernum.Size = new System.Drawing.Size(118, 23);
+            this.mskLostSernum.Size = new System.Drawing.Size(105, 23);
             this.mskLostSernum.TabIndex = 6;
             // 
             // mskNewSernum
             // 
             this.mskNewSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mskNewSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskNewSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.mskNewSernum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
             this.mskNewSernum.Location = new System.Drawing.Point(112, 36);
             this.mskNewSernum.Mask = ">A-AAA-AAAAAA";
             this.mskNewSernum.Name = "mskNewSernum";
             this.mskNewSernum.PromptChar = ' ';
-            this.mskNewSernum.Size = new System.Drawing.Size(118, 23);
+            this.mskNewSernum.Size = new System.Drawing.Size(105, 23);
             this.mskNewSernum.TabIndex = 0;
             // 
             // txtVersion
             // 
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.txtVersion.Location = new System.Drawing.Point(112, 65);
             this.txtVersion.MaxLength = 4;
             this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(60, 23);
+            this.txtVersion.Size = new System.Drawing.Size(40, 23);
             this.txtVersion.TabIndex = 1;
             // 
             // btnOK
@@ -165,17 +165,6 @@
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // chkNewRwt
-            // 
-            this.chkNewRwt.AutoSize = true;
-            this.chkNewRwt.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkNewRwt.Location = new System.Drawing.Point(187, 68);
-            this.chkNewRwt.Name = "chkNewRwt";
-            this.chkNewRwt.Size = new System.Drawing.Size(159, 20);
-            this.chkNewRwt.TabIndex = 2;
-            this.chkNewRwt.Text = "New RWT (Pink Disc)";
-            this.chkNewRwt.UseVisualStyleBackColor = true;
-            // 
             // toolStripProcess
             // 
             this.toolStripProcess.Image = global::SN_Net.Properties.Resources.process_bar;
@@ -183,9 +172,20 @@
             this.toolStripProcess.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripProcess.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcess.Name = "toolStripProcess";
-            this.toolStripProcess.Size = new System.Drawing.Size(378, 17);
+            this.toolStripProcess.Size = new System.Drawing.Size(409, 17);
             this.toolStripProcess.Spring = true;
             this.toolStripProcess.Visible = false;
+            // 
+            // chkNewRwt
+            // 
+            this.chkNewRwt.AutoSize = true;
+            this.chkNewRwt.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chkNewRwt.Location = new System.Drawing.Point(168, 68);
+            this.chkNewRwt.Name = "chkNewRwt";
+            this.chkNewRwt.Size = new System.Drawing.Size(148, 20);
+            this.chkNewRwt.TabIndex = 2;
+            this.chkNewRwt.Text = "New RWT (Pink Disc)";
+            this.chkNewRwt.UseVisualStyleBackColor = true;
             // 
             // LostRenewForm
             // 

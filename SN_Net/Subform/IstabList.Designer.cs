@@ -31,7 +31,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvIstab = new System.Windows.Forms.DataGridView();
             this.btnOK = new System.Windows.Forms.Button();
-            this.btnSearch = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -45,6 +44,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -57,7 +57,6 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.btnOK);
-            this.splitContainer1.Panel2.Controls.Add(this.btnSearch);
             this.splitContainer1.Panel2.Controls.Add(this.btnEdit);
             this.splitContainer1.Panel2.Controls.Add(this.btnAdd);
             this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
@@ -85,7 +84,6 @@
             this.dgvIstab.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvIstab_CellDoubleClick);
             this.dgvIstab.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvIstab_CellPainting);
             this.dgvIstab.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvIstab_ColumnHeaderMouseClick);
-            this.dgvIstab.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvIstab_KeyDown);
             this.dgvIstab.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvIstab_MouseClick);
             // 
             // btnOK
@@ -99,21 +97,10 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // btnSearch
-            // 
-            this.btnSearch.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSearch.Location = new System.Drawing.Point(132, 8);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(121, 29);
-            this.btnSearch.TabIndex = 2;
-            this.btnSearch.Text = "Search <Alt+S>";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
             // btnEdit
             // 
             this.btnEdit.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnEdit.Location = new System.Drawing.Point(365, 8);
+            this.btnEdit.Location = new System.Drawing.Point(264, 8);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(94, 29);
             this.btnEdit.TabIndex = 4;
@@ -124,7 +111,7 @@
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnAdd.Location = new System.Drawing.Point(270, 8);
+            this.btnAdd.Location = new System.Drawing.Point(169, 8);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(94, 29);
             this.btnAdd.TabIndex = 3;
@@ -150,12 +137,14 @@
             this.ClientSize = new System.Drawing.Size(465, 210);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(465, 210);
             this.Name = "IstabList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TabData";
             this.Load += new System.EventHandler(this.IstabList_Load);
             this.Shown += new System.EventHandler(this.IstabList_Shown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IstabList_KeyPress);
             this.Resize += new System.EventHandler(this.IstabList_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -173,7 +162,6 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.DataGridView dgvIstab;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnSearch;
 
     }
 }

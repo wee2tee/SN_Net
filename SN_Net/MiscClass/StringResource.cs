@@ -14,5 +14,6 @@ namespace SN_Net.MiscClass
         public const string CONFIRM_CANCEL_ADD_EDIT = "ยกเลิกการเพิ่ม/แก้ไขข้อมูล?";
         public const string CONFIRM_CLOSE_WINDOW = "ท่านต้องการปิดหน้าต่างงานนี้ใช่หรือไม่?\nข้อมูลที่ท่านกำลังเพิ่ม/แก้ไข จะไม่ถูกบันทึก";
         public const string DATA_NOT_FOUND_GET_NEXT_DATA = "ค้นหาข้อมูลไม่พบ ต้องการข้อมูลถัดไปหรือไม่?";
+        public const string DATA_NOT_FOUND = "ค้นหาข้อมูลไม่พบ";
     }
 }

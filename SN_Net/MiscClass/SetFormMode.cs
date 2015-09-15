@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace SN_Net.MiscClass
 {
@@ -45,12 +46,17 @@ namespace SN_Net.MiscClass
                     ((TextBox)ct).ReadOnly = false;
                     ((TextBox)ct).BorderStyle = BorderStyle.FixedSingle;
                     ((TextBox)ct).Text = "";
+                    //((TextBox)ct).GotFocus += new EventHandler(SetFormMode.controlFocusedHandler);
+                    //((TextBox)ct).Leave += new EventHandler(SetFormMode.controlLeaveHandler);
                 }
                 if (ct is MaskedTextBox)
                 {
                     ((MaskedTextBox)ct).ReadOnly = false;
                     ((MaskedTextBox)ct).BorderStyle = BorderStyle.FixedSingle;
                     ((MaskedTextBox)ct).Text = "";
+                    //((MaskedTextBox)ct).GotFocus += new EventHandler(SetFormMode.controlFocusedHandler);
+                    //((MaskedTextBox)ct).Leave += new EventHandler(SetFormMode.controlLeaveHandler);
+                    
                 }
                 if (ct is ComboBox)
                 {
@@ -58,7 +64,7 @@ namespace SN_Net.MiscClass
                 }
                 label_control[ndx].Visible = false;
             }
-            FormControlSequence.Attach(edit_control);
+            
             edit_control.First<Control>().Focus();
             if (edit_control.First() is TextBox)
             {
@@ -83,15 +89,20 @@ namespace SN_Net.MiscClass
                 {
                     ((TextBox)ct).ReadOnly = false;
                     ((TextBox)ct).BorderStyle = BorderStyle.FixedSingle;
+                    //((TextBox)ct).GotFocus += new EventHandler(SetFormMode.controlFocusedHandler);
+                    //((TextBox)ct).Leave += new EventHandler(SetFormMode.controlLeaveHandler);
+
                 }
                 if (ct is MaskedTextBox)
                 {
                     ((MaskedTextBox)ct).ReadOnly = false;
                     ((MaskedTextBox)ct).BorderStyle = BorderStyle.FixedSingle;
+                    //((MaskedTextBox)ct).GotFocus += new EventHandler(SetFormMode.controlFocusedHandler);
+                    //((MaskedTextBox)ct).Leave += new EventHandler(SetFormMode.controlLeaveHandler);
                 }
                 label_control[ndx].Visible = false;
             }
-            FormControlSequence.Attach(edit_control);
+            
             edit_control.First<Control>().Focus();
             if (edit_control.First() is TextBox)
             {
@@ -103,19 +114,34 @@ namespace SN_Net.MiscClass
             }
         }
 
-        //public static void Saving(this Form form, List<Control> edit_control)
-        //{
-        //    foreach (Control ct in edit_control)
-        //    {
-        //        if (ct is TextBox)
-        //        {
-        //            ((TextBox)ct).ReadOnly = true;
-        //        }
-        //        if (ct is MaskedTextBox)
-        //        {
-        //            ((MaskedTextBox)ct).ReadOnly = true;
-        //        }
-        //    }
-        //}
+        public static void controlFocusedHandler(object sender, EventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                ((TextBox)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                ((TextBox)sender).ForeColor = Color.Black;
+                ((TextBox)sender).SelectionStart = ((TextBox)sender).Text.Length;
+            }
+            if (sender is MaskedTextBox)
+            {
+                ((MaskedTextBox)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                ((MaskedTextBox)sender).ForeColor = Color.Black;
+                ((MaskedTextBox)sender).SelectionStart = ((MaskedTextBox)sender).Text.Length;
+            }
+        }
+
+        public static void controlLeaveHandler(object sender, EventArgs e)
+        {
+            if (sender is TextBox)
+            {
+                ((TextBox)sender).BackColor = Color.White;
+                ((TextBox)sender).ForeColor = Color.Black;
+            }
+            if (sender is MaskedTextBox)
+            {
+                ((MaskedTextBox)sender).BackColor = Color.White;
+                ((MaskedTextBox)sender).ForeColor = Color.Black;
+            }
+        }
     }
 }

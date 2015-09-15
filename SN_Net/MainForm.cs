@@ -27,8 +27,8 @@ namespace SN_Net
         public IstabWindow probcode_wind;
         
         public string my_mac = string.Empty;
-        private GlobalVar G;
-        private DataResource data_resource;
+        public GlobalVar G;
+        public DataResource data_resource;
         
         public MainForm()
         {
@@ -37,6 +37,7 @@ namespace SN_Net
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            this.loadDataResource();
             LoginForm login = new LoginForm();
             if (login.ShowDialog() == DialogResult.Cancel || login.loged_in == false)
             {
@@ -45,7 +46,7 @@ namespace SN_Net
             else
             {
                 this.G = login.G;
-                this.toolStripStatusUserLogin.Text = "Login as : " + this.G.loged_in_user_name;
+                this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
                 if (this.G.loged_in_user_level < 9)
                 {
                     this.userInformationToolStripMenuItem.Visible = false;
@@ -61,7 +62,7 @@ namespace SN_Net
         {
             if (this.sn_wind == null)
             {
-                this.sn_wind = new SnWindow();
+                this.sn_wind = new SnWindow(this);
                 this.sn_wind.G = this.G;
                 this.sn_wind.MdiParent = this;
                 this.sn_wind.WindowState = FormWindowState.Maximized;
@@ -77,7 +78,7 @@ namespace SN_Net
         {
             if (this.dealer_wind == null)
             {
-                this.dealer_wind = new DealerWindow();
+                this.dealer_wind = new DealerWindow(this);
                 this.dealer_wind.MdiParent = this;
                 this.dealer_wind.WindowState = FormWindowState.Maximized;
                 this.dealer_wind.Show();
@@ -92,7 +93,7 @@ namespace SN_Net
         {
             if (this.area_wind == null)
             {
-                this.area_wind = new IstabWindow(Istab.TABTYP.AREA);
+                this.area_wind = new IstabWindow(this, Istab.TABTYP.AREA);
                 this.area_wind.MdiParent = this;
                 this.area_wind.Show();
             }
@@ -106,7 +107,7 @@ namespace SN_Net
         {
             if (this.verext_wind == null)
             {
-                this.verext_wind = new IstabWindow(Istab.TABTYP.VEREXT);
+                this.verext_wind = new IstabWindow(this, Istab.TABTYP.VEREXT);
                 this.verext_wind.MdiParent = this;
                 this.verext_wind.Show();
             }
@@ -120,7 +121,7 @@ namespace SN_Net
         {
             if (this.howknown_wind == null)
             {
-                this.howknown_wind = new IstabWindow(Istab.TABTYP.HOWKNOWN);
+                this.howknown_wind = new IstabWindow(this, Istab.TABTYP.HOWKNOWN);
                 this.howknown_wind.MdiParent = this;
                 this.howknown_wind.Show();
             }
@@ -134,7 +135,7 @@ namespace SN_Net
         {
             if (this.busityp_wind == null)
             {
-                this.busityp_wind = new IstabWindow(Istab.TABTYP.BUSITYP);
+                this.busityp_wind = new IstabWindow(this, Istab.TABTYP.BUSITYP);
                 this.busityp_wind.MdiParent = this;
                 this.busityp_wind.Show();
             }
@@ -148,7 +149,7 @@ namespace SN_Net
         {
             if (this.probcode_wind == null)
             {
-                this.probcode_wind = new IstabWindow(Istab.TABTYP.PROBLEM_CODE);
+                this.probcode_wind = new IstabWindow(this, Istab.TABTYP.PROBLEM_CODE);
                 this.probcode_wind.MdiParent = this;
                 this.probcode_wind.Show();
             }
@@ -267,6 +268,18 @@ namespace SN_Net
         private void loadDataResource()
         {
             this.data_resource = new DataResource();
+        }
+
+        private void toolStripInfo_TextChanged(object sender, EventArgs e)
+        {
+            if (((ToolStripStatusLabel)sender).Text.Length > 0)
+            {
+                this.toolStripUserInfo.Visible = false;
+            }
+            else
+            {
+                this.toolStripUserInfo.Visible = true;
+            }
         }
 
     }

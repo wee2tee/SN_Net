@@ -197,10 +197,11 @@ namespace SN_Net.Subform
             int last_item_ndx = this.serial_id_list.FindIndex(t => t.id == last_item_id);
             if (last_item_ndx < this.serial_id_list.Count - 1)
             {
-                int rows_to_load = Convert.ToInt32(this.dgvSerial.ClientSize.Height / 25) + 10;
+                int rows_to_load = Convert.ToInt32(this.dgvSerial.ClientSize.Height / 25) + 10; // +(this.serial_id_list.Count - last_item_ndx < 100 ? this.serial_id_list.Count - last_item_ndx : 0);
 
                 int start_ndx = last_item_ndx + 1;
-                int stop_ndx = (start_ndx + rows_to_load > this.serial_id_list.Count - 1 ? (this.serial_id_list.Count - 1) - start_ndx : start_ndx + rows_to_load);
+                //int stop_ndx = (start_ndx + rows_to_load > this.serial_id_list.Count - 1 ? (this.serial_id_list.Count - 1) - start_ndx : start_ndx + rows_to_load);
+                int stop_ndx = (start_ndx + rows_to_load > this.serial_id_list.Count - 1 ? this.serial_id_list.Count - 1 : start_ndx + rows_to_load);
                 for (int i = start_ndx; i <= stop_ndx; i++)
                 {
                     if (i == start_ndx)

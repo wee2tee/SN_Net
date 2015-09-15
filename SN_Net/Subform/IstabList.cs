@@ -19,35 +19,59 @@ namespace SN_Net.Subform
         private const string SORT_TYPCOD = "typcod";
         private const string SORT_TYPDES = "typdes";
         private string sort_by;
+        //private SnWindow parent_window;
+        private MainForm main_form;
         private Istab.TABTYP tabtyp;
         public Istab istab;
         private string selected_typcod;
 
-        public IstabList(string typcod, Istab.TABTYP tabtyp)
+        public IstabList()
         {
             InitializeComponent();
+        }
+
+        //public IstabList(SnWindow parent_window, string typcod, Istab.TABTYP tabtyp)
+        public IstabList(MainForm main_form, string typcod, Istab.TABTYP tabtyp)
+            :   this()
+        {
+            //this.parent_window = parent_window;
+            this.main_form = main_form;
             this.tabtyp = tabtyp;
             this.selected_typcod = typcod;
             this.setTitleText();
             this.sort_by = SORT_TYPCOD;
         }
 
-        private void setSelectedItem(){
-            foreach (DataGridViewRow row in this.dgvIstab.Rows)
-	        {
-                if (((Istab)row.Tag).typcod == this.selected_typcod && ((Istab)row.Tag).tabtyp == this.tabtyp.ToTabtypString())
-                {
-                    row.Cells[1].Selected = true;
-                    break;
-                }
-	        }
-            this.dgvIstab.Focus();
-        }
-
         private void IstabList_Shown(object sender, EventArgs e)
         {
             this.dgvIstab.Focus();
-            EscapeKeyToCloseDialog.ActiveEscToClose(this);
+        }
+
+        private void setSelectedItem(Istab selected_item = null)
+        {
+            if (selected_item == null)
+            {
+                foreach (DataGridViewRow row in this.dgvIstab.Rows)
+                {
+                    if (string.CompareOrdinal(this.selected_typcod, ((Istab)row.Tag).typcod) <= 0)
+                    {
+                        row.Cells[1].Selected = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in this.dgvIstab.Rows)
+                {
+                    if (((Istab)row.Tag).typcod == selected_item.typcod)
+                    {
+                        row.Cells[1].Selected = true;
+                        break;
+                    }
+                }
+            }
+            this.dgvIstab.Focus();
         }
 
         private void setTitleText()
@@ -57,20 +81,7 @@ namespace SN_Net.Subform
 
         private void IstabList_Load(object sender, EventArgs e)
         {
-            this.fillInDataGrid(this.loadIstabData(this.sort_by));
-        }
-
-        private List<Istab> loadIstabData(string sort_by)
-        {
-            List<Istab> istabs = new List<Istab>();
-            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(this.tabtyp) + "&sort=" + sort_by);
-            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-            {
-                istabs = sr.istab;
-            }
-
-            return istabs;
+            this.fillInDataGrid(this.WhichDataToUse());
         }
 
         private void fillInDataGrid(List<Istab> istabs)
@@ -98,23 +109,26 @@ namespace SN_Net.Subform
             DataGridViewTextBoxColumn text_col2 = new DataGridViewTextBoxColumn();
             text_col2.HeaderText = "รหัส";
             text_col2.Width = 100;
+            text_col2.SortMode = DataGridViewColumnSortMode.Programmatic;
             text_col2.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter,
                 Padding = new Padding(0, 3, 0, 3),
-                BackColor = Color.OliveDrab
+                BackColor = (this.sort_by == SORT_TYPCOD ? Color.OliveDrab : ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN)
             };
             this.dgvIstab.Columns.Add(text_col2);
 
             DataGridViewTextBoxColumn text_col3 = new DataGridViewTextBoxColumn();
             text_col3.HeaderText = "รายละเอียด";
             text_col3.Width = this.dgvIstab.ClientSize.Width - (text_col2.Width + 3);
+            text_col3.SortMode = DataGridViewColumnSortMode.Programmatic;
             text_col3.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
                 Alignment = DataGridViewContentAlignment.MiddleCenter,
-                Padding = new Padding(0, 3, 0, 3)
+                Padding = new Padding(0, 3, 0, 3),
+                BackColor = (this.sort_by == SORT_TYPDES ? Color.OliveDrab : ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN)
             };
             this.dgvIstab.Columns.Add(text_col3);
 
@@ -169,13 +183,38 @@ namespace SN_Net.Subform
             this.dgvIstab.Columns[2].Width = this.dgvIstab.ClientSize.Width - (this.dgvIstab.Columns[1].Width + 3);
         }
 
+        private List<Istab> WhichDataToUse()
+        {
+            switch (this.tabtyp)
+            {
+                case Istab.TABTYP.AREA:
+                    return (this.sort_by == SORT_TYPCOD ? this.main_form.data_resource.LIST_AREA.OrderBy(t => t.typcod, new CompareStrings()).ToList<Istab>() : this.main_form.data_resource.LIST_AREA.OrderBy(t => t.typdes_th, new CompareStrings()).ToList<Istab>());
+                case Istab.TABTYP.VEREXT:
+                    return (this.sort_by == SORT_TYPCOD ? this.main_form.data_resource.LIST_VEREXT.OrderBy(t => t.typcod, new CompareStrings()).ToList<Istab>() : this.main_form.data_resource.LIST_VEREXT.OrderBy(t => t.typdes_th, new CompareStrings()).ToList<Istab>());
+                case Istab.TABTYP.HOWKNOWN:
+                    return (this.sort_by == SORT_TYPCOD ? this.main_form.data_resource.LIST_HOWKNOWN.OrderBy(t => t.typcod, new CompareStrings()).ToList<Istab>() : this.main_form.data_resource.LIST_HOWKNOWN.OrderBy(t => t.typdes_th, new CompareStrings()).ToList<Istab>());
+                case Istab.TABTYP.BUSITYP:
+                    return (this.sort_by == SORT_TYPCOD ? this.main_form.data_resource.LIST_BUSITYP.OrderBy(t => t.typcod, new CompareStrings()).ToList<Istab>() : this.main_form.data_resource.LIST_BUSITYP.OrderBy(t => t.typdes_th, new CompareStrings()).ToList<Istab>());
+                case Istab.TABTYP.PROBLEM_CODE:
+                    return (this.sort_by == SORT_TYPCOD ? this.main_form.data_resource.LIST_PROBLEM_CODE.OrderBy(t => t.typcod, new CompareStrings()).ToList<Istab>() : this.main_form.data_resource.LIST_PROBLEM_CODE.OrderBy(t => t.typdes_th, new CompareStrings()).ToList<Istab>());
+                default:
+                    return new List<Istab>();
+            }
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
             IstabAddEditForm wind = new IstabAddEditForm(IstabAddEditForm.FORM_MODE.ADD, this.tabtyp);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.selected_typcod = wind.istab.typcod;
-                this.fillInDataGrid(this.loadIstabData(this.sort_by));
+                this.main_form.data_resource.Refresh();
+                this.fillInDataGrid(this.WhichDataToUse());
+                this.setSelectedItem(wind.istab);
+                this.dgvIstab.Focus();
+            }
+            else
+            {
+                this.dgvIstab.Focus();
             }
         }
 
@@ -191,37 +230,6 @@ namespace SN_Net.Subform
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-        }
-
-        private void dgvIstab_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.DialogResult = DialogResult.Cancel;
-                this.Close();
-            }
-            else if (e.KeyCode == Keys.Enter)
-            {
-                this.returnSelectedResult();
-            }
-            else if (e.KeyCode == Keys.A && e.Modifiers == Keys.Alt)
-            {
-                this.btnAdd.PerformClick();
-            }
-            else if (e.KeyCode == Keys.E && e.Modifiers == Keys.Alt)
-            {
-                Istab istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
-                this.showEditForm(istab);
-            }
-            else if (e.KeyCode == Keys.D && e.Modifiers == Keys.Alt)
-            {
-                Istab istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
-                this.showConfirmDelete(istab);
-            }
-            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.Alt)
-            {
-                this.btnSearch.PerformClick();
-            }
         }
 
         private void dgvIstab_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -277,8 +285,14 @@ namespace SN_Net.Subform
             
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.selected_typcod = wind.istab.typcod;
-                this.fillInDataGrid(this.loadIstabData(this.sort_by));
+                this.main_form.data_resource.Refresh();
+                this.fillInDataGrid(this.WhichDataToUse());
+                this.setSelectedItem(wind.istab);
+                this.dgvIstab.Focus();
+            }
+            else
+            {
+                this.dgvIstab.Focus();
             }
         }
 
@@ -290,22 +304,48 @@ namespace SN_Net.Subform
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {
-                    this.fillInDataGrid(this.loadIstabData(sort_by));
+                    this.main_form.data_resource.Refresh();
+                    this.fillInDataGrid(this.WhichDataToUse());
+                    this.dgvIstab.Focus();
                 }
                 else
                 {
                     MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    this.dgvIstab.Focus();
                 }
+            }
+            else
+            {
+                this.dgvIstab.Focus();
             }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void dgvIstab_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            SearchBox s = new SearchBox();
-            if (s.ShowDialog() == DialogResult.OK)
+            foreach (DataGridViewColumn col in ((DataGridView)sender).Columns)
             {
-                this.performSearch(s.txtKeyword.Text);
+                col.HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN;
             }
+            ((DataGridView)sender).Columns[e.ColumnIndex].HeaderCell.Style.BackColor = Color.OliveDrab;
+
+            Istab current_item = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
+
+            if (e.ColumnIndex == 1)
+            {
+                this.sort_by = SORT_TYPCOD;
+                this.fillInDataGrid(this.WhichDataToUse());
+            }
+            else if(e.ColumnIndex == 2){
+                this.sort_by = SORT_TYPDES;
+                this.fillInDataGrid(this.WhichDataToUse());
+            }
+
+            this.setSelectedItem(current_item);
+        }
+
+        private void dgvIstab_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            ((DataGridView)sender).SetRowSelectedBorder(e);
         }
 
         private void performSearch(string keyword)
@@ -325,27 +365,76 @@ namespace SN_Net.Subform
             }
         }
 
-        private void dgvIstab_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void IstabList_KeyPress(object sender, KeyPressEventArgs e)
         {
-            foreach (DataGridViewColumn col in ((DataGridView)sender).Columns)
+            if (e.KeyChar.ToString().Length > 0)
             {
-                col.HeaderCell.Style.BackColor = Color.YellowGreen;
-            }
-            ((DataGridView)sender).Columns[e.ColumnIndex].HeaderCell.Style.BackColor = Color.OliveDrab;
+                SearchBox s = new SearchBox();
+                s.txtKeyword.Text = e.KeyChar.ToString();
+                s.txtKeyword.SelectionStart = s.txtKeyword.Text.Length;
+                s.Location = new Point(this.Location.X + 8, this.Location.Y + this.ClientSize.Height - 25);
+                s.SetBounds(s.Location.X, s.Location.Y, this.ClientSize.Width, s.ClientSize.Height);
+                s.txtKeyword.SetBounds(s.txtKeyword.Location.X, s.txtKeyword.Location.Y, s.ClientSize.Width - 63, s.txtKeyword.ClientSize.Height);
 
-            if (e.ColumnIndex == 1)
-            {
-                this.sort_by = SORT_TYPCOD;
-            }
-            else if(e.ColumnIndex == 2){
-                this.sort_by = SORT_TYPDES;
+                if (s.ShowDialog() == DialogResult.OK)
+                {
+                    this.performSearch(s.txtKeyword.Text);
+                }
             }
         }
-
-        private void dgvIstab_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            ((DataGridView)sender).SetRowSelectedBorder(e);
-        }
+            if (keyData == Keys.Escape)
+            {
+                this.btnCancel.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.Enter)
+            {
+                this.btnOK.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.A))
+            {
+                this.btnAdd.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.E))
+            {
+                this.btnEdit.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D))
+            {
+                Istab istab = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
+                this.showConfirmDelete(istab);
+                return true;
+            }
+            if (keyData == (Keys.Tab))
+            {
+                // do re-order column
+                Istab current_item = (Istab)this.dgvIstab.Rows[this.dgvIstab.CurrentCell.RowIndex].Tag;
 
+                if (this.sort_by == SORT_TYPCOD)
+                {
+                    this.sort_by = SORT_TYPDES;
+                    this.fillInDataGrid(this.WhichDataToUse());
+                    this.dgvIstab.Columns[2].HeaderCell.Style.BackColor = Color.OliveDrab;
+                    this.dgvIstab.Columns[1].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN;
+                }
+                else if (this.sort_by == SORT_TYPDES)
+                {
+                    this.sort_by = SORT_TYPCOD;
+                    this.fillInDataGrid(this.WhichDataToUse());
+                    this.dgvIstab.Columns[1].HeaderCell.Style.BackColor = Color.OliveDrab;
+                    this.dgvIstab.Columns[2].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_NOT_SORTABLE_GREEN;
+                }
+                this.setSelectedItem(current_item);
+
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
 }

@@ -44,17 +44,12 @@ namespace SN_Net.MiscClass
             textWidth = ((int)stringSize.Width);
 
             g.RotateTransform(-20);
-            for (int x = 0; x <
-                    (this.Width / textWidth) + 2; x++)
+            for (int x = 0; x < (this.Width / textWidth) + 2; x++)
             {
-                for (int y = 0; y < 2 *
-                         (this.Height / rowHeight) + 2; y++)
+                for (int y = 0; y < 2 * (this.Height / rowHeight) + 2; y++)
                 {
                     xAdjust = textWidth / 2;
-                    g.DrawString(str, font,
-                         System.Drawing.Brushes.Red,
-                       new Point(x * textWidth - xAdjust,
-                             y * rowHeight));
+                    g.DrawString(str, font, System.Drawing.Brushes.Red, new Point(x * textWidth - xAdjust, y * rowHeight));
                 }
             }
         }

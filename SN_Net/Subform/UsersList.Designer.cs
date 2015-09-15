@@ -163,7 +163,7 @@
             this.cbUserLevel.FormattingEnabled = true;
             this.cbUserLevel.Location = new System.Drawing.Point(81, 48);
             this.cbUserLevel.Name = "cbUserLevel";
-            this.cbUserLevel.Size = new System.Drawing.Size(77, 24);
+            this.cbUserLevel.Size = new System.Drawing.Size(98, 24);
             this.cbUserLevel.TabIndex = 4;
             // 
             // label3

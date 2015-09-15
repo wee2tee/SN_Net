@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModels\Dealer.cs" />
+    <Compile Include="DataModels\Dealer_list.cs" />
     <Compile Include="DataModels\Istab.cs" />
     <Compile Include="DataModels\MacAllowed.cs" />
     <Compile Include="DataModels\Problem.cs" />
@@ -66,14 +82,22 @@
     <Compile Include="DataModels\Serial.cs" />
     <Compile Include="DataModels\Serial_list.cs" />
     <Compile Include="DataModels\Users.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\Clean.cs" />
     <Compile Include="MiscClass\ColorResource.cs" />
+    <Compile Include="MiscClass\CompareString.cs" />
+    <Compile Include="MiscClass\CustomTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomTextBox.Designer.cs">
+      <DependentUpon>CustomTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\DataRowIntention.cs" />
     <Compile Include="MiscClass\DateTimeBindingControl.cs" />
     <Compile Include="MiscClass\EnterKeyManager.cs" />
     <Compile Include="MiscClass\EscapeKeyToCloseDialog.cs" />
@@ -89,6 +113,12 @@
     <Compile Include="MiscClass\ServerResult.cs" />
     <Compile Include="MiscClass\SetFormMode.cs" />
     <Compile Include="MiscClass\StringResource.cs" />
+    <Compile Include="MiscClass\TextBoxMaskedWithLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\TextBoxMaskedWithLabel.Designer.cs">
+      <DependentUpon>TextBoxMaskedWithLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="MiscClass\TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -113,6 +143,12 @@
     <Compile Include="Subform\DataInfo.Designer.cs">
       <DependentUpon>DataInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\DealerInquiryWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\DealerInquiryWindow.Designer.cs">
+      <DependentUpon>DealerInquiryWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\DealerList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +160,24 @@
     </Compile>
     <Compile Include="Subform\DealerWindow.Designer.cs">
       <DependentUpon>DealerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\GenerateSNForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\GenerateSNForm.Designer.cs">
+      <DependentUpon>GenerateSNForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\ImportListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\ImportListForm.Designer.cs">
+      <DependentUpon>ImportListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\InquiryConditionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\InquiryConditionForm.Designer.cs">
+      <DependentUpon>InquiryConditionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\IstabAddEditForm.cs">
       <SubType>Form</SubType>
@@ -179,11 +233,29 @@
     <Compile Include="Subform\SearchBox.Designer.cs">
       <DependentUpon>SearchBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\SearchDealerBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SearchDealerBox.Designer.cs">
+      <DependentUpon>SearchDealerBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\SearchSerialBox.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Subform\SearchSerialBox.Designer.cs">
       <DependentUpon>SearchSerialBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\SellBookForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SellBookForm.Designer.cs">
+      <DependentUpon>SellBookForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\SellProgram2nd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SellProgram2nd.Designer.cs">
+      <DependentUpon>SellProgram2nd.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\SNInquiryWindow.cs">
       <SubType>Form</SubType>
@@ -215,6 +287,18 @@
     <Compile Include="Subform\Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\UpgradeProgramForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\UpgradeProgramForm.Designer.cs">
+      <DependentUpon>UpgradeProgramForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\UpNewRwtLineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\UpNewRwtLineForm.Designer.cs">
+      <DependentUpon>UpNewRwtLineForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\UsersEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,8 +311,14 @@
     <Compile Include="Subform\UsersList.Designer.cs">
       <DependentUpon>UsersList.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomTextBox.resx">
+      <DependentUpon>CustomTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\TextBoxMaskedWithLabel.resx">
+      <DependentUpon>TextBoxMaskedWithLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -249,11 +339,23 @@
     <EmbeddedResource Include="Subform\DataInfo.resx">
       <DependentUpon>DataInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\DealerInquiryWindow.resx">
+      <DependentUpon>DealerInquiryWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\DealerList.resx">
       <DependentUpon>DealerList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\DealerWindow.resx">
       <DependentUpon>DealerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\GenerateSNForm.resx">
+      <DependentUpon>GenerateSNForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\ImportListForm.resx">
+      <DependentUpon>ImportListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\InquiryConditionForm.resx">
+      <DependentUpon>InquiryConditionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\IstabAddEditForm.resx">
       <DependentUpon>IstabAddEditForm.cs</DependentUpon>
@@ -282,8 +384,17 @@
     <EmbeddedResource Include="Subform\SearchBox.resx">
       <DependentUpon>SearchBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SearchDealerBox.resx">
+      <DependentUpon>SearchDealerBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\SearchSerialBox.resx">
       <DependentUpon>SearchSerialBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SellBookForm.resx">
+      <DependentUpon>SellBookForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SellProgram2nd.resx">
+      <DependentUpon>SellProgram2nd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\SNInquiryWindow.resx">
       <DependentUpon>SNInquiryWindow.cs</DependentUpon>
@@ -299,6 +410,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\Test.resx">
       <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\UpgradeProgramForm.resx">
+      <DependentUpon>UpgradeProgramForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\UpNewRwtLineForm.resx">
+      <DependentUpon>UpNewRwtLineForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UsersEditForm.resx">
       <DependentUpon>UsersEditForm.cs</DependentUpon>
@@ -400,11 +517,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\printer1.png" />
+    <None Include="Resources\printer.png" />
+    <None Include="Resources\print1.png" />
+    <None Include="Resources\arrow_up.png" />
+    <None Include="Resources\arrow_right_16.png" />
+    <None Include="Resources\import_data.png" />
+    <None Include="Resources\gen_sn1.png" />
+    <None Include="Resources\gen_sn.png" />
     <None Include="Resources\preferences.png" />
     <None Include="Resources\process-bar2.gif" />
     <None Include="Resources\process-bar1.gif" />
     <None Include="Resources\process_bar.bmp" />
     <None Include="Resources\process-bar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

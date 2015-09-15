@@ -48,9 +48,9 @@ namespace SN_Net.MiscClass
                             ((TextBox)this.list_control[ndx + 1]).SelectionStart = ((TextBox)this.list_control[ndx + 1]).Text.Length;
                             ((TextBox)this.list_control[ndx + 1]).SelectionLength = 0;
                         }
-                        
                     }
                 }
+                e.Handled = e.SuppressKeyPress = true;
             }
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SN_Net.DataModels;
 using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SN_Net.MiscClass
@@ -47,6 +48,52 @@ namespace SN_Net.MiscClass
             {
                 return "N";
             }
+        }
+
+        public static string GetVerextSelectedString(this string verext, ComboBox cbVerext)
+        {
+            foreach (ComboboxItem item in cbVerext.Items)
+            {
+                if (item.string_value == verext)
+                {
+                    return item.ToString();
+                }
+            }
+            return "";
+        }
+
+        public static void DrawLineEffect(this DataGridView datagrid)
+        {
+            datagrid.Paint += delegate
+            {
+                if (datagrid.Rows.Count > 0)
+                {
+                    Rectangle rect = datagrid.GetRowDisplayRectangle(datagrid.CurrentCell.RowIndex, true);
+                    Graphics g = datagrid.CreateGraphics();
+                    if (datagrid.Rows[datagrid.CurrentCell.RowIndex].Cells[0].Tag is DataRowIntention)
+                    {
+                        if (((DataRowIntention)datagrid.Rows[datagrid.CurrentCell.RowIndex].Cells[0].Tag).to_do == DataRowIntention.TO_DO.DELETE)
+                        {
+                            Pen p = new Pen(Color.Red, 1f);
+
+                            for (int i = rect.Left - 16; i < rect.Right; i += 8)
+                            {
+                                g.DrawLine(p, i, rect.Bottom - 2, i + 23, rect.Top);
+                            }
+                        }
+                        else
+                        {
+                            g.DrawLine(new Pen(Color.Red), rect.X, rect.Y, rect.X + rect.Width, rect.Y);
+                            g.DrawLine(new Pen(Color.Red), rect.X, rect.Y + rect.Height - 1, rect.X + rect.Width, rect.Y + rect.Height - 1);
+                        }
+                    }
+                    else
+                    {
+                        g.DrawLine(new Pen(Color.Red), rect.X, rect.Y, rect.X + rect.Width, rect.Y);
+                        g.DrawLine(new Pen(Color.Red), rect.X, rect.Y + rect.Height - 1, rect.X + rect.Width, rect.Y + rect.Height - 1);
+                    }
+                }
+            };
         }
     }
 }

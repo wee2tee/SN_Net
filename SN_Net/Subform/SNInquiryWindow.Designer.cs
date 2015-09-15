@@ -39,6 +39,7 @@
             this.toolStripLoadedRec = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripTotalRec = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSerial)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -137,7 +138,8 @@
             this.toolStripStatusLabel1,
             this.toolStripLoadedRec,
             this.toolStripStatusLabel3,
-            this.toolStripTotalRec});
+            this.toolStripTotalRec,
+            this.toolStripStatusLabel2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 373);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(942, 22);
@@ -153,8 +155,8 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(58, 17);
-            this.toolStripStatusLabel1.Text = " , Loaded ";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel1.Text = " , ";
             // 
             // toolStripLoadedRec
             // 
@@ -173,6 +175,12 @@
             this.toolStripTotalRec.Name = "toolStripTotalRec";
             this.toolStripTotalRec.Size = new System.Drawing.Size(10, 17);
             this.toolStripTotalRec.Text = " ";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(99, 17);
+            this.toolStripStatusLabel2.Text = " record(s) loaded.";
             // 
             // SNInquiryWindow
             // 
@@ -213,5 +221,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripLoadedRec;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripTotalRec;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

@@ -71,13 +71,16 @@ namespace SN_Net.MiscClass
                 return new List<Dealer>();
             }
         }
-    }
 
-    public static class DataResourceHelper
-    {
-        public static void Refresh(this DataResource data_resource)
+        public DataResource Refresh()
         {
-            data_resource = new DataResource();
+            this.LIST_AREA = this.getIstabDataFromServer(Istab.TABTYP.AREA);
+            this.LIST_VEREXT = this.getIstabDataFromServer(Istab.TABTYP.VEREXT);
+            this.LIST_HOWKNOWN = this.getIstabDataFromServer(Istab.TABTYP.HOWKNOWN);
+            this.LIST_BUSITYP = this.getIstabDataFromServer(Istab.TABTYP.BUSITYP);
+            this.LIST_PROBLEM_CODE = this.getIstabDataFromServer(Istab.TABTYP.PROBLEM_CODE);
+            this.LIST_DEALER = this.getDealerDataFromServer();
+            return this;
         }
     }
 }

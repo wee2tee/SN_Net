@@ -27,7 +27,9 @@ namespace SN_Net.Subform
         {
             // Adding users level selection
             this.cbUserLevel.Items.Add(new ComboboxItem("ADMIN", 9, ""));
-            this.cbUserLevel.Items.Add(new ComboboxItem("USER", 0, ""));
+            this.cbUserLevel.Items.Add(new ComboboxItem("SUPPORT", 0, ""));
+            this.cbUserLevel.Items.Add(new ComboboxItem("SALES", 1, ""));
+            this.cbUserLevel.Items.Add(new ComboboxItem("ACCOUNT", 2, ""));
             this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[1];
 
             // Adding users status selection

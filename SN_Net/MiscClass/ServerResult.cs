@@ -39,6 +39,8 @@ namespace SN_Net.MiscClass
         public List<Istab> howknown { get; set; }
         public List<Istab> verext { get; set; }
         public List<Istab> problem_code { get; set; }
-        public List<Serial_list> serial_list { get; set; }
+        public List<Serial_list> serial_list { get; set; } // for inquiry window
+        public List<Dealer_list> dealer_list { get; set; } // for inquiry window
+        public List<RegisterData> register_data { get; set; }
     }
 }

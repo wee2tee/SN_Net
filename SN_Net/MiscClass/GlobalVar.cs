@@ -7,6 +7,11 @@ namespace SN_Net.MiscClass
 {
     public class GlobalVar
     {
+        public const int USER_GROUP_ADMIN = 9;
+        public const int USER_GROUP_SUPPORT = 0;
+        public const int USER_GROUP_SALES = 1;
+        public const int USER_GROUP_ACCOUNT = 2;
+
         public int loged_in_user_id { get; set; }
         public string loged_in_user_name { get; set; }
         public string loged_in_user_email { get; set; }

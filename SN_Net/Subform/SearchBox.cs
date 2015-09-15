@@ -15,16 +15,28 @@ namespace SN_Net.Subform
         public SearchBox()
         {
             InitializeComponent();
-            EscapeKeyToCloseDialog.ActiveEscToClose(this);
         }
 
-        private void txtKeyword_KeyDown(object sender, KeyEventArgs e)
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (keyData == Keys.Enter)
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                this.btnOK.PerformClick();
             }
+            if (keyData == Keys.Escape)
+            {
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
     }
 }
