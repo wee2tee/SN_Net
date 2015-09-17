@@ -42,5 +42,6 @@ namespace SN_Net.MiscClass
         public List<Serial_list> serial_list { get; set; } // for inquiry window
         public List<Dealer_list> dealer_list { get; set; } // for inquiry window
         public List<RegisterData> register_data { get; set; }
+        public PrintPageSetup print_page_setup { get; set; } // for retrieve print page setup of each form
     }
 }

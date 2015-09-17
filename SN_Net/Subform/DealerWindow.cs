@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Printing;
 using SN_Net.DataModels;
 using SN_Net.MiscClass;
 using WebAPI;
@@ -23,6 +24,7 @@ namespace SN_Net.Subform
         public SORT_MODE sort_mode;
         public string inquiry_expression = "";
         Control current_focused_control = null;
+        private PrintDocument print_doc;
 
         string find_dealer = ""; // kept dealer search string
         string find_contact = ""; // kept contact search string
@@ -54,6 +56,13 @@ namespace SN_Net.Subform
             CONTACT,
             COMPNAM,
             AREA
+        }
+
+        public enum PAGE_SETUP_NAME
+        {
+            LABEL,
+            LITTLE_ENVELOPE,
+            BIG_ENVELOPE
         }
 
         private List<CustomTextBox> list_customtextbox = new List<CustomTextBox>();
@@ -607,7 +616,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = true;
@@ -656,7 +665,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = true;
             this.toolStripPrint.Enabled = true;
             this.toolStripPrintBigEnv.Enabled = true;
-            this.toolStripPrintLabel.Enabled = true;
+            this.toolStripPrintLabel3Col.Enabled = true;
             this.toolStripPrintLittleEnv.Enabled = true;
 
             this.toolStripProcessing.Visible = false;
@@ -701,7 +710,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = false;
@@ -746,7 +755,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = false;
@@ -790,7 +799,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = false;
@@ -835,7 +844,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = false;
@@ -880,7 +889,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = false;
@@ -925,7 +934,7 @@ namespace SN_Net.Subform
             this.toolStripSearchName.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintBigEnv.Enabled = false;
-            this.toolStripPrintLabel.Enabled = false;
+            this.toolStripPrintLabel3Col.Enabled = false;
             this.toolStripPrintLittleEnv.Enabled = false;
 
             this.toolStripProcessing.Visible = false;
@@ -1405,6 +1414,16 @@ namespace SN_Net.Subform
                 this.toolStripInquiryRest.PerformClick();
                 return true;
             }
+            if (keyData == (Keys.Alt | Keys.P))
+            {
+                this.toolStripPrintLabel3Col.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.P))
+            {
+                this.toolStripPrintLittleEnv.PerformClick();
+                return true;
+            }
             if (keyData == (Keys.Alt | Keys.D2))
             {
                 this.toolStripSearchContact.PerformClick();
@@ -1429,6 +1448,442 @@ namespace SN_Net.Subform
                 this.toolStripSave.PerformClick();
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void toolStripPrintLittleEnv_Click(object sender, EventArgs e)
+        {
+            print_doc = new PrintDocument();
+            print_doc.PrintPage += delegate(object o, PrintPageEventArgs pe)
+            {
+                using (SolidBrush brush = new SolidBrush(Color.Black))
+                {
+                    using (Font font = new Font("Tahoma", 12f))
+                    {
+                        int line_start = 140;
+                        int line_height = (font.Height * 2) - 5;
+                        int line_multi = 0;
+
+                        pe.Graphics.DrawString("กรุณาส่ง", font, brush, new Point(190, line_start));
+                        pe.Graphics.DrawString(this.dealer.contact, font, brush, new Point(280, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString((this.dealer.prenam.Length > 0 ? this.dealer.prenam + " " + this.dealer.compnam : this.dealer.compnam), font, brush, new Point(280, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString(this.dealer.addr01, font, brush, new Point(280, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString(this.dealer.addr02 + " " + this.dealer.addr03, font, brush, new Point(280, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString(this.dealer.zipcod, font, brush, new Point(280, line_start + (line_height * ++line_multi)));
+                    }
+                }
+            };
+
+            PageSetupDialog page_setup = new PageSetupDialog();
+            page_setup.Document = this.print_doc;
+            page_setup.PageSettings.PaperSize = new PaperSize("Little Envelope", 910, 425);
+            
+
+            PrintOutputSelection wind = new PrintOutputSelection();
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                if (wind.output == PrintOutputSelection.OUTPUT.PRINTER)
+                {
+                    PrintDialog print_dialog = new PrintDialog();
+                    print_dialog.Document = this.print_doc;
+                    print_dialog.AllowSelection = false;
+                    print_dialog.AllowSomePages = false;
+                    print_dialog.AllowPrintToFile = false;
+                    print_dialog.AllowCurrentPage = false;
+                    print_dialog.UseEXDialog = true;
+                    if (print_dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        print_doc.Print();
+                    }
+                }
+                if (wind.output == PrintOutputSelection.OUTPUT.SCREEN)
+                {
+                    PrintPreviewDialog preview_dialog = new PrintPreviewDialog();
+                    preview_dialog.Document = this.print_doc;
+                    preview_dialog.MdiParent = this.main_form;
+                    preview_dialog.Show();
+                }
+                if (wind.output == PrintOutputSelection.OUTPUT.FILE)
+                {
+                    
+                }
+            }
+            else
+            {
+                print_doc = null;
+                page_setup = null;
+            }
+        }
+
+        private void toolStripPrintBigEnv_Click(object sender, EventArgs e)
+        {
+            print_doc = new PrintDocument();
+            print_doc.PrintPage += delegate(object o, PrintPageEventArgs pe)
+            {
+                using (SolidBrush brush = new SolidBrush(Color.Black))
+                {
+                    using (Font font = new Font("Tahoma", 12f))
+                    {
+                        int line_start = 190;
+                        int line_height = (font.Height * 2) - 5;
+                        int line_multi = 0;
+
+                        pe.Graphics.DrawString("กรุณาส่ง", font, brush, new Point(180, line_start));
+                        pe.Graphics.DrawString(this.dealer.contact, font, brush, new Point(270, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString((this.dealer.prenam.Length > 0 ? this.dealer.prenam + " " + this.dealer.compnam : this.dealer.compnam), font, brush, new Point(270, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString(this.dealer.addr01, font, brush, new Point(270, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString(this.dealer.addr02 + " " + this.dealer.addr03, font, brush, new Point(270, line_start + (line_height * ++line_multi)));
+                        pe.Graphics.DrawString(this.dealer.zipcod, font, brush, new Point(270, line_start + (line_height * ++line_multi)));
+                    }
+                }
+            };
+
+            PageSetupDialog page_setup = new PageSetupDialog();
+            page_setup.Document = this.print_doc;
+            page_setup.PageSettings.PaperSize = new PaperSize("Big Envelope", 890, 600);
+
+            PrintOutputSelection wind = new PrintOutputSelection();
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                if (wind.output == PrintOutputSelection.OUTPUT.PRINTER)
+                {
+                    PrintDialog print_dialog = new PrintDialog();
+                    print_dialog.Document = this.print_doc;
+                    print_dialog.AllowSelection = false;
+                    print_dialog.AllowSomePages = false;
+                    print_dialog.AllowPrintToFile = false;
+                    print_dialog.AllowCurrentPage = false;
+                    print_dialog.UseEXDialog = true;
+                    if (print_dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        print_doc.Print();
+                    }
+                }
+                if (wind.output == PrintOutputSelection.OUTPUT.SCREEN)
+                {
+                    PrintPreviewDialog preview_dialog = new PrintPreviewDialog();
+                    preview_dialog.Document = this.print_doc;
+                    preview_dialog.MdiParent = this.main_form;
+                    preview_dialog.Show();
+                }
+                if (wind.output == PrintOutputSelection.OUTPUT.FILE)
+                {
+
+                }
+            }
+            else
+            {
+                print_doc = null;
+                page_setup = null;
+            }
+        }
+
+        private void toolStripPrintLabel3Col_Click(object sender, EventArgs e)
+        {
+            print_doc = new PrintDocument();
+
+            PageSetupDialog page_setup = new PageSetupDialog();
+            page_setup.Document = this.print_doc;
+            //page_setup.PageSettings.PaperSize = new PaperSize("Sticker 2 column", 825, 1165);
+            page_setup.PageSettings.PaperSize = new PaperSize("Sticker 3 column", 1250, 1195);
+            page_setup.PageSettings.Margins = new Margins(0, 0, 0, 0);
+
+            PrintDealerLabelOutputSelection wind = new PrintDealerLabelOutputSelection(this.main_form);
+            wind.txtFrom.Text = this.dealer.dealer;
+            wind.txtTo.Text = this.dealer.dealer;
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                int row_num = 0;
+                int page_count = 0;
+                List<Dealer> list_dealer = new List<Dealer>();
+
+                print_doc.BeginPrint += delegate(object o, PrintEventArgs pe)
+                {
+                                        string json_data = "{\"dealer_from\":\"" + wind.dealer_from + "\",";
+                    json_data += "\"dealer_to\":\"" + wind.dealer_to + "\",";
+                    json_data += "\"condition\":\"" + wind.condition + "\"}";
+
+                    CRUDResult get = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "dealer/get_for_print_label", json_data);
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        if(sr.dealer.Count > 0)
+                        {
+                            list_dealer = sr.dealer;
+                        }
+                        else
+                        {
+                            MessageAlert.Show(StringResource.NO_DATA_IN_RANGE, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        return;
+                    }
+
+                };
+
+                print_doc.PrintPage += delegate(object o, PrintPageEventArgs pe)
+                {
+                    using (Font font = new Font("Tahoma", 9.75f))
+                    {
+                        using (SolidBrush brush = new SolidBrush(Color.Black))
+                        {
+                            //int max_col = 2; // for sticker 2 column
+                            int max_col = 3; // for sticker 3 column
+                            int col_count = 0;
+                            int col_width = 413;
+
+                            int line_count = 0;
+                            int line_height = 25;
+
+                            int block_count = 1; // store row number of sticker
+                            int block_height = line_height * 4;
+                            int block_margin_top = 25;
+                            int block_margin_bottom = 25;
+
+                            page_count++;
+                            int page_row_count = 0;
+
+                            for (int i = row_num; i < list_dealer.Count; i++)
+                            {
+                                row_num++;
+                                col_count++;
+                                page_row_count++;
+
+                                if (page_row_count > 1 && i % max_col == 0)
+                                {
+                                    col_count = 1;
+                                    ++block_count;
+                                }
+
+                                int contact_x = 30 + (col_count * col_width) - col_width;
+                                int contact_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+
+                                if (col_count == 1 && Math.Ceiling(Convert.ToDouble(page_row_count / max_col)) * block_height + (block_count * (block_margin_top + block_margin_bottom)) > pe.MarginBounds.Bottom)
+                                {
+                                    pe.HasMorePages = true;
+                                    page_row_count = 0;
+                                    block_count = 1;
+                                    row_num--;
+                                    return;
+                                }
+                                else
+                                {
+                                    pe.HasMorePages = false;
+                                }
+
+                                pe.Graphics.DrawString("ส่ง", font, brush, new Point(contact_x - 30, contact_y));
+                                pe.Graphics.DrawString(list_dealer[i].contact, font, brush, new Point(contact_x, contact_y));
+
+                                int name_x = 30 + (col_count * col_width) - col_width;
+                                int name_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+                                pe.Graphics.DrawString(list_dealer[i].prenam + " " + list_dealer[i].compnam, font, brush, new Point(name_x, name_y));
+
+                                int addr01_x = 30 + (col_count * col_width) - col_width;
+                                int addr01_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+                                pe.Graphics.DrawString(list_dealer[i].addr01, font, brush, new Point(addr01_x, addr01_y));
+
+                                int addr02_x = 30 + (col_count * col_width) - col_width;
+                                int addr02_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+                                pe.Graphics.DrawString(list_dealer[i].addr02 + " " + list_dealer[i].addr03 + " " + list_dealer[i].zipcod, font, brush, new Point(addr02_x, addr02_y));
+
+                                line_count = 0;
+                            }
+                        }
+                    }
+                };
+
+                if (wind.output == PrintDealerLabelOutputSelection.OUTPUT.PRINTER)
+                {
+                    PrintDialog print_dialog = new PrintDialog();
+                    print_dialog.Document = this.print_doc;
+                    print_dialog.AllowSelection = false;
+                    print_dialog.AllowSomePages = false;
+                    print_dialog.AllowPrintToFile = false;
+                    print_dialog.AllowCurrentPage = false;
+                    print_dialog.UseEXDialog = true;
+                    if (print_dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        print_doc.Print();
+                    }
+                }
+                if (wind.output == PrintDealerLabelOutputSelection.OUTPUT.SCREEN)
+                {
+                    PrintPreviewDialog preview_dialog = new PrintPreviewDialog();
+                    preview_dialog.Document = this.print_doc;
+                    preview_dialog.MdiParent = this.main_form;
+                    preview_dialog.Show();
+                }
+                if (wind.output == PrintDealerLabelOutputSelection.OUTPUT.FILE)
+                {
+
+                }
+            }
+            else
+            {
+                print_doc = null;
+                page_setup = null;
+            }
+        }
+
+        private void toolStripPrintLabel2Col_Click(object sender, EventArgs e)
+        {
+            print_doc = new PrintDocument();
+
+            PageSetupDialog page_setup = new PageSetupDialog();
+            page_setup.Document = this.print_doc;
+            page_setup.PageSettings.PaperSize = new PaperSize("Sticker 2 column", 825, 1165);
+            //page_setup.PageSettings.PaperSize = new PaperSize("Sticker 3 column", 1250, 1195);
+            page_setup.PageSettings.Margins = new Margins(0, 0, 0, 0);
+
+            PrintDealerLabelOutputSelection wind = new PrintDealerLabelOutputSelection(this.main_form);
+            wind.txtFrom.Text = this.dealer.dealer;
+            wind.txtTo.Text = this.dealer.dealer;
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                int row_num = 0;
+                int page_count = 0;
+                List<Dealer> list_dealer = new List<Dealer>();
+
+                print_doc.BeginPrint += delegate(object o, PrintEventArgs pe)
+                {
+                                        string json_data = "{\"dealer_from\":\"" + wind.dealer_from + "\",";
+                    json_data += "\"dealer_to\":\"" + wind.dealer_to + "\",";
+                    json_data += "\"condition\":\"" + wind.condition + "\"}";
+
+                    CRUDResult get = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "dealer/get_for_print_label", json_data);
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        if(sr.dealer.Count > 0)
+                        {
+                            list_dealer = sr.dealer;
+                        }
+                        else
+                        {
+                            MessageAlert.Show(StringResource.NO_DATA_IN_RANGE, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        return;
+                    }
+
+                };
+
+                print_doc.PrintPage += delegate(object o, PrintPageEventArgs pe)
+                {
+                    using (Font font = new Font("Tahoma", 9.75f))
+                    {
+                        using (SolidBrush brush = new SolidBrush(Color.Black))
+                        {
+                            int max_col = 2; // for sticker 2 column
+                            //int max_col = 3; // for sticker 3 column
+                            int col_count = 0;
+                            int col_width = 413;
+
+                            int line_count = 0;
+                            int line_height = 25;
+
+                            int block_count = 1; // store row number of sticker
+                            int block_height = line_height * 4;
+                            int block_margin_top = 25;
+                            int block_margin_bottom = 25;
+
+                            page_count++;
+                            int page_row_count = 0;
+
+                            for (int i = row_num; i < list_dealer.Count; i++)
+                            {
+                                row_num++;
+                                col_count++;
+                                page_row_count++;
+
+                                if (page_row_count > 1 && i % max_col == 0)
+                                {
+                                    col_count = 1;
+                                    ++block_count;
+                                }
+
+                                int contact_x = 30 + (col_count * col_width) - col_width;
+                                int contact_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+
+                                if (col_count == 1 && Math.Ceiling(Convert.ToDouble(page_row_count / max_col)) * block_height + (block_count * (block_margin_top + block_margin_bottom)) > pe.MarginBounds.Bottom)
+                                {
+                                    pe.HasMorePages = true;
+                                    page_row_count = 0;
+                                    block_count = 1;
+                                    row_num--;
+                                    return;
+                                }
+                                else
+                                {
+                                    pe.HasMorePages = false;
+                                }
+
+                                pe.Graphics.DrawString("ส่ง", font, brush, new Point(contact_x - 30, contact_y));
+                                pe.Graphics.DrawString(list_dealer[i].contact, font, brush, new Point(contact_x, contact_y));
+
+                                int name_x = 30 + (col_count * col_width) - col_width;
+                                int name_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+                                pe.Graphics.DrawString(list_dealer[i].prenam + " " + list_dealer[i].compnam, font, brush, new Point(name_x, name_y));
+
+                                int addr01_x = 30 + (col_count * col_width) - col_width;
+                                int addr01_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+                                pe.Graphics.DrawString(list_dealer[i].addr01, font, brush, new Point(addr01_x, addr01_y));
+
+                                int addr02_x = 30 + (col_count * col_width) - col_width;
+                                int addr02_y = ((block_count == 1 ? block_margin_top : (block_margin_top + block_margin_bottom) * (block_count - 1))) + ((block_count * block_height) - block_height) + (++line_count * line_height) - line_height;
+                                pe.Graphics.DrawString(list_dealer[i].addr02 + " " + list_dealer[i].addr03 + " " + list_dealer[i].zipcod, font, brush, new Point(addr02_x, addr02_y));
+
+                                line_count = 0;
+                            }
+                        }
+                    }
+                };
+
+                if (wind.output == PrintDealerLabelOutputSelection.OUTPUT.PRINTER)
+                {
+                    PrintDialog print_dialog = new PrintDialog();
+                    print_dialog.Document = this.print_doc;
+                    print_dialog.AllowSelection = false;
+                    print_dialog.AllowSomePages = false;
+                    print_dialog.AllowPrintToFile = false;
+                    print_dialog.AllowCurrentPage = false;
+                    print_dialog.UseEXDialog = true;
+                    if (print_dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        print_doc.Print();
+                    }
+                }
+                if (wind.output == PrintDealerLabelOutputSelection.OUTPUT.SCREEN)
+                {
+                    PrintPreviewDialog preview_dialog = new PrintPreviewDialog();
+                    preview_dialog.Document = this.print_doc;
+                    preview_dialog.MdiParent = this.main_form;
+                    preview_dialog.Show();
+                }
+                if (wind.output == PrintDealerLabelOutputSelection.OUTPUT.FILE)
+                {
+
+                }
+            }
+            else
+            {
+                print_doc = null;
+                page_setup = null;
+            }
+        }
+
+        private void toolStripPrint_ButtonClick(object sender, EventArgs e)
+        {
+            this.toolStripPrintLabel3Col.PerformClick();
         }
     }
 }

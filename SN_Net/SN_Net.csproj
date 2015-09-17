@@ -77,6 +77,7 @@
     <Compile Include="DataModels\Dealer_list.cs" />
     <Compile Include="DataModels\Istab.cs" />
     <Compile Include="DataModels\MacAllowed.cs" />
+    <Compile Include="DataModels\PrintPageSetup.cs" />
     <Compile Include="DataModels\Problem.cs" />
     <Compile Include="DataModels\RegisterData.cs" />
     <Compile Include="DataModels\Serial.cs" />
@@ -226,6 +227,18 @@
     </Compile>
     <Compile Include="Subform\PreferenceForm.Designer.cs">
       <DependentUpon>PreferenceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\PrintDealerLabelOutputSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\PrintDealerLabelOutputSelection.Designer.cs">
+      <DependentUpon>PrintDealerLabelOutputSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\PrintOutputSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\PrintOutputSelection.Designer.cs">
+      <DependentUpon>PrintOutputSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\SearchBox.cs">
       <SubType>Form</SubType>
@@ -380,6 +393,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\PreferenceForm.resx">
       <DependentUpon>PreferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\PrintDealerLabelOutputSelection.resx">
+      <DependentUpon>PrintDealerLabelOutputSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\PrintOutputSelection.resx">
+      <DependentUpon>PrintOutputSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\SearchBox.resx">
       <DependentUpon>SearchBox.cs</DependentUpon>
