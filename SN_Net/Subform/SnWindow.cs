@@ -32,11 +32,6 @@ namespace SN_Net.Subform
         public List<Problem> problem;
         public List<Problem> problem_im_only;
 
-        private Istab busityp_not_found = new Istab();
-        private Istab area_not_found = new Istab();
-        private Istab howknown_not_found = new Istab();
-        private Istab verext_not_found = new Istab();
-        private Dealer dealer_not_found = new Dealer();
         private List<Problem> problem_not_found = new List<Problem>();
 
         #endregion declare Data Model
@@ -44,7 +39,7 @@ namespace SN_Net.Subform
         #region declare general variable
         private enum FORM_MODE
         {
-            LOADING,
+            PROCESSING,
             SAVING,
             READ,
             ADD,
@@ -67,7 +62,6 @@ namespace SN_Net.Subform
         public string sortMode;
         private CultureInfo cinfo_us = new CultureInfo("en-US");
         private CultureInfo cinfo_th = new CultureInfo("th-TH");
-        private string json_data;
         private int find_id;
         private string find_sernum = "";
         private string find_contact = "";
@@ -78,8 +72,8 @@ namespace SN_Net.Subform
         private string find_area = "";
         private FIND_TYPE find_type;
         private List<Label> labels = new List<Label>();
-        private List<Control> edit_controls = new List<Control>();
-        private Control current_focused_control;
+        private List<Control> list_edit_control;
+        public Control current_focused_control;
         private bool is_problem_im_only = false;
 
         private enum FIND_TYPE
@@ -99,60 +93,6 @@ namespace SN_Net.Subform
         {
             InitializeComponent();
             this.main_form = main_form;
-            this.pairingTextBoxWithBrowseButton();
-
-            #region pairing MaskedTextBox with DateTimePicker
-            // MaskedTextBox
-            List<MaskedTextBox> list_mt = new List<MaskedTextBox>();
-            list_mt.Add(this.mskPurdat);
-            list_mt.Add(this.mskExpdat);
-            list_mt.Add(this.mskManual);
-            list_mt.Add(this.mskVerextdat);
-            list_mt.Add(this.mskEditDate);
-            // DateTimePicker
-            List<DateTimePicker> list_dp = new List<DateTimePicker>();
-            list_dp.Add(this.dpPurdat);
-            list_dp.Add(this.dpExpdat);
-            list_dp.Add(this.dpManual);
-            list_dp.Add(this.dpVerextdat);
-            list_dp.Add(this.dpEditDate);
-            // Pairing
-            PairDatePickerWithMaskedTextBox.Attach(list_mt, list_dp);
-            #endregion pairing MaskedTextBox with DateTimePicker
-
-            this.KeyPreview = true;
-            this.KeyDown += new KeyEventHandler(this.KeyDownShortcutKeyToolstrip);
-            
-        }
-
-        private void pairingTextBoxWithBrowseButton()
-        {
-            // TextBox
-            List<TextBox> list_tb = new List<TextBox>();
-            list_tb.Add(this.txtArea);
-            list_tb.Add(this.txtBusityp);
-            list_tb.Add(this.txtDealer_dealer);
-            list_tb.Add(this.txtHowknown);
-            // Browse Button
-            List<Button> list_btn = new List<Button>();
-            list_btn.Add(this.btnBrowseArea);
-            list_btn.Add(this.btnBrowseBusityp);
-            list_btn.Add(this.btnBrowseDealer);
-            list_btn.Add(this.btnBrowseHowknown);
-            // Label
-            List<Label> list_label = new List<Label>();
-            list_label.Add(this.lblAreaTypdes);
-            list_label.Add(this.lblBusitypTypdes);
-            list_label.Add(this.lblDealer_DealerCompnam);
-            list_label.Add(this.lblHowknownTypdes);
-            // Selection Data
-            List<PairTextBoxWithBrowseButton.SELECTION_DATA> list_selection_data = new List<PairTextBoxWithBrowseButton.SELECTION_DATA>();
-            list_selection_data.Add(PairTextBoxWithBrowseButton.SELECTION_DATA.AREA);
-            list_selection_data.Add(PairTextBoxWithBrowseButton.SELECTION_DATA.BUSITYP);
-            list_selection_data.Add(PairTextBoxWithBrowseButton.SELECTION_DATA.DEALER);
-            list_selection_data.Add(PairTextBoxWithBrowseButton.SELECTION_DATA.HOWKNOWN);
-            // Pairing
-            PairTextBoxWithBrowseButton.Attach(list_tb, list_btn, list_label, list_selection_data, this.main_form.data_resource);
         }
 
         private void SnWindow_Load(object sender, EventArgs e)
@@ -174,22 +114,301 @@ namespace SN_Net.Subform
                 this.toolStripGenSN.Visible = false;
             }
             this.main_form = this.MdiParent as MainForm;
-            this.FormLoading();
-            this.tabControl1.Selecting += new TabControlCancelEventHandler(this.preventChangeTabInEditMode);
-            this.transparentPanel1.Paint += new PaintEventHandler(this.editPanelPaintHandler);
+            this.BindEditControlHandler();
+            this.FormProcessing();
+            this.loadVerextComboBox();
             this.dgvProblem.MouseClick += new MouseEventHandler(this.showProblemContextMenu);
-            this.transLayerHeader.Dock = DockStyle.Fill;
-            this.transLayerBody1.Dock = DockStyle.Fill;
-            this.transLayerBody2.Dock = DockStyle.Fill;
 
             this.sortMode = SORT_SN;
-            this.catchLabelReadModeDoubleClick();
-            this.catchInlineEditKeyEvent();
 
             BackgroundWorker snWorker = new BackgroundWorker();
             snWorker.DoWork += new DoWorkEventHandler(this.workerLoadLastSN_Dowork);
             snWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerLoadSN_Complete);
             snWorker.RunWorkerAsync();
+        }
+
+        private void BindEditControlHandler() // Create list of edit control and bind doubleclick event to edit handler, keep current_focused_control
+        {
+            this.list_edit_control = new List<Control>();
+            this.list_edit_control.Add(this.txtSernum);
+            this.list_edit_control.Add(this.txtArea);
+            this.list_edit_control.Add(this.txtVersion);
+            this.list_edit_control.Add(this.txtRefnum);
+            this.list_edit_control.Add(this.txtPrenam);
+            this.list_edit_control.Add(this.txtCompnam);
+            this.list_edit_control.Add(this.txtAddr01);
+            this.list_edit_control.Add(this.txtAddr02);
+            this.list_edit_control.Add(this.txtAddr03);
+            this.list_edit_control.Add(this.txtZipcod);
+            this.list_edit_control.Add(this.txtTelnum);
+            this.list_edit_control.Add(this.txtFaxnum);
+            this.list_edit_control.Add(this.txtContact);
+            this.list_edit_control.Add(this.txtPosition);
+            this.list_edit_control.Add(this.txtOldnum);
+            this.list_edit_control.Add(this.txtRemark);
+            this.list_edit_control.Add(this.txtBusides);
+            this.list_edit_control.Add(this.txtBusityp);
+            this.list_edit_control.Add(this.txtDealer);
+            this.list_edit_control.Add(this.txtHowknown);
+            this.list_edit_control.Add(this.txtUpfree);
+            this.list_edit_control.Add(this.dtPurdat);
+            this.list_edit_control.Add(this.dtExpdat);
+            this.list_edit_control.Add(this.dtManual);
+            this.list_edit_control.Add(this.dtVerextdat);
+            this.list_edit_control.Add(this.cbVerext);
+
+            foreach (Control ct in this.list_edit_control)
+            {
+                if (ct is CustomTextBox)
+                {
+                    ((CustomTextBox)ct).label1.DoubleClick += delegate
+                    {
+                        if(this.form_mode == FORM_MODE.READ)
+                        {
+                            this.toolStripEdit.PerformClick();
+                            if (ct == this.txtSernum)
+                            {
+                                this.txtVersion.Focus();
+                            }
+                            else
+                            {
+                                ct.Focus();
+                            }
+                        }
+                    };
+
+                    ((CustomTextBox)ct).textBox1.GotFocus += delegate
+                    {
+                        this.current_focused_control = ct;
+                        this.toolStripInfo.Text = this.toolTip1.GetToolTip(this.current_focused_control);
+                    };
+                }
+                if (ct is CustomMaskedTextBox)
+                {
+                    ((CustomMaskedTextBox)ct).label1.DoubleClick += delegate
+                    {
+                        if (this.form_mode == FORM_MODE.READ)
+                        {
+                            this.toolStripEdit.PerformClick();
+                            if (ct == this.txtSernum)
+                            {
+                                this.txtVersion.Focus();
+                            }
+                            else
+                            {
+                                ct.Focus();
+                            }
+                        }
+                    };
+
+                    ((CustomMaskedTextBox)ct).textBox1.GotFocus += delegate
+                    {
+                        this.current_focused_control = ct;
+                        this.toolStripInfo.Text = this.toolTip1.GetToolTip(this.current_focused_control);
+                    };
+                }
+                if (ct is CustomComboBox)
+                {
+                    ((CustomComboBox)ct).label1.DoubleClick += delegate
+                    {
+                        if (this.form_mode == FORM_MODE.READ)
+                        {
+                            this.toolStripEdit.PerformClick();
+                            if (ct == this.txtSernum)
+                            {
+                                this.txtVersion.Focus();
+                            }
+                            else
+                            {
+                                ct.Focus();
+                            }
+                        }
+                    };
+
+                    ((CustomComboBox)ct).comboBox1.GotFocus += delegate
+                    {
+                        this.current_focused_control = ct;
+                        this.toolStripInfo.Text = this.toolTip1.GetToolTip(this.current_focused_control);
+                    };
+                }
+                if (ct is CustomDateTimePicker)
+                {
+                    ((CustomDateTimePicker)ct).label1.DoubleClick += delegate
+                    {
+                        if (this.form_mode == FORM_MODE.READ)
+                        {
+                            this.toolStripEdit.PerformClick();
+                            ct.Focus();
+                        }
+                    };
+                    ((CustomDateTimePicker)ct).textBox1.GotFocus += delegate
+                    {
+                        this.current_focused_control = ct;
+                        this.toolStripInfo.Text = this.toolTip1.GetToolTip(this.current_focused_control);
+                    };
+                }
+            }
+
+            this.txtSernum.Leave += delegate(object sender, EventArgs e) // Validate S/N while add new S/N
+            {
+                if (!ValidateSN.Check(((CustomMaskedTextBox)sender).Texts) && this.form_mode == FORM_MODE.ADD)
+                {
+                    ((CustomMaskedTextBox)sender).Focus();
+                }
+            };
+
+            this.txtArea.Leave += delegate(object sender, EventArgs e) // Validate area code
+            {
+                if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT)
+                {
+                    if (this.txtArea.Texts.Length == 0)
+                    {
+                        this.lblAreaTypdes.Text = "";
+                        return;
+                    }
+                    if (this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Texts) == null)
+                    {
+                        this.txtArea.Focus();
+                        SendKeys.Send("{F6}");
+                    }
+                    else
+                    {
+                        this.lblAreaTypdes.Text = this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Texts).typdes_th;
+                    }
+                }
+            };
+
+            this.txtBusityp.Leave += delegate
+            {
+                if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT)
+                {
+                    if (this.txtBusityp.Texts.Length == 0)
+                    {
+                        this.lblBusitypTypdes.Text = "";
+                        return;
+                    }
+                    if (this.main_form.data_resource.LIST_BUSITYP.Find(t => t.typcod == this.txtBusityp.Texts) == null)
+                    {
+                        this.txtBusityp.Focus();
+                        SendKeys.Send("{F6}");
+                    }
+                    else
+                    {
+                        this.lblBusitypTypdes.Text = this.main_form.data_resource.LIST_BUSITYP.Find(t => t.typcod == this.txtBusityp.Texts).typdes_th;
+                    }
+                }
+            };
+
+            this.txtDealer.Leave += delegate
+            {
+                if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT)
+                {
+                    if (this.txtDealer.Texts.Length == 0)
+                    {
+                        this.lblDealer_DealerCompnam.Text = "";
+                        return;
+                    }
+                    if (this.main_form.data_resource.LIST_DEALER.Find(t => t.dealer == this.txtDealer.Texts) == null)
+                    {
+                        this.txtDealer.Focus();
+                        SendKeys.Send("{F6}");
+                    }
+                    else
+                    {
+                        this.lblDealer_DealerCompnam.Text = this.main_form.data_resource.LIST_DEALER.Find(t => t.dealer == this.txtDealer.Texts).compnam;
+                    }
+                }
+            };
+
+            this.txtHowknown.Leave += delegate
+            {
+                if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT)
+                {
+                    if (this.txtHowknown.Texts.Length == 0)
+                    {
+                        this.lblHowknownTypdes.Text = "";
+                        return;
+                    }
+                    if (this.main_form.data_resource.LIST_HOWKNOWN.Find(t => t.typcod == this.txtHowknown.Texts) == null)
+                    {
+                        this.txtHowknown.Focus();
+                        SendKeys.Send("{F6}");
+                    }
+                    else
+                    {
+                        this.lblHowknownTypdes.Text = this.main_form.data_resource.LIST_HOWKNOWN.Find(t => t.typcod == this.txtHowknown.Texts).typdes_th;
+                    }
+                }
+            };
+        }
+
+        private void EditControlReadState() // Set control to read state
+        {
+            foreach (Control ct in this.list_edit_control)
+            {
+                if (ct is CustomTextBox)
+                {
+                    ((CustomTextBox)ct).ReadOnly = true;
+                }
+                if (ct is CustomMaskedTextBox)
+                {
+                    ((CustomMaskedTextBox)ct).Read_Only = true;
+                }
+                if (ct is CustomComboBox)
+                {
+                    ((CustomComboBox)ct).Read_Only = true;
+                }
+            }
+        }
+
+        private void EditControlEditState() // Set control to edit state
+        {
+            foreach (Control ct in this.list_edit_control)
+            {
+                if (ct is CustomTextBox)
+                {
+                    ((CustomTextBox)ct).ReadOnly = false;
+                }
+                if (ct is CustomMaskedTextBox)
+                {
+                    ((CustomMaskedTextBox)ct).Read_Only = false;
+                }
+                if (ct is CustomComboBox)
+                {
+                    ((CustomComboBox)ct).Read_Only = false;
+                }
+            }
+        }
+
+        private void EditControlBlank() // Clear all text in edit control
+        {
+            foreach (Control ct in this.list_edit_control)
+            {
+                if (ct is CustomTextBox)
+                {
+                    ((CustomTextBox)ct).Texts = "";
+                }
+                if (ct is CustomMaskedTextBox)
+                {
+                    ((CustomMaskedTextBox)ct).Texts = "";
+                }
+                if (ct is CustomComboBox)
+                {
+                    ((CustomComboBox)ct).Texts = "";
+                }
+                if (ct is CustomDateTimePicker)
+                {
+                    ((CustomDateTimePicker)ct).Texts = "  /  /    ";
+                }
+                if (ct is CustomComboBox)
+                {
+                    ((CustomComboBox)ct).comboBox1.SelectedIndex = 0;
+                }
+            }
+            this.lblAreaTypdes.Text = "";
+            this.lblBusitypTypdes.Text = "";
+            this.lblDealer_DealerCompnam.Text = "";
+            this.lblHowknownTypdes.Text = "";
         }
 
         private void workerLoadLastSN_Dowork(object sender, DoWorkEventArgs e)
@@ -203,516 +422,951 @@ namespace SN_Net.Subform
             this.getSerialIDList();
             this.getSerial(this.id);
             this.main_form.data_resource.Refresh();
-            this.pairingTextBoxWithBrowseButton();
         }
 
         private void workerLoadSN_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.loadVerextComboBox();
             this.fillSerialInForm();
             this.dgvProblem.Dock = DockStyle.Fill;
-            this.FormReady();
-        }
-
-        private void catchLabelReadModeDoubleClick()
-        {
-            this.labels.Add(this.lblVersion);
-            this.labels.Add(this.lblArea);
-            this.labels.Add(this.lblRefnum);
-            this.labels.Add(this.lblPrenam);
-            this.labels.Add(this.lblCompnam);
-            this.labels.Add(this.lblAddr01);
-            this.labels.Add(this.lblAddr02);
-            this.labels.Add(this.lblAddr03);
-            this.labels.Add(this.lblZipcod);
-            this.labels.Add(this.lblTelnum);
-            this.labels.Add(this.lblFaxnum);
-            this.labels.Add(this.lblContact);
-            this.labels.Add(this.lblPosition);
-            this.labels.Add(this.lblOldnum);
-            this.labels.Add(this.lblRemark);
-            this.labels.Add(this.lblBusides);
-            this.labels.Add(this.lblBusityp);
-            this.labels.Add(this.lblDealer_dealer);
-            this.labels.Add(this.lblHowknown);
-            this.labels.Add(this.lblPurdat);
-            this.labels.Add(this.lblExpdat);
-            this.labels.Add(this.lblReg);
-            this.labels.Add(this.lblManual);
-            this.labels.Add(this.lblVerext);
-            this.labels.Add(this.lblVerextdat);
-
-            this.edit_controls.Add(this.txtVersion);
-            this.edit_controls.Add(this.txtArea);
-            this.edit_controls.Add(this.mskRefnum);
-            this.edit_controls.Add(this.txtPrenam);
-            this.edit_controls.Add(this.txtCompnam);
-            this.edit_controls.Add(this.txtAddr01);
-            this.edit_controls.Add(this.txtAddr02);
-            this.edit_controls.Add(this.txtAddr03);
-            this.edit_controls.Add(this.txtZipcod);
-            this.edit_controls.Add(this.txtTelnum);
-            this.edit_controls.Add(this.txtFaxnum);
-            this.edit_controls.Add(this.txtContact);
-            this.edit_controls.Add(this.txtPosition);
-            this.edit_controls.Add(this.mskOldnum);
-            this.edit_controls.Add(this.txtRemark);
-            this.edit_controls.Add(this.txtBusides);
-            this.edit_controls.Add(this.txtBusityp);
-            this.edit_controls.Add(this.txtDealer_dealer);
-            this.edit_controls.Add(this.txtHowknown);
-            this.edit_controls.Add(this.mskPurdat);
-            this.edit_controls.Add(this.mskExpdat);
-            this.edit_controls.Add(this.txtReg);
-            this.edit_controls.Add(this.mskManual);
-            this.edit_controls.Add(this.cbVerext);
-            this.edit_controls.Add(this.mskVerextdat);
-
-            foreach (Label label in this.labels)
-            {
-                label.DoubleClick += new EventHandler(this.doubleClickToEdit);
-            }
-        }
-
-        private void doubleClickToEdit(object sender, EventArgs e)
-        {
-            this.toolStripEdit.PerformClick();
-            int ndx = this.labels.FindIndex(t => t.Equals((Label)sender));
-            this.edit_controls[ndx].Focus();
-
-            if (this.edit_controls[ndx] is TextBox)
-            {
-                ((TextBox)this.edit_controls[ndx]).SelectionStart = ((TextBox)this.edit_controls[ndx]).Text.Length;
-            }
-            if (this.edit_controls[ndx] is MaskedTextBox)
-            {
-                ((MaskedTextBox)this.edit_controls[ndx]).SelectionStart = 0;
-                ((MaskedTextBox)this.edit_controls[ndx]).SelectionLength = ((MaskedTextBox)this.edit_controls[ndx]).Text.Length;
-            }
+            this.FormRead();
         }
 
         #region Set form state
-        private void FormLoading()
+        private void FormProcessing()
         {
-            this.form_mode = FORM_MODE.LOADING;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.WaitCursor;
-            this.main_form.Cursor = Cursors.WaitCursor;
-            this.main_form.toolStripProcessing.Visible = true;
-            this.main_form.menuStrip1.Enabled = false;
+            this.form_mode = FORM_MODE.PROCESSING;
+            this.toolStripProcessing.Visible = true;
 
-            List<Control> lct = new List<Control>();
-            lct.Add(this.mskSernum);
-            lct.Add(this.txtVersion);
-            lct.Add(this.txtArea);
-            lct.Add(this.mskRefnum);
-            lct.Add(this.txtPrenam);
-            lct.Add(this.txtCompnam);
-            lct.Add(this.txtAddr01);
-            lct.Add(this.txtAddr02);
-            lct.Add(this.txtAddr03);
-            lct.Add(this.txtZipcod);
-            lct.Add(this.txtTelnum);
-            lct.Add(this.txtFaxnum);
-            lct.Add(this.txtContact);
-            lct.Add(this.txtPosition);
-            lct.Add(this.mskOldnum);
-            lct.Add(this.txtRemark);
-            lct.Add(this.txtBusides);
-            lct.Add(this.txtBusityp);
-            lct.Add(this.txtDealer_dealer);
-            lct.Add(this.txtHowknown);
-            lct.Add(this.mskPurdat);
-            lct.Add(this.mskExpdat);
-            lct.Add(this.txtReg);
-            lct.Add(this.mskManual);
-            lct.Add(this.cbVerext);
-            lct.Add(this.mskVerextdat);
-            List<Label> llb = new List<Label>();
-            llb.Add(this.lblSerNum);
-            llb.Add(this.lblVersion);
-            llb.Add(this.lblArea);
-            llb.Add(this.lblRefnum);
-            llb.Add(this.lblPrenam);
-            llb.Add(this.lblCompnam);
-            llb.Add(this.lblAddr01);
-            llb.Add(this.lblAddr02);
-            llb.Add(this.lblAddr03);
-            llb.Add(this.lblZipcod);
-            llb.Add(this.lblTelnum);
-            llb.Add(this.lblFaxnum);
-            llb.Add(this.lblContact);
-            llb.Add(this.lblPosition);
-            llb.Add(this.lblOldnum);
-            llb.Add(this.lblRemark);
-            llb.Add(this.lblBusides);
-            llb.Add(this.lblBusityp);
-            llb.Add(this.lblDealer_dealer);
-            llb.Add(this.lblHowknown);
-            llb.Add(this.lblPurdat);
-            llb.Add(this.lblExpdat);
-            llb.Add(this.lblReg);
-            llb.Add(this.lblManual);
-            llb.Add(this.lblVerext);
-            llb.Add(this.lblVerextdat);
-            this.Ready(lct, llb);
-            this.txtDummy.Focus();
-            this.transLayerHeader.Visible = true;
-            this.transLayerBody1.Visible = true;
-            this.transLayerBody2.Visible = true;
-            foreach (Control ct in lct)
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = false;
+            this.toolStripSave.Enabled = false;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = false;
+            this.btnBrowseBusityp.Enabled = false;
+            this.btnBrowseDealer.Enabled = false;
+            this.btnBrowseHowknown.Enabled = false;
+            this.chkIMOnly.Enabled = false;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = true;
+            this.dtExpdat.Read_Only = true;
+            this.dtManual.Read_Only = true;
+            this.dtVerextdat.Read_Only = true;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
             {
-                ct.Enter += new EventHandler(this.onControlEnterHandler);
-                ct.GotFocus += new EventHandler(this.onControlFocusHandler);
-                ct.Leave += new EventHandler(this.onControlLeaveHandler);
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = true;
             }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = true;
+            }
+            #endregion Inline Problem Form
+
+            this.txtDummy.Focus();
+            this.EditControlReadState();
         }
 
         private void FormSaving()
         {
             this.form_mode = FORM_MODE.SAVING;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.WaitCursor;
-            this.main_form.Cursor = Cursors.WaitCursor;
-            this.main_form.toolStripProcessing.Visible = true;
-            this.main_form.menuStrip1.Enabled = false;
+            this.toolStripProcessing.Visible = true;
 
-            this.txtDummy.Focus();
-            this.transLayerHeader.Visible = true;
-            this.transLayerBody1.Visible = true;
-            this.transLayerBody2.Visible = true;
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = false;
+            this.toolStripSave.Enabled = false;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = false;
+            this.btnBrowseBusityp.Enabled = false;
+            this.btnBrowseDealer.Enabled = false;
+            this.btnBrowseHowknown.Enabled = false;
+            this.chkIMOnly.Enabled = false;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = true;
+            this.dtExpdat.Read_Only = true;
+            this.dtManual.Read_Only = true;
+            this.dtVerextdat.Read_Only = true;
+            #endregion DatePicker
+
+            this.EditControlReadState();
         }
 
-        private void FormReady()
+        private void FormRead()
         {
             this.form_mode = FORM_MODE.READ;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.Default;
-            this.main_form.Cursor = Cursors.Default;
-            this.main_form.toolStripProcessing.Visible = false;
-            this.main_form.menuStrip1.Enabled = true;
+            this.toolStripProcessing.Visible = false;
 
-            List<Control> lct = new List<Control>();
-            lct.Add(this.mskSernum);
-            lct.Add(this.txtVersion);
-            lct.Add(this.txtArea);
-            lct.Add(this.mskRefnum);
-            lct.Add(this.txtPrenam);
-            lct.Add(this.txtCompnam);
-            lct.Add(this.txtAddr01);
-            lct.Add(this.txtAddr02);
-            lct.Add(this.txtAddr03);
-            lct.Add(this.txtZipcod);
-            lct.Add(this.txtTelnum);
-            lct.Add(this.txtFaxnum);
-            lct.Add(this.txtContact);
-            lct.Add(this.txtPosition);
-            lct.Add(this.mskOldnum);
-            lct.Add(this.txtRemark);
-            lct.Add(this.txtBusides);
-            lct.Add(this.txtBusityp);
-            lct.Add(this.txtDealer_dealer);
-            lct.Add(this.txtHowknown);
-            lct.Add(this.mskPurdat);
-            lct.Add(this.mskExpdat);
-            lct.Add(this.txtReg);
-            lct.Add(this.mskManual);
-            lct.Add(this.cbVerext);
-            lct.Add(this.mskVerextdat);
-            List<Label> llb = new List<Label>();
-            llb.Add(this.lblSerNum);
-            llb.Add(this.lblVersion);
-            llb.Add(this.lblArea);
-            llb.Add(this.lblRefnum);
-            llb.Add(this.lblPrenam);
-            llb.Add(this.lblCompnam);
-            llb.Add(this.lblAddr01);
-            llb.Add(this.lblAddr02);
-            llb.Add(this.lblAddr03);
-            llb.Add(this.lblZipcod);
-            llb.Add(this.lblTelnum);
-            llb.Add(this.lblFaxnum);
-            llb.Add(this.lblContact);
-            llb.Add(this.lblPosition);
-            llb.Add(this.lblOldnum);
-            llb.Add(this.lblRemark);
-            llb.Add(this.lblBusides);
-            llb.Add(this.lblBusityp);
-            llb.Add(this.lblDealer_dealer);
-            llb.Add(this.lblHowknown);
-            llb.Add(this.lblPurdat);
-            llb.Add(this.lblExpdat);
-            llb.Add(this.lblReg);
-            llb.Add(this.lblManual);
-            llb.Add(this.lblVerext);
-            llb.Add(this.lblVerextdat);
-            this.Ready(lct, llb);
-            this.transLayerHeader.Visible = false;
-            this.transLayerBody1.Visible = false;
-            this.transLayerBody2.Visible = false;
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = true;
+            this.toolStripEdit.Enabled = true;
+            this.toolStripDelete.Enabled = true;
+            this.toolStripStop.Enabled = false;
+            this.toolStripSave.Enabled = false;
+            this.toolStripFirst.Enabled = true;
+            this.toolStripPrevious.Enabled = true;
+            this.toolStripNext.Enabled = true;
+            this.toolStripLast.Enabled = true;
+            this.toolStripItem.Enabled = true;
+            this.toolStripImport.Enabled = true;
+            this.toolStripGenSN.Enabled = true;
+            this.toolStripUpgrade.Enabled = true;
+            this.toolStripBook.Enabled = true;
+            this.toolStripSet2.Enabled = true;
+            this.toolStripSearch.Enabled = true;
+            this.toolStripInquiryAll.Enabled = true;
+            this.toolStripInquiryRest.Enabled = true;
+            this.toolStripSearchArea.Enabled = true;
+            this.toolStripSearchBusityp.Enabled = true;
+            this.toolStripSearchCompany.Enabled = true;
+            this.toolStripSearchContact.Enabled = true;
+            this.toolStripSearchDealer.Enabled = true;
+            this.toolStripSearchOldnum.Enabled = true;
+            this.toolStripSearchSN.Enabled = true;
+            this.toolStripReload.Enabled = true;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = false;
+            this.btnBrowseBusityp.Enabled = false;
+            this.btnBrowseDealer.Enabled = false;
+            this.btnBrowseHowknown.Enabled = false;
             this.chkIMOnly.Enabled = true;
-            this.txtDummy.Focus();
-            
-            this.main_form.toolStripInfo.Text = "";
+            this.btnLostRenew.Enabled = true;
+            this.btnSwithToRefnum.Enabled = true;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = (this.btnCD.Visible ? true : false);
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = (this.btnUP.Visible ? true : false);
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = (this.btnUPNewRwt.Visible ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = (this.btnUPNewRwtJob.Visible ? true : false);
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = true;
+            this.dtExpdat.Read_Only = true;
+            this.dtManual.Read_Only = true;
+            this.dtVerextdat.Read_Only = true;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = true;
+            }
+            #endregion Inline Problem Form
+
+            this.txtDummy.Focus(); // throw(set) focus to dummy textbox
+            this.EditControlReadState();
         }
 
         private void FormAdd()
         {
-            this.tabControl1.SelectedTab = this.tabPage1;
-            this.lblAreaTypdes.Text = "";
-            this.lblBusitypTypdes.Text = "";
-            this.lblDealer_DealerCompnam.Text = "";
-            this.lblHowknownTypdes.Text = "";
-            this.form_mode = FORM_MODE.ADD;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.Default;
-            this.main_form.Cursor = Cursors.Default;
-            this.main_form.toolStripProcessing.Visible = false;
-            this.main_form.menuStrip1.Enabled = true;
+            #region no use
+            //this.tabControl1.SelectedTab = this.tabPage1;
+            //this.lblAreaTypdes.Text = "";
+            //this.lblBusitypTypdes.Text = "";
+            //this.lblDealer_DealerCompnam.Text = "";
+            //this.lblHowknownTypdes.Text = "";
+            //this.form_mode = FORM_MODE.ADD;
+            //this.setToolStripFormMode();
+            //this.Cursor = Cursors.Default;
+            //this.main_form.Cursor = Cursors.Default;
+            //this.main_form.toolStripProcessing.Visible = false;
+            //this.main_form.menuStrip1.Enabled = true;
 
-            List<Control> lct = new List<Control>();
-            lct.Add(this.mskSernum);
-            lct.Add(this.txtVersion);
-            lct.Add(this.txtArea);
-            lct.Add(this.mskRefnum);
-            lct.Add(this.txtPrenam);
-            lct.Add(this.txtCompnam);
-            lct.Add(this.txtAddr01);
-            lct.Add(this.txtAddr02);
-            lct.Add(this.txtAddr03);
-            lct.Add(this.txtZipcod);
-            lct.Add(this.txtTelnum);
-            lct.Add(this.txtFaxnum);
-            lct.Add(this.txtContact);
-            lct.Add(this.txtPosition);
-            lct.Add(this.mskOldnum);
-            lct.Add(this.txtRemark);
-            lct.Add(this.txtBusides);
-            lct.Add(this.txtBusityp);
-            lct.Add(this.txtDealer_dealer);
-            lct.Add(this.txtHowknown);
-            lct.Add(this.mskPurdat);
-            lct.Add(this.mskExpdat);
-            lct.Add(this.txtReg);
-            lct.Add(this.mskManual);
-            lct.Add(this.cbVerext);
-            lct.Add(this.mskVerextdat);
-            List<Label> llb = new List<Label>();
-            llb.Add(this.lblSerNum);
-            llb.Add(this.lblVersion);
-            llb.Add(this.lblArea);
-            llb.Add(this.lblRefnum);
-            llb.Add(this.lblPrenam);
-            llb.Add(this.lblCompnam);
-            llb.Add(this.lblAddr01);
-            llb.Add(this.lblAddr02);
-            llb.Add(this.lblAddr03);
-            llb.Add(this.lblZipcod);
-            llb.Add(this.lblTelnum);
-            llb.Add(this.lblFaxnum);
-            llb.Add(this.lblContact);
-            llb.Add(this.lblPosition);
-            llb.Add(this.lblOldnum);
-            llb.Add(this.lblRemark);
-            llb.Add(this.lblBusides);
-            llb.Add(this.lblBusityp);
-            llb.Add(this.lblDealer_dealer);
-            llb.Add(this.lblHowknown);
-            llb.Add(this.lblPurdat);
-            llb.Add(this.lblExpdat);
-            llb.Add(this.lblReg);
-            llb.Add(this.lblManual);
-            llb.Add(this.lblVerext);
-            llb.Add(this.lblVerextdat);
-            this.Add(lct, llb);
-            this.transLayerHeader.Visible = false;
-            this.transLayerBody1.Visible = false;
-            this.transLayerBody2.Visible = false;
+            //List<Control> lct = new List<Control>();
+            //lct.Add(this.mskSernum);
+            //lct.Add(this.txtVersion);
+            //lct.Add(this.txtArea);
+            //lct.Add(this.mskRefnum);
+            //lct.Add(this.txtPrenam);
+            //lct.Add(this.txtCompnam);
+            //lct.Add(this.txtAddr01);
+            //lct.Add(this.txtAddr02);
+            //lct.Add(this.txtAddr03);
+            //lct.Add(this.txtZipcod);
+            //lct.Add(this.txtTelnum);
+            //lct.Add(this.txtFaxnum);
+            //lct.Add(this.txtContact);
+            //lct.Add(this.txtPosition);
+            //lct.Add(this.mskOldnum);
+            //lct.Add(this.txtRemark);
+            //lct.Add(this.txtBusides);
+            //lct.Add(this.txtBusityp);
+            //lct.Add(this.txtDealer_dealer);
+            //lct.Add(this.txtHowknown);
+            //lct.Add(this.mskPurdat);
+            //lct.Add(this.mskExpdat);
+            //lct.Add(this.txtReg);
+            //lct.Add(this.mskManual);
+            //lct.Add(this.cbVerext);
+            //lct.Add(this.mskVerextdat);
+            //List<Label> llb = new List<Label>();
+            //llb.Add(this.lblSerNum);
+            //llb.Add(this.lblVersion);
+            //llb.Add(this.lblArea);
+            //llb.Add(this.lblRefnum);
+            //llb.Add(this.lblPrenam);
+            //llb.Add(this.lblCompnam);
+            //llb.Add(this.lblAddr01);
+            //llb.Add(this.lblAddr02);
+            //llb.Add(this.lblAddr03);
+            //llb.Add(this.lblZipcod);
+            //llb.Add(this.lblTelnum);
+            //llb.Add(this.lblFaxnum);
+            //llb.Add(this.lblContact);
+            //llb.Add(this.lblPosition);
+            //llb.Add(this.lblOldnum);
+            //llb.Add(this.lblRemark);
+            //llb.Add(this.lblBusides);
+            //llb.Add(this.lblBusityp);
+            //llb.Add(this.lblDealer_dealer);
+            //llb.Add(this.lblHowknown);
+            //llb.Add(this.lblPurdat);
+            //llb.Add(this.lblExpdat);
+            //llb.Add(this.lblReg);
+            //llb.Add(this.lblManual);
+            //llb.Add(this.lblVerext);
+            //llb.Add(this.lblVerextdat);
+            //this.Add(lct, llb);
+            //this.transLayerHeader.Visible = false;
+            //this.transLayerBody1.Visible = false;
+            //this.transLayerBody2.Visible = false;
+            #endregion no use
+            this.txtDummy.Focus(); // set focus to dummy textbox first
+            this.form_mode = FORM_MODE.ADD;
+            this.toolStripProcessing.Visible = false;
+
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = true;
+            this.toolStripSave.Enabled = true;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = true;
+            this.btnBrowseBusityp.Enabled = true;
+            this.btnBrowseDealer.Enabled = true;
+            this.btnBrowseHowknown.Enabled = true;
+            this.chkIMOnly.Enabled = false;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = false;
+            this.dtExpdat.Read_Only = false;
+            this.dtManual.Read_Only = false;
+            this.dtVerextdat.Read_Only = false;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = true;
+            }
+            #endregion Inline Problem Form
+
+            this.EditControlEditState();
+            this.txtSernum.Focus(); // throw(set) focus to txtSernum
         }
 
         private void FormEdit()
         {
-            this.tabControl1.SelectedTab = this.tabPage1;
-            this.form_mode = FORM_MODE.EDIT;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.Default;
-            this.main_form.Cursor = Cursors.Default;
-            this.main_form.toolStripProcessing.Visible = false;
-            this.main_form.menuStrip1.Enabled = true;
+            #region no use
+            //this.tabControl1.SelectedTab = this.tabPage1;
+            //this.form_mode = FORM_MODE.EDIT;
+            //this.setToolStripFormMode();
+            //this.Cursor = Cursors.Default;
+            //this.main_form.Cursor = Cursors.Default;
+            //this.main_form.toolStripProcessing.Visible = false;
+            //this.main_form.menuStrip1.Enabled = true;
 
-            List<Control> lct = new List<Control>();
-            lct.Add(this.txtVersion);
-            lct.Add(this.txtArea);
-            lct.Add(this.mskRefnum);
-            lct.Add(this.txtPrenam);
-            lct.Add(this.txtCompnam);
-            lct.Add(this.txtAddr01);
-            lct.Add(this.txtAddr02);
-            lct.Add(this.txtAddr03);
-            lct.Add(this.txtZipcod);
-            lct.Add(this.txtTelnum);
-            lct.Add(this.txtFaxnum);
-            lct.Add(this.txtContact);
-            lct.Add(this.txtPosition);
-            lct.Add(this.mskOldnum);
-            lct.Add(this.txtRemark);
-            lct.Add(this.txtBusides);
-            lct.Add(this.txtBusityp);
-            lct.Add(this.txtDealer_dealer);
-            lct.Add(this.txtHowknown);
-            lct.Add(this.mskPurdat);
-            lct.Add(this.mskExpdat);
-            lct.Add(this.txtReg);
-            lct.Add(this.mskManual);
-            lct.Add(this.cbVerext);
-            lct.Add(this.mskVerextdat);
-            List<Label> llb = new List<Label>();
-            llb.Add(this.lblVersion);
-            llb.Add(this.lblArea);
-            llb.Add(this.lblRefnum);
-            llb.Add(this.lblPrenam);
-            llb.Add(this.lblCompnam);
-            llb.Add(this.lblAddr01);
-            llb.Add(this.lblAddr02);
-            llb.Add(this.lblAddr03);
-            llb.Add(this.lblZipcod);
-            llb.Add(this.lblTelnum);
-            llb.Add(this.lblFaxnum);
-            llb.Add(this.lblContact);
-            llb.Add(this.lblPosition);
-            llb.Add(this.lblOldnum);
-            llb.Add(this.lblRemark);
-            llb.Add(this.lblBusides);
-            llb.Add(this.lblBusityp);
-            llb.Add(this.lblDealer_dealer);
-            llb.Add(this.lblHowknown);
-            llb.Add(this.lblPurdat);
-            llb.Add(this.lblExpdat);
-            llb.Add(this.lblReg);
-            llb.Add(this.lblManual);
-            llb.Add(this.lblVerext);
-            llb.Add(this.lblVerextdat);
-            this.Edit(lct, llb);
-            this.transLayerHeader.Visible = false;
-            this.transLayerBody1.Visible = false;
-            this.transLayerBody2.Visible = false;
+            //List<Control> lct = new List<Control>();
+            //lct.Add(this.txtVersion);
+            //lct.Add(this.txtArea);
+            //lct.Add(this.mskRefnum);
+            //lct.Add(this.txtPrenam);
+            //lct.Add(this.txtCompnam);
+            //lct.Add(this.txtAddr01);
+            //lct.Add(this.txtAddr02);
+            //lct.Add(this.txtAddr03);
+            //lct.Add(this.txtZipcod);
+            //lct.Add(this.txtTelnum);
+            //lct.Add(this.txtFaxnum);
+            //lct.Add(this.txtContact);
+            //lct.Add(this.txtPosition);
+            //lct.Add(this.mskOldnum);
+            //lct.Add(this.txtRemark);
+            //lct.Add(this.txtBusides);
+            //lct.Add(this.txtBusityp);
+            //lct.Add(this.txtDealer_dealer);
+            //lct.Add(this.txtHowknown);
+            //lct.Add(this.mskPurdat);
+            //lct.Add(this.mskExpdat);
+            //lct.Add(this.txtReg);
+            //lct.Add(this.mskManual);
+            //lct.Add(this.cbVerext);
+            //lct.Add(this.mskVerextdat);
+            //List<Label> llb = new List<Label>();
+            //llb.Add(this.lblVersion);
+            //llb.Add(this.lblArea);
+            //llb.Add(this.lblRefnum);
+            //llb.Add(this.lblPrenam);
+            //llb.Add(this.lblCompnam);
+            //llb.Add(this.lblAddr01);
+            //llb.Add(this.lblAddr02);
+            //llb.Add(this.lblAddr03);
+            //llb.Add(this.lblZipcod);
+            //llb.Add(this.lblTelnum);
+            //llb.Add(this.lblFaxnum);
+            //llb.Add(this.lblContact);
+            //llb.Add(this.lblPosition);
+            //llb.Add(this.lblOldnum);
+            //llb.Add(this.lblRemark);
+            //llb.Add(this.lblBusides);
+            //llb.Add(this.lblBusityp);
+            //llb.Add(this.lblDealer_dealer);
+            //llb.Add(this.lblHowknown);
+            //llb.Add(this.lblPurdat);
+            //llb.Add(this.lblExpdat);
+            //llb.Add(this.lblReg);
+            //llb.Add(this.lblManual);
+            //llb.Add(this.lblVerext);
+            //llb.Add(this.lblVerextdat);
+            //this.Edit(lct, llb);
+            //this.transLayerHeader.Visible = false;
+            //this.transLayerBody1.Visible = false;
+            //this.transLayerBody2.Visible = false;
+            #endregion no use
+            this.txtDummy.Focus(); // set focus to dummy textbox first
+            this.tabControl1.SelectedTab = tabPage1;
+            this.form_mode = FORM_MODE.EDIT;
+            this.toolStripProcessing.Visible = false;
+
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = true;
+            this.toolStripSave.Enabled = true;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = true;
+            this.btnBrowseBusityp.Enabled = true;
+            this.btnBrowseDealer.Enabled = true;
+            this.btnBrowseHowknown.Enabled = true;
+            this.chkIMOnly.Enabled = false;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = false;
+            this.dtExpdat.Read_Only = false;
+            this.dtManual.Read_Only = false;
+            this.dtVerextdat.Read_Only = false;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = true;
+            }
+            #endregion Inline Problem Form
+
+            this.EditControlEditState();
+            this.txtSernum.Read_Only = true;
+            this.txtVersion.Focus(); // throw(set) focus to txtVersion
         }
 
         private void FormReadItem()
         {
+            #region no use
+            //this.form_mode = FORM_MODE.READ_ITEM;
+            //this.setToolStripFormMode();
+            //this.Cursor = Cursors.Default;
+            //this.main_form.Cursor = Cursors.Default;
+            //this.btnSwithToRefnum.TabStop = true;
+            //this.main_form.toolStripProcessing.Visible = false;
+            //this.main_form.menuStrip1.Enabled = true;
+            //this.dgvProblem.Focus();
+            //this.transLayerHeader.Visible = false;
+            //this.transLayerBody1.Visible = false;
+            //this.transLayerBody2.Visible = false;
+            //this.main_form.toolStripInfo.Text = "";
+            #endregion no use
             this.form_mode = FORM_MODE.READ_ITEM;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.Default;
-            this.main_form.Cursor = Cursors.Default;
-            this.btnSwithToRefnum.TabStop = true;
-            this.main_form.toolStripProcessing.Visible = false;
-            this.main_form.menuStrip1.Enabled = true;
+            this.toolStripProcessing.Visible = false;
+
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = true;
+            this.toolStripSave.Enabled = true;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = false;
+            this.btnBrowseBusityp.Enabled = false;
+            this.btnBrowseDealer.Enabled = false;
+            this.btnBrowseHowknown.Enabled = false;
+            this.chkIMOnly.Enabled = true;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = true;
+            this.dtExpdat.Read_Only = true;
+            this.dtManual.Read_Only = true;
+            this.dtVerextdat.Read_Only = true;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = true;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = true;
+            }
+            #endregion Inline Problem Form
+
+            this.dgvProblem.Enabled = true;
             this.dgvProblem.Focus();
-            this.transLayerHeader.Visible = false;
-            this.transLayerBody1.Visible = false;
-            this.transLayerBody2.Visible = false;
-            this.main_form.toolStripInfo.Text = "";
+            this.dgvProblem.Rows[0].Cells[1].Selected = true;
         }
 
         private void FormAddItem()
         {
+            #region no use
+            //this.form_mode = FORM_MODE.ADD_ITEM;
+            //this.setToolStripFormMode();
+            //this.Cursor = Cursors.Default;
+            //this.main_form.Cursor = Cursors.Default;
+            //this.btnSwithToRefnum.TabStop = false;
+            //this.main_form.toolStripProcessing.Visible = false;
+            //this.main_form.menuStrip1.Enabled = true;
+            //this.transLayerHeader.Visible = false;
+            //this.transLayerBody1.Visible = false;
+            //this.transLayerBody2.Visible = false;
+            #endregion no use
             this.form_mode = FORM_MODE.ADD_ITEM;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.Default;
-            this.main_form.Cursor = Cursors.Default;
-            this.btnSwithToRefnum.TabStop = false;
-            this.main_form.toolStripProcessing.Visible = false;
-            this.main_form.menuStrip1.Enabled = true;
-            this.transLayerHeader.Visible = false;
-            this.transLayerBody1.Visible = false;
-            this.transLayerBody2.Visible = false;
+            this.toolStripProcessing.Visible = false;
+
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = true;
+            this.toolStripSave.Enabled = true;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = false;
+            this.btnBrowseBusityp.Enabled = false;
+            this.btnBrowseDealer.Enabled = false;
+            this.btnBrowseHowknown.Enabled = false;
+            this.chkIMOnly.Enabled = false;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = true;
+            this.dtExpdat.Read_Only = true;
+            this.dtManual.Read_Only = true;
+            this.dtVerextdat.Read_Only = true;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = false;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = false;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = false;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = false;
+            }
+            #endregion Inline Problem Form
         }
 
         private void FormEditItem()
         {
+            #region no use
+            //this.form_mode = FORM_MODE.EDIT_ITEM;
+            //this.setToolStripFormMode();
+            //this.Cursor = Cursors.Default;
+            //this.main_form.Cursor = Cursors.Default;
+            //this.btnSwithToRefnum.TabStop = false;
+            //this.main_form.toolStripProcessing.Visible = false;
+            //this.main_form.menuStrip1.Enabled = true;
+            //this.transLayerHeader.Visible = false;
+            //this.transLayerBody1.Visible = false;
+            //this.transLayerBody2.Visible = false;
+            #endregion no use
             this.form_mode = FORM_MODE.EDIT_ITEM;
-            this.setToolStripFormMode();
-            this.Cursor = Cursors.Default;
-            this.main_form.Cursor = Cursors.Default;
-            this.btnSwithToRefnum.TabStop = false;
-            this.main_form.toolStripProcessing.Visible = false;
-            this.main_form.menuStrip1.Enabled = true;
-            this.transLayerHeader.Visible = false;
-            this.transLayerBody1.Visible = false;
-            this.transLayerBody2.Visible = false;
+            this.toolStripProcessing.Visible = false;
+
+            #region Toolstrip Button
+            this.toolStripAdd.Enabled = false;
+            this.toolStripEdit.Enabled = false;
+            this.toolStripDelete.Enabled = false;
+            this.toolStripStop.Enabled = true;
+            this.toolStripSave.Enabled = true;
+            this.toolStripFirst.Enabled = false;
+            this.toolStripPrevious.Enabled = false;
+            this.toolStripNext.Enabled = false;
+            this.toolStripLast.Enabled = false;
+            this.toolStripItem.Enabled = false;
+            this.toolStripImport.Enabled = false;
+            this.toolStripGenSN.Enabled = false;
+            this.toolStripUpgrade.Enabled = false;
+            this.toolStripBook.Enabled = false;
+            this.toolStripSet2.Enabled = false;
+            this.toolStripSearch.Enabled = false;
+            this.toolStripInquiryAll.Enabled = false;
+            this.toolStripInquiryRest.Enabled = false;
+            this.toolStripSearchArea.Enabled = false;
+            this.toolStripSearchBusityp.Enabled = false;
+            this.toolStripSearchCompany.Enabled = false;
+            this.toolStripSearchContact.Enabled = false;
+            this.toolStripSearchDealer.Enabled = false;
+            this.toolStripSearchOldnum.Enabled = false;
+            this.toolStripSearchSN.Enabled = false;
+            this.toolStripReload.Enabled = false;
+            #endregion Toolstrip Button
+
+            #region Button
+            this.btnBrowseArea.Enabled = false;
+            this.btnBrowseBusityp.Enabled = false;
+            this.btnBrowseDealer.Enabled = false;
+            this.btnBrowseHowknown.Enabled = false;
+            this.chkIMOnly.Enabled = false;
+            this.btnLostRenew.Enabled = false;
+            this.btnSwithToRefnum.Enabled = false;
+            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Enabled = false;
+            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Enabled = false;
+            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Enabled = false;
+            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Enabled = false;
+            #endregion Button
+
+            #region DatePicker
+            this.dtPurdat.Read_Only = true;
+            this.dtExpdat.Read_Only = true;
+            this.dtManual.Read_Only = true;
+            this.dtVerextdat.Read_Only = true;
+            #endregion DatePicker
+
+            #region Inline Problem Form
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                date.Read_Only = false;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                name.ReadOnly = false;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                probcod.ReadOnly = false;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                probdesc.Read_Only = false;
+            }
+            #endregion Inline Problem Form
         }
         #endregion Set form state
 
-        private void loadVerextComboBox()
+        private void loadVerextComboBox() // Load ComboBox item of Verext
         {
-            this.cbVerext.Items.Clear();
+            this.cbVerext.ClearItem();
             foreach (Istab verext in this.main_form.data_resource.LIST_VEREXT)
             {
-                this.cbVerext.Items.Add(new ComboboxItem(verext.typcod + " - " + verext.typdes_th, 0, verext.typcod));
+                this.cbVerext.AddItem(new ComboboxItem(verext.typcod + " - " + verext.typdes_th, 0, verext.typcod));
             }
         }
 
         #region DataGridView Event Handler
-        private void dgvProblem_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void dgvProblem_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            ((DataGridView)sender).SetRowSelectedBorder(e);
+            if (this.form_mode == FORM_MODE.READ)
+            {
+                if (e.RowIndex >= 0)
+                {
+                    this.FormReadItem();
+                    this.dgvProblem.Rows[e.RowIndex].Cells[1].Selected = true;
+                }
+            }
+        }
+
+        private void ManageDataGridRow()
+        {
+            if (this.problem != null)
+            {
+                int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                int dgv_row_count = this.dgvProblem.Rows.Count;
+
+                for (int i = dgv_row_count - 1; i > problem_count; i--)
+                {
+                    this.dgvProblem.Rows.RemoveAt(i);
+                }
+
+                if (this.dgvProblem.ClientSize.Height > (problem_count * 25))
+                {
+                    int line_to_fill = Convert.ToInt32(Math.Ceiling(Convert.ToDouble((this.dgvProblem.ClientSize.Height - (problem_count * 25)) / 25)));
+                    for (int i = 0; i < line_to_fill; i++)
+                    {
+                        int r = this.dgvProblem.Rows.Add();
+                        this.dgvProblem.Rows[r].Height = 25;
+                    }
+                }
+                // add last row for prevent error in case total problem row more than datagridview space
+                int rr = this.dgvProblem.Rows.Add();
+                this.dgvProblem.Rows[rr].Height = 25;
+            }
+            this.dgvProblem.Columns[4].Width = this.dgvProblem.ClientSize.Width - (this.dgvProblem.Columns[1].Width + this.dgvProblem.Columns[2].Width + this.dgvProblem.Columns[3].Width + SystemInformation.VerticalScrollBarWidth + 3);
         }
 
         private void dgvProblem_Resize(object sender, EventArgs e)
         {
-            int line_exist = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
-            this.dgvProblem.FillLine(line_exist);
-            this.setGridColumnExpand();
+            this.ManageDataGridRow();
+            this.setPositionInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+        }
+
+        private void dgvProblem_Paint(object sender, PaintEventArgs e)
+        {
+            if (this.form_mode == FORM_MODE.READ_ITEM || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                DataGridViewRow row = ((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex];
+                Rectangle row_rect = ((DataGridView)sender).GetRowDisplayRectangle(row.Index, false);
+
+                using (Pen p = new Pen(Color.Red))
+                {
+                    if (((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex].Tag is Problem)
+                    {
+                        if (((Problem)((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex].Tag).intention.to_do == DataRowIntention.TO_DO.DELETE)
+                        {
+                            for (int i = row_rect.Left - 16; i < row_rect.Right; i += 8)
+                            {
+                                e.Graphics.DrawLine(p, i, row_rect.Bottom - 2, i + 23, row_rect.Top);
+                            }
+                        }
+                    }
+                    e.Graphics.DrawLine(p, row_rect.X, row_rect.Y, row_rect.X + row_rect.Width, row_rect.Y);
+                    e.Graphics.DrawLine(p, row_rect.X, row_rect.Y + row_rect.Height - 1, row_rect.X + row_rect.Width, row_rect.Y + row_rect.Height - 1);
+                }
+            }
         }
 
         private void dgvProblem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int row_ndx;
-
-            if (this.dgvProblem.Rows[e.RowIndex].Tag is Problem)
+            if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
             {
-                this.dgvProblem.CurrentCell = this.dgvProblem.Rows[e.RowIndex].Cells[1];
-                this.mskEditDate.pickedDate(((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).date);
-                this.txtEditName.Text = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).name;
-                this.txtEditCo.Text = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probcod;
-
-                string prob_desc = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probdesc;
-
-                if (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN)
-                {
-                    this.txtEditDesc2.staticText = "";
-                    this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probdesc;
-                }
-                else
-                {
-                    if (((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probcod == "RG")
-                    {
-                        string mac_code = this.GetMachineCode(((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probdesc);
-                        this.txtEditDesc2.staticText = mac_code;
-                        if (mac_code.Length > 0)
-                        {
-                            this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probdesc.Substring(mac_code.Length, prob_desc.Length - mac_code.Length).TrimStart();
-                        }
-                        else
-                        {
-                            this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probdesc.Substring(mac_code.Length, prob_desc.Length - mac_code.Length);
-                        }
-                    }
-                    else
-                    {
-                        this.txtEditDesc2.staticText = "";
-                        this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[e.RowIndex].Tag).probdesc;
-                    }
-                }
-                
-                row_ndx = e.RowIndex;
+                DataGridViewRow row = ((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex];
+                //((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).intention.to_do = DataRowIntention.TO_DO.EDIT;
+                this.showInlineProblemForm(row);
             }
             else
             {
-                this.dgvProblem.CurrentCell = (this.is_problem_im_only ? this.dgvProblem.Rows[this.problem_im_only.Count].Cells[1] : this.dgvProblem.Rows[this.problem.Count].Cells[1]);
-                row_ndx = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                this.dgvProblem.Rows[problem_count].Cells[1].Selected = true;
+                this.showInlineProblemForm(this.dgvProblem.Rows[problem_count]);
             }
-            this.showInlineProblemForm(row_ndx, e.ColumnIndex);
         }
 
         private void showProblemContextMenu(object sender, MouseEventArgs e)
@@ -729,79 +1383,38 @@ namespace SN_Net.Subform
                     if (this.dgvProblem.Rows[current_over_row].Tag is Problem)
                     {
                         MenuItem m_edit = new MenuItem("Edit data <Alt+E>");
-                        m_edit.Click += new EventHandler(this.contextMenuEditHandler);
-                        m_edit.Tag = current_over_row;
+                        m_edit.Click += delegate
+                        {
+                            this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+                        };
                         m.MenuItems.Add(m_edit);
 
                         MenuItem m_delete = new MenuItem("Delete data <Alt+D>");
-                        m_delete.Click += new EventHandler(this.contextMenuDeleteHandler);
-                        m_delete.Tag = current_over_row;
+                        m_delete.Click += delegate(object o, EventArgs ea)
+                        {
+                            this.deleteProblemData();
+                        };
                         m.MenuItems.Add(m_delete);
                     }
                     else
                     {
                         MenuItem m_add = new MenuItem("Add data <Alt+A>");
-                        m_add.Click += new EventHandler(this.contextMenuAddHandler);
-                        m_add.Tag = current_over_row;
+                        m_add.Click += delegate(object o, EventArgs ea)
+                        {
+                            int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                            this.dgvProblem.Rows[problem_count].Cells[1].Selected = true;
+                            this.showInlineProblemForm(this.dgvProblem.Rows[problem_count]);
+                        };
                         m.MenuItems.Add(m_add);
                     }
                     m.Show(this.dgvProblem, new Point(e.X, e.Y));
                 }
             }
         }
-
-        private void contextMenuAddHandler(object sender, EventArgs e)
-        {
-            int row_ndx = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
-            this.showInlineProblemForm(row_ndx, 1);
-        }
-
-        private void contextMenuEditHandler(object sender, EventArgs e)
-        {
-            int row_ndx = (int)((MenuItem)sender).Tag;
-            this.mskEditDate.pickedDate(((Problem)this.dgvProblem.Rows[row_ndx].Tag).date);
-            this.txtEditName.Text = ((Problem)this.dgvProblem.Rows[row_ndx].Tag).name;
-            this.txtEditCo.Text = ((Problem)this.dgvProblem.Rows[row_ndx].Tag).probcod;
-            //this.txtEditDesc.Text = ((Problem)this.dgvProblem.Rows[row_ndx].Tag).probdesc;
-            string prob_desc = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc;
-
-            if (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN)
-            {
-                this.txtEditDesc2.staticText = "";
-                this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc;
-            }
-            else
-            {
-                if (((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probcod == "RG")
-                {
-                    string mac_code = this.GetMachineCode(((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc);
-                    this.txtEditDesc2.staticText = mac_code;
-                    if (mac_code.Length > 0)
-                    {
-                        this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc.Substring(mac_code.Length, prob_desc.Length - mac_code.Length).TrimStart();
-                    }
-                    else
-                    {
-                        this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc.Substring(mac_code.Length, prob_desc.Length - mac_code.Length);
-                    }
-                }
-                else
-                {
-                    this.txtEditDesc2.staticText = "";
-                    this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc;
-                }
-            }
-            this.showInlineProblemForm(row_ndx, 1);
-        }
-
-        private void contextMenuDeleteHandler(object sender, EventArgs e)
-        {
-            this.deleteProblemData();
-        }
         #endregion DataGridView Event Handler
 
         #region Manage Problem data
-        private string GetMachineCode(string probDesc)
+        private string GetMachineCode(string probDesc) // Get Machine Code (string) in probdesc
         {
             int dash_1st = 0;
             int dash_2nd = 0;
@@ -874,368 +1487,371 @@ namespace SN_Net.Subform
             return "";
         }
 
-        private void showInlineProblemForm(int row_index, int column_index)
+        private void showInlineProblemForm(DataGridViewRow row)
         {
             this.dgvProblem.Enabled = false;
-            this.dgvProblem.CurrentCell = this.dgvProblem.Rows[row_index].Cells[1];
 
-            Rectangle rect_date = this.dgvProblem.GetCellDisplayRectangle(1, row_index, true);
-            Rectangle rect_name = this.dgvProblem.GetCellDisplayRectangle(2, row_index, true);
-            Rectangle rect_co = this.dgvProblem.GetCellDisplayRectangle(3, row_index, true);
-            Rectangle rect_desc = this.dgvProblem.GetCellDisplayRectangle(4, row_index, true);
+            Problem prob = new Problem();
 
-            this.mskEditDate.SetBounds(rect_date.Left, rect_date.Top + 1, rect_date.Width - this.dpEditDate.ClientSize.Width, this.mskEditDate.ClientSize.Height);
-            this.dpEditDate.SetBounds(rect_date.Left + (rect_date.Width - this.dpEditDate.ClientSize.Width), rect_date.Top + 1, this.dpEditDate.ClientSize.Width, this.dpEditDate.ClientSize.Height);
-            this.txtEditName.SetBounds(rect_name.Left, rect_name.Top + 1, rect_name.Width, rect_name.Height);
-            this.txtEditCo.SetBounds(rect_co.Left, rect_co.Top + 1, rect_co.Width, rect_co.Height);
-            if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
+            CustomDateTimePicker date = new CustomDateTimePicker();
+            date.Name = "inline_problem_date";
+            date.BringToFront();
+            date.Read_Only = false;
+            date.BorderStyle = BorderStyle.None;
+            date.textBox1.GotFocus += delegate
             {
-                if (((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probcod == "RG")
+                this.current_focused_control = date;
+            };
+            CustomTextBox name = new CustomTextBox();
+            name.Name = "inline_problem_name";
+            name.BringToFront();
+            name.ReadOnly = false;
+            name.BorderStyle = BorderStyle.None;
+            name.textBox1.GotFocus += delegate
+            {
+                this.current_focused_control = name;
+            };
+            CustomTextBox probcod = new CustomTextBox();
+            probcod.Name = "inline_problem_probcod";
+            probcod.BringToFront();
+            probcod.ReadOnly = false;
+            probcod.BorderStyle = BorderStyle.None;
+            probcod.textBox1.GotFocus += delegate
+            {
+                this.current_focused_control = probcod;
+            };
+            probcod.textBox1.Leave += delegate
+            {
+                if (this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == probcod.Texts) != null)
                 {
-                    this.txtEditDesc2.SetBounds(rect_desc.Left, rect_desc.Top + 1, rect_desc.Width - 1, rect_desc.Height - 2);
+                    return;
                 }
                 else
                 {
-                    this.txtEditDesc2.SetBounds(rect_desc.Left, rect_desc.Top + 1, rect_desc.Width - 1, rect_desc.Height - 2);
+                    probcod.Focus();
+                    SendKeys.Send("{F6}");
                 }
-            }
-            else
+            };
+            CustomTextBoxMaskedWithLabel probdesc = new CustomTextBoxMaskedWithLabel();
+            probdesc.Name = "inline_problem_probdesc";
+            probdesc.BringToFront();
+            probdesc.BorderStyle = BorderStyle.None;
+            probdesc.txtEdit.GotFocus += delegate
             {
-                this.txtEditDesc2.SetBounds(rect_desc.Left, rect_desc.Top + 1, rect_desc.Width - 1, rect_desc.Height - 2);
-            }
+                this.current_focused_control = probdesc;
+            };
 
-            this.transparentPanel1.Dock = DockStyle.Fill;
-            this.transparentPanel1.Tag = (this.dgvProblem.Rows[row_index].Tag is Problem ? this.dgvProblem.Rows[row_index].Tag : null);
-            this.transparentPanel1.Visible = true;
-            if (this.transparentPanel1.Tag is Problem)
+            if (row.Tag is Problem) // edit existing problem
             {
                 this.FormEditItem();
-                switch (column_index)
-                {
-                    case 1:
-                        this.mskEditDate.Focus();
-                        break;
-                    case 2:
-                        this.txtEditName.Focus();
-                        this.txtEditName.SelectionStart = this.txtEditName.Text.Length;
-                        break;
-                    case 3:
-                        this.txtEditCo.Focus();
-                        this.txtEditCo.SelectionStart = this.txtEditCo.Text.Length;
-                        break;
-                    case 4:
-                        this.txtEditDesc2.txtEdit.Focus();
-                        //this.txtEditDesc2.txtEdit.SelectionStart = this.txtEditDesc2.txtEdit.Text.Length;
-                        break;
-                    default:
-                        this.mskEditDate.Focus();
-                        break;
-                }
+                prob = (Problem)row.Tag;
+            }
+            else // add new problem
+            {
+                this.FormAddItem();
+            }
+
+            this.dgvProblem.Parent.Controls.Add(date);
+            this.dgvProblem.Parent.Controls.Add(name);
+            this.dgvProblem.Parent.Controls.Add(probcod);
+            this.dgvProblem.Parent.Controls.Add(probdesc);
+            this.dgvProblem.SendToBack();
+
+            this.setPositionInlineProblemForm(row);
+
+            // specify value in each field
+            date.TextsMysql = (row.Tag is Problem ? prob.date : DateTime.Now.ToMysqlDate());
+            name.Texts = prob.name;
+            probcod.Texts = prob.probcod;
+            if (prob.probcod == "RG" && this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            {
+                probdesc.StaticText = this.GetMachineCode(prob.probdesc);
+                probdesc.EditableText = prob.probdesc.Substring(probdesc.StaticText.Length, prob.probdesc.Length - probdesc.StaticText.Length);
             }
             else
             {
-                this.FormAddItem();
-                this.dpEditDate.Value = DateTime.Now;
-                this.mskEditDate.Focus();
+                probdesc.StaticText = "";
+                probdesc.EditableText = prob.probdesc;
+            }
+            date.Focus();
+        }
+
+        private void setPositionInlineProblemForm(DataGridViewRow row)
+        {
+            Control[] ct_date = this.dgvProblem.Parent.Controls.Find("inline_problem_date", true);
+            if (ct_date.Length > 0)
+            {
+                Rectangle rect_date = this.dgvProblem.GetCellDisplayRectangle(1, row.Index, false);
+                CustomDateTimePicker date = (CustomDateTimePicker)ct_date[0];
+                date.SetBounds(rect_date.X + 1, rect_date.Y + 1, rect_date.Width, rect_date.Height - 2);
+            }
+
+            Control[] ct_name = this.dgvProblem.Parent.Controls.Find("inline_problem_name", true);
+            if (ct_name.Length > 0)
+            {
+                Rectangle rect_name = this.dgvProblem.GetCellDisplayRectangle(2, row.Index, false);
+                CustomTextBox name = (CustomTextBox)ct_name[0];
+                name.SetBounds(rect_name.X + 1, rect_name.Y + 1, rect_name.Width - 2, rect_name.Height - 2);
+            }
+
+            Control[] ct_probcod = this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true);
+            if (ct_probcod.Length > 0)
+            {
+                Rectangle rect_probcod = this.dgvProblem.GetCellDisplayRectangle(3, row.Index, false);
+                CustomTextBox probcod = (CustomTextBox)ct_probcod[0];
+                probcod.SetBounds(rect_probcod.X + 1, rect_probcod.Y + 1, rect_probcod.Width - 2, rect_probcod.Height - 2);
+            }
+
+            Control[] ct_probdesc = this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true);
+            if (ct_probdesc.Length > 0)
+            {
+                Rectangle rect_probdesc = this.dgvProblem.GetCellDisplayRectangle(4, row.Index, false);
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)ct_probdesc[0];
+                probdesc.SetBounds(rect_probdesc.X + 1, rect_probdesc.Y + 1, rect_probdesc.Width - 2, rect_probdesc.Height - 2);
             }
         }
 
-        private void editPanelPaintHandler(object sender, PaintEventArgs e)
+        private void clearInlineProblemForm(Problem focused_problem_row = null)
         {
-            Rectangle rect = this.dgvProblem.GetRowDisplayRectangle(this.dgvProblem.CurrentCell.RowIndex, false);
-            e.Graphics.DrawLine(new Pen(Color.Red, 1f), rect.Left, rect.Top, rect.Right, rect.Top);
-            e.Graphics.DrawLine(new Pen(Color.Red, 1f), rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
+            if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM || this.form_mode == FORM_MODE.PROCESSING)
+            {
+                int focus_row_index = this.dgvProblem.CurrentCell.RowIndex;
+                this.FormReadItem();
+                if(this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+                    this.dgvProblem.Parent.Controls.RemoveByKey("inline_problem_date");
+                if(this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+                    this.dgvProblem.Parent.Controls.RemoveByKey("inline_problem_name");
+                if(this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+                    this.dgvProblem.Parent.Controls.RemoveByKey("inline_problem_probcod");
+                if(this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+                    this.dgvProblem.Parent.Controls.RemoveByKey("inline_problem_probdesc");
+                
+                this.dgvProblem.Rows[focus_row_index].Cells[1].Selected = true;
+                this.current_focused_control = null;
+            }
         }
 
-        private void submitProblemData()
+        private void SubmitAddProblem()
         {
             bool submit_success = false;
-            this.FormLoading();
+            string err_msg = "";
 
-            if (this.transparentPanel1.Tag is Problem) // Edit
+            string prob_date = "";
+            string prob_name = "";
+            string prob_code = "";
+            string prob_desc = "";
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
             {
-                BackgroundWorker worker_update = new BackgroundWorker();
-                worker_update.DoWork += delegate
-                {
-                    string json_data = "";
-
-                    int prob_id = ((Problem)this.transparentPanel1.Tag).id;
-                    string prob_date = this.mskEditDate.Text.toMySQLDate();
-                    string prob_name = this.txtEditName.Text.cleanString();
-                    string prob_code = this.txtEditCo.Text.cleanString();
-                    string prob_desc = (this.txtEditDesc2.txtStatic.Text.Length > 0 ? this.txtEditDesc2.txtStatic.Text + " " + this.txtEditDesc2.txtEdit.Text.cleanString() : this.txtEditDesc2.txtEdit.Text.cleanString());
-                    string users_name = this.G.loged_in_user_name;
-                    string serial_sernum = this.serial.sernum;
-
-                    json_data += "{\"id\":" + prob_id + ",";
-                    json_data += "\"date\":\"" + prob_date + "\",";
-                    json_data += "\"name\":\"" + prob_name + "\",";
-                    json_data += "\"probcod\":\"" + prob_code + "\",";
-                    json_data += "\"probdesc\":\"" + prob_desc + "\",";
-                    json_data += "\"users_name\":\"" + users_name + "\",";
-                    json_data += "\"serial_sernum\":\"" + serial_sernum + "\"}";
-
-                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/update", json_data);
-                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
-                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                    {
-                        submit_success = true;
-                        this.loadProblemData();
-                    }
-                    else
-                    {
-                        submit_success = false;
-                        MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                    }
-                };
-                worker_update.RunWorkerCompleted += delegate
-                {
-                    if (submit_success)
-                    {
-                        this.clearInlineEditForm((Problem)this.transparentPanel1.Tag);
-                        this.FormReadItem();
-                    }
-                    else
-                    {
-                        this.FormEditItem();
-                    }
-                };
-                worker_update.RunWorkerAsync();
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                prob_date = date.TextsMysql;
             }
-            else // Add
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
             {
-                if (this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN && this.txtEditCo.Text == "RG")
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                prob_name = name.Texts;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                prob_code = probcod.Texts;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                prob_desc = probdesc.Texts;
+            }
+            string users_name = this.G.loged_in_user_name;
+            string serial_sernum = this.serial.sernum;
+
+            // in case of record problem code as "RG"
+            if (prob_code == "RG" && this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            {
+                MessageAlert.Show("Your permission is not allowed to record problem code as \"RG\"", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                return;
+            }
+
+            this.FormProcessing();
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate
+            {
+                string json_data = "{\"date\":\"" + prob_date + "\",";
+                json_data += "\"name\":\"" + prob_name + "\",";
+                json_data += "\"probcod\":\"" + prob_code + "\",";
+                json_data += "\"probdesc\":\"" + prob_desc + "\",";
+                json_data += "\"users_name\":\"" + users_name + "\",";
+                json_data += "\"serial_sernum\":\"" + serial_sernum + "\"}";
+
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/create_new", json_data);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                 {
-                    MessageAlert.Show("Your permission is not allowed to record problem code as \"RG\"", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                    this.FormAddItem();
-                    this.txtEditCo.Focus();
+                    submit_success = true;
+                    this.loadProblemData();
                 }
                 else
                 {
-                    BackgroundWorker worker_add = new BackgroundWorker();
-                    worker_add.DoWork += delegate
-                    {
-                        if (this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN && this.txtEditCo.Text == "RG")
-                        {
-                            submit_success = false;
-                            MessageAlert.Show("Your permission is not allowed to record problem code as \"RG\"", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                            return;
-                        }
-
-                        string json_data = "";
-
-                        string prob_date = this.mskEditDate.Text.toMySQLDate();
-                        string prob_name = this.txtEditName.Text.cleanString();
-                        string prob_code = this.txtEditCo.Text.cleanString();
-                        //string prob_desc = this.txtEditDesc.Text.cleanString();
-                        string prob_desc = this.txtEditDesc2.txtStatic.Text.cleanString() + " " + this.txtEditDesc2.txtEdit.Text.cleanString();
-                        string users_name = this.G.loged_in_user_name;
-                        string serial_sernum = this.serial.sernum;
-
-                        json_data += "{\"date\":\"" + prob_date + "\",";
-                        json_data += "\"name\":\"" + prob_name + "\",";
-                        json_data += "\"probcod\":\"" + prob_code + "\",";
-                        json_data += "\"probdesc\":\"" + prob_desc + "\",";
-                        json_data += "\"users_name\":\"" + users_name + "\",";
-                        json_data += "\"serial_sernum\":\"" + serial_sernum + "\"}";
-
-                        CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/create_new", json_data);
-                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
-
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            submit_success = true;
-                            this.loadProblemData();
-                        }
-                        else
-                        {
-                            submit_success = false;
-                            MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                        }
-                    };
-                    worker_add.RunWorkerCompleted += delegate
-                    {
-                        if (submit_success)
-                        {
-                            Problem last_problem = (this.is_problem_im_only ? this.problem_im_only.Last<Problem>() : this.problem.Last<Problem>());
-                            this.clearInlineEditForm(last_problem);
-                            if (this.is_problem_im_only)
-                            {
-                                this.dgvProblem.Rows[this.problem_im_only.Count].Cells[1].Selected = true;
-                            }
-                            else
-                            {
-                                this.dgvProblem.Rows[this.problem.Count].Cells[1].Selected = true;
-                            }
-                            this.showInlineProblemForm(this.dgvProblem.CurrentCell.RowIndex, 1);
-                            this.FormAddItem();
-                        }
-                        else
-                        {
-                            this.FormAddItem();
-                        }
-                    };
-                    worker_add.RunWorkerAsync();
+                    submit_success = false;
+                    err_msg = sr.message;
                 }
+            };
+            worker.RunWorkerCompleted += delegate
+            {
+                if (submit_success)
+                {
+                    this.clearInlineProblemForm();
+                    this.fillInDatagrid();
+                }
+                else
+                {
+                    this.FormAddItem();
+                    MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
+            };
+            worker.RunWorkerAsync();
+        }
+
+        private void SubmitEditProblem()
+        {
+            bool submit_success = false;
+            string err_msg = "";
+            
+            int prob_id = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).id;
+            string prob_date = "";
+            string prob_name = "";
+            string prob_code = "";
+            string prob_desc = "";
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvProblem.Parent.Controls.Find("inline_problem_date", true)[0];
+                prob_date = date.TextsMysql;
             }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_name", true)[0];
+                prob_name = name.Texts;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true).Length > 0)
+            {
+                CustomTextBox probcod = (CustomTextBox)this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true)[0];
+                prob_code = probcod.Texts;
+            }
+            if (this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true).Length > 0)
+            {
+                CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
+                prob_desc = probdesc.Texts;
+            }
+            string users_name = this.G.loged_in_user_name;
+            string serial_sernum = this.serial.sernum;
+
+            // in case of changing problem code from other to "RG"
+            if (((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probcod != "RG" && prob_code == "RG" && this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            {
+                MessageAlert.Show("Your permission is not allowed to change problem code to \"RG\"", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                return;
+            }
+
+            this.FormProcessing();
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate
+            {
+                string json_data = "{\"id\":" + prob_id + ",";
+                json_data += "\"date\":\"" + prob_date + "\",";
+                json_data += "\"name\":\"" + prob_name + "\",";
+                json_data += "\"probcod\":\"" + prob_code + "\",";
+                json_data += "\"probdesc\":\"" + prob_desc + "\",";
+                json_data += "\"users_name\":\"" + users_name + "\",";
+                json_data += "\"serial_sernum\":\"" + serial_sernum + "\"}";
+
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/update", json_data);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    submit_success = true;
+                    this.loadProblemData();
+                }
+                else
+                {
+                    submit_success = false;
+                    err_msg = sr.message;
+                }
+            };
+            worker.RunWorkerCompleted += delegate
+            {
+                if (submit_success)
+                {
+                    this.clearInlineProblemForm();
+                    this.fillInDatagrid();
+                }
+                else
+                {
+                    this.FormEditItem();
+                    MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
+            };
+            worker.RunWorkerAsync();
         }
 
         private void deleteProblemData()
         {
             if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
             {
-                this.transparentPanel2.Dock = DockStyle.Fill;
-                this.transparentPanel2.Visible = true;
+                ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).intention.to_do = DataRowIntention.TO_DO.DELETE;
+                this.dgvProblem.Refresh(); // call refresh to re-paint the datagridview
 
                 if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
                 {
-                    this.FormLoading();
-                    BackgroundWorker worker_delete = new BackgroundWorker();
-                    worker_delete.DoWork += delegate
-                    {
-                        Problem deleted_problem = (Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag;
+                    bool delete_success = false;
+                    string err_msg = "";
+                    this.FormProcessing();
 
-                        CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "problem/delete&id=" + deleted_problem.id.ToString());
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += delegate
+                    {
+                        int deleted_id = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).id;
+
+                        CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "problem/delete&id=" + deleted_id.ToString());
                         ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
 
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
+                            delete_success = true;
                             this.loadProblemData();
                         }
                         else
                         {
-                            MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                            delete_success = false;
+                            err_msg = sr.message;
                         }
                     };
-                    worker_delete.RunWorkerCompleted += delegate
+                    worker.RunWorkerCompleted += delegate
                     {
-                        this.transparentPanel2.Visible = false;
-                        this.fillInDatagrid();
                         this.FormReadItem();
+
+                        if (delete_success)
+                        {
+                            this.fillInDatagrid();
+                        }
+                        else
+                        {
+                            MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        }
+
                     };
-                    worker_delete.RunWorkerAsync();
+                    worker.RunWorkerAsync();
                 }
                 else
                 {
-                    this.transparentPanel2.Visible = false;
+                    ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).intention.to_do = DataRowIntention.TO_DO.READ;
+                    this.dgvProblem.Refresh();
                 }
-            }
-        }
-
-        private void drawDeleteRowSlash(object sender, PaintEventArgs e)
-        {
-            Rectangle rect = this.dgvProblem.GetRowDisplayRectangle(this.dgvProblem.CurrentCell.RowIndex, true);
-            Pen p = new Pen(Color.Red, 1f);
-
-            for (int i = rect.Left - 16; i < rect.Right; i += 8)
-            {
-                e.Graphics.DrawLine(p, i, rect.Bottom - 2, i + 23, rect.Top);
-            }
-        }
-
-        private void clearInlineEditForm(Problem focused_problem_row = null)
-        {
-            this.transparentPanel1.Visible = false;
-            this.transparentPanel1.Tag = null;
-            this.mskEditDate.Text = "";
-            this.txtEditName.Text = "";
-            this.txtEditCo.Text = "";
-            this.txtEditDesc2.txtStatic.Text = "";
-            this.txtEditDesc2.txtEdit.Text = "";
-            this.mskEditDate.BackColor = Color.White;
-            this.txtEditName.BackColor = Color.White;
-            this.txtEditCo.BackColor = Color.White;
-            this.txtEditDesc2.txtEdit.BackColor = Color.White;
-            this.txtEditDesc2.txtStatic.BackColor = Color.White;
-            this.dgvProblem.Enabled = true;
-            this.dgvProblem.Focus();
-            this.fillInDatagrid();
-            if(focused_problem_row == null)
-            {
-                if (!this.is_problem_im_only && this.problem.Count > 0)
-                {
-                    this.setSelectedDataGridItem((Problem)this.dgvProblem.Rows[this.problem.Count - 1].Tag);
-                }
-                else if (this.is_problem_im_only && this.problem_im_only.Count > 0)
-                {
-                    this.setSelectedDataGridItem((Problem)this.dgvProblem.Rows[this.problem_im_only.Count - 1].Tag);
-                }
-                else
-                {
-                    this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
-                }
-            }
-            else 
-            {
-                this.setSelectedDataGridItem(focused_problem_row);
-            }
-            this.form_mode = FORM_MODE.READ_ITEM;
-            this.setToolStripFormMode();
-        }
-
-        private void catchInlineEditKeyEvent()
-        {
-            List<Control> lct = new List<Control>();
-            lct.Add(this.mskEditDate);
-            lct.Add(this.txtEditName);
-            lct.Add(this.txtEditCo);
-            lct.Add(this.txtEditDesc2.txtEdit);
-
-            foreach (Control ct in lct)
-            {
-                ct.Enter += new EventHandler(this.inlineEditEnterHandler);
-                ct.GotFocus += new EventHandler(this.inlineEditGotFocusedHandler);
-                ct.Leave += new EventHandler(this.inlineEditLeaveHandler);
-            }
-        }
-
-        private void inlineEditEnterHandler(object sender, EventArgs e)
-        {
-            ((Control)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-            ((Control)sender).ForeColor = Color.Black;
-        }
-
-        private void inlineEditGotFocusedHandler(object sender, EventArgs e)
-        {
-            this.current_focused_control = (Control)sender;
-            this.main_form.toolStripInfo.Text = (this.current_focused_control.Tag is string ? (string)this.current_focused_control.Tag : " ");
-
-            if ((Control)sender == this.txtEditDesc2.txtEdit)
-            {
-                Istab probcod = this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == this.txtEditCo.Text);
-                if (probcod == null)
-                {
-                    this.txtEditCo.Focus();
-                }
-            }
-        }
-
-        private void inlineEditLeaveHandler(object sender, EventArgs e)
-        {
-            if ((Control)sender == this.txtEditCo)
-            {
-                Istab probcod = this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == this.txtEditCo.Text);
-                if (probcod == null)
-                {
-                    this.txtEditCo.Focus();
-                    SendKeys.Send("{F6}");
-                }
-                else
-                {
-                    ((Control)sender).BackColor = Color.White;
-                    ((Control)sender).ForeColor = Color.Black;
-                }
-            }
-            else
-            {
-                ((Control)sender).BackColor = Color.White;
-                ((Control)sender).ForeColor = Color.Black;
             }
         }
         #endregion Manage Problem data
 
         #region Get Serial data from server
-        private void getSerialIDList()
+        private void getSerialIDList() // Get serial_id_list
         {
             CRUDResult get_id_list = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_id_list&sort=" + this.sortMode);
             ServerResult sr_id_list = JsonConvert.DeserializeObject<ServerResult>(get_id_list.data);
@@ -1255,11 +1871,6 @@ namespace SN_Net.Subform
                 if (sr.serial.Count > 0)
                 {
                     this.serial = sr.serial[0];
-                    this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                    this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                    this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                    this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                    this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                     this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
                     this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                 }
@@ -1279,11 +1890,6 @@ namespace SN_Net.Subform
                 if (sr.serial.Count > 0) 
                 {
                     this.serial = sr.serial[0];
-                    this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                    this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                    this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                    this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                    this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                     this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
                     this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                 }
@@ -1308,50 +1914,48 @@ namespace SN_Net.Subform
             this.id = this.serial.id;
             
             #region Fill header data
-            this.lblSerNum.Text = this.serial.sernum;
-            this.lblVersion.Text = this.serial.version;
-            this.lblArea.Text = this.serial.area;
-            this.lblAreaTypdes.Text = this.area.typdes_th;
-            this.lblRefnum.Text = serial.refnum;
-            this.lblPrenam.Text = this.serial.prenam;
-            this.lblCompnam.Text = this.serial.compnam;
+            this.txtSernum.Texts = this.serial.sernum;
+            this.txtVersion.Texts = this.serial.version;
+            this.txtArea.Texts = this.serial.area;
+            this.lblAreaTypdes.Text = (this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.serial.area) != null ? this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.serial.area).typdes_th : "");
+            this.txtRefnum.Texts = serial.refnum;
+            this.txtPrenam.Texts = this.serial.prenam;
+            this.txtCompnam.Texts = this.serial.compnam;
             #endregion Fill header data
 
             #region Fill first tab data
-            this.lblAddr01.Text = this.serial.addr01;
-            this.lblAddr02.Text = this.serial.addr02;
-            this.lblAddr03.Text = this.serial.addr03;
-            this.lblZipcod.Text = this.serial.zipcod;
-            this.lblTelnum.Text = this.serial.telnum;
-            this.lblFaxnum.Text = this.serial.faxnum;
-            this.lblContact.Text = this.serial.contact;
-            this.lblPosition.Text = this.serial.position;
-            this.lblOldnum.Text = this.serial.oldnum;
-            
-            this.lblRemark.Text = serial.remark;
-            this.lblBusides.Text = serial.busides;
-            this.lblBusityp.Text = this.serial.busityp;
-            this.lblBusitypTypdes.Text = this.busityp.typdes_th;
-            this.lblDealer_dealer.Text = this.serial.dealer_dealer;
-            this.lblDealer_DealerCompnam.Text = this.dealer.compnam;
-            this.lblHowknown.Text = this.serial.howknown;
-            this.lblHowknownTypdes.Text = this.howknown.typdes_th;
-            this.lblPurdat.pickedDate(this.serial.purdat);
-            this.lblReg.Text = this.serial.upfree;
-            this.lblExpdat.pickedDate(this.serial.expdat);
-            this.lblManual.pickedDate(this.serial.manual);
-            this.lblVerext.Text = this.verext.typcod + " - " + this.verext.typdes_th;
-            this.lblVerextdat.pickedDate(this.serial.verextdat);
+            this.txtAddr01.Texts = this.serial.addr01;
+            this.txtAddr02.Texts = this.serial.addr02;
+            this.txtAddr03.Texts = this.serial.addr03;
+            this.txtZipcod.Texts = this.serial.zipcod;
+            this.txtTelnum.Texts = this.serial.telnum;
+            this.txtFaxnum.Texts = this.serial.faxnum;
+            this.txtContact.Texts = this.serial.contact;
+            this.txtPosition.Texts = this.serial.position;
+            this.txtOldnum.Texts = this.serial.oldnum;
+            this.txtRemark.Texts = serial.remark;
+            this.txtBusides.Texts = serial.busides;
+            this.txtBusityp.Texts = this.serial.busityp;
+            this.lblBusitypTypdes.Text = (this.main_form.data_resource.LIST_BUSITYP.Find(t => t.typcod == this.serial.busityp) != null ? this.main_form.data_resource.LIST_BUSITYP.Find(t => t.typcod == this.serial.busityp).typdes_th : "");
+            this.txtDealer.Texts = this.serial.dealer_dealer;
+            this.lblDealer_DealerCompnam.Text = (this.main_form.data_resource.LIST_DEALER.Find(t => t.dealer == this.serial.dealer_dealer) != null ? this.main_form.data_resource.LIST_DEALER.Find(t => t.dealer == this.serial.dealer_dealer).compnam : "");
+            this.txtHowknown.Texts = this.serial.howknown;
+            this.lblHowknownTypdes.Text = (this.main_form.data_resource.LIST_HOWKNOWN.Find(t => t.typcod == this.serial.howknown) != null ? this.main_form.data_resource.LIST_HOWKNOWN.Find(t => t.typcod == this.serial.howknown).typdes_th : "");
+            this.dtPurdat.TextsMysql = this.serial.purdat;
+            this.txtUpfree.Texts = this.serial.upfree;
+            this.dtExpdat.TextsMysql = this.serial.expdat;
+            this.dtManual.TextsMysql = this.serial.manual;
+            this.cbVerext.Texts = (this.main_form.data_resource.LIST_VEREXT.Find(t => t.typcod == this.serial.verext) != null ? this.main_form.data_resource.LIST_VEREXT.Find(t => t.typcod == this.serial.verext).typcod + " - " + this.main_form.data_resource.LIST_VEREXT.Find(t => t.typcod == this.serial.verext).typdes_th : "");
+            this.dtVerextdat.TextsMysql = this.serial.verextdat;
             #endregion Fill first tab data
 
             #region Fill second tab data
             this.lblTelnum2.Text = this.serial.telnum;
             this.lblExpdat2.pickedDate(this.serial.expdat);
             this.lblContact2.Text = this.serial.contact;
-            this.lblReg2.Text = this.serial.upfree;
+            this.lblUpfree.Text = this.serial.upfree;
             this.fillInDatagrid();
             #endregion Fill second tab data
-
         }
 
         private void loadProblemData()
@@ -1367,6 +1971,7 @@ namespace SN_Net.Subform
 
         private void fillInDatagrid()
         {
+            int current_row_index = (this.dgvProblem.Rows.Count > 0 ? this.dgvProblem.CurrentCell.RowIndex : 0); // keep current row index first
             this.dgvProblem.Rows.Clear();
             this.dgvProblem.Columns.Clear();
             this.dgvProblem.EnableHeadersVisualStyles = false;
@@ -1379,7 +1984,8 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
             col1.HeaderText = "DATE";
-            col1.Width = 90;
+            col1.Width = 98;
+            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
             col1.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
@@ -1391,6 +1997,7 @@ namespace SN_Net.Subform
             DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
             col2.HeaderText = "NAME";
             col2.Width = 180;
+            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
             col2.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
@@ -1402,6 +2009,7 @@ namespace SN_Net.Subform
             DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
             col3.HeaderText = "CO.";
             col3.Width = 40;
+            col3.SortMode = DataGridViewColumnSortMode.NotSortable;
             col3.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
@@ -1412,6 +2020,7 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn col4 = new DataGridViewTextBoxColumn();
             col4.HeaderText = "DESC.";
+            col4.SortMode = DataGridViewColumnSortMode.NotSortable;
             col4.HeaderCell.Style = new DataGridViewCellStyle()
             {
                 Font = new Font("Tahoma", 9.75f, FontStyle.Bold),
@@ -1427,9 +2036,11 @@ namespace SN_Net.Subform
                 int r = this.dgvProblem.Rows.Add();
                 this.dgvProblem.Rows[r].Height = 25;
                 this.dgvProblem.Rows[r].Tag = p;
-
+                p.intention = new DataRowIntention(DataRowIntention.TO_DO.READ);
+                
                 this.dgvProblem.Rows[r].Cells[0].ValueType = typeof(int);
                 this.dgvProblem.Rows[r].Cells[0].Value = p.id;
+                this.dgvProblem.Rows[r].Cells[0].Tag = new DataRowIntention(DataRowIntention.TO_DO.READ);
 
                 this.dgvProblem.Rows[r].Cells[1].ValueType = typeof(string);
                 this.dgvProblem.Rows[r].Cells[1].pickedDate(p.date);
@@ -1475,191 +2086,175 @@ namespace SN_Net.Subform
                     SelectionForeColor = Color.Black
                 };
             }
-            int line_exist = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
-            this.dgvProblem.FillLine(line_exist);
-            this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
-            this.setGridColumnExpand();
-        }
+            this.ManageDataGridRow();
 
-        private void setSelectedDataGridItem(Problem selected_problem)
-        {
-            foreach (DataGridViewRow row in this.dgvProblem.Rows)
+            if (current_row_index <= this.dgvProblem.Rows.Count)
             {
-                if (row.Tag is Problem)
-                {
-                    if (((Problem)row.Tag).id == selected_problem.id)
-                    {
-                        this.dgvProblem.CurrentCell = this.dgvProblem.Rows[row.Index].Cells[1];
-                        break;
-                    }
-                }
+                this.dgvProblem.Rows[current_row_index].Cells[1].Selected = true;
             }
-        }
-
-        private void setGridColumnExpand()
-        {
-            this.dgvProblem.Columns[4].Width = this.dgvProblem.ClientSize.Width - (this.dgvProblem.Columns[1].Width + this.dgvProblem.Columns[2].Width + this.dgvProblem.Columns[3].Width + SystemInformation.VerticalScrollBarWidth + 3);
-            this.txtEditDesc2.Width = this.dgvProblem.Columns[4].Width - 2;
+            else
+            {
+                this.dgvProblem.Rows[0].Cells[1].Selected = true;
+            }
         }
 
         #region Manage Serial data
-        private void submitSerialData()
+        private void SubmitAddSerial()
         {
-            bool submit_serial_success = false;
+            bool submit_success = false;
+            string err_msg = "";
+            this.FormProcessing();
 
-            if (this.form_mode == FORM_MODE.ADD)
+            if (ValidateSN.Check(this.txtSernum.Texts))
             {
-                // Submit data in Add mode
-                if (ValidateSN.Check(this.mskSernum.Text))
-                {
-                    this.json_data = string.Empty;
-                    this.json_data += "{\"sernum\":\"" + this.mskSernum.Text.cleanString() + "\",";
-                    this.json_data += "\"oldnum\":\"" + this.mskOldnum.Text.cleanString() + "\",";
-                    this.json_data += "\"version\":\"" + this.txtVersion.Text.cleanString() + "\",";
-                    this.json_data += "\"contact\":\"" + this.txtContact.Text.cleanString() + "\",";
-                    this.json_data += "\"position\":\"" + this.txtPosition.Text.cleanString() + "\",";
-                    this.json_data += "\"prenam\":\"" + this.txtPrenam.Text.cleanString() + "\",";
-                    this.json_data += "\"compnam\":\"" + this.txtCompnam.Text.cleanString() + "\",";
-                    this.json_data += "\"addr01\":\"" + this.txtAddr01.Text.cleanString() + "\",";
-                    this.json_data += "\"addr02\":\"" + this.txtAddr02.Text.cleanString() + "\",";
-                    this.json_data += "\"addr03\":\"" + this.txtAddr03.Text.cleanString() + "\",";
-                    this.json_data += "\"zipcod\":\"" + this.txtZipcod.Text.cleanString() + "\",";
-                    this.json_data += "\"telnum\":\"" + this.txtTelnum.Text.cleanString() + "\",";
-                    this.json_data += "\"faxnum\":\"" + this.txtFaxnum.Text.cleanString() + "\",";
-                    this.json_data += "\"busityp\":\"" + this.txtBusityp.Text.cleanString() + "\",";
-                    this.json_data += "\"busides\":\"" + this.txtBusides.Text.cleanString() + "\",";
-                    this.json_data += "\"purdat\":\"" + this.mskPurdat.Text.toMySQLDate() + "\",";
-                    this.json_data += "\"expdat\":\"" + this.mskExpdat.Text.toMySQLDate() + "\",";
-                    this.json_data += "\"howknown\":\"" + this.txtHowknown.Text.cleanString() + "\",";
-                    this.json_data += "\"area\":\"" + this.txtArea.Text.cleanString() + "\",";
-                    //this.json_data += "\"branch\":\"" +  + "\",";
-                    this.json_data += "\"manual\":\"" + this.mskManual.Text.toMySQLDate() + "\",";
-                    this.json_data += "\"upfree\":\"" + this.txtReg.Text.cleanString() + "\",";
-                    this.json_data += "\"refnum\":\"" + this.mskRefnum.Text.cleanString() + "\",";
-                    this.json_data += "\"remark\":\"" + this.txtRemark.Text.cleanString() + "\",";
-                    this.json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.SelectedItem).string_value + "\",";
-                    this.json_data += "\"verextdat\":\"" + this.mskVerextdat.Text.toMySQLDate() + "\",";
-                    this.json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
-                    this.json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
-                    this.json_data += "\"dealer_dealer\":\"" + this.txtDealer_dealer.Text.cleanString() + "\"}";
-                    this.FormSaving();
-                    BackgroundWorker workerSerialCreate = new BackgroundWorker();
-                    workerSerialCreate.DoWork += delegate
-                    {
-                        CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/create_new", this.json_data);
-                        Console.WriteLine(post.data);
-                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            submit_serial_success = true;
-                            this.getSerial(Convert.ToInt32(sr.message));
-                            this.getSerialIDList();
-                        }
-                        else
-                        {
-                            submit_serial_success = false;
-                            MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                        }
-                    };
-                    workerSerialCreate.RunWorkerCompleted += delegate
-                    {
-                        if (submit_serial_success)
-                        {
-                            this.fillSerialInForm();
-                            this.FormReady();
-                            this.toolStripItem.PerformClick();
-                            this.showInlineProblemForm(0, 1);
-                        }
-                        else
-                        {
-                            this.form_mode = FORM_MODE.ADD;
-                            this.setToolStripFormMode();
-                            this.Cursor = Cursors.Default;
-                            this.main_form.Cursor = Cursors.Default;
-                            this.main_form.toolStripProcessing.Visible = false;
-                            this.main_form.menuStrip1.Enabled = true;
+                string json_data = "{\"sernum\":\"" + this.txtSernum.Texts.cleanString() + "\",";
+                json_data += "\"oldnum\":\"" + this.txtOldnum.Texts.cleanString() + "\",";
+                json_data += "\"version\":\"" + this.txtVersion.Texts.cleanString() + "\",";
+                json_data += "\"contact\":\"" + this.txtContact.Texts.cleanString() + "\",";
+                json_data += "\"position\":\"" + this.txtPosition.Texts.cleanString() + "\",";
+                json_data += "\"prenam\":\"" + this.txtPrenam.Texts.cleanString() + "\",";
+                json_data += "\"compnam\":\"" + this.txtCompnam.Texts.cleanString() + "\",";
+                json_data += "\"addr01\":\"" + this.txtAddr01.Texts.cleanString() + "\",";
+                json_data += "\"addr02\":\"" + this.txtAddr02.Texts.cleanString() + "\",";
+                json_data += "\"addr03\":\"" + this.txtAddr03.Texts.cleanString() + "\",";
+                json_data += "\"zipcod\":\"" + this.txtZipcod.Texts.cleanString() + "\",";
+                json_data += "\"telnum\":\"" + this.txtTelnum.Texts.cleanString() + "\",";
+                json_data += "\"faxnum\":\"" + this.txtFaxnum.Texts.cleanString() + "\",";
+                json_data += "\"busityp\":\"" + this.txtBusityp.Texts.cleanString() + "\",";
+                json_data += "\"busides\":\"" + this.txtBusides.Texts.cleanString() + "\",";
+                json_data += "\"purdat\":\"" + this.dtPurdat.TextsMysql + "\",";
+                json_data += "\"expdat\":\"" + this.dtExpdat.TextsMysql + "\",";
+                json_data += "\"howknown\":\"" + this.txtHowknown.Texts.cleanString() + "\",";
+                json_data += "\"area\":\"" + this.txtArea.Texts.cleanString() + "\",";
+                json_data += "\"manual\":\"" + this.dtManual.TextsMysql + "\",";
+                json_data += "\"upfree\":\"" + this.txtUpfree.Texts.cleanString() + "\",";
+                json_data += "\"refnum\":\"" + this.txtRefnum.Texts.cleanString() + "\",";
+                json_data += "\"remark\":\"" + this.txtRemark.Texts.cleanString() + "\",";
+                json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.comboBox1.SelectedItem).string_value + "\",";
+                json_data += "\"verextdat\":\"" + this.dtVerextdat.TextsMysql + "\",";
+                json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
+                json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+                json_data += "\"dealer_dealer\":\"" + this.txtDealer.Texts.cleanString() + "\"}";
 
-                            this.mskSernum.Focus();
-                            this.transLayerHeader.Visible = false;
-                            this.transLayerBody1.Visible = false;
-                            this.transLayerBody2.Visible = false;
-                        }
-                    };
-                    workerSerialCreate.RunWorkerAsync();
-                }
-                else
-                {
-                    MessageAlert.Show(StringResource.PLEASE_FILL_CORRECT_SN, "", MessageAlertButtons.OK, MessageAlertIcons.WARNING);
-                }
-            }
-            else if(this.form_mode == FORM_MODE.EDIT)
-            {
-                // Submit data in Edit mode
-                this.json_data = string.Empty;
-                this.json_data += "{\"id\":" + this.serial.id.ToString() + ",";
-                this.json_data += "\"oldnum\":\"" + this.mskOldnum.Text.cleanString() + "\",";
-                this.json_data += "\"version\":\"" + this.txtVersion.Text.cleanString() + "\",";
-                this.json_data += "\"contact\":\"" + this.txtContact.Text.cleanString() + "\",";
-                this.json_data += "\"position\":\"" + this.txtPosition.Text.cleanString() + "\",";
-                this.json_data += "\"prenam\":\"" + this.txtPrenam.Text.cleanString() + "\",";
-                this.json_data += "\"compnam\":\"" + this.txtCompnam.Text.cleanString() + "\",";
-                this.json_data += "\"addr01\":\"" + this.txtAddr01.Text.cleanString() + "\",";
-                this.json_data += "\"addr02\":\"" + this.txtAddr02.Text.cleanString() + "\",";
-                this.json_data += "\"addr03\":\"" + this.txtAddr03.Text.cleanString() + "\",";
-                this.json_data += "\"zipcod\":\"" + this.txtZipcod.Text.cleanString() + "\",";
-                this.json_data += "\"telnum\":\"" + this.txtTelnum.Text.cleanString() + "\",";
-                this.json_data += "\"faxnum\":\"" + this.txtFaxnum.Text.cleanString() + "\",";
-                this.json_data += "\"busityp\":\"" + this.txtBusityp.Text.cleanString() + "\",";
-                this.json_data += "\"busides\":\"" + this.txtBusides.Text.cleanString() + "\",";
-                this.json_data += "\"purdat\":\"" + this.mskPurdat.Text.toMySQLDate() + "\",";
-                this.json_data += "\"expdat\":\"" + this.mskExpdat.Text.toMySQLDate() + "\",";
-                this.json_data += "\"howknown\":\"" + this.txtHowknown.Text.cleanString() + "\",";
-                this.json_data += "\"area\":\"" + this.txtArea.Text.cleanString() + "\",";
-                //this.json_data += "\"branch\":\"" +  + "\",";
-                this.json_data += "\"manual\":\"" + this.mskManual.Text.toMySQLDate() + "\",";
-                this.json_data += "\"upfree\":\"" + this.txtReg.Text.cleanString() + "\",";
-                this.json_data += "\"refnum\":\"" + this.mskRefnum.Text.cleanString() + "\",";
-                this.json_data += "\"remark\":\"" + this.txtRemark.Text.cleanString() + "\",";
-                this.json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.SelectedItem).string_value + "\",";
-                this.json_data += "\"verextdat\":\"" + this.mskVerextdat.Text.toMySQLDate() + "\",";
-                this.json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
-                this.json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
-                this.json_data += "\"dealer_dealer\":\"" + this.txtDealer_dealer.Text.cleanString() + "\"}";
                 this.FormSaving();
-                BackgroundWorker workerSerialUpdate = new BackgroundWorker();
-                workerSerialUpdate.DoWork += delegate
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
                 {
-                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/update", this.json_data);
+                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/create_new", json_data);
+                    Console.WriteLine(post.data);
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                     {
-                        submit_serial_success = true;
+                        submit_success = true;
                         this.getSerial(Convert.ToInt32(sr.message));
                         this.getSerialIDList();
                     }
                     else
                     {
-                        submit_serial_success = false;
-                        MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        submit_success = false;
+                        err_msg = sr.message;
                     }
                 };
-                workerSerialUpdate.RunWorkerCompleted += delegate
+                worker.RunWorkerCompleted += delegate
                 {
-                    if (submit_serial_success)
+                    if (submit_success)
                     {
+                        this.FormRead();
                         this.fillSerialInForm();
-                        this.FormReady();
+                        this.toolStripItem.PerformClick();
+                        this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+                    }
+                    else
+                    {
+                        this.FormAdd();
+                        this.txtSernum.Focus();
+                        MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                     }
                 };
-                workerSerialUpdate.RunWorkerAsync();
+                worker.RunWorkerAsync();
             }
+            else
+            {
+                MessageAlert.Show(StringResource.PLEASE_FILL_CORRECT_SN, "", MessageAlertButtons.OK, MessageAlertIcons.WARNING);
+                this.txtSernum.Focus();
+            }
+        }
+
+        private void SubmitEditSerial()
+        {
+            bool submit_success = false;
+            string err_msg = "";
+            this.FormProcessing();
+
+            string json_data = "{\"id\":" + this.serial.id.ToString() + ",";
+            json_data += "\"oldnum\":\"" + this.txtOldnum.Texts.cleanString() + "\",";
+            json_data += "\"version\":\"" + this.txtVersion.Texts.cleanString() + "\",";
+            json_data += "\"contact\":\"" + this.txtContact.Texts.cleanString() + "\",";
+            json_data += "\"position\":\"" + this.txtPosition.Texts.cleanString() + "\",";
+            json_data += "\"prenam\":\"" + this.txtPrenam.Texts.cleanString() + "\",";
+            json_data += "\"compnam\":\"" + this.txtCompnam.Texts.cleanString() + "\",";
+            json_data += "\"addr01\":\"" + this.txtAddr01.Texts.cleanString() + "\",";
+            json_data += "\"addr02\":\"" + this.txtAddr02.Texts.cleanString() + "\",";
+            json_data += "\"addr03\":\"" + this.txtAddr03.Texts.cleanString() + "\",";
+            json_data += "\"zipcod\":\"" + this.txtZipcod.Texts.cleanString() + "\",";
+            json_data += "\"telnum\":\"" + this.txtTelnum.Texts.cleanString() + "\",";
+            json_data += "\"faxnum\":\"" + this.txtFaxnum.Texts.cleanString() + "\",";
+            json_data += "\"busityp\":\"" + this.txtBusityp.Texts.cleanString() + "\",";
+            json_data += "\"busides\":\"" + this.txtBusides.Texts.cleanString() + "\",";
+            json_data += "\"purdat\":\"" + this.dtPurdat.TextsMysql + "\",";
+            json_data += "\"expdat\":\"" + this.dtExpdat.TextsMysql + "\",";
+            json_data += "\"howknown\":\"" + this.txtHowknown.Texts.cleanString() + "\",";
+            json_data += "\"area\":\"" + this.txtArea.Texts.cleanString() + "\",";
+            json_data += "\"manual\":\"" + this.dtManual.TextsMysql + "\",";
+            json_data += "\"upfree\":\"" + this.txtUpfree.Texts.cleanString() + "\",";
+            json_data += "\"refnum\":\"" + this.txtRefnum.Texts.cleanString() + "\",";
+            json_data += "\"remark\":\"" + this.txtRemark.Texts.cleanString() + "\",";
+            json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.comboBox1.SelectedItem).string_value + "\",";
+            json_data += "\"verextdat\":\"" + this.dtVerextdat.TextsMysql + "\",";
+            json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
+            json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+            json_data += "\"dealer_dealer\":\"" + this.txtDealer.Texts.cleanString() + "\"}";
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate
+            {
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/update", json_data);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    submit_success = true;
+                    this.getSerial(this.serial.id);
+                    this.getSerialIDList();
+                }
+                else
+                {
+                    submit_success = false;
+                    err_msg = sr.message;
+                }
+            };
+            worker.RunWorkerCompleted += delegate
+            {
+                if (submit_success)
+                {
+                    this.fillSerialInForm();
+                    this.FormRead();
+                }
+                else
+                {
+                    this.FormEdit();
+                    this.txtVersion.Focus();
+                    MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
+            };
+            worker.RunWorkerAsync();
         }
 
         private void findSerial()
         {
             if (this.find_id != this.serial.id)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerFind = new BackgroundWorker();
                 workerFind.DoWork += delegate
                 {
@@ -1668,7 +2263,7 @@ namespace SN_Net.Subform
                 workerFind.RunWorkerCompleted += delegate
                 {
                     this.fillSerialInForm();
-                    this.FormReady();
+                    this.FormRead();
                 };
                 workerFind.RunWorkerAsync();
             }
@@ -1679,6 +2274,7 @@ namespace SN_Net.Subform
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
             this.FormAdd();
+            this.EditControlBlank();
         }
 
         private void toolStripEdit_Click(object sender, EventArgs e)
@@ -1690,7 +2286,7 @@ namespace SN_Net.Subform
         {
             if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.YES_NO, MessageAlertIcons.QUESTION) == DialogResult.Yes)
             {
-                this.FormLoading();
+                this.FormProcessing();
 
                 BackgroundWorker workerDeleteSerial = new BackgroundWorker();
                 workerDeleteSerial.DoWork += delegate
@@ -1721,7 +2317,7 @@ namespace SN_Net.Subform
                 workerDeleteSerial.RunWorkerCompleted += delegate
                 {
                     this.fillSerialInForm();
-                    this.FormReady();
+                    this.FormRead();
                 };
                 workerDeleteSerial.RunWorkerAsync();
             }
@@ -1732,43 +2328,41 @@ namespace SN_Net.Subform
             if (this.form_mode == FORM_MODE.READ_ITEM)
             {
                 this.fillInDatagrid();
-                this.FormReady();
+                this.FormRead();
             }
             else if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
             {
-                if (this.transparentPanel1.Tag is Problem)
-                {
-                    this.clearInlineEditForm((Problem)this.transparentPanel1.Tag);
-                }
-                else
-                {
-                    this.clearInlineEditForm();
-                }
-                this.FormReadItem();
+                this.clearInlineProblemForm();
             }
             else
             {
-                this.form_mode = FORM_MODE.READ;
-                this.setToolStripFormMode();
+                this.FormRead();
                 this.fillSerialInForm();
-                this.FormReady();
             }
         }
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
-            if (this.form_mode == FORM_MODE.READ_ITEM)
+            if (this.form_mode == FORM_MODE.ADD)
+            {
+                this.SubmitAddSerial();
+            }
+            else if (this.form_mode == FORM_MODE.EDIT)
+            {
+                this.SubmitEditSerial();
+            }
+            else if (this.form_mode == FORM_MODE.READ_ITEM)
             {
                 this.fillInDatagrid();
-                this.FormReady();
+                this.FormRead();
             }
-            else if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            else if (this.form_mode == FORM_MODE.ADD_ITEM)
             {
-                this.submitProblemData();
+                this.SubmitAddProblem();
             }
-            else
+            else if (this.form_mode == FORM_MODE.EDIT_ITEM)
             {
-                this.submitSerialData();
+                this.SubmitEditProblem();
             }
         }
 
@@ -1807,8 +2401,7 @@ namespace SN_Net.Subform
         private void toolStripItem_Click(object sender, EventArgs e)
         {
             this.tabControl1.SelectedTab = this.tabPage2;
-            this.form_mode = FORM_MODE.READ_ITEM;
-            this.setToolStripFormMode();
+            this.FormReadItem();
             this.dgvProblem.Focus();
             this.fillInDatagrid();
             this.dgvProblem.CurrentCell = this.dgvProblem.Rows[0].Cells[1];
@@ -1822,7 +2415,7 @@ namespace SN_Net.Subform
             {
                 this.find_sernum = box.mskSearchKey.Text;
                 this.find_type = FIND_TYPE.SERNUM;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -1835,7 +2428,7 @@ namespace SN_Net.Subform
             SNInquiryWindow wind = new SNInquiryWindow(this, SNInquiryWindow.INQUIRY_TYPE.ALL);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 this.find_id = wind.selected_id;
                 BackgroundWorker selectFromInquiryWorker = new BackgroundWorker();
                 selectFromInquiryWorker.DoWork += new DoWorkEventHandler(this.selectFromInquiryWorker_DoWork);
@@ -1849,18 +2442,13 @@ namespace SN_Net.Subform
             SNInquiryWindow wind = new SNInquiryWindow(this, SNInquiryWindow.INQUIRY_TYPE.REST);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 this.find_id = wind.selected_id;
                 BackgroundWorker selectFromInquiryWorker = new BackgroundWorker();
                 selectFromInquiryWorker.DoWork += new DoWorkEventHandler(this.selectFromInquiryWorker_DoWork);
                 selectFromInquiryWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.selectFromInquiryWorker_Complete);
                 selectFromInquiryWorker.RunWorkerAsync();
             }
-        }
-
-        private void toolStripInquiryCondition_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void selectFromInquiryWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -1871,7 +2459,7 @@ namespace SN_Net.Subform
         private void selectFromInquiryWorker_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
             this.fillSerialInForm();
-            this.FormReady();
+            this.FormRead();
         }
 
         private void searchContactToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1882,7 +2470,7 @@ namespace SN_Net.Subform
             {
                 this.find_contact = box.txtSearchKey.Text;
                 this.find_type = FIND_TYPE.CONTACT;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -1898,7 +2486,7 @@ namespace SN_Net.Subform
             {
                 this.find_company = box.txtSearchKey.Text;
                 this.find_type = FIND_TYPE.COMPANY;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -1914,7 +2502,7 @@ namespace SN_Net.Subform
             {
                 this.find_dealer = box.txtSearchKey.Text;
                 this.find_type = FIND_TYPE.DEALER;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -1930,7 +2518,7 @@ namespace SN_Net.Subform
             {
                 this.find_oldnum = box.mskSearchKey.Text;
                 this.find_type = FIND_TYPE.OLDNUM;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -1946,7 +2534,7 @@ namespace SN_Net.Subform
             {
                 this.find_busityp = box.txtSearchKey.Text;
                 this.find_type = FIND_TYPE.BUSITYP;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -1962,7 +2550,7 @@ namespace SN_Net.Subform
             {
                 this.find_area = box.txtSearchKey.Text;
                 this.find_type = FIND_TYPE.AREA;
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerSearch = new BackgroundWorker();
                 workerSearch.DoWork += new DoWorkEventHandler(this.workerSearch_DoWork);
                 workerSearch.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerSearch_Complete);
@@ -2289,13 +2877,13 @@ namespace SN_Net.Subform
         private void workerSearch_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
             this.fillSerialInForm();
-            this.FormReady();
+            this.FormRead();
         }
         #endregion find by criteria
 
         private void toolStripReload_Click(object sender, EventArgs e)
         {
-            this.FormLoading();
+            this.FormProcessing();
             BackgroundWorker work = new BackgroundWorker();
             work.DoWork += new DoWorkEventHandler(this.workerLoadCurrentSN_Dowork);
             work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.workerLoadSN_Complete);
@@ -2303,77 +2891,71 @@ namespace SN_Net.Subform
         }
         #endregion toolStrip
 
-        #region TabControl Event Handler
-        private void preventChangeTabInEditMode(object sender, TabControlCancelEventArgs e)
-        {
-            if (this.form_mode != FORM_MODE.READ)
-            {
-                e.Cancel = true;
-            }
-        }
-        #endregion TabControl Event Handler
-
         #region Browse button
         private void btnBrowseBusityp_Click(object sender, EventArgs e)
         {
+            this.txtBusityp.Focus();
+
             IstabList wind = new IstabList(this.main_form, this.txtBusityp.Text, Istab.TABTYP.BUSITYP);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.txtBusityp.Text = wind.istab.typcod;
+                this.txtBusityp.Texts = wind.istab.typcod;
                 this.lblBusitypTypdes.Text = wind.istab.typdes_th;
-                this.txtDealer_dealer.Focus();
-            }
-            else
-            {
-                this.txtBusityp.Focus();
             }
         }
 
         private void btnBrowseArea_Click(object sender, EventArgs e)
         {
+            this.txtArea.Focus();
+
             IstabList wind = new IstabList(this.main_form, this.txtArea.Text, Istab.TABTYP.AREA);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.txtArea.Text = wind.istab.typcod;
+                this.txtArea.Texts = wind.istab.typcod;
                 this.lblAreaTypdes.Text = wind.istab.typdes_th;
-                this.mskRefnum.Focus();
-            }
-            else
-            {
-                this.txtArea.Focus();
             }
         }
 
         private void btnBrowseHowknown_Click(object sender, EventArgs e)
         {
+            this.txtHowknown.Focus();
+
             IstabList wind = new IstabList(this.main_form, this.txtHowknown.Text, Istab.TABTYP.HOWKNOWN);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.txtHowknown.Text = wind.istab.typcod;
+                this.txtHowknown.Texts = wind.istab.typcod;
                 this.lblHowknownTypdes.Text = wind.istab.typdes_th;
-                this.mskPurdat.Focus();
-            }
-            else
-            {
-                this.txtHowknown.Focus();
             }
         }
 
         private void btnBrowseDealer_Click(object sender, EventArgs e)
         {
-            DealerList wind = new DealerList(this, this.txtDealer_dealer.Text);
+            this.txtDealer.Focus();
+            
+            DealerList wind = new DealerList(this, this.txtDealer.Texts);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.txtDealer_dealer.Text = wind.dealer.dealer;
+                this.txtDealer.Texts = wind.dealer.dealer;
                 this.lblDealer_DealerCompnam.Text = wind.dealer.compnam;
-                this.txtHowknown.Focus();
-            }
-            else
-            {
-                this.txtDealer_dealer.Focus();
             }
         }
         #endregion Browse button
+
+        private void DisableChangeTabWhileAddEdit(object sender, TabControlCancelEventArgs e) // Prevent change tab while Add,Edit,ReadItem,AddItem,EditItem
+        {
+            if (this.form_mode != FORM_MODE.READ)
+            {
+                e.Cancel = true;
+                if (this.current_focused_control != null)
+                {
+                    this.current_focused_control.Focus();
+                }
+                else
+                {
+                    this.txtDummy.Focus();
+                }
+            }
+        }
 
         private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -2381,390 +2963,27 @@ namespace SN_Net.Subform
             main_form.sn_wind = null;
         }
 
-        #region Add shortcut key to ToolStripButton
-        private void KeyDownShortcutKeyToolstrip(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.PageUp)
-            {
-                this.toolStripPrevious.PerformClick();
-            }
-            if (e.KeyCode == Keys.PageDown)
-            {
-                this.toolStripNext.PerformClick();
-            }
-            if (e.KeyCode == Keys.Home && e.Modifiers == Keys.Control)
-            {
-                this.toolStripFirst.PerformClick();
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.End && e.Modifiers == Keys.Control)
-            {
-                this.toolStripLast.PerformClick();
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.toolStripStop.PerformClick();
-                e.Handled = e.SuppressKeyPress = true;
-            }
-            if (e.KeyCode == Keys.F3)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.tabControl1.SelectedTab = this.tabPage1;
-                    e.Handled = true;
-                }
-            }
-            if (e.KeyCode == Keys.F4)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.tabControl1.SelectedTab = this.tabPage2;
-                    e.Handled = true;
-                }
-            }
-            if (e.KeyCode == Keys.F5)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.toolStripReload.PerformClick();
-                    e.Handled = true;
-                }
-            }
-            if (e.KeyCode == Keys.F8)
-            {
-                this.toolStripItem.PerformClick();
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.F9)
-            {
-                this.toolStripSave.PerformClick();
-                e.Handled = true;
-            }
-            if (e.KeyCode == Keys.D && e.Alt)
-            {
-                if (this.form_mode == FORM_MODE.READ_ITEM)
-                {
-                    this.deleteProblemData();
-                }
-                else
-                {
-                    this.toolStripDelete.PerformClick();
-                }
-            }
-            if (e.KeyCode == Keys.L && e.Control)
-            {
-                this.toolStripInquiryAll.PerformClick();
-            }
-            if (e.KeyCode == Keys.L && e.Alt)
-            {
-                this.toolStripInquiryRest.PerformClick();
-            }
-            if (e.KeyCode == Keys.S && e.Alt)
-            {
-                this.toolStripSearchSN.PerformClick();
-            }
-            if (e.KeyCode == Keys.D2 && e.Alt)
-            {
-                this.toolStripSearchContact.PerformClick();
-            }
-            if (e.KeyCode == Keys.D3 && e.Alt)
-            {
-                this.toolStripSearchCompany.PerformClick();
-            }
-            if (e.KeyCode == Keys.D4 && e.Alt)
-            {
-                this.toolStripSearchDealer.PerformClick();
-            }
-            if (e.KeyCode == Keys.D5 && e.Alt)
-            {
-                this.toolStripSearchOldnum.PerformClick();
-            }
-            if (e.KeyCode == Keys.D6 && e.Alt)
-            {
-                this.toolStripSearchBusityp.PerformClick();
-            }
-            if (e.KeyCode == Keys.D7 && e.Alt)
-            {
-                this.toolStripSearchArea.PerformClick();
-            }
-            if (e.KeyCode == Keys.Enter && (this.form_mode == FORM_MODE.READ || this.form_mode == FORM_MODE.READ_ITEM))
-            {
-                e.Handled = e.SuppressKeyPress = true;
-            }
-            if (e.KeyCode == Keys.Escape && this.form_mode == FORM_MODE.READ)
-            {
-                e.Handled = e.SuppressKeyPress = true;
-            }
-        }
-        #endregion Add shortcut key to ToolStripButton
-
-        private void setToolStripFormMode()
-        {
-            switch (this.form_mode)
-            {
-                case FORM_MODE.LOADING:
-                    Console.WriteLine("FORM_MODE.LOADING");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = false;
-                    this.toolStripSave.Enabled = false;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                case FORM_MODE.SAVING:
-                    Console.WriteLine("FORM_MODE.SAVING");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = false;
-                    this.toolStripSave.Enabled = false;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                case FORM_MODE.READ:
-                    Console.WriteLine("FORM_MODE.READ");
-                    this.toolStripAdd.Enabled = true;
-                    this.toolStripEdit.Enabled = true;
-                    this.toolStripDelete.Enabled = true;
-                    this.toolStripStop.Enabled = false;
-                    this.toolStripSave.Enabled = false;
-                    this.toolStripFirst.Enabled = true;
-                    this.toolStripPrevious.Enabled = true;
-                    this.toolStripNext.Enabled = true;
-                    this.toolStripLast.Enabled = true;
-                    this.toolStripItem.Enabled = true;
-                    this.toolStripImport.Enabled = true;
-                    this.toolStripGenSN.Enabled = true;
-                    this.toolStripUpgrade.Enabled = true;
-                    this.toolStripBook.Enabled = true;
-                    this.toolStripSet2.Enabled = true;
-                    this.toolStripSearch.Enabled = true;
-                    this.toolStripInquiryAll.Enabled = true;
-                    this.toolStripInquiryRest.Enabled = true;
-                    this.toolStripSearchArea.Enabled = true;
-                    this.toolStripSearchBusityp.Enabled = true;
-                    this.toolStripSearchCompany.Enabled = true;
-                    this.toolStripSearchContact.Enabled = true;
-                    this.toolStripSearchDealer.Enabled = true;
-                    this.toolStripSearchOldnum.Enabled = true;
-                    this.toolStripSearchSN.Enabled = true;
-                    this.toolStripReload.Enabled = true;
-                    break;
-                case FORM_MODE.ADD:
-                    Console.WriteLine("FORM_MODE.ADD");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = true;
-                    this.toolStripSave.Enabled = true;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                case FORM_MODE.EDIT:
-                    Console.WriteLine("FORM_MODE.EDIT");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = true;
-                    this.toolStripSave.Enabled = true;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                case FORM_MODE.READ_ITEM:
-                    Console.WriteLine("FORM_MODE.READ_ITEM");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = true;
-                    this.toolStripSave.Enabled = true;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                case FORM_MODE.ADD_ITEM:
-                    Console.WriteLine("FORM_MODE.ADD_ITEM");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = true;
-                    this.toolStripSave.Enabled = true;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                case FORM_MODE.EDIT_ITEM:
-                    Console.WriteLine("FORM_MODE.EDIT_ITEM");
-                    this.toolStripAdd.Enabled = false;
-                    this.toolStripEdit.Enabled = false;
-                    this.toolStripDelete.Enabled = false;
-                    this.toolStripStop.Enabled = true;
-                    this.toolStripSave.Enabled = true;
-                    this.toolStripFirst.Enabled = false;
-                    this.toolStripPrevious.Enabled = false;
-                    this.toolStripNext.Enabled = false;
-                    this.toolStripLast.Enabled = false;
-                    this.toolStripItem.Enabled = false;
-                    this.toolStripImport.Enabled = false;
-                    this.toolStripGenSN.Enabled = false;
-                    this.toolStripUpgrade.Enabled = false;
-                    this.toolStripBook.Enabled = false;
-                    this.toolStripSet2.Enabled = false;
-                    this.toolStripSearch.Enabled = false;
-                    this.toolStripInquiryAll.Enabled = false;
-                    this.toolStripInquiryRest.Enabled = false;
-                    this.toolStripSearchArea.Enabled = false;
-                    this.toolStripSearchBusityp.Enabled = false;
-                    this.toolStripSearchCompany.Enabled = false;
-                    this.toolStripSearchContact.Enabled = false;
-                    this.toolStripSearchDealer.Enabled = false;
-                    this.toolStripSearchOldnum.Enabled = false;
-                    this.toolStripSearchSN.Enabled = false;
-                    this.toolStripReload.Enabled = false;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private int getMaxSerialId()
-        {
-            int max_id = 0;
-            foreach (Serial s in this.serial_id_list)
-            {
-                if (s.id > max_id)
-                {
-                    max_id = s.id;
-                }
-            }
-
-            return max_id;
-        }
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Tab && this.form_mode == FORM_MODE.READ)
             {
                 DataInfo data_info = new DataInfo();
+
+                int max_id = 0;
+                foreach (Serial s in this.serial_id_list)
+                {
+                    if (s.id > max_id)
+                    {
+                        max_id = s.id;
+                    }
+                }
+
                 data_info.lblDataTable.Text = "Serial";
                 data_info.lblExpression.Text = (this.sortMode == SORT_SN ? this.sortMode : this.sortMode + "+sernum");
                 data_info.lblRecBy.Text = this.serial.users_name;
                 data_info.lblRecDate.pickedDate(this.serial.chgdat);
                 data_info.lblRecNo.Text = this.serial.id.ToString();
-                data_info.lblTotalRec.Text = this.getMaxSerialId().ToString();
+                data_info.lblTotalRec.Text = max_id.ToString();
                 data_info.lblTime.ForeColor = Color.DarkGray;
                 data_info.lblRecTime.BackColor = Color.WhiteSmoke;
                 data_info.ShowDialog();
@@ -2800,269 +3019,279 @@ namespace SN_Net.Subform
             {
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
-                    int col_index = this.dgvProblem.CurrentCell.ColumnIndex;
-                    this.showInlineProblemForm(this.problem.Count, col_index);
+                    int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                    this.dgvProblem.Rows[problem_count].Cells[1].Selected = true;
+                    this.showInlineProblemForm(this.dgvProblem.Rows[problem_count]);
+                    return true;
                 }
                 else if (this.form_mode == FORM_MODE.READ)
                 {
                     this.toolStripAdd.PerformClick();
+                    return true;
                 }
-                
-                return true;
             }
             if (keyData == (Keys.Alt | Keys.E))
             {
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
-                    int row_index = this.dgvProblem.CurrentCell.RowIndex;
-                    int col_index = this.dgvProblem.CurrentCell.ColumnIndex;
-                    if (this.dgvProblem.Rows[row_index].Tag is Problem)
+                    if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
                     {
-                        this.mskEditDate.pickedDate(((Problem)this.dgvProblem.Rows[row_index].Tag).date);
-                        this.txtEditName.Text = ((Problem)this.dgvProblem.Rows[row_index].Tag).name;
-                        this.txtEditCo.Text = ((Problem)this.dgvProblem.Rows[row_index].Tag).probcod;
-                        //this.txtEditDesc.Text = ((Problem)this.dgvProblem.Rows[row_index].Tag).probdesc;
-                        string prob_desc = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc;
-
-                        if (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN)
-                        {
-                            this.txtEditDesc2.staticText = "";
-                            this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc;
-                        }
-                        else
-                        {
-                            if (((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probcod == "RG")
-                            {
-                                string mac_code = this.GetMachineCode(((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc);
-                                this.txtEditDesc2.staticText = mac_code;
-                                if (mac_code.Length > 0)
-                                {
-                                    this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc.Substring(mac_code.Length, prob_desc.Length - mac_code.Length).TrimStart();
-                                }
-                                else
-                                {
-                                    this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc.Substring(mac_code.Length, prob_desc.Length - mac_code.Length);
-                                }
-                            }
-                            else
-                            {
-                                this.txtEditDesc2.staticText = "";
-                                this.txtEditDesc2.txtEdit.Text = ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probdesc;
-                            }
-                        }
-                        this.showInlineProblemForm(row_index, col_index);
+                        this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+                        return true;
                     }
                 }
                 else
                 {
                     this.toolStripEdit.PerformClick();
+                    return true;
                 }
-                return true;
             }
             if(keyData == Keys.Enter && (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
             {
-                if (this.current_focused_control == this.mskVerextdat || this.current_focused_control == this.txtEditDesc2.txtEdit)
+                if (this.current_focused_control == this.dtVerextdat || this.current_focused_control.Name == "inline_problem_probdesc")
                 {
                     this.toolStripSave.PerformClick();
+                    return true;
+                }
+
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+            if (keyData == Keys.Escape)
+            {
+                if(!(this.current_focused_control is CustomDateTimePicker)) // if current_focused_control is not CustomDateTimePicker
+                {
+                    if (!(this.current_focused_control is CustomComboBox)) // and if current_focused_control is not CustomComboBox
+                    {
+                        this.toolStripStop.PerformClick();
+                        this.current_focused_control = null;
+                        return true;
+                    }
+                    else
+                    {
+                        if (!((CustomComboBox)this.current_focused_control).item_shown) // if CustomComboBox is currently not showing items.
+                        {
+                            this.toolStripStop.PerformClick();
+                            this.current_focused_control = null;
+                            return true;
+                        }
+                        else // then if CustomComboBox is currently showing calendar just close the items portion.
+                        {
+                            SendKeys.Send("{F4}");
+                            return true;
+                        }
+                    }
                 }
                 else
                 {
-                    SendKeys.Send("{TAB}");
-                    return true;
+                    if (!((CustomDateTimePicker)this.current_focused_control).calendar_shown) // if CustomDateTimePicker is currently not showing calendar.
+                    {
+                        this.toolStripStop.PerformClick();
+                        this.current_focused_control = null;
+                        return true;
+                    }
+                    // then if CustomDateTimePicker is currently showing calendar just close the calendar.
                 }
             }
             if (keyData == Keys.F6)
             {
-                if (this.current_focused_control == this.txtArea)
+                if (this.current_focused_control != null)
                 {
-                    this.btnBrowseArea.PerformClick();
-                    return true;
-                }
-                else if (this.current_focused_control == this.txtBusityp)
-                {
-                    this.btnBrowseBusityp.PerformClick();
-                    return true;
-                }
-                else if (this.current_focused_control == this.txtDealer_dealer)
-                {
-                    this.btnBrowseDealer.PerformClick();
-                    return true;
-                }
-                else if (this.current_focused_control == this.txtHowknown)
-                {
-                    this.btnBrowseHowknown.PerformClick();
-                    return true;
-                }
-                else if (this.current_focused_control == this.mskPurdat)
-                {
-                    this.dpPurdat.Focus();
-                    SendKeys.Send("{F4}");
-                    this.dpPurdat.CloseUp += delegate
+                    if (this.current_focused_control == this.txtArea)
                     {
-                        this.mskPurdat.Focus();
-                    };
-                    return true;
-                }
-                else if (this.current_focused_control == this.mskExpdat)
-                {
-                    this.dpExpdat.Focus();
-                    SendKeys.Send("{F4}");
-                    this.dpExpdat.CloseUp += delegate
-                    {
-                        this.mskExpdat.Focus();
-                    };
-                    return true;
-                }
-                else if (this.current_focused_control == this.mskManual)
-                {
-                    this.dpManual.Focus();
-                    SendKeys.Send("{F4}");
-                    this.dpManual.CloseUp += delegate
-                    {
-                        this.mskManual.Focus();
-                    };
-                    return true;
-                }
-                else if (this.current_focused_control == this.mskVerextdat)
-                {
-                    this.dpVerextdat.Focus();
-                    SendKeys.Send("{F4}");
-                    this.dpVerextdat.CloseUp += delegate
-                    {
-                        this.mskVerextdat.Focus();
-                    };
-                    return true;
-                }
-                else if (this.current_focused_control == this.cbVerext)
-                {
-                    SendKeys.Send("{F4}");
-                    return true;
-                }
-                else if (this.current_focused_control == this.mskEditDate)
-                {
-                    this.dpEditDate.Focus();
-                    SendKeys.Send("{F4}");
-                    this.dpEditDate.CloseUp += delegate
-                    {
-                        this.mskEditDate.Focus();
-                    };
-                    return true;
-                }
-                else if (this.current_focused_control == this.txtEditCo)
-                {
-                    IstabList wind = new IstabList(this.main_form, this.txtEditCo.Text, Istab.TABTYP.PROBLEM_CODE);
-                    if (wind.ShowDialog() == DialogResult.OK)
-                    {
-                        this.txtEditCo.Text = wind.istab.typcod;
+                        this.btnBrowseArea.PerformClick();
+                        return true;
                     }
-                    else
+                    else if (this.current_focused_control == this.txtBusityp)
                     {
-                        this.txtEditCo.Focus();
+                        this.btnBrowseBusityp.PerformClick();
+                        return true;
                     }
+                    else if (this.current_focused_control == this.txtDealer)
+                    {
+                        this.btnBrowseDealer.PerformClick();
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.txtHowknown)
+                    {
+                        this.btnBrowseHowknown.PerformClick();
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtPurdat)
+                    {
+                        this.dtPurdat.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtExpdat)
+                    {
+                        this.dtExpdat.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtManual)
+                    {
+                        this.dtManual.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtVerextdat)
+                    {
+                        this.dtVerextdat.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.cbVerext)
+                    {
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control.Name == "inline_problem_date" && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+                    {
+                        Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_date", true);
+                        if (ct.Length > 0)
+                        {
+                            CustomDateTimePicker dt = (CustomDateTimePicker)ct[0];
+                            dt.dateTimePicker1.Focus();
+                            SendKeys.Send("{F4}");
+                            return true;
+                        }
+                    }
+                    else if (this.current_focused_control.Name == "inline_problem_probcod" && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+                    {
+                        Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true);
+                        if (ct.Length > 0)
+                        {
+                            CustomTextBox probcod = (CustomTextBox)ct[0];
+                            probcod.Focus();
+                            IstabList wind = new IstabList(this.main_form, probcod.Texts, Istab.TABTYP.PROBLEM_CODE);
+                            if (wind.ShowDialog() == DialogResult.OK)
+                            {
+                                probcod.Texts = wind.istab.typcod;
+                                SendKeys.Send("{TAB}");
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            if (keyData == Keys.PageUp)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.toolStripPrevious.PerformClick();
                     return true;
                 }
+            }
+            if (keyData == Keys.PageDown)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.toolStripNext.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == (Keys.Control | Keys.Home))
+            {
+                this.toolStripFirst.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.End))
+            {
+                this.toolStripLast.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F3)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage1;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F4)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage2;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F5)
+            {
+                this.toolStripReload.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F8)
+            {
+                this.toolStripItem.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F9)
+            {
+                this.toolStripSave.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D))
+            {
+                if (this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    this.deleteProblemData();
+                    return true;
+                }
+                else
+                {
+                    this.toolStripDelete.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == (Keys.Control | Keys.L))
+            {
+                this.toolStripInquiryAll.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.L))
+            {
+                this.toolStripInquiryRest.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.S))
+            {
+                this.toolStripSearchSN.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D2))
+            {
+                this.toolStripSearchContact.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D3))
+            {
+                this.toolStripSearchCompany.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D4))
+            {
+                this.toolStripSearchDealer.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D5))
+            {
+                this.toolStripSearchOldnum.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D6))
+            {
+                this.toolStripSearchBusityp.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D7))
+            {
+                this.toolStripSearchArea.PerformClick();
+                return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        private void onControlEnterHandler(object sender, EventArgs e)
-        {
-            if (sender is TextBox || sender is MaskedTextBox || sender is NumericUpDown)
-            {
-                ((Control)sender).BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-                ((Control)sender).ForeColor = Color.Black;
-            }
-        }
-
-        private void onControlFocusHandler(object sender, EventArgs e)
-        {
-            this.current_focused_control = (Control)sender;
-            this.main_form.toolStripInfo.Text = (((Control)sender).Tag is string ? (string)((Control)sender).Tag : " ");
-        }
-
-        private void onControlLeaveHandler(object sender, EventArgs e)
-        {
-            if (sender is TextBox || sender is MaskedTextBox || sender is NumericUpDown)
-            {
-                ((Control)sender).BackColor = Color.White;
-                ((Control)sender).ForeColor = Color.Black;
-            }
-            if ((Control)sender == this.txtArea || (Control)sender == this.txtBusityp || (Control)sender == this.txtHowknown)
-            {
-                if (((Control)sender).Text.Length > 0)
-                {
-                    Istab istab = null ;
-                    if ((Control)sender == this.txtArea)
-                    {
-                        istab = this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Text);
-                    }
-                    else if ((Control)sender == this.txtBusityp)
-                    {
-                        istab = this.main_form.data_resource.LIST_BUSITYP.Find(t => t.typcod == this.txtBusityp.Text);
-                    }
-                    else if ((Control)sender == this.txtHowknown)
-                    {
-                        istab = this.main_form.data_resource.LIST_HOWKNOWN.Find(t => t.typcod == this.txtHowknown.Text);
-                    }
-                    
-                    if (istab == null)
-                    {
-                        ((Control)sender).Focus();
-                        SendKeys.Send("{F6}");
-                    }
-                    else
-                    {
-                        if ((Control)sender == this.txtArea)
-                        {
-                            this.lblAreaTypdes.Text = istab.typdes_th;
-                        }
-                        else if ((Control)sender == this.txtBusityp)
-                        {
-                            this.lblBusitypTypdes.Text = istab.typdes_th;
-                        }
-                        else if ((Control)sender == this.txtHowknown)
-                        {
-                            this.lblHowknownTypdes.Text = istab.typdes_th;
-                        }
-                    }
-                }
-                else
-                {
-                    if ((Control)sender == this.txtArea)
-                    {
-                        this.lblAreaTypdes.Text = "";
-                    }
-                    else if((Control)sender == this.txtBusityp)
-                    {
-                        this.lblBusitypTypdes.Text = "";
-                    }
-                    else if ((Control)sender == this.txtHowknown)
-                    {
-                        this.lblHowknownTypdes.Text = "";
-                    }
-                }
-            }
-            else if ((Control)sender == this.txtDealer_dealer)
-            {
-                if (((Control)sender).Text.Length > 0)
-                {
-                    Dealer dealer = this.main_form.data_resource.LIST_DEALER.Find(t => t.dealer == ((Control)sender).Text);
-                    if (dealer == null)
-                    {
-                        ((Control)sender).Focus();
-                        SendKeys.Send("{F6}");
-                    }
-                    else
-                    {
-                        this.lblDealer_DealerCompnam.Text = dealer.compnam;
-                    }
-                }
-                else
-                {
-                    this.lblDealer_DealerCompnam.Text = "";
-                }
-            }
         }
 
         private void toolStripAdd_EnabledChanged(object sender, EventArgs e)
@@ -3085,18 +3314,6 @@ namespace SN_Net.Subform
             }
         }
 
-        private void transparentPanel1_VisibleChanged(object sender, EventArgs e)
-        {
-            if (((TransparentPanel)sender).Visible)
-            {
-                this.chkIMOnly.Enabled = false;
-            }
-            else
-            {
-                this.chkIMOnly.Enabled = true;
-            }
-        }
-
         private void chkIMOnly_CheckedChanged(object sender, EventArgs e)
         {
             if (((CheckBox)sender).Checked)
@@ -3116,7 +3333,7 @@ namespace SN_Net.Subform
             LostRenewForm wind = new LostRenewForm(this);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker workerAfterLostRenew = new BackgroundWorker();
                 workerAfterLostRenew.DoWork += delegate
                 {
@@ -3126,13 +3343,13 @@ namespace SN_Net.Subform
                 workerAfterLostRenew.RunWorkerCompleted += delegate
                 {
                     this.fillSerialInForm();
-                    this.FormReady();
+                    this.FormRead();
                 };
                 workerAfterLostRenew.RunWorkerAsync();
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 
@@ -3143,7 +3360,7 @@ namespace SN_Net.Subform
                 if (this.serial.refnum.Replace("-", "").Replace(" ", "").Length > 0)
                 {
                     bool founded_sn = false;
-                    this.FormLoading();
+                    this.FormProcessing();
                     BackgroundWorker workerSwitchRefnum = new BackgroundWorker();
                     workerSwitchRefnum.DoWork += delegate
                     {
@@ -3157,11 +3374,6 @@ namespace SN_Net.Subform
                             {
                                 founded_sn = true;
                                 this.serial = sr.serial[0];
-                                this.busityp = (sr.busityp.Count > 0 ? sr.busityp[0] : this.busityp_not_found);
-                                this.area = (sr.area.Count > 0 ? sr.area[0] : this.area_not_found);
-                                this.howknown = (sr.howknown.Count > 0 ? sr.howknown[0] : this.howknown_not_found);
-                                this.verext = (sr.verext.Count > 0 ? sr.verext[0] : this.verext_not_found);
-                                this.dealer = (sr.dealer.Count > 0 ? sr.dealer[0] : this.dealer_not_found);
                                 this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
                                 this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                             }
@@ -3180,11 +3392,11 @@ namespace SN_Net.Subform
                         if (founded_sn)
                         {
                             this.fillSerialInForm();
-                            this.FormReady();
+                            this.FormRead();
                         }
                         else
                         {
-                            this.FormReady();
+                            this.FormRead();
                             MessageAlert.Show("Reference S/N not found", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                         }
                         
@@ -3195,19 +3407,12 @@ namespace SN_Net.Subform
             }
         }
 
-        private void mskSernum_Leave(object sender, EventArgs e)
-        {
-            if(!ValidateSN.Check(((MaskedTextBox)sender).Text)){
-                ((MaskedTextBox)sender).Focus();
-            }
-        }
-
         private void toolStripGenSN_Click(object sender, EventArgs e)
         {
             GenerateSNForm wind = new GenerateSNForm(this);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork += delegate
                 {
@@ -3216,7 +3421,7 @@ namespace SN_Net.Subform
                 worker.RunWorkerCompleted += delegate
                 {
                     this.fillSerialInForm();
-                    this.FormReady();
+                    this.FormRead();
                 };
                 worker.RunWorkerAsync();
             }
@@ -3226,7 +3431,7 @@ namespace SN_Net.Subform
         {
             if (MessageAlert.Show("Generate \"CD training date\"", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 bool post_success = false;
                 
                 BackgroundWorker workerCD = new BackgroundWorker();
@@ -3255,13 +3460,13 @@ namespace SN_Net.Subform
                 {
                     if (post_success)
                     {
-                        this.lblExpdat.pickedDate(this.serial.expdat);
+                        this.dtExpdat.TextsMysql = this.serial.expdat;
                         this.lblExpdat2.pickedDate(this.serial.expdat);
-                        this.FormReady();
+                        this.FormRead();
                     }
                     else
                     {
-                        this.FormReady();
+                        this.FormRead();
                     }
                 };
                 
@@ -3269,7 +3474,7 @@ namespace SN_Net.Subform
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 
@@ -3278,16 +3483,12 @@ namespace SN_Net.Subform
             UpNewRwtLineForm wind = new UpNewRwtLineForm(this, UpNewRwtLineForm.DIALOG_TYPE.UP_NEWRWT);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.lblExpdat.pickedDate(this.serial.expdat);
-                this.lblExpdat2.pickedDate(this.serial.expdat);
-                this.lblVerext.Text = this.serial.verext.GetVerextSelectedString(this.cbVerext);
-                this.lblVerextdat.pickedDate(this.serial.verextdat);
-                this.fillInDatagrid();
-                this.FormReady();
+                this.fillSerialInForm();
+                this.FormRead();
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 
@@ -3296,15 +3497,12 @@ namespace SN_Net.Subform
             UpNewRwtLineForm wind = new UpNewRwtLineForm(this, UpNewRwtLineForm.DIALOG_TYPE.UP_NEWRWT_JOB);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.lblExpdat.pickedDate(this.serial.expdat);
-                this.lblVerext.Text = this.serial.verext.GetVerextSelectedString(this.cbVerext);
-                this.lblVerextdat.pickedDate(this.serial.verextdat);
-                this.fillInDatagrid();
-                this.FormReady();
+                this.fillSerialInForm();
+                this.FormRead();
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 
@@ -3313,7 +3511,7 @@ namespace SN_Net.Subform
             if (MessageAlert.Show("Generate \"Update\" line", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
             {
                 bool post_success = false;
-                this.FormLoading();
+                this.FormProcessing();
 
                 BackgroundWorker workerUp = new BackgroundWorker();
                 workerUp.DoWork += delegate
@@ -3342,11 +3540,11 @@ namespace SN_Net.Subform
                     if (post_success)
                     {
                         this.fillInDatagrid();
-                        this.FormReady();
+                        this.FormRead();
                     }
                     else
                     {
-                        this.FormReady();
+                        this.FormRead();
                     }
                 };
                 
@@ -3354,7 +3552,7 @@ namespace SN_Net.Subform
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 
@@ -3363,18 +3561,18 @@ namespace SN_Net.Subform
             UpgradeProgramForm wind = new UpgradeProgramForm(this);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.lblSerNum.Text = this.serial.sernum;
-                this.lblVersion.Text = this.serial.version;
-                this.lblExpdat.pickedDate(this.serial.expdat);
+                this.txtSernum.Texts = this.serial.sernum;
+                this.txtVersion.Texts = this.serial.version;
+                this.dtExpdat.TextsMysql = this.serial.expdat;
                 this.lblExpdat2.pickedDate(this.serial.expdat);
-                this.lblVerext.Text = this.serial.verext.GetVerextSelectedString(this.cbVerext);
-                this.lblVerextdat.pickedDate(this.serial.verextdat);
+                //this.lblVerext.Text = this.serial.verext.GetVerextSelectedString(this.cbVerext);
+                this.dtVerextdat.TextsMysql = this.serial.verextdat;
                 this.fillInDatagrid();
-                this.FormReady();
+                this.FormRead();
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 
@@ -3392,7 +3590,7 @@ namespace SN_Net.Subform
             SellProgram2nd wind = new SellProgram2nd(this);
             if (wind.ShowDialog() == DialogResult.OK)
             {
-                this.FormLoading();
+                this.FormProcessing();
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork += delegate
                 {
@@ -3402,13 +3600,13 @@ namespace SN_Net.Subform
                 worker.RunWorkerCompleted += delegate
                 {
                     this.fillSerialInForm();
-                    this.FormReady();
+                    this.FormRead();
                 };
                 worker.RunWorkerAsync();
             }
             else
             {
-                this.FormReady();
+                this.FormRead();
             }
         }
 

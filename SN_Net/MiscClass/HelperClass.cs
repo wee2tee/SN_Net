@@ -6,6 +6,7 @@ using SN_Net.DataModels;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace SN_Net.MiscClass
 {
@@ -94,6 +95,27 @@ namespace SN_Net.MiscClass
                     }
                 }
             };
+        }
+
+        public static bool tryParseToDateTime(this String str_date)
+        {
+            CultureInfo cinfo_th = new CultureInfo("th-TH");
+
+            DateTime out_date;
+            if (DateTime.TryParse(str_date, cinfo_th, DateTimeStyles.None, out out_date))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static string ToMysqlDate(this DateTime date)
+        {
+            CultureInfo cinfo_en = CultureInfo.CreateSpecificCulture("en-US"); // specify culture to US for retrieve the year in US culture format
+            return date.ToString("yyyy-MM-dd", cinfo_en.DateTimeFormat);
         }
     }
 }

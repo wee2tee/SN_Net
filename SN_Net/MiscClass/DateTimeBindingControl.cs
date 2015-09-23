@@ -9,21 +9,6 @@ namespace SN_Net.MiscClass
 {
     public static class DateTimeBindingControl
     {
-        public static bool tryParseToDateTime(this String str_date)
-        {
-            CultureInfo cinfo_th = new CultureInfo("th-TH");
-
-            DateTime out_date;
-            if (DateTime.TryParse(str_date, cinfo_th, DateTimeStyles.None, out out_date))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public static void pickedDate(this MaskedTextBox maskTextBox, string str_date)
         {
             CultureInfo cinfo_us = new CultureInfo("en-US");
@@ -69,6 +54,22 @@ namespace SN_Net.MiscClass
             else
             {
                 label.Text = "  /  /    ";
+            }
+        }
+
+        public static void pickedDate(this CustomMaskedTextBox textbox, string str_date)
+        {
+            CultureInfo cinfo_us = new CultureInfo("en-US");
+            CultureInfo cinfo_th = new CultureInfo("th-TH");
+
+            if (str_date != null)
+            {
+                DateTime dt = Convert.ToDateTime(str_date, cinfo_us);
+                textbox.Texts = dt.ToString("dd/MM/yyyy", cinfo_th.DateTimeFormat);
+            }
+            else
+            {
+                textbox.Texts = "  /  /    ";
             }
         }
 

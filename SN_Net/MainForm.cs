@@ -71,6 +71,10 @@ namespace SN_Net
             else
             {
                 this.sn_wind.Activate();
+                if (sn_wind.current_focused_control != null)
+                {
+                    sn_wind.current_focused_control.Focus();
+                }
             }
         }
 

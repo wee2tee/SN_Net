@@ -1,6 +1,6 @@
 ﻿namespace SN_Net.MiscClass
 {
-    partial class TextBoxMaskedWithLabel
+    partial class CustomTextBoxMaskedWithLabel
     {
         /// <summary> 
         /// Required designer variable.
@@ -55,18 +55,19 @@
             this.txtStatic.Size = new System.Drawing.Size(69, 16);
             this.txtStatic.TabIndex = 2;
             // 
-            // TextBoxMaskedWithLabel
+            // CustomTextBoxMaskedWithLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.txtStatic);
             this.Controls.Add(this.txtEdit);
             this.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "TextBoxMaskedWithLabel";
-            this.Size = new System.Drawing.Size(327, 31);
+            this.Name = "CustomTextBoxMaskedWithLabel";
+            this.Size = new System.Drawing.Size(325, 21);
             this.Load += new System.EventHandler(this.TextBoxMaskedWithLabel_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.TextBoxMaskedWithLabel_Paint);
             this.ResumeLayout(false);

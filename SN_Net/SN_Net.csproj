@@ -92,6 +92,24 @@
     <Compile Include="MiscClass\Clean.cs" />
     <Compile Include="MiscClass\ColorResource.cs" />
     <Compile Include="MiscClass\CompareString.cs" />
+    <Compile Include="MiscClass\CustomComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomComboBox.Designer.cs">
+      <DependentUpon>CustomComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateTimePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateTimePicker.Designer.cs">
+      <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\CustomMaskedTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomMaskedTextBox.Designer.cs">
+      <DependentUpon>CustomMaskedTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="MiscClass\CustomTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,11 +132,11 @@
     <Compile Include="MiscClass\ServerResult.cs" />
     <Compile Include="MiscClass\SetFormMode.cs" />
     <Compile Include="MiscClass\StringResource.cs" />
-    <Compile Include="MiscClass\TextBoxMaskedWithLabel.cs">
+    <Compile Include="MiscClass\CustomTextBoxMaskedWithLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MiscClass\TextBoxMaskedWithLabel.Designer.cs">
-      <DependentUpon>TextBoxMaskedWithLabel.cs</DependentUpon>
+    <Compile Include="MiscClass\CustomTextBoxMaskedWithLabel.Designer.cs">
+      <DependentUpon>CustomTextBoxMaskedWithLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\TransparentPanel.cs">
       <SubType>Component</SubType>
@@ -327,11 +345,20 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomComboBox.resx">
+      <DependentUpon>CustomComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomDateTimePicker.resx">
+      <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomMaskedTextBox.resx">
+      <DependentUpon>CustomMaskedTextBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomTextBox.resx">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MiscClass\TextBoxMaskedWithLabel.resx">
-      <DependentUpon>TextBoxMaskedWithLabel.cs</DependentUpon>
+    <EmbeddedResource Include="MiscClass\CustomTextBoxMaskedWithLabel.resx">
+      <DependentUpon>CustomTextBoxMaskedWithLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -9,50 +9,56 @@ using System.Windows.Forms;
 
 namespace SN_Net.MiscClass
 {
-    public partial class CustomTextBox : UserControl
+    public partial class CustomMaskedTextBox : UserControl
     {
         private bool readOnly;
         private string text;
-        private int maxchar;
-        private bool characterUpperCase;
+        private string maskString;
+        private int selectedStringBegin;
+        private int selectedStringLength;
 
-        public CustomTextBox()
+        public CustomMaskedTextBox()
         {
             InitializeComponent();
+            //this.textBox1.Mask = "";
+            this.textBox1.PromptChar = ' ';
+            this.Height = 23;
             this.textBox1.Text = "";
             this.label1.Text = "";
-            
-            this.ReadOnly = true;
+
+            this.Read_Only = true;
             this.ShowHideControl();
             this.BackColor = Color.White;
             this.textBox1.BackColor = Color.White;
         }
 
-        public int SelectionStart
+        public int SelectedStringBegin
         {
             get
             {
-                return this.textBox1.SelectionStart;
+                return this.selectedStringBegin;
             }
             set
             {
+                this.selectedStringBegin = value;
                 this.textBox1.SelectionStart = value;
             }
         }
 
-        public int SelectionLength
+        public int SelectedStringEnd
         {
             get
             {
-                return this.textBox1.SelectionLength;
+                return this.selectedStringLength;
             }
             set
             {
+                this.selectedStringLength = value;
                 this.textBox1.SelectionLength = value;
             }
         }
 
-        public bool ReadOnly
+        public bool Read_Only
         {
             get
             {
@@ -69,7 +75,7 @@ namespace SN_Net.MiscClass
         {
             get
             {
-                return this.textBox1.Text;
+                return this.text;
             }
             set
             {
@@ -79,38 +85,22 @@ namespace SN_Net.MiscClass
             }
         }
 
-        public int MaxChar
+        public string MaskString
         {
             get
             {
-                return this.maxchar;
+                return this.maskString;
             }
             set
             {
-                this.maxchar = value;
-                this.textBox1.MaxLength = this.maxchar;
+                this.maskString = value;
+                this.textBox1.Mask = value;
             }
         }
 
-        public bool CharUpperCase
-        {
-            get
-            {
-                return this.characterUpperCase;
-            }
-            set
-            {
-                this.characterUpperCase = value;
-                this.CharCasingControl();
-            }
-        }
-
-        private void CustomTextBox_Load(object sender, EventArgs e)
+        private void CustomMaskedTextBox_Load(object sender, EventArgs e)
         {
             this.BindingEventWithChildControl();
-
-            this.textBox1.Size = new Size(this.ClientSize.Width - 5, this.textBox1.Height);
-            this.label1.Size = new Size(this.ClientSize.Width - 2, this.label1.Height);
         }
 
         private void ShowHideControl()
@@ -127,47 +117,40 @@ namespace SN_Net.MiscClass
             }
         }
 
-        private void CharCasingControl()
+        protected override void OnEnter(EventArgs e)
         {
-            if (this.characterUpperCase)
+            if (!this.readOnly)
             {
-                this.textBox1.CharacterCasing = CharacterCasing.Upper;
+                this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                this.textBox1.ForeColor = Color.Black;
             }
-            else
-            {
-                this.textBox1.CharacterCasing = CharacterCasing.Normal;
-            }
+            base.OnEnter(e);
+        }
+
+        protected override void OnLeave(EventArgs e)
+        {
+            this.BackColor = Color.White;
+            this.textBox1.BackColor = Color.White;
+            this.textBox1.ForeColor = Color.Black;
+            this.label1.ForeColor = Color.Black;
+            base.OnLeave(e);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            this.textBox1.Size = new Size(this.ClientSize.Width - 5, this.textBox1.Height);
+            this.label1.Size = new Size(this.ClientSize.Width - 2, this.label1.Height);
+            base.OnSizeChanged(e);
         }
 
         private void BindingEventWithChildControl()
         {
-            this.Enter += delegate
-            {
-                if (this.ReadOnly)
-                {
-                    this.BackColor = Color.White;
-                }
-                else
-                {
-                    this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-                    this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-                }
-            };
-
             this.GotFocus += delegate
             {
-                if (!this.ReadOnly)
+                if (!this.Read_Only)
                 {
                     this.textBox1.Focus();
-                }
-            };
-
-            this.Leave += delegate
-            {
-                if (!this.ReadOnly)
-                {
-                    this.BackColor = Color.White;
-                    this.textBox1.BackColor = Color.White;
                 }
             };
 
@@ -181,11 +164,6 @@ namespace SN_Net.MiscClass
             {
                 this.textBox1.Font = this.Font;
                 this.label1.Font = this.Font;
-            };
-
-            this.SizeChanged += delegate
-            {
-                this.textBox1.Size = new Size(this.ClientSize.Width - 3, this.textBox1.Height);
             };
 
             this.textBox1.TextChanged += delegate
