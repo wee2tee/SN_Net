@@ -71,9 +71,8 @@
             this.txtUser.MaxLength = 20;
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(164, 23);
-            this.txtUser.TabIndex = 2;
+            this.txtUser.TabIndex = 0;
             this.txtUser.Text = "WEE";
-            this.txtUser.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUser_KeyDown);
             // 
             // txtPassword
             // 
@@ -84,9 +83,8 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(164, 23);
-            this.txtPassword.TabIndex = 3;
+            this.txtPassword.TabIndex = 1;
             this.txtPassword.Text = "12345";
-            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
             // groupBox1
             // 
@@ -106,7 +104,7 @@
             this.btnLoginSubmit.Location = new System.Drawing.Point(98, 114);
             this.btnLoginSubmit.Name = "btnLoginSubmit";
             this.btnLoginSubmit.Size = new System.Drawing.Size(86, 30);
-            this.btnLoginSubmit.TabIndex = 4;
+            this.btnLoginSubmit.TabIndex = 2;
             this.btnLoginSubmit.Text = "ตกลง";
             this.btnLoginSubmit.UseVisualStyleBackColor = true;
             this.btnLoginSubmit.Click += new System.EventHandler(this.btnLoginSubmit_Click);
@@ -118,7 +116,7 @@
             this.btnLoginCancel.Location = new System.Drawing.Point(201, 114);
             this.btnLoginCancel.Name = "btnLoginCancel";
             this.btnLoginCancel.Size = new System.Drawing.Size(86, 30);
-            this.btnLoginCancel.TabIndex = 6;
+            this.btnLoginCancel.TabIndex = 3;
             this.btnLoginCancel.Text = "ยกเลิก";
             this.btnLoginCancel.UseVisualStyleBackColor = true;
             // 
@@ -128,7 +126,7 @@
             this.btnPreference.Location = new System.Drawing.Point(319, 114);
             this.btnPreference.Name = "btnPreference";
             this.btnPreference.Size = new System.Drawing.Size(30, 30);
-            this.btnPreference.TabIndex = 8;
+            this.btnPreference.TabIndex = 4;
             this.toolTip1.SetToolTip(this.btnPreference, "Preferences");
             this.btnPreference.UseVisualStyleBackColor = true;
             this.btnPreference.Click += new System.EventHandler(this.btnPreference_Click);
@@ -143,9 +141,11 @@
             this.Controls.Add(this.btnLoginSubmit);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.Shown += new System.EventHandler(this.LoginForm_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

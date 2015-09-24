@@ -31,6 +31,7 @@ namespace SN_Net.Subform
         public GlobalVar G = new GlobalVar();
         private string system_path;
         private string appdata_path;
+        private Control current_focused_control;
 
         public LoginForm()
         {
@@ -40,6 +41,30 @@ namespace SN_Net.Subform
             system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             appdata_path = Path.Combine(system_path, "SN_Net\\");
             Console.WriteLine(appdata_path);
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            this.txtUser.GotFocus += delegate
+            {
+                this.current_focused_control = this.txtUser;
+            };
+            this.txtPassword.GotFocus += delegate
+            {
+                this.current_focused_control = this.txtPassword;
+            };
+            this.btnLoginSubmit.GotFocus += delegate
+            {
+                this.current_focused_control = this.btnLoginSubmit;
+            };
+            this.btnLoginCancel.GotFocus += delegate
+            {
+                this.current_focused_control = this.btnLoginCancel;
+            };
+            this.btnPreference.GotFocus += delegate
+            {
+                this.current_focused_control = this.btnPreference;
+            };
         }
 
         private void LoginForm_Shown(object sender, EventArgs e)
@@ -117,28 +142,29 @@ namespace SN_Net.Subform
             }
         }
 
-
-
-        private void txtUser_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyValue == 13)
-            {
-                this.txtPassword.Focus();
-            }
-        }
-
-        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyValue == 13)
-            {
-                this.submitLogin();
-            }
-        }
-
         private void btnPreference_Click(object sender, EventArgs e)
         {
             PreferenceForm wind = new PreferenceForm();
             wind.ShowDialog();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                if (!(this.current_focused_control is Button))
+                {
+                    if (this.current_focused_control == this.txtPassword)
+                    {
+                        this.submitLogin();
+                        return true;
+                    }
+
+                    SendKeys.Send("{TAB}");
+                    return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

@@ -77,6 +77,8 @@ namespace SN_Net.Subform
 
         private void DealerWindow_Load(object sender, EventArgs e)
         {
+            this.lblArea_typdes.Text = "";
+
             this.list_customtextbox.Add(this.txtDealer);
             this.list_customtextbox.Add(this.txtPrenam);
             this.list_customtextbox.Add(this.txtCompnam);
@@ -297,7 +299,7 @@ namespace SN_Net.Subform
             this.txtArea.Texts = this.dealer.area;
             this.lblArea_typdes.Text = (this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Texts) != null ? this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Texts).typdes_th : "");
             this.txtRemark.Texts = this.dealer.remark;
-            //this.dgvSerial.DataSource = this.serial;
+            
             this.FillDataGridSerial();
         }
 
@@ -961,6 +963,36 @@ namespace SN_Net.Subform
         }
         #endregion SET FORM MODE
 
+        public void collapseToolstrip()
+        {
+            //this.toolStrip1.SetBounds(this.toolStrip1.Location.X, this.toolStrip1.Location.Y, this.toolStrip1.ClientSize.Width, 0);
+        }
+
+        private void DealerWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
+            //{
+            //    if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
+            //    {
+            //        MainForm main_form = this.MdiParent as MainForm;
+            //        main_form.dealer_wind = null;
+            //        e.Cancel = false;
+            //    }
+            //    else
+            //    {
+            //        e.Cancel = true;
+            //    }
+            //}
+            //else
+            //{
+            //    MainForm main_form = this.MdiParent as MainForm;
+            //    main_form.dealer_wind = null;
+            //}
+
+            MainForm main_form = this.MdiParent as MainForm;
+            main_form.dealer_wind = null;
+        }
+
         #region SET TOOLSTRIP ACTION
         private void toolStripFirst_Click(object sender, EventArgs e)
         {
@@ -1300,195 +1332,6 @@ namespace SN_Net.Subform
                 this.GetDealerByID(wind.selected_id);
             }
         }
-        #endregion SET TOOLSTRIP ACTION
-
-
-        public void collapseToolstrip()
-        {
-            //this.toolStrip1.SetBounds(this.toolStrip1.Location.X, this.toolStrip1.Location.Y, this.toolStrip1.ClientSize.Width, 0);
-        }
-
-        private void DealerWindow_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
-            //{
-            //    if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
-            //    {
-            //        MainForm main_form = this.MdiParent as MainForm;
-            //        main_form.dealer_wind = null;
-            //        e.Cancel = false;
-            //    }
-            //    else
-            //    {
-            //        e.Cancel = true;
-            //    }
-            //}
-            //else
-            //{
-            //    MainForm main_form = this.MdiParent as MainForm;
-            //    main_form.dealer_wind = null;
-            //}
-
-            MainForm main_form = this.MdiParent as MainForm;
-            main_form.dealer_wind = null;
-        }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Enter)
-            {
-                if (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT)
-                {
-                    if (this.current_focused_control == this.txtRemark)
-                    {
-                        this.toolStripSave.PerformClick();
-                    }
-                    else
-                    {
-                        SendKeys.Send("{TAB}");
-                        return true;
-                    }
-                }
-            }
-            if (keyData == Keys.Escape)
-            {
-                this.toolStripStop.PerformClick();
-                return true;
-            }
-            if (keyData == Keys.Tab && this.form_state == FORM_STATE.READ)
-            {
-                DataInfo data_info = new DataInfo();
-                data_info.lblDataTable.Text = "DEALER";
-                data_info.lblExpression.Text = (this.sort_mode == SORT_MODE.DEALER ? "dealer" : this.GetSortFieldName() + "+dealer");
-                data_info.lblRecBy.Text = this.dealer.users_name;
-                data_info.lblRecDate.pickedDate(this.dealer.chgdat);
-                data_info.lblTime.ForeColor = Color.DarkGray;
-                data_info.lblRecTime.BackColor = Color.WhiteSmoke;
-                data_info.lblRecNo.Text = this.dealer.id.ToString();
-                data_info.lblTotalRec.Text = this.dealer_id_list.Max(t => t.id).ToString();
-                data_info.ShowDialog();
-                return true;
-            }
-            if (keyData == Keys.F3)
-            {
-                if (this.form_state == FORM_STATE.READ)
-                {
-                    this.tabControl1.SelectedTab = this.tabPage1;
-                    return true;
-                }
-            }
-            if (keyData == Keys.F4)
-            {
-                if (this.form_state == FORM_STATE.READ)
-                {
-                    this.tabControl1.SelectedTab = this.tabPage2;
-                    return true;
-                }
-            }
-            if (keyData == Keys.PageUp && this.form_state == FORM_STATE.READ)
-            {
-                this.toolStripPrev.PerformClick();
-                return true;
-            }
-            if (keyData == Keys.PageDown && this.form_state == FORM_STATE.READ)
-            {
-                this.toolStripNext.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Control | Keys.Home) && this.form_state == FORM_STATE.READ)
-            {
-                this.toolStripFirst.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Control | Keys.End) && this.form_state == FORM_STATE.READ)
-            {
-                this.toolStripLast.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.A))
-            {
-                this.toolStripAdd.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.E))
-            {
-                this.toolStripEdit.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D))
-            {
-                this.toolStripDelete.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.S))
-            {
-                this.toolStripSearchCode.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Control | Keys.L))
-            {
-                this.toolStripInquiryAll.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.K))
-            {
-                this.toolStripInquiryCondition.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.L))
-            {
-                this.toolStripInquiryRest.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.P))
-            {
-                this.toolStripPrintLabel3Col.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Control | Keys.P))
-            {
-                this.toolStripPrintLittleEnv.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D2))
-            {
-                this.toolStripSearchContact.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D3))
-            {
-                this.toolStripSearchName.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D4))
-            {
-                this.toolStripSearchArea.PerformClick();
-                return true;
-            }
-            if (keyData == Keys.F6 && this.current_focused_control == this.txtArea && (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT))
-            {
-                this.btnBrowseArea.PerformClick();
-            }
-            if (keyData == Keys.F9 && (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT))
-            {
-                this.toolStripSave.PerformClick();
-            }
-            if (keyData == Keys.F7 && this.form_state == FORM_STATE.READ)
-            {
-                this.tabControl1.SelectedTab = this.tabPage2;
-                this.dgvSerial.Focus();
-                this.FormReadItemF7();
-                return true;
-            }
-            if (keyData == Keys.F8 && this.form_state == FORM_STATE.READ)
-            {
-                this.tabControl1.SelectedTab = this.tabPage1;
-                this.dgvRemark.Focus();
-                this.FormReadItemF8();
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
 
         private void toolStripPrintLittleEnv_Click(object sender, EventArgs e)
         {
@@ -1516,7 +1359,7 @@ namespace SN_Net.Subform
             PageSetupDialog page_setup = new PageSetupDialog();
             page_setup.Document = this.print_doc;
             page_setup.PageSettings.PaperSize = new PaperSize("Little Envelope", 910, 425);
-            
+
 
             PrintOutputSelection wind = new PrintOutputSelection();
             if (wind.ShowDialog() == DialogResult.OK)
@@ -1544,7 +1387,7 @@ namespace SN_Net.Subform
                 }
                 if (wind.output == PrintOutputSelection.OUTPUT.FILE)
                 {
-                    
+
                 }
             }
             else
@@ -1638,7 +1481,7 @@ namespace SN_Net.Subform
 
                 print_doc.BeginPrint += delegate(object o, PrintEventArgs pe)
                 {
-                                        string json_data = "{\"dealer_from\":\"" + wind.dealer_from + "\",";
+                    string json_data = "{\"dealer_from\":\"" + wind.dealer_from + "\",";
                     json_data += "\"dealer_to\":\"" + wind.dealer_to + "\",";
                     json_data += "\"condition\":\"" + wind.condition + "\"}";
 
@@ -1647,7 +1490,7 @@ namespace SN_Net.Subform
 
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                     {
-                        if(sr.dealer.Count > 0)
+                        if (sr.dealer.Count > 0)
                         {
                             list_dealer = sr.dealer;
                         }
@@ -1790,7 +1633,7 @@ namespace SN_Net.Subform
 
                 print_doc.BeginPrint += delegate(object o, PrintEventArgs pe)
                 {
-                                        string json_data = "{\"dealer_from\":\"" + wind.dealer_from + "\",";
+                    string json_data = "{\"dealer_from\":\"" + wind.dealer_from + "\",";
                     json_data += "\"dealer_to\":\"" + wind.dealer_to + "\",";
                     json_data += "\"condition\":\"" + wind.condition + "\"}";
 
@@ -1799,7 +1642,7 @@ namespace SN_Net.Subform
 
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                     {
-                        if(sr.dealer.Count > 0)
+                        if (sr.dealer.Count > 0)
                         {
                             list_dealer = sr.dealer;
                         }
@@ -1924,6 +1767,177 @@ namespace SN_Net.Subform
         private void toolStripPrint_ButtonClick(object sender, EventArgs e)
         {
             this.toolStripPrintLabel3Col.PerformClick();
+        }
+
+        private void toolStripReload_Click(object sender, EventArgs e)
+        {
+            this.GetDealerByID(this.dealer.id);
+        }
+        #endregion SET TOOLSTRIP ACTION
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                if (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT)
+                {
+                    if (this.current_focused_control == this.txtRemark)
+                    {
+                        this.toolStripSave.PerformClick();
+                        return true;
+                    }
+                    else
+                    {
+                        SendKeys.Send("{TAB}");
+                        return true;
+                    }
+                }
+            }
+            if (keyData == Keys.Escape)
+            {
+                this.toolStripStop.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.Tab && this.form_state == FORM_STATE.READ)
+            {
+                DataInfo data_info = new DataInfo();
+                data_info.lblDataTable.Text = "DEALER";
+                data_info.lblExpression.Text = (this.sort_mode == SORT_MODE.DEALER ? "dealer" : this.GetSortFieldName() + "+dealer");
+                data_info.lblRecBy.Text = this.dealer.users_name;
+                data_info.lblRecDate.pickedDate(this.dealer.chgdat);
+                data_info.lblTime.ForeColor = Color.DarkGray;
+                data_info.lblRecTime.BackColor = Color.WhiteSmoke;
+                data_info.lblRecNo.Text = this.dealer.id.ToString();
+                data_info.lblTotalRec.Text = this.dealer_id_list.Max(t => t.id).ToString();
+                data_info.ShowDialog();
+                return true;
+            }
+            if (keyData == Keys.F3)
+            {
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage1;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F4)
+            {
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage2;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F5)
+            {
+                this.toolStripReload.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.PageUp && this.form_state == FORM_STATE.READ)
+            {
+                this.toolStripPrev.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.PageDown && this.form_state == FORM_STATE.READ)
+            {
+                this.toolStripNext.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.Home) && this.form_state == FORM_STATE.READ)
+            {
+                this.toolStripFirst.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.End) && this.form_state == FORM_STATE.READ)
+            {
+                this.toolStripLast.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.A))
+            {
+                this.toolStripAdd.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.E))
+            {
+                this.toolStripEdit.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D))
+            {
+                this.toolStripDelete.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.S))
+            {
+                this.toolStripSearchCode.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.L))
+            {
+                this.toolStripInquiryAll.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.K))
+            {
+                this.toolStripInquiryCondition.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.L))
+            {
+                this.toolStripInquiryRest.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.P))
+            {
+                this.toolStripPrintLabel3Col.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.P))
+            {
+                this.toolStripPrintLittleEnv.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D2))
+            {
+                this.toolStripSearchContact.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D3))
+            {
+                this.toolStripSearchName.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D4))
+            {
+                this.toolStripSearchArea.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F6 && this.current_focused_control == this.txtArea && (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT))
+            {
+                this.btnBrowseArea.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F9 && (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT))
+            {
+                this.toolStripSave.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F7 && this.form_state == FORM_STATE.READ)
+            {
+                this.tabControl1.SelectedTab = this.tabPage2;
+                this.dgvSerial.Focus();
+                this.FormReadItemF7();
+                return true;
+            }
+            if (keyData == Keys.F8 && this.form_state == FORM_STATE.READ)
+            {
+                this.tabControl1.SelectedTab = this.tabPage1;
+                this.dgvRemark.Focus();
+                this.FormReadItemF8();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
