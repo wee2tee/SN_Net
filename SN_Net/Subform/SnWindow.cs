@@ -584,6 +584,7 @@ namespace SN_Net.Subform
         {
             this.form_mode = FORM_MODE.READ;
             this.toolStripProcessing.Visible = false;
+            this.toolStripInfo.Text = "";
 
             #region Toolstrip Button
             this.toolStripAdd.Enabled = true;
@@ -998,6 +999,7 @@ namespace SN_Net.Subform
             #endregion no use
             this.form_mode = FORM_MODE.READ_ITEM;
             this.toolStripProcessing.Visible = false;
+            this.toolStripInfo.Text = "";
 
             #region Toolstrip Button
             this.toolStripAdd.Enabled = false;
@@ -1284,14 +1286,14 @@ namespace SN_Net.Subform
         #region DataGridView Event Handler
         private void dgvProblem_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (this.form_mode == FORM_MODE.READ)
-            {
-                if (e.RowIndex >= 0)
-                {
-                    this.FormReadItem();
-                    this.dgvProblem.Rows[e.RowIndex].Cells[1].Selected = true;
-                }
-            }
+            //if (this.form_mode == FORM_MODE.READ)
+            //{
+            //    if (e.RowIndex >= 0)
+            //    {
+            //        this.FormReadItem();
+            //        this.dgvProblem.Rows[e.RowIndex].Cells[1].Selected = true;
+            //    }
+            //}
         }
 
         private void ManageDataGridRow()
@@ -1330,7 +1332,7 @@ namespace SN_Net.Subform
 
         private void dgvProblem_Paint(object sender, PaintEventArgs e)
         {
-            if (this.form_mode == FORM_MODE.READ_ITEM || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            if (this.form_mode == FORM_MODE.READ || this.form_mode == FORM_MODE.READ_ITEM || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
             {
                 DataGridViewRow row = ((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex];
                 Rectangle row_rect = ((DataGridView)sender).GetRowDisplayRectangle(row.Index, false);
@@ -1382,6 +1384,15 @@ namespace SN_Net.Subform
                     ContextMenu m = new ContextMenu();
                     if (this.dgvProblem.Rows[current_over_row].Tag is Problem)
                     {
+                        MenuItem m_add = new MenuItem("Add data <Alt+A>");
+                        m_add.Click += delegate
+                        {
+                            int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                            this.dgvProblem.Rows[problem_count].Cells[1].Selected = true;
+                            this.showInlineProblemForm(this.dgvProblem.Rows[problem_count]);
+                        };
+                        m.MenuItems.Add(m_add);
+
                         MenuItem m_edit = new MenuItem("Edit data <Alt+E>");
                         m_edit.Click += delegate
                         {
@@ -1501,7 +1512,9 @@ namespace SN_Net.Subform
             date.textBox1.GotFocus += delegate
             {
                 this.current_focused_control = date;
+                this.toolStripInfo.Text = this.toolTip1.GetToolTip(date);
             };
+            toolTip1.SetToolTip(date, "<F6> = Show Calendar");
             CustomTextBox name = new CustomTextBox();
             name.Name = "inline_problem_name";
             name.BringToFront();
@@ -1510,6 +1523,7 @@ namespace SN_Net.Subform
             name.textBox1.GotFocus += delegate
             {
                 this.current_focused_control = name;
+                this.toolStripInfo.Text = this.toolTip1.GetToolTip(name);
             };
             CustomTextBox probcod = new CustomTextBox();
             probcod.Name = "inline_problem_probcod";
@@ -1519,6 +1533,8 @@ namespace SN_Net.Subform
             probcod.textBox1.GotFocus += delegate
             {
                 this.current_focused_control = probcod;
+                this.toolStripInfo.Text = this.toolTip1.GetToolTip(probcod);
+                Console.WriteLine(" # current control : " + probcod.Name);
             };
             probcod.textBox1.Leave += delegate
             {
@@ -1536,9 +1552,21 @@ namespace SN_Net.Subform
             probdesc.Name = "inline_problem_probdesc";
             probdesc.BringToFront();
             probdesc.BorderStyle = BorderStyle.None;
+            probdesc.txtEdit.Enter += delegate
+            {
+                
+            };
             probdesc.txtEdit.GotFocus += delegate
             {
+                if (this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == probcod.Texts) == null)
+                {
+                    SendKeys.Send("+{TAB}");
+                    SendKeys.Send("{F6}");
+                    return;
+                }
                 this.current_focused_control = probdesc;
+                this.toolStripInfo.Text = this.toolTip1.GetToolTip(probdesc);
+                Console.WriteLine(" # current control : " + probdesc.Name);
             };
 
             if (row.Tag is Problem) // edit existing problem
@@ -2273,6 +2301,7 @@ namespace SN_Net.Subform
         #region ToolStrip click event handler
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
             this.FormAdd();
             this.EditControlBlank();
         }
@@ -2358,10 +2387,32 @@ namespace SN_Net.Subform
             }
             else if (this.form_mode == FORM_MODE.ADD_ITEM)
             {
+                Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true);
+                if (ct.Length > 0)
+                {
+                    CustomTextBox probcod = (CustomTextBox)ct[0];
+                    if (this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == probcod.Texts) == null) // if probcod is invalid
+                    {
+                        probcod.Focus();
+                        SendKeys.Send("{F6}");
+                        return;
+                    }
+                }
                 this.SubmitAddProblem();
             }
             else if (this.form_mode == FORM_MODE.EDIT_ITEM)
             {
+                Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true);
+                if (ct.Length > 0)
+                {
+                    CustomTextBox probcod = (CustomTextBox)ct[0];
+                    if (this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == probcod.Texts) == null) // if probcod is invalid
+                    {
+                        probcod.Focus();
+                        SendKeys.Send("{F6}");
+                        return;
+                    }
+                }
                 this.SubmitEditProblem();
             }
         }
@@ -2963,337 +3014,6 @@ namespace SN_Net.Subform
             main_form.sn_wind = null;
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Tab && this.form_mode == FORM_MODE.READ)
-            {
-                DataInfo data_info = new DataInfo();
-
-                int max_id = 0;
-                foreach (Serial s in this.serial_id_list)
-                {
-                    if (s.id > max_id)
-                    {
-                        max_id = s.id;
-                    }
-                }
-
-                data_info.lblDataTable.Text = "Serial";
-                data_info.lblExpression.Text = (this.sortMode == SORT_SN ? this.sortMode : this.sortMode + "+sernum");
-                data_info.lblRecBy.Text = this.serial.users_name;
-                data_info.lblRecDate.pickedDate(this.serial.chgdat);
-                data_info.lblRecNo.Text = this.serial.id.ToString();
-                data_info.lblTotalRec.Text = max_id.ToString();
-                data_info.lblTime.ForeColor = Color.DarkGray;
-                data_info.lblRecTime.BackColor = Color.WhiteSmoke;
-                data_info.ShowDialog();
-                return true;
-            }
-            if (keyData == Keys.Tab && this.form_mode == FORM_MODE.READ_ITEM)
-            {
-                if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
-                {
-                    CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "problem/get_info&id=" + ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).id.ToString());
-                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-
-                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                    {
-                        if (sr.problem.Count > 0)
-                        {
-                            DataInfo data_info = new DataInfo();
-                            data_info.lblDataTable.Text = "Problem";
-                            data_info.lblExpression.Text = "sernum+date";
-                            data_info.lblRecBy.Text = sr.problem.First<Problem>().users_name;
-                            data_info.lblRecDate.pickedDate(sr.problem.First<Problem>().date);
-                            data_info.lblRecTime.Text = sr.problem.First<Problem>().time;
-                            data_info.lblRecNo.Text = sr.problem.First<Problem>().id.ToString();
-                            data_info.lblTotalRec.Text = sr.message;
-                            data_info.ShowDialog();
-                        }
-                    }
-
-                }
-                return true;
-            }
-            if(keyData == (Keys.Alt | Keys.A))
-            {
-                if (this.form_mode == FORM_MODE.READ_ITEM)
-                {
-                    int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
-                    this.dgvProblem.Rows[problem_count].Cells[1].Selected = true;
-                    this.showInlineProblemForm(this.dgvProblem.Rows[problem_count]);
-                    return true;
-                }
-                else if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.toolStripAdd.PerformClick();
-                    return true;
-                }
-            }
-            if (keyData == (Keys.Alt | Keys.E))
-            {
-                if (this.form_mode == FORM_MODE.READ_ITEM)
-                {
-                    if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
-                    {
-                        this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
-                        return true;
-                    }
-                }
-                else
-                {
-                    this.toolStripEdit.PerformClick();
-                    return true;
-                }
-            }
-            if(keyData == Keys.Enter && (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
-            {
-                if (this.current_focused_control == this.dtVerextdat || this.current_focused_control.Name == "inline_problem_probdesc")
-                {
-                    this.toolStripSave.PerformClick();
-                    return true;
-                }
-
-                SendKeys.Send("{TAB}");
-                return true;
-            }
-            if (keyData == Keys.Escape)
-            {
-                if(!(this.current_focused_control is CustomDateTimePicker)) // if current_focused_control is not CustomDateTimePicker
-                {
-                    if (!(this.current_focused_control is CustomComboBox)) // and if current_focused_control is not CustomComboBox
-                    {
-                        this.toolStripStop.PerformClick();
-                        this.current_focused_control = null;
-                        return true;
-                    }
-                    else
-                    {
-                        if (!((CustomComboBox)this.current_focused_control).item_shown) // if CustomComboBox is currently not showing items.
-                        {
-                            this.toolStripStop.PerformClick();
-                            this.current_focused_control = null;
-                            return true;
-                        }
-                        else // then if CustomComboBox is currently showing calendar just close the items portion.
-                        {
-                            SendKeys.Send("{F4}");
-                            return true;
-                        }
-                    }
-                }
-                else
-                {
-                    if (!((CustomDateTimePicker)this.current_focused_control).calendar_shown) // if CustomDateTimePicker is currently not showing calendar.
-                    {
-                        this.toolStripStop.PerformClick();
-                        this.current_focused_control = null;
-                        return true;
-                    }
-                    // then if CustomDateTimePicker is currently showing calendar just close the calendar.
-                }
-            }
-            if (keyData == Keys.F6)
-            {
-                if (this.current_focused_control != null)
-                {
-                    if (this.current_focused_control == this.txtArea)
-                    {
-                        this.btnBrowseArea.PerformClick();
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.txtBusityp)
-                    {
-                        this.btnBrowseBusityp.PerformClick();
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.txtDealer)
-                    {
-                        this.btnBrowseDealer.PerformClick();
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.txtHowknown)
-                    {
-                        this.btnBrowseHowknown.PerformClick();
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.dtPurdat)
-                    {
-                        this.dtPurdat.dateTimePicker1.Focus();
-                        SendKeys.Send("{F4}");
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.dtExpdat)
-                    {
-                        this.dtExpdat.dateTimePicker1.Focus();
-                        SendKeys.Send("{F4}");
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.dtManual)
-                    {
-                        this.dtManual.dateTimePicker1.Focus();
-                        SendKeys.Send("{F4}");
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.dtVerextdat)
-                    {
-                        this.dtVerextdat.dateTimePicker1.Focus();
-                        SendKeys.Send("{F4}");
-                        return true;
-                    }
-                    else if (this.current_focused_control == this.cbVerext)
-                    {
-                        SendKeys.Send("{F4}");
-                        return true;
-                    }
-                    else if (this.current_focused_control.Name == "inline_problem_date" && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
-                    {
-                        Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_date", true);
-                        if (ct.Length > 0)
-                        {
-                            CustomDateTimePicker dt = (CustomDateTimePicker)ct[0];
-                            dt.dateTimePicker1.Focus();
-                            SendKeys.Send("{F4}");
-                            return true;
-                        }
-                    }
-                    else if (this.current_focused_control.Name == "inline_problem_probcod" && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
-                    {
-                        Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true);
-                        if (ct.Length > 0)
-                        {
-                            CustomTextBox probcod = (CustomTextBox)ct[0];
-                            probcod.Focus();
-                            IstabList wind = new IstabList(this.main_form, probcod.Texts, Istab.TABTYP.PROBLEM_CODE);
-                            if (wind.ShowDialog() == DialogResult.OK)
-                            {
-                                probcod.Texts = wind.istab.typcod;
-                                SendKeys.Send("{TAB}");
-                            }
-                            return true;
-                        }
-                    }
-                }
-            }
-            if (keyData == Keys.PageUp)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.toolStripPrevious.PerformClick();
-                    return true;
-                }
-            }
-            if (keyData == Keys.PageDown)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.toolStripNext.PerformClick();
-                    return true;
-                }
-            }
-            if (keyData == (Keys.Control | Keys.Home))
-            {
-                this.toolStripFirst.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Control | Keys.End))
-            {
-                this.toolStripLast.PerformClick();
-                return true;
-            }
-            if (keyData == Keys.F3)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.tabControl1.SelectedTab = this.tabPage1;
-                    return true;
-                }
-            }
-            if (keyData == Keys.F4)
-            {
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    this.tabControl1.SelectedTab = this.tabPage2;
-                    return true;
-                }
-            }
-            if (keyData == Keys.F5)
-            {
-                this.toolStripReload.PerformClick();
-                return true;
-            }
-            if (keyData == Keys.F8)
-            {
-                this.toolStripItem.PerformClick();
-                return true;
-            }
-            if (keyData == Keys.F9)
-            {
-                this.toolStripSave.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D))
-            {
-                if (this.form_mode == FORM_MODE.READ_ITEM)
-                {
-                    this.deleteProblemData();
-                    return true;
-                }
-                else
-                {
-                    this.toolStripDelete.PerformClick();
-                    return true;
-                }
-            }
-            if (keyData == (Keys.Control | Keys.L))
-            {
-                this.toolStripInquiryAll.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.L))
-            {
-                this.toolStripInquiryRest.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.S))
-            {
-                this.toolStripSearchSN.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D2))
-            {
-                this.toolStripSearchContact.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D3))
-            {
-                this.toolStripSearchCompany.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D4))
-            {
-                this.toolStripSearchDealer.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D5))
-            {
-                this.toolStripSearchOldnum.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D6))
-            {
-                this.toolStripSearchBusityp.PerformClick();
-                return true;
-            }
-            if (keyData == (Keys.Alt | Keys.D7))
-            {
-                this.toolStripSearchArea.PerformClick();
-                return true;
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
         private void toolStripAdd_EnabledChanged(object sender, EventArgs e)
         {
             if (((ToolStripButton)sender).Enabled)
@@ -3614,6 +3334,337 @@ namespace SN_Net.Subform
         {
             ImportListForm wind = new ImportListForm(this);
             wind.ShowDialog();
+        }
+        
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Tab && this.form_mode == FORM_MODE.READ)
+            {
+                DataInfo data_info = new DataInfo();
+
+                int max_id = 0;
+                foreach (Serial s in this.serial_id_list)
+                {
+                    if (s.id > max_id)
+                    {
+                        max_id = s.id;
+                    }
+                }
+
+                data_info.lblDataTable.Text = "Serial";
+                data_info.lblExpression.Text = (this.sortMode == SORT_SN ? this.sortMode : this.sortMode + "+sernum");
+                data_info.lblRecBy.Text = this.serial.users_name;
+                data_info.lblRecDate.pickedDate(this.serial.chgdat);
+                data_info.lblRecNo.Text = this.serial.id.ToString();
+                data_info.lblTotalRec.Text = max_id.ToString();
+                data_info.lblTime.ForeColor = Color.DarkGray;
+                data_info.lblRecTime.BackColor = Color.WhiteSmoke;
+                data_info.ShowDialog();
+                return true;
+            }
+            if (keyData == Keys.Tab && this.form_mode == FORM_MODE.READ_ITEM)
+            {
+                if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
+                {
+                    CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "problem/get_info&id=" + ((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).id.ToString());
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        if (sr.problem.Count > 0)
+                        {
+                            DataInfo data_info = new DataInfo();
+                            data_info.lblDataTable.Text = "Problem";
+                            data_info.lblExpression.Text = "sernum+date";
+                            data_info.lblRecBy.Text = sr.problem.First<Problem>().users_name;
+                            data_info.lblRecDate.pickedDate(sr.problem.First<Problem>().date);
+                            data_info.lblRecTime.Text = sr.problem.First<Problem>().time;
+                            data_info.lblRecNo.Text = sr.problem.First<Problem>().id.ToString();
+                            data_info.lblTotalRec.Text = sr.message;
+                            data_info.ShowDialog();
+                        }
+                    }
+
+                }
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.A))
+            {
+                if (this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    int problem_count = (this.is_problem_im_only ? this.problem_im_only.Count : this.problem.Count);
+                    this.dgvProblem.Rows[problem_count].Cells[1].Selected = true;
+                    this.showInlineProblemForm(this.dgvProblem.Rows[problem_count]);
+                    return true;
+                }
+                else if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.toolStripAdd.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == (Keys.Alt | Keys.E))
+            {
+                if (this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    if (this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag is Problem)
+                    {
+                        this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+                        return true;
+                    }
+                }
+                else
+                {
+                    this.toolStripEdit.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == Keys.Enter && (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+            {
+                if (this.current_focused_control == this.dtVerextdat || this.current_focused_control.Name == "inline_problem_probdesc")
+                {
+                    this.toolStripSave.PerformClick();
+                    return true;
+                }
+
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+            if (keyData == Keys.Escape)
+            {
+                if (!(this.current_focused_control is CustomDateTimePicker)) // if current_focused_control is not CustomDateTimePicker
+                {
+                    if (!(this.current_focused_control is CustomComboBox)) // and if current_focused_control is not CustomComboBox
+                    {
+                        this.toolStripStop.PerformClick();
+                        this.current_focused_control = null;
+                        return true;
+                    }
+                    else
+                    {
+                        if (!((CustomComboBox)this.current_focused_control).item_shown) // if CustomComboBox is currently not showing items.
+                        {
+                            this.toolStripStop.PerformClick();
+                            this.current_focused_control = null;
+                            return true;
+                        }
+                        else // then if CustomComboBox is currently showing calendar just close the items portion.
+                        {
+                            SendKeys.Send("{F4}");
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (!((CustomDateTimePicker)this.current_focused_control).calendar_shown) // if CustomDateTimePicker is currently not showing calendar.
+                    {
+                        this.toolStripStop.PerformClick();
+                        this.current_focused_control = null;
+                        return true;
+                    }
+                    // then if CustomDateTimePicker is currently showing calendar just close the calendar.
+                }
+            }
+            if (keyData == Keys.F6)
+            {
+                if (this.current_focused_control != null)
+                {
+                    if (this.current_focused_control == this.txtArea)
+                    {
+                        this.btnBrowseArea.PerformClick();
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.txtBusityp)
+                    {
+                        this.btnBrowseBusityp.PerformClick();
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.txtDealer)
+                    {
+                        this.btnBrowseDealer.PerformClick();
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.txtHowknown)
+                    {
+                        this.btnBrowseHowknown.PerformClick();
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtPurdat)
+                    {
+                        this.dtPurdat.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtExpdat)
+                    {
+                        this.dtExpdat.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtManual)
+                    {
+                        this.dtManual.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.dtVerextdat)
+                    {
+                        this.dtVerextdat.dateTimePicker1.Focus();
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control == this.cbVerext)
+                    {
+                        SendKeys.Send("{F4}");
+                        return true;
+                    }
+                    else if (this.current_focused_control.Name == "inline_problem_date" && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+                    {
+                        Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_date", true);
+                        if (ct.Length > 0)
+                        {
+                            CustomDateTimePicker dt = (CustomDateTimePicker)ct[0];
+                            dt.dateTimePicker1.Focus();
+                            SendKeys.Send("{F4}");
+                            return true;
+                        }
+                    }
+                    else if (this.current_focused_control.Name == "inline_problem_probcod" && (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
+                    {
+                        Control[] ct = this.dgvProblem.Parent.Controls.Find("inline_problem_probcod", true);
+                        if (ct.Length > 0)
+                        {
+                            CustomTextBox probcod = (CustomTextBox)ct[0];
+                            probcod.Focus();
+                            IstabList wind = new IstabList(this.main_form, probcod.Texts, Istab.TABTYP.PROBLEM_CODE);
+                            if (wind.ShowDialog() == DialogResult.OK)
+                            {
+                                probcod.Texts = wind.istab.typcod;
+                                SendKeys.Send("{TAB}");
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            if (keyData == Keys.PageUp)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.toolStripPrevious.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == Keys.PageDown)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.toolStripNext.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == (Keys.Control | Keys.Home))
+            {
+                this.toolStripFirst.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.End))
+            {
+                this.toolStripLast.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F3)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage1;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F4)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage2;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F5)
+            {
+                this.toolStripReload.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F8)
+            {
+                this.toolStripItem.PerformClick();
+                return true;
+            }
+            if (keyData == Keys.F9)
+            {
+                this.toolStripSave.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D))
+            {
+                if (this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    this.deleteProblemData();
+                    return true;
+                }
+                else
+                {
+                    this.toolStripDelete.PerformClick();
+                    return true;
+                }
+            }
+            if (keyData == (Keys.Control | Keys.L))
+            {
+                this.toolStripInquiryAll.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.L))
+            {
+                this.toolStripInquiryRest.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.S))
+            {
+                this.toolStripSearchSN.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D2))
+            {
+                this.toolStripSearchContact.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D3))
+            {
+                this.toolStripSearchCompany.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D4))
+            {
+                this.toolStripSearchDealer.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D5))
+            {
+                this.toolStripSearchOldnum.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D6))
+            {
+                this.toolStripSearchBusityp.PerformClick();
+                return true;
+            }
+            if (keyData == (Keys.Alt | Keys.D7))
+            {
+                this.toolStripSearchArea.PerformClick();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 

@@ -245,8 +245,11 @@ namespace SN_Net.Subform
                 };
                 c.label1.DoubleClick += delegate
                 {
-                    this.FormEdit();
-                    c.Focus();
+                    if (this.form_state == FORM_STATE.READ)
+                    {
+                        this.FormEdit();
+                        c.Focus();
+                    }
                 };
             }
         }
@@ -263,15 +266,15 @@ namespace SN_Net.Subform
         }
 
         // Prevent changing tab while add/edit
-        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        private void tabControl1_Deselecting(object sender, TabControlCancelEventArgs e)
         {
-            if (this.form_state == FORM_STATE.READ)
-            {
-                e.Cancel = false;
-            }
-            else
+            if (this.form_state != FORM_STATE.READ)
             {
                 e.Cancel = true;
+                if (this.current_focused_control != null)
+                {
+                    this.current_focused_control.Focus();
+                }
             }
         }
 
@@ -1012,8 +1015,8 @@ namespace SN_Net.Subform
         {
             if (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT)
             {
-                this.FormRead();
                 this.FillForm();
+                this.FormRead();
             }
             else if (this.form_state == FORM_STATE.READF7 || this.form_state == FORM_STATE.READF8)
             {
@@ -1349,15 +1352,38 @@ namespace SN_Net.Subform
             }
             if (keyData == Keys.Escape)
             {
-                if (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT)
-                {
-                    this.FillForm();
-                    this.FormRead();
-                }
+                this.toolStripStop.PerformClick();
+                return true;
             }
             if (keyData == Keys.Tab && this.form_state == FORM_STATE.READ)
             {
+                DataInfo data_info = new DataInfo();
+                data_info.lblDataTable.Text = "DEALER";
+                data_info.lblExpression.Text = (this.sort_mode == SORT_MODE.DEALER ? "dealer" : this.GetSortFieldName() + "+dealer");
+                data_info.lblRecBy.Text = this.dealer.users_name;
+                data_info.lblRecDate.pickedDate(this.dealer.chgdat);
+                data_info.lblTime.ForeColor = Color.DarkGray;
+                data_info.lblRecTime.BackColor = Color.WhiteSmoke;
+                data_info.lblRecNo.Text = this.dealer.id.ToString();
+                data_info.lblTotalRec.Text = this.dealer_id_list.Max(t => t.id).ToString();
+                data_info.ShowDialog();
                 return true;
+            }
+            if (keyData == Keys.F3)
+            {
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage1;
+                    return true;
+                }
+            }
+            if (keyData == Keys.F4)
+            {
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage2;
+                    return true;
+                }
             }
             if (keyData == Keys.PageUp && this.form_state == FORM_STATE.READ)
             {
@@ -1446,6 +1472,20 @@ namespace SN_Net.Subform
             if (keyData == Keys.F9 && (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT))
             {
                 this.toolStripSave.PerformClick();
+            }
+            if (keyData == Keys.F7 && this.form_state == FORM_STATE.READ)
+            {
+                this.tabControl1.SelectedTab = this.tabPage2;
+                this.dgvSerial.Focus();
+                this.FormReadItemF7();
+                return true;
+            }
+            if (keyData == Keys.F8 && this.form_state == FORM_STATE.READ)
+            {
+                this.tabControl1.SelectedTab = this.tabPage1;
+                this.dgvRemark.Focus();
+                this.FormReadItemF8();
+                return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }

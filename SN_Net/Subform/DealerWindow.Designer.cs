@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DealerWindow));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripEdit = new System.Windows.Forms.ToolStripButton();
@@ -54,19 +54,33 @@
             this.toolStripSearchArea = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPrint = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripPrintLabel3Col = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripPrintLittleEnv = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPrintLabel2Col = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripPrintLittleEnv = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPrintBigEnv = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer_Main = new System.Windows.Forms.SplitContainer();
             this.txtDummy = new System.Windows.Forms.TextBox();
+            this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
+            this.txtPrenam = new SN_Net.MiscClass.CustomTextBox();
+            this.txtDealer = new SN_Net.MiscClass.CustomTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer_1st_Page = new System.Windows.Forms.SplitContainer();
+            this.txtFaxnum = new SN_Net.MiscClass.CustomTextBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.txtAddr01 = new SN_Net.MiscClass.CustomTextBox();
+            this.txtRemark = new SN_Net.MiscClass.CustomTextBox();
             this.btnBrowseArea = new System.Windows.Forms.Button();
+            this.txtArea = new SN_Net.MiscClass.CustomTextBox();
+            this.txtBusides = new SN_Net.MiscClass.CustomTextBox();
+            this.txtPosition = new SN_Net.MiscClass.CustomTextBox();
+            this.txtContact = new SN_Net.MiscClass.CustomTextBox();
+            this.txtTelnum = new SN_Net.MiscClass.CustomTextBox();
+            this.txtZipcod = new SN_Net.MiscClass.CustomTextBox();
+            this.txtAddr03 = new SN_Net.MiscClass.CustomTextBox();
+            this.txtAddr02 = new SN_Net.MiscClass.CustomTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.lblArea_typdes = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -80,6 +94,8 @@
             this.dgvRemark = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer_2nd_Page = new System.Windows.Forms.SplitContainer();
+            this.txtContact2 = new SN_Net.MiscClass.CustomTextBox();
+            this.txtTelnum2 = new SN_Net.MiscClass.CustomTextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -87,22 +103,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
-            this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
-            this.txtPrenam = new SN_Net.MiscClass.CustomTextBox();
-            this.txtDealer = new SN_Net.MiscClass.CustomTextBox();
-            this.txtFaxnum = new SN_Net.MiscClass.CustomTextBox();
-            this.txtAddr01 = new SN_Net.MiscClass.CustomTextBox();
-            this.txtRemark = new SN_Net.MiscClass.CustomTextBox();
-            this.txtArea = new SN_Net.MiscClass.CustomTextBox();
-            this.txtBusides = new SN_Net.MiscClass.CustomTextBox();
-            this.txtPosition = new SN_Net.MiscClass.CustomTextBox();
-            this.txtContact = new SN_Net.MiscClass.CustomTextBox();
-            this.txtTelnum = new SN_Net.MiscClass.CustomTextBox();
-            this.txtZipcod = new SN_Net.MiscClass.CustomTextBox();
-            this.txtAddr03 = new SN_Net.MiscClass.CustomTextBox();
-            this.txtAddr02 = new SN_Net.MiscClass.CustomTextBox();
-            this.txtContact2 = new SN_Net.MiscClass.CustomTextBox();
-            this.txtTelnum2 = new SN_Net.MiscClass.CustomTextBox();
             this.toolStrip1.SuspendLayout();
             this.splitContainer_Main.Panel1.SuspendLayout();
             this.splitContainer_Main.Panel2.SuspendLayout();
@@ -358,19 +358,19 @@
             this.toolStripPrintLabel3Col.Text = "Print Label 3 columns <Alt+P>";
             this.toolStripPrintLabel3Col.Click += new System.EventHandler(this.toolStripPrintLabel3Col_Click);
             // 
-            // toolStripPrintLittleEnv
-            // 
-            this.toolStripPrintLittleEnv.Name = "toolStripPrintLittleEnv";
-            this.toolStripPrintLittleEnv.Size = new System.Drawing.Size(237, 22);
-            this.toolStripPrintLittleEnv.Text = "Print Little Envelope <Ctrl+P>";
-            this.toolStripPrintLittleEnv.Click += new System.EventHandler(this.toolStripPrintLittleEnv_Click);
-            // 
             // toolStripPrintLabel2Col
             // 
             this.toolStripPrintLabel2Col.Name = "toolStripPrintLabel2Col";
             this.toolStripPrintLabel2Col.Size = new System.Drawing.Size(237, 22);
             this.toolStripPrintLabel2Col.Text = "Print Label 2 columns";
             this.toolStripPrintLabel2Col.Click += new System.EventHandler(this.toolStripPrintLabel2Col_Click);
+            // 
+            // toolStripPrintLittleEnv
+            // 
+            this.toolStripPrintLittleEnv.Name = "toolStripPrintLittleEnv";
+            this.toolStripPrintLittleEnv.Size = new System.Drawing.Size(237, 22);
+            this.toolStripPrintLittleEnv.Text = "Print Little Envelope <Ctrl+P>";
+            this.toolStripPrintLittleEnv.Click += new System.EventHandler(this.toolStripPrintLittleEnv_Click);
             // 
             // toolStripPrintBigEnv
             // 
@@ -416,6 +416,57 @@
             this.txtDummy.TabStop = false;
             this.txtDummy.Text = "throw focus here";
             // 
+            // txtCompnam
+            // 
+            this.txtCompnam.BackColor = System.Drawing.Color.White;
+            this.txtCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCompnam.CharUpperCase = false;
+            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtCompnam.Location = new System.Drawing.Point(324, 34);
+            this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtCompnam.MaxChar = 100;
+            this.txtCompnam.Name = "txtCompnam";
+            this.txtCompnam.ReadOnly = true;
+            this.txtCompnam.SelectionLength = 0;
+            this.txtCompnam.SelectionStart = 0;
+            this.txtCompnam.Size = new System.Drawing.Size(394, 23);
+            this.txtCompnam.TabIndex = 2;
+            this.txtCompnam.Texts = "";
+            // 
+            // txtPrenam
+            // 
+            this.txtPrenam.BackColor = System.Drawing.Color.White;
+            this.txtPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPrenam.CharUpperCase = false;
+            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtPrenam.Location = new System.Drawing.Point(324, 8);
+            this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPrenam.MaxChar = 30;
+            this.txtPrenam.Name = "txtPrenam";
+            this.txtPrenam.ReadOnly = true;
+            this.txtPrenam.SelectionLength = 0;
+            this.txtPrenam.SelectionStart = 0;
+            this.txtPrenam.Size = new System.Drawing.Size(179, 23);
+            this.txtPrenam.TabIndex = 1;
+            this.txtPrenam.Texts = "";
+            // 
+            // txtDealer
+            // 
+            this.txtDealer.BackColor = System.Drawing.Color.White;
+            this.txtDealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDealer.CharUpperCase = true;
+            this.txtDealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtDealer.Location = new System.Drawing.Point(105, 8);
+            this.txtDealer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtDealer.MaxChar = 20;
+            this.txtDealer.Name = "txtDealer";
+            this.txtDealer.ReadOnly = true;
+            this.txtDealer.SelectionLength = 0;
+            this.txtDealer.SelectionStart = 0;
+            this.txtDealer.Size = new System.Drawing.Size(132, 23);
+            this.txtDealer.TabIndex = 0;
+            this.txtDealer.Texts = "";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -458,7 +509,7 @@
             this.tabControl1.Size = new System.Drawing.Size(775, 470);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.TabStop = false;
-            this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
+            this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Deselecting);
             // 
             // tabPage1
             // 
@@ -515,6 +566,23 @@
             this.splitContainer_1st_Page.TabIndex = 0;
             this.splitContainer_1st_Page.TabStop = false;
             // 
+            // txtFaxnum
+            // 
+            this.txtFaxnum.BackColor = System.Drawing.Color.White;
+            this.txtFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFaxnum.CharUpperCase = false;
+            this.txtFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtFaxnum.Location = new System.Drawing.Point(122, 107);
+            this.txtFaxnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtFaxnum.MaxChar = 40;
+            this.txtFaxnum.Name = "txtFaxnum";
+            this.txtFaxnum.ReadOnly = true;
+            this.txtFaxnum.SelectionLength = 0;
+            this.txtFaxnum.SelectionStart = 0;
+            this.txtFaxnum.Size = new System.Drawing.Size(442, 23);
+            this.txtFaxnum.TabIndex = 8;
+            this.txtFaxnum.Texts = "";
+            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -524,6 +592,40 @@
             this.label16.Size = new System.Drawing.Size(55, 16);
             this.label16.TabIndex = 89;
             this.label16.Text = "Fax. No.";
+            // 
+            // txtAddr01
+            // 
+            this.txtAddr01.BackColor = System.Drawing.Color.White;
+            this.txtAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddr01.CharUpperCase = false;
+            this.txtAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAddr01.Location = new System.Drawing.Point(122, 7);
+            this.txtAddr01.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtAddr01.MaxChar = 50;
+            this.txtAddr01.Name = "txtAddr01";
+            this.txtAddr01.ReadOnly = true;
+            this.txtAddr01.SelectionLength = 0;
+            this.txtAddr01.SelectionStart = 0;
+            this.txtAddr01.Size = new System.Drawing.Size(442, 23);
+            this.txtAddr01.TabIndex = 3;
+            this.txtAddr01.Texts = "";
+            // 
+            // txtRemark
+            // 
+            this.txtRemark.BackColor = System.Drawing.Color.White;
+            this.txtRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRemark.CharUpperCase = false;
+            this.txtRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtRemark.Location = new System.Drawing.Point(122, 207);
+            this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtRemark.MaxChar = 50;
+            this.txtRemark.Name = "txtRemark";
+            this.txtRemark.ReadOnly = true;
+            this.txtRemark.SelectionLength = 0;
+            this.txtRemark.SelectionStart = 0;
+            this.txtRemark.Size = new System.Drawing.Size(442, 23);
+            this.txtRemark.TabIndex = 13;
+            this.txtRemark.Texts = "";
             // 
             // btnBrowseArea
             // 
@@ -535,6 +637,142 @@
             this.btnBrowseArea.TabStop = false;
             this.btnBrowseArea.UseVisualStyleBackColor = true;
             this.btnBrowseArea.Click += new System.EventHandler(this.btnBrowseArea_Click);
+            // 
+            // txtArea
+            // 
+            this.txtArea.BackColor = System.Drawing.Color.White;
+            this.txtArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtArea.CharUpperCase = false;
+            this.txtArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtArea.Location = new System.Drawing.Point(461, 182);
+            this.txtArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtArea.MaxChar = 10;
+            this.txtArea.Name = "txtArea";
+            this.txtArea.ReadOnly = true;
+            this.txtArea.SelectionLength = 0;
+            this.txtArea.SelectionStart = 0;
+            this.txtArea.Size = new System.Drawing.Size(80, 23);
+            this.txtArea.TabIndex = 12;
+            this.txtArea.Texts = "";
+            // 
+            // txtBusides
+            // 
+            this.txtBusides.BackColor = System.Drawing.Color.White;
+            this.txtBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBusides.CharUpperCase = false;
+            this.txtBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtBusides.Location = new System.Drawing.Point(122, 182);
+            this.txtBusides.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtBusides.MaxChar = 40;
+            this.txtBusides.Name = "txtBusides";
+            this.txtBusides.ReadOnly = true;
+            this.txtBusides.SelectionLength = 0;
+            this.txtBusides.SelectionStart = 0;
+            this.txtBusides.Size = new System.Drawing.Size(271, 23);
+            this.txtBusides.TabIndex = 11;
+            this.txtBusides.Texts = "";
+            // 
+            // txtPosition
+            // 
+            this.txtPosition.BackColor = System.Drawing.Color.White;
+            this.txtPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPosition.CharUpperCase = false;
+            this.txtPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtPosition.Location = new System.Drawing.Point(122, 157);
+            this.txtPosition.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPosition.MaxChar = 50;
+            this.txtPosition.Name = "txtPosition";
+            this.txtPosition.ReadOnly = true;
+            this.txtPosition.SelectionLength = 0;
+            this.txtPosition.SelectionStart = 0;
+            this.txtPosition.Size = new System.Drawing.Size(442, 23);
+            this.txtPosition.TabIndex = 10;
+            this.txtPosition.Texts = "";
+            // 
+            // txtContact
+            // 
+            this.txtContact.BackColor = System.Drawing.Color.White;
+            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtContact.CharUpperCase = false;
+            this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtContact.Location = new System.Drawing.Point(122, 132);
+            this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtContact.MaxChar = 100;
+            this.txtContact.Name = "txtContact";
+            this.txtContact.ReadOnly = true;
+            this.txtContact.SelectionLength = 0;
+            this.txtContact.SelectionStart = 0;
+            this.txtContact.Size = new System.Drawing.Size(442, 23);
+            this.txtContact.TabIndex = 9;
+            this.txtContact.Texts = "";
+            // 
+            // txtTelnum
+            // 
+            this.txtTelnum.BackColor = System.Drawing.Color.White;
+            this.txtTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTelnum.CharUpperCase = false;
+            this.txtTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTelnum.Location = new System.Drawing.Point(122, 82);
+            this.txtTelnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTelnum.MaxChar = 40;
+            this.txtTelnum.Name = "txtTelnum";
+            this.txtTelnum.ReadOnly = true;
+            this.txtTelnum.SelectionLength = 0;
+            this.txtTelnum.SelectionStart = 0;
+            this.txtTelnum.Size = new System.Drawing.Size(442, 23);
+            this.txtTelnum.TabIndex = 7;
+            this.txtTelnum.Texts = "";
+            // 
+            // txtZipcod
+            // 
+            this.txtZipcod.BackColor = System.Drawing.Color.White;
+            this.txtZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtZipcod.CharUpperCase = false;
+            this.txtZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtZipcod.Location = new System.Drawing.Point(495, 57);
+            this.txtZipcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtZipcod.MaxChar = 5;
+            this.txtZipcod.Name = "txtZipcod";
+            this.txtZipcod.ReadOnly = true;
+            this.txtZipcod.SelectionLength = 0;
+            this.txtZipcod.SelectionStart = 0;
+            this.txtZipcod.Size = new System.Drawing.Size(69, 23);
+            this.txtZipcod.TabIndex = 6;
+            this.txtZipcod.Texts = "";
+            // 
+            // txtAddr03
+            // 
+            this.txtAddr03.BackColor = System.Drawing.Color.White;
+            this.txtAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddr03.CharUpperCase = false;
+            this.txtAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAddr03.Location = new System.Drawing.Point(122, 57);
+            this.txtAddr03.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtAddr03.MaxChar = 30;
+            this.txtAddr03.Name = "txtAddr03";
+            this.txtAddr03.ReadOnly = true;
+            this.txtAddr03.SelectionLength = 0;
+            this.txtAddr03.SelectionStart = 0;
+            this.txtAddr03.Size = new System.Drawing.Size(271, 23);
+            this.txtAddr03.TabIndex = 5;
+            this.txtAddr03.Texts = "";
+            // 
+            // txtAddr02
+            // 
+            this.txtAddr02.BackColor = System.Drawing.Color.White;
+            this.txtAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddr02.CharUpperCase = false;
+            this.txtAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAddr02.Location = new System.Drawing.Point(122, 32);
+            this.txtAddr02.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtAddr02.MaxChar = 50;
+            this.txtAddr02.Name = "txtAddr02";
+            this.txtAddr02.ReadOnly = true;
+            this.txtAddr02.SelectionLength = 0;
+            this.txtAddr02.SelectionStart = 0;
+            this.txtAddr02.Size = new System.Drawing.Size(442, 23);
+            this.txtAddr02.TabIndex = 4;
+            this.txtAddr02.Texts = "";
             // 
             // label7
             // 
@@ -685,6 +923,40 @@
             this.splitContainer_2nd_Page.TabIndex = 0;
             this.splitContainer_2nd_Page.TabStop = false;
             // 
+            // txtContact2
+            // 
+            this.txtContact2.BackColor = System.Drawing.Color.White;
+            this.txtContact2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtContact2.CharUpperCase = false;
+            this.txtContact2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtContact2.Location = new System.Drawing.Point(132, 32);
+            this.txtContact2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtContact2.MaxChar = 0;
+            this.txtContact2.Name = "txtContact2";
+            this.txtContact2.ReadOnly = true;
+            this.txtContact2.SelectionLength = 0;
+            this.txtContact2.SelectionStart = 0;
+            this.txtContact2.Size = new System.Drawing.Size(442, 23);
+            this.txtContact2.TabIndex = 0;
+            this.txtContact2.Texts = "";
+            // 
+            // txtTelnum2
+            // 
+            this.txtTelnum2.BackColor = System.Drawing.Color.White;
+            this.txtTelnum2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTelnum2.CharUpperCase = false;
+            this.txtTelnum2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTelnum2.Location = new System.Drawing.Point(132, 7);
+            this.txtTelnum2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTelnum2.MaxChar = 0;
+            this.txtTelnum2.Name = "txtTelnum2";
+            this.txtTelnum2.ReadOnly = true;
+            this.txtTelnum2.SelectionLength = 0;
+            this.txtTelnum2.SelectionStart = 0;
+            this.txtTelnum2.Size = new System.Drawing.Size(442, 23);
+            this.txtTelnum2.TabIndex = 1;
+            this.txtTelnum2.Texts = "";
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -722,14 +994,14 @@
             this.dgvSerial.AllowUserToResizeColumns = false;
             this.dgvSerial.AllowUserToResizeRows = false;
             this.dgvSerial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSerial.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSerial.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvSerial.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSerial.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSerial.EnableHeadersVisualStyles = false;
@@ -738,10 +1010,10 @@
             this.dgvSerial.Name = "dgvSerial";
             this.dgvSerial.ReadOnly = true;
             this.dgvSerial.RowHeadersVisible = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            this.dgvSerial.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            this.dgvSerial.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSerial.RowTemplate.Height = 25;
             this.dgvSerial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSerial.Size = new System.Drawing.Size(761, 352);
@@ -782,278 +1054,6 @@
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripProcessing.Visible = false;
-            // 
-            // txtCompnam
-            // 
-            this.txtCompnam.BackColor = System.Drawing.Color.White;
-            this.txtCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCompnam.CharUpperCase = false;
-            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtCompnam.Location = new System.Drawing.Point(324, 34);
-            this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtCompnam.MaxChar = 100;
-            this.txtCompnam.Name = "txtCompnam";
-            this.txtCompnam.ReadOnly = true;
-            this.txtCompnam.SelectionLength = 0;
-            this.txtCompnam.SelectionStart = 0;
-            this.txtCompnam.Size = new System.Drawing.Size(394, 23);
-            this.txtCompnam.TabIndex = 2;
-            this.txtCompnam.Texts = "";
-            // 
-            // txtPrenam
-            // 
-            this.txtPrenam.BackColor = System.Drawing.Color.White;
-            this.txtPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrenam.CharUpperCase = false;
-            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPrenam.Location = new System.Drawing.Point(324, 8);
-            this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtPrenam.MaxChar = 30;
-            this.txtPrenam.Name = "txtPrenam";
-            this.txtPrenam.ReadOnly = true;
-            this.txtPrenam.SelectionLength = 0;
-            this.txtPrenam.SelectionStart = 0;
-            this.txtPrenam.Size = new System.Drawing.Size(179, 23);
-            this.txtPrenam.TabIndex = 1;
-            this.txtPrenam.Texts = "";
-            // 
-            // txtDealer
-            // 
-            this.txtDealer.BackColor = System.Drawing.Color.White;
-            this.txtDealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDealer.CharUpperCase = true;
-            this.txtDealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtDealer.Location = new System.Drawing.Point(105, 8);
-            this.txtDealer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtDealer.MaxChar = 20;
-            this.txtDealer.Name = "txtDealer";
-            this.txtDealer.ReadOnly = true;
-            this.txtDealer.SelectionLength = 0;
-            this.txtDealer.SelectionStart = 0;
-            this.txtDealer.Size = new System.Drawing.Size(132, 23);
-            this.txtDealer.TabIndex = 0;
-            this.txtDealer.Texts = "";
-            // 
-            // txtFaxnum
-            // 
-            this.txtFaxnum.BackColor = System.Drawing.Color.White;
-            this.txtFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFaxnum.CharUpperCase = false;
-            this.txtFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtFaxnum.Location = new System.Drawing.Point(122, 107);
-            this.txtFaxnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtFaxnum.MaxChar = 40;
-            this.txtFaxnum.Name = "txtFaxnum";
-            this.txtFaxnum.ReadOnly = true;
-            this.txtFaxnum.SelectionLength = 0;
-            this.txtFaxnum.SelectionStart = 0;
-            this.txtFaxnum.Size = new System.Drawing.Size(442, 23);
-            this.txtFaxnum.TabIndex = 8;
-            this.txtFaxnum.Texts = "";
-            // 
-            // txtAddr01
-            // 
-            this.txtAddr01.BackColor = System.Drawing.Color.White;
-            this.txtAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddr01.CharUpperCase = false;
-            this.txtAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr01.Location = new System.Drawing.Point(122, 7);
-            this.txtAddr01.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAddr01.MaxChar = 50;
-            this.txtAddr01.Name = "txtAddr01";
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr01.SelectionLength = 0;
-            this.txtAddr01.SelectionStart = 0;
-            this.txtAddr01.Size = new System.Drawing.Size(442, 23);
-            this.txtAddr01.TabIndex = 3;
-            this.txtAddr01.Texts = "";
-            // 
-            // txtRemark
-            // 
-            this.txtRemark.BackColor = System.Drawing.Color.White;
-            this.txtRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRemark.CharUpperCase = false;
-            this.txtRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRemark.Location = new System.Drawing.Point(122, 207);
-            this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtRemark.MaxChar = 50;
-            this.txtRemark.Name = "txtRemark";
-            this.txtRemark.ReadOnly = true;
-            this.txtRemark.SelectionLength = 0;
-            this.txtRemark.SelectionStart = 0;
-            this.txtRemark.Size = new System.Drawing.Size(442, 23);
-            this.txtRemark.TabIndex = 13;
-            this.txtRemark.Texts = "";
-            // 
-            // txtArea
-            // 
-            this.txtArea.BackColor = System.Drawing.Color.White;
-            this.txtArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtArea.CharUpperCase = false;
-            this.txtArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtArea.Location = new System.Drawing.Point(461, 182);
-            this.txtArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtArea.MaxChar = 10;
-            this.txtArea.Name = "txtArea";
-            this.txtArea.ReadOnly = true;
-            this.txtArea.SelectionLength = 0;
-            this.txtArea.SelectionStart = 0;
-            this.txtArea.Size = new System.Drawing.Size(80, 23);
-            this.txtArea.TabIndex = 12;
-            this.txtArea.Texts = "";
-            // 
-            // txtBusides
-            // 
-            this.txtBusides.BackColor = System.Drawing.Color.White;
-            this.txtBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBusides.CharUpperCase = false;
-            this.txtBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtBusides.Location = new System.Drawing.Point(122, 182);
-            this.txtBusides.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtBusides.MaxChar = 40;
-            this.txtBusides.Name = "txtBusides";
-            this.txtBusides.ReadOnly = true;
-            this.txtBusides.SelectionLength = 0;
-            this.txtBusides.SelectionStart = 0;
-            this.txtBusides.Size = new System.Drawing.Size(271, 23);
-            this.txtBusides.TabIndex = 11;
-            this.txtBusides.Texts = "";
-            // 
-            // txtPosition
-            // 
-            this.txtPosition.BackColor = System.Drawing.Color.White;
-            this.txtPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPosition.CharUpperCase = false;
-            this.txtPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPosition.Location = new System.Drawing.Point(122, 157);
-            this.txtPosition.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtPosition.MaxChar = 50;
-            this.txtPosition.Name = "txtPosition";
-            this.txtPosition.ReadOnly = true;
-            this.txtPosition.SelectionLength = 0;
-            this.txtPosition.SelectionStart = 0;
-            this.txtPosition.Size = new System.Drawing.Size(442, 23);
-            this.txtPosition.TabIndex = 10;
-            this.txtPosition.Texts = "";
-            // 
-            // txtContact
-            // 
-            this.txtContact.BackColor = System.Drawing.Color.White;
-            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtContact.CharUpperCase = false;
-            this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtContact.Location = new System.Drawing.Point(122, 132);
-            this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtContact.MaxChar = 100;
-            this.txtContact.Name = "txtContact";
-            this.txtContact.ReadOnly = true;
-            this.txtContact.SelectionLength = 0;
-            this.txtContact.SelectionStart = 0;
-            this.txtContact.Size = new System.Drawing.Size(442, 23);
-            this.txtContact.TabIndex = 9;
-            this.txtContact.Texts = "";
-            // 
-            // txtTelnum
-            // 
-            this.txtTelnum.BackColor = System.Drawing.Color.White;
-            this.txtTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTelnum.CharUpperCase = false;
-            this.txtTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTelnum.Location = new System.Drawing.Point(122, 82);
-            this.txtTelnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTelnum.MaxChar = 40;
-            this.txtTelnum.Name = "txtTelnum";
-            this.txtTelnum.ReadOnly = true;
-            this.txtTelnum.SelectionLength = 0;
-            this.txtTelnum.SelectionStart = 0;
-            this.txtTelnum.Size = new System.Drawing.Size(442, 23);
-            this.txtTelnum.TabIndex = 7;
-            this.txtTelnum.Texts = "";
-            // 
-            // txtZipcod
-            // 
-            this.txtZipcod.BackColor = System.Drawing.Color.White;
-            this.txtZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtZipcod.CharUpperCase = false;
-            this.txtZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtZipcod.Location = new System.Drawing.Point(495, 57);
-            this.txtZipcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtZipcod.MaxChar = 5;
-            this.txtZipcod.Name = "txtZipcod";
-            this.txtZipcod.ReadOnly = true;
-            this.txtZipcod.SelectionLength = 0;
-            this.txtZipcod.SelectionStart = 0;
-            this.txtZipcod.Size = new System.Drawing.Size(69, 23);
-            this.txtZipcod.TabIndex = 6;
-            this.txtZipcod.Texts = "";
-            // 
-            // txtAddr03
-            // 
-            this.txtAddr03.BackColor = System.Drawing.Color.White;
-            this.txtAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddr03.CharUpperCase = false;
-            this.txtAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr03.Location = new System.Drawing.Point(122, 57);
-            this.txtAddr03.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAddr03.MaxChar = 30;
-            this.txtAddr03.Name = "txtAddr03";
-            this.txtAddr03.ReadOnly = true;
-            this.txtAddr03.SelectionLength = 0;
-            this.txtAddr03.SelectionStart = 0;
-            this.txtAddr03.Size = new System.Drawing.Size(271, 23);
-            this.txtAddr03.TabIndex = 5;
-            this.txtAddr03.Texts = "";
-            // 
-            // txtAddr02
-            // 
-            this.txtAddr02.BackColor = System.Drawing.Color.White;
-            this.txtAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddr02.CharUpperCase = false;
-            this.txtAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr02.Location = new System.Drawing.Point(122, 32);
-            this.txtAddr02.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAddr02.MaxChar = 50;
-            this.txtAddr02.Name = "txtAddr02";
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr02.SelectionLength = 0;
-            this.txtAddr02.SelectionStart = 0;
-            this.txtAddr02.Size = new System.Drawing.Size(442, 23);
-            this.txtAddr02.TabIndex = 4;
-            this.txtAddr02.Texts = "";
-            // 
-            // txtContact2
-            // 
-            this.txtContact2.BackColor = System.Drawing.Color.White;
-            this.txtContact2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtContact2.CharUpperCase = false;
-            this.txtContact2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtContact2.Location = new System.Drawing.Point(132, 32);
-            this.txtContact2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtContact2.MaxChar = 0;
-            this.txtContact2.Name = "txtContact2";
-            this.txtContact2.ReadOnly = true;
-            this.txtContact2.SelectionLength = 0;
-            this.txtContact2.SelectionStart = 0;
-            this.txtContact2.Size = new System.Drawing.Size(442, 23);
-            this.txtContact2.TabIndex = 0;
-            this.txtContact2.Texts = "";
-            // 
-            // txtTelnum2
-            // 
-            this.txtTelnum2.BackColor = System.Drawing.Color.White;
-            this.txtTelnum2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTelnum2.CharUpperCase = false;
-            this.txtTelnum2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTelnum2.Location = new System.Drawing.Point(132, 7);
-            this.txtTelnum2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTelnum2.MaxChar = 0;
-            this.txtTelnum2.Name = "txtTelnum2";
-            this.txtTelnum2.ReadOnly = true;
-            this.txtTelnum2.SelectionLength = 0;
-            this.txtTelnum2.SelectionStart = 0;
-            this.txtTelnum2.Size = new System.Drawing.Size(442, 23);
-            this.txtTelnum2.TabIndex = 1;
-            this.txtTelnum2.Texts = "";
             // 
             // DealerWindow
             // 
