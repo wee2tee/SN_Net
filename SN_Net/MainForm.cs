@@ -20,11 +20,15 @@ namespace SN_Net
     {
         public SnWindow sn_wind;
         public DealerWindow dealer_wind;
+        public SupportNoteWindow supportnote_wind;
+        public SupportStatWindow supportstat_wind;
+        public LeaveWindow leave_wind;
         public IstabWindow area_wind;
         public IstabWindow verext_wind;
         public IstabWindow howknown_wind;
         public IstabWindow busityp_wind;
         public IstabWindow probcode_wind;
+        public IstabWindow leavecause_wind;
         
         public string my_mac = string.Empty;
         public GlobalVar G;
@@ -37,7 +41,6 @@ namespace SN_Net
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            this.loadDataResource();
             LoginForm login = new LoginForm();
             if (login.ShowDialog() == DialogResult.Cancel || login.loged_in == false)
             {
@@ -52,10 +55,31 @@ namespace SN_Net
                     this.userInformationToolStripMenuItem.Visible = false;
                     this.macAddressAllowedToolStripMenuItem.Visible = false;
                 }
+                if (this.G.loged_in_user_level < 8)
+                {
+                    this.supportStatMenuItem.Visible = false;
+                }
 
+                this.loadDataResource();
                 this.sNToolStripMenuItem.PerformClick();
-                //this.dealerToolStripMenuItem.PerformClick();
+
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.lblTimeDuration.Visible = false;
+            this.RePositionLabelDuration();
+
+            this.lblTimeDuration.Click += delegate
+            {
+                this.supportnote_wind.Activate();
+            };
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            this.RePositionLabelDuration();
         }
 
         private void sNToolStripMenuItem_Click(object sender, EventArgs e)
@@ -160,6 +184,21 @@ namespace SN_Net
             else
             {
                 this.probcode_wind.Activate();
+            }
+        }
+
+
+        private void leaveCauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.leavecause_wind == null)
+            {
+                this.leavecause_wind = new IstabWindow(this, Istab.TABTYP.LEAVE_CAUSE);
+                this.leavecause_wind.MdiParent = this;
+                this.leavecause_wind.Show();
+            }
+            else
+            {
+                this.leavecause_wind.Activate();
             }
         }
 
@@ -286,5 +325,47 @@ namespace SN_Net
             }
         }
 
+        private void RePositionLabelDuration()
+        {
+            this.lblTimeDuration.SetBounds(this.ClientSize.Width - (this.lblTimeDuration.Width), this.lblTimeDuration.Location.Y, this.lblTimeDuration.ClientSize.Width, this.lblTimeDuration.ClientSize.Height);
+        }
+
+        private void supportStatMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.supportstat_wind == null)
+            {
+                SupportStatWindow wind = new SupportStatWindow(this);
+                wind.MdiParent = this;
+                wind.Show();
+            }
+            else
+            {
+                this.supportstat_wind.Activate();
+            }
+        }
+
+        private void leaveSummaryMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.leave_wind == null)
+            {
+                LeaveWindow wind = new LeaveWindow(this);
+                wind.MdiParent = this;
+                wind.Show();
+            }
+            else
+            {
+                this.leave_wind.Activate();
+            }
+        }
+
+        private void calendarMenuItem_Click(object sender, EventArgs e)
+        {
+            CalendarWindow wind = new CalendarWindow(this);
+            //TestControl wind = new TestControl();
+            wind.MdiParent = this;
+            wind.Show();
+
+
+        }
     }
 }

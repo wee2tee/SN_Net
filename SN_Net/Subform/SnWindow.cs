@@ -97,19 +97,19 @@ namespace SN_Net.Subform
 
         private void SnWindow_Load(object sender, EventArgs e)
         {
-            if (this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            if (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
             {
                 this.btnCD.Visible = false;
                 this.btnUP.Visible = false;
                 this.btnUPNewRwt.Visible = false;
                 this.btnUPNewRwtJob.Visible = false;
             }
-            if (this.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT || this.G.loged_in_user_level == GlobalVar.USER_GROUP_ACCOUNT)
+            if (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ACCOUNT)
             {
                 this.toolStripImport.Visible = false;
                 this.toolStripGenSN.Visible = false;
             }
-            if (this.G.loged_in_user_level == GlobalVar.USER_GROUP_SALES)
+            if (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SALES)
             {
                 this.toolStripGenSN.Visible = false;
             }
@@ -420,7 +420,7 @@ namespace SN_Net.Subform
         private void workerLoadCurrentSN_Dowork(object sender, DoWorkEventArgs e)
         {
             this.getSerialIDList();
-            this.getSerial(this.id);
+            this.getSerial(this.serial.id);
             this.main_form.data_resource.Refresh();
         }
 
@@ -474,14 +474,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = false;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = false;
+            this.btnSupportHistory.Enabled = false;
             #endregion Button
 
             #region DatePicker
@@ -560,14 +562,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = false;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = false;
+            this.btnSupportHistory.Enabled = false;
             #endregion Button
 
             #region DatePicker
@@ -623,14 +627,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = true;
             this.btnLostRenew.Enabled = true;
             this.btnSwithToRefnum.Enabled = true;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = (this.btnCD.Visible ? true : false);
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = (this.btnUP.Visible ? true : false);
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = (this.btnUPNewRwt.Visible ? true : false);
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = (this.btnUPNewRwtJob.Visible ? true : false);
+            this.btnSupportNote.Enabled = ((this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT) ? true : false);
+            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
             #endregion Button
 
             #region DatePicker
@@ -782,14 +788,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = false;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = false;
+            this.btnSupportHistory.Enabled = false;
             #endregion Button
 
             #region DatePicker
@@ -936,14 +944,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = false;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = false;
+            this.btnSupportHistory.Enabled = false;
             #endregion Button
 
             #region DatePicker
@@ -1038,14 +1048,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = true;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
+            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
             #endregion Button
 
             #region DatePicker
@@ -1137,14 +1149,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = false;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
+            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
             #endregion Button
 
             #region DatePicker
@@ -1232,14 +1246,16 @@ namespace SN_Net.Subform
             this.chkIMOnly.Enabled = false;
             this.btnLostRenew.Enabled = false;
             this.btnSwithToRefnum.Enabled = false;
-            this.btnCD.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnCD.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnCD.Enabled = false;
-            this.btnUP.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUP.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUP.Enabled = false;
-            this.btnUPNewRwt.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwt.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwt.Enabled = false;
-            this.btnUPNewRwtJob.Visible = (this.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
+            this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
+            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
+            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_GROUP_SUPPORT ? true : false);
             #endregion Button
 
             #region DatePicker
@@ -1284,18 +1300,6 @@ namespace SN_Net.Subform
         }
 
         #region DataGridView Event Handler
-        private void dgvProblem_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (this.form_mode == FORM_MODE.READ)
-            //{
-            //    if (e.RowIndex >= 0)
-            //    {
-            //        this.FormReadItem();
-            //        this.dgvProblem.Rows[e.RowIndex].Cells[1].Selected = true;
-            //    }
-            //}
-        }
-
         private void ManageDataGridRow()
         {
             if (this.problem != null)
@@ -1326,8 +1330,11 @@ namespace SN_Net.Subform
 
         private void dgvProblem_Resize(object sender, EventArgs e)
         {
-            this.ManageDataGridRow();
-            this.setPositionInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+            if (this.dgvProblem.Rows.Count > 0)
+            {
+                this.ManageDataGridRow();
+                this.setPositionInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+            }
         }
 
         private void dgvProblem_Paint(object sender, PaintEventArgs e)
@@ -1361,7 +1368,7 @@ namespace SN_Net.Subform
             {
                 DataGridViewRow row = ((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex];
                 //((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).intention.to_do = DataRowIntention.TO_DO.EDIT;
-                this.showInlineProblemForm(row);
+                this.showInlineProblemForm(row, e.ColumnIndex);
             }
             else
             {
@@ -1498,7 +1505,7 @@ namespace SN_Net.Subform
             return "";
         }
 
-        private void showInlineProblemForm(DataGridViewRow row)
+        private void showInlineProblemForm(DataGridViewRow row, int column_index = 1)
         {
             this.dgvProblem.Enabled = false;
 
@@ -1534,8 +1541,8 @@ namespace SN_Net.Subform
             {
                 this.current_focused_control = probcod;
                 this.toolStripInfo.Text = this.toolTip1.GetToolTip(probcod);
-                Console.WriteLine(" # current control : " + probcod.Name);
             };
+            toolTip1.SetToolTip(probcod, "<F6> = Show Problem Code");
             probcod.textBox1.Leave += delegate
             {
                 if (this.main_form.data_resource.LIST_PROBLEM_CODE.Find(t => t.typcod == probcod.Texts) != null)
@@ -1591,7 +1598,7 @@ namespace SN_Net.Subform
             date.TextsMysql = (row.Tag is Problem ? prob.date : DateTime.Now.ToMysqlDate());
             name.Texts = prob.name;
             probcod.Texts = prob.probcod;
-            if (prob.probcod == "RG" && this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            if (prob.probcod == "RG" && this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
             {
                 probdesc.StaticText = this.GetMachineCode(prob.probdesc);
                 probdesc.EditableText = prob.probdesc.Substring(probdesc.StaticText.Length, prob.probdesc.Length - probdesc.StaticText.Length);
@@ -1601,7 +1608,23 @@ namespace SN_Net.Subform
                 probdesc.StaticText = "";
                 probdesc.EditableText = prob.probdesc;
             }
-            date.Focus();
+
+            if (column_index == 1)
+            {
+                date.Focus();
+            }
+            else if (column_index == 2)
+            {
+                name.Focus();
+            }
+            else if (column_index == 3)
+            {
+                probcod.Focus();
+            }
+            else if (column_index == 4)
+            {
+                probdesc.Focus();
+            }
         }
 
         private void setPositionInlineProblemForm(DataGridViewRow row)
@@ -1688,11 +1711,11 @@ namespace SN_Net.Subform
                 CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
                 prob_desc = probdesc.Texts;
             }
-            string users_name = this.G.loged_in_user_name;
+            string users_name = this.main_form.G.loged_in_user_name;
             string serial_sernum = this.serial.sernum;
 
             // in case of record problem code as "RG"
-            if (prob_code == "RG" && this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            if (prob_code == "RG" && this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
             {
                 MessageAlert.Show("Your permission is not allowed to record problem code as \"RG\"", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 return;
@@ -1769,11 +1792,11 @@ namespace SN_Net.Subform
                 CustomTextBoxMaskedWithLabel probdesc = (CustomTextBoxMaskedWithLabel)this.dgvProblem.Parent.Controls.Find("inline_problem_probdesc", true)[0];
                 prob_desc = probdesc.Texts;
             }
-            string users_name = this.G.loged_in_user_name;
+            string users_name = this.main_form.G.loged_in_user_name;
             string serial_sernum = this.serial.sernum;
 
             // in case of changing problem code from other to "RG"
-            if (((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probcod != "RG" && prob_code == "RG" && this.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
+            if (((Problem)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Tag).probcod != "RG" && prob_code == "RG" && this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_ADMIN)
             {
                 MessageAlert.Show("Your permission is not allowed to change problem code to \"RG\"", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 return;
@@ -1986,7 +2009,7 @@ namespace SN_Net.Subform
             #endregion Fill second tab data
         }
 
-        private void loadProblemData()
+        public void loadProblemData()
         {
             CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "problem/get_for_sn&sn=" + this.serial.sernum);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
@@ -1997,7 +2020,7 @@ namespace SN_Net.Subform
             }
         }
 
-        private void fillInDatagrid()
+        public void fillInDatagrid()
         {
             int current_row_index = (this.dgvProblem.Rows.Count > 0 ? this.dgvProblem.CurrentCell.RowIndex : 0); // keep current row index first
             this.dgvProblem.Rows.Clear();
@@ -2160,8 +2183,8 @@ namespace SN_Net.Subform
                 json_data += "\"remark\":\"" + this.txtRemark.Texts.cleanString() + "\",";
                 json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.comboBox1.SelectedItem).string_value + "\",";
                 json_data += "\"verextdat\":\"" + this.dtVerextdat.TextsMysql + "\",";
-                json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
-                json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+                json_data += "\"users_id\":\"" + this.main_form.G.loged_in_user_id + "\",";
+                json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\",";
                 json_data += "\"dealer_dealer\":\"" + this.txtDealer.Texts.cleanString() + "\"}";
 
                 this.FormSaving();
@@ -2240,8 +2263,8 @@ namespace SN_Net.Subform
             json_data += "\"remark\":\"" + this.txtRemark.Texts.cleanString() + "\",";
             json_data += "\"verext\":\"" + ((ComboboxItem)this.cbVerext.comboBox1.SelectedItem).string_value + "\",";
             json_data += "\"verextdat\":\"" + this.dtVerextdat.TextsMysql + "\",";
-            json_data += "\"users_id\":\"" + this.G.loged_in_user_id + "\",";
-            json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+            json_data += "\"users_id\":\"" + this.main_form.G.loged_in_user_id + "\",";
+            json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\",";
             json_data += "\"dealer_dealer\":\"" + this.txtDealer.Texts.cleanString() + "\"}";
 
             BackgroundWorker worker = new BackgroundWorker();
@@ -3008,11 +3031,11 @@ namespace SN_Net.Subform
             }
         }
 
-        private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            MainForm main_form = this.MdiParent as MainForm;
-            main_form.sn_wind = null;
-        }
+        //private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
+        //{
+        //    MainForm main_form = this.MdiParent as MainForm;
+        //    main_form.sn_wind = null;
+        //}
 
         private void toolStripAdd_EnabledChanged(object sender, EventArgs e)
         {
@@ -3158,7 +3181,7 @@ namespace SN_Net.Subform
                 workerCD.DoWork += delegate
                 {
                     string json_data = "{\"id\":" + this.serial.id.ToString() + ",";
-                    json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\"}";
+                    json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
                     Console.WriteLine(json_data);
                     CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/gen_cd_training_date", json_data);
                     Console.WriteLine("post.data = " + post.data);
@@ -3237,7 +3260,7 @@ namespace SN_Net.Subform
                 workerUp.DoWork += delegate
                 {
                     string json_data = "{\"id\":" + this.serial.id.ToString() + ",";
-                    json_data += "\"users_name\":\"" + this.G.loged_in_user_name + "\"}";
+                    json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
 
                     CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "problem/gen_up_line", json_data);
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
@@ -3663,8 +3686,63 @@ namespace SN_Net.Subform
                 this.toolStripSearchArea.PerformClick();
                 return true;
             }
-
+            if (keyData == Keys.F2)
+            {
+                this.btnSupportNote.PerformClick();
+                return true;
+            }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void btnSupportNote_Click(object sender, EventArgs e)
+        {
+            this.btnSupportNote.Enabled = false;
+            if (this.main_form.supportnote_wind == null)
+            {
+                SupportNoteWindow wind = new SupportNoteWindow(this, this.serial);
+                wind.Text += " (" + this.main_form.G.loged_in_user_level.ToUserLevelString() + " : " + this.main_form.G.loged_in_user_name + " - " + this.main_form.G.loged_in_user_realname + ")";
+                wind.MdiParent = this.main_form;
+                this.main_form.supportnote_wind = wind;
+                wind.Show();
+            }
+            else
+            {
+                this.main_form.supportnote_wind.serial = this.serial;
+                this.main_form.supportnote_wind.BeginDuration();
+                this.main_form.supportnote_wind.Activate();
+            }
+        }
+
+        private void btnSupportPause_Click(object sender, EventArgs e)
+        {
+            this.splitContainer2.SplitterDistance = 143;
+            //this.MinimumSize = new Size(this.MinimumSize.Width, 740);
+        }
+
+        private void btnSupportHistory_Click(object sender, EventArgs e)
+        {
+            if (this.main_form.supportnote_wind == null)
+            {
+                SupportNoteWindow wind = new SupportNoteWindow(this);
+                wind.Text += " (" + this.main_form.G.loged_in_user_level.ToUserLevelString() + " : " + this.main_form.G.loged_in_user_name + " - " + this.main_form.G.loged_in_user_realname + ")";
+                wind.MdiParent = this.main_form;
+                this.main_form.supportnote_wind = wind;
+                wind.Show();
+            }
+            else
+            {
+                this.main_form.supportnote_wind.Activate();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            this.main_form.sn_wind = null;
+            if (this.main_form.supportnote_wind != null)
+            {
+                this.main_form.supportnote_wind.Close();
+            }
+            base.OnClosing(e);
         }
     }
 

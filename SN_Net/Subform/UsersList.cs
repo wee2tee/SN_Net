@@ -27,10 +27,11 @@ namespace SN_Net.Subform
         {
             // Adding users level selection
             this.cbUserLevel.Items.Add(new ComboboxItem("ADMIN", 9, ""));
+            this.cbUserLevel.Items.Add(new ComboboxItem("SUPERVISOR", 8, ""));
             this.cbUserLevel.Items.Add(new ComboboxItem("SUPPORT", 0, ""));
             this.cbUserLevel.Items.Add(new ComboboxItem("SALES", 1, ""));
             this.cbUserLevel.Items.Add(new ComboboxItem("ACCOUNT", 2, ""));
-            this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[1];
+            this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[2];
 
             // Adding users status selection
             this.cbUserStatus.Items.Add(new ComboboxItem("ปกติ", 0, "N"));
@@ -83,12 +84,14 @@ namespace SN_Net.Subform
             if (this.txtUserName.Text.Length > 0 && this.txtEmail.Text.Length > 0)
             {
                 string username = this.txtUserName.Text;
+                string name = this.txtName.Text;
                 string email = this.txtEmail.Text;
                 int level = ((ComboboxItem)this.cbUserLevel.SelectedItem).int_value;
                 string status = ((ComboboxItem)this.cbUserStatus.SelectedItem).string_value;
                 string allowed_web_login = ((ComboboxItem)this.cbWebLogin.SelectedItem).string_value;
 
                 string json_data = "{\"username\":\"" + username.cleanString() + "\",";
+                json_data += "\"name\":\"" + name.cleanString() + "\",";
                 json_data += "\"email\":\"" + email.cleanString() + "\",";
                 json_data += "\"level\":" + level + ",";
                 json_data += "\"status\":\"" + status + "\",";
@@ -143,50 +146,58 @@ namespace SN_Net.Subform
                     // username
                     DataGridViewTextBoxColumn text_col2 = new DataGridViewTextBoxColumn();
                     int c2 = this.dgvUsers.Columns.Add(text_col2);
-                    this.dgvUsers.Columns[c2].HeaderText = "ชื่อผู้ใช้งาน";
+                    this.dgvUsers.Columns[c2].HeaderText = "รหัสผู้ใช้";
                     this.dgvUsers.Columns[c2].Width = 110;
                     this.dgvUsers.Columns[c2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // name
+                    DataGridViewTextBoxColumn text_col2_1 = new DataGridViewTextBoxColumn();
+                    text_col2_1.HeaderText = "ชื่อ";
+                    text_col2_1.Width = 110;
+                    text_col2_1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    this.dgvUsers.Columns.Add(text_col2_1);
 
                     // email
                     DataGridViewTextBoxColumn text_col3 = new DataGridViewTextBoxColumn();
                     int c3 = this.dgvUsers.Columns.Add(text_col3);
                     this.dgvUsers.Columns[c3].HeaderText = "อีเมล์";
-                    this.dgvUsers.Columns[c3].Width = 160;
+                    //this.dgvUsers.Columns[c3].Width = 160;
                     this.dgvUsers.Columns[c3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    this.dgvUsers.Columns[c3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
                     // level
                     DataGridViewTextBoxColumn text_col4 = new DataGridViewTextBoxColumn();
                     int c4 = this.dgvUsers.Columns.Add(text_col4);
                     this.dgvUsers.Columns[c4].HeaderText = "ระดับผู้ใช้";
-                    this.dgvUsers.Columns[c4].Width = 80;
+                    this.dgvUsers.Columns[c4].Width = 100;
                     this.dgvUsers.Columns[c4].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    // allowed_web_login
+                    // status
                     DataGridViewTextBoxColumn text_col5 = new DataGridViewTextBoxColumn();
                     int c5 = this.dgvUsers.Columns.Add(text_col5);
-                    this.dgvUsers.Columns[c5].HeaderText = "Web UI";
+                    this.dgvUsers.Columns[c5].HeaderText = "สถานะ";
                     this.dgvUsers.Columns[c5].Width = 50;
                     this.dgvUsers.Columns[c5].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    // status
+                    // allowed_web_login
                     DataGridViewTextBoxColumn text_col6 = new DataGridViewTextBoxColumn();
                     int c6 = this.dgvUsers.Columns.Add(text_col6);
-                    this.dgvUsers.Columns[c6].HeaderText = "สถานะ";
-                    this.dgvUsers.Columns[c6].Width = 40;
+                    this.dgvUsers.Columns[c6].HeaderText = "Web UI";
+                    this.dgvUsers.Columns[c6].Width = 80;
                     this.dgvUsers.Columns[c6].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     // create_at
                     DataGridViewTextBoxColumn text_col7 = new DataGridViewTextBoxColumn();
                     int c7 = this.dgvUsers.Columns.Add(text_col7);
                     this.dgvUsers.Columns[c7].HeaderText = "สร้างเมื่อ";
-                    this.dgvUsers.Columns[c7].Width = 120;
+                    this.dgvUsers.Columns[c7].Width = 140;
                     this.dgvUsers.Columns[c7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     // update_at
                     DataGridViewTextBoxColumn text_col8 = new DataGridViewTextBoxColumn();
                     int c8 = this.dgvUsers.Columns.Add(text_col8);
                     this.dgvUsers.Columns[c8].HeaderText = "แก้ไขเมื่อ";
-                    this.dgvUsers.Columns[c8].Width = 120;
+                    this.dgvUsers.Columns[c8].Width = 140;
                     this.dgvUsers.Columns[c8].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     // Create data row
@@ -203,25 +214,28 @@ namespace SN_Net.Subform
                         this.dgvUsers.Rows[r].Cells[1].Value = user.username;
 
                         this.dgvUsers.Rows[r].Cells[2].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[2].Value = user.email;
+                        this.dgvUsers.Rows[r].Cells[2].Value = user.name;
 
-                        this.dgvUsers.Rows[r].Cells[3].ValueType = typeof(int);
-                        this.dgvUsers.Rows[r].Cells[3].Value = ComboboxItem.GetItemText(this.cbUserLevel, user.level);
-                        this.dgvUsers.Rows[r].Cells[3].Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                        this.dgvUsers.Rows[r].Cells[3].ValueType = typeof(string);
+                        this.dgvUsers.Rows[r].Cells[3].Value = user.email;
 
-                        this.dgvUsers.Rows[r].Cells[4].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[4].Value = ComboboxItem.GetItemText(this.cbWebLogin, user.allowed_web_login);
-                        this.dgvUsers.Rows[r].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        this.dgvUsers.Rows[r].Cells[4].ValueType = typeof(int);
+                        this.dgvUsers.Rows[r].Cells[4].Value = ComboboxItem.GetItemText(this.cbUserLevel, user.level);
+                        this.dgvUsers.Rows[r].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
                         this.dgvUsers.Rows[r].Cells[5].ValueType = typeof(string);
                         this.dgvUsers.Rows[r].Cells[5].Value = ComboboxItem.GetItemText(this.cbUserStatus, user.status);
                         this.dgvUsers.Rows[r].Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                         this.dgvUsers.Rows[r].Cells[6].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[6].Value = user.create_at;
+                        this.dgvUsers.Rows[r].Cells[6].Value = ComboboxItem.GetItemText(this.cbWebLogin, user.allowed_web_login);
+                        this.dgvUsers.Rows[r].Cells[6].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                         this.dgvUsers.Rows[r].Cells[7].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[7].Value = user.last_use;
+                        this.dgvUsers.Rows[r].Cells[7].Value = user.create_at;
+
+                        this.dgvUsers.Rows[r].Cells[8].ValueType = typeof(string);
+                        this.dgvUsers.Rows[r].Cells[8].Value = user.last_use;
                     }
 
                     // Set selection item

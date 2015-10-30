@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DealerWindow));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripEdit = new System.Windows.Forms.ToolStripButton();
@@ -57,6 +59,8 @@
             this.toolStripPrintLabel2Col = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPrintLittleEnv = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPrintBigEnv = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripReload = new System.Windows.Forms.ToolStripButton();
             this.splitContainer_Main = new System.Windows.Forms.SplitContainer();
             this.txtDummy = new System.Windows.Forms.TextBox();
             this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
@@ -91,7 +95,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.dgvRemark = new System.Windows.Forms.DataGridView();
+            this.dgvMsg = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer_2nd_Page = new System.Windows.Forms.SplitContainer();
             this.txtContact2 = new SN_Net.MiscClass.CustomTextBox();
@@ -103,8 +107,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripReload = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.splitContainer_Main.Panel1.SuspendLayout();
             this.splitContainer_Main.Panel2.SuspendLayout();
@@ -114,7 +116,7 @@
             this.splitContainer_1st_Page.Panel1.SuspendLayout();
             this.splitContainer_1st_Page.Panel2.SuspendLayout();
             this.splitContainer_1st_Page.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRemark)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMsg)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.splitContainer_2nd_Page.Panel1.SuspendLayout();
             this.splitContainer_2nd_Page.Panel2.SuspendLayout();
@@ -183,6 +185,7 @@
             this.toolStripDelete.Name = "toolStripDelete";
             this.toolStripDelete.Size = new System.Drawing.Size(36, 37);
             this.toolStripDelete.Text = "Delete <Alt+D>";
+            this.toolStripDelete.Click += new System.EventHandler(this.toolStripDelete_Click);
             // 
             // toolStripStop
             // 
@@ -383,6 +386,24 @@
             this.toolStripPrintBigEnv.Text = "Print Big Envelope";
             this.toolStripPrintBigEnv.Click += new System.EventHandler(this.toolStripPrintBigEnv_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 40);
+            // 
+            // toolStripReload
+            // 
+            this.toolStripReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripReload.Image = global::SN_Net.Properties.Resources.refresh;
+            this.toolStripReload.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripReload.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
+            this.toolStripReload.Name = "toolStripReload";
+            this.toolStripReload.Size = new System.Drawing.Size(36, 37);
+            this.toolStripReload.Text = "Reload current data <F5>";
+            this.toolStripReload.Click += new System.EventHandler(this.toolStripReload_Click);
+            // 
             // splitContainer_Main
             // 
             this.splitContainer_Main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -563,7 +584,7 @@
             // 
             // splitContainer_1st_Page.Panel2
             // 
-            this.splitContainer_1st_Page.Panel2.Controls.Add(this.dgvRemark);
+            this.splitContainer_1st_Page.Panel2.Controls.Add(this.dgvMsg);
             this.splitContainer_1st_Page.Panel2.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.splitContainer_1st_Page.Size = new System.Drawing.Size(767, 441);
             this.splitContainer_1st_Page.SplitterDistance = 247;
@@ -877,17 +898,40 @@
             this.label10.TabIndex = 60;
             this.label10.Text = "Address";
             // 
-            // dgvRemark
+            // dgvMsg
             // 
-            this.dgvRemark.AllowUserToAddRows = false;
-            this.dgvRemark.AllowUserToDeleteRows = false;
-            this.dgvRemark.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRemark.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvRemark.Location = new System.Drawing.Point(3, 0);
-            this.dgvRemark.Name = "dgvRemark";
-            this.dgvRemark.ReadOnly = true;
-            this.dgvRemark.Size = new System.Drawing.Size(761, 187);
-            this.dgvRemark.TabIndex = 0;
+            this.dgvMsg.AllowUserToAddRows = false;
+            this.dgvMsg.AllowUserToDeleteRows = false;
+            this.dgvMsg.AllowUserToResizeColumns = false;
+            this.dgvMsg.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMsg.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvMsg.ColumnHeadersHeight = 25;
+            this.dgvMsg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMsg.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMsg.EnableHeadersVisualStyles = false;
+            this.dgvMsg.Location = new System.Drawing.Point(3, 0);
+            this.dgvMsg.MultiSelect = false;
+            this.dgvMsg.Name = "dgvMsg";
+            this.dgvMsg.ReadOnly = true;
+            this.dgvMsg.RowHeadersVisible = false;
+            this.dgvMsg.RowTemplate.Height = 25;
+            this.dgvMsg.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMsg.Size = new System.Drawing.Size(761, 187);
+            this.dgvMsg.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -997,15 +1041,16 @@
             this.dgvSerial.AllowUserToDeleteRows = false;
             this.dgvSerial.AllowUserToResizeColumns = false;
             this.dgvSerial.AllowUserToResizeRows = false;
-            this.dgvSerial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSerial.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvSerial.ColumnHeadersHeight = 25;
+            this.dgvSerial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSerial.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvSerial.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSerial.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvSerial.EnableHeadersVisualStyles = false;
@@ -1014,15 +1059,14 @@
             this.dgvSerial.Name = "dgvSerial";
             this.dgvSerial.ReadOnly = true;
             this.dgvSerial.RowHeadersVisible = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            this.dgvSerial.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            this.dgvSerial.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvSerial.RowTemplate.Height = 25;
             this.dgvSerial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSerial.Size = new System.Drawing.Size(761, 352);
             this.dgvSerial.TabIndex = 0;
-            this.dgvSerial.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvSerial_Paint);
             // 
             // statusStrip1
             // 
@@ -1059,24 +1103,6 @@
             this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripProcessing.Visible = false;
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 40);
-            // 
-            // toolStripReload
-            // 
-            this.toolStripReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripReload.Image = global::SN_Net.Properties.Resources.refresh;
-            this.toolStripReload.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripReload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripReload.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
-            this.toolStripReload.Name = "toolStripReload";
-            this.toolStripReload.Size = new System.Drawing.Size(36, 37);
-            this.toolStripReload.Text = "Reload current data <F5>";
-            this.toolStripReload.Click += new System.EventHandler(this.toolStripReload_Click);
-            // 
             // DealerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1103,7 +1129,7 @@
             this.splitContainer_1st_Page.Panel1.PerformLayout();
             this.splitContainer_1st_Page.Panel2.ResumeLayout(false);
             this.splitContainer_1st_Page.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRemark)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMsg)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.splitContainer_2nd_Page.Panel1.ResumeLayout(false);
             this.splitContainer_2nd_Page.Panel1.PerformLayout();
@@ -1163,7 +1189,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridView dgvRemark;
+        private System.Windows.Forms.DataGridView dgvMsg;
         private System.Windows.Forms.SplitContainer splitContainer_2nd_Page;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label8;

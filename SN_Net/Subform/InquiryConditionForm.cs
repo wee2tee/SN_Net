@@ -18,8 +18,10 @@ namespace SN_Net.Subform
     {
         private DealerWindow parent_window;
         private List<Dealer_list> dealer_list = new List<Dealer_list>(); // store Dealer_list from query result with condition
+        private List<Dealer_list> dl = new List<Dealer_list>();
         public int selected_id; // store selected Dealer.id
         private string sort_field;
+        private BindingSource bs = new BindingSource();
         private FORM_STATE form_state;
         private enum FORM_STATE
         {
@@ -63,6 +65,8 @@ namespace SN_Net.Subform
             this.cbCompareType.SelectedIndex = 0;
 
             this.txtExpression.Text = this.parent_window.inquiry_expression;
+            this.bs.DataSource = this.dl;
+            this.dgvDealer.DataSource = this.bs;
             this.FillDataGrid();
         }
 
@@ -102,7 +106,6 @@ namespace SN_Net.Subform
                 string value = this.txtValue.Texts;
 
                 this.txtExpression.Text += (compare_type == "Like" ? opr + field + " " + compare_type + " \'%" + value + "%\'" : opr + field + " " + compare_type + " \'" + value + "\'");
-                //this.btnGo.Focus();
                 SendKeys.Send("{TAB}");
             }
         }
@@ -123,7 +126,6 @@ namespace SN_Net.Subform
                 string json_data = "{\"expression\":\"" + expression + "\",";
                 json_data += "\"sort_field\":\"" + this.sort_field + "\"}";
 
-                Console.WriteLine(json_data);
                 CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "dealer/get_inquiry_condition", json_data);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
@@ -204,7 +206,13 @@ namespace SN_Net.Subform
 
         private void FillDataGrid()
         {
-            this.dgvDealer.DataSource = this.dealer_list;
+            this.dl.Clear();
+            foreach (Dealer_list d in this.dealer_list)
+            {
+                this.dl.Add(d);
+            }
+            this.bs.ResetBindings(false);
+
             this.dgvDealer.Columns[0].Visible = false;
             this.dgvDealer.Columns[1].Width = 120;
             this.dgvDealer.Columns[2].Width = 400;
@@ -215,17 +223,25 @@ namespace SN_Net.Subform
             this.dgvDealer.Columns[7].Width = 300;
             this.dgvDealer.Columns[8].Width = 300;
 
-            this.dgvDealer.CurrentCellChanged += delegate
-            {
-                this.toolStripSelectedID.Text = "#" + ((int)this.dgvDealer.Rows[this.dgvDealer.CurrentCell.RowIndex].Cells[0].Value).ToString();
-            };
+            this.dgvDealer.DrawLineEffect();
+            this.dgvDealer.Focus();
 
             if (this.dgvDealer.Rows.Count > 0)
             {
                 this.dgvDealer.Rows[0].Cells[1].Selected = true;
-                this.dgvDealer.DrawLineEffect();
-                this.dgvDealer.Focus();
             }
+
+            this.dgvDealer.CurrentCellChanged += delegate
+            {
+                if (this.dgvDealer.CurrentCell != null)
+                {
+                    this.toolStripSelectedID.Text = "#" + ((int)this.dgvDealer.Rows[this.dgvDealer.CurrentCell.RowIndex].Cells[0].Value).ToString();
+                }
+                else
+                {
+                    this.toolStripSelectedID.Text = "#";
+                }
+            };
         }
 
         private void FormProcessing()

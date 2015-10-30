@@ -38,9 +38,9 @@ namespace SN_Net.Subform
             InitializeComponent();
             EscapeKeyToCloseDialog.ActiveEscToClose(this);
 
-            system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            appdata_path = Path.Combine(system_path, "SN_Net\\");
-            Console.WriteLine(appdata_path);
+            //system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            //appdata_path = Path.Combine(system_path, "SN_Net\\");
+            //Console.WriteLine(appdata_path);
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -69,7 +69,8 @@ namespace SN_Net.Subform
 
         private void LoginForm_Shown(object sender, EventArgs e)
         {
-            if (File.Exists(this.appdata_path + "SN_pref.txt"))
+            //if (File.Exists(this.appdata_path + "SN_pref.txt"))
+            if(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt")))
             {
                 this.txtUser.Focus();
 
@@ -114,6 +115,7 @@ namespace SN_Net.Subform
 
                     this.G.loged_in_user_id = user.id;
                     this.G.loged_in_user_name = user.username;
+                    this.G.loged_in_user_realname = user.name;
                     this.G.loged_in_user_email = user.email;
                     this.G.loged_in_user_status = user.status;
                     this.G.loged_in_user_level = user.level;

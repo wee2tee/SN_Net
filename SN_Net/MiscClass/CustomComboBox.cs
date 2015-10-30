@@ -131,6 +131,10 @@ namespace SN_Net.MiscClass
             {
                 this.item_shown = false;
             };
+            this.comboBox1.SelectedIndexChanged += delegate
+            {
+                this.label1.Text = this.comboBox1.Text;
+            };
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -146,6 +150,16 @@ namespace SN_Net.MiscClass
         {
             this.comboBox1.BackColor = Color.FromKnownColor(KnownColor.Control);
             base.OnLeave(e);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F6)
+            {
+                SendKeys.Send("{F4}");
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

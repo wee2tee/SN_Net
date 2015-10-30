@@ -33,6 +33,17 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dtVerextdat = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.dtManual = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.dtExpdat = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.dtPurdat = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.cbVerext = new SN_Net.MiscClass.CustomComboBox();
+            this.txtUpfree = new SN_Net.MiscClass.CustomTextBox();
+            this.txtHowknown = new SN_Net.MiscClass.CustomTextBox();
+            this.txtDealer = new SN_Net.MiscClass.CustomTextBox();
+            this.txtBusityp = new SN_Net.MiscClass.CustomTextBox();
+            this.txtBusides = new SN_Net.MiscClass.CustomTextBox();
+            this.txtRemark = new SN_Net.MiscClass.CustomTextBox();
             this.lblHowknownTypdes = new System.Windows.Forms.Label();
             this.btnBrowseHowknown = new System.Windows.Forms.Button();
             this.btnBrowseDealer = new System.Windows.Forms.Button();
@@ -49,6 +60,15 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtOldnum = new SN_Net.MiscClass.CustomMaskedTextBox();
+            this.txtPosition = new SN_Net.MiscClass.CustomTextBox();
+            this.txtContact = new SN_Net.MiscClass.CustomTextBox();
+            this.txtFaxnum = new SN_Net.MiscClass.CustomTextBox();
+            this.txtTelnum = new SN_Net.MiscClass.CustomTextBox();
+            this.txtZipcod = new SN_Net.MiscClass.CustomTextBox();
+            this.txtAddr03 = new SN_Net.MiscClass.CustomTextBox();
+            this.txtAddr02 = new SN_Net.MiscClass.CustomTextBox();
+            this.txtAddr01 = new SN_Net.MiscClass.CustomTextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -107,6 +127,42 @@
             this.btnSwithToRefnum = new System.Windows.Forms.Button();
             this.btnLostRenew = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBox15 = new System.Windows.Forms.CheckBox();
+            this.checkBox14 = new System.Windows.Forms.CheckBox();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.checkBox13 = new System.Windows.Forms.CheckBox();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.dtEndTime = new System.Windows.Forms.DateTimePicker();
+            this.dtStartTime = new System.Windows.Forms.DateTimePicker();
+            this.lblDuration = new System.Windows.Forms.Label();
+            this.btnSupportHistory = new System.Windows.Forms.Button();
+            this.btnSupportNote = new System.Windows.Forms.Button();
+            this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
+            this.txtSernum = new SN_Net.MiscClass.CustomMaskedTextBox();
+            this.txtRefnum = new SN_Net.MiscClass.CustomTextBox();
+            this.txtArea = new SN_Net.MiscClass.CustomTextBox();
+            this.txtVersion = new SN_Net.MiscClass.CustomTextBox();
+            this.txtPrenam = new SN_Net.MiscClass.CustomTextBox();
             this.btnCD = new System.Windows.Forms.Button();
             this.btnUP = new System.Windows.Forms.Button();
             this.btnUPNewRwt = new System.Windows.Forms.Button();
@@ -119,32 +175,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
-            this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
-            this.txtSernum = new SN_Net.MiscClass.CustomMaskedTextBox();
-            this.txtRefnum = new SN_Net.MiscClass.CustomTextBox();
-            this.txtArea = new SN_Net.MiscClass.CustomTextBox();
-            this.txtVersion = new SN_Net.MiscClass.CustomTextBox();
-            this.txtPrenam = new SN_Net.MiscClass.CustomTextBox();
-            this.dtVerextdat = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.dtManual = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.dtExpdat = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.dtPurdat = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.cbVerext = new SN_Net.MiscClass.CustomComboBox();
-            this.txtUpfree = new SN_Net.MiscClass.CustomTextBox();
-            this.txtHowknown = new SN_Net.MiscClass.CustomTextBox();
-            this.txtDealer = new SN_Net.MiscClass.CustomTextBox();
-            this.txtBusityp = new SN_Net.MiscClass.CustomTextBox();
-            this.txtBusides = new SN_Net.MiscClass.CustomTextBox();
-            this.txtRemark = new SN_Net.MiscClass.CustomTextBox();
-            this.txtOldnum = new SN_Net.MiscClass.CustomMaskedTextBox();
-            this.txtPosition = new SN_Net.MiscClass.CustomTextBox();
-            this.txtContact = new SN_Net.MiscClass.CustomTextBox();
-            this.txtFaxnum = new SN_Net.MiscClass.CustomTextBox();
-            this.txtTelnum = new SN_Net.MiscClass.CustomTextBox();
-            this.txtZipcod = new SN_Net.MiscClass.CustomTextBox();
-            this.txtAddr03 = new SN_Net.MiscClass.CustomTextBox();
-            this.txtAddr02 = new SN_Net.MiscClass.CustomTextBox();
-            this.txtAddr01 = new SN_Net.MiscClass.CustomTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -158,6 +188,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -171,7 +203,7 @@
             this.tabControl1.MinimumSize = new System.Drawing.Size(600, 400);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(844, 477);
+            this.tabControl1.Size = new System.Drawing.Size(844, 440);
             this.tabControl1.TabIndex = 99;
             this.tabControl1.TabStop = false;
             this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.DisableChangeTabWhileAddEdit);
@@ -184,7 +216,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(836, 451);
+            this.tabPage1.Size = new System.Drawing.Size(836, 414);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "รายละเอียด";
             // 
@@ -216,17 +248,200 @@
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Location = new System.Drawing.Point(8, 240);
+            this.groupBox2.Location = new System.Drawing.Point(8, 213);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(829, 205);
+            this.groupBox2.Size = new System.Drawing.Size(822, 193);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
+            // 
+            // dtVerextdat
+            // 
+            this.dtVerextdat.BackColor = System.Drawing.Color.White;
+            this.dtVerextdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtVerextdat.Location = new System.Drawing.Point(676, 156);
+            this.dtVerextdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtVerextdat.Name = "dtVerextdat";
+            this.dtVerextdat.Read_Only = true;
+            this.dtVerextdat.Size = new System.Drawing.Size(96, 23);
+            this.dtVerextdat.TabIndex = 25;
+            this.dtVerextdat.Texts = "19/10/2558";
+            this.dtVerextdat.TextsMysql = "2015-10-19";
+            this.toolTip1.SetToolTip(this.dtVerextdat, "<F6> = Show Calendar");
+            this.dtVerextdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            // 
+            // dtManual
+            // 
+            this.dtManual.BackColor = System.Drawing.Color.White;
+            this.dtManual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtManual.Location = new System.Drawing.Point(676, 131);
+            this.dtManual.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtManual.Name = "dtManual";
+            this.dtManual.Read_Only = true;
+            this.dtManual.Size = new System.Drawing.Size(96, 23);
+            this.dtManual.TabIndex = 23;
+            this.dtManual.Texts = "19/10/2558";
+            this.dtManual.TextsMysql = "2015-10-19";
+            this.toolTip1.SetToolTip(this.dtManual, "<F6> = Show Calendar");
+            this.dtManual.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            // 
+            // dtExpdat
+            // 
+            this.dtExpdat.BackColor = System.Drawing.Color.White;
+            this.dtExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtExpdat.Location = new System.Drawing.Point(367, 156);
+            this.dtExpdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtExpdat.Name = "dtExpdat";
+            this.dtExpdat.Read_Only = true;
+            this.dtExpdat.Size = new System.Drawing.Size(96, 23);
+            this.dtExpdat.TabIndex = 21;
+            this.dtExpdat.Texts = "19/10/2558";
+            this.dtExpdat.TextsMysql = "2015-10-19";
+            this.toolTip1.SetToolTip(this.dtExpdat, "<F6> = Show Calendar");
+            this.dtExpdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            // 
+            // dtPurdat
+            // 
+            this.dtPurdat.BackColor = System.Drawing.Color.White;
+            this.dtPurdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtPurdat.Location = new System.Drawing.Point(118, 156);
+            this.dtPurdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtPurdat.Name = "dtPurdat";
+            this.dtPurdat.Read_Only = true;
+            this.dtPurdat.Size = new System.Drawing.Size(96, 23);
+            this.dtPurdat.TabIndex = 20;
+            this.dtPurdat.Texts = "19/10/2558";
+            this.dtPurdat.TextsMysql = "2015-10-19";
+            this.toolTip1.SetToolTip(this.dtPurdat, "<F6> = Show Calendar");
+            this.dtPurdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            // 
+            // cbVerext
+            // 
+            this.cbVerext.BackColor = System.Drawing.Color.White;
+            this.cbVerext.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cbVerext.Location = new System.Drawing.Point(485, 156);
+            this.cbVerext.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cbVerext.Name = "cbVerext";
+            this.cbVerext.Read_Only = true;
+            this.cbVerext.Size = new System.Drawing.Size(182, 24);
+            this.cbVerext.TabIndex = 24;
+            this.cbVerext.Texts = null;
+            this.toolTip1.SetToolTip(this.cbVerext, "<F6> = Show Item");
+            // 
+            // txtUpfree
+            // 
+            this.txtUpfree.BackColor = System.Drawing.Color.White;
+            this.txtUpfree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUpfree.CharUpperCase = false;
+            this.txtUpfree.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtUpfree.Location = new System.Drawing.Point(676, 106);
+            this.txtUpfree.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtUpfree.MaxChar = 0;
+            this.txtUpfree.Name = "txtUpfree";
+            this.txtUpfree.ReadOnly = true;
+            this.txtUpfree.SelectionLength = 0;
+            this.txtUpfree.SelectionStart = 0;
+            this.txtUpfree.Size = new System.Drawing.Size(20, 23);
+            this.txtUpfree.TabIndex = 22;
+            this.txtUpfree.Texts = "";
+            // 
+            // txtHowknown
+            // 
+            this.txtHowknown.BackColor = System.Drawing.Color.White;
+            this.txtHowknown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtHowknown.CharUpperCase = false;
+            this.txtHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtHowknown.Location = new System.Drawing.Point(118, 131);
+            this.txtHowknown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtHowknown.MaxChar = 0;
+            this.txtHowknown.Name = "txtHowknown";
+            this.txtHowknown.ReadOnly = true;
+            this.txtHowknown.SelectionLength = 0;
+            this.txtHowknown.SelectionStart = 0;
+            this.txtHowknown.Size = new System.Drawing.Size(70, 23);
+            this.txtHowknown.TabIndex = 19;
+            this.txtHowknown.Texts = "";
+            this.toolTip1.SetToolTip(this.txtHowknown, "<F6> = How to Know List");
+            // 
+            // txtDealer
+            // 
+            this.txtDealer.BackColor = System.Drawing.Color.White;
+            this.txtDealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDealer.CharUpperCase = false;
+            this.txtDealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtDealer.Location = new System.Drawing.Point(118, 95);
+            this.txtDealer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtDealer.MaxChar = 0;
+            this.txtDealer.Name = "txtDealer";
+            this.txtDealer.ReadOnly = true;
+            this.txtDealer.SelectionLength = 0;
+            this.txtDealer.SelectionStart = 0;
+            this.txtDealer.Size = new System.Drawing.Size(139, 23);
+            this.txtDealer.TabIndex = 18;
+            this.txtDealer.Texts = "";
+            this.toolTip1.SetToolTip(this.txtDealer, "<F6> = Dealer List");
+            // 
+            // txtBusityp
+            // 
+            this.txtBusityp.BackColor = System.Drawing.Color.White;
+            this.txtBusityp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBusityp.CharUpperCase = false;
+            this.txtBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtBusityp.Location = new System.Drawing.Point(118, 70);
+            this.txtBusityp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtBusityp.MaxChar = 0;
+            this.txtBusityp.Name = "txtBusityp";
+            this.txtBusityp.ReadOnly = true;
+            this.txtBusityp.SelectionLength = 0;
+            this.txtBusityp.SelectionStart = 0;
+            this.txtBusityp.Size = new System.Drawing.Size(70, 23);
+            this.txtBusityp.TabIndex = 17;
+            this.txtBusityp.Texts = "";
+            this.toolTip1.SetToolTip(this.txtBusityp, "<F6> = Business Type List");
+            // 
+            // txtBusides
+            // 
+            this.txtBusides.BackColor = System.Drawing.Color.White;
+            this.txtBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBusides.CharUpperCase = false;
+            this.txtBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtBusides.Location = new System.Drawing.Point(118, 45);
+            this.txtBusides.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtBusides.MaxChar = 0;
+            this.txtBusides.Name = "txtBusides";
+            this.txtBusides.ReadOnly = true;
+            this.txtBusides.SelectionLength = 0;
+            this.txtBusides.SelectionStart = 0;
+            this.txtBusides.Size = new System.Drawing.Size(501, 23);
+            this.txtBusides.TabIndex = 16;
+            this.txtBusides.Texts = "";
+            // 
+            // txtRemark
+            // 
+            this.txtRemark.BackColor = System.Drawing.Color.White;
+            this.txtRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRemark.CharUpperCase = false;
+            this.txtRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtRemark.Location = new System.Drawing.Point(118, 20);
+            this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtRemark.MaxChar = 0;
+            this.txtRemark.Name = "txtRemark";
+            this.txtRemark.ReadOnly = true;
+            this.txtRemark.SelectionLength = 0;
+            this.txtRemark.SelectionStart = 0;
+            this.txtRemark.Size = new System.Drawing.Size(501, 23);
+            this.txtRemark.TabIndex = 15;
+            this.txtRemark.Texts = "";
             // 
             // lblHowknownTypdes
             // 
             this.lblHowknownTypdes.AutoSize = true;
             this.lblHowknownTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblHowknownTypdes.Location = new System.Drawing.Point(213, 149);
+            this.lblHowknownTypdes.Location = new System.Drawing.Point(213, 134);
             this.lblHowknownTypdes.Name = "lblHowknownTypdes";
             this.lblHowknownTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblHowknownTypdes.TabIndex = 56;
@@ -234,7 +449,7 @@
             // btnBrowseHowknown
             // 
             this.btnBrowseHowknown.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseHowknown.Location = new System.Drawing.Point(186, 145);
+            this.btnBrowseHowknown.Location = new System.Drawing.Point(186, 130);
             this.btnBrowseHowknown.Name = "btnBrowseHowknown";
             this.btnBrowseHowknown.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseHowknown.TabIndex = 55;
@@ -245,7 +460,7 @@
             // btnBrowseDealer
             // 
             this.btnBrowseDealer.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseDealer.Location = new System.Drawing.Point(255, 106);
+            this.btnBrowseDealer.Location = new System.Drawing.Point(255, 94);
             this.btnBrowseDealer.Name = "btnBrowseDealer";
             this.btnBrowseDealer.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseDealer.TabIndex = 53;
@@ -257,7 +472,7 @@
             // 
             this.lblBusitypTypdes.AutoSize = true;
             this.lblBusitypTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusitypTypdes.Location = new System.Drawing.Point(213, 82);
+            this.lblBusitypTypdes.Location = new System.Drawing.Point(213, 73);
             this.lblBusitypTypdes.Name = "lblBusitypTypdes";
             this.lblBusitypTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblBusitypTypdes.TabIndex = 51;
@@ -265,7 +480,7 @@
             // btnBrowseBusityp
             // 
             this.btnBrowseBusityp.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseBusityp.Location = new System.Drawing.Point(186, 78);
+            this.btnBrowseBusityp.Location = new System.Drawing.Point(186, 69);
             this.btnBrowseBusityp.Name = "btnBrowseBusityp";
             this.btnBrowseBusityp.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseBusityp.TabIndex = 50;
@@ -277,7 +492,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label27.Location = new System.Drawing.Point(638, 149);
+            this.label27.Location = new System.Drawing.Point(638, 133);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(34, 16);
             this.label27.TabIndex = 45;
@@ -287,7 +502,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label26.Location = new System.Drawing.Point(618, 125);
+            this.label26.Location = new System.Drawing.Point(618, 110);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(55, 16);
             this.label26.TabIndex = 44;
@@ -297,7 +512,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label25.Location = new System.Drawing.Point(289, 177);
+            this.label25.Location = new System.Drawing.Point(289, 159);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(75, 16);
             this.label25.TabIndex = 42;
@@ -307,7 +522,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label24.Location = new System.Drawing.Point(24, 177);
+            this.label24.Location = new System.Drawing.Point(24, 159);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(90, 16);
             this.label24.TabIndex = 40;
@@ -317,7 +532,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label22.Location = new System.Drawing.Point(32, 149);
+            this.label22.Location = new System.Drawing.Point(32, 134);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(82, 16);
             this.label22.TabIndex = 37;
@@ -327,7 +542,7 @@
             // 
             this.lblDealer_DealerCompnam.AutoSize = true;
             this.lblDealer_DealerCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDealer_DealerCompnam.Location = new System.Drawing.Point(282, 110);
+            this.lblDealer_DealerCompnam.Location = new System.Drawing.Point(282, 98);
             this.lblDealer_DealerCompnam.Name = "lblDealer_DealerCompnam";
             this.lblDealer_DealerCompnam.Size = new System.Drawing.Size(0, 16);
             this.lblDealer_DealerCompnam.TabIndex = 36;
@@ -336,7 +551,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label20.Location = new System.Drawing.Point(20, 110);
+            this.label20.Location = new System.Drawing.Point(20, 98);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(94, 16);
             this.label20.TabIndex = 34;
@@ -346,7 +561,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label19.Location = new System.Drawing.Point(25, 82);
+            this.label19.Location = new System.Drawing.Point(25, 73);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(89, 16);
             this.label19.TabIndex = 32;
@@ -356,7 +571,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label18.Location = new System.Drawing.Point(22, 55);
+            this.label18.Location = new System.Drawing.Point(22, 48);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(92, 16);
             this.label18.TabIndex = 30;
@@ -366,7 +581,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label16.Location = new System.Drawing.Point(62, 28);
+            this.label16.Location = new System.Drawing.Point(62, 23);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(52, 16);
             this.label16.TabIndex = 28;
@@ -392,15 +607,167 @@
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Location = new System.Drawing.Point(8, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(829, 228);
+            this.groupBox1.Size = new System.Drawing.Size(822, 205);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
+            // 
+            // txtOldnum
+            // 
+            this.txtOldnum.BackColor = System.Drawing.Color.White;
+            this.txtOldnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOldnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtOldnum.Location = new System.Drawing.Point(664, 169);
+            this.txtOldnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtOldnum.MaskString = ">A-AAA-AAAAAA";
+            this.txtOldnum.Name = "txtOldnum";
+            this.txtOldnum.Read_Only = true;
+            this.txtOldnum.SelectedStringBegin = 0;
+            this.txtOldnum.SelectedStringEnd = 0;
+            this.txtOldnum.Size = new System.Drawing.Size(118, 23);
+            this.txtOldnum.TabIndex = 14;
+            this.txtOldnum.Texts = "";
+            // 
+            // txtPosition
+            // 
+            this.txtPosition.BackColor = System.Drawing.Color.White;
+            this.txtPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPosition.CharUpperCase = false;
+            this.txtPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtPosition.Location = new System.Drawing.Point(118, 169);
+            this.txtPosition.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPosition.MaxChar = 0;
+            this.txtPosition.Name = "txtPosition";
+            this.txtPosition.ReadOnly = true;
+            this.txtPosition.SelectionLength = 0;
+            this.txtPosition.SelectionStart = 0;
+            this.txtPosition.Size = new System.Drawing.Size(442, 23);
+            this.txtPosition.TabIndex = 13;
+            this.txtPosition.Texts = "";
+            // 
+            // txtContact
+            // 
+            this.txtContact.BackColor = System.Drawing.Color.White;
+            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtContact.CharUpperCase = false;
+            this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtContact.Location = new System.Drawing.Point(118, 144);
+            this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtContact.MaxChar = 0;
+            this.txtContact.Name = "txtContact";
+            this.txtContact.ReadOnly = true;
+            this.txtContact.SelectionLength = 0;
+            this.txtContact.SelectionStart = 0;
+            this.txtContact.Size = new System.Drawing.Size(442, 23);
+            this.txtContact.TabIndex = 12;
+            this.txtContact.Texts = "";
+            // 
+            // txtFaxnum
+            // 
+            this.txtFaxnum.BackColor = System.Drawing.Color.White;
+            this.txtFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFaxnum.CharUpperCase = false;
+            this.txtFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtFaxnum.Location = new System.Drawing.Point(118, 119);
+            this.txtFaxnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtFaxnum.MaxChar = 0;
+            this.txtFaxnum.Name = "txtFaxnum";
+            this.txtFaxnum.ReadOnly = true;
+            this.txtFaxnum.SelectionLength = 0;
+            this.txtFaxnum.SelectionStart = 0;
+            this.txtFaxnum.Size = new System.Drawing.Size(442, 23);
+            this.txtFaxnum.TabIndex = 11;
+            this.txtFaxnum.Texts = "";
+            // 
+            // txtTelnum
+            // 
+            this.txtTelnum.BackColor = System.Drawing.Color.White;
+            this.txtTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTelnum.CharUpperCase = false;
+            this.txtTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTelnum.Location = new System.Drawing.Point(118, 94);
+            this.txtTelnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTelnum.MaxChar = 0;
+            this.txtTelnum.Name = "txtTelnum";
+            this.txtTelnum.ReadOnly = true;
+            this.txtTelnum.SelectionLength = 0;
+            this.txtTelnum.SelectionStart = 0;
+            this.txtTelnum.Size = new System.Drawing.Size(442, 23);
+            this.txtTelnum.TabIndex = 10;
+            this.txtTelnum.Texts = "";
+            // 
+            // txtZipcod
+            // 
+            this.txtZipcod.BackColor = System.Drawing.Color.White;
+            this.txtZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtZipcod.CharUpperCase = false;
+            this.txtZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtZipcod.Location = new System.Drawing.Point(491, 69);
+            this.txtZipcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtZipcod.MaxChar = 0;
+            this.txtZipcod.Name = "txtZipcod";
+            this.txtZipcod.ReadOnly = true;
+            this.txtZipcod.SelectionLength = 0;
+            this.txtZipcod.SelectionStart = 0;
+            this.txtZipcod.Size = new System.Drawing.Size(69, 23);
+            this.txtZipcod.TabIndex = 9;
+            this.txtZipcod.Texts = "";
+            // 
+            // txtAddr03
+            // 
+            this.txtAddr03.BackColor = System.Drawing.Color.White;
+            this.txtAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddr03.CharUpperCase = false;
+            this.txtAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAddr03.Location = new System.Drawing.Point(118, 69);
+            this.txtAddr03.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtAddr03.MaxChar = 0;
+            this.txtAddr03.Name = "txtAddr03";
+            this.txtAddr03.ReadOnly = true;
+            this.txtAddr03.SelectionLength = 0;
+            this.txtAddr03.SelectionStart = 0;
+            this.txtAddr03.Size = new System.Drawing.Size(271, 23);
+            this.txtAddr03.TabIndex = 8;
+            this.txtAddr03.Texts = "";
+            // 
+            // txtAddr02
+            // 
+            this.txtAddr02.BackColor = System.Drawing.Color.White;
+            this.txtAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddr02.CharUpperCase = false;
+            this.txtAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAddr02.Location = new System.Drawing.Point(118, 44);
+            this.txtAddr02.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtAddr02.MaxChar = 0;
+            this.txtAddr02.Name = "txtAddr02";
+            this.txtAddr02.ReadOnly = true;
+            this.txtAddr02.SelectionLength = 0;
+            this.txtAddr02.SelectionStart = 0;
+            this.txtAddr02.Size = new System.Drawing.Size(442, 23);
+            this.txtAddr02.TabIndex = 7;
+            this.txtAddr02.Texts = "";
+            // 
+            // txtAddr01
+            // 
+            this.txtAddr01.BackColor = System.Drawing.Color.White;
+            this.txtAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAddr01.CharUpperCase = false;
+            this.txtAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtAddr01.Location = new System.Drawing.Point(118, 19);
+            this.txtAddr01.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtAddr01.MaxChar = 0;
+            this.txtAddr01.Name = "txtAddr01";
+            this.txtAddr01.ReadOnly = true;
+            this.txtAddr01.SelectionLength = 0;
+            this.txtAddr01.SelectionStart = 0;
+            this.txtAddr01.Size = new System.Drawing.Size(442, 23);
+            this.txtAddr01.TabIndex = 6;
+            this.txtAddr01.Texts = "";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label17.Location = new System.Drawing.Point(82, 136);
+            this.label17.Location = new System.Drawing.Point(82, 122);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(32, 16);
             this.label17.TabIndex = 28;
@@ -410,7 +777,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label15.Location = new System.Drawing.Point(594, 190);
+            this.label15.Location = new System.Drawing.Point(594, 172);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(64, 16);
             this.label15.TabIndex = 27;
@@ -420,7 +787,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label14.Location = new System.Drawing.Point(62, 190);
+            this.label14.Location = new System.Drawing.Point(62, 172);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(52, 16);
             this.label14.TabIndex = 25;
@@ -430,7 +797,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label13.Location = new System.Drawing.Point(63, 163);
+            this.label13.Location = new System.Drawing.Point(63, 147);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 16);
             this.label13.TabIndex = 23;
@@ -440,7 +807,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label12.Location = new System.Drawing.Point(84, 109);
+            this.label12.Location = new System.Drawing.Point(84, 97);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(30, 16);
             this.label12.TabIndex = 21;
@@ -450,7 +817,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(432, 82);
+            this.label11.Location = new System.Drawing.Point(432, 72);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(58, 16);
             this.label11.TabIndex = 20;
@@ -460,7 +827,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label10.Location = new System.Drawing.Point(60, 28);
+            this.label10.Location = new System.Drawing.Point(60, 22);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 16);
             this.label10.TabIndex = 17;
@@ -473,7 +840,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(836, 451);
+            this.tabPage2.Size = new System.Drawing.Size(836, 414);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "ประวัติการติดต่อ <F8>";
             // 
@@ -500,7 +867,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvProblem);
-            this.splitContainer1.Size = new System.Drawing.Size(830, 445);
+            this.splitContainer1.Size = new System.Drawing.Size(830, 408);
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 99;
             this.splitContainer1.TabStop = false;
@@ -610,10 +977,9 @@
             this.dgvProblem.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.dgvProblem.RowTemplate.Height = 25;
             this.dgvProblem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProblem.Size = new System.Drawing.Size(830, 414);
+            this.dgvProblem.Size = new System.Drawing.Size(830, 377);
             this.dgvProblem.TabIndex = 0;
             this.dgvProblem.TabStop = false;
-            this.dgvProblem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProblem_CellClick);
             this.dgvProblem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProblem_CellDoubleClick);
             this.dgvProblem.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvProblem_Paint);
             this.dgvProblem.Resize += new System.EventHandler(this.dgvProblem_Resize);
@@ -951,7 +1317,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(11, 67);
+            this.label1.Location = new System.Drawing.Point(11, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(64, 16);
             this.label1.TabIndex = 2;
@@ -961,7 +1327,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(11, 96);
+            this.label2.Location = new System.Drawing.Point(11, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 16);
             this.label2.TabIndex = 4;
@@ -971,7 +1337,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(218, 67);
+            this.label3.Location = new System.Drawing.Point(218, 58);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 16);
             this.label3.TabIndex = 6;
@@ -981,7 +1347,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label4.Location = new System.Drawing.Point(351, 67);
+            this.label4.Location = new System.Drawing.Point(351, 58);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 16);
             this.label4.TabIndex = 7;
@@ -1013,9 +1379,9 @@
             // 
             this.btnLostRenew.Enabled = false;
             this.btnLostRenew.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnLostRenew.Location = new System.Drawing.Point(747, 77);
+            this.btnLostRenew.Location = new System.Drawing.Point(747, 80);
             this.btnLostRenew.Name = "btnLostRenew";
-            this.btnLostRenew.Size = new System.Drawing.Size(96, 23);
+            this.btnLostRenew.Size = new System.Drawing.Size(96, 26);
             this.btnLostRenew.TabIndex = 15;
             this.btnLostRenew.TabStop = false;
             this.btnLostRenew.Text = "Lost + Renew";
@@ -1035,6 +1401,9 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.panel1);
+            this.splitContainer2.Panel1.Controls.Add(this.btnSupportHistory);
+            this.splitContainer2.Panel1.Controls.Add(this.btnSupportNote);
             this.splitContainer2.Panel1.Controls.Add(this.txtCompnam);
             this.splitContainer2.Panel1.Controls.Add(this.txtSernum);
             this.splitContainer2.Panel1.Controls.Add(this.txtRefnum);
@@ -1055,142 +1424,348 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(5, 5, 5, 25);
-            this.splitContainer2.Size = new System.Drawing.Size(854, 636);
-            this.splitContainer2.SplitterDistance = 125;
+            this.splitContainer2.Size = new System.Drawing.Size(854, 617);
+            this.splitContainer2.SplitterDistance = 143;
             this.splitContainer2.TabIndex = 16;
             this.splitContainer2.TabStop = false;
             // 
-            // btnCD
+            // panel1
             // 
-            this.btnCD.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnCD.Location = new System.Drawing.Point(584, 101);
-            this.btnCD.Name = "btnCD";
-            this.btnCD.Size = new System.Drawing.Size(33, 23);
-            this.btnCD.TabIndex = 79;
-            this.btnCD.TabStop = false;
-            this.btnCD.Text = "CD";
-            this.toolTip1.SetToolTip(this.btnCD, "Send Training CD");
-            this.btnCD.UseVisualStyleBackColor = true;
-            this.btnCD.Click += new System.EventHandler(this.btnCD_Click);
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.groupBox3);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.label30);
+            this.panel1.Controls.Add(this.label21);
+            this.panel1.Controls.Add(this.label29);
+            this.panel1.Controls.Add(this.label23);
+            this.panel1.Controls.Add(this.label28);
+            this.panel1.Controls.Add(this.dtEndTime);
+            this.panel1.Controls.Add(this.dtStartTime);
+            this.panel1.Controls.Add(this.lblDuration);
+            this.panel1.Enabled = false;
+            this.panel1.Location = new System.Drawing.Point(6, 144);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(842, 193);
+            this.panel1.TabIndex = 88;
             // 
-            // btnUP
+            // groupBox3
             // 
-            this.btnUP.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnUP.Location = new System.Drawing.Point(619, 101);
-            this.btnUP.Name = "btnUP";
-            this.btnUP.Size = new System.Drawing.Size(33, 23);
-            this.btnUP.TabIndex = 78;
-            this.btnUP.TabStop = false;
-            this.btnUP.Text = "UP";
-            this.toolTip1.SetToolTip(this.btnUP, "Update program");
-            this.btnUP.UseVisualStyleBackColor = true;
-            this.btnUP.Click += new System.EventHandler(this.btnUP_Click);
+            this.groupBox3.Controls.Add(this.checkBox15);
+            this.groupBox3.Controls.Add(this.checkBox14);
+            this.groupBox3.Controls.Add(this.checkBox12);
+            this.groupBox3.Controls.Add(this.checkBox13);
+            this.groupBox3.Controls.Add(this.checkBox11);
+            this.groupBox3.Controls.Add(this.checkBox10);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.checkBox9);
+            this.groupBox3.Controls.Add(this.checkBox8);
+            this.groupBox3.Controls.Add(this.checkBox7);
+            this.groupBox3.Controls.Add(this.checkBox6);
+            this.groupBox3.Controls.Add(this.checkBox5);
+            this.groupBox3.Controls.Add(this.checkBox4);
+            this.groupBox3.Controls.Add(this.checkBox3);
+            this.groupBox3.Controls.Add(this.checkBox2);
+            this.groupBox3.Controls.Add(this.checkBox1);
+            this.groupBox3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.groupBox3.Location = new System.Drawing.Point(242, 2);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(590, 183);
+            this.groupBox3.TabIndex = 90;
+            this.groupBox3.TabStop = false;
             // 
-            // btnUPNewRwt
+            // checkBox15
             // 
-            this.btnUPNewRwt.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnUPNewRwt.Location = new System.Drawing.Point(654, 101);
-            this.btnUPNewRwt.Name = "btnUPNewRwt";
-            this.btnUPNewRwt.Size = new System.Drawing.Size(91, 23);
-            this.btnUPNewRwt.TabIndex = 77;
-            this.btnUPNewRwt.TabStop = false;
-            this.btnUPNewRwt.Text = "UP - NewRwt";
-            this.toolTip1.SetToolTip(this.btnUPNewRwt, "Up to New Report Writer");
-            this.btnUPNewRwt.UseVisualStyleBackColor = true;
-            this.btnUPNewRwt.Click += new System.EventHandler(this.btnUPNewRwt_Click);
+            this.checkBox15.AutoSize = true;
+            this.checkBox15.Location = new System.Drawing.Point(113, 125);
+            this.checkBox15.Name = "checkBox15";
+            this.checkBox15.Size = new System.Drawing.Size(115, 20);
+            this.checkBox15.TabIndex = 98;
+            this.checkBox15.Text = "วันที่ไม่อยู่ในงวด";
+            this.checkBox15.UseVisualStyleBackColor = true;
             // 
-            // btnUPNewRwtJob
+            // checkBox14
             // 
-            this.btnUPNewRwtJob.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnUPNewRwtJob.Location = new System.Drawing.Point(747, 101);
-            this.btnUPNewRwtJob.Name = "btnUPNewRwtJob";
-            this.btnUPNewRwtJob.Size = new System.Drawing.Size(96, 23);
-            this.btnUPNewRwtJob.TabIndex = 28;
-            this.btnUPNewRwtJob.TabStop = false;
-            this.btnUPNewRwtJob.Text = "UP - NewRwtJob";
-            this.toolTip1.SetToolTip(this.btnUPNewRwtJob, "Up to New Report Writer + Job");
-            this.btnUPNewRwtJob.UseVisualStyleBackColor = true;
-            this.btnUPNewRwtJob.Click += new System.EventHandler(this.btnUPNewRwtJob_Click);
+            this.checkBox14.AutoSize = true;
+            this.checkBox14.Location = new System.Drawing.Point(6, 125);
+            this.checkBox14.Name = "checkBox14";
+            this.checkBox14.Size = new System.Drawing.Size(101, 20);
+            this.checkBox14.TabIndex = 97;
+            this.checkBox14.Text = "ปิดประมวลผล";
+            this.checkBox14.UseVisualStyleBackColor = true;
             // 
-            // chkIMOnly
+            // checkBox12
             // 
-            this.chkIMOnly.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkIMOnly.Enabled = false;
-            this.chkIMOnly.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkIMOnly.Location = new System.Drawing.Point(654, 77);
-            this.chkIMOnly.Name = "chkIMOnly";
-            this.chkIMOnly.Size = new System.Drawing.Size(91, 23);
-            this.chkIMOnly.TabIndex = 76;
-            this.chkIMOnly.TabStop = false;
-            this.chkIMOnly.Text = "CO=IM only";
-            this.chkIMOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.chkIMOnly, "Show only Problem Code = \"IM\"");
-            this.chkIMOnly.UseVisualStyleBackColor = true;
-            this.chkIMOnly.CheckedChanged += new System.EventHandler(this.chkIMOnly_CheckedChanged);
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.Location = new System.Drawing.Point(213, 99);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(131, 20);
+            this.checkBox12.TabIndex = 96;
+            this.checkBox12.Text = "ระบบความปลอดภัย";
+            this.checkBox12.UseVisualStyleBackColor = true;
             // 
-            // txtDummy
+            // checkBox13
             // 
-            this.txtDummy.Location = new System.Drawing.Point(579, 49);
-            this.txtDummy.Name = "txtDummy";
-            this.txtDummy.Size = new System.Drawing.Size(0, 20);
-            this.txtDummy.TabIndex = 69;
-            this.txtDummy.TabStop = false;
-            this.txtDummy.Text = "***";
+            this.checkBox13.AutoSize = true;
+            this.checkBox13.Location = new System.Drawing.Point(86, 99);
+            this.checkBox13.Name = "checkBox13";
+            this.checkBox13.Size = new System.Drawing.Size(129, 20);
+            this.checkBox13.TabIndex = 95;
+            this.checkBox13.Text = "ทรัพย์สิน/ค่าเสื่อมฯ";
+            this.checkBox13.UseVisualStyleBackColor = true;
             // 
-            // btnBrowseArea
+            // checkBox11
             // 
-            this.btnBrowseArea.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseArea.Location = new System.Drawing.Point(468, 63);
-            this.btnBrowseArea.Name = "btnBrowseArea";
-            this.btnBrowseArea.Size = new System.Drawing.Size(25, 25);
-            this.btnBrowseArea.TabIndex = 54;
-            this.btnBrowseArea.TabStop = false;
-            this.btnBrowseArea.UseVisualStyleBackColor = true;
-            this.btnBrowseArea.Click += new System.EventHandler(this.btnBrowseArea_Click);
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.Location = new System.Drawing.Point(213, 75);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(110, 20);
+            this.checkBox11.TabIndex = 94;
+            this.checkBox11.Text = "รายงาน->Excel";
+            this.checkBox11.UseVisualStyleBackColor = true;
             // 
-            // lblAreaTypdes
+            // checkBox10
             // 
-            this.lblAreaTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblAreaTypdes.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblAreaTypdes.Location = new System.Drawing.Point(495, 67);
-            this.lblAreaTypdes.Name = "lblAreaTypdes";
-            this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
-            this.lblAreaTypdes.TabIndex = 55;
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Location = new System.Drawing.Point(71, 75);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(134, 20);
+            this.checkBox10.TabIndex = 93;
+            this.checkBox10.Text = "แก้ไขฟอร์ม/รายงาน";
+            this.checkBox10.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // button1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripInfo,
-            this.toolStripProcessing});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 614);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(854, 22);
-            this.statusStrip1.TabIndex = 28;
-            this.statusStrip1.Text = "statusStrip1";
+            this.button1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.button1.Location = new System.Drawing.Point(493, 145);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(92, 33);
+            this.button1.TabIndex = 92;
+            this.button1.Text = "Finish";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // toolStripInfo
+            // textBox2
             // 
-            this.toolStripInfo.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripInfo.Name = "toolStripInfo";
-            this.toolStripInfo.Size = new System.Drawing.Size(22, 17);
-            this.toolStripInfo.Text = "     ";
+            this.textBox2.Location = new System.Drawing.Point(344, 15);
+            this.textBox2.MaxLength = 255;
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(240, 125);
+            this.textBox2.TabIndex = 8;
             // 
-            // toolStripProcessing
+            // checkBox9
             // 
-            this.toolStripProcessing.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
-            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
-            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
-            this.toolStripProcessing.Name = "toolStripProcessing";
-            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(807, 17);
-            this.toolStripProcessing.Spring = true;
-            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripProcessing.Visible = false;
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.checkBox9.Location = new System.Drawing.Point(315, 152);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(177, 20);
+            this.checkBox9.TabIndex = 91;
+            this.checkBox9.Text = "บันทึกในประวัติฯ <F8> ด้วย";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(6, 161);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(91, 20);
+            this.checkBox8.TabIndex = 7;
+            this.checkBox8.Text = "Mail/รอสาย";
+            this.checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(6, 37);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(53, 20);
+            this.checkBox7.TabIndex = 6;
+            this.checkBox7.Text = "Print";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(6, 99);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(74, 20);
+            this.checkBox6.TabIndex = 5;
+            this.checkBox6.Text = "สร้างงบฯ";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(256, 13);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(58, 20);
+            this.checkBox5.TabIndex = 4;
+            this.checkBox5.Text = "Fonts";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(96, 13);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(81, 20);
+            this.checkBox4.TabIndex = 3;
+            this.checkBox4.Text = "Install/Up";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(188, 13);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(56, 20);
+            this.checkBox3.TabIndex = 2;
+            this.checkBox3.Text = "Error";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(6, 13);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(84, 20);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Map Drive";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 75);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(57, 20);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "สินค้า";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.textBox1.Location = new System.Drawing.Point(93, 110);
+            this.textBox1.MaxLength = 20;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(113, 23);
+            this.textBox1.TabIndex = 89;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label30.Location = new System.Drawing.Point(6, 113);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(88, 16);
+            this.label30.TabIndex = 88;
+            this.label30.Text = "Contact Name";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label21.Location = new System.Drawing.Point(7, 18);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(37, 16);
+            this.label21.TabIndex = 81;
+            this.label21.Text = "Time";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label29.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label29.Location = new System.Drawing.Point(63, 85);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(66, 16);
+            this.label29.TabIndex = 87;
+            this.label29.Text = "hh:mm:ss";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label23.Location = new System.Drawing.Point(6, 63);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(56, 16);
+            this.label23.TabIndex = 82;
+            this.label23.Text = "Duration";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label28.Location = new System.Drawing.Point(139, 19);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(13, 16);
+            this.label28.TabIndex = 85;
+            this.label28.Text = "-";
+            // 
+            // dtEndTime
+            // 
+            this.dtEndTime.Enabled = false;
+            this.dtEndTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtEndTime.Location = new System.Drawing.Point(153, 15);
+            this.dtEndTime.Name = "dtEndTime";
+            this.dtEndTime.ShowUpDown = true;
+            this.dtEndTime.Size = new System.Drawing.Size(83, 23);
+            this.dtEndTime.TabIndex = 84;
+            // 
+            // dtStartTime
+            // 
+            this.dtStartTime.Enabled = false;
+            this.dtStartTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtStartTime.Location = new System.Drawing.Point(54, 15);
+            this.dtStartTime.Name = "dtStartTime";
+            this.dtStartTime.ShowUpDown = true;
+            this.dtStartTime.Size = new System.Drawing.Size(83, 23);
+            this.dtStartTime.TabIndex = 83;
+            this.dtStartTime.Value = new System.DateTime(2015, 10, 2, 13, 52, 0, 0);
+            // 
+            // lblDuration
+            // 
+            this.lblDuration.Font = new System.Drawing.Font("Tahoma", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblDuration.ForeColor = System.Drawing.Color.Red;
+            this.lblDuration.Location = new System.Drawing.Point(59, 49);
+            this.lblDuration.Name = "lblDuration";
+            this.lblDuration.Size = new System.Drawing.Size(152, 36);
+            this.lblDuration.TabIndex = 86;
+            this.lblDuration.Text = "00:00:00";
+            this.lblDuration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnSupportHistory
+            // 
+            this.btnSupportHistory.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnSupportHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportHistory.Location = new System.Drawing.Point(78, 112);
+            this.btnSupportHistory.Name = "btnSupportHistory";
+            this.btnSupportHistory.Size = new System.Drawing.Size(83, 29);
+            this.btnSupportHistory.TabIndex = 80;
+            this.btnSupportHistory.Text = "      View Note";
+            this.btnSupportHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.btnSupportHistory, "พิมพ์รายงาน");
+            this.btnSupportHistory.UseVisualStyleBackColor = true;
+            this.btnSupportHistory.Click += new System.EventHandler(this.btnSupportHistory_Click);
+            // 
+            // btnSupportNote
+            // 
+            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
+            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.Location = new System.Drawing.Point(12, 112);
+            this.btnSupportNote.Name = "btnSupportNote";
+            this.btnSupportNote.Size = new System.Drawing.Size(65, 29);
+            this.btnSupportNote.TabIndex = 29;
+            this.btnSupportNote.Text = "       Note";
+            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.btnSupportNote, "บันทึกรายละเอียดการสนทนากับลูกค้า");
+            this.btnSupportNote.UseVisualStyleBackColor = true;
+            this.btnSupportNote.Click += new System.EventHandler(this.btnSupportNote_Click);
             // 
             // txtCompnam
             // 
@@ -1198,7 +1773,7 @@
             this.txtCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCompnam.CharUpperCase = false;
             this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtCompnam.Location = new System.Drawing.Point(202, 92);
+            this.txtCompnam.Location = new System.Drawing.Point(202, 83);
             this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCompnam.MaxChar = 0;
             this.txtCompnam.Name = "txtCompnam";
@@ -1214,7 +1789,7 @@
             this.txtSernum.BackColor = System.Drawing.Color.White;
             this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSernum.Location = new System.Drawing.Point(81, 64);
+            this.txtSernum.Location = new System.Drawing.Point(81, 55);
             this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtSernum.MaskString = ">A-AAA-AAAAAA";
             this.txtSernum.Name = "txtSernum";
@@ -1248,7 +1823,7 @@
             this.txtArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtArea.CharUpperCase = false;
             this.txtArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtArea.Location = new System.Drawing.Point(390, 64);
+            this.txtArea.Location = new System.Drawing.Point(390, 55);
             this.txtArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtArea.MaxChar = 0;
             this.txtArea.Name = "txtArea";
@@ -1266,7 +1841,7 @@
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtVersion.CharUpperCase = false;
             this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtVersion.Location = new System.Drawing.Point(270, 64);
+            this.txtVersion.Location = new System.Drawing.Point(270, 55);
             this.txtVersion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtVersion.MaxChar = 0;
             this.txtVersion.Name = "txtVersion";
@@ -1283,7 +1858,7 @@
             this.txtPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPrenam.CharUpperCase = false;
             this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPrenam.Location = new System.Drawing.Point(81, 92);
+            this.txtPrenam.Location = new System.Drawing.Point(81, 83);
             this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPrenam.MaxChar = 0;
             this.txtPrenam.Name = "txtPrenam";
@@ -1294,340 +1869,137 @@
             this.txtPrenam.TabIndex = 4;
             this.txtPrenam.Texts = "";
             // 
-            // dtVerextdat
+            // btnCD
             // 
-            this.dtVerextdat.BackColor = System.Drawing.Color.White;
-            this.dtVerextdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtVerextdat.Location = new System.Drawing.Point(676, 174);
-            this.dtVerextdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtVerextdat.Name = "dtVerextdat";
-            this.dtVerextdat.Read_Only = true;
-            this.dtVerextdat.Size = new System.Drawing.Size(96, 23);
-            this.dtVerextdat.TabIndex = 25;
-            this.dtVerextdat.Texts = "23/09/2558";
-            this.dtVerextdat.TextsMysql = "2015-09-23";
-            this.toolTip1.SetToolTip(this.dtVerextdat, "<F6> = Show Calendar");
-            this.dtVerextdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.btnCD.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnCD.Location = new System.Drawing.Point(584, 107);
+            this.btnCD.Name = "btnCD";
+            this.btnCD.Size = new System.Drawing.Size(33, 26);
+            this.btnCD.TabIndex = 79;
+            this.btnCD.TabStop = false;
+            this.btnCD.Text = "CD";
+            this.toolTip1.SetToolTip(this.btnCD, "Send Training CD");
+            this.btnCD.UseVisualStyleBackColor = true;
+            this.btnCD.Click += new System.EventHandler(this.btnCD_Click);
             // 
-            // dtManual
+            // btnUP
             // 
-            this.dtManual.BackColor = System.Drawing.Color.White;
-            this.dtManual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtManual.Location = new System.Drawing.Point(676, 147);
-            this.dtManual.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtManual.Name = "dtManual";
-            this.dtManual.Read_Only = true;
-            this.dtManual.Size = new System.Drawing.Size(96, 23);
-            this.dtManual.TabIndex = 23;
-            this.dtManual.Texts = "23/09/2558";
-            this.dtManual.TextsMysql = "2015-09-23";
-            this.toolTip1.SetToolTip(this.dtManual, "<F6> = Show Calendar");
-            this.dtManual.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.btnUP.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnUP.Location = new System.Drawing.Point(619, 107);
+            this.btnUP.Name = "btnUP";
+            this.btnUP.Size = new System.Drawing.Size(33, 26);
+            this.btnUP.TabIndex = 78;
+            this.btnUP.TabStop = false;
+            this.btnUP.Text = "UP";
+            this.toolTip1.SetToolTip(this.btnUP, "Update program");
+            this.btnUP.UseVisualStyleBackColor = true;
+            this.btnUP.Click += new System.EventHandler(this.btnUP_Click);
             // 
-            // dtExpdat
+            // btnUPNewRwt
             // 
-            this.dtExpdat.BackColor = System.Drawing.Color.White;
-            this.dtExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtExpdat.Location = new System.Drawing.Point(367, 174);
-            this.dtExpdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtExpdat.Name = "dtExpdat";
-            this.dtExpdat.Read_Only = true;
-            this.dtExpdat.Size = new System.Drawing.Size(96, 23);
-            this.dtExpdat.TabIndex = 21;
-            this.dtExpdat.Texts = "23/09/2558";
-            this.dtExpdat.TextsMysql = "2015-09-23";
-            this.toolTip1.SetToolTip(this.dtExpdat, "<F6> = Show Calendar");
-            this.dtExpdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.btnUPNewRwt.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnUPNewRwt.Location = new System.Drawing.Point(654, 107);
+            this.btnUPNewRwt.Name = "btnUPNewRwt";
+            this.btnUPNewRwt.Size = new System.Drawing.Size(91, 26);
+            this.btnUPNewRwt.TabIndex = 77;
+            this.btnUPNewRwt.TabStop = false;
+            this.btnUPNewRwt.Text = "UP - NewRwt";
+            this.toolTip1.SetToolTip(this.btnUPNewRwt, "Up to New Report Writer");
+            this.btnUPNewRwt.UseVisualStyleBackColor = true;
+            this.btnUPNewRwt.Click += new System.EventHandler(this.btnUPNewRwt_Click);
             // 
-            // dtPurdat
+            // btnUPNewRwtJob
             // 
-            this.dtPurdat.BackColor = System.Drawing.Color.White;
-            this.dtPurdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtPurdat.Location = new System.Drawing.Point(118, 174);
-            this.dtPurdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtPurdat.Name = "dtPurdat";
-            this.dtPurdat.Read_Only = true;
-            this.dtPurdat.Size = new System.Drawing.Size(96, 23);
-            this.dtPurdat.TabIndex = 20;
-            this.dtPurdat.Texts = "23/09/2558";
-            this.dtPurdat.TextsMysql = "2015-09-23";
-            this.toolTip1.SetToolTip(this.dtPurdat, "<F6> = Show Calendar");
-            this.dtPurdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.btnUPNewRwtJob.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnUPNewRwtJob.Location = new System.Drawing.Point(747, 107);
+            this.btnUPNewRwtJob.Name = "btnUPNewRwtJob";
+            this.btnUPNewRwtJob.Size = new System.Drawing.Size(96, 26);
+            this.btnUPNewRwtJob.TabIndex = 28;
+            this.btnUPNewRwtJob.TabStop = false;
+            this.btnUPNewRwtJob.Text = "UP - NewRwtJob";
+            this.toolTip1.SetToolTip(this.btnUPNewRwtJob, "Up to New Report Writer + Job");
+            this.btnUPNewRwtJob.UseVisualStyleBackColor = true;
+            this.btnUPNewRwtJob.Click += new System.EventHandler(this.btnUPNewRwtJob_Click);
             // 
-            // cbVerext
+            // chkIMOnly
             // 
-            this.cbVerext.BackColor = System.Drawing.Color.White;
-            this.cbVerext.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbVerext.Location = new System.Drawing.Point(485, 174);
-            this.cbVerext.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cbVerext.Name = "cbVerext";
-            this.cbVerext.Read_Only = true;
-            this.cbVerext.Size = new System.Drawing.Size(182, 24);
-            this.cbVerext.TabIndex = 24;
-            this.cbVerext.Texts = null;
-            this.toolTip1.SetToolTip(this.cbVerext, "<F6> = Show Item");
+            this.chkIMOnly.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkIMOnly.Enabled = false;
+            this.chkIMOnly.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chkIMOnly.Location = new System.Drawing.Point(654, 80);
+            this.chkIMOnly.Name = "chkIMOnly";
+            this.chkIMOnly.Size = new System.Drawing.Size(91, 26);
+            this.chkIMOnly.TabIndex = 76;
+            this.chkIMOnly.TabStop = false;
+            this.chkIMOnly.Text = "CO=IM only";
+            this.chkIMOnly.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.chkIMOnly, "Show only Problem Code = \"IM\"");
+            this.chkIMOnly.UseVisualStyleBackColor = true;
+            this.chkIMOnly.CheckedChanged += new System.EventHandler(this.chkIMOnly_CheckedChanged);
             // 
-            // txtUpfree
+            // txtDummy
             // 
-            this.txtUpfree.BackColor = System.Drawing.Color.White;
-            this.txtUpfree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUpfree.CharUpperCase = false;
-            this.txtUpfree.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtUpfree.Location = new System.Drawing.Point(676, 121);
-            this.txtUpfree.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtUpfree.MaxChar = 0;
-            this.txtUpfree.Name = "txtUpfree";
-            this.txtUpfree.ReadOnly = true;
-            this.txtUpfree.SelectionLength = 0;
-            this.txtUpfree.SelectionStart = 0;
-            this.txtUpfree.Size = new System.Drawing.Size(20, 23);
-            this.txtUpfree.TabIndex = 22;
-            this.txtUpfree.Texts = "";
+            this.txtDummy.Location = new System.Drawing.Point(579, 49);
+            this.txtDummy.Name = "txtDummy";
+            this.txtDummy.Size = new System.Drawing.Size(0, 20);
+            this.txtDummy.TabIndex = 69;
+            this.txtDummy.TabStop = false;
+            this.txtDummy.Text = "***";
             // 
-            // txtHowknown
+            // btnBrowseArea
             // 
-            this.txtHowknown.BackColor = System.Drawing.Color.White;
-            this.txtHowknown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtHowknown.CharUpperCase = false;
-            this.txtHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtHowknown.Location = new System.Drawing.Point(118, 146);
-            this.txtHowknown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtHowknown.MaxChar = 0;
-            this.txtHowknown.Name = "txtHowknown";
-            this.txtHowknown.ReadOnly = true;
-            this.txtHowknown.SelectionLength = 0;
-            this.txtHowknown.SelectionStart = 0;
-            this.txtHowknown.Size = new System.Drawing.Size(70, 23);
-            this.txtHowknown.TabIndex = 19;
-            this.txtHowknown.Texts = "";
-            this.toolTip1.SetToolTip(this.txtHowknown, "<F6> = How to Know List");
+            this.btnBrowseArea.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnBrowseArea.Location = new System.Drawing.Point(468, 54);
+            this.btnBrowseArea.Name = "btnBrowseArea";
+            this.btnBrowseArea.Size = new System.Drawing.Size(25, 25);
+            this.btnBrowseArea.TabIndex = 54;
+            this.btnBrowseArea.TabStop = false;
+            this.btnBrowseArea.UseVisualStyleBackColor = true;
+            this.btnBrowseArea.Click += new System.EventHandler(this.btnBrowseArea_Click);
             // 
-            // txtDealer
+            // lblAreaTypdes
             // 
-            this.txtDealer.BackColor = System.Drawing.Color.White;
-            this.txtDealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDealer.CharUpperCase = false;
-            this.txtDealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtDealer.Location = new System.Drawing.Point(118, 107);
-            this.txtDealer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtDealer.MaxChar = 0;
-            this.txtDealer.Name = "txtDealer";
-            this.txtDealer.ReadOnly = true;
-            this.txtDealer.SelectionLength = 0;
-            this.txtDealer.SelectionStart = 0;
-            this.txtDealer.Size = new System.Drawing.Size(139, 23);
-            this.txtDealer.TabIndex = 18;
-            this.txtDealer.Texts = "";
-            this.toolTip1.SetToolTip(this.txtDealer, "<F6> = Dealer List");
+            this.lblAreaTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblAreaTypdes.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblAreaTypdes.Location = new System.Drawing.Point(495, 58);
+            this.lblAreaTypdes.Name = "lblAreaTypdes";
+            this.lblAreaTypdes.Size = new System.Drawing.Size(127, 16);
+            this.lblAreaTypdes.TabIndex = 55;
             // 
-            // txtBusityp
+            // statusStrip1
             // 
-            this.txtBusityp.BackColor = System.Drawing.Color.White;
-            this.txtBusityp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBusityp.CharUpperCase = false;
-            this.txtBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtBusityp.Location = new System.Drawing.Point(118, 79);
-            this.txtBusityp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtBusityp.MaxChar = 0;
-            this.txtBusityp.Name = "txtBusityp";
-            this.txtBusityp.ReadOnly = true;
-            this.txtBusityp.SelectionLength = 0;
-            this.txtBusityp.SelectionStart = 0;
-            this.txtBusityp.Size = new System.Drawing.Size(70, 23);
-            this.txtBusityp.TabIndex = 17;
-            this.txtBusityp.Texts = "";
-            this.toolTip1.SetToolTip(this.txtBusityp, "<F6> = Business Type List");
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripInfo,
+            this.toolStripProcessing});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 595);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(854, 22);
+            this.statusStrip1.TabIndex = 28;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // txtBusides
+            // toolStripInfo
             // 
-            this.txtBusides.BackColor = System.Drawing.Color.White;
-            this.txtBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBusides.CharUpperCase = false;
-            this.txtBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtBusides.Location = new System.Drawing.Point(118, 52);
-            this.txtBusides.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtBusides.MaxChar = 0;
-            this.txtBusides.Name = "txtBusides";
-            this.txtBusides.ReadOnly = true;
-            this.txtBusides.SelectionLength = 0;
-            this.txtBusides.SelectionStart = 0;
-            this.txtBusides.Size = new System.Drawing.Size(501, 23);
-            this.txtBusides.TabIndex = 16;
-            this.txtBusides.Texts = "";
+            this.toolStripInfo.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripInfo.Name = "toolStripInfo";
+            this.toolStripInfo.Size = new System.Drawing.Size(22, 17);
+            this.toolStripInfo.Text = "     ";
             // 
-            // txtRemark
+            // toolStripProcessing
             // 
-            this.txtRemark.BackColor = System.Drawing.Color.White;
-            this.txtRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRemark.CharUpperCase = false;
-            this.txtRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRemark.Location = new System.Drawing.Point(118, 25);
-            this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtRemark.MaxChar = 0;
-            this.txtRemark.Name = "txtRemark";
-            this.txtRemark.ReadOnly = true;
-            this.txtRemark.SelectionLength = 0;
-            this.txtRemark.SelectionStart = 0;
-            this.txtRemark.Size = new System.Drawing.Size(501, 23);
-            this.txtRemark.TabIndex = 15;
-            this.txtRemark.Texts = "";
-            // 
-            // txtOldnum
-            // 
-            this.txtOldnum.BackColor = System.Drawing.Color.White;
-            this.txtOldnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtOldnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtOldnum.Location = new System.Drawing.Point(664, 187);
-            this.txtOldnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtOldnum.MaskString = ">A-AAA-AAAAAA";
-            this.txtOldnum.Name = "txtOldnum";
-            this.txtOldnum.Read_Only = true;
-            this.txtOldnum.SelectedStringBegin = 0;
-            this.txtOldnum.SelectedStringEnd = 0;
-            this.txtOldnum.Size = new System.Drawing.Size(118, 23);
-            this.txtOldnum.TabIndex = 14;
-            this.txtOldnum.Texts = "";
-            // 
-            // txtPosition
-            // 
-            this.txtPosition.BackColor = System.Drawing.Color.White;
-            this.txtPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPosition.CharUpperCase = false;
-            this.txtPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPosition.Location = new System.Drawing.Point(118, 187);
-            this.txtPosition.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtPosition.MaxChar = 0;
-            this.txtPosition.Name = "txtPosition";
-            this.txtPosition.ReadOnly = true;
-            this.txtPosition.SelectionLength = 0;
-            this.txtPosition.SelectionStart = 0;
-            this.txtPosition.Size = new System.Drawing.Size(442, 23);
-            this.txtPosition.TabIndex = 13;
-            this.txtPosition.Texts = "";
-            // 
-            // txtContact
-            // 
-            this.txtContact.BackColor = System.Drawing.Color.White;
-            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtContact.CharUpperCase = false;
-            this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtContact.Location = new System.Drawing.Point(118, 160);
-            this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtContact.MaxChar = 0;
-            this.txtContact.Name = "txtContact";
-            this.txtContact.ReadOnly = true;
-            this.txtContact.SelectionLength = 0;
-            this.txtContact.SelectionStart = 0;
-            this.txtContact.Size = new System.Drawing.Size(442, 23);
-            this.txtContact.TabIndex = 12;
-            this.txtContact.Texts = "";
-            // 
-            // txtFaxnum
-            // 
-            this.txtFaxnum.BackColor = System.Drawing.Color.White;
-            this.txtFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFaxnum.CharUpperCase = false;
-            this.txtFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtFaxnum.Location = new System.Drawing.Point(118, 133);
-            this.txtFaxnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtFaxnum.MaxChar = 0;
-            this.txtFaxnum.Name = "txtFaxnum";
-            this.txtFaxnum.ReadOnly = true;
-            this.txtFaxnum.SelectionLength = 0;
-            this.txtFaxnum.SelectionStart = 0;
-            this.txtFaxnum.Size = new System.Drawing.Size(442, 23);
-            this.txtFaxnum.TabIndex = 11;
-            this.txtFaxnum.Texts = "";
-            // 
-            // txtTelnum
-            // 
-            this.txtTelnum.BackColor = System.Drawing.Color.White;
-            this.txtTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTelnum.CharUpperCase = false;
-            this.txtTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTelnum.Location = new System.Drawing.Point(118, 106);
-            this.txtTelnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTelnum.MaxChar = 0;
-            this.txtTelnum.Name = "txtTelnum";
-            this.txtTelnum.ReadOnly = true;
-            this.txtTelnum.SelectionLength = 0;
-            this.txtTelnum.SelectionStart = 0;
-            this.txtTelnum.Size = new System.Drawing.Size(442, 23);
-            this.txtTelnum.TabIndex = 10;
-            this.txtTelnum.Texts = "";
-            // 
-            // txtZipcod
-            // 
-            this.txtZipcod.BackColor = System.Drawing.Color.White;
-            this.txtZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtZipcod.CharUpperCase = false;
-            this.txtZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtZipcod.Location = new System.Drawing.Point(491, 79);
-            this.txtZipcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtZipcod.MaxChar = 0;
-            this.txtZipcod.Name = "txtZipcod";
-            this.txtZipcod.ReadOnly = true;
-            this.txtZipcod.SelectionLength = 0;
-            this.txtZipcod.SelectionStart = 0;
-            this.txtZipcod.Size = new System.Drawing.Size(69, 23);
-            this.txtZipcod.TabIndex = 9;
-            this.txtZipcod.Texts = "";
-            // 
-            // txtAddr03
-            // 
-            this.txtAddr03.BackColor = System.Drawing.Color.White;
-            this.txtAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddr03.CharUpperCase = false;
-            this.txtAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr03.Location = new System.Drawing.Point(118, 79);
-            this.txtAddr03.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAddr03.MaxChar = 0;
-            this.txtAddr03.Name = "txtAddr03";
-            this.txtAddr03.ReadOnly = true;
-            this.txtAddr03.SelectionLength = 0;
-            this.txtAddr03.SelectionStart = 0;
-            this.txtAddr03.Size = new System.Drawing.Size(271, 23);
-            this.txtAddr03.TabIndex = 8;
-            this.txtAddr03.Texts = "";
-            // 
-            // txtAddr02
-            // 
-            this.txtAddr02.BackColor = System.Drawing.Color.White;
-            this.txtAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddr02.CharUpperCase = false;
-            this.txtAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr02.Location = new System.Drawing.Point(118, 52);
-            this.txtAddr02.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAddr02.MaxChar = 0;
-            this.txtAddr02.Name = "txtAddr02";
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr02.SelectionLength = 0;
-            this.txtAddr02.SelectionStart = 0;
-            this.txtAddr02.Size = new System.Drawing.Size(442, 23);
-            this.txtAddr02.TabIndex = 7;
-            this.txtAddr02.Texts = "";
-            // 
-            // txtAddr01
-            // 
-            this.txtAddr01.BackColor = System.Drawing.Color.White;
-            this.txtAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAddr01.CharUpperCase = false;
-            this.txtAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr01.Location = new System.Drawing.Point(118, 25);
-            this.txtAddr01.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtAddr01.MaxChar = 0;
-            this.txtAddr01.Name = "txtAddr01";
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr01.SelectionLength = 0;
-            this.txtAddr01.SelectionStart = 0;
-            this.txtAddr01.Size = new System.Drawing.Size(442, 23);
-            this.txtAddr01.TabIndex = 6;
-            this.txtAddr01.Texts = "";
+            this.toolStripProcessing.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
+            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
+            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
+            this.toolStripProcessing.Name = "toolStripProcessing";
+            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProcessing.Size = new System.Drawing.Size(807, 17);
+            this.toolStripProcessing.Spring = true;
+            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripProcessing.Visible = false;
             // 
             // SnWindow
             // 
@@ -1635,7 +2007,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(854, 636);
+            this.ClientSize = new System.Drawing.Size(854, 617);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnLostRenew);
@@ -1646,10 +2018,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer2);
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(870, 675);
+            this.MinimumSize = new System.Drawing.Size(870, 656);
             this.Name = "SnWindow";
             this.Text = "Serial Number";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SnWindow_FormClosing);
             this.Load += new System.EventHandler(this.SnWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -1669,6 +2040,10 @@
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -1748,7 +2123,6 @@
         private System.Windows.Forms.Label lblAreaTypdes;
         private System.Windows.Forms.Label lblHowknownTypdes;
         private System.Windows.Forms.Button btnBrowseHowknown;
-        private System.Windows.Forms.ToolStripButton toolStripReload;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.Label lblTelnum2;
         private System.Windows.Forms.Label lblUpfree;
@@ -1793,5 +2167,36 @@
         private MiscClass.CustomDateTimePicker dtVerextdat;
         private MiscClass.CustomDateTimePicker dtManual;
         private MiscClass.CustomDateTimePicker dtExpdat;
+        private System.Windows.Forms.Button btnSupportHistory;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBox15;
+        private System.Windows.Forms.CheckBox checkBox14;
+        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.CheckBox checkBox13;
+        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.DateTimePicker dtEndTime;
+        private System.Windows.Forms.DateTimePicker dtStartTime;
+        private System.Windows.Forms.Label lblDuration;
+        public System.Windows.Forms.Button btnSupportNote;
+        public System.Windows.Forms.ToolStripButton toolStripReload;
     }
 }

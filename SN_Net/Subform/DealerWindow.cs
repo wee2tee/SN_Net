@@ -36,6 +36,7 @@ namespace SN_Net.Subform
         public List<Dealer> dealer_id_list;
         public Dealer dealer;
         public List<Serial> serial;
+        public List<D_msg> d_msg;
         #endregion Data Model variable declaration
 
         private enum FORM_STATE
@@ -63,6 +64,13 @@ namespace SN_Net.Subform
             LABEL,
             LITTLE_ENVELOPE,
             BIG_ENVELOPE
+        }
+
+        public enum DATAGRID_INTENTION
+        {
+            READ,
+            EDIT,
+            DELETE
         }
 
         private List<CustomTextBox> list_customtextbox = new List<CustomTextBox>();
@@ -94,12 +102,492 @@ namespace SN_Net.Subform
             this.list_customtextbox.Add(this.txtArea);
             this.list_customtextbox.Add(this.txtRemark);
 
+            this.AddControlEventHandler();
+
             this.BindAreaFieldEvent();
             this.BindCustomTextBoxEvent();
             this.txtDummy.Width = 0;
             this.FormProcessing();
             this.GetDealerIdList();
             this.GetFirst();
+        }
+
+        private void AddControlEventHandler()
+        {
+            #region draw line effect for current row
+            this.dgvMsg.Tag = DATAGRID_INTENTION.READ;
+            this.dgvMsg.Paint += delegate
+            {
+                if (this.dgvMsg.CurrentCell != null)
+                {
+                    Rectangle rect = this.dgvMsg.GetRowDisplayRectangle(this.dgvMsg.CurrentCell.RowIndex, true);
+                    using (Pen p = new Pen(Color.Red))
+                    {
+                        if ((DATAGRID_INTENTION)this.dgvMsg.Tag == DATAGRID_INTENTION.READ || (DATAGRID_INTENTION)this.dgvMsg.Tag == DATAGRID_INTENTION.EDIT)
+                        {
+                            this.dgvMsg.CreateGraphics().DrawLine(p, rect.X, rect.Y, rect.X + rect.Width, rect.Y);
+                            this.dgvMsg.CreateGraphics().DrawLine(p, rect.X, rect.Y + rect.Height - 1, rect.X + rect.Width, rect.Y + rect.Height - 1);
+                        }
+                        else if ((DATAGRID_INTENTION)this.dgvMsg.Tag == DATAGRID_INTENTION.DELETE)
+                        {
+                            this.dgvMsg.CreateGraphics().DrawLine(p, rect.X, rect.Y, rect.X + rect.Width, rect.Y);
+                            this.dgvMsg.CreateGraphics().DrawLine(p, rect.X, rect.Y + rect.Height - 1, rect.X + rect.Width, rect.Y + rect.Height - 1);
+                            for (int i = rect.Left - 16; i < rect.Right; i += 8)
+                            {
+                                this.dgvMsg.CreateGraphics().DrawLine(p, i, rect.Bottom - 2, i + 23, rect.Top);
+                            }
+                        }
+                    }
+                }
+            };
+            #endregion draw line effect for current row
+
+            #region fillLine when resize dgvMsg
+            this.dgvMsg.Resize += delegate
+            {
+                if (this.dgvMsg.Rows.Count > 0)
+                {
+                    this.dgvMsg.FillLine(this.d_msg.Count);
+                }
+            };
+            #endregion fillLine when resize dgvMsg
+
+            #region dgvMsg context menu
+            this.dgvMsg.MouseClick += delegate(object sender, MouseEventArgs e)
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    int row_index = ((DataGridView)sender).HitTest(e.X, e.Y).RowIndex;
+                    int column_index = ((DataGridView)sender).HitTest(e.X, e.Y).ColumnIndex;
+                    ((DataGridView)sender).Rows[row_index].Cells[1].Selected = true;
+
+                    ContextMenu m = new ContextMenu();
+
+                    #region add msg
+                    MenuItem m_add = new MenuItem("เพิ่ม <Alt+A>");
+                    m_add.Click += delegate
+                    {
+                        this.AddFormMsg();
+                    };
+                    m.MenuItems.Add(m_add);
+                    #endregion add msg
+
+                    #region edit msg
+                    MenuItem m_edit = new MenuItem("แก้ไข <Alt+E>");
+                    m_edit.Enabled = (((DataGridView)sender).Rows[row_index].Tag is D_msg ? true : false);
+                    m_edit.Click += delegate
+                    {
+                        this.EditFormMsg(1);
+                    };
+                    m.MenuItems.Add(m_edit);
+                    #endregion edit msg
+
+                    #region delete msg
+                    MenuItem m_delete = new MenuItem("ลบ <Alt+D>");
+                    m_delete.Enabled = (((DataGridView)sender).Rows[row_index].Tag is D_msg ? true : false);
+                    m_delete.Click += delegate
+                    {
+                        this.DeleteMsg();
+                    };
+                    m.MenuItems.Add(m_delete);
+                    #endregion delete msg
+
+                    m.Show((DataGridView)sender, new Point(e.X, e.Y));
+                }
+            };
+            #endregion dgvMsg context menu
+
+            #region double click dgvMsg cell to edit/add
+            this.dgvMsg.CellDoubleClick += delegate(object sender, DataGridViewCellEventArgs e)
+            {
+                if (this.dgvMsg.Rows[e.RowIndex].Tag is D_msg)
+                {
+                    this.EditFormMsg(1);
+                }
+                else
+                {
+                    this.AddFormMsg();
+                }
+            };
+
+            #endregion double click dgvMsg cell to edit/add
+
+            #region adjust inline form position & size when dgvMsg is resized
+            this.dgvMsg.Resize += delegate
+            {
+                this.AdjustInlineForm();
+            };
+            #endregion adjust inline form position & size when dgvMsg is resized
+        }
+
+        private void AddFormMsg()
+        {
+            this.FormAddItemF8();
+            this.dgvMsg.Rows[this.d_msg.Count].Cells[1].Selected = true;
+
+            CustomDateTimePicker inline_date = new CustomDateTimePicker();
+            inline_date.Name = "inline_date";
+            inline_date.BorderStyle = BorderStyle.None;
+            inline_date.Read_Only = false;
+            inline_date.textBox1.GotFocus += delegate
+            {
+                this.current_focused_control = inline_date;
+            };
+            CustomTextBox inline_name = new CustomTextBox();
+            inline_name.Name = "inline_name";
+            inline_name.BorderStyle = BorderStyle.None;
+            inline_name.ReadOnly = false;
+            inline_name.MaxChar = 3;
+            inline_name.textBox1.GotFocus += delegate
+            {
+                this.current_focused_control = inline_name;
+            };
+            CustomTextBox inline_desc = new CustomTextBox();
+            inline_desc.Name = "inline_desc";
+            inline_desc.BorderStyle = BorderStyle.None;
+            inline_desc.ReadOnly = false;
+            inline_desc.MaxChar = 100;
+            inline_desc.textBox1.GotFocus += delegate
+            {
+                this.current_focused_control = inline_desc;
+            };
+            inline_desc.textBox1.KeyDown += delegate(object sender, KeyEventArgs e)
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    this.toolStripSave.PerformClick();
+                }
+            };
+
+            this.dgvMsg.Parent.Controls.Add(inline_date);
+            this.dgvMsg.Parent.Controls.Add(inline_name);
+            this.dgvMsg.Parent.Controls.Add(inline_desc);
+
+            this.AdjustInlineForm();
+
+            this.dgvMsg.Enabled = false;
+            this.dgvMsg.SendToBack();
+            inline_date.BringToFront();
+            inline_date.dateTimePicker1.Value = DateTime.Now;
+            inline_name.BringToFront();
+            inline_desc.BringToFront();
+
+            inline_date.Focus();
+        }
+
+        private void SubmitAddMsg()
+        {
+            if (this.form_state == FORM_STATE.ADDF8)
+            {
+                string date = "";
+                string name = "";
+                string desc = "";
+
+                if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+                {
+                    date = ((CustomDateTimePicker)this.dgvMsg.Parent.Controls.Find("inline_date", true)[0]).TextsMysql;
+                }
+                if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
+                {
+                    name = ((CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0]).Texts.cleanString();
+                }
+                if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+                {
+                    desc = ((CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0]).Texts.cleanString();
+                }
+
+                string json_data = "{\"dealer\":\"" + this.dealer.dealer + "\",";
+                json_data += "\"date\":\"" + date + "\",";
+                json_data += "\"name\":\"" + name + "\",";
+                json_data += "\"desc\":\"" + desc + "\",";
+                json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
+
+                this.FormProcessing();
+
+                bool post_success = false;
+                string err_msg = "";
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
+                {
+                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "dmsg/create", json_data);
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        post_success = true;
+                    }
+                    else
+                    {
+                        post_success = false;
+                        err_msg = sr.message;
+                    }
+                };
+                worker.RunWorkerCompleted += delegate
+                {
+                    if (post_success)
+                    {
+                        this.GetMsg();
+                        this.FillDataGridMsg();
+                        this.ClearInlineForm();
+                        this.FormReadItemF8();
+                        this.AddFormMsg();
+                    }
+                    else
+                    {
+                        this.FormAddItemF8();
+                        MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+                        {
+                            ((CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0]).Focus();
+                        }
+                    }
+                };
+                worker.RunWorkerAsync();
+            }
+        }
+
+        private void EditFormMsg(int column_index)
+        {
+            if (this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag is D_msg)
+            {
+                this.FormEditItemF8();
+                int row_index = this.dgvMsg.CurrentCell.RowIndex;
+
+                CustomDateTimePicker inline_date = new CustomDateTimePicker();
+                inline_date.Name = "inline_date";
+                inline_date.BorderStyle = BorderStyle.None;
+                inline_date.Read_Only = false;
+                inline_date.textBox1.GotFocus += delegate
+                {
+                    this.current_focused_control = inline_date;
+                };
+                CustomTextBox inline_name = new CustomTextBox();
+                inline_name.Name = "inline_name";
+                inline_name.BorderStyle = BorderStyle.None;
+                inline_name.ReadOnly = false;
+                inline_name.MaxChar = 3;
+                inline_name.textBox1.GotFocus += delegate
+                {
+                    this.current_focused_control = inline_name;
+                };
+                CustomTextBox inline_desc = new CustomTextBox();
+                inline_desc.Name = "inline_desc";
+                inline_desc.BorderStyle = BorderStyle.None;
+                inline_desc.ReadOnly = false;
+                inline_desc.MaxChar = 100;
+                inline_desc.textBox1.GotFocus += delegate
+                {
+                    this.current_focused_control = inline_desc;
+                };
+                inline_desc.textBox1.KeyDown += delegate(object sender, KeyEventArgs e)
+                {
+                    if (e.KeyCode == Keys.Enter)
+                    {
+                        this.toolStripSave.PerformClick();
+                    }
+                };
+
+                this.dgvMsg.Parent.Controls.Add(inline_date);
+                this.dgvMsg.Parent.Controls.Add(inline_name);
+                this.dgvMsg.Parent.Controls.Add(inline_desc);
+                inline_date.TextsMysql = ((D_msg)this.dgvMsg.Rows[row_index].Tag).date;
+                inline_name.Texts = ((D_msg)this.dgvMsg.Rows[row_index].Tag).name;
+                inline_desc.Texts = ((D_msg)this.dgvMsg.Rows[row_index].Tag).description;
+
+                this.AdjustInlineForm();
+
+                this.dgvMsg.Enabled = false;
+                this.dgvMsg.SendToBack();
+                inline_date.BringToFront();
+                inline_name.BringToFront();
+                inline_desc.BringToFront();
+
+                if (this.dgvMsg.Rows[row_index].Cells[column_index] != null)
+                {
+                    if (column_index == 1)
+                    {
+                        inline_date.Focus();
+                    }
+                    else if (column_index == 2)
+                    {
+                        inline_name.Focus();
+                    }
+                    else if (column_index == 3)
+                    {
+                        inline_desc.Focus();
+                    }
+                }
+                else
+                {
+                    inline_date.Focus();
+                }
+            }
+        }
+
+        private void SubmitEditMsg()
+        {
+            if (this.form_state == FORM_STATE.EDITF8)
+            {
+                int id = -1;
+                string date = "";
+                string name = "";
+                string desc = "";
+
+                if (((D_msg)this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag).id > -1)
+                {
+                    id = ((D_msg)this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag).id;
+                }
+                if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+                {
+                    date = ((CustomDateTimePicker)this.dgvMsg.Parent.Controls.Find("inline_date", true)[0]).TextsMysql;
+                }
+                if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
+                {
+                    name = ((CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0]).Texts.cleanString();
+                }
+                if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+                {
+                    desc = ((CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0]).Texts.cleanString();
+                }
+
+                string json_data = "{\"id\":" + id.ToString() + ",";
+                json_data += "\"dealer\":\"" + this.dealer.dealer + "\",";
+                json_data += "\"date\":\"" + date + "\",";
+                json_data += "\"name\":\"" + name + "\",";
+                json_data += "\"desc\":\"" + desc + "\",";
+                json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
+
+                this.FormProcessing();
+
+                bool post_success = false;
+                string err_msg = "";
+                int updated_id = -1;
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
+                {
+                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "dmsg/update", json_data);
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        post_success = true;
+                        updated_id = Convert.ToInt32(sr.message);
+                    }
+                    else
+                    {
+                        post_success = false;
+                        err_msg = sr.message;
+                    }
+                };
+                worker.RunWorkerCompleted += delegate
+                {
+                    if (post_success)
+                    {
+                        this.GetMsg();
+                        this.FillDataGridMsg();
+                        this.ClearInlineForm();
+                        this.FormReadItemF8();
+                        if (this.d_msg.FindIndex(t => t.id == updated_id) > -1)
+                        {
+                            this.dgvMsg.Rows[this.d_msg.FindIndex(t => t.id == updated_id)].Cells[1].Selected = true;
+                        }
+                    }
+                    else
+                    {
+                        this.FormEditItemF8();
+                        MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+                        {
+                            ((CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0]).Focus();
+                        }
+                    }
+                };
+                worker.RunWorkerAsync();
+            }
+        }
+
+        private void DeleteMsg()
+        {
+            if (this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag is D_msg)
+            {
+                this.dgvMsg.Tag = DATAGRID_INTENTION.DELETE;
+                if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                {
+                    this.FormProcessing();
+                    bool delete_success = false;
+                    string delete_err_msg = "";
+                    int row_index = this.dgvMsg.CurrentCell.RowIndex;
+                    int id = ((D_msg)this.dgvMsg.Rows[row_index].Tag).id;
+
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.DoWork += delegate
+                    {
+                        CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "dmsg/delete&id=" + id.ToString());
+                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
+
+                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                        {
+                            delete_success = true;
+                        }
+                        else
+                        {
+                            delete_success = false;
+                            delete_err_msg = sr.message;
+                        }
+                    };
+                    worker.RunWorkerCompleted += delegate
+                    {
+                        this.dgvMsg.Tag = DATAGRID_INTENTION.READ;
+
+                        if (delete_success)
+                        {
+                            this.GetMsg();
+                            this.FillDataGridMsg();
+                            this.FormReadItemF8();
+                        }
+                        else
+                        {
+                            this.dgvMsg.Refresh();
+                            MessageAlert.Show(delete_err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        }
+                    };
+                    worker.RunWorkerAsync();
+                }
+                else
+                {
+                    this.dgvMsg.Tag = DATAGRID_INTENTION.READ;
+                    this.dgvMsg.Refresh();
+                }
+            }
+        }
+
+        private void AdjustInlineForm()
+        {
+            if (this.dgvMsg.CurrentCell != null && this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+            {
+                Rectangle rect_date = this.dgvMsg.GetCellDisplayRectangle(1, this.dgvMsg.CurrentCell.RowIndex, true);
+                Rectangle rect_name = this.dgvMsg.GetCellDisplayRectangle(2, this.dgvMsg.CurrentCell.RowIndex, true);
+                Rectangle rect_desc = this.dgvMsg.GetCellDisplayRectangle(3, this.dgvMsg.CurrentCell.RowIndex, true);
+
+                if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+                {
+                    CustomDateTimePicker date = (CustomDateTimePicker)this.dgvMsg.Parent.Controls.Find("inline_date", true)[0];
+                    date.SetBounds(rect_date.X + 3, rect_date.Y + 1, rect_date.Width - 1, rect_date.Height - 2);
+                }
+
+                if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
+                {
+                    CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
+                    name.SetBounds(rect_name.X + 3, rect_name.Y + 1, rect_name.Width - 1, rect_name.Height - 2);
+                }
+
+                if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+                {
+                    CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
+                    desc.SetBounds(rect_desc.X + 3, rect_desc.Y + 1, rect_desc.Width - 1, rect_desc.Height - 2);
+                }
+            }
         }
 
         public string GetSortFieldName()
@@ -162,6 +650,8 @@ namespace SN_Net.Subform
                         {
                             this.serial = new List<Serial>();
                         }
+
+                        this.d_msg = sr.d_msg;
                     }
                     else
                     {
@@ -280,6 +770,21 @@ namespace SN_Net.Subform
             }
         }
 
+        private void GetMsg()
+        {
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "dmsg/get_msg&dealer=" + this.dealer.dealer);
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+
+            if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.d_msg = sr.d_msg;
+            }
+            else
+            {
+                MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+            }
+        }
+
         private void FillForm()
         {
             this.txtDealer.Texts = this.dealer.dealer;
@@ -299,8 +804,64 @@ namespace SN_Net.Subform
             this.txtArea.Texts = this.dealer.area;
             this.lblArea_typdes.Text = (this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Texts) != null ? this.main_form.data_resource.LIST_AREA.Find(t => t.typcod == this.txtArea.Texts).typdes_th : "");
             this.txtRemark.Texts = this.dealer.remark;
-            
+
+            this.FillDataGridMsg();
             this.FillDataGridSerial();
+        }
+
+        private void FillDataGridMsg()
+        {
+            this.dgvMsg.Rows.Clear();
+            this.dgvMsg.Columns.Clear();
+
+            DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
+            col0.HeaderText = "ID";
+            col0.Visible = false;
+            this.dgvMsg.Columns.Add(col0);
+
+            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
+            col1.HeaderText = "Date";
+            col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col1.Width = 98;
+            this.dgvMsg.Columns.Add(col1);
+
+            DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
+            col2.HeaderText = "Name";
+            col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col2.Width = 60;
+            this.dgvMsg.Columns.Add(col2);
+
+            DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
+            col3.HeaderText = "Description";
+            col3.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            col3.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvMsg.Columns.Add(col3);
+
+            if (this.form_state != FORM_STATE.ADD) // blank the datagrid while add mode
+            {
+                foreach (D_msg msg in this.d_msg)
+                {
+                    int r = this.dgvMsg.Rows.Add();
+                    this.dgvMsg.Rows[r].Tag = msg;
+
+                    this.dgvMsg.Rows[r].Cells[0].ValueType = typeof(int);
+                    this.dgvMsg.Rows[r].Cells[0].Value = msg.id;
+
+                    this.dgvMsg.Rows[r].Cells[1].ValueType = typeof(string);
+                    this.dgvMsg.Rows[r].Cells[1].pickedDate(msg.date);
+
+                    this.dgvMsg.Rows[r].Cells[2].ValueType = typeof(string);
+                    this.dgvMsg.Rows[r].Cells[2].Value = msg.name;
+
+                    this.dgvMsg.Rows[r].Cells[3].ValueType = typeof(string);
+                    this.dgvMsg.Rows[r].Cells[3].Value = msg.description;
+                }
+
+            }
+            this.dgvMsg.FillLine((this.form_state != FORM_STATE.ADD ? this.d_msg.Count : 0));
         }
 
         private void FillDataGridSerial()
@@ -358,7 +919,8 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
             col3.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col3.Width = this.dgvSerial.ClientSize.Width - (col1.Width + col2.Width + col4.Width + SystemInformation.VerticalScrollBarWidth + 3);
+            //col3.Width = this.dgvSerial.ClientSize.Width - (col1.Width + col2.Width + col4.Width + SystemInformation.VerticalScrollBarWidth + 3);
+            col3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             col3.HeaderText = "Customer Name";
             col3.HeaderCell.Style = new DataGridViewCellStyle()
             {
@@ -398,34 +960,6 @@ namespace SN_Net.Subform
                 this.dgvSerial.FillLine(this.serial.Count);
             };
 
-            //this.dgvSerial.MouseClick += new MouseEventHandler(this.DataGridRightClick);
-        }
-
-        //private void DataGridRightClick(object sender, MouseEventArgs e)
-        //{
-        //    if (e.Button == System.Windows.Forms.MouseButtons.Right)
-        //    {
-        //        Console.WriteLine("current_row : " + ((DataGridView)sender).CurrentCell.RowIndex.ToString());
-
-        //        // reverse the row has right click before to read-row
-        //        if (((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex].Cells[0].Tag is DataRowIntention)
-        //        {
-        //            ((DataRowIntention)(((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex].Cells[0]).Tag).to_do = DataRowIntention.TO_DO.READ;
-        //        }
-
-        //        // mark the current row as delete-row
-        //        if (((DataGridView)sender).Rows[((DataGridView)sender).HitTest(e.X, e.Y).RowIndex].Cells[0].Tag is DataRowIntention)
-        //        {
-        //            ((DataGridView)sender).Rows[((DataGridView)sender).HitTest(e.X, e.Y).RowIndex].Cells[1].Selected = true;
-        //            ((DataRowIntention)((DataGridView)sender).Rows[((DataGridView)sender).HitTest(e.X, e.Y).RowIndex].Cells[0].Tag).to_do = DataRowIntention.TO_DO.DELETE;
-        //        }
-        //    }
-        //}
-
-        // expand datagrid cell to fit container
-        private void dgvSerial_Paint(object sender, PaintEventArgs e)
-        {
-            this.dgvSerial.Columns[3].Width = this.dgvSerial.ClientSize.Width - (this.dgvSerial.Columns[1].Width + this.dgvSerial.Columns[2].Width + this.dgvSerial.Columns[4].Width + SystemInformation.VerticalScrollBarWidth + 3);
         }
 
         #region CREATE,UPDATE,DELETE dealer
@@ -463,6 +997,7 @@ namespace SN_Net.Subform
                     post_success = true;
                     this.dealer = sr.dealer[0];
                     this.serial = sr.serial;
+                    this.d_msg = sr.d_msg;
                 }
                 else
                 {
@@ -522,6 +1057,7 @@ namespace SN_Net.Subform
                     post_success = true;
                     this.dealer = sr.dealer[0];
                     this.serial = sr.serial;
+                    this.d_msg = sr.d_msg;
                 }
                 else
                 {
@@ -549,53 +1085,63 @@ namespace SN_Net.Subform
 
         private void DeleteDealer()
         {
-            //bool delete_success = false;
-            //string err_msg = "";
+            if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                bool delete_success = false;
+                string err_msg = "";
+                int curr_list_index = this.dealer_id_list.FindIndex(t => t.id == this.dealer.id);
+                this.FormProcessing();
 
-            //BackgroundWorker worker = new BackgroundWorker();
-            //worker.DoWork += delegate
-            //{
-            //    CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "dealer/delete_dealer&id=" + this.dealer.id.ToString());
-            //    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
+                {
+                    CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "dealer/delete&id=" + this.dealer.id.ToString());
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
 
-            //    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-            //    {
-            //        this.dealer = sr.dealer[0];
-            //        this.serial = sr.serial;
-            //        delete_success = true;
-            //    }
-            //    else
-            //    {
-            //        delete_success = false;
-            //        err_msg = sr.message;
-            //    }
-            //};
-            //worker.RunWorkerCompleted += delegate
-            //{
-            //    if (delete_success)
-            //    {
-            //        this.GetDealerIdList();
-            //        this.FillForm();
-            //        this.FormRead();
-            //    }
-            //    else
-            //    {
-            //        this.FormRead();
-            //        MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-            //    }
-            //};
-            //worker.RunWorkerAsync();
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        delete_success = true;
+                    }
+                    else
+                    {
+                        delete_success = false;
+                        err_msg = sr.message;
+                    }
+                };
+                worker.RunWorkerCompleted += delegate
+                {
+                    if (delete_success)
+                    {
+                        this.GetDealerIdList();
+                        if (curr_list_index <= this.dealer_id_list.Count - 1)
+                        {
+                            this.GetDealerByID(this.dealer_id_list[curr_list_index].id);
+                        }
+                        else
+                        {
+                            this.GetDealerByID(0);
+                        }
+                    }
+                    else
+                    {
+                        this.FormRead();
+                        MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                };
+                worker.RunWorkerAsync();
+            }
         }
         #endregion CREATE,UPDATE,DELETE dealer
 
-        private void ShowInlineForm()
-        {
-
-        }
-
         private void ClearInlineForm()
         {
-
+            if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+            {
+                this.dgvMsg.Parent.Controls.RemoveByKey("inline_date");
+                this.dgvMsg.Parent.Controls.RemoveByKey("inline_name");
+                this.dgvMsg.Parent.Controls.RemoveByKey("inline_desc");
+                this.dgvMsg.Enabled = true;
+            }
         }
 
         #region SET FORM MODE
@@ -644,6 +1190,24 @@ namespace SN_Net.Subform
             this.btnBrowseArea.Enabled = false;
 
             this.txtDummy.Focus();
+
+            #region inline form
+            if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvMsg.Parent.Controls.Find("inline_date", true)[0];
+                date.Read_Only = true;
+            }
+            if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
+                name.ReadOnly = true;
+            }
+            if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+            {
+                CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
+                desc.ReadOnly = true;
+            }
+            #endregion inline form
         }
 
         private void FormRead()
@@ -691,6 +1255,7 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = true;
 
             this.btnBrowseArea.Enabled = false;
+            this.dgvMsg.Enabled = true;
         }
 
         private void FormAdd()
@@ -736,6 +1301,7 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = false;
 
             this.btnBrowseArea.Enabled = true;
+            this.dgvMsg.Enabled = false;
         }
 
         private void FormEdit()
@@ -780,6 +1346,7 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = false;
 
             this.btnBrowseArea.Enabled = true;
+            this.dgvMsg.Enabled = false;
         }
 
         private void FormReadItemF8()
@@ -825,6 +1392,8 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = true;
 
             this.btnBrowseArea.Enabled = false;
+            this.dgvMsg.Enabled = true;
+            this.dgvMsg.Focus();
         }
 
         private void FormReadItemF7()
@@ -870,6 +1439,7 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = true;
 
             this.btnBrowseArea.Enabled = false;
+            this.dgvSerial.Focus();
         }
 
         private void FormAddItemF8()
@@ -915,6 +1485,24 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = true;
 
             this.btnBrowseArea.Enabled = false;
+
+            #region inline form
+            if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvMsg.Parent.Controls.Find("inline_date", true)[0];
+                date.Read_Only = false;
+            }
+            if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
+                name.ReadOnly = false;
+            }
+            if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+            {
+                CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
+                desc.ReadOnly = false;
+            }
+            #endregion inline form
         }
 
         private void FormEditItemF8()
@@ -960,13 +1548,26 @@ namespace SN_Net.Subform
             this.txtRemark.ReadOnly = true;
 
             this.btnBrowseArea.Enabled = false;
+
+            #region inline form
+            if (this.dgvMsg.Parent.Controls.Find("inline_date", true).Length > 0)
+            {
+                CustomDateTimePicker date = (CustomDateTimePicker)this.dgvMsg.Parent.Controls.Find("inline_date", true)[0];
+                date.Read_Only = false;
+            }
+            if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
+            {
+                CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
+                name.ReadOnly = false;
+            }
+            if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
+            {
+                CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
+                desc.ReadOnly = false;
+            }
+            #endregion inline form
         }
         #endregion SET FORM MODE
-
-        public void collapseToolstrip()
-        {
-            //this.toolStrip1.SetBounds(this.toolStrip1.Location.X, this.toolStrip1.Location.Y, this.toolStrip1.ClientSize.Width, 0);
-        }
 
         private void DealerWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1016,7 +1617,9 @@ namespace SN_Net.Subform
 
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
             this.FormAdd();
+            this.FillDataGridMsg();
 
             this.txtDealer.Texts = "";
             this.txtPrenam.Texts = "";
@@ -1039,16 +1642,22 @@ namespace SN_Net.Subform
 
         private void toolStripEdit_Click(object sender, EventArgs e)
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
             this.FormEdit();
             this.txtPrenam.Focus();
+        }
+
+        private void toolStripDelete_Click(object sender, EventArgs e)
+        {
+            this.DeleteDealer();
         }
 
         private void toolStripStop_Click(object sender, EventArgs e)
         {
             if (this.form_state == FORM_STATE.ADD || this.form_state == FORM_STATE.EDIT)
             {
-                this.FillForm();
                 this.FormRead();
+                this.FillForm();
             }
             else if (this.form_state == FORM_STATE.READF7 || this.form_state == FORM_STATE.READF8)
             {
@@ -1070,6 +1679,14 @@ namespace SN_Net.Subform
             else if (this.form_state == FORM_STATE.EDIT)
             {
                 this.UpdateDealer();
+            }
+            else if(this.form_state == FORM_STATE.EDITF8)
+            {
+                this.SubmitEditMsg();
+            }
+            else if (this.form_state == FORM_STATE.ADDF8)
+            {
+                this.SubmitAddMsg();
             }
         }
 
@@ -1792,25 +2409,60 @@ namespace SN_Net.Subform
                         return true;
                     }
                 }
+                if (this.form_state == FORM_STATE.ADDF8 || this.form_state == FORM_STATE.EDITF8)
+                {
+                    if (this.current_focused_control.Name != "inline_desc")
+                    {
+                        SendKeys.Send("{TAB}");
+                        return true;
+                    }
+                }
             }
             if (keyData == Keys.Escape)
             {
                 this.toolStripStop.PerformClick();
                 return true;
             }
-            if (keyData == Keys.Tab && this.form_state == FORM_STATE.READ)
+            if (keyData == Keys.Tab)
             {
-                DataInfo data_info = new DataInfo();
-                data_info.lblDataTable.Text = "DEALER";
-                data_info.lblExpression.Text = (this.sort_mode == SORT_MODE.DEALER ? "dealer" : this.GetSortFieldName() + "+dealer");
-                data_info.lblRecBy.Text = this.dealer.users_name;
-                data_info.lblRecDate.pickedDate(this.dealer.chgdat);
-                data_info.lblTime.ForeColor = Color.DarkGray;
-                data_info.lblRecTime.BackColor = Color.WhiteSmoke;
-                data_info.lblRecNo.Text = this.dealer.id.ToString();
-                data_info.lblTotalRec.Text = this.dealer_id_list.Max(t => t.id).ToString();
-                data_info.ShowDialog();
-                return true;
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    DataInfo data_info = new DataInfo();
+                    data_info.lblDataTable.Text = "DEALER";
+                    data_info.lblExpression.Text = (this.sort_mode == SORT_MODE.DEALER ? "dealer" : this.GetSortFieldName() + "+dealer");
+                    data_info.lblRecBy.Text = this.dealer.users_name;
+                    data_info.lblRecDate.pickedDate(this.dealer.chgdat);
+                    data_info.lblTime.ForeColor = Color.DarkGray;
+                    data_info.lblRecTime.BackColor = Color.WhiteSmoke;
+                    data_info.lblRecNo.Text = this.dealer.id.ToString();
+                    data_info.lblTotalRec.Text = this.dealer_id_list.Max(t => t.id).ToString();
+                    data_info.ShowDialog();
+                    return true;
+                }
+                if (this.form_state == FORM_STATE.READF8)
+                {
+                    if (this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag is D_msg)
+                    {
+                        D_msg d_msg = (D_msg)this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag;
+                        CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "dmsg/get_max_id");
+                        Console.WriteLine(" >>>> " + get.data);
+                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                        {
+                            DataInfo data_info = new DataInfo();
+                            data_info.lblDataTable.Text = "D_MSG";
+                            data_info.lblExpression.Text = "dealer+date";
+                            data_info.lblRecBy.Text = d_msg.users_name;
+                            data_info.lblRecDate.pickedDate(d_msg.date);
+                            data_info.lblTime.ForeColor = Color.DarkGray;
+                            data_info.lblRecTime.BackColor = Color.WhiteSmoke;
+                            data_info.lblRecNo.Text = d_msg.id.ToString();
+                            data_info.lblTotalRec.Text = sr.d_msg[0].id.ToString(); // this.dealer_id_list.Max(t => t.id).ToString();
+                            data_info.ShowDialog();
+                            return true;
+                        }
+                    }
+                }
             }
             if (keyData == Keys.F3)
             {
@@ -1855,18 +2507,42 @@ namespace SN_Net.Subform
             }
             if (keyData == (Keys.Alt | Keys.A))
             {
-                this.toolStripAdd.PerformClick();
-                return true;
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.toolStripAdd.PerformClick();
+                    return true;
+                }
+                if (this.form_state == FORM_STATE.READF8)
+                {
+                    this.AddFormMsg();
+                    return true;
+                }
             }
             if (keyData == (Keys.Alt | Keys.E))
             {
-                this.toolStripEdit.PerformClick();
-                return true;
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.toolStripEdit.PerformClick();
+                    return true;
+                }
+                if(this.form_state == FORM_STATE.READF8)
+                {
+                    this.EditFormMsg(1);
+                    return true;
+                }
             }
             if (keyData == (Keys.Alt | Keys.D))
             {
-                this.toolStripDelete.PerformClick();
-                return true;
+                if (this.form_state == FORM_STATE.READ)
+                {
+                    this.toolStripDelete.PerformClick();
+                    return true;
+                }
+                if (this.form_state == FORM_STATE.READF8)
+                {
+                    this.DeleteMsg();
+                    return true;
+                }
             }
             if (keyData == (Keys.Alt | Keys.S))
             {
@@ -1933,7 +2609,7 @@ namespace SN_Net.Subform
             if (keyData == Keys.F8 && this.form_state == FORM_STATE.READ)
             {
                 this.tabControl1.SelectedTab = this.tabPage1;
-                this.dgvRemark.Focus();
+                this.dgvMsg.Focus();
                 this.FormReadItemF8();
                 return true;
             }

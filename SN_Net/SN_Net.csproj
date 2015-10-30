@@ -75,13 +75,19 @@
   <ItemGroup>
     <Compile Include="DataModels\Dealer.cs" />
     <Compile Include="DataModels\Dealer_list.cs" />
+    <Compile Include="DataModels\D_msg.cs" />
+    <Compile Include="DataModels\EventCalendar.cs" />
     <Compile Include="DataModels\Istab.cs" />
     <Compile Include="DataModels\MacAllowed.cs" />
+    <Compile Include="DataModels\Note.cs" />
+    <Compile Include="DataModels\NoteCalendar.cs" />
     <Compile Include="DataModels\PrintPageSetup.cs" />
     <Compile Include="DataModels\Problem.cs" />
     <Compile Include="DataModels\RegisterData.cs" />
     <Compile Include="DataModels\Serial.cs" />
     <Compile Include="DataModels\Serial_list.cs" />
+    <Compile Include="DataModels\SupportNote.cs" />
+    <Compile Include="DataModels\TrainingCalendar.cs" />
     <Compile Include="DataModels\Users.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -97,6 +103,12 @@
     </Compile>
     <Compile Include="MiscClass\CustomComboBox.Designer.cs">
       <DependentUpon>CustomComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateEvent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateEvent.Designer.cs">
+      <DependentUpon>CustomDateEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\CustomDateTimePicker.cs">
       <SubType>UserControl</SubType>
@@ -115,6 +127,12 @@
     </Compile>
     <Compile Include="MiscClass\CustomTextBox.Designer.cs">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\CustomTimePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomTimePicker.Designer.cs">
+      <DependentUpon>CustomTimePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\DataRowIntention.cs" />
     <Compile Include="MiscClass\DateTimeBindingControl.cs" />
@@ -150,6 +168,12 @@
     <Compile Include="Subform\ApiMainUrlFirstSetting.Designer.cs">
       <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\CalendarWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\CalendarWindow.Designer.cs">
+      <DependentUpon>CalendarWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +185,12 @@
     </Compile>
     <Compile Include="Subform\DataInfo.Designer.cs">
       <DependentUpon>DataInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\DateEventWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\DateEventWindow.Designer.cs">
+      <DependentUpon>DateEventWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\DealerInquiryWindow.cs">
       <SubType>Form</SubType>
@@ -209,6 +239,12 @@
     </Compile>
     <Compile Include="Subform\IstabWindow.Designer.cs">
       <DependentUpon>IstabWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\LeaveWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\LeaveWindow.Designer.cs">
+      <DependentUpon>LeaveWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\LoginForm.cs">
       <SubType>Form</SubType>
@@ -312,11 +348,29 @@
     <Compile Include="Subform\SplashPreventMenustripActive.Designer.cs">
       <DependentUpon>SplashPreventMenustripActive.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\SupportNoteWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SupportNoteWindow.Designer.cs">
+      <DependentUpon>SupportNoteWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\SupportStatWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SupportStatWindow.Designer.cs">
+      <DependentUpon>SupportStatWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\Test.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Subform\Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\TestControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\TestControl.Designer.cs">
+      <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\UpgradeProgramForm.cs">
       <SubType>Form</SubType>
@@ -348,6 +402,9 @@
     <EmbeddedResource Include="MiscClass\CustomComboBox.resx">
       <DependentUpon>CustomComboBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomDateEvent.resx">
+      <DependentUpon>CustomDateEvent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomDateTimePicker.resx">
       <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -359,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomTextBoxMaskedWithLabel.resx">
       <DependentUpon>CustomTextBoxMaskedWithLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomTimePicker.resx">
+      <DependentUpon>CustomTimePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -373,11 +433,17 @@
     <EmbeddedResource Include="Subform\ApiMainUrlFirstSetting.resx">
       <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\CalendarWindow.resx">
+      <DependentUpon>CalendarWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\DataInfo.resx">
       <DependentUpon>DataInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\DateEventWindow.resx">
+      <DependentUpon>DateEventWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\DealerInquiryWindow.resx">
       <DependentUpon>DealerInquiryWindow.cs</DependentUpon>
@@ -402,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\IstabWindow.resx">
       <DependentUpon>IstabWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\LeaveWindow.resx">
+      <DependentUpon>LeaveWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -454,8 +523,17 @@
     <EmbeddedResource Include="Subform\SplashPreventMenustripActive.resx">
       <DependentUpon>SplashPreventMenustripActive.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SupportNoteWindow.resx">
+      <DependentUpon>SupportNoteWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SupportStatWindow.resx">
+      <DependentUpon>SupportStatWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\Test.resx">
       <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\TestControl.resx">
+      <DependentUpon>TestControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UpgradeProgramForm.resx">
       <DependentUpon>UpgradeProgramForm.cs</DependentUpon>
@@ -563,6 +641,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\export.png" />
+    <None Include="Resources\report.png" />
+    <None Include="Resources\support.png" />
+    <None Include="Resources\pause_32.png" />
+    <None Include="Resources\detail.png" />
+    <None Include="Resources\printer_small.png" />
+    <None Include="Resources\pause.png" />
+    <None Include="Resources\note_go.png" />
     <None Include="Resources\printer1.png" />
     <None Include="Resources\printer.png" />
     <None Include="Resources\print1.png" />

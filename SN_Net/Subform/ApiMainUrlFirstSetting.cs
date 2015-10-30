@@ -25,8 +25,8 @@ namespace SN_Net.Subform
         {
             InitializeComponent();
 
-            system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            appdata_path = Path.Combine(system_path, "SN_Net\\");
+            //system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            //appdata_path = Path.Combine(system_path, "SN_Net\\");
 
             this.mskMainURL.GotFocus += new EventHandler(this.mskMainURL_GotFocus);
         }
@@ -43,7 +43,8 @@ namespace SN_Net.Subform
 
         private void ApiMainUrlFirstSetting_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (File.Exists(this.appdata_path + "SN_pref.txt"))
+            //if (File.Exists(this.appdata_path + "SN_pref.txt"))
+            if(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt")))
             {
                 this.DialogResult = DialogResult.OK;
                 e.Cancel = false;
@@ -122,17 +123,23 @@ namespace SN_Net.Subform
                 this.t = null;
                 this.label2.Text = "";
 
-                if (!Directory.Exists(Path.Combine(system_path, "SN_Net")))
+                //if (!Directory.Exists(Path.Combine(system_path, "SN_Net")))
+                //{
+                //    DirectoryInfo dir_info = Directory.CreateDirectory(Path.Combine(system_path, "SN_Net"));
+                //    if (dir_info.Exists)
+                //    {
+                //        using (StreamWriter file = new StreamWriter(this.appdata_path + "SN_pref.txt", false))
+                //        {
+                //            file.WriteLine("MAIN URL | " + this.mskMainURL.Text);
+                //            this.Close();
+                //        }
+                //    }
+                //}
+                ///////////////////
+                using (StreamWriter file = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt"), false))
                 {
-                    DirectoryInfo dir_info = Directory.CreateDirectory(Path.Combine(system_path, "SN_Net"));
-                    if (dir_info.Exists)
-                    {
-                        using (StreamWriter file = new StreamWriter(this.appdata_path + "SN_pref.txt", false))
-                        {
-                            file.WriteLine("MAIN URL | " + this.mskMainURL.Text);
-                            this.Close();
-                        }
-                    }
+                    file.WriteLine("MAIN URL | " + this.mskMainURL.Text);
+                    this.Close();
                 }
             }
             else

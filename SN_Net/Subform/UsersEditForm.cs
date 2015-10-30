@@ -17,6 +17,7 @@ namespace SN_Net.Subform
     public partial class UsersEditForm : Form
     {
         public int id;
+        private Control current_focused_control;
 
         public UsersEditForm()
         {
@@ -27,10 +28,11 @@ namespace SN_Net.Subform
         {
             // Adding users level selection
             this.cbUserLevel.Items.Add(new ComboboxItem("ADMIN", 9, ""));
+            this.cbUserLevel.Items.Add(new ComboboxItem("SUPERVISOR", 8, ""));
             this.cbUserLevel.Items.Add(new ComboboxItem("SUPPORT", 0, ""));
             this.cbUserLevel.Items.Add(new ComboboxItem("SALES", 1, ""));
             this.cbUserLevel.Items.Add(new ComboboxItem("ACCOUNT", 2, ""));
-            this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[1];
+            this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[2];
 
             // Adding users status selection
             this.cbUserStatus.Items.Add(new ComboboxItem("ปกติ", 0, "N"));
@@ -49,6 +51,7 @@ namespace SN_Net.Subform
                 Users user = sr.users.First<Users>();
 
                 this.txtUserName.Text = user.username;
+                this.txtName.Text = user.name;
                 this.txtEmail.Text = user.email;
                 this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[ComboboxItem.GetItemIndex(this.cbUserLevel, user.level)];
                 this.cbUserStatus.SelectedItem = this.cbUserStatus.Items[ComboboxItem.GetItemIndex(this.cbUserStatus, user.status)];
@@ -64,40 +67,19 @@ namespace SN_Net.Subform
 
             foreach (Control ct in this.groupBox1.Controls)
             {
-                ct.KeyDown += new KeyEventHandler(this.enterKeyDetect);
-            }
-
-            EscapeKeyToCloseDialog.ActiveEscToClose(this);
-            
-        }
-
-        private void enterKeyDetect(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                Control curr_control = sender as Control;
-                int curr_index = curr_control.TabIndex;
-
-                if(curr_control.Name == this.cbUserStatus.Name){
-                    this.btnSubmitChangeUser.Select();
-                }
-                else
+                ct.GotFocus += delegate
                 {
-                    foreach (Control c in this.groupBox1.Controls)
-                    {
-                        if (c.TabIndex == curr_index + 1 && c.TabStop == true)
-                        {
-                            c.Select();
-                            if (c is ComboBox)
-                            {
-                                ComboBox combo = c as ComboBox;
-                                combo.DroppedDown = true;
-                            }
-                            break;
-                        }
-                    }
-                }
+                    this.current_focused_control = ct;
+                };
             }
+            this.btnSubmitChangeUser.GotFocus += delegate
+            {
+                this.current_focused_control = this.btnSubmitChangeUser;
+            };
+            this.btnCancelSubmitChangeUser.GotFocus += delegate
+            {
+                this.current_focused_control = this.btnCancelSubmitChangeUser;
+            };
         }
 
         private void btnCancelSubmitChangeUser_Click(object sender, EventArgs e)
@@ -109,6 +91,7 @@ namespace SN_Net.Subform
         private void btnSubmitChangeUser_Click(object sender, EventArgs e)
         {
             string username = this.txtUserName.Text;
+            string name = this.txtName.Text;
             string email = this.txtEmail.Text;
             int level = ((ComboboxItem)this.cbUserLevel.SelectedItem).int_value;
             string status = ((ComboboxItem)this.cbUserStatus.SelectedItem).string_value;
@@ -116,6 +99,7 @@ namespace SN_Net.Subform
 
             string json_data = "{\"id\":" + this.id + ",";
             json_data += "\"username\":\"" + username.cleanString() + "\",";
+            json_data += "\"name\":\"" + name.cleanString() + "\",";
             json_data += "\"email\":\"" + email.cleanString() + "\",";
             json_data += "\"level\":" + level + ",";
             json_data += "\"status\":\"" + status + "\",";
@@ -133,6 +117,25 @@ namespace SN_Net.Subform
             {
                 MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
             }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                if (!(this.current_focused_control is Button))
+                {
+                    SendKeys.Send("{TAB}");
+                    return true;
+                }
+            }
+            if (keyData == Keys.Escape)
+            {
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

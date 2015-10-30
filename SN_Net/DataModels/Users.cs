@@ -10,6 +10,7 @@ namespace SN_Net.DataModels
         public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; } // sensitive data not retrieve from server
+        public string name { get; set; }
         public string email { get; set; }
         public int level { get; set; }
         public string status { get; set; }

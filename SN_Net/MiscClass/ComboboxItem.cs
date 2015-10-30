@@ -11,6 +11,7 @@ namespace SN_Net.MiscClass
         public string name;
         public int int_value;
         public string string_value;
+        public object Tag { get; set; }
 
         public ComboboxItem(string name, int int_value, string string_value)
         {
