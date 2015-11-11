@@ -89,13 +89,15 @@ namespace SN_Net.Subform
                 int level = ((ComboboxItem)this.cbUserLevel.SelectedItem).int_value;
                 string status = ((ComboboxItem)this.cbUserStatus.SelectedItem).string_value;
                 string allowed_web_login = ((ComboboxItem)this.cbWebLogin.SelectedItem).string_value;
+                string training_expert = this.chTrainingExpert.CheckState.ToYesOrNoString();
 
                 string json_data = "{\"username\":\"" + username.cleanString() + "\",";
                 json_data += "\"name\":\"" + name.cleanString() + "\",";
                 json_data += "\"email\":\"" + email.cleanString() + "\",";
                 json_data += "\"level\":" + level + ",";
                 json_data += "\"status\":\"" + status + "\",";
-                json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\"}";
+                json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\",";
+                json_data += "\"training_expert\":\"" + training_expert + "\"}";
 
                 CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/create", json_data);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
@@ -186,19 +188,26 @@ namespace SN_Net.Subform
                     this.dgvUsers.Columns[c6].Width = 80;
                     this.dgvUsers.Columns[c6].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    // create_at
+                    // is training_expert
                     DataGridViewTextBoxColumn text_col7 = new DataGridViewTextBoxColumn();
                     int c7 = this.dgvUsers.Columns.Add(text_col7);
-                    this.dgvUsers.Columns[c7].HeaderText = "สร้างเมื่อ";
-                    this.dgvUsers.Columns[c7].Width = 140;
+                    this.dgvUsers.Columns[c7].HeaderText = "วิทยากร";
+                    this.dgvUsers.Columns[c7].Width = 50;
                     this.dgvUsers.Columns[c7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    // update_at
+                    // create_at
                     DataGridViewTextBoxColumn text_col8 = new DataGridViewTextBoxColumn();
                     int c8 = this.dgvUsers.Columns.Add(text_col8);
-                    this.dgvUsers.Columns[c8].HeaderText = "แก้ไขเมื่อ";
+                    this.dgvUsers.Columns[c8].HeaderText = "สร้างเมื่อ";
                     this.dgvUsers.Columns[c8].Width = 140;
                     this.dgvUsers.Columns[c8].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // update_at
+                    DataGridViewTextBoxColumn text_col9 = new DataGridViewTextBoxColumn();
+                    int c9 = this.dgvUsers.Columns.Add(text_col9);
+                    this.dgvUsers.Columns[c9].HeaderText = "ใช้งานล่าสุด";
+                    this.dgvUsers.Columns[c9].Width = 140;
+                    this.dgvUsers.Columns[c9].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     // Create data row
                     foreach (Users user in this.users)
@@ -232,10 +241,15 @@ namespace SN_Net.Subform
                         this.dgvUsers.Rows[r].Cells[6].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                         this.dgvUsers.Rows[r].Cells[7].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[7].Value = user.create_at;
+                        this.dgvUsers.Rows[r].Cells[7].Value = user.training_expert;
+                        this.dgvUsers.Rows[r].Cells[7].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        this.dgvUsers.Rows[r].Cells[7].Style.ForeColor = (user.training_expert == "Y" ? Color.Black : Color.LightGray);
 
                         this.dgvUsers.Rows[r].Cells[8].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[8].Value = user.last_use;
+                        this.dgvUsers.Rows[r].Cells[8].Value = user.create_at;
+
+                        this.dgvUsers.Rows[r].Cells[9].ValueType = typeof(string);
+                        this.dgvUsers.Rows[r].Cells[9].Value = user.last_use;
                     }
 
                     // Set selection item
@@ -269,7 +283,7 @@ namespace SN_Net.Subform
         {
             this.txtUserName.Text = "";
             this.txtEmail.Text = "";
-            this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[1];
+            this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[2];
             this.cbUserStatus.SelectedItem = this.cbUserStatus.Items[0];
             this.cbWebLogin.SelectedItem = this.cbWebLogin.Items[0];
         }

@@ -29,6 +29,7 @@ namespace SN_Net
         public IstabWindow busityp_wind;
         public IstabWindow probcode_wind;
         public IstabWindow leavecause_wind;
+        public SearchHistory searchhistory_wind;
         
         public string my_mac = string.Empty;
         public GlobalVar G;
@@ -58,6 +59,7 @@ namespace SN_Net
                 if (this.G.loged_in_user_level < 8)
                 {
                     this.supportStatMenuItem.Visible = false;
+                    this.SearchHistoryMenuItem.Visible = false;
                 }
 
                 this.loadDataResource();
@@ -192,7 +194,7 @@ namespace SN_Net
         {
             if (this.leavecause_wind == null)
             {
-                this.leavecause_wind = new IstabWindow(this, Istab.TABTYP.LEAVE_CAUSE);
+                this.leavecause_wind = new IstabWindow(this, Istab.TABTYP.ABSENT_CAUSE);
                 this.leavecause_wind.MdiParent = this;
                 this.leavecause_wind.Show();
             }
@@ -358,6 +360,20 @@ namespace SN_Net
             }
         }
 
+        private void SearchHistoryMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.searchhistory_wind == null)
+            {
+                this.searchhistory_wind = new SearchHistory(this);
+                searchhistory_wind.MdiParent = this;
+                searchhistory_wind.Show();
+            }
+            else
+            {
+                this.searchhistory_wind.Activate();
+            }
+        }
+
         private void calendarMenuItem_Click(object sender, EventArgs e)
         {
             CalendarWindow wind = new CalendarWindow(this);
@@ -366,6 +382,12 @@ namespace SN_Net
             wind.Show();
 
 
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestControl w = new TestControl();
+            w.ShowDialog();
         }
     }
 }

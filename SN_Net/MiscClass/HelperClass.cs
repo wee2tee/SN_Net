@@ -28,7 +28,7 @@ namespace SN_Net.MiscClass
                     return "04";
                 case Istab.TABTYP.PROBLEM_CODE:
                     return "05";
-                case Istab.TABTYP.LEAVE_CAUSE:
+                case Istab.TABTYP.ABSENT_CAUSE:
                     return "06";
                 default:
                     return "00";
@@ -233,7 +233,7 @@ namespace SN_Net.MiscClass
         public static DateTime TimeString2DateTime(this string time_string)
         {
             string[] time = time_string.Split(':');
-            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(time[0]), Convert.ToInt32(time[1]), Convert.ToInt32(time[2]));
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(time[0]), Convert.ToInt32(time[1]), 0);
         }
 
         public static string ThaiDayOfWeek(this DateTime date)
@@ -279,14 +279,13 @@ namespace SN_Net.MiscClass
             }
             if (t.TotalMinutes > 0)
             {
-                //leave_string += "ลางาน,ออกพบลูกค้า ";
                 int days = Convert.ToInt32(Math.Floor((double)((t.TotalMinutes / 60) / 8)));
                 int hours = Convert.ToInt32(Math.Floor((double)(t.TotalMinutes / 60))) - (days * 8);
                 int minutes = Convert.ToInt32(t.TotalMinutes) - (days * 8 * 60) - (hours * 60);
                 leave_string +=
-                    (days > 0 ? days.ToString() + " วัน" : "") +
-                    (hours > 0 ? " " + hours.ToString() + " ชั่วโมง" : "") +
-                    (minutes > 0 ? " " + minutes.ToString() + " นาที" : "");
+                    (days > 0 ? " " + days.ToString() + " วัน" : "") +
+                    (hours > 0 ? (days > 0 ? ", " + hours.ToString() : " " + hours.ToString()) + " ชั่วโมง" : "") +
+                    (minutes > 0 ? (hours > 0 ? ", " + minutes.ToString() : " " + minutes.ToString()) + " นาที" : "");
             }
 
             return leave_string;

@@ -266,7 +266,6 @@ namespace SN_Net.Subform
 
         private void mouseWheelHandler(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Mouse wheel " + e.Delta.ToString());
             
         }
 

@@ -151,7 +151,7 @@ namespace SN_Net.MiscClass
         {
             get
             {
-                return this.valDateTime;
+                return this.dateTimePicker1.Value;
             }
             set
             {
@@ -229,6 +229,15 @@ namespace SN_Net.MiscClass
             {
                 this.textBox1.Focus();
                 this.calendar_shown = false;
+            };
+
+            this.textBox1.KeyDown += delegate(object sender, KeyEventArgs e)
+            {
+                if (e.KeyCode == Keys.F6)
+                {
+                    this.dateTimePicker1.Focus();
+                    SendKeys.Send("{F4}");
+                }
             };
         }
 

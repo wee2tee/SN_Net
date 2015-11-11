@@ -120,6 +120,7 @@ namespace SN_Net.Subform
                     this.G.loged_in_user_status = user.status;
                     this.G.loged_in_user_level = user.level;
                     this.G.loged_in_user_allowed_web_login = user.allowed_web_login;
+                    this.G.loged_in_user_training_expert = (user.training_expert == "Y" ? true : false);
 
                     this.loged_in = true;
                     this.DialogResult = DialogResult.OK;

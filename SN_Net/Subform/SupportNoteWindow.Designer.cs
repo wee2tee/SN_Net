@@ -787,8 +787,8 @@
             this.dtWorkDate.Read_Only = false;
             this.dtWorkDate.Size = new System.Drawing.Size(96, 23);
             this.dtWorkDate.TabIndex = 1;
-            this.dtWorkDate.Texts = "27/10/2558";
-            this.dtWorkDate.TextsMysql = "2015-10-27";
+            this.dtWorkDate.Texts = "02/11/2558";
+            this.dtWorkDate.TextsMysql = "2015-11-02";
             this.dtWorkDate.ValDateTime = new System.DateTime(2015, 10, 7, 15, 17, 35, 103);
             // 
             // cbSupportCode
@@ -939,7 +939,7 @@
             this.Controls.Add(this.splitContainer1);
             this.KeyPreview = true;
             this.Name = "SupportNoteWindow";
-            this.Text = "Support Note";
+            this.Text = "บันทึกการปฏิบัติงานประจำวัน (Support)";
             this.Load += new System.EventHandler(this.SupportNote_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

@@ -157,6 +157,7 @@
             // rbFile
             // 
             this.rbFile.AutoSize = true;
+            this.rbFile.Enabled = false;
             this.rbFile.Location = new System.Drawing.Point(20, 78);
             this.rbFile.Name = "rbFile";
             this.rbFile.Size = new System.Drawing.Size(46, 20);

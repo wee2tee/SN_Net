@@ -2487,6 +2487,13 @@ namespace SN_Net.Subform
             box.mskSearchKey.Text = this.find_sernum;
             if (box.ShowDialog() == DialogResult.OK)
             {
+                #region keep spy_log (no need response)
+                string json_data = "{\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+                json_data += "\"sernum\":\"" + box.mskSearchKey.Text.cleanString() + "\",";
+                json_data += "\"compnam\":\"\"}";
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "spylog/create", json_data);
+                #endregion keep spy_log (no need response)
+
                 this.find_sernum = box.mskSearchKey.Text;
                 this.find_type = FIND_TYPE.SERNUM;
                 this.FormProcessing();
@@ -2558,6 +2565,13 @@ namespace SN_Net.Subform
             box.txtSearchKey.Text = this.find_company;
             if (box.ShowDialog() == DialogResult.OK)
             {
+                #region keep spy_log (no need response)
+                string json_data = "{\"users_name\":\"" + this.G.loged_in_user_name + "\",";
+                json_data += "\"compnam\":\"" + box.txtSearchKey.Text.cleanString() + "\",";
+                json_data += "\"sernum\":\"\"}";
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "spylog/create", json_data);
+                #endregion keep spy_log (no need response)
+
                 this.find_company = box.txtSearchKey.Text;
                 this.find_type = FIND_TYPE.COMPANY;
                 this.FormProcessing();

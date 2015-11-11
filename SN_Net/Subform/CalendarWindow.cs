@@ -120,6 +120,9 @@ namespace SN_Net.Subform
                     de.Date = out_firstday.AddDays(i - out_firstday.GetDayIntOfWeek());
                     de.TargetMonth = out_firstday.Month;
                     de.G = this.main_form.G;
+                    de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
+                    de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
+                    de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true ? true : false);
                     //de.RefreshView();
                 }
 
@@ -131,7 +134,9 @@ namespace SN_Net.Subform
                     de.Date = out_firstday.AddDays(i);
                     de.TargetMonth = out_firstday.Month;
                     de.G = this.main_form.G;
-                    //de.RefreshView();
+                    de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
+                    de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
+                    de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true ? true : false);
                     // increase row_index
                     row_index += (out_firstday.AddDays(i).GetDayIntOfWeek() == 7 ? 1 : 0);
                 }
@@ -148,7 +153,9 @@ namespace SN_Net.Subform
                         de.Date = out_firstday.AddDays(days_in_month + (add_date - 1));
                         de.TargetMonth = out_firstday.Month;
                         de.G = this.main_form.G;
-                        //de.RefreshView();
+                        de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
+                        de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
+                        de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true ? true : false);
                     }
                     row_index++;
                     day_of_week = 1;

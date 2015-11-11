@@ -40,6 +40,7 @@ namespace SN_Net.MiscClass
         public List<Istab> verext { get; set; }
         public List<Istab> problem_code { get; set; }
         public List<SupportNote> support_note { get; set; } // for retrieve support note data from server
+        public List<SupportNoteComment> support_note_comment { get; set; } // for retrieve support note comment data from server
         public List<Serial_list> serial_list { get; set; } // for inquiry window
         public List<Dealer_list> dealer_list { get; set; } // for inquiry window
         public List<RegisterData> register_data { get; set; }
@@ -47,6 +48,7 @@ namespace SN_Net.MiscClass
         public List<EventCalendar> event_calendar { get; set; } // for retrieve event_calendar (display in calendar)
         public List<TrainingCalendar> training_calendar { get; set; } // for retrieve training_calendar (display in calendar)
         public List<NoteCalendar> note_calendar { get; set; } // for retrieve note_calendar (display in calendar)
+        public List<SpyLog> spy_log { get; set; } // for retrieve spy_log (Search history)
         public PrintPageSetup print_page_setup { get; set; } // for retrieve print page setup of each form
     }
 }

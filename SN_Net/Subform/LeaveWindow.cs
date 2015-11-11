@@ -28,6 +28,13 @@ namespace SN_Net.Subform
         private List<Istab> leave_cause;
         private List<EventCalendar> sorted_list = new List<EventCalendar>();
         private CultureInfo cinfo_th = new CultureInfo("th-TH");
+        private FORM_MODE form_mode;
+        private enum FORM_MODE
+        {
+            EDIT_ITEM,
+            READING,
+            PROCESSING
+        }
 
         public LeaveWindow()
         {
@@ -67,14 +74,14 @@ namespace SN_Net.Subform
             #region Add users_list to cbUsers
             foreach (Users u in this.users_list)
 	        {
-                ComboboxItem item = new ComboboxItem(u.username, u.id, u.username);
+                ComboboxItem item = new ComboboxItem(u.username + " : " + u.name, u.id, u.username);
                 item.Tag = u;
                 this.cbUsers.Items.Add(item);
 	        }
             #endregion Add users_list to cbUsers
 
             #region Load leave_cause from server
-            CRUDResult get_leave_cause = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(Istab.TABTYP.LEAVE_CAUSE) + "&sort=typcod");
+            CRUDResult get_leave_cause = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(Istab.TABTYP.ABSENT_CAUSE) + "&sort=typcod");
             ServerResult sr_leave_cause = JsonConvert.DeserializeObject<ServerResult>(get_leave_cause.data);
 
             if (sr_leave_cause.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -83,16 +90,29 @@ namespace SN_Net.Subform
             }
             #endregion Load leave_cause from server
 
+            this.lblSummaryTime.Text = "";
             this.BindingControlEventHandler();
 
             if (this.current_user != null && this.current_date_from != null && this.current_date_to != null)
             {
-                this.cbUsers.SelectedIndex = this.users_list.FindIndex(t => t.id == this.current_user.id);
+                if (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR)
+                {
+                    this.cbUsers.SelectedIndex = this.users_list.FindIndex(t => t.username == this.main_form.G.loged_in_user_name);
+                }
+                else
+                {
+                    this.cbUsers.SelectedIndex = this.users_list.FindIndex(t => t.id == this.current_user.id);
+                }
+
                 this.dtFrom.Value = this.current_date_from;
                 this.dtTo.Value = this.current_date_to;
             }
             else
             {
+                if (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR)
+                {
+                    this.cbUsers.SelectedIndex = this.users_list.FindIndex(t => t.username == this.main_form.G.loged_in_user_name);
+                }
                 this.dtFrom.Value = DateTime.Now;
                 this.dtTo.Value = DateTime.Now;
                 this.current_date_from = this.dtFrom.Value;
@@ -102,7 +122,7 @@ namespace SN_Net.Subform
 
         private void LeaveWindow_Shown(object sender, EventArgs e)
         {
-            
+            this.FormReading();
         }
 
         private void BindingControlEventHandler()
@@ -142,6 +162,37 @@ namespace SN_Net.Subform
                     }
                 }
             };
+
+            this.dgvLeaveList.Paint += new PaintEventHandler(this.DrawSelectedRowBorder);
+            this.dgvLeaveSummary.Paint += new PaintEventHandler(this.DrawSelectedRowBorder);
+            this.dgvLeaveList.CellDoubleClick += delegate
+            {
+                if (this.dgvLeaveList.CurrentCell != null)
+                {
+                    if (this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag is EventCalendar)
+                    {
+                        this.ShowInlineFormLeaveList();
+                    }
+                }
+            };
+            this.dgvLeaveList.Resize += delegate
+            {
+                this.SetPositionFormLeaveList();
+            };
+        }
+
+        private void DrawSelectedRowBorder(object sender, PaintEventArgs e)
+        {
+            if (((DataGridView)sender).CurrentCell != null)
+            {
+                Rectangle rect = ((DataGridView)sender).GetRowDisplayRectangle(((DataGridView)sender).CurrentCell.RowIndex, true);
+
+                using (Pen p = new Pen(Color.Red))
+                {
+                    e.Graphics.DrawLine(p, rect.X, rect.Y, rect.X + rect.Width, rect.Y);
+                    e.Graphics.DrawLine(p, rect.X, rect.Y + rect.Height - 2, rect.X + rect.Width, rect.Y + rect.Height - 2);
+                }
+            }
         }
 
         public void CrossingCall(Users user, DateTime date_from, DateTime date_to)
@@ -157,6 +208,7 @@ namespace SN_Net.Subform
         {
             bool get_success = false;
             string err_msg = "";
+            this.FormProcessing();
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += delegate
@@ -180,8 +232,8 @@ namespace SN_Net.Subform
                 {
                     this.FillDataGridLeaveSummary();
                     this.FillDataGridLeaveList();
-                    this.toolStripPrint.Enabled = true;
-                    this.toolStripExport.Enabled = true;
+                    this.ClearInlineFormLeaveList();
+                    this.FormReading();
                 }
                 else
                 {
@@ -198,19 +250,22 @@ namespace SN_Net.Subform
 
             DataGridViewCheckBoxColumn col0 = new DataGridViewCheckBoxColumn();
             col0.HeaderText = "";
-            col0.Width = 20;
+            col0.Width = 30;
+            col0.SortMode = DataGridViewColumnSortMode.NotSortable;
             col0.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveSummary.Columns.Add(col0);
 
             DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
             col1.HeaderText = "เหตุผล";
             col1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
             col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveSummary.Columns.Add(col1);
 
             DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
             col2.HeaderText = "จำนวนวัน";
             col2.Width = 140;
+            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
             col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveSummary.Columns.Add(col2);
 
@@ -245,55 +300,71 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
             col0.Visible = false;
+            col0.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.dgvLeaveList.Columns.Add(col0);
 
             DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
             col1.Width = 40;
+            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
             col1.HeaderText = "ลำดับ";
             col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col1);
 
             DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
             col2.Width = 80;
+            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
             col2.HeaderText = "วันที่";
             col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col2);
 
             DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
             col3.Width = 100;
+            col3.SortMode = DataGridViewColumnSortMode.NotSortable;
             col3.HeaderText = "ชื่อพนักงาน";
             col3.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col3);
 
             DataGridViewTextBoxColumn col4 = new DataGridViewTextBoxColumn();
             col4.Width = 120;
+            col4.SortMode = DataGridViewColumnSortMode.NotSortable;
             col4.HeaderText = "เหตุผล";
             col4.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col4);
 
             DataGridViewTextBoxColumn col5 = new DataGridViewTextBoxColumn();
             col5.Width = 60;
+            col5.SortMode = DataGridViewColumnSortMode.NotSortable;
             col5.HeaderText = "จาก";
             col5.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col5);
 
             DataGridViewTextBoxColumn col6 = new DataGridViewTextBoxColumn();
             col6.Width = 60;
+            col6.SortMode = DataGridViewColumnSortMode.NotSortable;
             col6.HeaderText = "ถึง";
             col6.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col6);
 
             DataGridViewTextBoxColumn col7 = new DataGridViewTextBoxColumn();
-            col7.Width = 70;
-            col7.HeaderText = "Confirmed";
+            col7.Width = 120;
+            col7.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col7.HeaderText = "รวมเวลา";
             col7.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col7);
 
             DataGridViewTextBoxColumn col8 = new DataGridViewTextBoxColumn();
-            col8.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col8.HeaderText = "ชื่อลูกค้า";
+            col8.Width = 70;
+            col8.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col8.HeaderText = "Confirmed";
             col8.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLeaveList.Columns.Add(col8);
+
+            DataGridViewTextBoxColumn col9 = new DataGridViewTextBoxColumn();
+            col9.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col9.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col9.HeaderText = "ชื่อลูกค้า";
+            col9.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvLeaveList.Columns.Add(col9);
 
             int row_count = 0;
             List<EventCalendar> filter_event_calendar = new List<EventCalendar>();
@@ -347,22 +418,148 @@ namespace SN_Net.Subform
                 this.dgvLeaveList.Rows[r].Cells[6].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
 
                 this.dgvLeaveList.Rows[r].Cells[7].ValueType = typeof(string);
-                this.dgvLeaveList.Rows[r].Cells[7].Value = (ev.status == (int)CustomDateEvent.EVENT_STATUS.CONFIRMED ? "Y" : "N");
-                this.dgvLeaveList.Rows[r].Cells[7].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dgvLeaveList.Rows[r].Cells[7].Value = sorted_list.Where(t => t.id == ev.id).ToList<EventCalendar>().GetSummaryLeaveDayString();
+                this.dgvLeaveList.Rows[r].Cells[7].Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 this.dgvLeaveList.Rows[r].Cells[7].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
                 this.dgvLeaveList.Rows[r].Cells[7].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
 
                 this.dgvLeaveList.Rows[r].Cells[8].ValueType = typeof(string);
-                this.dgvLeaveList.Rows[r].Cells[8].Value = ev.customer;
+                this.dgvLeaveList.Rows[r].Cells[8].Value = (ev.status == (int)CustomDateEvent.EVENT_STATUS.CONFIRMED ? "Y" : "N");
+                this.dgvLeaveList.Rows[r].Cells[8].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dgvLeaveList.Rows[r].Cells[8].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
                 this.dgvLeaveList.Rows[r].Cells[8].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+
+                this.dgvLeaveList.Rows[r].Cells[9].ValueType = typeof(string);
+                this.dgvLeaveList.Rows[r].Cells[9].Value = ev.customer;
+                this.dgvLeaveList.Rows[r].Cells[9].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgvLeaveList.Rows[r].Cells[9].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+            }
+
+            this.lblSummaryTime.Text = (sorted_list.Count > 0 ? "(รวม" + sorted_list.GetSummaryLeaveDayString() + ")" : "");
+        }
+
+        private void ShowInlineFormLeaveList()
+        {
+            this.FormEditItem();
+            CustomTimePicker inline_from_time = new CustomTimePicker();
+            inline_from_time.Name = "inline_from_time";
+            inline_from_time.Read_Only = false;
+            this.dgvLeaveList.Parent.Controls.Add(inline_from_time);
+
+            CustomTimePicker inline_to_time = new CustomTimePicker();
+            inline_to_time.Name = "inline_to_time";
+            inline_to_time.Read_Only = false;
+            this.dgvLeaveList.Parent.Controls.Add(inline_to_time);
+
+            this.SetPositionFormLeaveList();
+            this.dgvLeaveSummary.Enabled = false;
+            this.dgvLeaveList.Enabled = false;
+            this.dgvLeaveList.SendToBack();
+            inline_from_time.BringToFront();
+            inline_to_time.BringToFront();
+
+            if (this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag is EventCalendar)
+            {
+                string[] from = ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).from_time.Split(':');
+                inline_from_time.Time = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(from[0]), Convert.ToInt32(from[1]), 0);
+                string[] to = ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).to_time.Split(':');
+                inline_to_time.Time = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(to[0]), Convert.ToInt32(to[1]), 0);
             }
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        private void SetPositionFormLeaveList()
         {
-            this.main_form.leave_wind = null;
-            base.OnClosing(e);
+            if (this.dgvLeaveList.CurrentCell != null)
+            {
+                if (this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true).Length > 0)
+                {
+                    Rectangle rect_from = this.dgvLeaveList.GetCellDisplayRectangle(5, this.dgvLeaveList.CurrentCell.RowIndex, true);
+                    ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true)[0]).SetBounds(rect_from.X, rect_from.Y + 1, rect_from.Width, rect_from.Height - 3);
+                }
+                if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+                {
+                    Rectangle rect_to = this.dgvLeaveList.GetCellDisplayRectangle(6, this.dgvLeaveList.CurrentCell.RowIndex, true);
+                    ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true)[0]).SetBounds(rect_to.X, rect_to.Y + 1, rect_to.Width, rect_to.Height - 3);
+                }
+            }
+        }
+
+        private void ClearInlineFormLeaveList()
+        {
+            if (this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true).Length > 0)
+            {
+                this.dgvLeaveList.Parent.Controls.RemoveByKey("inline_from_time");
+            }
+            if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+            {
+                this.dgvLeaveList.Parent.Controls.RemoveByKey("inline_to_time");
+            }
+        }
+
+        private void SubmitEditEvent()
+        {
+            if (this.dgvLeaveList.CurrentCell != null)
+            {
+                string json_data = "{\"id\":" + ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).id.ToString() + ",";
+                json_data += "\"users_name\":\"" + ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).users_name + "\",";
+                json_data += "\"date\":\"" + ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).date + "\",";
+                json_data += "\"event_code\":\"" + ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).event_code + "\",";
+                json_data += "\"customer\":\"" + ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).customer + "\",";
+                json_data += "\"status\":\"" + ((EventCalendar)this.dgvLeaveList.Rows[this.dgvLeaveList.CurrentCell.RowIndex].Tag).status + "\",";
+                json_data += "\"rec_by\":\"" + this.main_form.G.loged_in_user_name + "\",";
+
+                if (this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true).Length > 0)
+                {
+                    json_data += "\"from_time\":\"" + ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true)[0]).Time.ToString("HH:mm", cinfo_th.DateTimeFormat) + "\",";
+                }
+                else
+                {
+                    json_data += "\"from_time\":\"\",";
+                }
+                if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+                {
+                    json_data += "\"to_time\":\"" + ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true)[0]).Time.ToString("HH:mm", cinfo_th.DateTimeFormat) + "\"}";
+                }
+                else
+                {
+                    json_data += "\"to_time\":\"\"}";
+                }
+
+                bool post_success = false;
+                string err_msg = "";
+                this.FormProcessing();
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
+                {
+                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "eventcalendar/update", json_data);
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                    {
+                        post_success = true;
+                    }
+                    else
+                    {
+                        post_success = false;
+                        err_msg = sr.message;
+                    }
+                };
+                worker.RunWorkerCompleted += delegate
+                {
+                    if (post_success)
+                    {
+                        this.LoadEventAndFill();
+                        this.dgvLeaveList.Enabled = true;
+                        this.dgvLeaveSummary.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        this.FormEditItem();
+                    }
+                };
+                worker.RunWorkerAsync();
+            }
         }
 
         private void toolStripPrint_Click(object sender, EventArgs e)
@@ -655,6 +852,7 @@ namespace SN_Net.Subform
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Comma separated value | *.csv";
             dlg.DefaultExt = "csv";
+            dlg.RestoreDirectory = true;
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 string destination_filename = dlg.FileName;
@@ -709,6 +907,102 @@ namespace SN_Net.Subform
                     return;
                 }
             }
+        }
+
+        private void FormProcessing()
+        {
+            this.form_mode = FORM_MODE.PROCESSING;
+
+            this.toolStripExport.Enabled = false;
+            this.toolStripPrint.Enabled = false;
+            this.cbUsers.Enabled = false;
+            this.dtFrom.Enabled = false;
+            this.dtTo.Enabled = false;
+
+            if (this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true).Length > 0)
+            {
+                ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true)[0]).Read_Only = true;
+            }
+            if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+            {
+                ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true)[0]).Read_Only = true;
+            }
+        }
+
+        private void FormReading()
+        {
+            this.form_mode = FORM_MODE.READING;
+
+            this.toolStripExport.Enabled = true;
+            this.toolStripPrint.Enabled = true;
+            this.cbUsers.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : true);
+            this.dtFrom.Enabled = true;
+            this.dtTo.Enabled = true;
+        }
+
+        private void FormEditItem()
+        {
+            this.form_mode = FORM_MODE.EDIT_ITEM;
+
+            this.toolStripExport.Enabled = false;
+            this.toolStripPrint.Enabled = false;
+            this.cbUsers.Enabled = false;
+            this.dtFrom.Enabled = false;
+            this.dtTo.Enabled = false;
+
+            if (this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true).Length > 0)
+            {
+                ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_from_time", true)[0]).Read_Only = false;
+            }
+            if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+            {
+                ((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true)[0]).Read_Only = false;
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            this.main_form.leave_wind = null;
+            base.OnClosing(e);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+                {
+                    if (((CustomTimePicker)this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true)[0]).dateTimePicker1.Focused)
+                    {
+                        this.SubmitEditEvent();
+                        return true;
+                    }
+                }
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+
+            if (keyData == Keys.F9)
+            {
+                if (this.dgvLeaveList.Parent.Controls.Find("inline_to_time", true).Length > 0)
+                {
+                    this.SubmitEditEvent();
+                    return true;
+                }
+            }
+
+            if (keyData == Keys.Escape)
+            {
+                if (this.form_mode == FORM_MODE.EDIT_ITEM)
+                {
+                    this.ClearInlineFormLeaveList();
+                    this.dgvLeaveList.Enabled = true;
+                    this.dgvLeaveSummary.Enabled = true;
+                    this.FormReading();
+                    return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

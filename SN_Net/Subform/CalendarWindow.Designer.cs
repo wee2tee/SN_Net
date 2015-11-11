@@ -1019,7 +1019,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 165F));
             this.tableLayoutPanel2.Controls.Add(this.btnPrevMonth, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnNextMonth, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.cbMonth, 1, 0);
@@ -1053,7 +1053,7 @@
             this.cbMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMonth.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbMonth.FormattingEnabled = true;
-            this.cbMonth.Location = new System.Drawing.Point(674, 3);
+            this.cbMonth.Location = new System.Drawing.Point(670, 3);
             this.cbMonth.Name = "cbMonth";
             this.cbMonth.Size = new System.Drawing.Size(140, 31);
             this.cbMonth.TabIndex = 4;
@@ -1064,7 +1064,7 @@
             this.cbYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbYear.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbYear.FormattingEnabled = true;
-            this.cbYear.Location = new System.Drawing.Point(820, 3);
+            this.cbYear.Location = new System.Drawing.Point(816, 3);
             this.cbYear.Name = "cbYear";
             this.cbYear.Size = new System.Drawing.Size(90, 31);
             this.cbYear.TabIndex = 5;
@@ -1140,7 +1140,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "CalendarWindow";
-            this.Text = "Calendar";
+            this.Text = "ปฏิธินวันหยุดประจำปี, วันลา, จองวันออกพบลูกค้า";
             this.Load += new System.EventHandler(this.CalendarWindow_Load);
             this.Shown += new System.EventHandler(this.CalendarWindow_Shown);
             this.tableLayout1.ResumeLayout(false);

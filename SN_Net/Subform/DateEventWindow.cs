@@ -38,7 +38,8 @@ namespace SN_Net.Subform
         private enum LEAVE_STATUS : int
         {
             WAIT = 0,
-            CONFIRMED = 1
+            CONFIRMED = 1,
+            CANCELED = 2
         }
 
         public DateEventWindow()
@@ -87,7 +88,7 @@ namespace SN_Net.Subform
             #endregion Load users_list from server
 
             #region Load leave_cause from server
-            CRUDResult get_leave_cause = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(Istab.TABTYP.LEAVE_CAUSE) + "&sort=typcod");
+            CRUDResult get_leave_cause = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(Istab.TABTYP.ABSENT_CAUSE) + "&sort=typcod");
             ServerResult sr_leave_cause = JsonConvert.DeserializeObject<ServerResult>(get_leave_cause.data);
 
             if (sr_leave_cause.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -137,6 +138,7 @@ namespace SN_Net.Subform
             this.rbWeekday.Checked = ((this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.NOTE) || this.cde.note_calendar == null ? true : false);
             this.txtHoliday.Texts = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cde.note_calendar.description : "");
             this.txtRemark.Texts = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.NOTE ? this.cde.note_calendar.description : "");
+            this.leaveMax.Value = (this.cde.note_calendar != null ? this.cde.note_calendar.max_leave : -1);
         }
 
         private void BindingControlEvent()
@@ -218,6 +220,7 @@ namespace SN_Net.Subform
             List<Control> ct = new List<Control>();
             ct.Add(this.txtHoliday.label1);
             ct.Add(this.txtRemark.label1);
+            ct.Add(this.leaveMax);
             foreach (Control c in ct)
             {
                 c.DoubleClick += delegate
@@ -243,10 +246,12 @@ namespace SN_Net.Subform
                 if (this.rbWeekday.Enabled && this.rbWeekday.Checked)
                 {
                     this.txtRemark.ReadOnly = false;
+                    this.leaveMax.Enabled = true;
                 }
                 else
                 {
                     this.txtRemark.ReadOnly = true;
+                    this.leaveMax.Enabled = false;
                 }
             };
 
@@ -255,6 +260,7 @@ namespace SN_Net.Subform
                 if (this.rbHoliday.Checked && this.rbHoliday.Enabled)
                 {
                     this.txtHoliday.ReadOnly = false;
+                    this.leaveMax.Enabled = false;
                 }
                 else
                 {
@@ -267,10 +273,12 @@ namespace SN_Net.Subform
                 if (this.rbWeekday.Checked && this.rbWeekday.Enabled)
                 {
                     this.txtRemark.ReadOnly = false;
+                    this.leaveMax.Enabled = true;
                 }
                 else
                 {
                     this.txtRemark.ReadOnly = true;
+                    this.leaveMax.Enabled = false;
                 }
             };
 
@@ -288,6 +296,11 @@ namespace SN_Net.Subform
                 {
                     this.txtHoliday.Texts = "";
                 }
+            };
+
+            this.leaveMax.GotFocus += delegate
+            {
+                this.leaveMax.Select(0, this.leaveMax.Text.Length);
             };
         }
 
@@ -307,7 +320,7 @@ namespace SN_Net.Subform
             this.dgv.Columns.Add(col1);
 
             DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
-            col2.Width = 100;
+            col2.Width = 120;
             col2.HeaderText = "ชื่อพนักงาน";
             col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgv.Columns.Add(col2);
@@ -338,7 +351,7 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn col7 = new DataGridViewTextBoxColumn();
             col7.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col7.HeaderText = "ชื่อลูกค้า";
+            col7.HeaderText = "หมายเหตุ/ชื่อลูกค้า";
             col7.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgv.Columns.Add(col7);
 
@@ -358,7 +371,7 @@ namespace SN_Net.Subform
                 this.dgv.Rows[r].Cells[1].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
 
                 this.dgv.Rows[r].Cells[2].ValueType = typeof(string);
-                this.dgv.Rows[r].Cells[2].Value = ev.realname;
+                this.dgv.Rows[r].Cells[2].Value = ev.users_name + " : " + ev.realname;
                 this.dgv.Rows[r].Cells[2].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
                 this.dgv.Rows[r].Cells[2].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
 
@@ -414,7 +427,7 @@ namespace SN_Net.Subform
             inline_users_name.BorderStyle = BorderStyle.None;
             foreach (Users u in this.users_list)
             {
-                ComboboxItem item = new ComboboxItem(u.name, u.id, u.username);
+                ComboboxItem item = new ComboboxItem(u.username + " : " + u.name, u.id, u.username);
                 inline_users_name.AddItem(item);
                 if (this.form_mode == FORM_MODE.EDIT_ITEM)
                 {
@@ -461,7 +474,7 @@ namespace SN_Net.Subform
             inline_to_time.BorderStyle = BorderStyle.None;
             inline_to_time.Show_Second = false;
             this.dgv.Parent.Controls.Add(inline_to_time);
-            inline_to_time.Time = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).to_time.TimeString2DateTime() : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0));
+            inline_to_time.Time = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).to_time.TimeString2DateTime() : (this.cde.Date.GetDayIntOfWeek() == 7 ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 00, 0) : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0)));
 
             CustomComboBox inline_status = new CustomComboBox();
             inline_status.Name = "inline_status";
@@ -622,6 +635,7 @@ namespace SN_Net.Subform
             #region Form control
             this.rbHoliday.Enabled = false;
             this.rbWeekday.Enabled = false;
+            this.leaveMax.Enabled = false;
             #endregion Form control
         }
 
@@ -641,6 +655,7 @@ namespace SN_Net.Subform
             #region Form control
             this.rbHoliday.Enabled = true;
             this.rbWeekday.Enabled = true;
+            this.leaveMax.Enabled = (this.rbWeekday.Checked ? true : false);
             #endregion Form control
         }
 
@@ -661,6 +676,7 @@ namespace SN_Net.Subform
             #region Form control
             this.rbHoliday.Enabled = false;
             this.rbWeekday.Enabled = false;
+            this.leaveMax.Enabled = false;
             #endregion Form control
 
             this.ClearInlineForm();
@@ -681,6 +697,7 @@ namespace SN_Net.Subform
             #region Form control
             this.rbHoliday.Enabled = false;
             this.rbWeekday.Enabled = false;
+            this.leaveMax.Enabled = false;
             #endregion Form control
         }
 
@@ -699,6 +716,7 @@ namespace SN_Net.Subform
             #region Form control
             this.rbHoliday.Enabled = false;
             this.rbWeekday.Enabled = false;
+            this.leaveMax.Enabled = false;
             #endregion Form control
         }
 
@@ -718,6 +736,7 @@ namespace SN_Net.Subform
             #region Form control
             this.rbHoliday.Enabled = false;
             this.rbWeekday.Enabled = false;
+            this.leaveMax.Enabled = false;
             #endregion Form control
 
             #region Set inline control to read-only state
@@ -797,6 +816,7 @@ namespace SN_Net.Subform
                     string json_data = "{\"date\":\"" + date + "\",";
                     json_data += "\"type\":\"" + type.ToString() + "\",";
                     json_data += "\"description\":\"" + description + "\",";
+                    json_data += "\"max_leave\":-1,";
                     json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
 
                     BackgroundWorker worker = new BackgroundWorker();
@@ -829,7 +849,7 @@ namespace SN_Net.Subform
                     };
                     worker.RunWorkerAsync();
                 }
-                else if (this.rbWeekday.Checked && this.txtRemark.Texts.Length > 0) // Weekday and have remark
+                else if (this.rbWeekday.Checked && this.txtRemark.Texts.Length > 0 || this.leaveMax.Value > -1) // Weekday and have remark or have leave_max value
                 {
                     bool post_success = false;
 
@@ -840,6 +860,7 @@ namespace SN_Net.Subform
                     string json_data = "{\"date\":\"" + date + "\",";
                     json_data += "\"type\":\"" + type.ToString() + "\",";
                     json_data += "\"description\":\"" + description + "\",";
+                    json_data += "\"max_leave\":" + this.leaveMax.Value.ToString() + ",";
                     json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
 
                     BackgroundWorker worker = new BackgroundWorker();
@@ -872,7 +893,7 @@ namespace SN_Net.Subform
                     };
                     worker.RunWorkerAsync();
                 }
-                else if (this.rbWeekday.Checked && this.txtRemark.Texts.Length == 0) // Weekday not hae remark
+                else if (this.rbWeekday.Checked && this.txtRemark.Texts.Length == 0 && this.leaveMax.Value == -1) // Weekday not have remark and not have leave_max value
                 {
                     bool delete_success = false;
 
@@ -1050,12 +1071,12 @@ namespace SN_Net.Subform
             if (this.dgv.Parent.Controls.Find("inline_from_time", true).Length > 0)
             {
                 CustomTimePicker inline_from_time = (CustomTimePicker)this.dgv.Parent.Controls.Find("inline_from_time", true)[0];
-                ev.from_time = inline_from_time.Time.ToString("HH:mm:ss", cinfo_th);
+                ev.from_time = inline_from_time.Time.ToString("HH:mm", cinfo_th);
             }
             if (this.dgv.Parent.Controls.Find("inline_to_time", true).Length > 0)
             {
                 CustomTimePicker inline_to_time = (CustomTimePicker)this.dgv.Parent.Controls.Find("inline_to_time", true)[0];
-                ev.to_time = inline_to_time.Time.ToString("HH:mm:ss", cinfo_th);
+                ev.to_time = inline_to_time.Time.ToString("HH:mm", cinfo_th);
             }
             if (this.dgv.Parent.Controls.Find("inline_leave_cause", true).Length > 0)
             {
@@ -1103,7 +1124,12 @@ namespace SN_Net.Subform
                 }
                 if (this.form_mode == FORM_MODE.EDIT)
                 {
-                    if (this.txtHoliday.textBox1.Focused || this.txtRemark.textBox1.Focused)
+                    if (this.rbHoliday.Checked && this.txtHoliday.textBox1.Focused)
+                    {
+                        this.toolStripSave.PerformClick();
+                        return true;
+                    }
+                    else if (this.rbWeekday.Checked && this.leaveMax.Focused)
                     {
                         this.toolStripSave.PerformClick();
                         return true;

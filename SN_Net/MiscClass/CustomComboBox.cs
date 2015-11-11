@@ -137,14 +137,14 @@ namespace SN_Net.MiscClass
             };
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (!this.readOnly)
-            {
-                this.comboBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-            }
-            base.OnPaint(e);
-        }
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    if (!this.readOnly && this.comboBox1.Focused)
+        //    {
+        //        this.comboBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+        //    }
+        //    base.OnPaint(e);
+        //}
 
         protected override void OnLeave(EventArgs e)
         {

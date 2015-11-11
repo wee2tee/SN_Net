@@ -5,13 +5,14 @@ using System.Text;
 
 namespace SN_Net.DataModels
 {
-    public class NoteCalendar
+    public class SupportNoteComment
     {
         public int id { get; set; }
         public string date { get; set; }
+        public int note_id { get; set; }
         public int type { get; set; }
         public string description { get; set; }
-        public int max_leave { get; set; }
+        public string file_path { get; set; }
         public string rec_by { get; set; }
     }
 }

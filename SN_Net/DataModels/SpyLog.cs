@@ -5,13 +5,13 @@ using System.Text;
 
 namespace SN_Net.DataModels
 {
-    public class NoteCalendar
+    public class SpyLog
     {
         public int id { get; set; }
+        public string users_name { get; set; }
+        public string serial_sernum { get; set; }
+        public string compnam { get; set; }
         public string date { get; set; }
-        public int type { get; set; }
-        public string description { get; set; }
-        public int max_leave { get; set; }
-        public string rec_by { get; set; }
+        public string time { get; set; }
     }
 }

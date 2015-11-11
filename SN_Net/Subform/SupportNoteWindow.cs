@@ -238,12 +238,12 @@ namespace SN_Net.Subform
                 if (this.tabControl1.SelectedTab == this.tabPage1)
                 {
                     this.dtEndTime.Value = DateTime.Now;
-                    ts = new TimeSpan(this.dtEndTime.Value.Hour - this.dtStartTime.Value.Hour, this.dtEndTime.Value.Minute - this.dtStartTime.Value.Minute, this.dtEndTime.Value.Second - this.dtStartTime.Value.Second);
+                    ts = TimeSpan.Parse((this.dtEndTime.Value - this.dtStartTime.Value).Hours.ToString() + ":" + (this.dtEndTime.Value - this.dtStartTime.Value).Minutes.ToString() + ":" + (this.dtEndTime.Value - this.dtStartTime.Value).Seconds.ToString());
                 }
                 else if (this.tabControl1.SelectedTab == this.tabPage2)
                 {
                     this.dtBreakEnd.Value = DateTime.Now;
-                    ts = new TimeSpan(this.dtBreakEnd.Value.Hour - this.dtBreakStart.Value.Hour, this.dtBreakEnd.Value.Minute - this.dtBreakStart.Value.Minute, this.dtBreakEnd.Value.Second - this.dtBreakStart.Value.Second);
+                    ts = TimeSpan.Parse((this.dtBreakEnd.Value - this.dtBreakStart.Value).Hours.ToString() + ":" + (this.dtBreakEnd.Value - this.dtBreakStart.Value).Minutes.ToString() + ":" + (this.dtBreakEnd.Value - this.dtBreakStart.Value).Seconds.ToString());
                 }
 
                 this.main_form.lblTimeDuration.Text = ts.ToString();

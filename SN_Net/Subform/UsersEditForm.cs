@@ -56,6 +56,7 @@ namespace SN_Net.Subform
                 this.cbUserLevel.SelectedItem = this.cbUserLevel.Items[ComboboxItem.GetItemIndex(this.cbUserLevel, user.level)];
                 this.cbUserStatus.SelectedItem = this.cbUserStatus.Items[ComboboxItem.GetItemIndex(this.cbUserStatus, user.status)];
                 this.cbWebLogin.SelectedItem = this.cbWebLogin.Items[ComboboxItem.GetItemIndex(this.cbWebLogin, user.allowed_web_login)];
+                this.chTrainingExpert.CheckState = (user.training_expert == "Y" ? CheckState.Checked : CheckState.Unchecked);
             }
             else
             {
@@ -96,6 +97,7 @@ namespace SN_Net.Subform
             int level = ((ComboboxItem)this.cbUserLevel.SelectedItem).int_value;
             string status = ((ComboboxItem)this.cbUserStatus.SelectedItem).string_value;
             string allowed_web_login = ((ComboboxItem)this.cbWebLogin.SelectedItem).string_value;
+            string training_expert = this.chTrainingExpert.CheckState.ToYesOrNoString();
 
             string json_data = "{\"id\":" + this.id + ",";
             json_data += "\"username\":\"" + username.cleanString() + "\",";
@@ -103,7 +105,8 @@ namespace SN_Net.Subform
             json_data += "\"email\":\"" + email.cleanString() + "\",";
             json_data += "\"level\":" + level + ",";
             json_data += "\"status\":\"" + status + "\",";
-            json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\"}";
+            json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\",";
+            json_data += "\"training_expert\":\"" + training_expert + "\"}";
 
             CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/update", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);

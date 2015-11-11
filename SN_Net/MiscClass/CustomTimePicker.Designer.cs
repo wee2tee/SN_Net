@@ -71,7 +71,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

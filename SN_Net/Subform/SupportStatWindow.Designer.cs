@@ -34,6 +34,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripEdit = new System.Windows.Forms.ToolStripButton();
@@ -41,25 +43,25 @@
             this.toolStripStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripExport = new System.Windows.Forms.ToolStripButton();
             this.toolStripPrint = new System.Windows.Forms.ToolStripButton();
+            this.toolStripExport = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblLeaveRemark = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtSernum = new SN_Net.MiscClass.CustomTextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.chProblem = new System.Windows.Forms.CheckBox();
             this.chBreak = new System.Windows.Forms.CheckBox();
+            this.dtDateEnd = new SN_Net.MiscClass.CustomDateTimePicker();
             this.cbProblem = new System.Windows.Forms.ComboBox();
             this.btnViewNote = new System.Windows.Forms.Button();
             this.cbReason = new System.Windows.Forms.ComboBox();
             this.txtDummy = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.dtDateStart = new SN_Net.MiscClass.CustomDateTimePicker();
             this.cbSupportCode = new System.Windows.Forms.ComboBox();
             this.dgvNote = new System.Windows.Forms.DataGridView();
-            this.txtSernum = new SN_Net.MiscClass.CustomTextBox();
-            this.dtDateEnd = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.dtDateStart = new SN_Net.MiscClass.CustomDateTimePicker();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -72,10 +74,12 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripInfo,
+            this.toolStripStatusLabel2,
+            this.toolStripStatusLabel1,
             this.toolStripProcessing});
             this.statusStrip1.Location = new System.Drawing.Point(0, 685);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(865, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1235, 22);
             this.statusStrip1.TabIndex = 30;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -85,6 +89,22 @@
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Size = new System.Drawing.Size(22, 17);
             this.toolStripInfo.Text = "     ";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this.toolStripStatusLabel2.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(82, 17);
+            this.toolStripStatusLabel2.Text = "Has comment";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(220)))), ((int)(((byte)(224)))));
+            this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(3, 3, 0, 2);
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(80, 17);
+            this.toolStripStatusLabel1.Text = "Has complain";
             // 
             // toolStripProcessing
             // 
@@ -96,7 +116,7 @@
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcessing.Name = "toolStripProcessing";
             this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(818, 17);
+            this.toolStripProcessing.Size = new System.Drawing.Size(1020, 17);
             this.toolStripProcessing.Spring = true;
             this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -117,7 +137,7 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(865, 43);
+            this.toolStrip1.Size = new System.Drawing.Size(1235, 43);
             this.toolStrip1.TabIndex = 31;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -170,19 +190,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 43);
             // 
-            // toolStripExport
-            // 
-            this.toolStripExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripExport.Enabled = false;
-            this.toolStripExport.Image = global::SN_Net.Properties.Resources.export;
-            this.toolStripExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripExport.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.toolStripExport.Name = "toolStripExport";
-            this.toolStripExport.Size = new System.Drawing.Size(36, 40);
-            this.toolStripExport.Text = "Export to CSV <F12>";
-            this.toolStripExport.Click += new System.EventHandler(this.toolStripExport_Click);
-            // 
             // toolStripPrint
             // 
             this.toolStripPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -195,6 +202,19 @@
             this.toolStripPrint.Size = new System.Drawing.Size(36, 40);
             this.toolStripPrint.Text = "Print <Alt+P>";
             this.toolStripPrint.Click += new System.EventHandler(this.toolStripPrint_Click);
+            // 
+            // toolStripExport
+            // 
+            this.toolStripExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripExport.Enabled = false;
+            this.toolStripExport.Image = global::SN_Net.Properties.Resources.export;
+            this.toolStripExport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripExport.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.toolStripExport.Name = "toolStripExport";
+            this.toolStripExport.Size = new System.Drawing.Size(36, 40);
+            this.toolStripExport.Text = "Export to CSV <F12>";
+            this.toolStripExport.Click += new System.EventHandler(this.toolStripExport_Click);
             // 
             // splitContainer1
             // 
@@ -228,7 +248,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvNote);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.splitContainer1.Size = new System.Drawing.Size(865, 642);
+            this.splitContainer1.Size = new System.Drawing.Size(1235, 642);
             this.splitContainer1.SplitterDistance = 110;
             this.splitContainer1.TabIndex = 32;
             // 
@@ -255,6 +275,23 @@
             this.label1.Size = new System.Drawing.Size(64, 16);
             this.label1.TabIndex = 128;
             this.label1.Text = "Serial No.";
+            // 
+            // txtSernum
+            // 
+            this.txtSernum.BackColor = System.Drawing.Color.White;
+            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSernum.CharUpperCase = false;
+            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSernum.Location = new System.Drawing.Point(468, 80);
+            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSernum.MaxChar = 0;
+            this.txtSernum.Name = "txtSernum";
+            this.txtSernum.ReadOnly = false;
+            this.txtSernum.SelectionLength = 0;
+            this.txtSernum.SelectionStart = 0;
+            this.txtSernum.Size = new System.Drawing.Size(118, 23);
+            this.txtSernum.TabIndex = 127;
+            this.txtSernum.Texts = "";
             // 
             // label9
             // 
@@ -292,6 +329,21 @@
             this.chBreak.Text = "ประเภทการพักสาย";
             this.chBreak.UseVisualStyleBackColor = true;
             // 
+            // dtDateEnd
+            // 
+            this.dtDateEnd.BackColor = System.Drawing.Color.White;
+            this.dtDateEnd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtDateEnd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtDateEnd.Location = new System.Drawing.Point(208, 55);
+            this.dtDateEnd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtDateEnd.Name = "dtDateEnd";
+            this.dtDateEnd.Read_Only = false;
+            this.dtDateEnd.Size = new System.Drawing.Size(96, 23);
+            this.dtDateEnd.TabIndex = 118;
+            this.dtDateEnd.Texts = "05/11/2558";
+            this.dtDateEnd.TextsMysql = "2015-11-05";
+            this.dtDateEnd.ValDateTime = new System.DateTime(2015, 10, 7, 15, 17, 35, 103);
+            // 
             // cbProblem
             // 
             this.cbProblem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -307,7 +359,7 @@
             this.btnViewNote.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnViewNote.Image = global::SN_Net.Properties.Resources.report;
             this.btnViewNote.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnViewNote.Location = new System.Drawing.Point(661, 21);
+            this.btnViewNote.Location = new System.Drawing.Point(648, 21);
             this.btnViewNote.Name = "btnViewNote";
             this.btnViewNote.Size = new System.Drawing.Size(78, 57);
             this.btnViewNote.TabIndex = 116;
@@ -355,6 +407,21 @@
             this.label2.TabIndex = 107;
             this.label2.Text = "Support #";
             // 
+            // dtDateStart
+            // 
+            this.dtDateStart.BackColor = System.Drawing.Color.White;
+            this.dtDateStart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtDateStart.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtDateStart.Location = new System.Drawing.Point(77, 55);
+            this.dtDateStart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtDateStart.Name = "dtDateStart";
+            this.dtDateStart.Read_Only = false;
+            this.dtDateStart.Size = new System.Drawing.Size(96, 23);
+            this.dtDateStart.TabIndex = 1;
+            this.dtDateStart.Texts = "05/11/2558";
+            this.dtDateStart.TextsMysql = "2015-11-05";
+            this.dtDateStart.ValDateTime = new System.DateTime(2015, 10, 7, 15, 17, 35, 103);
+            // 
             // cbSupportCode
             // 
             this.cbSupportCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -362,7 +429,7 @@
             this.cbSupportCode.FormattingEnabled = true;
             this.cbSupportCode.Location = new System.Drawing.Point(77, 27);
             this.cbSupportCode.Name = "cbSupportCode";
-            this.cbSupportCode.Size = new System.Drawing.Size(96, 24);
+            this.cbSupportCode.Size = new System.Drawing.Size(130, 24);
             this.cbSupportCode.TabIndex = 0;
             // 
             // dgvNote
@@ -402,68 +469,21 @@
             this.dgvNote.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvNote.RowTemplate.Height = 25;
             this.dgvNote.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvNote.Size = new System.Drawing.Size(859, 525);
+            this.dgvNote.Size = new System.Drawing.Size(1229, 525);
             this.dgvNote.TabIndex = 1;
-            // 
-            // txtSernum
-            // 
-            this.txtSernum.BackColor = System.Drawing.Color.White;
-            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSernum.CharUpperCase = false;
-            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSernum.Location = new System.Drawing.Point(468, 80);
-            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSernum.MaxChar = 0;
-            this.txtSernum.Name = "txtSernum";
-            this.txtSernum.ReadOnly = false;
-            this.txtSernum.SelectionLength = 0;
-            this.txtSernum.SelectionStart = 0;
-            this.txtSernum.Size = new System.Drawing.Size(118, 23);
-            this.txtSernum.TabIndex = 127;
-            this.txtSernum.Texts = "";
-            // 
-            // dtDateEnd
-            // 
-            this.dtDateEnd.BackColor = System.Drawing.Color.White;
-            this.dtDateEnd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtDateEnd.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtDateEnd.Location = new System.Drawing.Point(208, 55);
-            this.dtDateEnd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtDateEnd.Name = "dtDateEnd";
-            this.dtDateEnd.Read_Only = false;
-            this.dtDateEnd.Size = new System.Drawing.Size(96, 23);
-            this.dtDateEnd.TabIndex = 118;
-            this.dtDateEnd.Texts = "30/10/2558";
-            this.dtDateEnd.TextsMysql = "2015-10-30";
-            this.dtDateEnd.ValDateTime = new System.DateTime(2015, 10, 7, 15, 17, 35, 103);
-            // 
-            // dtDateStart
-            // 
-            this.dtDateStart.BackColor = System.Drawing.Color.White;
-            this.dtDateStart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtDateStart.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtDateStart.Location = new System.Drawing.Point(77, 55);
-            this.dtDateStart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtDateStart.Name = "dtDateStart";
-            this.dtDateStart.Read_Only = false;
-            this.dtDateStart.Size = new System.Drawing.Size(96, 23);
-            this.dtDateStart.TabIndex = 1;
-            this.dtDateStart.Texts = "30/10/2558";
-            this.dtDateStart.TextsMysql = "2015-10-30";
-            this.dtDateStart.ValDateTime = new System.DateTime(2015, 10, 7, 15, 17, 35, 103);
             // 
             // SupportStatWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(865, 707);
+            this.ClientSize = new System.Drawing.Size(1235, 707);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.KeyPreview = true;
             this.Name = "SupportStatWindow";
-            this.Text = "Support Statistics.";
+            this.Text = "ข้อมูลการปฏิบัติงาน (Support)";
             this.Load += new System.EventHandler(this.SupportStatWindow_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -492,7 +512,6 @@
         private System.Windows.Forms.Label label2;
         private MiscClass.CustomDateTimePicker dtDateStart;
         private System.Windows.Forms.ComboBox cbSupportCode;
-        private System.Windows.Forms.DataGridView dgvNote;
         private System.Windows.Forms.ToolStripButton toolStripPrint;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Label label9;
@@ -509,5 +528,8 @@
         private System.Windows.Forms.ToolStripButton toolStripSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.LinkLabel lblLeaveRemark;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        public System.Windows.Forms.DataGridView dgvNote;
     }
 }

@@ -20,6 +20,7 @@ namespace SN_Net.MiscClass
         public int loged_in_user_level { get; set; }
         public string loged_in_user_status { get; set; }
         public string loged_in_user_allowed_web_login { get; set; }
+        public bool loged_in_user_training_expert { get; set; }
         public string current_mac_address { get; set; }
 
         public static string GetUserLevelString(int user_level)

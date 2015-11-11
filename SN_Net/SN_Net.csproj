@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -54,6 +54,9 @@
   <ItemGroup>
     <Reference Include="GetMac">
       <HintPath>..\..\_DLL\GetMac.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -86,7 +89,9 @@
     <Compile Include="DataModels\RegisterData.cs" />
     <Compile Include="DataModels\Serial.cs" />
     <Compile Include="DataModels\Serial_list.cs" />
+    <Compile Include="DataModels\SpyLog.cs" />
     <Compile Include="DataModels\SupportNote.cs" />
+    <Compile Include="DataModels\SupportNoteComment.cs" />
     <Compile Include="DataModels\TrainingCalendar.cs" />
     <Compile Include="DataModels\Users.cs" />
     <Compile Include="MainForm.cs">
@@ -179,6 +184,12 @@
     </Compile>
     <Compile Include="Subform\ChangePasswordForm.Designer.cs">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\CommentWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\CommentWindow.Designer.cs">
+      <DependentUpon>CommentWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\DataInfo.cs">
       <SubType>Form</SubType>
@@ -306,6 +317,12 @@
     <Compile Include="Subform\SearchDealerBox.Designer.cs">
       <DependentUpon>SearchDealerBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\SearchHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SearchHistory.Designer.cs">
+      <DependentUpon>SearchHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\SearchSerialBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,6 +388,12 @@
     </Compile>
     <Compile Include="Subform\TestControl.Designer.cs">
       <DependentUpon>TestControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\TrainingExpertWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\TrainingExpertWindow.Designer.cs">
+      <DependentUpon>TrainingExpertWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\UpgradeProgramForm.cs">
       <SubType>Form</SubType>
@@ -439,6 +462,9 @@
     <EmbeddedResource Include="Subform\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\CommentWindow.resx">
+      <DependentUpon>CommentWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\DataInfo.resx">
       <DependentUpon>DataInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -502,6 +528,9 @@
     <EmbeddedResource Include="Subform\SearchDealerBox.resx">
       <DependentUpon>SearchDealerBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SearchHistory.resx">
+      <DependentUpon>SearchHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\SearchSerialBox.resx">
       <DependentUpon>SearchSerialBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -534,6 +563,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\TestControl.resx">
       <DependentUpon>TestControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\TrainingExpertWindow.resx">
+      <DependentUpon>TrainingExpertWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UpgradeProgramForm.resx">
       <DependentUpon>UpgradeProgramForm.cs</DependentUpon>
@@ -641,6 +673,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\reset_321.png" />
+    <None Include="Resources\check_32.png" />
+    <None Include="Resources\reset_32.png" />
+    <None Include="Resources\remove.png" />
+    <None Include="Resources\stop_media.png" />
+    <None Include="Resources\pause_media.png" />
+    <None Include="Resources\play_media.png" />
+    <None Include="Resources\arrow_left_16.png" />
     <None Include="Resources\export.png" />
     <None Include="Resources\report.png" />
     <None Include="Resources\support.png" />
@@ -674,6 +714,25 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
