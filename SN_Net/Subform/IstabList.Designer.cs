@@ -157,11 +157,11 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.DataGridView dgvIstab;
         private System.Windows.Forms.Button btnOK;
+        public System.Windows.Forms.Button btnAdd;
+        public System.Windows.Forms.Button btnEdit;
+        public System.Windows.Forms.DataGridView dgvIstab;
 
     }
 }

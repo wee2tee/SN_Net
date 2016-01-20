@@ -14,6 +14,13 @@ namespace SN_Net.MiscClass
 {
     public static class HelperClass
     {
+        public enum DGV_TAG
+        {
+            READ,
+            DELETE,
+            LEAVE
+        }
+
         public static string ToTabtypString(this Istab.TABTYP tabtyp)
         {
             switch (tabtyp)
@@ -30,6 +37,10 @@ namespace SN_Net.MiscClass
                     return "05";
                 case Istab.TABTYP.ABSENT_CAUSE:
                     return "06";
+                case Istab.TABTYP.SERVICE_CASE:
+                    return "07";
+                case Istab.TABTYP.USER_GROUP:
+                    return "08";
                 default:
                     return "00";
             }
@@ -101,6 +112,45 @@ namespace SN_Net.MiscClass
             };
         }
 
+        public static void DrawDgvRowBorder(this DataGridView dgv)
+        {
+            //dgv.Enter += delegate(object sender, EventArgs e)
+            //{
+            //    ((DataGridView)sender).Tag = DGV_TAG.FOCUSED;
+            //    ((DataGridView)sender).Refresh();
+            //};
+
+            //dgv.Leave += delegate(object sender, EventArgs e)
+            //{
+            //    ((DataGridView)sender).Tag = DGV_TAG.LEAVED;
+            //    ((DataGridView)sender).Refresh();
+            //};
+
+            dgv.Paint += delegate
+            {
+                if (dgv.CurrentCell != null)
+                {
+                    Rectangle rect = dgv.GetRowDisplayRectangle(dgv.CurrentCell.RowIndex, false);
+                    using (Pen p = new Pen(Color.Red))
+                    {
+                        if ((DGV_TAG)dgv.Tag == DGV_TAG.READ || (DGV_TAG)dgv.Tag == DGV_TAG.DELETE)
+                        {
+                            dgv.CreateGraphics().DrawLine(p, rect.X, rect.Y, rect.X + rect.Width, rect.Y);
+                            dgv.CreateGraphics().DrawLine(p, rect.X, rect.Y + rect.Height - 2, rect.X + rect.Width, rect.Y + rect.Height - 2);
+
+                            if ((DGV_TAG)dgv.Tag == DGV_TAG.DELETE)
+                            {
+                                for (int i = rect.Left - 16; i < rect.Right; i += 8)
+                                {
+                                    dgv.CreateGraphics().DrawLine(p, i, rect.Bottom - 2, i + 23, rect.Top);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
         public static bool tryParseToDateTime(this String str_date)
         {
             CultureInfo cinfo_th = new CultureInfo("th-TH");
@@ -136,6 +186,12 @@ namespace SN_Net.MiscClass
         {
             CultureInfo cinfo_en = CultureInfo.CreateSpecificCulture("en-US"); // specify culture to US for retrieve the year in US culture format
             return date.ToString("yyyy-MM-dd", cinfo_en.DateTimeFormat);
+        }
+
+        public static string ToDMYDateValue(this DateTime date)
+        {
+            CultureInfo cinfo_th = CultureInfo.CreateSpecificCulture("th-TH");
+            return date.ToString("dd/MM/yy", cinfo_th);
         }
 
         /**
@@ -289,6 +345,161 @@ namespace SN_Net.MiscClass
             }
 
             return leave_string;
+        }
+
+        public static string GetSummaryLeaveDayStringForCommission(this List<EventCalendar> list_event_calendar)
+        {
+            string leave_string = "";
+            TimeSpan t = TimeSpan.Parse("00:00:00");
+            foreach (EventCalendar ev in list_event_calendar)
+            {
+                TimeSpan t_from = TimeSpan.Parse(ev.from_time);
+                TimeSpan t_to = TimeSpan.Parse(ev.to_time);
+
+                if (t_from.Hours <= 12 && t_to.Hours >= 13) // ลางานคาบเกี่ยวช่วงเที่ยง
+                {
+                    // ถ้ามีใบรับรองแพทย์ คิดวันลาครึ่งหนึ่ง
+                    if (ev.med_cert == "Y")
+                    {
+                        t = t.Add(TimeSpan.FromSeconds((t_to - t_from - TimeSpan.Parse("01:00:00")).TotalSeconds / 2)); // ลบช่วงเวลาพักเที่ยงออก 1 ชม. แล้วนำมาหาร 2
+                    }
+                    else
+                    {
+                        t = t.Add(t_to - t_from - TimeSpan.Parse("01:00:00")); // ลบช่วงเวลาพักเที่ยงออก 1 ชม.
+                    }
+                }
+                else
+                {
+                    if (ev.med_cert == "Y")
+                    {
+                        t = t.Add(TimeSpan.FromSeconds((t_to - t_from).TotalSeconds / 2));
+                    }
+                    else
+                    {
+                        t = t.Add(t_to - t_from);
+                    }
+                }
+            }
+            if (t.TotalMinutes > 0)
+            {
+                int days = Convert.ToInt32(Math.Floor((double)((t.TotalMinutes / 60) / 8)));
+                int hours = Convert.ToInt32(Math.Floor((double)(t.TotalMinutes / 60))) - (days * 8);
+                int minutes = Convert.ToInt32(t.TotalMinutes) - (days * 8 * 60) - (hours * 60);
+                leave_string +=
+                    (days > 0 ? " " + days.ToString() + " วัน" : "") +
+                    (hours > 0 ? (days > 0 ? ", " + hours.ToString() : " " + hours.ToString()) + " ชั่วโมง" : "") +
+                    (minutes > 0 ? (hours > 0 ? ", " + minutes.ToString() : " " + minutes.ToString()) + " นาที" : "");
+            }
+
+            return leave_string;
+        }
+
+        public static string GetSummaryHoursMinutesString(this List<EventCalendar> list_event_calendar)
+        {
+            string leave_string = "";
+            TimeSpan t = TimeSpan.Parse("00:00:00");
+            foreach (EventCalendar ev in list_event_calendar)
+            {
+                TimeSpan t_from = TimeSpan.Parse(ev.from_time);
+                TimeSpan t_to = TimeSpan.Parse(ev.to_time);
+
+                if (t_from.Hours <= 12 && t_to.Hours >= 13) // ลางานคาบเกี่ยวช่วงเที่ยง
+                {
+                    t = t.Add(t_to - t_from - TimeSpan.Parse("01:00:00")); // ลบช่วงเวลาพักเที่ยงออก 1 ชม.
+                }
+                else
+                {
+                    t = t.Add(t_to - t_from);
+                }
+            }
+            if (t.TotalMinutes > 0)
+            {
+                //int days = Convert.ToInt32(Math.Floor((double)((t.TotalMinutes / 60) / 8)));
+                int hours = Convert.ToInt32(Math.Floor((double)(t.TotalMinutes / 60)));
+                int minutes = Convert.ToInt32(t.TotalMinutes) - (hours * 60);
+                leave_string +=
+                    //(days > 0 ? " " + days.ToString() + " วัน" : "") +
+                    (hours > 0 ? hours.ToString() + " ชั่วโมง" : "") +
+                    (minutes > 0 ? (hours > 0 ? ", " + minutes.ToString() + " นาที" : "" + minutes.ToString() + " นาที") : "");
+            }
+
+            return leave_string;
+        }
+
+        public static TimeSpan GetSummaryTimeSpan(this List<EventCalendar> list_event_calendar)
+        {
+            TimeSpan t = TimeSpan.Parse("00:00:00");
+            foreach (EventCalendar ev in list_event_calendar)
+            {
+                TimeSpan t_from = TimeSpan.Parse(ev.from_time);
+                TimeSpan t_to = TimeSpan.Parse(ev.to_time);
+
+                if (t_from.Hours <= 12 && t_to.Hours >= 13) // ลางานคาบเกี่ยวช่วงเที่ยง
+                {
+                    t = t.Add(t_to - t_from - TimeSpan.Parse("01:00:00")); // ลบช่วงเวลาพักเที่ยงออก 1 ชม.
+                }
+                else
+                {
+                    t = t.Add(t_to - t_from);
+                }
+            }
+
+            return t;
+        }
+
+        public static int GetSummaryFine(this List<EventCalendar> list_event_calendar)
+        {
+            int fine = 0;
+            foreach (EventCalendar ev in list_event_calendar)
+            {
+                fine += ev.fine;
+            }
+
+            return fine;
+        }
+
+        public static string GetSummaryMedCertRemark(this List<EventCalendar> list_event_calendar)
+        {
+            string str = "";
+            foreach (EventCalendar ev in list_event_calendar.Where(e => e.med_cert == "Y").ToList<EventCalendar>())
+            {
+                str = "ลาป่วยโดยมีใบรับรองแพทย์";
+            }
+
+            return str;
+        }
+
+        public static TimeSpan GetSummaryTalkTime(this List<Note> notes)
+        {
+            TimeSpan ts = new TimeSpan(0, 0, 0);
+            foreach (Note n in notes.Where(n => n.is_break == "N"))
+            {
+                ts = ts.Add(TimeSpan.Parse(n.duration));
+            }
+            return ts;
+        }
+
+        public static TimeSpan GetSummaryBreakTime(this List<Note> notes)
+        {
+            TimeSpan ts = new TimeSpan(0, 0, 0);
+            foreach (Note n in notes.Where(n => n.is_break == "Y"))
+            {
+                ts = ts.Add(TimeSpan.Parse(n.duration));
+            }
+            return ts;
+        }
+
+        // Distinc a List by some field value
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
         }
     }
 }

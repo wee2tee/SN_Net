@@ -138,7 +138,7 @@ namespace SN_Net.Subform
                 ///////////////////
                 using (StreamWriter file = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt"), false))
                 {
-                    file.WriteLine("MAIN URL | " + this.mskMainURL.Text);
+                    file.WriteLine("MAIN_URL | " + this.mskMainURL.Text);
                     this.Close();
                 }
             }

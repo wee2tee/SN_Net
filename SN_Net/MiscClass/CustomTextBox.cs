@@ -11,7 +11,7 @@ namespace SN_Net.MiscClass
 {
     public partial class CustomTextBox : UserControl
     {
-        private bool readOnly;
+        private bool read_Only;
         private string text;
         private int maxchar;
         private bool characterUpperCase;
@@ -22,7 +22,7 @@ namespace SN_Net.MiscClass
             this.textBox1.Text = "";
             this.label1.Text = "";
             
-            this.ReadOnly = true;
+            this.Read_Only = true;
             this.ShowHideControl();
             this.BackColor = Color.White;
             this.textBox1.BackColor = Color.White;
@@ -52,15 +52,15 @@ namespace SN_Net.MiscClass
             }
         }
 
-        public bool ReadOnly
+        public bool Read_Only
         {
             get
             {
-                return this.readOnly;
+                return this.read_Only;
             }
             set
             {
-                this.readOnly = value;
+                this.read_Only = value;
                 this.ShowHideControl();
             }
         }
@@ -115,7 +115,7 @@ namespace SN_Net.MiscClass
 
         private void ShowHideControl()
         {
-            if (this.readOnly)
+            if (this.read_Only)
             {
                 this.label1.Visible = true;
                 this.textBox1.Visible = false;
@@ -143,7 +143,7 @@ namespace SN_Net.MiscClass
         {
             this.Enter += delegate
             {
-                if (this.ReadOnly)
+                if (this.Read_Only)
                 {
                     this.BackColor = Color.White;
                 }
@@ -156,7 +156,7 @@ namespace SN_Net.MiscClass
 
             this.GotFocus += delegate
             {
-                if (!this.ReadOnly)
+                if (!this.Read_Only)
                 {
                     this.textBox1.Focus();
                 }
@@ -164,7 +164,7 @@ namespace SN_Net.MiscClass
 
             this.Leave += delegate
             {
-                if (!this.ReadOnly)
+                if (!this.Read_Only)
                 {
                     this.BackColor = Color.White;
                     this.textBox1.BackColor = Color.White;
@@ -192,6 +192,34 @@ namespace SN_Net.MiscClass
             {
                 this.Texts = this.textBox1.Text;
             };
+            this.textBox1.Enter += delegate
+            {
+                if (!this.read_Only)
+                {
+                    this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                    this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                }
+                else
+                {
+                    this.BackColor = Color.White;
+                    this.textBox1.BackColor = Color.White;
+                }
+            };
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (!this.read_Only && this.textBox1.Focused)
+            {
+                this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+            }
+            else
+            {
+                this.BackColor = Color.White;
+                this.textBox1.BackColor = Color.White;
+            }
+            base.OnPaint(e);
         }
     }
 }

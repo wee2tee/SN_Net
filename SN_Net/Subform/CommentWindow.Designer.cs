@@ -29,102 +29,64 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommentWindow));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chComplain = new System.Windows.Forms.CheckBox();
-            this.chComment = new System.Windows.Forms.CheckBox();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFilePath = new System.Windows.Forms.TextBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.lblTotalDuration = new System.Windows.Forms.Label();
-            this.lblCurrentDuration = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnDeletePath = new System.Windows.Forms.Button();
-            this.btnPause = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnPlay = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnDeletePath = new System.Windows.Forms.Button();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.dgvComment = new System.Windows.Forms.DataGridView();
+            this.dgvComplain = new System.Windows.Forms.DataGridView();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnSaveComment = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnStopComment = new System.Windows.Forms.Button();
+            this.btnEditComment = new System.Windows.Forms.Button();
+            this.btnDeleteComment = new System.Windows.Forms.Button();
+            this.btnAddComment = new System.Windows.Forms.Button();
+            this.btnSaveComplain = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnStopComplain = new System.Windows.Forms.Button();
+            this.btnEditComplain = new System.Windows.Forms.Button();
+            this.btnDeleteComplain = new System.Windows.Forms.Button();
+            this.btnAddComplain = new System.Windows.Forms.Button();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvComment)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvComplain)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // btnClose
             // 
-            this.groupBox1.Controls.Add(this.chComplain);
-            this.groupBox1.Controls.Add(this.chComment);
-            this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.groupBox1.Location = new System.Drawing.Point(13, 11);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(423, 56);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "ประเภท";
-            // 
-            // chComplain
-            // 
-            this.chComplain.AutoSize = true;
-            this.chComplain.Location = new System.Drawing.Point(212, 25);
-            this.chComplain.Name = "chComplain";
-            this.chComplain.Size = new System.Drawing.Size(189, 20);
-            this.chComplain.TabIndex = 3;
-            this.chComplain.Text = "Complain (คำตำหนิจากลูกค้า)";
-            this.chComplain.UseVisualStyleBackColor = true;
-            // 
-            // chComment
-            // 
-            this.chComment.AutoSize = true;
-            this.chComment.Location = new System.Drawing.Point(21, 25);
-            this.chComment.Name = "chComment";
-            this.chComment.Size = new System.Drawing.Size(148, 20);
-            this.chComment.TabIndex = 2;
-            this.chComment.Text = "Comment (ข้อคิดเห้น)";
-            this.chComment.UseVisualStyleBackColor = true;
-            // 
-            // txtDescription
-            // 
-            this.txtDescription.Enabled = false;
-            this.txtDescription.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(13, 75);
-            this.txtDescription.MaxLength = 255;
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(423, 96);
-            this.txtDescription.TabIndex = 2;
-            // 
-            // btnOK
-            // 
-            this.btnOK.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnOK.Location = new System.Drawing.Point(140, 286);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 28);
-            this.btnOK.TabIndex = 3;
-            this.btnOK.Text = "ตกลง";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnCancel.Location = new System.Drawing.Point(234, 286);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 28);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "ยกเลิก";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnClose.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnClose.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnClose.Location = new System.Drawing.Point(462, 497);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(84, 36);
+            this.btnClose.TabIndex = 4;
+            this.btnClose.Text = "ปิด";
+            this.btnClose.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(12, 184);
+            this.label1.Location = new System.Drawing.Point(12, 397);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 16);
             this.label1.TabIndex = 5;
@@ -132,81 +94,26 @@
             // 
             // txtFilePath
             // 
+            this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFilePath.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtFilePath.Location = new System.Drawing.Point(70, 181);
+            this.txtFilePath.Location = new System.Drawing.Point(70, 394);
             this.txtFilePath.MaxLength = 255;
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.ReadOnly = true;
-            this.txtFilePath.Size = new System.Drawing.Size(317, 23);
+            this.txtFilePath.Size = new System.Drawing.Size(878, 23);
             this.txtFilePath.TabIndex = 6;
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.Enabled = false;
-            this.btnBrowse.Location = new System.Drawing.Point(386, 180);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(26, 25);
-            this.btnBrowse.TabIndex = 7;
-            this.btnBrowse.Text = "...";
-            this.toolTip1.SetToolTip(this.btnBrowse, "Browse file path");
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.Filter = "Audio Files | *.wav;*.mp3";
             this.openFileDialog1.RestoreDirectory = true;
             // 
-            // trackBar1
-            // 
-            this.trackBar1.Enabled = false;
-            this.trackBar1.Location = new System.Drawing.Point(12, 226);
-            this.trackBar1.Maximum = 300;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(346, 45);
-            this.trackBar1.TabIndex = 9;
-            this.trackBar1.TickFrequency = 10;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar1.Visible = false;
-            // 
-            // lblTotalDuration
-            // 
-            this.lblTotalDuration.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblTotalDuration.Location = new System.Drawing.Point(304, 215);
-            this.lblTotalDuration.Name = "lblTotalDuration";
-            this.lblTotalDuration.Size = new System.Drawing.Size(52, 13);
-            this.lblTotalDuration.TabIndex = 13;
-            this.lblTotalDuration.Text = "00:00:00";
-            this.lblTotalDuration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTotalDuration.Visible = false;
-            // 
-            // lblCurrentDuration
-            // 
-            this.lblCurrentDuration.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblCurrentDuration.Location = new System.Drawing.Point(242, 215);
-            this.lblCurrentDuration.Name = "lblCurrentDuration";
-            this.lblCurrentDuration.Size = new System.Drawing.Size(55, 13);
-            this.lblCurrentDuration.TabIndex = 14;
-            this.lblCurrentDuration.Text = "00:00:00";
-            this.lblCurrentDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblCurrentDuration.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(296, 215);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(10, 13);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "/";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label3.Visible = false;
-            // 
             // btnDeletePath
             // 
-            this.btnDeletePath.Enabled = false;
+            this.btnDeletePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDeletePath.Image = global::SN_Net.Properties.Resources.remove;
-            this.btnDeletePath.Location = new System.Drawing.Point(413, 180);
+            this.btnDeletePath.Location = new System.Drawing.Point(973, 393);
             this.btnDeletePath.Name = "btnDeletePath";
             this.btnDeletePath.Size = new System.Drawing.Size(26, 25);
             this.btnDeletePath.TabIndex = 16;
@@ -214,85 +121,382 @@
             this.btnDeletePath.UseVisualStyleBackColor = true;
             this.btnDeletePath.Click += new System.EventHandler(this.btnDeletePath_Click);
             // 
-            // btnPause
+            // btnBrowse
             // 
-            this.btnPause.Enabled = false;
-            this.btnPause.Image = global::SN_Net.Properties.Resources.pause_media;
-            this.btnPause.Location = new System.Drawing.Point(386, 223);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(26, 25);
-            this.btnPause.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.btnPause, "Pause");
-            this.btnPause.UseVisualStyleBackColor = true;
-            this.btnPause.Visible = false;
-            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnBrowse.Location = new System.Drawing.Point(946, 393);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(26, 25);
+            this.btnBrowse.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.btnBrowse, "Browse file path");
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // btnStop
+            // dgvComment
             // 
-            this.btnStop.Enabled = false;
-            this.btnStop.Image = global::SN_Net.Properties.Resources.stop_media;
-            this.btnStop.Location = new System.Drawing.Point(413, 223);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(26, 25);
-            this.btnStop.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.btnStop, "Stop");
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Visible = false;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            this.dgvComment.AllowUserToAddRows = false;
+            this.dgvComment.AllowUserToDeleteRows = false;
+            this.dgvComment.AllowUserToResizeColumns = false;
+            this.dgvComment.AllowUserToResizeRows = false;
+            this.dgvComment.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvComment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvComment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComment.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvComment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvComment.EnableHeadersVisualStyles = false;
+            this.dgvComment.Location = new System.Drawing.Point(3, 30);
+            this.dgvComment.MultiSelect = false;
+            this.dgvComment.Name = "dgvComment";
+            this.dgvComment.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvComment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvComment.RowHeadersVisible = false;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            this.dgvComment.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvComment.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dgvComment.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvComment.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dgvComment.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.dgvComment.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            this.dgvComment.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvComment.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComment.RowTemplate.Height = 25;
+            this.dgvComment.RowTemplate.ReadOnly = true;
+            this.dgvComment.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComment.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvComment.Size = new System.Drawing.Size(980, 153);
+            this.dgvComment.StandardTab = true;
+            this.dgvComment.TabIndex = 6;
             // 
-            // btnPlay
+            // dgvComplain
             // 
-            this.btnPlay.Enabled = false;
-            this.btnPlay.Image = global::SN_Net.Properties.Resources.play_media;
-            this.btnPlay.Location = new System.Drawing.Point(359, 223);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(26, 25);
-            this.btnPlay.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.btnPlay, "Play");
-            this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Visible = false;
-            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            this.dgvComplain.AllowUserToAddRows = false;
+            this.dgvComplain.AllowUserToDeleteRows = false;
+            this.dgvComplain.AllowUserToResizeColumns = false;
+            this.dgvComplain.AllowUserToResizeRows = false;
+            this.dgvComplain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(181)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvComplain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvComplain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComplain.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvComplain.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvComplain.EnableHeadersVisualStyles = false;
+            this.dgvComplain.Location = new System.Drawing.Point(3, 29);
+            this.dgvComplain.MultiSelect = false;
+            this.dgvComplain.Name = "dgvComplain";
+            this.dgvComplain.ReadOnly = true;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvComplain.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvComplain.RowHeadersVisible = false;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            this.dgvComplain.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            this.dgvComplain.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dgvComplain.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvComplain.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dgvComplain.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
+            this.dgvComplain.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
+            this.dgvComplain.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvComplain.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComplain.RowTemplate.Height = 25;
+            this.dgvComplain.RowTemplate.ReadOnly = true;
+            this.dgvComplain.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComplain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvComplain.Size = new System.Drawing.Size(980, 153);
+            this.dgvComplain.StandardTab = true;
+            this.dgvComplain.TabIndex = 7;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(12, 12);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnSaveComment);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.btnStopComment);
+            this.splitContainer1.Panel1.Controls.Add(this.btnEditComment);
+            this.splitContainer1.Panel1.Controls.Add(this.btnDeleteComment);
+            this.splitContainer1.Panel1.Controls.Add(this.btnAddComment);
+            this.splitContainer1.Panel1.Controls.Add(this.dgvComment);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnSaveComplain);
+            this.splitContainer1.Panel2.Controls.Add(this.label3);
+            this.splitContainer1.Panel2.Controls.Add(this.btnStopComplain);
+            this.splitContainer1.Panel2.Controls.Add(this.btnEditComplain);
+            this.splitContainer1.Panel2.Controls.Add(this.btnDeleteComplain);
+            this.splitContainer1.Panel2.Controls.Add(this.btnAddComplain);
+            this.splitContainer1.Panel2.Controls.Add(this.dgvComplain);
+            this.splitContainer1.Size = new System.Drawing.Size(986, 375);
+            this.splitContainer1.SplitterDistance = 186;
+            this.splitContainer1.TabIndex = 20;
+            // 
+            // btnSaveComment
+            // 
+            this.btnSaveComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveComment.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSaveComment.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveComment.Image")));
+            this.btnSaveComment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveComment.Location = new System.Drawing.Point(853, 5);
+            this.btnSaveComment.Name = "btnSaveComment";
+            this.btnSaveComment.Size = new System.Drawing.Size(68, 23);
+            this.btnSaveComment.TabIndex = 12;
+            this.btnSaveComment.Text = "บันทึก";
+            this.btnSaveComment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveComment.UseVisualStyleBackColor = true;
+            this.btnSaveComment.Click += new System.EventHandler(this.btnSaveComment_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.ForeColor = System.Drawing.Color.Blue;
+            this.label2.Location = new System.Drawing.Point(4, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 16);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Comment";
+            // 
+            // btnStopComment
+            // 
+            this.btnStopComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStopComment.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnStopComment.Image = global::SN_Net.Properties.Resources.stop1;
+            this.btnStopComment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStopComment.Location = new System.Drawing.Point(785, 5);
+            this.btnStopComment.Name = "btnStopComment";
+            this.btnStopComment.Size = new System.Drawing.Size(68, 23);
+            this.btnStopComment.TabIndex = 10;
+            this.btnStopComment.Text = "ยกเลิก";
+            this.btnStopComment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStopComment.UseVisualStyleBackColor = true;
+            this.btnStopComment.Click += new System.EventHandler(this.btnStopComment_Click);
+            // 
+            // btnEditComment
+            // 
+            this.btnEditComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditComment.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEditComment.Image = global::SN_Net.Properties.Resources.edit1;
+            this.btnEditComment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEditComment.Location = new System.Drawing.Point(723, 5);
+            this.btnEditComment.Name = "btnEditComment";
+            this.btnEditComment.Size = new System.Drawing.Size(62, 23);
+            this.btnEditComment.TabIndex = 9;
+            this.btnEditComment.Text = "แก้ไข";
+            this.btnEditComment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEditComment.UseVisualStyleBackColor = true;
+            this.btnEditComment.Click += new System.EventHandler(this.btnEditComment_Click);
+            // 
+            // btnDeleteComment
+            // 
+            this.btnDeleteComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteComment.Enabled = false;
+            this.btnDeleteComment.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnDeleteComment.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteComment.Image")));
+            this.btnDeleteComment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeleteComment.Location = new System.Drawing.Point(921, 5);
+            this.btnDeleteComment.Name = "btnDeleteComment";
+            this.btnDeleteComment.Size = new System.Drawing.Size(62, 23);
+            this.btnDeleteComment.TabIndex = 8;
+            this.btnDeleteComment.Text = "ลบ";
+            this.btnDeleteComment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDeleteComment.UseVisualStyleBackColor = true;
+            this.btnDeleteComment.Click += new System.EventHandler(this.btnDeleteComment_Click);
+            // 
+            // btnAddComment
+            // 
+            this.btnAddComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddComment.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddComment.Image = global::SN_Net.Properties.Resources.plus;
+            this.btnAddComment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddComment.Location = new System.Drawing.Point(661, 5);
+            this.btnAddComment.Name = "btnAddComment";
+            this.btnAddComment.Size = new System.Drawing.Size(62, 23);
+            this.btnAddComment.TabIndex = 7;
+            this.btnAddComment.Text = "เพิ่ม";
+            this.btnAddComment.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddComment.UseVisualStyleBackColor = true;
+            this.btnAddComment.Click += new System.EventHandler(this.btnAddComment_Click);
+            // 
+            // btnSaveComplain
+            // 
+            this.btnSaveComplain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveComplain.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSaveComplain.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveComplain.Image")));
+            this.btnSaveComplain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveComplain.Location = new System.Drawing.Point(853, 4);
+            this.btnSaveComplain.Name = "btnSaveComplain";
+            this.btnSaveComplain.Size = new System.Drawing.Size(68, 23);
+            this.btnSaveComplain.TabIndex = 15;
+            this.btnSaveComplain.Text = "บันทึก";
+            this.btnSaveComplain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveComplain.UseVisualStyleBackColor = true;
+            this.btnSaveComplain.Click += new System.EventHandler(this.btnSaveComplain_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(4, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 16);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Complain";
+            // 
+            // btnStopComplain
+            // 
+            this.btnStopComplain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStopComplain.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnStopComplain.Image = global::SN_Net.Properties.Resources.stop1;
+            this.btnStopComplain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStopComplain.Location = new System.Drawing.Point(785, 4);
+            this.btnStopComplain.Name = "btnStopComplain";
+            this.btnStopComplain.Size = new System.Drawing.Size(68, 23);
+            this.btnStopComplain.TabIndex = 13;
+            this.btnStopComplain.Text = "ยกเลิก";
+            this.btnStopComplain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStopComplain.UseVisualStyleBackColor = true;
+            this.btnStopComplain.Click += new System.EventHandler(this.btnStopComplain_Click);
+            // 
+            // btnEditComplain
+            // 
+            this.btnEditComplain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditComplain.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEditComplain.Image = global::SN_Net.Properties.Resources.edit1;
+            this.btnEditComplain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEditComplain.Location = new System.Drawing.Point(723, 4);
+            this.btnEditComplain.Name = "btnEditComplain";
+            this.btnEditComplain.Size = new System.Drawing.Size(62, 23);
+            this.btnEditComplain.TabIndex = 12;
+            this.btnEditComplain.Text = "แก้ไข";
+            this.btnEditComplain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnEditComplain.UseVisualStyleBackColor = true;
+            this.btnEditComplain.Click += new System.EventHandler(this.btnEditComplain_Click);
+            // 
+            // btnDeleteComplain
+            // 
+            this.btnDeleteComplain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteComplain.Enabled = false;
+            this.btnDeleteComplain.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnDeleteComplain.Image = global::SN_Net.Properties.Resources.trash1;
+            this.btnDeleteComplain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeleteComplain.Location = new System.Drawing.Point(921, 4);
+            this.btnDeleteComplain.Name = "btnDeleteComplain";
+            this.btnDeleteComplain.Size = new System.Drawing.Size(62, 23);
+            this.btnDeleteComplain.TabIndex = 11;
+            this.btnDeleteComplain.Text = "ลบ";
+            this.btnDeleteComplain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDeleteComplain.UseVisualStyleBackColor = true;
+            this.btnDeleteComplain.Click += new System.EventHandler(this.btnDeleteComplain_Click);
+            // 
+            // btnAddComplain
+            // 
+            this.btnAddComplain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddComplain.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddComplain.Image = global::SN_Net.Properties.Resources.plus;
+            this.btnAddComplain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddComplain.Location = new System.Drawing.Point(661, 4);
+            this.btnAddComplain.Name = "btnAddComplain";
+            this.btnAddComplain.Size = new System.Drawing.Size(62, 23);
+            this.btnAddComplain.TabIndex = 10;
+            this.btnAddComplain.Text = "เพิ่ม";
+            this.btnAddComplain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddComplain.UseVisualStyleBackColor = true;
+            this.btnAddComplain.Click += new System.EventHandler(this.btnAddComplain_Click);
             // 
             // axWindowsMediaPlayer1
             // 
+            this.axWindowsMediaPlayer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(12, 210);
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(12, 423);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(425, 63);
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(986, 63);
             this.axWindowsMediaPlayer1.TabIndex = 18;
             // 
             // CommentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 327);
+            this.ClientSize = new System.Drawing.Size(1011, 545);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.btnDeletePath);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblCurrentDuration);
-            this.Controls.Add(this.lblTotalDuration);
-            this.Controls.Add(this.btnPause);
-            this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.txtFilePath);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.txtDescription);
-            this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Controls.Add(this.btnClose);
             this.KeyPreview = true;
+            this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "CommentWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Comment / Complain";
             this.Load += new System.EventHandler(this.CommentWindow_Load);
             this.Shown += new System.EventHandler(this.CommentWindow_Shown);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvComment)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvComplain)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -301,26 +505,29 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chComplain;
-        private System.Windows.Forms.CheckBox chComment;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Label lblTotalDuration;
-        private System.Windows.Forms.Label lblCurrentDuration;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnDeletePath;
         private System.Windows.Forms.ToolTip toolTip1;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        public System.Windows.Forms.DataGridView dgvComment;
+        public System.Windows.Forms.DataGridView dgvComplain;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button btnEditComment;
+        private System.Windows.Forms.Button btnDeleteComment;
+        private System.Windows.Forms.Button btnAddComment;
+        private System.Windows.Forms.Button btnEditComplain;
+        private System.Windows.Forms.Button btnDeleteComplain;
+        private System.Windows.Forms.Button btnAddComplain;
+        private System.Windows.Forms.Button btnStopComment;
+        private System.Windows.Forms.Button btnStopComplain;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnSaveComment;
+        private System.Windows.Forms.Button btnSaveComplain;
 
     }
 }

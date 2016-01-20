@@ -56,8 +56,8 @@ namespace SN_Net.Subform
                 string json_data = "{\"validate_code\":\"WeeTee\",";
                 json_data += "\"p_type\":\"get_new_register_list\"}";
 
-                //CRUDResult post = ApiActions.POST("http://www.esg.co.th/esg/SN_Net_API/get_registered_sn.php", json_data);
-                CRUDResult post = ApiActions.POST("http://localhost/esg/SN_Net_API/get_registered_sn.php", json_data);
+                CRUDResult post = ApiActions.POST("http://www.esg.co.th/esg/SN_Net_API/get_registered_sn.php", json_data);
+                //CRUDResult post = ApiActions.POST("http://localhost/esg/SN_Net_API/get_registered_sn.php", json_data);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
                 if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -703,8 +703,8 @@ namespace SN_Net.Subform
             json_data += "\"p_type\":\"marked_as_recorded\",";
             json_data += "\"id\":" + this.rg.id.ToString() + "}";
             
-            //CRUDResult post = ApiActions.POST("http://www.esg.co.th/esg/SN_Net_API/get_registered_sn.php", json_data);
-            CRUDResult post = ApiActions.POST("http://localhost/esg/SN_Net_API/get_registered_sn.php", json_data);
+            CRUDResult post = ApiActions.POST("http://www.esg.co.th/esg/SN_Net_API/get_registered_sn.php", json_data);
+            //CRUDResult post = ApiActions.POST("http://localhost/esg/SN_Net_API/get_registered_sn.php", json_data);
             return JsonConvert.DeserializeObject<ServerResult>(post.data);
         }
 

@@ -13,9 +13,11 @@ namespace SN_Net.DataModels
         public string name { get; set; }
         public string email { get; set; }
         public int level { get; set; }
+        public string usergroup { get; set; }
         public string status { get; set; }
         public string allowed_web_login { get; set; }
         public string training_expert { get; set; }
+        public int max_absent { get; set; }
         public string create_at { get; set; }
         public string last_use { get; set; }
     }

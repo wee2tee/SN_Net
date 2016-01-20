@@ -24,6 +24,7 @@ namespace SN_Net.DataModels
             PERIOD,
             ASSETS,
             TRAINING,
+            TRANSFER_MKT,
             OTHER
         }
 
@@ -32,12 +33,15 @@ namespace SN_Net.DataModels
             TOILET,
             QT,
             MEET_CUST,
-            TRAINING,
-            CORRECT_DATA
+            TRAINING_TRAINER,
+            TRAINING_ASSIST,
+            CORRECT_DATA,
+            OTHER
         }
 
         public int id { get; set; }
         public string date { get; set; }
+        public string users_name { get; set; }
         public string start_time { get; set; }
         public string end_time { get; set; }
         public string duration { get; set; }
@@ -47,7 +51,8 @@ namespace SN_Net.DataModels
         public string remark { get; set; }
         public string is_break { get; set; }
         public string reason { get; set; }
-        public string users_name { get; set; }
+        public string file_path { get; set; }
+        public string rec_by { get; set; }
     }
 
     public static class SupportNoteHelper
@@ -86,6 +91,8 @@ namespace SN_Net.DataModels
                     return "{ASSETS}";
                 case SupportNote.NOTE_PROBLEM.TRAINING:
                     return "{TRAINING}";
+                case SupportNote.NOTE_PROBLEM.TRANSFER_MKT:
+                    return "{TRANSFER_MKT}";
                 case SupportNote.NOTE_PROBLEM.OTHER:
                     return "{OTHER}";
                 default:
@@ -103,10 +110,14 @@ namespace SN_Net.DataModels
                     return "{QT}";
                 case SupportNote.BREAK_REASON.MEET_CUST:
                     return "{MEET_CUST}";
-                case SupportNote.BREAK_REASON.TRAINING:
-                    return "{TRAINING}";
+                case SupportNote.BREAK_REASON.TRAINING_TRAINER:
+                    return "{TRAINING_TRAINER}";
+                case SupportNote.BREAK_REASON.TRAINING_ASSIST:
+                    return "{TRAINING_ASSIST}";
                 case SupportNote.BREAK_REASON.CORRECT_DATA:
                     return "{CORRECT_DATA}";
+                case SupportNote.BREAK_REASON.OTHER:
+                    return "{OTHER}";
                 default:
                     return "{}";
             }

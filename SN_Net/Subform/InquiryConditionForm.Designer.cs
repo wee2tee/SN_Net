@@ -170,7 +170,7 @@
             this.txtValue.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtValue.MaxChar = 20;
             this.txtValue.Name = "txtValue";
-            this.txtValue.ReadOnly = false;
+            this.txtValue.Read_Only = false;
             this.txtValue.SelectionLength = 0;
             this.txtValue.SelectionStart = 0;
             this.txtValue.Size = new System.Drawing.Size(216, 23);

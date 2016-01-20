@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtNewPassword2 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.txtOldPassword = new System.Windows.Forms.TextBox();
             this.txtNewPassword1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCancelChangePassword = new System.Windows.Forms.Button();
             this.btnSubmitChangePassword = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtNewPassword2 = new System.Windows.Forms.TextBox();
-            this.txtUserName = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +57,50 @@
             this.groupBox1.Size = new System.Drawing.Size(356, 158);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
+            // 
+            // txtUserName
+            // 
+            this.txtUserName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtUserName.Enabled = false;
+            this.txtUserName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtUserName.Location = new System.Drawing.Point(179, 19);
+            this.txtUserName.MaxLength = 20;
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.ReadOnly = true;
+            this.txtUserName.Size = new System.Drawing.Size(152, 23);
+            this.txtUserName.TabIndex = 7;
+            this.txtUserName.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label4.Location = new System.Drawing.Point(10, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(162, 16);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "ชื่อผู้ใช้งาน :";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtNewPassword2
+            // 
+            this.txtNewPassword2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNewPassword2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtNewPassword2.Location = new System.Drawing.Point(179, 117);
+            this.txtNewPassword2.MaxLength = 20;
+            this.txtNewPassword2.Name = "txtNewPassword2";
+            this.txtNewPassword2.PasswordChar = '*';
+            this.txtNewPassword2.Size = new System.Drawing.Size(152, 23);
+            this.txtNewPassword2.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label3.Location = new System.Drawing.Point(10, 120);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(162, 16);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "ยืนยันรหัสผ่านใหม่อีกครั้ง :";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtOldPassword
             // 
@@ -122,50 +166,6 @@
             this.btnSubmitChangePassword.UseVisualStyleBackColor = true;
             this.btnSubmitChangePassword.Click += new System.EventHandler(this.btnSubmitChangePassword_Click);
             // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(10, 120);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(162, 16);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "ยืนยันรหัสผ่านใหม่อีกครั้ง :";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtNewPassword2
-            // 
-            this.txtNewPassword2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNewPassword2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtNewPassword2.Location = new System.Drawing.Point(179, 117);
-            this.txtNewPassword2.MaxLength = 20;
-            this.txtNewPassword2.Name = "txtNewPassword2";
-            this.txtNewPassword2.PasswordChar = '*';
-            this.txtNewPassword2.Size = new System.Drawing.Size(152, 23);
-            this.txtNewPassword2.TabIndex = 4;
-            // 
-            // txtUserName
-            // 
-            this.txtUserName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtUserName.Enabled = false;
-            this.txtUserName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtUserName.Location = new System.Drawing.Point(179, 19);
-            this.txtUserName.MaxLength = 20;
-            this.txtUserName.Name = "txtUserName";
-            this.txtUserName.ReadOnly = true;
-            this.txtUserName.Size = new System.Drawing.Size(152, 23);
-            this.txtUserName.TabIndex = 7;
-            this.txtUserName.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label4.Location = new System.Drawing.Point(10, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(162, 16);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "ชื่อผู้ใช้งาน :";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // ChangePasswordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,6 +175,8 @@
             this.Controls.Add(this.btnSubmitChangePassword);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ChangePasswordForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "เปลี่ยนรหัสผ่าน";

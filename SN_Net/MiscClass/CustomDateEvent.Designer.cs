@@ -29,18 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblDay = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnTraining = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDetail = new System.Windows.Forms.Button();
             this.lblMontYear = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lblWeekend = new System.Windows.Forms.Label();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.lblBottom = new System.Windows.Forms.Label();
             this.lblLoading = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnTraining = new System.Windows.Forms.Button();
-            this.btnDetail = new System.Windows.Forms.Button();
+            this.bottomLabel = new SN_Net.MiscClass.CustomLabel();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -89,6 +91,20 @@
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.TabIndex = 1;
             // 
+            // btnTraining
+            // 
+            this.btnTraining.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnTraining.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnTraining.Location = new System.Drawing.Point(118, 0);
+            this.btnTraining.Name = "btnTraining";
+            this.btnTraining.Size = new System.Drawing.Size(24, 25);
+            this.btnTraining.TabIndex = 4;
+            this.btnTraining.Text = "T";
+            this.toolTip1.SetToolTip(this.btnTraining, "Training");
+            this.btnTraining.UseVisualStyleBackColor = true;
+            this.btnTraining.Visible = false;
+            this.btnTraining.Click += new System.EventHandler(this.btnTraining_Click);
+            // 
             // btnAdd
             // 
             this.btnAdd.Dock = System.Windows.Forms.DockStyle.Right;
@@ -101,6 +117,19 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Visible = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnDetail
+            // 
+            this.btnDetail.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDetail.Image = global::SN_Net.Properties.Resources.detail;
+            this.btnDetail.Location = new System.Drawing.Point(166, 0);
+            this.btnDetail.Name = "btnDetail";
+            this.btnDetail.Size = new System.Drawing.Size(24, 25);
+            this.btnDetail.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.btnDetail, "Description");
+            this.btnDetail.UseVisualStyleBackColor = true;
+            this.btnDetail.Visible = false;
+            this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
             // 
             // lblMontYear
             // 
@@ -124,17 +153,30 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.lblWeekend);
             this.splitContainer2.Panel1.Controls.Add(this.dgv);
             this.splitContainer2.Panel1MinSize = 1;
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainer2.Panel2.Controls.Add(this.lblBottom);
+            this.splitContainer2.Panel2.Controls.Add(this.bottomLabel);
             this.splitContainer2.Panel2MinSize = 16;
             this.splitContainer2.Size = new System.Drawing.Size(190, 101);
-            this.splitContainer2.SplitterDistance = 81;
+            this.splitContainer2.SplitterDistance = 75;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // lblWeekend
+            // 
+            this.lblWeekend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblWeekend.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWeekend.ForeColor = System.Drawing.Color.Red;
+            this.lblWeekend.Location = new System.Drawing.Point(0, 0);
+            this.lblWeekend.Name = "lblWeekend";
+            this.lblWeekend.Size = new System.Drawing.Size(190, 75);
+            this.lblWeekend.TabIndex = 1;
+            this.lblWeekend.Text = "label1";
+            this.lblWeekend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgv
             // 
@@ -147,6 +189,14 @@
             this.dgv.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.ColumnHeadersVisible = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgv.Location = new System.Drawing.Point(0, 0);
@@ -154,28 +204,19 @@
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgv.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgv.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgv.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgv.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.White;
             this.dgv.RowTemplate.Height = 18;
             this.dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv.Size = new System.Drawing.Size(190, 81);
+            this.dgv.Size = new System.Drawing.Size(190, 75);
             this.dgv.TabIndex = 0;
-            // 
-            // lblBottom
-            // 
-            this.lblBottom.BackColor = System.Drawing.Color.Transparent;
-            this.lblBottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBottom.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBottom.Location = new System.Drawing.Point(0, 0);
-            this.lblBottom.Name = "lblBottom";
-            this.lblBottom.Size = new System.Drawing.Size(190, 16);
-            this.lblBottom.TabIndex = 1;
-            this.lblBottom.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblLoading
             // 
@@ -188,32 +229,14 @@
             this.lblLoading.Text = "Loading...";
             this.lblLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnTraining
+            // bottomLabel
             // 
-            this.btnTraining.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnTraining.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnTraining.Location = new System.Drawing.Point(118, 0);
-            this.btnTraining.Name = "btnTraining";
-            this.btnTraining.Size = new System.Drawing.Size(24, 25);
-            this.btnTraining.TabIndex = 4;
-            this.btnTraining.Text = "T";
-            this.toolTip1.SetToolTip(this.btnTraining, "Training");
-            this.btnTraining.UseVisualStyleBackColor = true;
-            this.btnTraining.Visible = false;
-            this.btnTraining.Click += new System.EventHandler(this.btnTraining_Click);
-            // 
-            // btnDetail
-            // 
-            this.btnDetail.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnDetail.Image = global::SN_Net.Properties.Resources.detail;
-            this.btnDetail.Location = new System.Drawing.Point(166, 0);
-            this.btnDetail.Name = "btnDetail";
-            this.btnDetail.Size = new System.Drawing.Size(24, 25);
-            this.btnDetail.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.btnDetail, "Description");
-            this.btnDetail.UseVisualStyleBackColor = true;
-            this.btnDetail.Visible = false;
-            this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
+            this.bottomLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomLabel.Location = new System.Drawing.Point(0, 0);
+            this.bottomLabel.Name = "bottomLabel";
+            this.bottomLabel.Padding = new System.Windows.Forms.Padding(1);
+            this.bottomLabel.Size = new System.Drawing.Size(190, 22);
+            this.bottomLabel.TabIndex = 0;
             // 
             // CustomDateEvent
             // 
@@ -241,7 +264,6 @@
 
         private System.Windows.Forms.Label lblDay;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label lblBottom;
         private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Label lblMontYear;
@@ -250,5 +272,7 @@
         public System.Windows.Forms.Button btnTraining;
         public System.Windows.Forms.Button btnDetail;
         public System.Windows.Forms.Button btnAdd;
+        private CustomLabel bottomLabel;
+        private System.Windows.Forms.Label lblWeekend;
     }
 }

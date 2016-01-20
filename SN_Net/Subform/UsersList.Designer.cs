@@ -34,6 +34,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsersList));
             this.dgvUsers = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numMaxAbsent = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.chTrainingExpert = new System.Windows.Forms.CheckBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnCancelAddUser = new System.Windows.Forms.Button();
@@ -50,9 +54,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.chTrainingExpert = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxAbsent)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -83,7 +87,8 @@
             this.dgvUsers.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvUsers.RowTemplate.Height = 25;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(903, 374);
+            this.dgvUsers.Size = new System.Drawing.Size(903, 344);
+            this.dgvUsers.StandardTab = true;
             this.dgvUsers.TabIndex = 1;
             this.dgvUsers.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellDoubleClick);
             this.dgvUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvUsers_KeyDown);
@@ -91,6 +96,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.numMaxAbsent);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.chTrainingExpert);
             this.groupBox1.Controls.Add(this.txtName);
             this.groupBox1.Controls.Add(this.label6);
@@ -110,16 +118,63 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.groupBox1.Location = new System.Drawing.Point(10, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(757, 119);
+            this.groupBox1.Size = new System.Drawing.Size(756, 148);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "เพิ่มผู้ใช้งานระบบ";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label8.Location = new System.Drawing.Point(349, 84);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(22, 16);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "วัน";
+            // 
+            // numMaxAbsent
+            // 
+            this.numMaxAbsent.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.numMaxAbsent.Location = new System.Drawing.Point(301, 80);
+            this.numMaxAbsent.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numMaxAbsent.Name = "numMaxAbsent";
+            this.numMaxAbsent.Size = new System.Drawing.Size(41, 23);
+            this.numMaxAbsent.TabIndex = 9;
+            this.numMaxAbsent.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label7.Location = new System.Drawing.Point(203, 84);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(97, 16);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "จำนวนวันลา/ปี : ";
+            // 
+            // chTrainingExpert
+            // 
+            this.chTrainingExpert.AutoSize = true;
+            this.chTrainingExpert.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.chTrainingExpert.ForeColor = System.Drawing.Color.Black;
+            this.chTrainingExpert.Location = new System.Drawing.Point(14, 83);
+            this.chTrainingExpert.Name = "chTrainingExpert";
+            this.chTrainingExpert.Size = new System.Drawing.Size(100, 20);
+            this.chTrainingExpert.TabIndex = 8;
+            this.chTrainingExpert.Text = "วิทยากรอบรม";
+            this.chTrainingExpert.UseVisualStyleBackColor = true;
+            // 
             // txtName
             // 
-            this.txtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtName.Location = new System.Drawing.Point(284, 17);
+            this.txtName.Location = new System.Drawing.Point(301, 17);
             this.txtName.MaxLength = 20;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(115, 23);
@@ -130,7 +185,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(249, 20);
+            this.label6.Location = new System.Drawing.Point(263, 20);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(37, 16);
             this.label6.TabIndex = 11;
@@ -140,10 +195,10 @@
             // 
             this.btnCancelAddUser.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnCancelAddUser.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnCancelAddUser.Location = new System.Drawing.Point(627, 81);
+            this.btnCancelAddUser.Location = new System.Drawing.Point(643, 109);
             this.btnCancelAddUser.Name = "btnCancelAddUser";
             this.btnCancelAddUser.Size = new System.Drawing.Size(102, 27);
-            this.btnCancelAddUser.TabIndex = 10;
+            this.btnCancelAddUser.TabIndex = 11;
             this.btnCancelAddUser.Text = "ยกเลิก";
             this.btnCancelAddUser.UseVisualStyleBackColor = true;
             this.btnCancelAddUser.Click += new System.EventHandler(this.btnCancelAddUser_Click);
@@ -152,10 +207,10 @@
             // 
             this.btnAddUser.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnAddUser.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnAddUser.Location = new System.Drawing.Point(519, 81);
+            this.btnAddUser.Location = new System.Drawing.Point(535, 109);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(102, 27);
-            this.btnAddUser.TabIndex = 9;
+            this.btnAddUser.TabIndex = 10;
             this.btnAddUser.Text = "เพิ่มข้อมูลผู้ใช้";
             this.btnAddUser.UseVisualStyleBackColor = true;
             this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
@@ -165,7 +220,7 @@
             this.cbWebLogin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWebLogin.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbWebLogin.FormattingEnabled = true;
-            this.cbWebLogin.Location = new System.Drawing.Point(564, 48);
+            this.cbWebLogin.Location = new System.Drawing.Point(578, 48);
             this.cbWebLogin.Name = "cbWebLogin";
             this.cbWebLogin.Size = new System.Drawing.Size(46, 24);
             this.cbWebLogin.TabIndex = 7;
@@ -175,7 +230,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(425, 51);
+            this.label5.Location = new System.Drawing.Point(439, 51);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(142, 16);
             this.label5.TabIndex = 10;
@@ -186,7 +241,7 @@
             this.cbUserStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUserStatus.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbUserStatus.FormattingEnabled = true;
-            this.cbUserStatus.Location = new System.Drawing.Point(284, 48);
+            this.cbUserStatus.Location = new System.Drawing.Point(301, 48);
             this.cbUserStatus.Name = "cbUserStatus";
             this.cbUserStatus.Size = new System.Drawing.Size(77, 24);
             this.cbUserStatus.TabIndex = 6;
@@ -196,7 +251,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(207, 51);
+            this.label4.Location = new System.Drawing.Point(221, 51);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(79, 16);
             this.label4.TabIndex = 8;
@@ -207,7 +262,7 @@
             this.cbUserLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUserLevel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbUserLevel.FormattingEnabled = true;
-            this.cbUserLevel.Location = new System.Drawing.Point(80, 48);
+            this.cbUserLevel.Location = new System.Drawing.Point(83, 48);
             this.cbUserLevel.Name = "cbUserLevel";
             this.cbUserLevel.Size = new System.Drawing.Size(98, 24);
             this.cbUserLevel.TabIndex = 5;
@@ -226,7 +281,7 @@
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtEmail.Location = new System.Drawing.Point(471, 17);
+            this.txtEmail.Location = new System.Drawing.Point(485, 17);
             this.txtEmail.MaxLength = 100;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(260, 23);
@@ -237,7 +292,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(425, 20);
+            this.label2.Location = new System.Drawing.Point(439, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 16);
             this.label2.TabIndex = 4;
@@ -247,7 +302,7 @@
             // 
             this.txtUserName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUserName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtUserName.Location = new System.Drawing.Point(80, 17);
+            this.txtUserName.Location = new System.Drawing.Point(83, 17);
             this.txtUserName.MaxLength = 20;
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(138, 23);
@@ -288,20 +343,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.dgvUsers);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.splitContainer1.Size = new System.Drawing.Size(909, 511);
-            this.splitContainer1.SplitterDistance = 130;
+            this.splitContainer1.SplitterDistance = 160;
             this.splitContainer1.TabIndex = 3;
-            // 
-            // chTrainingExpert
-            // 
-            this.chTrainingExpert.AutoSize = true;
-            this.chTrainingExpert.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chTrainingExpert.ForeColor = System.Drawing.Color.Black;
-            this.chTrainingExpert.Location = new System.Drawing.Point(639, 50);
-            this.chTrainingExpert.Name = "chTrainingExpert";
-            this.chTrainingExpert.Size = new System.Drawing.Size(100, 20);
-            this.chTrainingExpert.TabIndex = 8;
-            this.chTrainingExpert.Text = "วิทยากรอบรม";
-            this.chTrainingExpert.UseVisualStyleBackColor = true;
             // 
             // UsersList
             // 
@@ -309,6 +352,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(909, 511);
             this.Controls.Add(this.splitContainer1);
+            this.KeyPreview = true;
             this.Name = "UsersList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "แฟ้มข้อมูลผู้ใช้งานระบบ";
@@ -316,6 +360,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaxAbsent)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -344,5 +389,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.CheckBox chTrainingExpert;
+        private System.Windows.Forms.NumericUpDown numMaxAbsent;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }

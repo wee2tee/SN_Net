@@ -72,7 +72,6 @@
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(164, 23);
             this.txtUser.TabIndex = 0;
-            this.txtUser.Text = "WEE";
             // 
             // txtPassword
             // 
@@ -84,7 +83,6 @@
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(164, 23);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.Text = "12345";
             // 
             // groupBox1
             // 
@@ -129,6 +127,7 @@
             this.btnPreference.TabIndex = 4;
             this.toolTip1.SetToolTip(this.btnPreference, "Preferences");
             this.btnPreference.UseVisualStyleBackColor = true;
+            this.btnPreference.Visible = false;
             this.btnPreference.Click += new System.EventHandler(this.btnPreference_Click);
             // 
             // LoginForm
@@ -142,6 +141,8 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

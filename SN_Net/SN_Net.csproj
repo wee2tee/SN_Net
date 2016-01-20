@@ -55,9 +55,6 @@
     <Reference Include="GetMac">
       <HintPath>..\..\_DLL\GetMac.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
@@ -81,6 +78,7 @@
     <Compile Include="DataModels\D_msg.cs" />
     <Compile Include="DataModels\EventCalendar.cs" />
     <Compile Include="DataModels\Istab.cs" />
+    <Compile Include="DataModels\Ma.cs" />
     <Compile Include="DataModels\MacAllowed.cs" />
     <Compile Include="DataModels\Note.cs" />
     <Compile Include="DataModels\NoteCalendar.cs" />
@@ -88,6 +86,7 @@
     <Compile Include="DataModels\Problem.cs" />
     <Compile Include="DataModels\RegisterData.cs" />
     <Compile Include="DataModels\Serial.cs" />
+    <Compile Include="DataModels\SerialPassword.cs" />
     <Compile Include="DataModels\Serial_list.cs" />
     <Compile Include="DataModels\SpyLog.cs" />
     <Compile Include="DataModels\SupportNote.cs" />
@@ -103,6 +102,12 @@
     <Compile Include="MiscClass\Clean.cs" />
     <Compile Include="MiscClass\ColorResource.cs" />
     <Compile Include="MiscClass\CompareString.cs" />
+    <Compile Include="MiscClass\CustomBrowseField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomBrowseField.Designer.cs">
+      <DependentUpon>CustomBrowseField.cs</DependentUpon>
+    </Compile>
     <Compile Include="MiscClass\CustomComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,6 +125,12 @@
     </Compile>
     <Compile Include="MiscClass\CustomDateTimePicker.Designer.cs">
       <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\CustomLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomLabel.Designer.cs">
+      <DependentUpon>CustomLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\CustomMaskedTextBox.cs">
       <SubType>UserControl</SubType>
@@ -179,6 +190,12 @@
     <Compile Include="Subform\CalendarWindow.Designer.cs">
       <DependentUpon>CalendarWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\ChangeLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\ChangeLog.Designer.cs">
+      <DependentUpon>ChangeLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +219,12 @@
     </Compile>
     <Compile Include="Subform\DateEventWindow.Designer.cs">
       <DependentUpon>DateEventWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\DateSelectorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\DateSelectorDialog.Designer.cs">
+      <DependentUpon>DateSelectorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\DealerInquiryWindow.cs">
       <SubType>Form</SubType>
@@ -251,6 +274,18 @@
     <Compile Include="Subform\IstabWindow.Designer.cs">
       <DependentUpon>IstabWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\LeaveRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\LeaveRange.Designer.cs">
+      <DependentUpon>LeaveRange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\LeaveRangeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\LeaveRangeDialog.Designer.cs">
+      <DependentUpon>LeaveRangeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\LeaveWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -280,6 +315,12 @@
     </Compile>
     <Compile Include="Subform\MacAddressList.Designer.cs">
       <DependentUpon>MacAddressList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\MAFormDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\MAFormDialog.Designer.cs">
+      <DependentUpon>MAFormDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\MessageAlert.cs">
       <SubType>Form</SubType>
@@ -341,11 +382,29 @@
     <Compile Include="Subform\SellProgram2nd.Designer.cs">
       <DependentUpon>SellProgram2nd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\SerialPasswordList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SerialPasswordList.Designer.cs">
+      <DependentUpon>SerialPasswordList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\SimpleDatagridDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SimpleDatagridDialog.Designer.cs">
+      <DependentUpon>SimpleDatagridDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\SNInquiryWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Subform\SNInquiryWindow.Designer.cs">
       <DependentUpon>SNInquiryWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\SerialPasswordDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\SerialPasswordDialog.Designer.cs">
+      <DependentUpon>SerialPasswordDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\SnWindow.cs">
       <SubType>Form</SubType>
@@ -389,11 +448,23 @@
     <Compile Include="Subform\TestControl.Designer.cs">
       <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\TrainerNoteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\TrainerNoteDialog.Designer.cs">
+      <DependentUpon>TrainerNoteDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\TrainingExpertWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Subform\TrainingExpertWindow.Designer.cs">
       <DependentUpon>TrainingExpertWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\TrainingExpertWindow2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\TrainingExpertWindow2.Designer.cs">
+      <DependentUpon>TrainingExpertWindow2.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\UpgradeProgramForm.cs">
       <SubType>Form</SubType>
@@ -413,6 +484,12 @@
     <Compile Include="Subform\UsersEditForm.Designer.cs">
       <DependentUpon>UsersEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\UsersGroupWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\UsersGroupWindow.Designer.cs">
+      <DependentUpon>UsersGroupWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\UsersList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -422,6 +499,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomBrowseField.resx">
+      <DependentUpon>CustomBrowseField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomComboBox.resx">
       <DependentUpon>CustomComboBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -430,6 +510,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomDateTimePicker.resx">
       <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomLabel.resx">
+      <DependentUpon>CustomLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomMaskedTextBox.resx">
       <DependentUpon>CustomMaskedTextBox.cs</DependentUpon>
@@ -459,6 +542,9 @@
     <EmbeddedResource Include="Subform\CalendarWindow.resx">
       <DependentUpon>CalendarWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\ChangeLog.resx">
+      <DependentUpon>ChangeLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -470,6 +556,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\DateEventWindow.resx">
       <DependentUpon>DateEventWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\DateSelectorDialog.resx">
+      <DependentUpon>DateSelectorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\DealerInquiryWindow.resx">
       <DependentUpon>DealerInquiryWindow.cs</DependentUpon>
@@ -495,6 +584,12 @@
     <EmbeddedResource Include="Subform\IstabWindow.resx">
       <DependentUpon>IstabWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\LeaveRange.resx">
+      <DependentUpon>LeaveRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\LeaveRangeDialog.resx">
+      <DependentUpon>LeaveRangeDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\LeaveWindow.resx">
       <DependentUpon>LeaveWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -509,6 +604,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\MacAddressList.resx">
       <DependentUpon>MacAddressList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\MAFormDialog.resx">
+      <DependentUpon>MAFormDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\MessageAlert.resx">
       <DependentUpon>MessageAlert.cs</DependentUpon>
@@ -540,8 +638,17 @@
     <EmbeddedResource Include="Subform\SellProgram2nd.resx">
       <DependentUpon>SellProgram2nd.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SerialPasswordList.resx">
+      <DependentUpon>SerialPasswordList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SimpleDatagridDialog.resx">
+      <DependentUpon>SimpleDatagridDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\SNInquiryWindow.resx">
       <DependentUpon>SNInquiryWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\SerialPasswordDialog.resx">
+      <DependentUpon>SerialPasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\SnWindow.resx">
       <DependentUpon>SnWindow.cs</DependentUpon>
@@ -564,8 +671,14 @@
     <EmbeddedResource Include="Subform\TestControl.resx">
       <DependentUpon>TestControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\TrainerNoteDialog.resx">
+      <DependentUpon>TrainerNoteDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\TrainingExpertWindow.resx">
       <DependentUpon>TrainingExpertWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\TrainingExpertWindow2.resx">
+      <DependentUpon>TrainingExpertWindow2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UpgradeProgramForm.resx">
       <DependentUpon>UpgradeProgramForm.cs</DependentUpon>
@@ -575,6 +688,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UsersEditForm.resx">
       <DependentUpon>UsersEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\UsersGroupWindow.resx">
+      <DependentUpon>UsersGroupWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UsersList.resx">
       <DependentUpon>UsersList.cs</DependentUpon>
@@ -673,6 +789,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\save2.png" />
+    <None Include="Resources\save1.png" />
+    <None Include="Resources\trash2.png" />
+    <None Include="Resources\stop1.png" />
+    <None Include="Resources\trash1.png" />
+    <None Include="Resources\edit1.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\plus.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="Resources\arrow_all_up.png" />
+    <None Include="Resources\arrow_all_down.png" />
+    <None Include="Resources\arrow_go_down.png" />
+    <None Include="Resources\arrow_upper.png" />
+    <None Include="Resources\check_16.png" />
+    <None Include="Resources\teacher.png" />
+    <None Include="Resources\maid.png" />
+    <None Include="Resources\smile.png" />
+    <None Include="Resources\users_group.png" />
+    <None Include="Resources\change_scope.png" />
+    <None Include="Resources\calendar_range.png" />
     <None Include="Resources\reset_321.png" />
     <None Include="Resources\check_32.png" />
     <None Include="Resources\reset_32.png" />

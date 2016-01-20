@@ -24,6 +24,7 @@ namespace SN_Net.Subform
         private Istab.TABTYP tabtyp;
         public Istab istab;
         private string selected_typcod;
+        private List<Istab> passing_list;
 
         public IstabList()
         {
@@ -40,6 +41,12 @@ namespace SN_Net.Subform
             this.selected_typcod = typcod;
             this.setTitleText();
             this.sort_by = SORT_TYPCOD;
+        }
+
+        public IstabList(MainForm main_form, string typcod, Istab.TABTYP tabtyp, List<Istab> list_istab)
+            : this(main_form, typcod, tabtyp)
+        {
+            this.passing_list = list_istab;
         }
 
         private void IstabList_Shown(object sender, EventArgs e)
@@ -81,7 +88,14 @@ namespace SN_Net.Subform
 
         private void IstabList_Load(object sender, EventArgs e)
         {
-            this.fillInDataGrid(this.WhichDataToUse());
+            //if (this.passing_list != null)
+            //{
+            //    this.fillInDataGrid(this.passing_list);
+            //}
+            //else
+            //{
+                this.fillInDataGrid(this.WhichDataToUse());
+            //}
         }
 
         private void fillInDataGrid(List<Istab> istabs)
@@ -121,7 +135,8 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn text_col3 = new DataGridViewTextBoxColumn();
             text_col3.HeaderText = "รายละเอียด";
-            text_col3.Width = this.dgvIstab.ClientSize.Width - (text_col2.Width + 3);
+            //text_col3.Width = this.dgvIstab.ClientSize.Width - (text_col2.Width + 3);
+            text_col3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             text_col3.SortMode = DataGridViewColumnSortMode.Programmatic;
             text_col3.HeaderCell.Style = new DataGridViewCellStyle()
             {
@@ -180,11 +195,16 @@ namespace SN_Net.Subform
 
         private void IstabList_Resize(object sender, EventArgs e)
         {
-            this.dgvIstab.Columns[2].Width = this.dgvIstab.ClientSize.Width - (this.dgvIstab.Columns[1].Width + 3);
+            //this.dgvIstab.Columns[2].Width = this.dgvIstab.ClientSize.Width - (this.dgvIstab.Columns[1].Width + 3);
         }
 
         private List<Istab> WhichDataToUse()
         {
+            if (this.passing_list != null)
+            {
+                return (this.sort_by == SORT_TYPCOD ? this.passing_list.OrderBy(t => t.typcod, new CompareStrings()).ToList<Istab>() : this.passing_list.OrderBy(t => t.typdes_th, new CompareStrings()).ToList<Istab>());
+            }
+
             switch (this.tabtyp)
             {
                 case Istab.TABTYP.AREA:
@@ -249,21 +269,27 @@ namespace SN_Net.Subform
         {
             if (e.Button == MouseButtons.Right)
             {
+                if (this.passing_list != null)
+                    return;
+
                 int currentMouseOverRow = this.dgvIstab.HitTest(e.X, e.Y).RowIndex;
-                this.dgvIstab.Rows[currentMouseOverRow].Selected = true;
+                if (currentMouseOverRow > -1)
+                {
+                    this.dgvIstab.Rows[currentMouseOverRow].Selected = true;
 
-                ContextMenu m = new ContextMenu();
-                MenuItem mnu_edit = new MenuItem("แก้ไข");
-                mnu_edit.Tag = (Istab)this.dgvIstab.Rows[currentMouseOverRow].Tag;
-                mnu_edit.Click += this.performEdit;
-                m.MenuItems.Add(mnu_edit);
+                    ContextMenu m = new ContextMenu();
+                    MenuItem mnu_edit = new MenuItem("แก้ไข");
+                    mnu_edit.Tag = (Istab)this.dgvIstab.Rows[currentMouseOverRow].Tag;
+                    mnu_edit.Click += this.performEdit;
+                    m.MenuItems.Add(mnu_edit);
 
-                MenuItem mnu_delete = new MenuItem("ลบ");
-                mnu_delete.Tag = (Istab)this.dgvIstab.Rows[currentMouseOverRow].Tag;
-                mnu_delete.Click += this.performDelete;
-                m.MenuItems.Add(mnu_delete);
+                    MenuItem mnu_delete = new MenuItem("ลบ");
+                    mnu_delete.Tag = (Istab)this.dgvIstab.Rows[currentMouseOverRow].Tag;
+                    mnu_delete.Click += this.performDelete;
+                    m.MenuItems.Add(mnu_delete);
 
-                m.Show(this.dgvIstab, new Point(e.X, e.Y));
+                    m.Show(this.dgvIstab, new Point(e.X, e.Y));
+                }
             }
         }
 

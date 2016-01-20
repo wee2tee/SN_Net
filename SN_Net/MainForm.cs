@@ -22,6 +22,7 @@ namespace SN_Net
         public DealerWindow dealer_wind;
         public SupportNoteWindow supportnote_wind;
         public SupportStatWindow supportstat_wind;
+        public CalendarWindow calendar_wind;
         public LeaveWindow leave_wind;
         public IstabWindow area_wind;
         public IstabWindow verext_wind;
@@ -29,7 +30,9 @@ namespace SN_Net
         public IstabWindow busityp_wind;
         public IstabWindow probcode_wind;
         public IstabWindow leavecause_wind;
+        public IstabWindow servicecase_wind;
         public SearchHistory searchhistory_wind;
+        public UsersGroupWindow usersgroup_wind;
         
         public string my_mac = string.Empty;
         public GlobalVar G;
@@ -51,15 +54,17 @@ namespace SN_Net
             {
                 this.G = login.G;
                 this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
-                if (this.G.loged_in_user_level < 9)
+                if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)
                 {
-                    this.userInformationToolStripMenuItem.Visible = false;
                     this.macAddressAllowedToolStripMenuItem.Visible = false;
                 }
-                if (this.G.loged_in_user_level < 8)
+                if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR)
                 {
+                    this.userInformationToolStripMenuItem.Visible = false;
                     this.supportStatMenuItem.Visible = false;
                     this.SearchHistoryMenuItem.Visible = false;
+                    this.usersGroupMenuItem.Visible = false;
+                    this.preferenceToolStripMenuItem.Enabled = false;
                 }
 
                 this.loadDataResource();
@@ -204,6 +209,20 @@ namespace SN_Net
             }
         }
 
+        private void serviceCaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.servicecase_wind == null)
+            {
+                this.servicecase_wind = new IstabWindow(this, Istab.TABTYP.SERVICE_CASE);
+                this.servicecase_wind.MdiParent = this;
+                this.servicecase_wind.Show();
+            }
+            else
+            {
+                this.servicecase_wind.Activate();
+            }
+        }
+
         private void macAddressAllowedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CRUDResult res = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "macallowed/get_all");
@@ -228,7 +247,7 @@ namespace SN_Net
 
         private void userInformationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UsersList wind = new UsersList();
+            UsersList wind = new UsersList(this);
             wind.ShowDialog();
         }
 
@@ -336,9 +355,14 @@ namespace SN_Net
         {
             if (this.supportstat_wind == null)
             {
-                SupportStatWindow wind = new SupportStatWindow(this);
-                wind.MdiParent = this;
-                wind.Show();
+                LeaveRangeDialog dlg = new LeaveRangeDialog(this);
+                dlg.Text = "กำหนดขอบเขตการแสดงข้อมูลการปฏิบัติงาน(Support)";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    SupportStatWindow wind = new SupportStatWindow(this, dlg.user_from, dlg.user_to, dlg.date_from, dlg.date_to);
+                    wind.MdiParent = this;
+                    wind.Show();
+                }
             }
             else
             {
@@ -350,9 +374,13 @@ namespace SN_Net
         {
             if (this.leave_wind == null)
             {
-                LeaveWindow wind = new LeaveWindow(this);
-                wind.MdiParent = this;
-                wind.Show();
+                LeaveRangeDialog dlg = new LeaveRangeDialog(this);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    LeaveWindow wind = new LeaveWindow(this, dlg.user_from, dlg.user_to, dlg.date_from, dlg.date_to);
+                    wind.MdiParent = this;
+                    wind.Show();
+                }
             }
             else
             {
@@ -376,18 +404,43 @@ namespace SN_Net
 
         private void calendarMenuItem_Click(object sender, EventArgs e)
         {
-            CalendarWindow wind = new CalendarWindow(this);
-            //TestControl wind = new TestControl();
-            wind.MdiParent = this;
-            wind.Show();
-
-
+            if (this.calendar_wind == null)
+            {
+                this.calendar_wind = new CalendarWindow(this);
+                this.calendar_wind.MdiParent = this;
+                this.calendar_wind.Show();
+            }
+            else
+            {
+                this.calendar_wind.Activate();
+            }
         }
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TestControl w = new TestControl();
-            w.ShowDialog();
+            //TestControl w = new TestControl();
+            //w.ShowDialog();
+            UsersGroupWindow win = new UsersGroupWindow(this);
+            win.ShowDialog();
+        }
+
+        private void usersGroupMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.usersgroup_wind == null)
+            {
+                this.usersgroup_wind = new UsersGroupWindow(this);
+                this.usersgroup_wind.MdiParent = this;
+                this.usersgroup_wind.Show();
+            }
+            else{
+                this.usersgroup_wind.Activate();
+            }
+        }
+
+        private void changeLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeLog cl = new ChangeLog();
+            cl.ShowDialog();
         }
     }
 }

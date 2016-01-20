@@ -20,10 +20,11 @@ namespace SN_Net.Subform
         private CustomDateEvent cde;
         private bool begin_add_at_first_show = false;
         private bool begin_edit_at_first_show = false;
-        private EventCalendar event_to_edit = null;
+        private EventCalendar current_event = null;
         CultureInfo cinfo_th = new CultureInfo("th-TH");
         private List<Users> users_list;
         private List<Istab> leave_cause;
+        private List<Istab> users_group;
         private FORM_MODE form_mode;
         private enum FORM_MODE
         {
@@ -40,6 +41,12 @@ namespace SN_Net.Subform
             WAIT = 0,
             CONFIRMED = 1,
             CANCELED = 2
+        }
+
+        private enum DGV_TAG
+        {
+            NORMAL,
+            DELETE
         }
 
         public DateEventWindow()
@@ -65,7 +72,7 @@ namespace SN_Net.Subform
         {
             this.cde = cde;
             this.begin_edit_at_first_show = begin_edit_at_first_show;
-            this.event_to_edit = ev;
+            this.current_event = ev;
         }
 
         private void DateEventWindow_Load(object sender, EventArgs e)
@@ -74,8 +81,6 @@ namespace SN_Net.Subform
             this.BindingControlEvent();
 
             this.groupBox1.Text = this.cde.Date.ThaiDayOfWeek() + " ที่ " + this.cde.Date.ToString("d MMMM yyyy", cinfo_th);
-
-            this.SetRadioButtonState();
 
             #region Load users_list from server
             CRUDResult get_user = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_all");
@@ -87,15 +92,39 @@ namespace SN_Net.Subform
             }
             #endregion Load users_list from server
 
-            #region Load leave_cause from server
-            CRUDResult get_leave_cause = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.getTabtypString(Istab.TABTYP.ABSENT_CAUSE) + "&sort=typcod");
+            #region Load Absent_cause and Service_case from server
+            CRUDResult get_leave_cause = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_leave_cause");
             ServerResult sr_leave_cause = JsonConvert.DeserializeObject<ServerResult>(get_leave_cause.data);
 
             if (sr_leave_cause.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
                 this.leave_cause = sr_leave_cause.istab;
             }
-            #endregion Load leave_cause from server
+            #endregion Load Absent_cause and Service_case from server
+
+            #region Load Users Group from Server
+            CRUDResult get_group = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "istab/get_all&tabtyp=" + Istab.TABTYP.USER_GROUP.ToTabtypString() + "&sort=typcod");
+
+            ServerResult sr_group = JsonConvert.DeserializeObject<ServerResult>(get_group.data);
+            if (sr_group.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.users_group = sr_group.istab;
+            }
+
+            this.cbGroupWeekend.AddItem(new ComboboxItem("", -1, ""));
+            foreach (Istab g in this.users_group)
+            {
+                this.cbGroupWeekend.AddItem(new ComboboxItem(g.typcod + " : " + g.typdes_th, g.id, g.typcod) { Tag = g });
+            }
+
+            this.cbGroupMaid.AddItem(new ComboboxItem("", -1, ""));
+            foreach (Istab g in this.users_group)
+            {
+                this.cbGroupMaid.AddItem(new ComboboxItem(g.typcod + " : " + g.typdes_th, g.id, g.typcod) { Tag = g });
+            }
+            #endregion Load Users Group from Server
+
+            this.InitControl();
 
             this.FillDataGrid();
         }
@@ -113,10 +142,16 @@ namespace SN_Net.Subform
                     ((CustomComboBox)this.dgv.Parent.Controls.Find("inline_users_name", true)[0]).Focus();
                 }
             }
-            else if (this.begin_edit_at_first_show && this.event_to_edit != null)
+            else if (this.begin_edit_at_first_show && this.current_event != null)
             {
-                int edit_item_index = this.cde.event_list.FindIndex(t => t.id == this.event_to_edit.id);
-                this.dgv.Rows[edit_item_index].Cells[1].Selected = true;
+                if (this.dgv.Rows.Cast<DataGridViewRow>().Where(r => r.Tag is EventCalendar).Where(r => ((EventCalendar)r.Tag).id == this.current_event.id).Count<DataGridViewRow>() > 0)
+                {
+                    this.dgv.Rows.Cast<DataGridViewRow>().Where(r => r.Tag is EventCalendar).Where(r => ((EventCalendar)r.Tag).id == this.current_event.id).First<DataGridViewRow>().Cells[1].Selected = true;
+                }
+                else
+                {
+                    return;
+                }
                 this.FormEditItem();
                 this.ShowInlineForm();
 
@@ -131,13 +166,21 @@ namespace SN_Net.Subform
             }
         }
 
-        private void SetRadioButtonState()
+        private void InitControl()
         {
-            // set radio button state
             this.rbHoliday.Checked = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? true : false);
             this.rbWeekday.Checked = ((this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.NOTE) || this.cde.note_calendar == null ? true : false);
             this.txtHoliday.Texts = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cde.note_calendar.description : "");
-            this.txtRemark.Texts = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.NOTE ? this.cde.note_calendar.description : "");
+            if (this.cde.note_calendar != null)
+            {
+                this.cbGroupMaid.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cbGroupMaid.comboBox1.Items[0] : (this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_maid).Count<ComboboxItem>() > 0 ? this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_maid).First<ComboboxItem>() : this.cbGroupMaid.comboBox1.Items[0]));
+                this.cbGroupWeekend.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cbGroupWeekend.comboBox1.Items[0] : (this.cbGroupWeekend.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_weekend).Count<ComboboxItem>() > 0 ? this.cbGroupWeekend.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_weekend).First<ComboboxItem>() : this.cbGroupWeekend.comboBox1.Items[0]));
+            }
+            else
+            {
+                this.cbGroupMaid.comboBox1.SelectedItem = this.cbGroupMaid.comboBox1.Items[0];
+                this.cbGroupWeekend.comboBox1.SelectedItem = this.cbGroupWeekend.comboBox1.Items[0];
+            }
             this.leaveMax.Value = (this.cde.note_calendar != null ? this.cde.note_calendar.max_leave : -1);
         }
 
@@ -152,6 +195,14 @@ namespace SN_Net.Subform
                     {
                         this.dgv.CreateGraphics().DrawLine(p, rect.X, rect.Y, rect.X + rect.Width, rect.Y);
                         this.dgv.CreateGraphics().DrawLine(p, rect.X, rect.Y + rect.Height - 2, rect.X + rect.Width, rect.Y + rect.Height - 2);
+
+                        if ((DGV_TAG)this.dgv.Tag == DGV_TAG.DELETE)
+                        {
+                            for (int i = rect.Left - 16; i < rect.Right; i += 8)
+                            {
+                                this.dgv.CreateGraphics().DrawLine(p, i, rect.Bottom - 2, i + 23, rect.Top);
+                            }
+                        }
                     }
                 }
             };
@@ -204,6 +255,18 @@ namespace SN_Net.Subform
                         m_edit.Enabled = (this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag is EventCalendar ? true : false);
                         m.MenuItems.Add(m_edit);
 
+                        MenuItem m_copy = new MenuItem("คัดลอกไปยังวันที่ ... <Alt+C>");
+                        m_copy.Click += delegate
+                        {
+                            DateSelectorDialog ds = new DateSelectorDialog(this.cde.Date);
+                            if (ds.ShowDialog() == DialogResult.OK)
+                            {
+                                this.DoCopy(ds.selected_date, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
+                            }
+                        };
+                        m_copy.Enabled = (this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag is EventCalendar ? true : false);
+                        m.MenuItems.Add(m_copy);
+
                         MenuItem m_delete = new MenuItem("ลบ <Alt+D>");
                         m_delete.Click += delegate
                         {
@@ -219,7 +282,8 @@ namespace SN_Net.Subform
 
             List<Control> ct = new List<Control>();
             ct.Add(this.txtHoliday.label1);
-            ct.Add(this.txtRemark.label1);
+            ct.Add(this.cbGroupMaid.label1);
+            ct.Add(this.cbGroupWeekend.label1);
             ct.Add(this.leaveMax);
             foreach (Control c in ct)
             {
@@ -233,11 +297,11 @@ namespace SN_Net.Subform
             {
                 if (this.rbHoliday.Enabled && this.rbHoliday.Checked)
                 {
-                    this.txtHoliday.ReadOnly = false;
+                    this.txtHoliday.Read_Only = false;
                 }
                 else
                 {
-                    this.txtHoliday.ReadOnly = true;
+                    this.txtHoliday.Read_Only = true;
                 }
             };
 
@@ -245,12 +309,14 @@ namespace SN_Net.Subform
             {
                 if (this.rbWeekday.Enabled && this.rbWeekday.Checked)
                 {
-                    this.txtRemark.ReadOnly = false;
+                    this.cbGroupWeekend.Read_Only = false;
+                    this.cbGroupMaid.Read_Only = false;
                     this.leaveMax.Enabled = true;
                 }
                 else
                 {
-                    this.txtRemark.ReadOnly = true;
+                    this.cbGroupWeekend.Read_Only = true;
+                    this.cbGroupMaid.Read_Only = true;
                     this.leaveMax.Enabled = false;
                 }
             };
@@ -259,12 +325,12 @@ namespace SN_Net.Subform
             {
                 if (this.rbHoliday.Checked && this.rbHoliday.Enabled)
                 {
-                    this.txtHoliday.ReadOnly = false;
+                    this.txtHoliday.Read_Only = false;
                     this.leaveMax.Enabled = false;
                 }
                 else
                 {
-                    this.txtHoliday.ReadOnly = true;
+                    this.txtHoliday.Read_Only = true;
                 }
             };
 
@@ -272,12 +338,14 @@ namespace SN_Net.Subform
             {
                 if (this.rbWeekday.Checked && this.rbWeekday.Enabled)
                 {
-                    this.txtRemark.ReadOnly = false;
+                    this.cbGroupWeekend.Read_Only = false;
+                    this.cbGroupMaid.Read_Only = false;
                     this.leaveMax.Enabled = true;
                 }
                 else
                 {
-                    this.txtRemark.ReadOnly = true;
+                    this.cbGroupWeekend.Read_Only = true;
+                    this.cbGroupMaid.Read_Only = true;
                     this.leaveMax.Enabled = false;
                 }
             };
@@ -286,17 +354,18 @@ namespace SN_Net.Subform
             {
                 if (this.txtHoliday.Texts.Length > 0)
                 {
-                    this.txtRemark.Texts = "";
+                    this.cbGroupMaid.comboBox1.SelectedIndex = 0;
+                    this.cbGroupWeekend.comboBox1.SelectedIndex = 0;
                 }
             };
 
-            this.txtRemark.textBox1.TextChanged += delegate
-            {
-                if (this.txtRemark.Texts.Length > 0)
-                {
-                    this.txtHoliday.Texts = "";
-                }
-            };
+            //this.txtRemark.textBox1.TextChanged += delegate
+            //{
+            //    if (this.txtRemark.Texts.Length > 0)
+            //    {
+            //        this.txtHoliday.Texts = "";
+            //    }
+            //};
 
             this.leaveMax.GotFocus += delegate
             {
@@ -304,10 +373,11 @@ namespace SN_Net.Subform
             };
         }
 
-        private void FillDataGrid()
+        private void FillDataGrid(EventCalendar selected_item = null)
         {
             this.dgv.Rows.Clear();
             this.dgv.Columns.Clear();
+            this.dgv.Tag = DGV_TAG.NORMAL;
 
             DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
             col0.Visible = false;
@@ -344,8 +414,8 @@ namespace SN_Net.Subform
             this.dgv.Columns.Add(col5);
 
             DataGridViewTextBoxColumn col6 = new DataGridViewTextBoxColumn();
-            col6.Width = 70;
-            col6.HeaderText = "Confirmed";
+            col6.Width = 80;
+            col6.HeaderText = "สถานะ";
             col6.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgv.Columns.Add(col6);
 
@@ -355,8 +425,35 @@ namespace SN_Net.Subform
             col7.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgv.Columns.Add(col7);
 
+            DataGridViewTextBoxColumn col8 = new DataGridViewTextBoxColumn();
+            col8.Width = 120;
+            col8.HeaderText = "ใบรับรองแพทย์";
+            col8.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgv.Columns.Add(col8);
+
+            DataGridViewTextBoxColumn col9 = new DataGridViewTextBoxColumn();
+            col9.Width = 90;
+            col9.HeaderText = "หักค่าคอมฯ";
+            col9.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgv.Columns.Add(col9);
+
             int row_count = 0;
-            foreach (EventCalendar ev in this.cde.event_list)
+
+            List<EventCalendar> support_list = new List<EventCalendar>();
+            List<EventCalendar> supervisor_list = new List<EventCalendar>();
+            foreach (EventCalendar e in this.cde.event_list)
+            {
+                if (this.users_list.Where(u => u.username == e.users_name && u.level >= GlobalVar.USER_LEVEL_SUPERVISOR).Count<Users>() > 0)
+                {
+                    supervisor_list.Add(e);
+                }
+                else
+                {
+                    support_list.Add(e);
+                }
+            }
+
+            foreach (EventCalendar ev in support_list)
             {
                 int r = this.dgv.Rows.Add();
                 this.dgv.Rows[r].Tag = ev;
@@ -364,49 +461,195 @@ namespace SN_Net.Subform
                 this.dgv.Rows[r].Cells[0].ValueType = typeof(int);
                 this.dgv.Rows[r].Cells[0].Value = ev.id;
 
-                this.dgv.Rows[r].Cells[1].ValueType = typeof(int);
-                this.dgv.Rows[r].Cells[1].Value = ++row_count;
+                row_count += (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? 0 : 1);
+                this.dgv.Rows[r].Cells[1].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[1].Value = (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? "" : row_count.ToString());
                 this.dgv.Rows[r].Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-                this.dgv.Rows[r].Cells[1].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[1].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgv.Rows[r].Cells[1].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[1].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[2].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[2].Value = ev.users_name + " : " + ev.realname;
-                this.dgv.Rows[r].Cells[2].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[2].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgv.Rows[r].Cells[2].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[2].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[3].ValueType = typeof(string);
-                this.dgv.Rows[r].Cells[3].Value = this.GetEventTypdes(ev.event_code);
-                this.dgv.Rows[r].Cells[3].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[3].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgv.Rows[r].Cells[3].Value = this.GetEventTypdes(ev.event_type, ev.event_code);
+                this.dgv.Rows[r].Cells[3].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[3].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[4].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[4].Value = ev.from_time.Substring(0, 5);
-                this.dgv.Rows[r].Cells[4].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[4].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgv.Rows[r].Cells[4].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[4].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[5].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[5].Value = ev.to_time.Substring(0, 5);
-                this.dgv.Rows[r].Cells[5].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[5].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgv.Rows[r].Cells[5].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[5].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[6].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[6].Value = this.GetLeaveStatusString((int)ev.status);
-                this.dgv.Rows[r].Cells[6].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[6].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
+                this.dgv.Rows[r].Cells[6].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[6].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[7].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[7].Value = ev.customer; //(ev.customer.Length > 0 ? ev.customer : this.cde.GetTimeString(ev));
-                this.dgv.Rows[r].Cells[7].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-                this.dgv.Rows[r].Cells[7].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : Color.White);
-            }
+                this.dgv.Rows[r].Cells[7].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[7].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
+                this.dgv.Rows[r].Cells[8].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[8].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : "");
+                this.dgv.Rows[r].Cells[8].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[8].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+
+                this.dgv.Rows[r].Cells[9].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[9].Value = (ev.fine > 0 ? ev.fine.ToString() : "");
+                this.dgv.Rows[r].Cells[9].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                this.dgv.Rows[r].Cells[9].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[9].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[9].Style.ForeColor = Color.Red;
+                this.dgv.Rows[r].Cells[9].Style.SelectionForeColor = Color.Red;
+            }
+            foreach (EventCalendar ev in supervisor_list)
+            {
+                int r = this.dgv.Rows.Add();
+                this.dgv.Rows[r].Tag = ev;
+
+                this.dgv.Rows[r].Cells[0].ValueType = typeof(int);
+                this.dgv.Rows[r].Cells[0].Value = ev.id;
+
+                this.dgv.Rows[r].Cells[1].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[1].Value = "";
+                this.dgv.Rows[r].Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                this.dgv.Rows[r].Cells[1].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[1].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[2].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[2].Value = ev.users_name + " : " + ev.realname;
+                this.dgv.Rows[r].Cells[2].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[2].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[3].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[3].Value = this.GetEventTypdes(ev.event_type, ev.event_code);
+                this.dgv.Rows[r].Cells[3].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[3].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[4].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[4].Value = ev.from_time.Substring(0, 5);
+                this.dgv.Rows[r].Cells[4].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[4].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[5].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[5].Value = ev.to_time.Substring(0, 5);
+                this.dgv.Rows[r].Cells[5].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[5].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[6].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[6].Value = this.GetLeaveStatusString((int)ev.status);
+                this.dgv.Rows[r].Cells[6].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[6].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[7].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[7].Value = ev.customer;
+                this.dgv.Rows[r].Cells[7].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[7].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[8].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[8].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : "");
+                this.dgv.Rows[r].Cells[8].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[8].Style.SelectionBackColor = Color.Wheat;
+
+                this.dgv.Rows[r].Cells[9].ValueType = typeof(string);
+                this.dgv.Rows[r].Cells[9].Value = (ev.fine > 0 ? ev.fine.ToString() : "");
+                this.dgv.Rows[r].Cells[9].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                this.dgv.Rows[r].Cells[9].Style.BackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[9].Style.SelectionBackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[9].Style.ForeColor = Color.Red;
+                this.dgv.Rows[r].Cells[9].Style.SelectionForeColor = Color.Red;
+            }
             this.dgv.FillLine(this.cde.event_list.Count + 4);
+
+            if (selected_item != null)
+            {
+                if (this.dgv.Rows.Cast<DataGridViewRow>().Where(r => r.Tag is EventCalendar).Where(r => ((EventCalendar)r.Tag).id == selected_item.id).Count() > 0)
+                {
+                    this.dgv.Rows.Cast<DataGridViewRow>().Where(r => r.Tag is EventCalendar).Where(r => ((EventCalendar)r.Tag).id == selected_item.id).First<DataGridViewRow>().Cells[1].Selected = true;
+                }
+            }
         }
 
-        private string GetEventTypdes(string event_code)
+        private void DoCopy(DateTime date, EventCalendar event_calendar)
         {
-            if (this.leave_cause.Find(t => t.typcod == event_code) != null)
+            bool post_success = false;
+            string err_msg = "";
+            int inserted_id = -1;
+
+            this.FormProcessing();
+
+            string json_data = "{\"users_name\":\"" + event_calendar.users_name + "\",";
+            json_data += "\"date\":\"" + date.ToMysqlDate() + "\",";
+            json_data += "\"from_time\":\"" + event_calendar.from_time + "\",";
+            json_data += "\"to_time\":\"" + event_calendar.to_time + "\",";
+            json_data += "\"event_type\":\"" + event_calendar.event_type + "\",";
+            json_data += "\"event_code\":\"" + event_calendar.event_code + "\",";
+            json_data += "\"customer\":\"" + event_calendar.customer + "\",";
+            json_data += "\"status\":\"" + event_calendar.status.ToString() + "\",";
+            json_data += "\"med_cert\":\"" + event_calendar.med_cert + "\",";
+            json_data += "\"fine\":" + event_calendar.fine.ToString() + ",";
+            json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate
+            {
+                CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "eventcalendar/create", json_data);
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    post_success = true;
+                    inserted_id = Convert.ToInt32(sr.message);
+                }
+                else
+                {
+                    post_success = false;
+                    err_msg = sr.message;
+                }
+            };
+            worker.RunWorkerCompleted += delegate
+            {
+                if (post_success)
+                {
+                    foreach (CustomDateEvent ct in this.cde.Parent.Controls)
+                    {
+                        if (ct.Date.ToDMYDateValue() == date.ToDMYDateValue())
+                        {
+                            ct.RefreshData();
+                            ct.RefreshView();
+                        }
+                    }
+                    if (this.cde.Date.ToDMYDateValue() == date.ToDMYDateValue())
+                    {
+                        this.FillDataGrid();
+                        this.dgv.Rows[this.cde.event_list.FindIndex(t => t.id == inserted_id)].Cells[1].Selected = true;
+                    }
+                    this.FormReadItem();
+                }
+                else
+                {
+                    if (MessageAlert.Show(err_msg, "Error", MessageAlertButtons.RETRY_CANCEL, MessageAlertIcons.ERROR) == DialogResult.Retry)
+                    {
+                        this.DoCopy(date, event_calendar);
+                    }
+                    this.FormReadItem();
+                }
+            };
+            worker.RunWorkerAsync();
+        }
+
+        private string GetEventTypdes(string event_type, string event_code)
+        {
+            if (this.leave_cause.Find(t => t.tabtyp == event_type && t.typcod == event_code) != null)
             {
                 return this.leave_cause.Find(t => t.typcod == event_code).typdes_th;
             }
@@ -423,6 +666,7 @@ namespace SN_Net.Subform
 
             CustomComboBox inline_users_name = new CustomComboBox();
             inline_users_name.Name = "inline_users_name";
+            inline_users_name.comboBox1.DropDownStyle = ComboBoxStyle.DropDown;
             inline_users_name.Read_Only = false;
             inline_users_name.BorderStyle = BorderStyle.None;
             foreach (Users u in this.users_list)
@@ -437,6 +681,18 @@ namespace SN_Net.Subform
                     }
                 }
             }
+            inline_users_name.Leave += delegate
+            {
+                if (inline_users_name.comboBox1.Items.Cast<ComboboxItem>().Where(t => t.name.Length >= inline_users_name.comboBox1.Text.Length).Where(t => t.name.Substring(0, inline_users_name.comboBox1.Text.Length) == inline_users_name.comboBox1.Text).Count() > 0)
+                {
+                    inline_users_name.comboBox1.SelectedItem = inline_users_name.comboBox1.Items.Cast<ComboboxItem>().Where(t => t.name.Length >= inline_users_name.comboBox1.Text.Length).Where(t => t.name.Substring(0, inline_users_name.comboBox1.Text.Length) == inline_users_name.comboBox1.Text).First();
+                }
+                else
+                {
+                    inline_users_name.comboBox1.Focus();
+                    SendKeys.Send("{F6}");
+                }
+            };
             inline_users_name.comboBox1.SelectedIndex = (this.form_mode == FORM_MODE.EDIT_ITEM ? this.users_list.FindIndex(t => t.username == ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).users_name) : 0);
             this.dgv.Parent.Controls.Add(inline_users_name);
 
@@ -447,10 +703,11 @@ namespace SN_Net.Subform
             foreach (Istab i in this.leave_cause)
             {
                 ComboboxItem item = new ComboboxItem(i.typdes_th, i.id, i.typcod);
+                item.Tag = i;
                 inline_leave_cause.AddItem(item);
                 if (this.form_mode == FORM_MODE.EDIT_ITEM)
                 {
-                    if (i.typcod == ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).event_code)
+                    if (i.tabtyp == ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).event_type && i.typcod == ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).event_code)
                     {
                         inline_leave_cause.comboBox1.SelectedItem = item;
                     }
@@ -480,17 +737,40 @@ namespace SN_Net.Subform
             inline_status.Name = "inline_status";
             inline_status.Read_Only = false;
             inline_status.BorderStyle = BorderStyle.None;
-            inline_status.AddItem(new ComboboxItem("N", 0, "N"));
-            inline_status.AddItem(new ComboboxItem("Y", 1, "Y"));
+            inline_status.AddItem(new ComboboxItem("Wait", 0, "Wait"));
+            inline_status.AddItem(new ComboboxItem("Confirmed", 1, "Confirmed"));
+            inline_status.AddItem(new ComboboxItem("Canceled", 2, "Canceled"));
             this.dgv.Parent.Controls.Add(inline_status);
             inline_status.comboBox1.SelectedIndex = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).status : 1);
             
             CustomTextBox inline_customer = new CustomTextBox();
             inline_customer.Name = "inline_customer";
-            inline_customer.ReadOnly = false;
+            inline_customer.Read_Only = false;
+            inline_customer.MaxChar = 40;
             inline_customer.BorderStyle = BorderStyle.None;
             this.dgv.Parent.Controls.Add(inline_customer);
             inline_customer.Texts = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).customer : "");
+
+            CustomComboBox inline_medcert = new CustomComboBox();
+            inline_medcert.Name = "inline_medcert";
+            inline_medcert.Read_Only = false;
+            inline_medcert.BorderStyle = BorderStyle.None;
+            inline_medcert.AddItem(new ComboboxItem("ไม่มีใบรับรองแพทย์", 0, "N"));
+            inline_medcert.AddItem(new ComboboxItem("มีใบรับรองแพทย์", 1, "Y"));
+            this.dgv.Parent.Controls.Add(inline_medcert);
+            inline_medcert.comboBox1.SelectedItem = (this.form_mode == FORM_MODE.EDIT_ITEM ? inline_medcert.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.string_value == ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).med_cert).First<ComboboxItem>() : (ComboboxItem)inline_medcert.comboBox1.Items[0]);
+
+            NumericUpDown inline_fine = new NumericUpDown();
+            inline_fine.Name = "inline_fine";
+            inline_fine.Maximum = 1000;
+            inline_fine.Minimum = 0;
+            inline_fine.AutoSize = false;
+            inline_fine.Font = new Font("tahoma", 9.75f);
+            inline_fine.ThousandsSeparator = true;
+            inline_fine.BorderStyle = BorderStyle.None;
+            inline_fine.TextAlign = HorizontalAlignment.Right;
+            this.dgv.Parent.Controls.Add(inline_fine);
+            inline_fine.Value = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).fine : 0);
 
             this.SetInlineFormPosition();
             this.dgv.SendToBack();
@@ -501,6 +781,8 @@ namespace SN_Net.Subform
             inline_to_time.BringToFront();
             inline_status.BringToFront();
             inline_customer.BringToFront();
+            inline_medcert.BringToFront();
+            inline_fine.BringToFront();
         }
 
         private void ClearInlineForm()
@@ -528,6 +810,14 @@ namespace SN_Net.Subform
             if (this.dgv.Parent.Controls.Find("inline_customer", true).Length > 0)
             {
                 this.dgv.Parent.Controls.RemoveByKey("inline_customer");
+            }
+            if (this.dgv.Parent.Controls.Find("inline_medcert", true).Length > 0)
+            {
+                this.dgv.Parent.Controls.RemoveByKey("inline_medcert");
+            }
+            if (this.dgv.Parent.Controls.Find("inline_fine", true).Length > 0)
+            {
+                this.dgv.Parent.Controls.RemoveByKey("inline_fine");
             }
         }
 
@@ -576,6 +866,21 @@ namespace SN_Net.Subform
                     CustomTextBox inline_customer = (CustomTextBox)this.dgv.Parent.Controls.Find("inline_customer", true)[0];
                     inline_customer.SetBounds(rect_customer.X + 2, rect_customer.Y + 1, rect_customer.Width - 1, rect_customer.Height - 3);
                 }
+
+                if (this.dgv.Parent.Controls.Find("inline_medcert", true).Length > 0)
+                {
+                    Rectangle rect_medcert = this.dgv.GetCellDisplayRectangle(8, this.dgv.CurrentCell.RowIndex, true);
+                    CustomComboBox inline_medcert = (CustomComboBox)this.dgv.Parent.Controls.Find("inline_medcert", true)[0];
+                    inline_medcert.SetBounds(rect_medcert.X + 2, rect_medcert.Y + 1, rect_medcert.Width - 1, rect_medcert.Height - 3);
+                }
+
+                if (this.dgv.Parent.Controls.Find("inline_fine", true).Length > 0)
+                {
+                    Rectangle rect_fine = this.dgv.GetCellDisplayRectangle(9, this.dgv.CurrentCell.RowIndex, true);
+                    //CustomMaskedTextBox inline_fine = (CustomMaskedTextBox)this.dgv.Parent.Controls.Find("inline_fine", true)[0];
+                    NumericUpDown inline_fine = (NumericUpDown)this.dgv.Parent.Controls.Find("inline_fine", true)[0];
+                    inline_fine.SetBounds(rect_fine.X + 2, rect_fine.Y + 1, rect_fine.Width - 1, rect_fine.Height - 3);
+                }
             }
         }
 
@@ -583,6 +888,8 @@ namespace SN_Net.Subform
         {
             if (this.dgv.CurrentCell != null && this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag is EventCalendar)
             {
+                this.dgv.Tag = DGV_TAG.DELETE;
+
                 if (MessageAlert.Show(StringResource.CONFIRM_DELETE, "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
                 {
                     EventCalendar ev = (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag;
@@ -606,14 +913,24 @@ namespace SN_Net.Subform
                     {
                         if (delete_success)
                         {
+                            this.dgv.Tag = DGV_TAG.NORMAL;
                             this.cde.RefreshData();
                             this.cde.RefreshView();
                             this.FillDataGrid();
                             this.FormReadItem();
                             this.dgv.Rows[0].Cells[1].Selected = true;
                         }
+                        else
+                        {
+                            MessageAlert.Show("เกิดข้อผิดพลาด, กรุณาลองใหม่อีกครั้งในภายหลัง", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                            this.FillDataGrid((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
+                        }
                     };
                     worker.RunWorkerAsync();
+                }
+                else
+                {
+                    this.FillDataGrid((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
                 }
             }
         }
@@ -762,7 +1079,16 @@ namespace SN_Net.Subform
             }
             if (this.dgv.Parent.Controls.Find("inline_customer", true).Length > 0)
             {
-                ((CustomTextBox)this.dgv.Parent.Controls.Find("inline_customer", true)[0]).ReadOnly = true;
+                ((CustomTextBox)this.dgv.Parent.Controls.Find("inline_customer", true)[0]).Read_Only = true;
+            }
+            if (this.dgv.Parent.Controls.Find("inline_medcert", true).Length > 0)
+            {
+                ((CustomComboBox)this.dgv.Parent.Controls.Find("inline_medcert", true)[0]).Read_Only = true;
+            }
+            if (this.dgv.Parent.Controls.Find("inline_fine", true).Length > 0)
+            {
+                //((CustomMaskedTextBox)this.dgv.Parent.Controls.Find("inline_fine", true)[0]).Read_Only = true;
+                ((NumericUpDown)this.dgv.Parent.Controls.Find("inline_fine", true)[0]).ReadOnly = true;
             }
             #endregion Set inline control to read-only state
         }
@@ -776,7 +1102,7 @@ namespace SN_Net.Subform
             }
             if (this.rbWeekday.Checked)
             {
-                this.txtRemark.Focus();
+                this.cbGroupWeekend.comboBox1.Focus();
             }
         }
 
@@ -785,7 +1111,7 @@ namespace SN_Net.Subform
             if (this.form_mode == FORM_MODE.EDIT)
             {
                 this.FormRead();
-                this.SetRadioButtonState();
+                this.InitControl();
             }
             else if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
             {
@@ -803,131 +1129,51 @@ namespace SN_Net.Subform
             #region Note calendar (main data)
             if (this.form_mode == FORM_MODE.EDIT)
             {
-                string date = this.cde.Date.ToMysqlDate();
+                bool post_success = false;
 
-                if (this.rbHoliday.Checked) // Holiday
+                int type = (this.rbHoliday.Checked ? (int)CustomDateEvent.NOTE_TYPE.HOLIDAY : (int)CustomDateEvent.NOTE_TYPE.NOTE);
+                string description = (type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.txtHoliday.Texts : "");
+                this.FormProcessing();
+
+                string json_data = "{\"date\":\"" + this.cde.Date.ToMysqlDate() + "\",";
+                json_data += "\"type\":\"" + type.ToString() + "\",";
+                json_data += "\"description\":\"" + description + "\",";
+                json_data += "\"group_maid\":\"" + ((ComboboxItem)this.cbGroupMaid.comboBox1.SelectedItem).string_value + "\",";
+                json_data += "\"group_weekend\":\"" + ((ComboboxItem)this.cbGroupWeekend.comboBox1.SelectedItem).string_value + "\",";
+                json_data += "\"max_leave\":" + this.leaveMax.Value.ToString() + ",";
+                json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
+
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
                 {
-                    bool post_success = false;
-
-                    int type = (int)CustomDateEvent.NOTE_TYPE.HOLIDAY;
-                    string description = this.txtHoliday.Texts;
-                    this.FormProcessing();
-
-                    string json_data = "{\"date\":\"" + date + "\",";
-                    json_data += "\"type\":\"" + type.ToString() + "\",";
-                    json_data += "\"description\":\"" + description + "\",";
-                    json_data += "\"max_leave\":-1,";
-                    json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
-
-                    BackgroundWorker worker = new BackgroundWorker();
-                    worker.DoWork += delegate
+                    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "notecalendar/create_or_update", json_data);
+                    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
+                    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                     {
-                        CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "notecalendar/create_or_update", json_data);
-                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            post_success = true;
-                        }
-                        else
-                        {
-                            post_success = false;
-                        }
-                    };
-                    worker.RunWorkerCompleted += delegate
+                        post_success = true;
+                    }
+                    else
                     {
-                        if (post_success)
-                        {
-                            this.cde.RefreshData();
-                            this.cde.RefreshView();
-                            this.SetRadioButtonState();
-                            this.FormRead();
-                        }
-                        else
-                        {
-                            MessageAlert.Show("เกิดข้อผิดพลาด, กรุณาลองใหม่", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                        }
-                    };
-                    worker.RunWorkerAsync();
-                }
-                else if (this.rbWeekday.Checked && this.txtRemark.Texts.Length > 0 || this.leaveMax.Value > -1) // Weekday and have remark or have leave_max value
+                        post_success = false;
+                    }
+                };
+                worker.RunWorkerCompleted += delegate
                 {
-                    bool post_success = false;
-
-                    int type = (int)CustomDateEvent.NOTE_TYPE.NOTE;
-                    string description = this.txtRemark.Texts;
-                    this.FormProcessing();
-
-                    string json_data = "{\"date\":\"" + date + "\",";
-                    json_data += "\"type\":\"" + type.ToString() + "\",";
-                    json_data += "\"description\":\"" + description + "\",";
-                    json_data += "\"max_leave\":" + this.leaveMax.Value.ToString() + ",";
-                    json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
-
-                    BackgroundWorker worker = new BackgroundWorker();
-                    worker.DoWork += delegate
+                    if (post_success)
                     {
-                        CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "notecalendar/create_or_update", json_data);
-                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            post_success = true;
-                        }
-                        else
-                        {
-                            post_success = false;
-                        }
-                    };
-                    worker.RunWorkerCompleted += delegate
+                        this.cde.RefreshData();
+                        this.cde.RefreshView();
+                        this.InitControl();
+                        this.FormRead();
+                    }
+                    else
                     {
-                        if (post_success)
-                        {
-                            this.cde.RefreshData();
-                            this.cde.RefreshView();
-                            this.SetRadioButtonState();
-                            this.FormRead();
-                        }
-                        else
-                        {
-                            MessageAlert.Show("เกิดข้อผิดพลาด, กรุณาลองใหม่", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                        }
-                    };
-                    worker.RunWorkerAsync();
-                }
-                else if (this.rbWeekday.Checked && this.txtRemark.Texts.Length == 0 && this.leaveMax.Value == -1) // Weekday not have remark and not have leave_max value
-                {
-                    bool delete_success = false;
-
-                    BackgroundWorker worker = new BackgroundWorker();
-                    worker.DoWork += delegate
-                    {
-                        CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "notecalendar/delete&date=" + date);
-                        ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
-                        if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                        {
-                            delete_success = true;
-                        }
-                        else
-                        {
-                            delete_success = false;
-                        }
-                    };
-                    worker.RunWorkerCompleted += delegate
-                    {
-                        if (delete_success)
-                        {
-                            this.cde.RefreshData();
-                            this.cde.RefreshView();
-                            this.SetRadioButtonState();
-                            this.FormRead();
-                        }
-                        else
-                        {
-                            MessageAlert.Show("เกิดข้อผิดพลาด, กรุณาลองใหม่", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                        }
-                    };
-                    worker.RunWorkerAsync();
-                }
+                        MessageAlert.Show("เกิดข้อผิดพลาด, กรุณาลองใหม่", "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                };
+                worker.RunWorkerAsync();
             }
+
             #endregion Note calendar (main data)
 
             #region Add item
@@ -938,15 +1184,19 @@ namespace SN_Net.Subform
                 int inserted_id = -1;
 
                 EventCalendar ev = this.GetInlineEvent();
+
                 this.FormProcessing();
 
                 string json_data = "{\"users_name\":\"" + ev.users_name + "\",";
                 json_data += "\"date\":\"" + ev.date + "\",";
                 json_data += "\"from_time\":\"" + ev.from_time + "\",";
                 json_data += "\"to_time\":\"" + ev.to_time + "\",";
+                json_data += "\"event_type\":\"" + ev.event_type + "\",";
                 json_data += "\"event_code\":\"" + ev.event_code + "\",";
                 json_data += "\"customer\":\"" + ev.customer + "\",";
                 json_data += "\"status\":\"" + ev.status.ToString() + "\",";
+                json_data += "\"med_cert\":\"" + ev.med_cert + "\",";
+                json_data += "\"fine\":" + ev.fine.ToString() + ",";
                 json_data += "\"rec_by\":\"" + ev.rec_by + "\"}";
 
                 BackgroundWorker worker = new BackgroundWorker();
@@ -1000,9 +1250,12 @@ namespace SN_Net.Subform
                 json_data += "\"date\":\"" + ev.date + "\",";
                 json_data += "\"from_time\":\"" + ev.from_time + "\",";
                 json_data += "\"to_time\":\"" + ev.to_time + "\",";
+                json_data += "\"event_type\":\"" + ev.event_type + "\",";
                 json_data += "\"event_code\":\"" + ev.event_code + "\",";
                 json_data += "\"customer\":\"" + ev.customer + "\",";
                 json_data += "\"status\":\"" + ev.status.ToString() + "\",";
+                json_data += "\"med_cert\":\"" + ev.med_cert + "\",";
+                json_data += "\"fine\":" + ev.fine.ToString() + ",";
                 json_data += "\"rec_by\":\"" + ev.rec_by + "\"}";
 
                 BackgroundWorker worker = new BackgroundWorker();
@@ -1080,7 +1333,8 @@ namespace SN_Net.Subform
             }
             if (this.dgv.Parent.Controls.Find("inline_leave_cause", true).Length > 0)
             {
-                ev.event_code = ((ComboboxItem)((CustomComboBox)this.dgv.Parent.Controls.Find("inline_leave_cause", true)[0]).comboBox1.SelectedItem).string_value;
+                ev.event_type = ((Istab)((ComboboxItem)((CustomComboBox)this.dgv.Parent.Controls.Find("inline_leave_cause", true)[0]).comboBox1.SelectedItem).Tag).tabtyp;
+                ev.event_code = ((Istab)((ComboboxItem)((CustomComboBox)this.dgv.Parent.Controls.Find("inline_leave_cause", true)[0]).comboBox1.SelectedItem).Tag).typcod;
             }
             if (this.dgv.Parent.Controls.Find("inline_status", true).Length > 0)
             {
@@ -1089,7 +1343,17 @@ namespace SN_Net.Subform
             if (this.dgv.Parent.Controls.Find("inline_customer", true).Length > 0)
             {
                 CustomTextBox inline_customer = (CustomTextBox)this.dgv.Parent.Controls.Find("inline_customer", true)[0];
-                ev.customer = inline_customer.Texts;
+                ev.customer = inline_customer.Texts.cleanString();
+            }
+            if (this.dgv.Parent.Controls.Find("inline_medcert", true).Length > 0)
+            {
+                CustomComboBox inline_medcert = (CustomComboBox)this.dgv.Parent.Controls.Find("inline_medcert", true)[0];
+                ev.med_cert = ((ComboboxItem)inline_medcert.comboBox1.SelectedItem).string_value;
+            }
+            if (this.dgv.Parent.Controls.Find("inline_medcert", true).Length > 0)
+            {
+                NumericUpDown inline_fine = (NumericUpDown)this.dgv.Parent.Controls.Find("inline_fine", true)[0];
+                ev.fine = Convert.ToInt32(inline_fine.Value);
             }
             ev.rec_by = this.cde.G.loged_in_user_name;
 
@@ -1101,9 +1365,11 @@ namespace SN_Net.Subform
             switch (status)
             {
                 case (int)LEAVE_STATUS.WAIT:
-                    return "N";
+                    return "Wait";
                 case (int)LEAVE_STATUS.CONFIRMED:
-                    return "Y";
+                    return "Confirmed";
+                case (int)LEAVE_STATUS.CANCELED:
+                    return "Canceled";
                 default:
                     return "";
             }
@@ -1113,13 +1379,33 @@ namespace SN_Net.Subform
         {
             if (keyData == Keys.Enter)
             {
-                if (this.dgv.Parent.Controls.Find("inline_customer", true).Length > 0)
+                if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
                 {
-                    CustomTextBox inline_customer = (CustomTextBox)this.dgv.Parent.Controls.Find("inline_customer", true)[0];
-                    if (inline_customer.textBox1.Focused)
+                    //if (this.dgv.Parent.Controls.Find("inline_customer", true).Length > 0)
+                    //{
+                        //CustomTextBox inline_customer = (CustomTextBox)this.dgv.Parent.Controls.Find("inline_customer", true)[0];
+                        //if (inline_customer.textBox1.Focused)
+                        //{
+                        //    DateEventSubWindow subwind = (this.form_mode == FORM_MODE.ADD_ITEM ? new DateEventSubWindow() : new DateEventSubWindow((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag));
+                        //    if (subwind.ShowDialog() == DialogResult.OK)
+                        //    {
+                        //        this.toolStripSave.PerformClick();
+                        //    }
+                        //    else
+                        //    {
+                        //        inline_customer.textBox1.Focus();
+                        //    }
+                        //    return true;
+                        //}
+                    //}
+                    if (this.dgv.Parent.Controls.Find("inline_fine", true).Length > 0)
                     {
-                        this.toolStripSave.PerformClick();
-                        return true;
+                        NumericUpDown inline_fine = (NumericUpDown)this.dgv.Parent.Controls.Find("inline_fine", true)[0];
+                        if (inline_fine.Focused)
+                        {
+                            this.toolStripSave.PerformClick();
+                            return true;
+                        }
                     }
                 }
                 if (this.form_mode == FORM_MODE.EDIT)
@@ -1134,6 +1420,10 @@ namespace SN_Net.Subform
                         this.toolStripSave.PerformClick();
                         return true;
                     }
+                }
+                if (this.form_mode == FORM_MODE.READ || this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    return true;
                 }
                 SendKeys.Send("{TAB}");
                 return true;
@@ -1188,6 +1478,26 @@ namespace SN_Net.Subform
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
                     this.DeleteItem();
+                }
+            }
+
+            if (keyData == (Keys.Alt | Keys.C))
+            {
+                if (this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    if (this.dgv.CurrentCell == null)
+                        return true;
+
+                    if (this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag is EventCalendar)
+                    {
+                        DateSelectorDialog ds = new DateSelectorDialog(this.cde.Date);
+                        if (ds.ShowDialog() == DialogResult.OK)
+                        {
+                            this.DoCopy(ds.selected_date, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
+                        }
+                    }
+
+                    return true;
                 }
             }
 

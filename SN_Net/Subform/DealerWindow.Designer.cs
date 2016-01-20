@@ -451,7 +451,7 @@
             this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCompnam.MaxChar = 100;
             this.txtCompnam.Name = "txtCompnam";
-            this.txtCompnam.ReadOnly = true;
+            this.txtCompnam.Read_Only = true;
             this.txtCompnam.SelectionLength = 0;
             this.txtCompnam.SelectionStart = 0;
             this.txtCompnam.Size = new System.Drawing.Size(394, 23);
@@ -468,7 +468,7 @@
             this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPrenam.MaxChar = 30;
             this.txtPrenam.Name = "txtPrenam";
-            this.txtPrenam.ReadOnly = true;
+            this.txtPrenam.Read_Only = true;
             this.txtPrenam.SelectionLength = 0;
             this.txtPrenam.SelectionStart = 0;
             this.txtPrenam.Size = new System.Drawing.Size(179, 23);
@@ -485,7 +485,7 @@
             this.txtDealer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDealer.MaxChar = 20;
             this.txtDealer.Name = "txtDealer";
-            this.txtDealer.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
             this.txtDealer.SelectionLength = 0;
             this.txtDealer.SelectionStart = 0;
             this.txtDealer.Size = new System.Drawing.Size(132, 23);
@@ -601,7 +601,7 @@
             this.txtFaxnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtFaxnum.MaxChar = 40;
             this.txtFaxnum.Name = "txtFaxnum";
-            this.txtFaxnum.ReadOnly = true;
+            this.txtFaxnum.Read_Only = true;
             this.txtFaxnum.SelectionLength = 0;
             this.txtFaxnum.SelectionStart = 0;
             this.txtFaxnum.Size = new System.Drawing.Size(442, 23);
@@ -628,7 +628,7 @@
             this.txtAddr01.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAddr01.MaxChar = 50;
             this.txtAddr01.Name = "txtAddr01";
-            this.txtAddr01.ReadOnly = true;
+            this.txtAddr01.Read_Only = true;
             this.txtAddr01.SelectionLength = 0;
             this.txtAddr01.SelectionStart = 0;
             this.txtAddr01.Size = new System.Drawing.Size(442, 23);
@@ -645,7 +645,7 @@
             this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRemark.MaxChar = 50;
             this.txtRemark.Name = "txtRemark";
-            this.txtRemark.ReadOnly = true;
+            this.txtRemark.Read_Only = true;
             this.txtRemark.SelectionLength = 0;
             this.txtRemark.SelectionStart = 0;
             this.txtRemark.Size = new System.Drawing.Size(442, 23);
@@ -673,7 +673,7 @@
             this.txtArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtArea.MaxChar = 10;
             this.txtArea.Name = "txtArea";
-            this.txtArea.ReadOnly = true;
+            this.txtArea.Read_Only = true;
             this.txtArea.SelectionLength = 0;
             this.txtArea.SelectionStart = 0;
             this.txtArea.Size = new System.Drawing.Size(80, 23);
@@ -690,7 +690,7 @@
             this.txtBusides.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBusides.MaxChar = 40;
             this.txtBusides.Name = "txtBusides";
-            this.txtBusides.ReadOnly = true;
+            this.txtBusides.Read_Only = true;
             this.txtBusides.SelectionLength = 0;
             this.txtBusides.SelectionStart = 0;
             this.txtBusides.Size = new System.Drawing.Size(271, 23);
@@ -707,7 +707,7 @@
             this.txtPosition.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPosition.MaxChar = 50;
             this.txtPosition.Name = "txtPosition";
-            this.txtPosition.ReadOnly = true;
+            this.txtPosition.Read_Only = true;
             this.txtPosition.SelectionLength = 0;
             this.txtPosition.SelectionStart = 0;
             this.txtPosition.Size = new System.Drawing.Size(442, 23);
@@ -724,7 +724,7 @@
             this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtContact.MaxChar = 100;
             this.txtContact.Name = "txtContact";
-            this.txtContact.ReadOnly = true;
+            this.txtContact.Read_Only = true;
             this.txtContact.SelectionLength = 0;
             this.txtContact.SelectionStart = 0;
             this.txtContact.Size = new System.Drawing.Size(442, 23);
@@ -741,7 +741,7 @@
             this.txtTelnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtTelnum.MaxChar = 40;
             this.txtTelnum.Name = "txtTelnum";
-            this.txtTelnum.ReadOnly = true;
+            this.txtTelnum.Read_Only = true;
             this.txtTelnum.SelectionLength = 0;
             this.txtTelnum.SelectionStart = 0;
             this.txtTelnum.Size = new System.Drawing.Size(442, 23);
@@ -758,7 +758,7 @@
             this.txtZipcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtZipcod.MaxChar = 5;
             this.txtZipcod.Name = "txtZipcod";
-            this.txtZipcod.ReadOnly = true;
+            this.txtZipcod.Read_Only = true;
             this.txtZipcod.SelectionLength = 0;
             this.txtZipcod.SelectionStart = 0;
             this.txtZipcod.Size = new System.Drawing.Size(69, 23);
@@ -775,7 +775,7 @@
             this.txtAddr03.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAddr03.MaxChar = 30;
             this.txtAddr03.Name = "txtAddr03";
-            this.txtAddr03.ReadOnly = true;
+            this.txtAddr03.Read_Only = true;
             this.txtAddr03.SelectionLength = 0;
             this.txtAddr03.SelectionStart = 0;
             this.txtAddr03.Size = new System.Drawing.Size(271, 23);
@@ -792,7 +792,7 @@
             this.txtAddr02.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAddr02.MaxChar = 50;
             this.txtAddr02.Name = "txtAddr02";
-            this.txtAddr02.ReadOnly = true;
+            this.txtAddr02.Read_Only = true;
             this.txtAddr02.SelectionLength = 0;
             this.txtAddr02.SelectionStart = 0;
             this.txtAddr02.Size = new System.Drawing.Size(442, 23);
@@ -981,7 +981,7 @@
             this.txtContact2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtContact2.MaxChar = 0;
             this.txtContact2.Name = "txtContact2";
-            this.txtContact2.ReadOnly = true;
+            this.txtContact2.Read_Only = true;
             this.txtContact2.SelectionLength = 0;
             this.txtContact2.SelectionStart = 0;
             this.txtContact2.Size = new System.Drawing.Size(442, 23);
@@ -998,7 +998,7 @@
             this.txtTelnum2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtTelnum2.MaxChar = 0;
             this.txtTelnum2.Name = "txtTelnum2";
-            this.txtTelnum2.ReadOnly = true;
+            this.txtTelnum2.Read_Only = true;
             this.txtTelnum2.SelectionLength = 0;
             this.txtTelnum2.SelectionStart = 0;
             this.txtTelnum2.Size = new System.Drawing.Size(442, 23);

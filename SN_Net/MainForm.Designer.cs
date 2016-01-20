@@ -33,9 +33,12 @@
             this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.calendarMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usersGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportStatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LeaveSummaryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SearchHistoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +47,7 @@
             this.businessTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.problemCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leaveCauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serviceCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,10 +62,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripUserInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblTimeDuration = new System.Windows.Forms.Label();
-            this.SearchHistoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +88,9 @@
             this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sNToolStripMenuItem,
             this.dealerToolStripMenuItem,
+            this.toolStripSeparator5,
             this.calendarMenuItem,
+            this.usersGroupMenuItem,
             this.supportStatMenuItem,
             this.LeaveSummaryMenuItem,
             this.SearchHistoryMenuItem,
@@ -106,7 +112,7 @@
             // 
             this.sNToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sNToolStripMenuItem.Name = "sNToolStripMenuItem";
-            this.sNToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.sNToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.sNToolStripMenuItem.Text = "S/N";
             this.sNToolStripMenuItem.Click += new System.EventHandler(this.sNToolStripMenuItem_Click);
             // 
@@ -114,23 +120,35 @@
             // 
             this.dealerToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dealerToolStripMenuItem.Name = "dealerToolStripMenuItem";
-            this.dealerToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.dealerToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.dealerToolStripMenuItem.Text = "Dealer";
             this.dealerToolStripMenuItem.Click += new System.EventHandler(this.dealerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(334, 6);
             // 
             // calendarMenuItem
             // 
             this.calendarMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.calendarMenuItem.Name = "calendarMenuItem";
-            this.calendarMenuItem.Size = new System.Drawing.Size(335, 22);
-            this.calendarMenuItem.Text = "ปฏิธินวันหยุดประจำปี, วันลา, จองวันออกพบลูกค้า";
+            this.calendarMenuItem.Size = new System.Drawing.Size(337, 22);
+            this.calendarMenuItem.Text = "ปฏิทินวันหยุดประจำปี, วันลา, จองวันออกพบลูกค้า";
             this.calendarMenuItem.Click += new System.EventHandler(this.calendarMenuItem_Click);
+            // 
+            // usersGroupMenuItem
+            // 
+            this.usersGroupMenuItem.Name = "usersGroupMenuItem";
+            this.usersGroupMenuItem.Size = new System.Drawing.Size(337, 22);
+            this.usersGroupMenuItem.Text = "จัดกลุ่มพนักงาน";
+            this.usersGroupMenuItem.Click += new System.EventHandler(this.usersGroupMenuItem_Click);
             // 
             // supportStatMenuItem
             // 
             this.supportStatMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.supportStatMenuItem.Name = "supportStatMenuItem";
-            this.supportStatMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.supportStatMenuItem.Size = new System.Drawing.Size(337, 22);
             this.supportStatMenuItem.Text = "ข้อมูลการปฏิบัติงาน (Support)";
             this.supportStatMenuItem.Click += new System.EventHandler(this.supportStatMenuItem_Click);
             // 
@@ -138,14 +156,21 @@
             // 
             this.LeaveSummaryMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LeaveSummaryMenuItem.Name = "LeaveSummaryMenuItem";
-            this.LeaveSummaryMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.LeaveSummaryMenuItem.Size = new System.Drawing.Size(337, 22);
             this.LeaveSummaryMenuItem.Text = "สรุปวันลา,ออกพบลูกค้า";
             this.LeaveSummaryMenuItem.Click += new System.EventHandler(this.leaveSummaryMenuItem_Click);
+            // 
+            // SearchHistoryMenuItem
+            // 
+            this.SearchHistoryMenuItem.Name = "SearchHistoryMenuItem";
+            this.SearchHistoryMenuItem.Size = new System.Drawing.Size(337, 22);
+            this.SearchHistoryMenuItem.Text = "ประวัติการค้นหา S/N";
+            this.SearchHistoryMenuItem.Click += new System.EventHandler(this.SearchHistoryMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(334, 6);
             // 
             // tableToolStripMenuItem
             // 
@@ -155,10 +180,11 @@
             this.howToKnowToolStripMenuItem,
             this.businessTypeToolStripMenuItem,
             this.problemCodeToolStripMenuItem,
-            this.leaveCauseToolStripMenuItem});
+            this.leaveCauseToolStripMenuItem,
+            this.serviceCaseToolStripMenuItem});
             this.tableToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
-            this.tableToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.tableToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.tableToolStripMenuItem.Text = "Table";
             // 
             // salesAreaToolStripMenuItem
@@ -203,10 +229,17 @@
             this.leaveCauseToolStripMenuItem.Text = "06 - Absent Cause";
             this.leaveCauseToolStripMenuItem.Click += new System.EventHandler(this.leaveCauseToolStripMenuItem_Click);
             // 
+            // serviceCaseToolStripMenuItem
+            // 
+            this.serviceCaseToolStripMenuItem.Name = "serviceCaseToolStripMenuItem";
+            this.serviceCaseToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.serviceCaseToolStripMenuItem.Text = "07 - Service Case";
+            this.serviceCaseToolStripMenuItem.Click += new System.EventHandler(this.serviceCaseToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(334, 6);
             // 
             // userManagementToolStripMenuItem
             // 
@@ -215,7 +248,7 @@
             this.changePasswordToolStripMenuItem});
             this.userManagementToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userManagementToolStripMenuItem.Name = "userManagementToolStripMenuItem";
-            this.userManagementToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.userManagementToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.userManagementToolStripMenuItem.Text = "User management";
             // 
             // userInformationToolStripMenuItem
@@ -236,33 +269,33 @@
             // 
             this.macAddressAllowedToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.macAddressAllowedToolStripMenuItem.Name = "macAddressAllowedToolStripMenuItem";
-            this.macAddressAllowedToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.macAddressAllowedToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.macAddressAllowedToolStripMenuItem.Text = "MAC address allowed";
             this.macAddressAllowedToolStripMenuItem.Click += new System.EventHandler(this.macAddressAllowedToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(334, 6);
             // 
             // preferenceToolStripMenuItem
             // 
             this.preferenceToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
-            this.preferenceToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.preferenceToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.preferenceToolStripMenuItem.Text = "Preference";
             this.preferenceToolStripMenuItem.Click += new System.EventHandler(this.preferenceToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(332, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(334, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -270,13 +303,15 @@
             // 
             this.testToolStripMenuItem.ForeColor = System.Drawing.Color.Red;
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.testToolStripMenuItem.Text = "Test";
             this.testToolStripMenuItem.Visible = false;
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeLogToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.helpToolStripMenuItem.Text = "Help?";
@@ -307,22 +342,6 @@
             this.toolStripInfo.Text = "     ";
             this.toolStripInfo.TextChanged += new System.EventHandler(this.toolStripInfo_TextChanged);
             // 
-            // toolStripProcessing
-            // 
-            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
-            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
-            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
-            this.toolStripProcessing.Name = "toolStripProcessing";
-            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(805, 17);
-            this.toolStripProcessing.Spring = true;
-            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripProcessing.Visible = false;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.AutoSize = false;
@@ -347,12 +366,28 @@
             this.lblTimeDuration.Text = "00:00:00";
             this.lblTimeDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // SearchHistoryMenuItem
+            // changeLogToolStripMenuItem
             // 
-            this.SearchHistoryMenuItem.Name = "SearchHistoryMenuItem";
-            this.SearchHistoryMenuItem.Size = new System.Drawing.Size(335, 22);
-            this.SearchHistoryMenuItem.Text = "ประวัติการค้นหา S/N";
-            this.SearchHistoryMenuItem.Click += new System.EventHandler(this.SearchHistoryMenuItem_Click);
+            this.changeLogToolStripMenuItem.Name = "changeLogToolStripMenuItem";
+            this.changeLogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeLogToolStripMenuItem.Text = "ChangeLog";
+            this.changeLogToolStripMenuItem.Click += new System.EventHandler(this.changeLogToolStripMenuItem_Click);
+            // 
+            // toolStripProcessing
+            // 
+            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
+            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
+            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
+            this.toolStripProcessing.Name = "toolStripProcessing";
+            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProcessing.Size = new System.Drawing.Size(805, 17);
+            this.toolStripProcessing.Spring = true;
+            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripProcessing.Visible = false;
             // 
             // MainForm
             // 
@@ -418,6 +453,10 @@
         private System.Windows.Forms.ToolStripMenuItem LeaveSummaryMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SearchHistoryMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serviceCaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem usersGroupMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeLogToolStripMenuItem;
     }
 }
 

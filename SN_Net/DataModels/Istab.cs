@@ -27,7 +27,9 @@ namespace SN_Net.DataModels
             HOWKNOWN,
             BUSITYP,
             PROBLEM_CODE,
-            ABSENT_CAUSE
+            ABSENT_CAUSE,
+            SERVICE_CASE,
+            USER_GROUP
         }
 
         public static string getTabtypString(Istab.TABTYP tabtyp)
@@ -46,6 +48,10 @@ namespace SN_Net.DataModels
                     return "05";
                 case Istab.TABTYP.ABSENT_CAUSE:
                     return "06";
+                case Istab.TABTYP.SERVICE_CASE:
+                    return "07";
+                case Istab.TABTYP.USER_GROUP:
+                    return "08";
                 default:
                     return "00";
             }
@@ -67,6 +73,10 @@ namespace SN_Net.DataModels
                     return "Problem Code";
                 case TABTYP.ABSENT_CAUSE:
                     return "Absent Cause";
+                case TABTYP.SERVICE_CASE:
+                    return "Service Case";
+                case TABTYP.USER_GROUP:
+                    return "User Group";
                 default:
                     return "Istab";
             }

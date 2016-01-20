@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Printing;
+using System.Threading;
 using SN_Net.DataModels;
 using SN_Net.MiscClass;
 using WebAPI;
@@ -77,6 +78,7 @@ namespace SN_Net.Subform
 
         public DealerWindow(MainForm main_form)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("th-TH");
             InitializeComponent();
             this.main_form = main_form;
             this.G = main_form.G;
@@ -236,7 +238,7 @@ namespace SN_Net.Subform
             CustomTextBox inline_name = new CustomTextBox();
             inline_name.Name = "inline_name";
             inline_name.BorderStyle = BorderStyle.None;
-            inline_name.ReadOnly = false;
+            inline_name.Read_Only = false;
             inline_name.MaxChar = 3;
             inline_name.textBox1.GotFocus += delegate
             {
@@ -245,7 +247,7 @@ namespace SN_Net.Subform
             CustomTextBox inline_desc = new CustomTextBox();
             inline_desc.Name = "inline_desc";
             inline_desc.BorderStyle = BorderStyle.None;
-            inline_desc.ReadOnly = false;
+            inline_desc.Read_Only = false;
             inline_desc.MaxChar = 100;
             inline_desc.textBox1.GotFocus += delegate
             {
@@ -299,7 +301,7 @@ namespace SN_Net.Subform
                 string json_data = "{\"dealer\":\"" + this.dealer.dealer + "\",";
                 json_data += "\"date\":\"" + date + "\",";
                 json_data += "\"name\":\"" + name + "\",";
-                json_data += "\"desc\":\"" + desc + "\",";
+                json_data += "\"description\":\"" + desc + "\",";
                 json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
 
                 this.FormProcessing();
@@ -365,7 +367,7 @@ namespace SN_Net.Subform
                 CustomTextBox inline_name = new CustomTextBox();
                 inline_name.Name = "inline_name";
                 inline_name.BorderStyle = BorderStyle.None;
-                inline_name.ReadOnly = false;
+                inline_name.Read_Only = false;
                 inline_name.MaxChar = 3;
                 inline_name.textBox1.GotFocus += delegate
                 {
@@ -374,7 +376,7 @@ namespace SN_Net.Subform
                 CustomTextBox inline_desc = new CustomTextBox();
                 inline_desc.Name = "inline_desc";
                 inline_desc.BorderStyle = BorderStyle.None;
-                inline_desc.ReadOnly = false;
+                inline_desc.Read_Only = false;
                 inline_desc.MaxChar = 100;
                 inline_desc.textBox1.GotFocus += delegate
                 {
@@ -455,7 +457,7 @@ namespace SN_Net.Subform
                 json_data += "\"dealer\":\"" + this.dealer.dealer + "\",";
                 json_data += "\"date\":\"" + date + "\",";
                 json_data += "\"name\":\"" + name + "\",";
-                json_data += "\"desc\":\"" + desc + "\",";
+                json_data += "\"description\":\"" + desc + "\",";
                 json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
 
                 this.FormProcessing();
@@ -1172,20 +1174,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = true;
 
-            this.txtDealer.ReadOnly = true;
-            this.txtPrenam.ReadOnly = true;
-            this.txtCompnam.ReadOnly = true;
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr03.ReadOnly = true;
-            this.txtZipcod.ReadOnly = true;
-            this.txtTelnum.ReadOnly = true;
-            this.txtFaxnum.ReadOnly = true;
-            this.txtContact.ReadOnly = true;
-            this.txtPosition.ReadOnly = true;
-            this.txtBusides.ReadOnly = true;
-            this.txtArea.ReadOnly = true;
-            this.txtRemark.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
+            this.txtPrenam.Read_Only = true;
+            this.txtCompnam.Read_Only = true;
+            this.txtAddr01.Read_Only = true;
+            this.txtAddr02.Read_Only = true;
+            this.txtAddr03.Read_Only = true;
+            this.txtZipcod.Read_Only = true;
+            this.txtTelnum.Read_Only = true;
+            this.txtFaxnum.Read_Only = true;
+            this.txtContact.Read_Only = true;
+            this.txtPosition.Read_Only = true;
+            this.txtBusides.Read_Only = true;
+            this.txtArea.Read_Only = true;
+            this.txtRemark.Read_Only = true;
 
             this.btnBrowseArea.Enabled = false;
 
@@ -1200,12 +1202,12 @@ namespace SN_Net.Subform
             if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
             {
                 CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
-                name.ReadOnly = true;
+                name.Read_Only = true;
             }
             if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
             {
                 CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
-                desc.ReadOnly = true;
+                desc.Read_Only = true;
             }
             #endregion inline form
         }
@@ -1239,20 +1241,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtDealer.ReadOnly = true;
-            this.txtPrenam.ReadOnly = true;
-            this.txtCompnam.ReadOnly = true;
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr03.ReadOnly = true;
-            this.txtZipcod.ReadOnly = true;
-            this.txtTelnum.ReadOnly = true;
-            this.txtFaxnum.ReadOnly = true;
-            this.txtContact.ReadOnly = true;
-            this.txtPosition.ReadOnly = true;
-            this.txtBusides.ReadOnly = true;
-            this.txtArea.ReadOnly = true;
-            this.txtRemark.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
+            this.txtPrenam.Read_Only = true;
+            this.txtCompnam.Read_Only = true;
+            this.txtAddr01.Read_Only = true;
+            this.txtAddr02.Read_Only = true;
+            this.txtAddr03.Read_Only = true;
+            this.txtZipcod.Read_Only = true;
+            this.txtTelnum.Read_Only = true;
+            this.txtFaxnum.Read_Only = true;
+            this.txtContact.Read_Only = true;
+            this.txtPosition.Read_Only = true;
+            this.txtBusides.Read_Only = true;
+            this.txtArea.Read_Only = true;
+            this.txtRemark.Read_Only = true;
 
             this.btnBrowseArea.Enabled = false;
             this.dgvMsg.Enabled = true;
@@ -1285,20 +1287,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtDealer.ReadOnly = false;
-            this.txtPrenam.ReadOnly = false;
-            this.txtCompnam.ReadOnly = false;
-            this.txtAddr01.ReadOnly = false;
-            this.txtAddr02.ReadOnly = false;
-            this.txtAddr03.ReadOnly = false;
-            this.txtZipcod.ReadOnly = false;
-            this.txtTelnum.ReadOnly = false;
-            this.txtFaxnum.ReadOnly = false;
-            this.txtContact.ReadOnly = false;
-            this.txtPosition.ReadOnly = false;
-            this.txtBusides.ReadOnly = false;
-            this.txtArea.ReadOnly = false;
-            this.txtRemark.ReadOnly = false;
+            this.txtDealer.Read_Only = false;
+            this.txtPrenam.Read_Only = false;
+            this.txtCompnam.Read_Only = false;
+            this.txtAddr01.Read_Only = false;
+            this.txtAddr02.Read_Only = false;
+            this.txtAddr03.Read_Only = false;
+            this.txtZipcod.Read_Only = false;
+            this.txtTelnum.Read_Only = false;
+            this.txtFaxnum.Read_Only = false;
+            this.txtContact.Read_Only = false;
+            this.txtPosition.Read_Only = false;
+            this.txtBusides.Read_Only = false;
+            this.txtArea.Read_Only = false;
+            this.txtRemark.Read_Only = false;
 
             this.btnBrowseArea.Enabled = true;
             this.dgvMsg.Enabled = false;
@@ -1331,19 +1333,19 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtPrenam.ReadOnly = false;
-            this.txtCompnam.ReadOnly = false;
-            this.txtAddr01.ReadOnly = false;
-            this.txtAddr02.ReadOnly = false;
-            this.txtAddr03.ReadOnly = false;
-            this.txtZipcod.ReadOnly = false;
-            this.txtTelnum.ReadOnly = false;
-            this.txtFaxnum.ReadOnly = false;
-            this.txtContact.ReadOnly = false;
-            this.txtPosition.ReadOnly = false;
-            this.txtBusides.ReadOnly = false;
-            this.txtArea.ReadOnly = false;
-            this.txtRemark.ReadOnly = false;
+            this.txtPrenam.Read_Only = false;
+            this.txtCompnam.Read_Only = false;
+            this.txtAddr01.Read_Only = false;
+            this.txtAddr02.Read_Only = false;
+            this.txtAddr03.Read_Only = false;
+            this.txtZipcod.Read_Only = false;
+            this.txtTelnum.Read_Only = false;
+            this.txtFaxnum.Read_Only = false;
+            this.txtContact.Read_Only = false;
+            this.txtPosition.Read_Only = false;
+            this.txtBusides.Read_Only = false;
+            this.txtArea.Read_Only = false;
+            this.txtRemark.Read_Only = false;
 
             this.btnBrowseArea.Enabled = true;
             this.dgvMsg.Enabled = false;
@@ -1376,20 +1378,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtDealer.ReadOnly = true;
-            this.txtPrenam.ReadOnly = true;
-            this.txtCompnam.ReadOnly = true;
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr03.ReadOnly = true;
-            this.txtZipcod.ReadOnly = true;
-            this.txtTelnum.ReadOnly = true;
-            this.txtFaxnum.ReadOnly = true;
-            this.txtContact.ReadOnly = true;
-            this.txtPosition.ReadOnly = true;
-            this.txtBusides.ReadOnly = true;
-            this.txtArea.ReadOnly = true;
-            this.txtRemark.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
+            this.txtPrenam.Read_Only = true;
+            this.txtCompnam.Read_Only = true;
+            this.txtAddr01.Read_Only = true;
+            this.txtAddr02.Read_Only = true;
+            this.txtAddr03.Read_Only = true;
+            this.txtZipcod.Read_Only = true;
+            this.txtTelnum.Read_Only = true;
+            this.txtFaxnum.Read_Only = true;
+            this.txtContact.Read_Only = true;
+            this.txtPosition.Read_Only = true;
+            this.txtBusides.Read_Only = true;
+            this.txtArea.Read_Only = true;
+            this.txtRemark.Read_Only = true;
 
             this.btnBrowseArea.Enabled = false;
             this.dgvMsg.Enabled = true;
@@ -1423,20 +1425,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtDealer.ReadOnly = true;
-            this.txtPrenam.ReadOnly = true;
-            this.txtCompnam.ReadOnly = true;
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr03.ReadOnly = true;
-            this.txtZipcod.ReadOnly = true;
-            this.txtTelnum.ReadOnly = true;
-            this.txtFaxnum.ReadOnly = true;
-            this.txtContact.ReadOnly = true;
-            this.txtPosition.ReadOnly = true;
-            this.txtBusides.ReadOnly = true;
-            this.txtArea.ReadOnly = true;
-            this.txtRemark.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
+            this.txtPrenam.Read_Only = true;
+            this.txtCompnam.Read_Only = true;
+            this.txtAddr01.Read_Only = true;
+            this.txtAddr02.Read_Only = true;
+            this.txtAddr03.Read_Only = true;
+            this.txtZipcod.Read_Only = true;
+            this.txtTelnum.Read_Only = true;
+            this.txtFaxnum.Read_Only = true;
+            this.txtContact.Read_Only = true;
+            this.txtPosition.Read_Only = true;
+            this.txtBusides.Read_Only = true;
+            this.txtArea.Read_Only = true;
+            this.txtRemark.Read_Only = true;
 
             this.btnBrowseArea.Enabled = false;
             this.dgvSerial.Focus();
@@ -1469,20 +1471,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtDealer.ReadOnly = true;
-            this.txtPrenam.ReadOnly = true;
-            this.txtCompnam.ReadOnly = true;
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr03.ReadOnly = true;
-            this.txtZipcod.ReadOnly = true;
-            this.txtTelnum.ReadOnly = true;
-            this.txtFaxnum.ReadOnly = true;
-            this.txtContact.ReadOnly = true;
-            this.txtPosition.ReadOnly = true;
-            this.txtBusides.ReadOnly = true;
-            this.txtArea.ReadOnly = true;
-            this.txtRemark.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
+            this.txtPrenam.Read_Only = true;
+            this.txtCompnam.Read_Only = true;
+            this.txtAddr01.Read_Only = true;
+            this.txtAddr02.Read_Only = true;
+            this.txtAddr03.Read_Only = true;
+            this.txtZipcod.Read_Only = true;
+            this.txtTelnum.Read_Only = true;
+            this.txtFaxnum.Read_Only = true;
+            this.txtContact.Read_Only = true;
+            this.txtPosition.Read_Only = true;
+            this.txtBusides.Read_Only = true;
+            this.txtArea.Read_Only = true;
+            this.txtRemark.Read_Only = true;
 
             this.btnBrowseArea.Enabled = false;
 
@@ -1495,12 +1497,12 @@ namespace SN_Net.Subform
             if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
             {
                 CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
-                name.ReadOnly = false;
+                name.Read_Only = false;
             }
             if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
             {
                 CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
-                desc.ReadOnly = false;
+                desc.Read_Only = false;
             }
             #endregion inline form
         }
@@ -1532,20 +1534,20 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
 
-            this.txtDealer.ReadOnly = true;
-            this.txtPrenam.ReadOnly = true;
-            this.txtCompnam.ReadOnly = true;
-            this.txtAddr01.ReadOnly = true;
-            this.txtAddr02.ReadOnly = true;
-            this.txtAddr03.ReadOnly = true;
-            this.txtZipcod.ReadOnly = true;
-            this.txtTelnum.ReadOnly = true;
-            this.txtFaxnum.ReadOnly = true;
-            this.txtContact.ReadOnly = true;
-            this.txtPosition.ReadOnly = true;
-            this.txtBusides.ReadOnly = true;
-            this.txtArea.ReadOnly = true;
-            this.txtRemark.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
+            this.txtPrenam.Read_Only = true;
+            this.txtCompnam.Read_Only = true;
+            this.txtAddr01.Read_Only = true;
+            this.txtAddr02.Read_Only = true;
+            this.txtAddr03.Read_Only = true;
+            this.txtZipcod.Read_Only = true;
+            this.txtTelnum.Read_Only = true;
+            this.txtFaxnum.Read_Only = true;
+            this.txtContact.Read_Only = true;
+            this.txtPosition.Read_Only = true;
+            this.txtBusides.Read_Only = true;
+            this.txtArea.Read_Only = true;
+            this.txtRemark.Read_Only = true;
 
             this.btnBrowseArea.Enabled = false;
 
@@ -1558,12 +1560,12 @@ namespace SN_Net.Subform
             if (this.dgvMsg.Parent.Controls.Find("inline_name", true).Length > 0)
             {
                 CustomTextBox name = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_name", true)[0];
-                name.ReadOnly = false;
+                name.Read_Only = false;
             }
             if (this.dgvMsg.Parent.Controls.Find("inline_desc", true).Length > 0)
             {
                 CustomTextBox desc = (CustomTextBox)this.dgvMsg.Parent.Controls.Find("inline_desc", true)[0];
-                desc.ReadOnly = false;
+                desc.Read_Only = false;
             }
             #endregion inline form
         }
@@ -2122,7 +2124,8 @@ namespace SN_Net.Subform
                         MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                         return;
                     }
-
+                    row_num = 0;
+                    page_count = 0;
                 };
 
                 print_doc.PrintPage += delegate(object o, PrintPageEventArgs pe)
@@ -2274,7 +2277,8 @@ namespace SN_Net.Subform
                         MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                         return;
                     }
-
+                    row_num = 0;
+                    page_count = 0;
                 };
 
                 print_doc.PrintPage += delegate(object o, PrintPageEventArgs pe)
@@ -2445,7 +2449,6 @@ namespace SN_Net.Subform
                     {
                         D_msg d_msg = (D_msg)this.dgvMsg.Rows[this.dgvMsg.CurrentCell.RowIndex].Tag;
                         CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "dmsg/get_max_id");
-                        Console.WriteLine(" >>>> " + get.data);
                         ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
                         if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                         {
@@ -2454,14 +2457,21 @@ namespace SN_Net.Subform
                             data_info.lblExpression.Text = "dealer+date";
                             data_info.lblRecBy.Text = d_msg.users_name;
                             data_info.lblRecDate.pickedDate(d_msg.date);
-                            data_info.lblTime.ForeColor = Color.DarkGray;
-                            data_info.lblRecTime.BackColor = Color.WhiteSmoke;
+                            data_info.lblRecTime.Text = d_msg.time;
                             data_info.lblRecNo.Text = d_msg.id.ToString();
                             data_info.lblTotalRec.Text = sr.d_msg[0].id.ToString(); // this.dealer_id_list.Max(t => t.id).ToString();
                             data_info.ShowDialog();
                             return true;
                         }
                     }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                if (this.form_state == FORM_STATE.READF7)
+                {
+                    return true;
                 }
             }
             if (keyData == Keys.F3)

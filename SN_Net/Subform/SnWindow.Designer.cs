@@ -33,6 +33,15 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnEditMA = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.maEmail = new SN_Net.MiscClass.CustomTextBox();
+            this.maDateTo = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.maDateFrom = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.dtVerextdat = new SN_Net.MiscClass.CustomDateTimePicker();
             this.dtManual = new SN_Net.MiscClass.CustomDateTimePicker();
             this.dtExpdat = new SN_Net.MiscClass.CustomDateTimePicker();
@@ -60,6 +69,10 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnPasswordRemove = new System.Windows.Forms.Button();
+            this.btnPasswordAdd = new System.Windows.Forms.Button();
+            this.dgvPassword = new System.Windows.Forms.DataGridView();
+            this.label31 = new System.Windows.Forms.Label();
             this.txtOldnum = new SN_Net.MiscClass.CustomMaskedTextBox();
             this.txtPosition = new SN_Net.MiscClass.CustomTextBox();
             this.txtContact = new SN_Net.MiscClass.CustomTextBox();
@@ -175,10 +188,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnDeleteMA = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPassword)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -222,6 +238,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnDeleteMA);
+            this.groupBox2.Controls.Add(this.btnEditMA);
+            this.groupBox2.Controls.Add(this.label32);
+            this.groupBox2.Controls.Add(this.panel4);
             this.groupBox2.Controls.Add(this.dtVerextdat);
             this.groupBox2.Controls.Add(this.dtManual);
             this.groupBox2.Controls.Add(this.dtExpdat);
@@ -249,81 +271,200 @@
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Location = new System.Drawing.Point(8, 213);
+            this.groupBox2.MaximumSize = new System.Drawing.Size(1000, 193);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(822, 193);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
+            // 
+            // btnEditMA
+            // 
+            this.btnEditMA.Location = new System.Drawing.Point(563, 45);
+            this.btnEditMA.Name = "btnEditMA";
+            this.btnEditMA.Size = new System.Drawing.Size(64, 23);
+            this.btnEditMA.TabIndex = 142;
+            this.btnEditMA.Text = "แก้ไข  >>";
+            this.btnEditMA.UseVisualStyleBackColor = true;
+            this.btnEditMA.Click += new System.EventHandler(this.btnEditMA_Click);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label32.Location = new System.Drawing.Point(562, 27);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(68, 16);
+            this.label32.TabIndex = 141;
+            this.label32.Text = "บริการ MA.";
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.maEmail);
+            this.panel4.Controls.Add(this.maDateTo);
+            this.panel4.Controls.Add(this.maDateFrom);
+            this.panel4.Controls.Add(this.label35);
+            this.panel4.Controls.Add(this.label34);
+            this.panel4.Controls.Add(this.label33);
+            this.panel4.Location = new System.Drawing.Point(631, 20);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(184, 81);
+            this.panel4.TabIndex = 140;
+            // 
+            // maEmail
+            // 
+            this.maEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.maEmail.BackColor = System.Drawing.Color.White;
+            this.maEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maEmail.CharUpperCase = false;
+            this.maEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.maEmail.Location = new System.Drawing.Point(45, 53);
+            this.maEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.maEmail.MaxChar = 0;
+            this.maEmail.Name = "maEmail";
+            this.maEmail.Read_Only = true;
+            this.maEmail.SelectionLength = 0;
+            this.maEmail.SelectionStart = 0;
+            this.maEmail.Size = new System.Drawing.Size(134, 23);
+            this.maEmail.TabIndex = 147;
+            this.maEmail.Texts = "";
+            // 
+            // maDateTo
+            // 
+            this.maDateTo.BackColor = System.Drawing.Color.White;
+            this.maDateTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maDateTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.maDateTo.Location = new System.Drawing.Point(45, 29);
+            this.maDateTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.maDateTo.Name = "maDateTo";
+            this.maDateTo.Read_Only = true;
+            this.maDateTo.Size = new System.Drawing.Size(96, 23);
+            this.maDateTo.TabIndex = 146;
+            this.maDateTo.Texts = "20/01/2559";
+            this.maDateTo.TextsMysql = "2016-01-20";
+            this.toolTip1.SetToolTip(this.maDateTo, "<F6> = Show Calendar");
+            this.maDateTo.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 516);
+            // 
+            // maDateFrom
+            // 
+            this.maDateFrom.BackColor = System.Drawing.Color.White;
+            this.maDateFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.maDateFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.maDateFrom.Location = new System.Drawing.Point(45, 3);
+            this.maDateFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.maDateFrom.Name = "maDateFrom";
+            this.maDateFrom.Read_Only = true;
+            this.maDateFrom.Size = new System.Drawing.Size(96, 23);
+            this.maDateFrom.TabIndex = 145;
+            this.maDateFrom.Texts = "20/01/2559";
+            this.maDateFrom.TextsMysql = "2016-01-20";
+            this.toolTip1.SetToolTip(this.maDateFrom, "<F6> = Show Calendar");
+            this.maDateFrom.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 517);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label35.Location = new System.Drawing.Point(2, 56);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(36, 16);
+            this.label35.TabIndex = 144;
+            this.label35.Text = "อีเมล์";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label34.Location = new System.Drawing.Point(2, 31);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(40, 16);
+            this.label34.TabIndex = 143;
+            this.label34.Text = "สิ้นสุด";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label33.Location = new System.Drawing.Point(2, 6);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(26, 16);
+            this.label33.TabIndex = 142;
+            this.label33.Text = "เริ่ม";
             // 
             // dtVerextdat
             // 
             this.dtVerextdat.BackColor = System.Drawing.Color.White;
             this.dtVerextdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtVerextdat.Location = new System.Drawing.Point(676, 156);
+            this.dtVerextdat.Location = new System.Drawing.Point(668, 156);
             this.dtVerextdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtVerextdat.Name = "dtVerextdat";
             this.dtVerextdat.Read_Only = true;
             this.dtVerextdat.Size = new System.Drawing.Size(96, 23);
             this.dtVerextdat.TabIndex = 25;
-            this.dtVerextdat.Texts = "19/10/2558";
-            this.dtVerextdat.TextsMysql = "2015-10-19";
+            this.dtVerextdat.Texts = "20/01/2559";
+            this.dtVerextdat.TextsMysql = "2016-01-20";
             this.toolTip1.SetToolTip(this.dtVerextdat, "<F6> = Show Calendar");
-            this.dtVerextdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.dtVerextdat.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 519);
             // 
             // dtManual
             // 
             this.dtManual.BackColor = System.Drawing.Color.White;
             this.dtManual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtManual.Location = new System.Drawing.Point(676, 131);
+            this.dtManual.Location = new System.Drawing.Point(668, 131);
             this.dtManual.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtManual.Name = "dtManual";
             this.dtManual.Read_Only = true;
             this.dtManual.Size = new System.Drawing.Size(96, 23);
             this.dtManual.TabIndex = 23;
-            this.dtManual.Texts = "19/10/2558";
-            this.dtManual.TextsMysql = "2015-10-19";
+            this.dtManual.Texts = "20/01/2559";
+            this.dtManual.TextsMysql = "2016-01-20";
             this.toolTip1.SetToolTip(this.dtManual, "<F6> = Show Calendar");
-            this.dtManual.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.dtManual.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 521);
             // 
             // dtExpdat
             // 
             this.dtExpdat.BackColor = System.Drawing.Color.White;
             this.dtExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtExpdat.Location = new System.Drawing.Point(367, 156);
+            this.dtExpdat.Location = new System.Drawing.Point(359, 156);
             this.dtExpdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtExpdat.Name = "dtExpdat";
             this.dtExpdat.Read_Only = true;
             this.dtExpdat.Size = new System.Drawing.Size(96, 23);
             this.dtExpdat.TabIndex = 21;
-            this.dtExpdat.Texts = "19/10/2558";
-            this.dtExpdat.TextsMysql = "2015-10-19";
+            this.dtExpdat.Texts = "20/01/2559";
+            this.dtExpdat.TextsMysql = "2016-01-20";
             this.toolTip1.SetToolTip(this.dtExpdat, "<F6> = Show Calendar");
-            this.dtExpdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.dtExpdat.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 522);
             // 
             // dtPurdat
             // 
             this.dtPurdat.BackColor = System.Drawing.Color.White;
             this.dtPurdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtPurdat.Location = new System.Drawing.Point(118, 156);
+            this.dtPurdat.Location = new System.Drawing.Point(110, 156);
             this.dtPurdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtPurdat.Name = "dtPurdat";
             this.dtPurdat.Read_Only = true;
             this.dtPurdat.Size = new System.Drawing.Size(96, 23);
             this.dtPurdat.TabIndex = 20;
-            this.dtPurdat.Texts = "19/10/2558";
-            this.dtPurdat.TextsMysql = "2015-10-19";
+            this.dtPurdat.Texts = "20/01/2559";
+            this.dtPurdat.TextsMysql = "2016-01-20";
             this.toolTip1.SetToolTip(this.dtPurdat, "<F6> = Show Calendar");
-            this.dtPurdat.ValDateTime = new System.DateTime(2015, 9, 19, 11, 45, 20, 953);
+            this.dtPurdat.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 524);
             // 
             // cbVerext
             // 
             this.cbVerext.BackColor = System.Drawing.Color.White;
             this.cbVerext.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbVerext.Location = new System.Drawing.Point(485, 156);
+            this.cbVerext.Location = new System.Drawing.Point(477, 156);
             this.cbVerext.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cbVerext.Name = "cbVerext";
             this.cbVerext.Read_Only = true;
@@ -338,11 +479,11 @@
             this.txtUpfree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpfree.CharUpperCase = false;
             this.txtUpfree.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtUpfree.Location = new System.Drawing.Point(676, 106);
+            this.txtUpfree.Location = new System.Drawing.Point(668, 106);
             this.txtUpfree.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtUpfree.MaxChar = 0;
             this.txtUpfree.Name = "txtUpfree";
-            this.txtUpfree.ReadOnly = true;
+            this.txtUpfree.Read_Only = true;
             this.txtUpfree.SelectionLength = 0;
             this.txtUpfree.SelectionStart = 0;
             this.txtUpfree.Size = new System.Drawing.Size(20, 23);
@@ -355,11 +496,11 @@
             this.txtHowknown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtHowknown.CharUpperCase = false;
             this.txtHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtHowknown.Location = new System.Drawing.Point(118, 131);
+            this.txtHowknown.Location = new System.Drawing.Point(110, 131);
             this.txtHowknown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtHowknown.MaxChar = 0;
             this.txtHowknown.Name = "txtHowknown";
-            this.txtHowknown.ReadOnly = true;
+            this.txtHowknown.Read_Only = true;
             this.txtHowknown.SelectionLength = 0;
             this.txtHowknown.SelectionStart = 0;
             this.txtHowknown.Size = new System.Drawing.Size(70, 23);
@@ -373,11 +514,11 @@
             this.txtDealer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDealer.CharUpperCase = false;
             this.txtDealer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtDealer.Location = new System.Drawing.Point(118, 95);
+            this.txtDealer.Location = new System.Drawing.Point(110, 95);
             this.txtDealer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDealer.MaxChar = 0;
             this.txtDealer.Name = "txtDealer";
-            this.txtDealer.ReadOnly = true;
+            this.txtDealer.Read_Only = true;
             this.txtDealer.SelectionLength = 0;
             this.txtDealer.SelectionStart = 0;
             this.txtDealer.Size = new System.Drawing.Size(139, 23);
@@ -391,11 +532,11 @@
             this.txtBusityp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBusityp.CharUpperCase = false;
             this.txtBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtBusityp.Location = new System.Drawing.Point(118, 70);
+            this.txtBusityp.Location = new System.Drawing.Point(110, 70);
             this.txtBusityp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBusityp.MaxChar = 0;
             this.txtBusityp.Name = "txtBusityp";
-            this.txtBusityp.ReadOnly = true;
+            this.txtBusityp.Read_Only = true;
             this.txtBusityp.SelectionLength = 0;
             this.txtBusityp.SelectionStart = 0;
             this.txtBusityp.Size = new System.Drawing.Size(70, 23);
@@ -409,14 +550,14 @@
             this.txtBusides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBusides.CharUpperCase = false;
             this.txtBusides.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtBusides.Location = new System.Drawing.Point(118, 45);
+            this.txtBusides.Location = new System.Drawing.Point(110, 45);
             this.txtBusides.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBusides.MaxChar = 0;
             this.txtBusides.Name = "txtBusides";
-            this.txtBusides.ReadOnly = true;
+            this.txtBusides.Read_Only = true;
             this.txtBusides.SelectionLength = 0;
             this.txtBusides.SelectionStart = 0;
-            this.txtBusides.Size = new System.Drawing.Size(501, 23);
+            this.txtBusides.Size = new System.Drawing.Size(442, 23);
             this.txtBusides.TabIndex = 16;
             this.txtBusides.Texts = "";
             // 
@@ -426,14 +567,14 @@
             this.txtRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRemark.CharUpperCase = false;
             this.txtRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtRemark.Location = new System.Drawing.Point(118, 20);
+            this.txtRemark.Location = new System.Drawing.Point(110, 20);
             this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRemark.MaxChar = 0;
             this.txtRemark.Name = "txtRemark";
-            this.txtRemark.ReadOnly = true;
+            this.txtRemark.Read_Only = true;
             this.txtRemark.SelectionLength = 0;
             this.txtRemark.SelectionStart = 0;
-            this.txtRemark.Size = new System.Drawing.Size(501, 23);
+            this.txtRemark.Size = new System.Drawing.Size(442, 23);
             this.txtRemark.TabIndex = 15;
             this.txtRemark.Texts = "";
             // 
@@ -441,7 +582,7 @@
             // 
             this.lblHowknownTypdes.AutoSize = true;
             this.lblHowknownTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblHowknownTypdes.Location = new System.Drawing.Point(213, 134);
+            this.lblHowknownTypdes.Location = new System.Drawing.Point(205, 134);
             this.lblHowknownTypdes.Name = "lblHowknownTypdes";
             this.lblHowknownTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblHowknownTypdes.TabIndex = 56;
@@ -449,7 +590,7 @@
             // btnBrowseHowknown
             // 
             this.btnBrowseHowknown.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseHowknown.Location = new System.Drawing.Point(186, 130);
+            this.btnBrowseHowknown.Location = new System.Drawing.Point(178, 130);
             this.btnBrowseHowknown.Name = "btnBrowseHowknown";
             this.btnBrowseHowknown.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseHowknown.TabIndex = 55;
@@ -460,7 +601,7 @@
             // btnBrowseDealer
             // 
             this.btnBrowseDealer.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseDealer.Location = new System.Drawing.Point(255, 94);
+            this.btnBrowseDealer.Location = new System.Drawing.Point(247, 94);
             this.btnBrowseDealer.Name = "btnBrowseDealer";
             this.btnBrowseDealer.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseDealer.TabIndex = 53;
@@ -472,7 +613,7 @@
             // 
             this.lblBusitypTypdes.AutoSize = true;
             this.lblBusitypTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusitypTypdes.Location = new System.Drawing.Point(213, 73);
+            this.lblBusitypTypdes.Location = new System.Drawing.Point(205, 73);
             this.lblBusitypTypdes.Name = "lblBusitypTypdes";
             this.lblBusitypTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblBusitypTypdes.TabIndex = 51;
@@ -480,7 +621,7 @@
             // btnBrowseBusityp
             // 
             this.btnBrowseBusityp.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseBusityp.Location = new System.Drawing.Point(186, 69);
+            this.btnBrowseBusityp.Location = new System.Drawing.Point(178, 69);
             this.btnBrowseBusityp.Name = "btnBrowseBusityp";
             this.btnBrowseBusityp.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseBusityp.TabIndex = 50;
@@ -492,7 +633,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label27.Location = new System.Drawing.Point(638, 133);
+            this.label27.Location = new System.Drawing.Point(630, 133);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(34, 16);
             this.label27.TabIndex = 45;
@@ -502,7 +643,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label26.Location = new System.Drawing.Point(618, 110);
+            this.label26.Location = new System.Drawing.Point(610, 110);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(55, 16);
             this.label26.TabIndex = 44;
@@ -512,7 +653,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label25.Location = new System.Drawing.Point(289, 159);
+            this.label25.Location = new System.Drawing.Point(281, 159);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(75, 16);
             this.label25.TabIndex = 42;
@@ -522,7 +663,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label24.Location = new System.Drawing.Point(24, 159);
+            this.label24.Location = new System.Drawing.Point(16, 159);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(90, 16);
             this.label24.TabIndex = 40;
@@ -532,7 +673,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label22.Location = new System.Drawing.Point(32, 134);
+            this.label22.Location = new System.Drawing.Point(24, 134);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(82, 16);
             this.label22.TabIndex = 37;
@@ -542,7 +683,7 @@
             // 
             this.lblDealer_DealerCompnam.AutoSize = true;
             this.lblDealer_DealerCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDealer_DealerCompnam.Location = new System.Drawing.Point(282, 98);
+            this.lblDealer_DealerCompnam.Location = new System.Drawing.Point(274, 98);
             this.lblDealer_DealerCompnam.Name = "lblDealer_DealerCompnam";
             this.lblDealer_DealerCompnam.Size = new System.Drawing.Size(0, 16);
             this.lblDealer_DealerCompnam.TabIndex = 36;
@@ -551,7 +692,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label20.Location = new System.Drawing.Point(20, 98);
+            this.label20.Location = new System.Drawing.Point(12, 98);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(94, 16);
             this.label20.TabIndex = 34;
@@ -561,7 +702,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label19.Location = new System.Drawing.Point(25, 73);
+            this.label19.Location = new System.Drawing.Point(17, 73);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(89, 16);
             this.label19.TabIndex = 32;
@@ -571,7 +712,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label18.Location = new System.Drawing.Point(22, 48);
+            this.label18.Location = new System.Drawing.Point(14, 48);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(92, 16);
             this.label18.TabIndex = 30;
@@ -581,7 +722,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label16.Location = new System.Drawing.Point(62, 23);
+            this.label16.Location = new System.Drawing.Point(54, 23);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(52, 16);
             this.label16.TabIndex = 28;
@@ -589,6 +730,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnPasswordRemove);
+            this.groupBox1.Controls.Add(this.btnPasswordAdd);
+            this.groupBox1.Controls.Add(this.dgvPassword);
+            this.groupBox1.Controls.Add(this.label31);
             this.groupBox1.Controls.Add(this.txtOldnum);
             this.groupBox1.Controls.Add(this.txtPosition);
             this.groupBox1.Controls.Add(this.txtContact);
@@ -606,17 +753,78 @@
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.MaximumSize = new System.Drawing.Size(1000, 205);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(822, 205);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
+            // 
+            // btnPasswordRemove
+            // 
+            this.btnPasswordRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPasswordRemove.Location = new System.Drawing.Point(723, 123);
+            this.btnPasswordRemove.Name = "btnPasswordRemove";
+            this.btnPasswordRemove.Size = new System.Drawing.Size(92, 23);
+            this.btnPasswordRemove.TabIndex = 32;
+            this.btnPasswordRemove.Text = "- Remove";
+            this.btnPasswordRemove.UseVisualStyleBackColor = true;
+            this.btnPasswordRemove.Click += new System.EventHandler(this.btnPasswordRemove_Click);
+            // 
+            // btnPasswordAdd
+            // 
+            this.btnPasswordAdd.Location = new System.Drawing.Point(631, 123);
+            this.btnPasswordAdd.Name = "btnPasswordAdd";
+            this.btnPasswordAdd.Size = new System.Drawing.Size(91, 23);
+            this.btnPasswordAdd.TabIndex = 31;
+            this.btnPasswordAdd.Text = "+ Add";
+            this.btnPasswordAdd.UseVisualStyleBackColor = true;
+            this.btnPasswordAdd.Click += new System.EventHandler(this.btnPasswordAdd_Click);
+            // 
+            // dgvPassword
+            // 
+            this.dgvPassword.AllowUserToAddRows = false;
+            this.dgvPassword.AllowUserToDeleteRows = false;
+            this.dgvPassword.AllowUserToResizeColumns = false;
+            this.dgvPassword.AllowUserToResizeRows = false;
+            this.dgvPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPassword.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPassword.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvPassword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPassword.ColumnHeadersVisible = false;
+            this.dgvPassword.GridColor = System.Drawing.Color.White;
+            this.dgvPassword.Location = new System.Drawing.Point(632, 19);
+            this.dgvPassword.MultiSelect = false;
+            this.dgvPassword.Name = "dgvPassword";
+            this.dgvPassword.RowHeadersVisible = false;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dgvPassword.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.Red;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvPassword.RowTemplate.Height = 25;
+            this.dgvPassword.RowTemplate.ReadOnly = true;
+            this.dgvPassword.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPassword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPassword.Size = new System.Drawing.Size(182, 103);
+            this.dgvPassword.TabIndex = 30;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label31.Location = new System.Drawing.Point(567, 22);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(63, 16);
+            this.label31.TabIndex = 29;
+            this.label31.Text = "Password";
             // 
             // txtOldnum
             // 
             this.txtOldnum.BackColor = System.Drawing.Color.White;
             this.txtOldnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtOldnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtOldnum.Location = new System.Drawing.Point(664, 169);
+            this.txtOldnum.Location = new System.Drawing.Point(632, 169);
             this.txtOldnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtOldnum.MaskString = ">A-AAA-AAAAAA";
             this.txtOldnum.Name = "txtOldnum";
@@ -633,11 +841,11 @@
             this.txtPosition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPosition.CharUpperCase = false;
             this.txtPosition.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPosition.Location = new System.Drawing.Point(118, 169);
+            this.txtPosition.Location = new System.Drawing.Point(110, 169);
             this.txtPosition.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPosition.MaxChar = 0;
             this.txtPosition.Name = "txtPosition";
-            this.txtPosition.ReadOnly = true;
+            this.txtPosition.Read_Only = true;
             this.txtPosition.SelectionLength = 0;
             this.txtPosition.SelectionStart = 0;
             this.txtPosition.Size = new System.Drawing.Size(442, 23);
@@ -650,11 +858,11 @@
             this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContact.CharUpperCase = false;
             this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtContact.Location = new System.Drawing.Point(118, 144);
+            this.txtContact.Location = new System.Drawing.Point(110, 144);
             this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtContact.MaxChar = 0;
             this.txtContact.Name = "txtContact";
-            this.txtContact.ReadOnly = true;
+            this.txtContact.Read_Only = true;
             this.txtContact.SelectionLength = 0;
             this.txtContact.SelectionStart = 0;
             this.txtContact.Size = new System.Drawing.Size(442, 23);
@@ -667,11 +875,11 @@
             this.txtFaxnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFaxnum.CharUpperCase = false;
             this.txtFaxnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtFaxnum.Location = new System.Drawing.Point(118, 119);
+            this.txtFaxnum.Location = new System.Drawing.Point(110, 119);
             this.txtFaxnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtFaxnum.MaxChar = 0;
             this.txtFaxnum.Name = "txtFaxnum";
-            this.txtFaxnum.ReadOnly = true;
+            this.txtFaxnum.Read_Only = true;
             this.txtFaxnum.SelectionLength = 0;
             this.txtFaxnum.SelectionStart = 0;
             this.txtFaxnum.Size = new System.Drawing.Size(442, 23);
@@ -684,11 +892,11 @@
             this.txtTelnum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTelnum.CharUpperCase = false;
             this.txtTelnum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTelnum.Location = new System.Drawing.Point(118, 94);
+            this.txtTelnum.Location = new System.Drawing.Point(110, 94);
             this.txtTelnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtTelnum.MaxChar = 0;
             this.txtTelnum.Name = "txtTelnum";
-            this.txtTelnum.ReadOnly = true;
+            this.txtTelnum.Read_Only = true;
             this.txtTelnum.SelectionLength = 0;
             this.txtTelnum.SelectionStart = 0;
             this.txtTelnum.Size = new System.Drawing.Size(442, 23);
@@ -701,11 +909,11 @@
             this.txtZipcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtZipcod.CharUpperCase = false;
             this.txtZipcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtZipcod.Location = new System.Drawing.Point(491, 69);
+            this.txtZipcod.Location = new System.Drawing.Point(483, 69);
             this.txtZipcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtZipcod.MaxChar = 0;
             this.txtZipcod.Name = "txtZipcod";
-            this.txtZipcod.ReadOnly = true;
+            this.txtZipcod.Read_Only = true;
             this.txtZipcod.SelectionLength = 0;
             this.txtZipcod.SelectionStart = 0;
             this.txtZipcod.Size = new System.Drawing.Size(69, 23);
@@ -718,11 +926,11 @@
             this.txtAddr03.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr03.CharUpperCase = false;
             this.txtAddr03.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr03.Location = new System.Drawing.Point(118, 69);
+            this.txtAddr03.Location = new System.Drawing.Point(110, 69);
             this.txtAddr03.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAddr03.MaxChar = 0;
             this.txtAddr03.Name = "txtAddr03";
-            this.txtAddr03.ReadOnly = true;
+            this.txtAddr03.Read_Only = true;
             this.txtAddr03.SelectionLength = 0;
             this.txtAddr03.SelectionStart = 0;
             this.txtAddr03.Size = new System.Drawing.Size(271, 23);
@@ -735,11 +943,11 @@
             this.txtAddr02.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr02.CharUpperCase = false;
             this.txtAddr02.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr02.Location = new System.Drawing.Point(118, 44);
+            this.txtAddr02.Location = new System.Drawing.Point(110, 44);
             this.txtAddr02.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAddr02.MaxChar = 0;
             this.txtAddr02.Name = "txtAddr02";
-            this.txtAddr02.ReadOnly = true;
+            this.txtAddr02.Read_Only = true;
             this.txtAddr02.SelectionLength = 0;
             this.txtAddr02.SelectionStart = 0;
             this.txtAddr02.Size = new System.Drawing.Size(442, 23);
@@ -752,11 +960,11 @@
             this.txtAddr01.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr01.CharUpperCase = false;
             this.txtAddr01.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtAddr01.Location = new System.Drawing.Point(118, 19);
+            this.txtAddr01.Location = new System.Drawing.Point(110, 19);
             this.txtAddr01.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtAddr01.MaxChar = 0;
             this.txtAddr01.Name = "txtAddr01";
-            this.txtAddr01.ReadOnly = true;
+            this.txtAddr01.Read_Only = true;
             this.txtAddr01.SelectionLength = 0;
             this.txtAddr01.SelectionStart = 0;
             this.txtAddr01.Size = new System.Drawing.Size(442, 23);
@@ -767,7 +975,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label17.Location = new System.Drawing.Point(82, 122);
+            this.label17.Location = new System.Drawing.Point(74, 122);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(32, 16);
             this.label17.TabIndex = 28;
@@ -777,7 +985,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label15.Location = new System.Drawing.Point(594, 172);
+            this.label15.Location = new System.Drawing.Point(562, 172);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(64, 16);
             this.label15.TabIndex = 27;
@@ -787,7 +995,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label14.Location = new System.Drawing.Point(62, 172);
+            this.label14.Location = new System.Drawing.Point(54, 172);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(52, 16);
             this.label14.TabIndex = 25;
@@ -797,7 +1005,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label13.Location = new System.Drawing.Point(63, 147);
+            this.label13.Location = new System.Drawing.Point(55, 147);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 16);
             this.label13.TabIndex = 23;
@@ -807,7 +1015,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label12.Location = new System.Drawing.Point(84, 97);
+            this.label12.Location = new System.Drawing.Point(76, 97);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(30, 16);
             this.label12.TabIndex = 21;
@@ -817,7 +1025,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(432, 72);
+            this.label11.Location = new System.Drawing.Point(424, 72);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(58, 16);
             this.label11.TabIndex = 20;
@@ -827,7 +1035,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label10.Location = new System.Drawing.Point(60, 22);
+            this.label10.Location = new System.Drawing.Point(52, 22);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 16);
             this.label10.TabIndex = 17;
@@ -1749,7 +1957,7 @@
             this.btnSupportHistory.TabIndex = 80;
             this.btnSupportHistory.Text = "      View Note";
             this.btnSupportHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.btnSupportHistory, "พิมพ์รายงาน");
+            this.toolTip1.SetToolTip(this.btnSupportHistory, "ดูรายละเอียดการปฏิบัติงาน");
             this.btnSupportHistory.UseVisualStyleBackColor = true;
             this.btnSupportHistory.Click += new System.EventHandler(this.btnSupportHistory_Click);
             // 
@@ -1777,7 +1985,7 @@
             this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCompnam.MaxChar = 0;
             this.txtCompnam.Name = "txtCompnam";
-            this.txtCompnam.ReadOnly = true;
+            this.txtCompnam.Read_Only = true;
             this.txtCompnam.SelectionLength = 0;
             this.txtCompnam.SelectionStart = 0;
             this.txtCompnam.Size = new System.Drawing.Size(370, 23);
@@ -1810,7 +2018,7 @@
             this.txtRefnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRefnum.MaxChar = 0;
             this.txtRefnum.Name = "txtRefnum";
-            this.txtRefnum.ReadOnly = true;
+            this.txtRefnum.Read_Only = true;
             this.txtRefnum.SelectionLength = 0;
             this.txtRefnum.SelectionStart = 0;
             this.txtRefnum.Size = new System.Drawing.Size(118, 23);
@@ -1827,7 +2035,7 @@
             this.txtArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtArea.MaxChar = 0;
             this.txtArea.Name = "txtArea";
-            this.txtArea.ReadOnly = true;
+            this.txtArea.Read_Only = true;
             this.txtArea.SelectionLength = 0;
             this.txtArea.SelectionStart = 0;
             this.txtArea.Size = new System.Drawing.Size(80, 23);
@@ -1845,7 +2053,7 @@
             this.txtVersion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtVersion.MaxChar = 0;
             this.txtVersion.Name = "txtVersion";
-            this.txtVersion.ReadOnly = true;
+            this.txtVersion.Read_Only = true;
             this.txtVersion.SelectionLength = 0;
             this.txtVersion.SelectionStart = 0;
             this.txtVersion.Size = new System.Drawing.Size(60, 23);
@@ -1862,7 +2070,7 @@
             this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPrenam.MaxChar = 0;
             this.txtPrenam.Name = "txtPrenam";
-            this.txtPrenam.ReadOnly = true;
+            this.txtPrenam.Read_Only = true;
             this.txtPrenam.SelectionLength = 0;
             this.txtPrenam.SelectionStart = 0;
             this.txtPrenam.Size = new System.Drawing.Size(118, 23);
@@ -2001,6 +2209,16 @@
             this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripProcessing.Visible = false;
             // 
+            // btnDeleteMA
+            // 
+            this.btnDeleteMA.Location = new System.Drawing.Point(563, 69);
+            this.btnDeleteMA.Name = "btnDeleteMA";
+            this.btnDeleteMA.Size = new System.Drawing.Size(64, 23);
+            this.btnDeleteMA.TabIndex = 143;
+            this.btnDeleteMA.Text = "ลบ  >>";
+            this.btnDeleteMA.UseVisualStyleBackColor = true;
+            this.btnDeleteMA.Click += new System.EventHandler(this.btnDeleteMA_Click);
+            // 
             // SnWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2026,8 +2244,11 @@
             this.tabPage1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPassword)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -2198,5 +2419,19 @@
         private System.Windows.Forms.Label lblDuration;
         public System.Windows.Forms.Button btnSupportNote;
         public System.Windows.Forms.ToolStripButton toolStripReload;
+        private System.Windows.Forms.Button btnPasswordRemove;
+        private System.Windows.Forms.Button btnPasswordAdd;
+        private System.Windows.Forms.DataGridView dgvPassword;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button btnEditMA;
+        private MiscClass.CustomTextBox maEmail;
+        private MiscClass.CustomDateTimePicker maDateTo;
+        private MiscClass.CustomDateTimePicker maDateFrom;
+        private System.Windows.Forms.Button btnDeleteMA;
     }
 }

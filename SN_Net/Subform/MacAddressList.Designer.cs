@@ -39,7 +39,6 @@
             this.toolStripStatusCurrentMac = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMacAddress)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvMacAddress
@@ -153,6 +152,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvMacAddress);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MacAddressList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MAC Address ที่ได้รับอนุญาต";
@@ -160,8 +161,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvMacAddress)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

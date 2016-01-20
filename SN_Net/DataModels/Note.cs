@@ -35,6 +35,7 @@ namespace SN_Net.DataModels
         public bool year_end { get; set; }
         public bool period { get; set; }
         public bool mail_wait { get; set; }
+        public bool transfer_mkt { get; set; }
         #endregion problem
 
         public string remark { get; set; }

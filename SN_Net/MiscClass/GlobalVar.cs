@@ -7,11 +7,11 @@ namespace SN_Net.MiscClass
 {
     public class GlobalVar
     {
-        public const int USER_GROUP_ADMIN = 9;
-        public const int USER_GROUP_SUPERVISOR = 8;
-        public const int USER_GROUP_SUPPORT = 0;
-        public const int USER_GROUP_SALES = 1;
-        public const int USER_GROUP_ACCOUNT = 2;
+        public const int USER_LEVEL_ADMIN = 9;
+        public const int USER_LEVEL_SUPERVISOR = 8;
+        public const int USER_LEVEL_SUPPORT = 0;
+        public const int USER_LEVEL_SALES = 1;
+        public const int USER_LEVEL_ACCOUNT = 2;
 
         public int loged_in_user_id { get; set; }
         public string loged_in_user_name { get; set; }
@@ -25,15 +25,15 @@ namespace SN_Net.MiscClass
 
         public static string GetUserLevelString(int user_level)
         {
-            if (user_level == USER_GROUP_ADMIN)
+            if (user_level == USER_LEVEL_ADMIN)
                 return "Admin";
-            if (user_level == USER_GROUP_SUPERVISOR)
+            if (user_level == USER_LEVEL_SUPERVISOR)
                 return "Supervisor";
-            if (user_level == USER_GROUP_SUPPORT)
+            if (user_level == USER_LEVEL_SUPPORT)
                 return "Support";
-            if (user_level == USER_GROUP_SALES)
+            if (user_level == USER_LEVEL_SALES)
                 return "Sales";
-            if (user_level == USER_GROUP_ACCOUNT)
+            if (user_level == USER_LEVEL_ACCOUNT)
                 return "Account";
 
             return "";

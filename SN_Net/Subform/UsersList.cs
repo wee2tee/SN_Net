@@ -17,10 +17,12 @@ namespace SN_Net.Subform
     public partial class UsersList : Form
     {
         private List<Users> users;
+        private MainForm main_form;
 
-        public UsersList()
+        public UsersList(MainForm main_form)
         {
             InitializeComponent();
+            this.main_form = main_form;
         }
 
         private void UsersList_Load(object sender, EventArgs e)
@@ -43,36 +45,50 @@ namespace SN_Net.Subform
             this.cbWebLogin.Items.Add(new ComboboxItem("Yes", 0, "Y"));
             this.cbWebLogin.SelectedItem = this.cbWebLogin.Items[0];
 
+            this.numMaxAbsent.Value = 10;
+            this.numMaxAbsent.Enter += delegate
+            {
+                this.numMaxAbsent.Select(0, this.numMaxAbsent.Text.Length);
+            };
+            this.cbUserLevel.GotFocus += new EventHandler(this.ShowComboBoxItemOnFocused);
+            this.cbUserStatus.GotFocus += new EventHandler(this.ShowComboBoxItemOnFocused);
+            this.cbWebLogin.GotFocus += new EventHandler(this.ShowComboBoxItemOnFocused);
+
             this.loadUserListData();
 
-            foreach (Control ct in this.groupBox1.Controls)
-            {
-                ct.KeyDown += new KeyEventHandler(this.enterKeyDetect);
-            }
+            //foreach (Control ct in this.groupBox1.Controls)
+            //{
+            //    ct.KeyDown += new KeyEventHandler(this.enterKeyDetect);
+            //}
         }
 
-        private void enterKeyDetect(object sender, KeyEventArgs e)
+        private void ShowComboBoxItemOnFocused(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                Control curr_control = sender as Control;
-                int curr_index = curr_control.TabIndex;
-
-                foreach (Control c in this.groupBox1.Controls)
-                {
-                    if (c.TabIndex == curr_index + 1 && c.TabStop == true)
-                    {
-                        c.Focus();
-                        if (c is ComboBox)
-                        {
-                            ComboBox combo = c as ComboBox;
-                            combo.DroppedDown = true;
-                        }
-                        break;
-                    }
-                }
-            }
+            SendKeys.Send("{F6}");
         }
+
+        //private void enterKeyDetect(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Enter)
+        //    {
+        //        Control curr_control = sender as Control;
+        //        int curr_index = curr_control.TabIndex;
+
+        //        foreach (Control c in this.groupBox1.Controls)
+        //        {
+        //            if (c.TabIndex == curr_index + 1 && c.TabStop == true)
+        //            {
+        //                c.Focus();
+        //                if (c is ComboBox)
+        //                {
+        //                    ComboBox combo = c as ComboBox;
+        //                    combo.DroppedDown = true;
+        //                }
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         private void btnCancelAddUser_Click(object sender, EventArgs e)
         {
@@ -90,6 +106,7 @@ namespace SN_Net.Subform
                 string status = ((ComboboxItem)this.cbUserStatus.SelectedItem).string_value;
                 string allowed_web_login = ((ComboboxItem)this.cbWebLogin.SelectedItem).string_value;
                 string training_expert = this.chTrainingExpert.CheckState.ToYesOrNoString();
+                int max_absent = (int)this.numMaxAbsent.Value;
 
                 string json_data = "{\"username\":\"" + username.cleanString() + "\",";
                 json_data += "\"name\":\"" + name.cleanString() + "\",";
@@ -97,7 +114,9 @@ namespace SN_Net.Subform
                 json_data += "\"level\":" + level + ",";
                 json_data += "\"status\":\"" + status + "\",";
                 json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\",";
-                json_data += "\"training_expert\":\"" + training_expert + "\"}";
+                json_data += "\"training_expert\":\"" + training_expert + "\",";
+                json_data += "\"max_absent\":" + max_absent.ToString() + ",";
+                json_data += "\"rec_by\":\"" + this.main_form.G.loged_in_user_name + "\"}";
 
                 CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/create", json_data);
                 ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
@@ -144,6 +163,7 @@ namespace SN_Net.Subform
                     this.dgvUsers.Columns[c1].HeaderText = "ID.";
                     this.dgvUsers.Columns[c1].Width = 40;
                     this.dgvUsers.Columns[c1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    this.dgvUsers.Columns[c1].Visible = false;
 
                     // username
                     DataGridViewTextBoxColumn text_col2 = new DataGridViewTextBoxColumn();
@@ -195,19 +215,26 @@ namespace SN_Net.Subform
                     this.dgvUsers.Columns[c7].Width = 50;
                     this.dgvUsers.Columns[c7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    // create_at
+                    // max_absent
                     DataGridViewTextBoxColumn text_col8 = new DataGridViewTextBoxColumn();
-                    int c8 = this.dgvUsers.Columns.Add(text_col8);
-                    this.dgvUsers.Columns[c8].HeaderText = "สร้างเมื่อ";
-                    this.dgvUsers.Columns[c8].Width = 140;
-                    this.dgvUsers.Columns[c8].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    text_col8.HeaderText = "วันลา";
+                    text_col8.Width = 50;
+                    text_col8.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    this.dgvUsers.Columns.Add(text_col8);
 
-                    // update_at
+                    // create_at
                     DataGridViewTextBoxColumn text_col9 = new DataGridViewTextBoxColumn();
                     int c9 = this.dgvUsers.Columns.Add(text_col9);
-                    this.dgvUsers.Columns[c9].HeaderText = "ใช้งานล่าสุด";
+                    this.dgvUsers.Columns[c9].HeaderText = "สร้างเมื่อ";
                     this.dgvUsers.Columns[c9].Width = 140;
                     this.dgvUsers.Columns[c9].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                    // update_at
+                    DataGridViewTextBoxColumn text_col10 = new DataGridViewTextBoxColumn();
+                    int c10 = this.dgvUsers.Columns.Add(text_col10);
+                    this.dgvUsers.Columns[c10].HeaderText = "ใช้งานล่าสุด";
+                    this.dgvUsers.Columns[c10].Width = 140;
+                    this.dgvUsers.Columns[c10].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     // Create data row
                     foreach (Users user in this.users)
@@ -245,11 +272,15 @@ namespace SN_Net.Subform
                         this.dgvUsers.Rows[r].Cells[7].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                         this.dgvUsers.Rows[r].Cells[7].Style.ForeColor = (user.training_expert == "Y" ? Color.Black : Color.LightGray);
 
-                        this.dgvUsers.Rows[r].Cells[8].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[8].Value = user.create_at;
+                        this.dgvUsers.Rows[r].Cells[8].ValueType = typeof(int);
+                        this.dgvUsers.Rows[r].Cells[8].Value = user.max_absent;
+                        this.dgvUsers.Rows[r].Cells[8].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 
                         this.dgvUsers.Rows[r].Cells[9].ValueType = typeof(string);
-                        this.dgvUsers.Rows[r].Cells[9].Value = user.last_use;
+                        this.dgvUsers.Rows[r].Cells[9].Value = user.create_at;
+
+                        this.dgvUsers.Rows[r].Cells[10].ValueType = typeof(string);
+                        this.dgvUsers.Rows[r].Cells[10].Value = user.last_use;
                     }
 
                     // Set selection item
@@ -259,7 +290,7 @@ namespace SN_Net.Subform
                         {
                             if ((int)row.Tag == id)
                             {
-                                row.Cells[0].Selected = true;
+                                row.Cells[1].Selected = true;
                             }
                         }
                     }
@@ -346,8 +377,11 @@ namespace SN_Net.Subform
 
         private void dgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = (int)this.dgvUsers.Rows[e.RowIndex].Tag;
-            this.showEditForm(id);
+            if (e.RowIndex > -1)
+            {
+                int id = (int)this.dgvUsers.Rows[e.RowIndex].Tag;
+                this.showEditForm(id);
+            }
         }
 
         private void editUsers(object sender, EventArgs e)
@@ -359,7 +393,7 @@ namespace SN_Net.Subform
 
         private void showEditForm(int id)
         {
-            UsersEditForm wind = new UsersEditForm();
+            UsersEditForm wind = new UsersEditForm(this.main_form);
             Console.WriteLine("id : " + id.ToString());
             wind.id = id;
             if (wind.ShowDialog() == DialogResult.OK)
@@ -404,6 +438,27 @@ namespace SN_Net.Subform
                     MessageAlert.Show(sr.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 }
             }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                if (!(this.btnAddUser.Focused || this.btnCancelAddUser.Focused))
+                {
+                    SendKeys.Send("{TAB}");
+                    return true;
+                }
+            }
+            if (keyData == Keys.F6)
+            {
+                if (this.cbUserLevel.Focused || this.cbUserStatus.Focused || this.cbWebLogin.Focused)
+                {
+                    SendKeys.Send("{F4}");
+                    return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

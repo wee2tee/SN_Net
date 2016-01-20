@@ -20,7 +20,8 @@ namespace SN_Net.Subform
             DEALER,
             OLDNUM,
             BUSITYP,
-            AREA
+            AREA,
+            USERGROUP
         }
         private SEARCH_MODE search_mode;
 
@@ -36,10 +37,14 @@ namespace SN_Net.Subform
             if (this.mskSearchKey.Visible)
             {
                 this.mskSearchKey.Focus();
+                this.mskSearchKey.SelectionStart = 0;
+                this.mskSearchKey.SelectionLength = this.mskSearchKey.Text.Length;
             }
             else
             {
                 this.txtSearchKey.Focus();
+                this.txtSearchKey.SelectionStart = 0;
+                this.txtSearchKey.SelectionLength = this.txtSearchKey.Text.Length;
             }
         }
 
@@ -81,6 +86,11 @@ namespace SN_Net.Subform
                     break;
                 case SEARCH_MODE.AREA:
                     this.lblSearchKey.Text = "Area";
+                    this.mskSearchKey.Visible = false;
+                    this.txtSearchKey.Visible = true;
+                    break;
+                case SEARCH_MODE.USERGROUP:
+                    this.lblSearchKey.Text = "Group Code";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
                     break;

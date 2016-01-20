@@ -45,6 +45,17 @@ namespace SN_Net.Subform
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            this.txtUser.Enter += delegate
+            {
+                this.txtUser.SelectionStart = 0;
+                this.txtUser.SelectionLength = this.txtUser.Text.Length;
+            };
+            this.txtPassword.Enter += delegate
+            {
+                this.txtPassword.SelectionStart = 0;
+                this.txtPassword.SelectionLength = this.txtPassword.Text.Length;
+            };
+
             this.txtUser.GotFocus += delegate
             {
                 this.current_focused_control = this.txtUser;

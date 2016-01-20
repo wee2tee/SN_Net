@@ -51,7 +51,7 @@
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(83, 32);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 2;
             this.btnOK.Text = "ตกลง";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Visible = false;
@@ -65,7 +65,7 @@
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(83, 32);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "ยกเลิก";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Visible = false;
@@ -79,7 +79,7 @@
             this.btnRetry.Margin = new System.Windows.Forms.Padding(2);
             this.btnRetry.Name = "btnRetry";
             this.btnRetry.Size = new System.Drawing.Size(110, 32);
-            this.btnRetry.TabIndex = 2;
+            this.btnRetry.TabIndex = 3;
             this.btnRetry.Text = "ลองใหม่อีกครั้ง";
             this.btnRetry.UseVisualStyleBackColor = true;
             this.btnRetry.Visible = false;
@@ -93,7 +93,7 @@
             this.btnYes.Margin = new System.Windows.Forms.Padding(2);
             this.btnYes.Name = "btnYes";
             this.btnYes.Size = new System.Drawing.Size(83, 32);
-            this.btnYes.TabIndex = 3;
+            this.btnYes.TabIndex = 5;
             this.btnYes.Text = "ใช่";
             this.btnYes.UseVisualStyleBackColor = true;
             this.btnYes.Visible = false;
@@ -107,7 +107,7 @@
             this.btnNo.Margin = new System.Windows.Forms.Padding(2);
             this.btnNo.Name = "btnNo";
             this.btnNo.Size = new System.Drawing.Size(83, 32);
-            this.btnNo.TabIndex = 4;
+            this.btnNo.TabIndex = 6;
             this.btnNo.Text = "ไม่ใช่";
             this.btnNo.UseVisualStyleBackColor = true;
             this.btnNo.Visible = false;
@@ -120,7 +120,7 @@
             this.lblMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(300, 60);
-            this.lblMessage.TabIndex = 5;
+            this.lblMessage.TabIndex = 100;
             this.lblMessage.Text = resources.GetString("lblMessage.Text");
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -137,7 +137,7 @@
             this.panelBtn.Margin = new System.Windows.Forms.Padding(2);
             this.panelBtn.Name = "panelBtn";
             this.panelBtn.Size = new System.Drawing.Size(376, 48);
-            this.panelBtn.TabIndex = 6;
+            this.panelBtn.TabIndex = 1;
             // 
             // pictureBoxIcon
             // 
@@ -168,10 +168,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MessageAlert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MessageAlert";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.MessageAlert_Load);
             this.Shown += new System.EventHandler(this.MessageAlert_Shown);
             this.panelBtn.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();

@@ -49,6 +49,8 @@ namespace SN_Net.MiscClass
         public List<TrainingCalendar> training_calendar { get; set; } // for retrieve training_calendar (display in calendar)
         public List<NoteCalendar> note_calendar { get; set; } // for retrieve note_calendar (display in calendar)
         public List<SpyLog> spy_log { get; set; } // for retrieve spy_log (Search history)
+        public List<SerialPassword> serial_password { get; set; } // for retrieve password data for service to customer (display in SnWindow, SupportNoteWindow)
+        public List<Ma> ma { get; set; } // for retrieve ma data to show in SnWindow
         public PrintPageSetup print_page_setup { get; set; } // for retrieve print page setup of each form
     }
 }

@@ -17,11 +17,14 @@ namespace SN_Net.Subform
     public partial class UsersEditForm : Form
     {
         public int id;
+        private Users current_user;
         private Control current_focused_control;
+        private MainForm main_form;
 
-        public UsersEditForm()
+        public UsersEditForm(MainForm main_form)
         {
             InitializeComponent();
+            this.main_form = main_form;
         }
 
         private void UsersEditForm_Load(object sender, EventArgs e)
@@ -48,6 +51,7 @@ namespace SN_Net.Subform
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
+                this.current_user = sr.users.First<Users>();
                 Users user = sr.users.First<Users>();
 
                 this.txtUserName.Text = user.username;
@@ -57,6 +61,7 @@ namespace SN_Net.Subform
                 this.cbUserStatus.SelectedItem = this.cbUserStatus.Items[ComboboxItem.GetItemIndex(this.cbUserStatus, user.status)];
                 this.cbWebLogin.SelectedItem = this.cbWebLogin.Items[ComboboxItem.GetItemIndex(this.cbWebLogin, user.allowed_web_login)];
                 this.chTrainingExpert.CheckState = (user.training_expert == "Y" ? CheckState.Checked : CheckState.Unchecked);
+                this.numMaxAbsent.Value = user.max_absent;
             }
             else
             {
@@ -81,6 +86,10 @@ namespace SN_Net.Subform
             {
                 this.current_focused_control = this.btnCancelSubmitChangeUser;
             };
+            this.numMaxAbsent.GotFocus += delegate
+            {
+                this.numMaxAbsent.Select(0, this.numMaxAbsent.Text.Length);
+            };
         }
 
         private void btnCancelSubmitChangeUser_Click(object sender, EventArgs e)
@@ -98,15 +107,19 @@ namespace SN_Net.Subform
             string status = ((ComboboxItem)this.cbUserStatus.SelectedItem).string_value;
             string allowed_web_login = ((ComboboxItem)this.cbWebLogin.SelectedItem).string_value;
             string training_expert = this.chTrainingExpert.CheckState.ToYesOrNoString();
+            int max_absent = (int)this.numMaxAbsent.Value;
 
             string json_data = "{\"id\":" + this.id + ",";
             json_data += "\"username\":\"" + username.cleanString() + "\",";
             json_data += "\"name\":\"" + name.cleanString() + "\",";
             json_data += "\"email\":\"" + email.cleanString() + "\",";
             json_data += "\"level\":" + level + ",";
+            json_data += "\"usergroup\":\"" + this.current_user.usergroup + "\",";
             json_data += "\"status\":\"" + status + "\",";
             json_data += "\"allowed_web_login\":\"" + allowed_web_login + "\",";
-            json_data += "\"training_expert\":\"" + training_expert + "\"}";
+            json_data += "\"training_expert\":\"" + training_expert + "\",";
+            json_data += "\"max_absent\":" + max_absent.ToString() + ",";
+            json_data += "\"rec_by\":\"" + this.main_form.G.loged_in_user_name + "\"}";
 
             CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/update", json_data);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);

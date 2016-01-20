@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Threading;
 using SN_Net.DataModels;
 using SN_Net.MiscClass;
 using WebAPI;
@@ -20,14 +21,17 @@ namespace SN_Net.Subform
         private MainForm main_form;
         private int curr_year;
         private int curr_month;
-        private int curr_day;
+        //private int curr_day;
         private DateTime first_day;
         private DateTime last_day;
         private List<EventCalendar> month_event = new List<EventCalendar>();
         private List<TrainingCalendar> month_training = new List<TrainingCalendar>();
         private List<NoteCalendar> month_note = new List<NoteCalendar>();
+        public List<Users> list_users = new List<Users>();
         CultureInfo cinfo_th = new CultureInfo("th-TH"); // for display in UI
         CultureInfo cinfo_us = new CultureInfo("en-US"); // for calculate/processing data
+        private delegate void delegateUpdateDateEventUI(CustomDateEvent de, List<EventCalendar> list_event_calendar, List<TrainingCalendar> list_training_calendar, NoteCalendar note_calendar, int target_month);
+        private delegate void delegateRefreshDateEventUI();
 
         public CalendarWindow()
         {
@@ -42,6 +46,8 @@ namespace SN_Net.Subform
 
         private void CalendarWindow_Load(object sender, EventArgs e)
         {
+            this.LoadDependenciesData();
+
             #region Load Month name to cbMonth
             this.cbMonth.Items.Add(new ComboboxItem("มกราคม", 1, "01"));
             this.cbMonth.Items.Add(new ComboboxItem("กุมภาพันธ์", 2, "02"));
@@ -73,11 +79,13 @@ namespace SN_Net.Subform
             #region Binding event handler to cbMonth,cbYear
             this.cbMonth.SelectedIndexChanged += delegate
             {
-                this.LoadCalendar(((ComboboxItem)this.cbMonth.SelectedItem).int_value, ((ComboboxItem)this.cbYear.SelectedItem).int_value);
+                //this.LoadCalendar(((ComboboxItem)this.cbMonth.SelectedItem).int_value, ((ComboboxItem)this.cbYear.SelectedItem).int_value);
+                this.btnLoadCalendar.PerformClick();
             };
             this.cbYear.SelectedIndexChanged += delegate
             {
-                this.LoadCalendar(((ComboboxItem)this.cbMonth.SelectedItem).int_value, ((ComboboxItem)this.cbYear.SelectedItem).int_value);
+                //this.LoadCalendar(((ComboboxItem)this.cbMonth.SelectedItem).int_value, ((ComboboxItem)this.cbYear.SelectedItem).int_value);
+                this.btnLoadCalendar.PerformClick();
             };
             #endregion Binding event handler to cbMonth,cbYear
         }
@@ -85,6 +93,19 @@ namespace SN_Net.Subform
         private void CalendarWindow_Shown(object sender, EventArgs e)
         {
             this.LoadCalendar(DateTime.Now.Month, DateTime.Now.Year);
+            this.toolStripRangeLeave.Visible = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : true);
+            this.toolStripUsersGroup.Visible = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : true);
+        }
+
+        private void LoadDependenciesData()
+        {
+            CRUDResult get_users = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_all");
+            ServerResult sr_users = JsonConvert.DeserializeObject<ServerResult>(get_users.data);
+
+            if (sr_users.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                this.list_users = sr_users.users;
+            }
         }
 
         private void LoadCalendar(int month, int year)
@@ -120,9 +141,10 @@ namespace SN_Net.Subform
                     de.Date = out_firstday.AddDays(i - out_firstday.GetDayIntOfWeek());
                     de.TargetMonth = out_firstday.Month;
                     de.G = this.main_form.G;
-                    de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
-                    de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
-                    de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true ? true : false);
+                    de.calendar_window = this;
+                    de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : Enabled);
+                    de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : Enabled);
+                    de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true || this.main_form.G.loged_in_user_level >= GlobalVar.USER_LEVEL_SUPERVISOR ? true : false);
                     //de.RefreshView();
                 }
 
@@ -134,9 +156,10 @@ namespace SN_Net.Subform
                     de.Date = out_firstday.AddDays(i);
                     de.TargetMonth = out_firstday.Month;
                     de.G = this.main_form.G;
-                    de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
-                    de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
-                    de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true ? true : false);
+                    de.calendar_window = this;
+                    de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : Enabled);
+                    de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : Enabled);
+                    de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true || this.main_form.G.loged_in_user_level >= GlobalVar.USER_LEVEL_SUPERVISOR ? true : false);
                     // increase row_index
                     row_index += (out_firstday.AddDays(i).GetDayIntOfWeek() == 7 ? 1 : 0);
                 }
@@ -153,9 +176,10 @@ namespace SN_Net.Subform
                         de.Date = out_firstday.AddDays(days_in_month + (add_date - 1));
                         de.TargetMonth = out_firstday.Month;
                         de.G = this.main_form.G;
-                        de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
-                        de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_GROUP_SUPERVISOR ? false : Enabled);
-                        de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true ? true : false);
+                        de.calendar_window = this;
+                        de.btnAdd.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : Enabled);
+                        de.btnDetail.Enabled = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : Enabled);
+                        de.btnTraining.Enabled = (this.main_form.G.loged_in_user_training_expert == true || this.main_form.G.loged_in_user_level >= GlobalVar.USER_LEVEL_SUPERVISOR ? true : false);
                     }
                     row_index++;
                     day_of_week = 1;
@@ -196,11 +220,25 @@ namespace SN_Net.Subform
                             for (int j = 0; j <= 6; j++)
                             {
                                 CustomDateEvent de = (CustomDateEvent)this.tableLayout1.GetControlFromPosition(j, i);
-                                de.SetEventList(this.month_event.Where<EventCalendar>(t => t.date == de.Date.ToMysqlDate()).ToList<EventCalendar>());
-                                de.SetTrainingList(this.month_training.Where<TrainingCalendar>(t => t.date == de.Date.ToMysqlDate()).ToList<TrainingCalendar>());
-                                de.note_calendar = this.month_note.Find(t => t.date == de.Date.ToMysqlDate());
-                                de.TargetMonth = this.curr_month;
-                                de.RefreshView();
+                                BackgroundWorker subworker = new BackgroundWorker();
+                                subworker.DoWork += delegate
+                                {
+                                    de.RefreshView(this.list_users, this.month_event.Where<EventCalendar>(t => t.date == de.Date.ToMysqlDate()).ToList<EventCalendar>(), this.month_training.Where<TrainingCalendar>(t => t.date == de.Date.ToMysqlDate()).ToList<TrainingCalendar>(), this.month_note.Find(t => t.date == de.Date.ToMysqlDate()), this.curr_month);
+                                };
+                                subworker.RunWorkerCompleted += delegate
+                                {
+
+                                };
+                                subworker.RunWorkerAsync();
+                                
+                                /******************/
+
+                                //de.list_users = this.list_users;
+                                //de.SetEventList(this.month_event.Where<EventCalendar>(t => t.date == de.Date.ToMysqlDate()).ToList<EventCalendar>());
+                                //de.SetTrainingList(this.month_training.Where<TrainingCalendar>(t => t.date == de.Date.ToMysqlDate()).ToList<TrainingCalendar>());
+                                //de.note_calendar = this.month_note.Find(t => t.date == de.Date.ToMysqlDate());
+                                //de.TargetMonth = this.curr_month;
+                                //de.RefreshView();
                             }
                         }
                         this.btnPrevMonth.Enabled = true;
@@ -221,12 +259,18 @@ namespace SN_Net.Subform
 
                 #endregion Set event_list for each date
             }
-            else
-            {
-                Console.WriteLine(" >>> fault date");
-            }
         }
-
+        private void UpdateDateEventUI(CustomDateEvent de, List<Users> list_users, List<EventCalendar> list_event_calendar, List<TrainingCalendar> list_training_calendar, NoteCalendar note_calendar, int current_month)
+        //private void UpdateDateEventUI()
+        {
+            de.list_users = list_users;
+            de.SetEventList(list_event_calendar);
+            de.SetTrainingList(list_training_calendar);
+            de.note_calendar = note_calendar;
+            de.TargetMonth = current_month;
+            de.RefreshView();
+            //Console.WriteLine(list_users[0]);
+        }
 
         private void btnPrevMonth_Click(object sender, EventArgs e)
         {
@@ -257,6 +301,54 @@ namespace SN_Net.Subform
         private void toolStripReload_Click(object sender, EventArgs e)
         {
             this.LoadCalendar(this.curr_month, this.curr_year);
+        }
+
+        private void toolStripRangeLeave_Click(object sender, EventArgs e)
+        {
+            LeaveRange wind = new LeaveRange(this.main_form);
+            if (wind.ShowDialog() == DialogResult.OK)
+            {
+                MessageAlert.Show("บันทึกข้อมูลเรียบร้อย", "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+
+                if ((wind.dtDateStart.Value.Year == this.curr_year && wind.dtDateStart.Value.Month == this.curr_month) || (wind.dtDateEnd.Value.Year == this.curr_year && wind.dtDateEnd.Value.Month == this.curr_month))
+                {
+                    this.LoadCalendar(this.curr_month, this.curr_year);
+                }
+            }
+        }
+
+        private void toolStripUsersGroup_Click(object sender, EventArgs e)
+        {
+            if (this.main_form.usersgroup_wind == null)
+            {
+                this.main_form.usersgroup_wind = new UsersGroupWindow(this.main_form);
+                this.main_form.usersgroup_wind.MdiParent = this.main_form;
+                this.main_form.usersgroup_wind.Show();
+            }
+            else
+            {
+                this.main_form.usersgroup_wind.Activate();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            this.main_form.calendar_wind = null;
+            base.OnClosing(e);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.btnLoadCalendar.Enabled = false;
+            this.cbMonth.SelectedItem = this.cbMonth.Items.Cast<ComboboxItem>().Where(i => i.int_value == DateTime.Now.Month).First<ComboboxItem>();
+            this.cbYear.SelectedItem = this.cbYear.Items.Cast<ComboboxItem>().Where(i => i.int_value == DateTime.Now.Year).First<ComboboxItem>();
+            this.btnLoadCalendar.Enabled = true;
+            this.btnLoadCalendar.PerformClick();
+        }
+
+        private void btnLoadCalendar_Click(object sender, EventArgs e)
+        {
+            this.LoadCalendar(((ComboboxItem)this.cbMonth.SelectedItem).int_value, ((ComboboxItem)this.cbYear.SelectedItem).int_value);
         }
     }
 }

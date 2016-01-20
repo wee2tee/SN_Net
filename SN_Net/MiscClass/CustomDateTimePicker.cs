@@ -7,27 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Threading;
 
 namespace SN_Net.MiscClass
 {
     public partial class CustomDateTimePicker : UserControl
     {
-        private bool readOnly;
+        private bool read_Only;
         private string texts;
         private string textMysql;
-        private DateTime valDateTime = DateTime.Now;
         private CultureInfo cinfo_us = new CultureInfo("en-US");
         private CultureInfo cinfo_th = new CultureInfo("th-TH");
         public bool calendar_shown;
-        //private DateTime date_when_dropdown = DateTime.Now;
 
         public CustomDateTimePicker()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("th-TH");
             InitializeComponent();
             this.BindEventWithChildControl();
             this.Read_Only = true;
-            //this.valDateTime = DateTime.Now;
-            //this.valString = "2300-01-01";
         }
 
         private void CustomDateTimePicker_Load(object sender, EventArgs e)
@@ -50,11 +48,11 @@ namespace SN_Net.MiscClass
         {
             get
             {
-                return this.readOnly;
+                return this.read_Only;
             }
             set
             {
-                this.readOnly = value;
+                this.read_Only = value;
                 this.SetControlState();
             }
         }
@@ -70,7 +68,7 @@ namespace SN_Net.MiscClass
             }
             set
             {
-                if (value != null)
+                if (value != "  /  /  " && value != "")
                 {
                     DateTime out_datetime;
                     if (DateTime.TryParse(value, cinfo_th, DateTimeStyles.None, out out_datetime))
@@ -112,7 +110,7 @@ namespace SN_Net.MiscClass
             }
             set
             {
-                if (value != null)
+                if (value != null && value.Length != 0)
                 {
                     string add_year = (Convert.ToInt32(value.Substring(0, 4)) + 543).ToString() + value.Substring(4, 6);
                     DateTime out_datetime;
@@ -125,6 +123,7 @@ namespace SN_Net.MiscClass
 
                         this.textBox1.Text = dt.Substring(8, 2) + "/" + dt.Substring(5, 2) + "/" + dt.Substring(0, 4);
                         this.label1.Text = dt.Substring(8, 2) + "/" + dt.Substring(5, 2) + "/" + dt.Substring(0, 4); ;
+                        this.dateTimePicker1.Value = out_datetime;
                     }
                     else
                     {
@@ -155,15 +154,13 @@ namespace SN_Net.MiscClass
             }
             set
             {
-                this.valDateTime = value;
                 this.dateTimePicker1.Value = value;
-                this.Texts = value.ToString("dd/MM/yyyy", cinfo_th.DateTimeFormat);
             }
         }
         
         private void SetControlState()
         {
-            if (this.readOnly)
+            if (this.read_Only)
             {
                 this.textBox1.Visible = false;
                 this.textBox1.Enabled = false;
@@ -201,28 +198,34 @@ namespace SN_Net.MiscClass
 
             this.dateTimePicker1.Enter += delegate
             {
-                this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-                this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
-                if (this.Texts.tryParseToDateTime())
+                if (!this.read_Only)
                 {
-                    DateTime dt = Convert.ToDateTime(this.Texts, cinfo_th);
-                    this.dateTimePicker1.Value = dt;
+                    //this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                    //this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                    //if (this.textBox1.Text.tryParseToDateTime())
+                    //{
+                    //    DateTime dt = Convert.ToDateTime(this.textBox1.Text, cinfo_th);
+                    //    this.dateTimePicker1.Value = dt;
+                    //}
+                    //else
+                    //{
+                    //    this.dateTimePicker1.Value = DateTime.Now;
+                    //    this.textBox1.Text = "  /  /    ";
+                    //}
                 }
-                else
-                {
-                    this.dateTimePicker1.Value = DateTime.Now;
-                    this.Texts = "  /  /    ";
-                }
-            };
-
-            this.dateTimePicker1.DropDown += delegate
-            {
-                this.calendar_shown = true;
             };
 
             this.dateTimePicker1.ValueChanged += delegate
             {
                 this.Texts = this.dateTimePicker1.Value.ToString("dd/MM/yyyy", cinfo_th.DateTimeFormat);
+                
+                //this.textBox1.Text = this.dateTimePicker1.Value.ToString("dd/MM/yyyy", cinfo_th.DateTimeFormat);
+                //this.label1.Text = this.textBox1.Text;
+            };
+
+            this.dateTimePicker1.DropDown += delegate
+            {
+                this.calendar_shown = true;
             };
 
             this.dateTimePicker1.CloseUp += delegate
@@ -239,6 +242,21 @@ namespace SN_Net.MiscClass
                     SendKeys.Send("{F4}");
                 }
             };
+
+            this.textBox1.Leave += delegate
+            {
+                DateTime out_date;
+                if (DateTime.TryParse(this.textBox1.Text, out out_date))
+                {
+                    this.dateTimePicker1.Value = out_date;
+                }
+            };
+
+            this.textBox1.GotFocus += delegate
+            {
+                this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+                this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
+            };
         }
 
         #region Protected method
@@ -251,20 +269,8 @@ namespace SN_Net.MiscClass
 
         protected override void OnEnter(EventArgs e)
         {
-            if (!this.readOnly)
+            if (!this.read_Only)
             {
-                DateTime out_datetime;
-                if (DateTime.TryParse(this.textBox1.Text, cinfo_th, DateTimeStyles.None, out out_datetime))
-                {
-                    DateTime dt = Convert.ToDateTime(this.textBox1.Text, cinfo_th);
-                    this.Texts = dt.ToString("dd/MM/yyyy", cinfo_th.DateTimeFormat);
-                }
-                else
-                {
-                    this.dateTimePicker1.Value = DateTime.Now;
-                    this.Texts = "  /  /    ";
-                }
-
                 this.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
                 this.textBox1.BackColor = ColorResource.ACTIVE_CONTROL_BACKCOLOR;
                 this.textBox1.ForeColor = Color.Black;
@@ -278,6 +284,31 @@ namespace SN_Net.MiscClass
             this.textBox1.BackColor = Color.White;
             this.textBox1.ForeColor = Color.Black;
             base.OnLeave(e);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                if (this.calendar_shown)
+                {
+                    this.dateTimePicker1.Focus();
+                    SendKeys.Send("{F4}");
+                    this.textBox1.Focus();
+                    return true;
+                }
+            }
+
+            if (keyData == Keys.F6)
+            {
+                if (!this.calendar_shown)
+                {
+                    this.dateTimePicker1.Focus();
+                    SendKeys.Send("{F4}");
+                    return true;
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
         #endregion Protected method
     }

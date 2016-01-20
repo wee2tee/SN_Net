@@ -69,6 +69,19 @@ namespace SN_Net.Subform
                     this.rbSernum.Checked = true;
                 }
             };
+
+            this.cbUsers.Leave += delegate
+            {
+                if (this.cbUsers.Items.Cast<ComboboxItem>().Where(c => c.name.Length >= this.cbUsers.Text.Length).Where(c => c.name.Substring(0, this.cbUsers.Text.Length) == this.cbUsers.Text).Count<ComboboxItem>() > 0)
+                {
+                    this.cbUsers.SelectedItem = this.cbUsers.Items.Cast<ComboboxItem>().Where(c => c.name.Length >= this.cbUsers.Text.Length).Where(c => c.name.Substring(0, this.cbUsers.Text.Length) == this.cbUsers.Text).First<ComboboxItem>();
+                }
+                else
+                {
+                    this.cbUsers.Focus();
+                    SendKeys.Send("{F6}");
+                }
+            };
         }
 
         private void LoadDependenciesData()
@@ -92,7 +105,7 @@ namespace SN_Net.Subform
         private void InitControl()
         {
             #region Initial cbSupport
-            this.cbUsers.Items.Add(new ComboboxItem("* All", -1, "*"){ Tag = new Users()});
+            this.cbUsers.Items.Add(new ComboboxItem("* All", -1, "*") { Tag = new Users() });
             foreach (Users u in this.list_users)
             {
                 this.cbUsers.Items.Add(new ComboboxItem(u.username + " : " + u.name, u.id, u.username){ Tag = u});
@@ -101,8 +114,8 @@ namespace SN_Net.Subform
             #endregion Initial cbSupport
 
             #region Initial dtStart,dtEnd date
-            this.dtStart.ValDateTime = DateTime.Now;
-            this.dtEnd.ValDateTime = DateTime.Now;
+            this.dtStart.Value = DateTime.Now;
+            this.dtEnd.Value = DateTime.Now;
             #endregion Initial dtStart,dtEnd date
         }
 
@@ -116,6 +129,16 @@ namespace SN_Net.Subform
                 Visible = false,
                 Name = "col_id",
                 HeaderText = "ID"
+            });
+            this.dgvHistory.Columns.Add(new DataGridViewTextBoxColumn()
+            {
+                Name = "col_seq",
+                HeaderText = "ลำดับ",
+                Width = 50,
+                DefaultCellStyle = new DataGridViewCellStyle()
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleRight
+                }
             });
             this.dgvHistory.Columns.Add(new DataGridViewTextBoxColumn()
             { 
@@ -148,6 +171,8 @@ namespace SN_Net.Subform
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
+            int seq = 0;
+
             foreach (SpyLog log in this.list_spylog)
             {
                 int r = this.dgvHistory.Rows.Add();
@@ -156,20 +181,23 @@ namespace SN_Net.Subform
                 this.dgvHistory.Rows[r].Cells[0].ValueType = typeof(int);
                 this.dgvHistory.Rows[r].Cells[0].Value = log.id;
 
-                this.dgvHistory.Rows[r].Cells[1].ValueType = typeof(string);
-                this.dgvHistory.Rows[r].Cells[1].Value = log.date.M2WDate();
+                this.dgvHistory.Rows[r].Cells[1].ValueType = typeof(int);
+                this.dgvHistory.Rows[r].Cells[1].Value = ++seq;
 
                 this.dgvHistory.Rows[r].Cells[2].ValueType = typeof(string);
-                this.dgvHistory.Rows[r].Cells[2].Value = log.time;
+                this.dgvHistory.Rows[r].Cells[2].Value = log.date.M2WDate();
 
                 this.dgvHistory.Rows[r].Cells[3].ValueType = typeof(string);
-                this.dgvHistory.Rows[r].Cells[3].Value = log.users_name;
+                this.dgvHistory.Rows[r].Cells[3].Value = log.time;
 
                 this.dgvHistory.Rows[r].Cells[4].ValueType = typeof(string);
-                this.dgvHistory.Rows[r].Cells[4].Value = log.serial_sernum;
+                this.dgvHistory.Rows[r].Cells[4].Value = log.users_name;
 
                 this.dgvHistory.Rows[r].Cells[5].ValueType = typeof(string);
-                this.dgvHistory.Rows[r].Cells[5].Value = log.compnam;
+                this.dgvHistory.Rows[r].Cells[5].Value = log.serial_sernum;
+
+                this.dgvHistory.Rows[r].Cells[6].ValueType = typeof(string);
+                this.dgvHistory.Rows[r].Cells[6].Value = log.compnam;
             }
         }
 
@@ -179,9 +207,9 @@ namespace SN_Net.Subform
             string err_msg = "";
             this.FormProcessing();
 
-            string users_name = ((ComboboxItem)this.cbUsers.SelectedItem).string_value;
-            string date_from = this.dtStart.ValDateTime.ToMysqlDate();
-            string date_to = this.dtEnd.ValDateTime.ToMysqlDate();
+            string users_name = ((Users)((ComboboxItem)this.cbUsers.SelectedItem).Tag).username;
+            string date_from = this.dtStart.Value.ToMysqlDate();
+            string date_to = this.dtEnd.Value.ToMysqlDate();
             string sernum = (this.rbSernum.Checked ? this.txtCompnam.Texts : null);
             string compnam = (this.rbCompnam.Checked ? this.txtCompnam.Texts : null);
 
@@ -204,6 +232,7 @@ namespace SN_Net.Subform
             };
             worker.RunWorkerCompleted += delegate
             {
+                this.FormReading();
                 if (get_success)
                 {
                     this.FillDgvHistory();
@@ -212,7 +241,6 @@ namespace SN_Net.Subform
                 {
                     MessageAlert.Show(err_msg, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 }
-                this.FormReading();
             };
             worker.RunWorkerAsync();
         }
@@ -229,10 +257,10 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = true;
             this.dgvHistory.Enabled = false;
-            this.dtStart.Read_Only = true;
-            this.dtEnd.Read_Only = true;
+            this.dtStart.Enabled = false;
+            this.dtEnd.Enabled = false;
             this.cbUsers.Enabled = false;
-            this.txtCompnam.ReadOnly = true;
+            this.txtCompnam.Read_Only = true;
         }
 
         private void FormReading()
@@ -241,10 +269,10 @@ namespace SN_Net.Subform
 
             this.toolStripProcessing.Visible = false;
             this.dgvHistory.Enabled = true;
-            this.dtStart.Read_Only = false;
-            this.dtEnd.Read_Only = false;
+            this.dtStart.Enabled = true;
+            this.dtEnd.Enabled = true;
             this.cbUsers.Enabled = true;
-            this.txtCompnam.ReadOnly = false;
+            this.txtCompnam.Read_Only = false;
             this.txtDummy.Focus();
         }
 
@@ -270,6 +298,14 @@ namespace SN_Net.Subform
             {
                 this.btnReset.PerformClick();
                 return true;
+            }
+            if (keyData == Keys.F6)
+            {
+                if (this.cbUsers.Focused)
+                {
+                    SendKeys.Send("{F4}");
+                    return true;
+                }
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }

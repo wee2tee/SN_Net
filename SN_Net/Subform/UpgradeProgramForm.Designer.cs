@@ -62,7 +62,7 @@
             this.toolStripProcess.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripProcess.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcess.Name = "toolStripProcess";
-            this.toolStripProcess.Size = new System.Drawing.Size(409, 17);
+            this.toolStripProcess.Size = new System.Drawing.Size(388, 17);
             this.toolStripProcess.Spring = true;
             this.toolStripProcess.Visible = false;
             // 
@@ -207,6 +207,8 @@
             this.Controls.Add(this.chkNewRwt);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "UpgradeProgramForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Upgrade Program";

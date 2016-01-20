@@ -19,6 +19,11 @@ namespace SN_Net.Subform
             InitializeComponent();
         }
 
+        private void MessageAlert_Load(object sender, EventArgs e)
+        {
+            
+        }
+
         public static DialogResult Show(string message, string caption, MessageAlertButtons button, MessageAlertIcons icon)
         {
             MessageAlert m = new MessageAlert();
@@ -60,7 +65,6 @@ namespace SN_Net.Subform
                     break;
             }
             return m.ShowDialog();
-            //return m.DialogResult;
         }
         
         public static DialogResult Show(string message, string caption, MessageAlertButtons button)
@@ -209,6 +213,17 @@ namespace SN_Net.Subform
         private void buttonLeaveFocusHandler(object sender, EventArgs e)
         {
             //((Button)sender).BackColor = Color.FromKnownColor(KnownColor.ControlLightLight);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Left || keyData == Keys.Right)
+            {
+                SendKeys.Send("{TAB}");
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 

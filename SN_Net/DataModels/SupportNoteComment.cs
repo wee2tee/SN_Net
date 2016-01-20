@@ -14,5 +14,11 @@ namespace SN_Net.DataModels
         public string description { get; set; }
         public string file_path { get; set; }
         public string rec_by { get; set; }
+
+        public enum COMMENT_TYPE : int
+        {
+            COMMENT = 1,
+            COMPLAIN = 2
+        }
     }
 }

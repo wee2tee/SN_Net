@@ -193,6 +193,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtTypcod);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "IstabAddEditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "IstabAddEditForm";
