@@ -62,16 +62,16 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.txtMemberCount = new SN_Net.MiscClass.CustomTextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.txtTypdes = new SN_Net.MiscClass.CustomTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtTypcod = new SN_Net.MiscClass.CustomTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvMember = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgvUnGroup = new System.Windows.Forms.DataGridView();
-            this.txtMemberCount = new SN_Net.MiscClass.CustomTextBox();
-            this.txtTypdes = new SN_Net.MiscClass.CustomTextBox();
-            this.txtTypcod = new SN_Net.MiscClass.CustomTextBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -405,6 +405,23 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "จำนวนสมาชิก";
             // 
+            // txtMemberCount
+            // 
+            this.txtMemberCount.BackColor = System.Drawing.Color.White;
+            this.txtMemberCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMemberCount.CharUpperCase = true;
+            this.txtMemberCount.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtMemberCount.Location = new System.Drawing.Point(107, 69);
+            this.txtMemberCount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMemberCount.MaxChar = 10;
+            this.txtMemberCount.Name = "txtMemberCount";
+            this.txtMemberCount.Read_Only = true;
+            this.txtMemberCount.SelectionLength = 0;
+            this.txtMemberCount.SelectionStart = 0;
+            this.txtMemberCount.Size = new System.Drawing.Size(40, 23);
+            this.txtMemberCount.TabIndex = 4;
+            this.txtMemberCount.Texts = "";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -415,6 +432,23 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "คำอธิบาย";
             // 
+            // txtTypdes
+            // 
+            this.txtTypdes.BackColor = System.Drawing.Color.White;
+            this.txtTypdes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTypdes.CharUpperCase = false;
+            this.txtTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTypdes.Location = new System.Drawing.Point(107, 42);
+            this.txtTypdes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTypdes.MaxChar = 50;
+            this.txtTypdes.Name = "txtTypdes";
+            this.txtTypdes.Read_Only = true;
+            this.txtTypdes.SelectionLength = 0;
+            this.txtTypdes.SelectionStart = 0;
+            this.txtTypdes.Size = new System.Drawing.Size(446, 23);
+            this.txtTypdes.TabIndex = 1;
+            this.txtTypdes.Texts = "";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -424,6 +458,23 @@
             this.label1.Size = new System.Drawing.Size(54, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "รหัสกลุ่ม";
+            // 
+            // txtTypcod
+            // 
+            this.txtTypcod.BackColor = System.Drawing.Color.White;
+            this.txtTypcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTypcod.CharUpperCase = true;
+            this.txtTypcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtTypcod.Location = new System.Drawing.Point(107, 15);
+            this.txtTypcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTypcod.MaxChar = 10;
+            this.txtTypcod.Name = "txtTypcod";
+            this.txtTypcod.Read_Only = true;
+            this.txtTypcod.SelectionLength = 0;
+            this.txtTypcod.SelectionStart = 0;
+            this.txtTypcod.Size = new System.Drawing.Size(115, 23);
+            this.txtTypcod.TabIndex = 0;
+            this.txtTypcod.Texts = "";
             // 
             // tabControl1
             // 
@@ -537,57 +588,6 @@
             this.dgvUnGroup.StandardTab = true;
             this.dgvUnGroup.TabIndex = 119;
             // 
-            // txtMemberCount
-            // 
-            this.txtMemberCount.BackColor = System.Drawing.Color.White;
-            this.txtMemberCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMemberCount.CharUpperCase = true;
-            this.txtMemberCount.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtMemberCount.Location = new System.Drawing.Point(107, 69);
-            this.txtMemberCount.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtMemberCount.MaxChar = 10;
-            this.txtMemberCount.Name = "txtMemberCount";
-            this.txtMemberCount.Read_Only = true;
-            this.txtMemberCount.SelectionLength = 0;
-            this.txtMemberCount.SelectionStart = 0;
-            this.txtMemberCount.Size = new System.Drawing.Size(40, 23);
-            this.txtMemberCount.TabIndex = 4;
-            this.txtMemberCount.Texts = "";
-            // 
-            // txtTypdes
-            // 
-            this.txtTypdes.BackColor = System.Drawing.Color.White;
-            this.txtTypdes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTypdes.CharUpperCase = false;
-            this.txtTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTypdes.Location = new System.Drawing.Point(107, 42);
-            this.txtTypdes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTypdes.MaxChar = 50;
-            this.txtTypdes.Name = "txtTypdes";
-            this.txtTypdes.Read_Only = true;
-            this.txtTypdes.SelectionLength = 0;
-            this.txtTypdes.SelectionStart = 0;
-            this.txtTypdes.Size = new System.Drawing.Size(446, 23);
-            this.txtTypdes.TabIndex = 1;
-            this.txtTypdes.Texts = "";
-            // 
-            // txtTypcod
-            // 
-            this.txtTypcod.BackColor = System.Drawing.Color.White;
-            this.txtTypcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTypcod.CharUpperCase = true;
-            this.txtTypcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtTypcod.Location = new System.Drawing.Point(107, 15);
-            this.txtTypcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTypcod.MaxChar = 10;
-            this.txtTypcod.Name = "txtTypcod";
-            this.txtTypcod.Read_Only = true;
-            this.txtTypcod.SelectionLength = 0;
-            this.txtTypcod.SelectionStart = 0;
-            this.txtTypcod.Size = new System.Drawing.Size(115, 23);
-            this.txtTypcod.TabIndex = 0;
-            this.txtTypcod.Texts = "";
-            // 
             // UsersGroupWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -601,6 +601,7 @@
             this.Name = "UsersGroupWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "จัดกลุ่มพนักงาน";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UsersGroupWindow_FormClosing);
             this.Load += new System.EventHandler(this.UsersGroupWindow_Load);
             this.Shown += new System.EventHandler(this.UsersGroupWindow_Shown);
             this.statusStrip1.ResumeLayout(false);

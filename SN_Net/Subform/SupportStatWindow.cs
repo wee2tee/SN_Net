@@ -32,6 +32,7 @@ namespace SN_Net.Subform
         private List<Note> note_list = new List<Note>();
         private CultureInfo cinfo_th = new CultureInfo("th-TH");
         private CultureInfo cinfo_us = new CultureInfo("en-US");
+        private BindingSource bs = new BindingSource();
         private FORM_MODE form_mode;
         private enum FORM_MODE
         {
@@ -39,7 +40,7 @@ namespace SN_Net.Subform
             EDIT,
             PROCESSING
         }
-        private int sorted_column = 3; // sort datagridview by 3rd column
+        private int sorted_column = 5; // sort datagridview by 3rd column
 
         private BindingSource problem_all_source = new BindingSource();
         private List<ComboboxItem> list_problem_all = new List<ComboboxItem>();
@@ -57,8 +58,6 @@ namespace SN_Net.Subform
             this.current_user_to = user_to;
             this.current_date_from = date_from;
             this.current_date_to = date_to;
-
-            
         }
 
         private void SupportStatWindow_Load(object sender, EventArgs e)
@@ -106,6 +105,62 @@ namespace SN_Net.Subform
                 this.leave_cause = sr_leave_cause.istab;
             }
             #endregion Load leave_cause from server
+
+
+            #region config dgvNote column
+            this.dgvNote.Columns[0].Visible = false;
+            this.dgvNote.Columns[1].Visible = false;
+            this.dgvNote.Columns[2].Visible = false;
+            this.dgvNote.Columns[3].Width = 40;
+            this.dgvNote.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            this.dgvNote.Columns[4].Width = 70;
+            this.dgvNote.Columns[5].Width = 80;
+            this.dgvNote.Columns[5].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_ACTIVE_BROWN;
+            this.dgvNote.Columns[6].Width = 65;
+            this.dgvNote.Columns[7].Width = 65;
+            this.dgvNote.Columns[8].Width = 65;
+            this.dgvNote.Columns[9].Width = 120;
+            this.dgvNote.Columns[10].Width = 100;
+            for (int i = 11; i <= 26; i++)
+            {
+                this.dgvNote.Columns[i].Width = 35;
+                this.dgvNote.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                this.dgvNote.Columns[i].HeaderCell.Style.Font = new Font("Tahoma", 7f);
+            }
+            this.dgvNote.Columns[27].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvNote.Columns[28].Visible = false;
+
+            this.dgvNote.Columns[3].HeaderText = "ลำดับ";
+            this.dgvNote.Columns[4].HeaderText = "Support#";
+            this.dgvNote.Columns[5].HeaderText = "วันที่";
+            this.dgvNote.Columns[6].HeaderText = "รับสาย";
+            this.dgvNote.Columns[7].HeaderText = "วางสาย";
+            this.dgvNote.Columns[8].HeaderText = "ระยะเวลา";
+            this.dgvNote.Columns[9].HeaderText = "S/N";
+            this.dgvNote.Columns[10].HeaderText = "ชื่อลูกค้า";
+            this.dgvNote.Columns[11].HeaderText = "Map Drive";
+            this.dgvNote.Columns[12].HeaderText = "Ins. /Up";
+            this.dgvNote.Columns[13].HeaderText = "Error";
+            this.dgvNote.Columns[14].HeaderText = "Ins. Fonts";
+            this.dgvNote.Columns[15].HeaderText = "Print";
+            this.dgvNote.Columns[16].HeaderText = "อบรม";
+            this.dgvNote.Columns[17].HeaderText = "สินค้า";
+            this.dgvNote.Columns[18].HeaderText = "Form Rep.";
+            this.dgvNote.Columns[19].HeaderText = "Ret > Excel";
+            this.dgvNote.Columns[20].HeaderText = "สร้างงบ";
+            this.dgvNote.Columns[21].HeaderText = "ท/ส ค่าเสื่อม";
+            this.dgvNote.Columns[22].HeaderText = "Se cure";
+            this.dgvNote.Columns[23].HeaderText = "Year End";
+            this.dgvNote.Columns[24].HeaderText = "วันที่ ไม่อยู่ในงวด";
+            this.dgvNote.Columns[25].HeaderText = "Mail รอสาย";
+            this.dgvNote.Columns[26].HeaderText = "โอน ฝ่าย ขาย";
+            this.dgvNote.Columns[27].HeaderText = "ปัญหาอื่น ๆ / หมายเหตุ";
+
+            foreach (DataGridViewColumn col in this.dgvNote.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            #endregion config dgvNote column
         }
 
         private void SupportStatWindow_Shown(object sender, EventArgs e)
@@ -214,6 +269,125 @@ namespace SN_Net.Subform
             };
             #endregion Draw red line for current row & enable/disable toolstrip button
 
+            this.dgvNote.RowPostPaint += delegate(object sender, DataGridViewRowPostPaintEventArgs e)
+            {
+                this.SetRowBackground(((DataGridView)sender).Rows[e.RowIndex]);
+            };
+
+            this.dgvNote.CellPainting += delegate(object sender, DataGridViewCellPaintingEventArgs e)
+            {
+                if (e.RowIndex == -1)
+                {
+                    e.PaintBackground(e.CellBounds, true);
+                    e.PaintContent(e.CellBounds);
+                    if (e.ColumnIndex >= 11 && e.ColumnIndex <= 26)
+                    {
+                        RectangleF summary_bound = new RectangleF(e.CellBounds.X + 1, (e.CellBounds.Y + e.CellBounds.Height) - 18, e.CellBounds.Width - 2, 17);
+
+                        using (SolidBrush brush_bg = new SolidBrush(Color.LightGray))
+                        {
+                            e.Graphics.FillRectangle(brush_bg, summary_bound);
+                        }
+                        using (Pen p = new Pen(Color.Gray))
+                        {
+                            e.Graphics.DrawLine(p, summary_bound.X, summary_bound.Y, summary_bound.X + summary_bound.Width, summary_bound.Y);
+                        }
+                        
+
+                        using (SolidBrush brush = new SolidBrush(Color.Blue))
+                        {
+                            using (Font font = new Font("tahoma", 7f))
+                            {
+                                using (StringFormat format = new StringFormat() { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center, FormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoWrap })
+                                {
+                                    if (e.ColumnIndex == 11) // map drive
+                                    {
+                                        int sum = this.note_list.Where(r => r.map_drive.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 12) // install update
+                                    {
+                                        int sum = this.note_list.Where(r => r.install.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 13) // Error
+                                    {
+                                        int sum = this.note_list.Where(r => r.error.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 14) // install fonts
+                                    {
+                                        int sum = this.note_list.Where(r => r.fonts.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 15) // print
+                                    {
+                                        int sum = this.note_list.Where(r => r.print.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 16) // อบรม
+                                    {
+                                        int sum = this.note_list.Where(r => r.training.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 17) // สินค้า
+                                    {
+                                        int sum = this.note_list.Where(r => r.stock.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 18) // form,report
+                                    {
+                                        int sum = this.note_list.Where(r => r.form.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 19) // report->excel
+                                    {
+                                        int sum = this.note_list.Where(r => r.rep_excel.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 20) // สร้างงบ
+                                    {
+                                        int sum = this.note_list.Where(r => r.statement.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 21) // ทรัพย์สิน/ค่าเสื่อม
+                                    {
+                                        int sum = this.note_list.Where(r => r.asset.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 22) // secure
+                                    {
+                                        int sum = this.note_list.Where(r => r.secure.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 23) // year end
+                                    {
+                                        int sum = this.note_list.Where(r => r.year_end.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 24) // วันที่ไม่อยู่ในงวด
+                                    {
+                                        int sum = this.note_list.Where(r => r.period.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 25) // Mail,รอสาย
+                                    {
+                                        int sum = this.note_list.Where(r => r.mail_wait.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 26) // โอนฝ่ายขาย
+                                    {
+                                        int sum = this.note_list.Where(r => r.transfer_mkt.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    e.Handled = true;
+                }
+            };
+
             #region Adjust Inline Form Control position while datagridview is resized
             this.dgvNote.Resize += delegate
             {
@@ -235,33 +409,78 @@ namespace SN_Net.Subform
             #endregion Show Inline Form When Double-click cell
 
             #region Re-order datagridview by click column header
+            //this.dgvNote.ColumnHeaderMouseClick += delegate(object sender, DataGridViewCellMouseEventArgs e)
+            //{
+            //    if (e.ColumnIndex == 3)
+            //    {
+            //        this.sorted_column = 3;
+            //        this.FillDataGrid();
+            //    }
+            //    if (e.ColumnIndex == 6)
+            //    {
+            //        this.sorted_column = 6;
+            //        this.FillDataGrid();
+            //    }
+            //};
             this.dgvNote.ColumnHeaderMouseClick += delegate(object sender, DataGridViewCellMouseEventArgs e)
             {
-                if (e.ColumnIndex == 3)
+                if (e.RowIndex == -1 && e.Button == MouseButtons.Left)
                 {
-                    this.sorted_column = 3;
-                    this.FillDataGrid();
-                }
-                if (e.ColumnIndex == 6)
-                {
-                    this.sorted_column = 6;
-                    this.FillDataGrid();
+                    if (e.ColumnIndex == 5)
+                    {
+                        this.sorted_column = 5;
+                        this.FillDataGrid();
+                        this.dgvNote.Columns[5].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_ACTIVE_BROWN;
+                        this.dgvNote.Columns[8].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_BROWN;
+                    }
+
+                    if (e.ColumnIndex == 8)
+                    {
+                        //this.dgvNote.Rows.Cast<DataGridViewRow>().OrderBy(r => ((SupportNote)r.Cells[0].Value).duration);
+                        this.sorted_column = 8;
+                        this.FillDataGrid();
+                        this.dgvNote.Columns[8].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_ACTIVE_BROWN;
+                        this.dgvNote.Columns[5].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_BROWN;
+                    }
                 }
             };
             #endregion Re-order datagridview by click column header
 
-            #region Comment/Complain button
-            this.dgvNote.CellMouseClick += delegate(object sender, DataGridViewCellMouseEventArgs e)
+            #region DgvNote context menu
+            this.dgvNote.MouseClick += delegate(object sender, MouseEventArgs e)
             {
-                if (e.RowIndex > -1)
+                int row_index = this.dgvNote.HitTest(e.X, e.Y).RowIndex;
+                int col_index = this.dgvNote.HitTest(e.X, e.Y).ColumnIndex;
+
+                if (row_index == -1)
+                    return;
+
+                if (!(this.dgvNote.Rows[row_index].Cells[0].Value is SupportNote))
+                    return;
+
+                this.dgvNote.Rows[row_index].Cells[col_index].Selected = true;
+                if (e.Button == MouseButtons.Right)
                 {
-                    if (e.ColumnIndex == 26)
+                    ContextMenu mnu = new ContextMenu();
+                    MenuItem m_remark = new MenuItem("Edit remark");
+                    m_remark.Click += delegate
+                    {
+                        this.toolStripEdit.PerformClick();
+                    };
+                    mnu.MenuItems.Add(m_remark);
+
+                    MenuItem m_comment = new MenuItem("Comment/Complain");
+                    m_comment.Click += delegate
                     {
                         this.ShowCommentForm();
-                    }
+                    };
+                    mnu.MenuItems.Add(m_comment);
+
+                    mnu.Show(this.dgvNote, new Point(e.X, e.Y));
+
                 }
             };
-            #endregion Comment/Complain button
+            #endregion DgvNote context menu
 
             #region chApplyCondition CheckState Change
             this.chApplyCondition.CheckStateChanged += delegate
@@ -285,6 +504,8 @@ namespace SN_Net.Subform
                 {
                     this.txtSernum.Read_Only = false;
                     this.chComment.Enabled = true;
+                    this.cbProblem.Enabled = true;
+                    this.cbReason.Enabled = true;
                     this.btnAddProblem.Enabled = true;
                     this.btnAddAllProblem.Enabled = true;
                     this.btnRemoveAllProblem.Enabled = true;
@@ -473,7 +694,7 @@ namespace SN_Net.Subform
 
         private void ShowCommentForm()
         {
-            int current_note_id = ((Note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Tag).id;
+            int current_note_id = ((SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[0].Value).id;
             CommentWindow wind = new CommentWindow(this);
             if (wind.ShowDialog() == DialogResult.OK)
             {
@@ -670,22 +891,22 @@ namespace SN_Net.Subform
                 note.contact = (snote.is_break != "Y" ? snote.contact : this.GetReason(snote.reason));
                 note.remark = snote.remark;
 
-                note.map_drive = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? true : false);
-                note.install = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? true : false);
-                note.error = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? true : false);
-                note.fonts = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? true : false);
-                note.print = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? true : false);
-                note.training = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? true : false);
-                note.stock = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? true : false);
-                note.form = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? true : false);
-                note.rep_excel = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? true : false);
-                note.statement = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? true : false);
-                note.asset = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? true : false);
-                note.secure = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? true : false);
-                note.year_end = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? true : false);
-                note.period = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? true : false);
-                note.mail_wait = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? true : false);
-                note.transfer_mkt = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? true : false);
+                note.map_drive = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? "\u2713" : "");
+                note.install = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? "\u2713" : "");
+                note.error = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? "\u2713" : "");
+                note.fonts = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? "\u2713" : "");
+                note.print = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? "\u2713" : "");
+                note.training = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? "\u2713" : "");
+                note.stock = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? "\u2713" : "");
+                note.form = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? "\u2713" : "");
+                note.rep_excel = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? "\u2713" : "");
+                note.statement = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? "\u2713" : "");
+                note.asset = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? "\u2713" : "");
+                note.secure = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? "\u2713" : "");
+                note.year_end = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? "\u2713" : "");
+                note.period = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? "\u2713" : "");
+                note.mail_wait = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? "\u2713" : "");
+                note.transfer_mkt = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? "\u2713" : "");
 
                 note_list.Add(note);
             }
@@ -740,11 +961,11 @@ namespace SN_Net.Subform
                     }
                 }
             }
-            if (this.sorted_column == 3) // sort by date + start_time
+            if (this.sorted_column == 5) // sort by date + start_time
             {
                 support_note = support_note.OrderBy(n => n.users_name + n.date + n.start_time).ToList<SupportNote>();
             }
-            else if (this.sorted_column == 6) // sort by duration time
+            else if (this.sorted_column == 8) // sort by duration time
             {
                 support_note = support_note.OrderBy(n => n.duration).ToList<SupportNote>();
             }
@@ -768,22 +989,22 @@ namespace SN_Net.Subform
                 note.contact = (snote.is_break != "Y" ? snote.contact : this.GetReason(snote.reason));
                 note.remark = snote.remark;
 
-                note.map_drive = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? true : false);
-                note.install = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? true : false);
-                note.error = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? true : false);
-                note.fonts = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? true : false);
-                note.print = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? true : false);
-                note.training = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? true : false);
-                note.stock = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? true : false);
-                note.form = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? true : false);
-                note.rep_excel = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? true : false);
-                note.statement = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? true : false);
-                note.asset = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? true : false);
-                note.secure = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? true : false);
-                note.year_end = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? true : false);
-                note.period = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? true : false);
-                note.mail_wait = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? true : false);
-                note.transfer_mkt = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? true : false);
+                note.map_drive = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? "\u2713" : "");
+                note.install = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? "\u2713" : "");
+                note.error = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? "\u2713" : "");
+                note.fonts = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? "\u2713" : "");
+                note.print = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? "\u2713" : "");
+                note.training = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? "\u2713" : "");
+                note.stock = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? "\u2713" : "");
+                note.form = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? "\u2713" : "");
+                note.rep_excel = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? "\u2713" : "");
+                note.statement = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? "\u2713" : "");
+                note.asset = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? "\u2713" : "");
+                note.secure = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? "\u2713" : "");
+                note.year_end = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? "\u2713" : "");
+                note.period = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? "\u2713" : "");
+                note.mail_wait = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? "\u2713" : "");
+                note.transfer_mkt = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? "\u2713" : "");
 
                 this.note_list.Add(note);
             }
@@ -794,316 +1015,44 @@ namespace SN_Net.Subform
 
         public void FillDataGrid(int selected_row_id = 0)
         {
+            this.FilterNoteList();
+            this.dgvNote.DataSource = this.bs;
+            this.bs.DataSource = this.note_list;
+            this.bs.ResetBindings(true);
+
             TimeSpan total_time = new TimeSpan(0, 0, 0);
             TimeSpan work_time = new TimeSpan(0, 0, 0);
             TimeSpan break_time = new TimeSpan(0, 0, 0);
 
-            this.dgvNote.Rows.Clear();
-            this.dgvNote.Columns.Clear();
-
-            #region Create Columns
-            DataGridViewTextBoxColumn col0 = new DataGridViewTextBoxColumn();
-            col0.Visible = false;
-            this.dgvNote.Columns.Add(col0);
-
-            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
-            col1.Width = 40;
-            col1.HeaderText = "ลำดับ";
-            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            this.dgvNote.Columns.Add(col1);
-            
-            DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
-            col2.Width = 70;
-            col2.HeaderText = "Support#";
-            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.dgvNote.Columns.Add(col2);
-
-            DataGridViewTextBoxColumn col3 = new DataGridViewTextBoxColumn();
-            col3.Width = 80;
-            col3.HeaderText = "วันที่";
-            this.dgvNote.Columns.Add(col3);
-
-            DataGridViewTextBoxColumn col4 = new DataGridViewTextBoxColumn();
-            col4.Width = 65;
-            col4.HeaderText = "รับสาย";
-            col4.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.dgvNote.Columns.Add(col4);
-
-            DataGridViewTextBoxColumn col5 = new DataGridViewTextBoxColumn();
-            col5.Width = 65;
-            col5.HeaderText = "วางสาย";
-            col5.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.dgvNote.Columns.Add(col5);
-            
-            DataGridViewTextBoxColumn col6 = new DataGridViewTextBoxColumn();
-            col6.Width = 65;
-            col6.HeaderText = "ระยะเวลา";
-            this.dgvNote.Columns.Add(col6);
-
-            DataGridViewTextBoxColumn col7 = new DataGridViewTextBoxColumn();
-            col7.Width = 120;
-            col7.HeaderText = "S/N";
-            col7.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.dgvNote.Columns.Add(col7);
-
-            DataGridViewTextBoxColumn col8 = new DataGridViewTextBoxColumn();
-            col8.Width = 160;
-            col8.HeaderText = "ชื่อลูกค้า";
-            col8.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.dgvNote.Columns.Add(col8);
-
-            DataGridViewCheckBoxColumn col9 = new DataGridViewCheckBoxColumn();
-            col9.Width = 30;
-            col9.HeaderText = "Map Drive";
-            col9.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col9.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col9);
-
-            DataGridViewCheckBoxColumn col10 = new DataGridViewCheckBoxColumn();
-            col10.Width = 30;
-            col10.HeaderText = "Ins. /Up";
-            col10.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col10.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col10);
-
-            DataGridViewCheckBoxColumn col11 = new DataGridViewCheckBoxColumn();
-            col11.Width = 30;
-            col11.HeaderText = "Error";
-            col11.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col11.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col11);
-
-            DataGridViewCheckBoxColumn col12 = new DataGridViewCheckBoxColumn();
-            col12.Width = 30;
-            col12.HeaderText = "Ins. Fonts";
-            col12.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col12.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col12);
-
-            DataGridViewCheckBoxColumn col13 = new DataGridViewCheckBoxColumn();
-            col13.Width = 30;
-            col13.HeaderText = "Print";
-            col13.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col13.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col13);
-
-            DataGridViewCheckBoxColumn col14 = new DataGridViewCheckBoxColumn();
-            col14.Width = 30;
-            col14.HeaderText = "อบรม";
-            col14.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col14.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col14);
-
-            DataGridViewCheckBoxColumn col15 = new DataGridViewCheckBoxColumn();
-            col15.Width = 30;
-            col15.HeaderText = "สินค้า";
-            col15.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col15.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col15);
-
-            DataGridViewCheckBoxColumn col16 = new DataGridViewCheckBoxColumn();
-            col16.Width = 30;
-            col16.HeaderText = "Form Rep.";
-            col16.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col16.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col16);
-
-            DataGridViewCheckBoxColumn col17 = new DataGridViewCheckBoxColumn();
-            col17.Width = 30;
-            col17.HeaderText = "Rep> Excel";
-            col17.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col17.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col17);
-
-            DataGridViewCheckBoxColumn col18 = new DataGridViewCheckBoxColumn();
-            col18.Width = 30;
-            col18.HeaderText = "สร้างงบ";
-            col18.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col18.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col18);
-
-            DataGridViewCheckBoxColumn col19 = new DataGridViewCheckBoxColumn();
-            col19.Width = 30;
-            col19.HeaderText = "ท/ส. ค่าเสื่อม";
-            col19.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col19.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col19);
-
-            DataGridViewCheckBoxColumn col20 = new DataGridViewCheckBoxColumn();
-            col20.Width = 30;
-            col20.HeaderText = "Se cure";
-            col20.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col20.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col20);
-
-            DataGridViewCheckBoxColumn col21 = new DataGridViewCheckBoxColumn();
-            col21.Width = 30;
-            col21.HeaderText = "Year End";
-            col21.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col21.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col21);
-
-            DataGridViewCheckBoxColumn col22 = new DataGridViewCheckBoxColumn();
-            col22.Width = 50;
-            col22.HeaderText = "วันที่ ไม่อยู่ในงวด";
-            col22.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col22.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col22);
-
-            DataGridViewCheckBoxColumn col23 = new DataGridViewCheckBoxColumn();
-            col23.Width = 30;
-            col23.HeaderText = "Mail รอสาย";
-            col23.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col23.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col23);
-
-            DataGridViewCheckBoxColumn col24 = new DataGridViewCheckBoxColumn();
-            col24.Width = 30;
-            col24.HeaderText = "โอนฝ่ายขาย";
-            col24.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col24.HeaderCell.Style.Font = new Font("tahoma", 7f);
-            this.dgvNote.Columns.Add(col24);
-
-            DataGridViewTextBoxColumn col25 = new DataGridViewTextBoxColumn();
-            col25.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col25.HeaderText = "ปัญหาอื่น ๆ";
-            col25.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.dgvNote.Columns.Add(col25);
-
-            DataGridViewButtonColumn col26 = new DataGridViewButtonColumn();
-            col26.Width = 60;
-            col26.HeaderText = "Comment/ Complain";
-            col26.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col26.HeaderCell.Style.Font = new Font("tahoma", 8f);
-            this.dgvNote.Columns.Add(col26);
-            #endregion Create Columns
-
-            // Perform Filter Note List data with Condition
-            this.FilterNoteList();
-
-            foreach (Note note in this.note_list)
+            foreach (DataGridViewRow row in this.dgvNote.Rows)
             {
-                total_time += TimeSpan.Parse(note.duration);
-                work_time += (note.is_break == "N" ? TimeSpan.Parse(note.duration) : TimeSpan.Parse("0:0:0"));
-                break_time += (note.is_break == "Y" ? TimeSpan.Parse(note.duration) : TimeSpan.Parse("0:0:0"));
-
-                int r = this.dgvNote.Rows.Add();
-                this.dgvNote.Rows[r].Tag = note;
-                this.SetRowBackground(this.dgvNote.Rows[r]);
-
-                this.dgvNote.Rows[r].Cells[0].ValueType = typeof(int);
-                this.dgvNote.Rows[r].Cells[0].Value = note.id;
-
-                this.dgvNote.Rows[r].Cells[1].ValueType = typeof(int);
-                this.dgvNote.Rows[r].Cells[1].Value = note.seq;
-
-                this.dgvNote.Rows[r].Cells[2].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[2].Value = note.users_name;
-
-                this.dgvNote.Rows[r].Cells[3].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[3].Value = note.date;
-
-                this.dgvNote.Rows[r].Cells[4].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[4].Value = note.start_time;
-
-                this.dgvNote.Rows[r].Cells[5].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[5].Value = note.end_time;
-
-                this.dgvNote.Rows[r].Cells[6].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[6].Value = note.duration;
-
-                this.dgvNote.Rows[r].Cells[7].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[7].Value = note.sernum;
-
-                this.dgvNote.Rows[r].Cells[8].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[8].Value = note.contact;
-
-                this.dgvNote.Rows[r].Cells[9].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[9].Value = note.map_drive;
-
-                this.dgvNote.Rows[r].Cells[10].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[10].Value = note.install;
-
-                this.dgvNote.Rows[r].Cells[11].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[11].Value = note.error;
-
-                this.dgvNote.Rows[r].Cells[12].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[12].Value = note.fonts;
-
-                this.dgvNote.Rows[r].Cells[13].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[13].Value = note.print;
-
-                this.dgvNote.Rows[r].Cells[14].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[14].Value = note.training;
-
-                this.dgvNote.Rows[r].Cells[15].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[15].Value = note.stock;
-
-                this.dgvNote.Rows[r].Cells[16].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[16].Value = note.form;
-
-                this.dgvNote.Rows[r].Cells[17].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[17].Value = note.rep_excel;
-
-                this.dgvNote.Rows[r].Cells[18].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[18].Value = note.statement;
-
-                this.dgvNote.Rows[r].Cells[19].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[19].Value = note.asset;
-
-                this.dgvNote.Rows[r].Cells[20].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[20].Value = note.secure;
-
-                this.dgvNote.Rows[r].Cells[21].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[21].Value = note.year_end;
-
-                this.dgvNote.Rows[r].Cells[22].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[22].Value = note.period;
-
-                this.dgvNote.Rows[r].Cells[23].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[23].Value = note.mail_wait;
-
-                this.dgvNote.Rows[r].Cells[24].ValueType = typeof(bool);
-                this.dgvNote.Rows[r].Cells[24].Value = note.transfer_mkt;
-
-                this.dgvNote.Rows[r].Cells[25].ValueType = typeof(string);
-                this.dgvNote.Rows[r].Cells[25].Value = note.remark;
-
-                this.dgvNote.Rows[r].Cells[26].Value = "...";
+                if (row.Cells[0].Value is SupportNote)
+                {
+                    total_time += TimeSpan.Parse(((SupportNote)row.Cells[0].Value).duration);
+                    work_time += (((SupportNote)row.Cells[0].Value).is_break == "N" ? TimeSpan.Parse(((SupportNote)row.Cells[0].Value).duration) : TimeSpan.Parse("0:0:0"));
+                    break_time += (((SupportNote)row.Cells[0].Value).is_break == "Y" ? TimeSpan.Parse(((SupportNote)row.Cells[0].Value).duration) : TimeSpan.Parse("0:0:0"));
+                }
             }
-
-            #region Display summary data
             this.lblWorkTime.Text = (this.current_user_from.id == this.current_user_to.id ? work_time.ToString() : "-");
             this.lblBreakTime.Text = (this.current_user_from.id == this.current_user_to.id ? break_time.ToString() : "-");
             this.lblTotalTime.Text = (this.current_user_from.id == this.current_user_to.id ? total_time.ToString() : "-");
-            this.lblPeriodAbsent.Text = (this.current_user_from.id == this.current_user_to.id ? this.event_calendar.GetSummaryLeaveDayString() : "");
-            #endregion Display summary data
 
-            foreach (DataGridViewColumn col in this.dgvNote.Columns)
-            {
-                col.HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_BROWN;
-            }
-            this.dgvNote.Columns[this.sorted_column].HeaderCell.Style.BackColor = ColorResource.COLUMN_HEADER_ACTIVE_BROWN;
+            //int summary_row = this.dgvNote.Rows.Add();
 
-            if (this.dgvNote.Rows.Count > 0)
+            if (this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((SupportNote)r.Cells[0].Value).id == selected_row_id).Count<DataGridViewRow>() > 0)
             {
-                this.dgvNote.Focus();
-                if (this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((Note)r.Tag).id == selected_row_id).Count<DataGridViewRow>() > 0)
-                {
-                    this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((Note)r.Tag).id == selected_row_id).First<DataGridViewRow>().Cells[1].Selected = true;
-                }
+                this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((SupportNote)r.Cells[0].Value).id == selected_row_id).First<DataGridViewRow>().Cells[3].Selected = true;
             }
         }
 
         private void SetRowBackground(DataGridViewRow row)
         {
-            if (row.Tag is Note)
+            if (row.Cells[0].Value is SupportNote)
             {
-                if (this.supportnotecomment_list.Find(t => t.note_id == ((Note)row.Tag).id) != null) // Has comment/complain
+                if (this.supportnotecomment_list.Find(t => t.note_id == ((SupportNote)row.Cells[0].Value).id) != null) // Has comment/complain
                 {
-                    if (this.supportnotecomment_list.Where(t => t.note_id == ((Note)row.Tag).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMMENT).Count<SupportNoteComment>() > 0
-                        && this.supportnotecomment_list.Where(t => t.note_id == ((Note)row.Tag).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMPLAIN).Count<SupportNoteComment>() == 0) // Only comment
+                    if (this.supportnotecomment_list.Where(t => t.note_id == ((SupportNote)row.Cells[0].Value).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMMENT).Count<SupportNoteComment>() > 0
+                        && this.supportnotecomment_list.Where(t => t.note_id == ((SupportNote)row.Cells[0].Value).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMPLAIN).Count<SupportNoteComment>() == 0) // Only comment
                     {
                         foreach (DataGridViewCell cell in row.Cells)
                         {
@@ -1115,8 +1064,8 @@ namespace SN_Net.Subform
                         return;
                     }
 
-                    if (this.supportnotecomment_list.Where(t => t.note_id == ((Note)row.Tag).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMMENT).Count<SupportNoteComment>() == 0
-                        && this.supportnotecomment_list.Where(t => t.note_id == ((Note)row.Tag).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMPLAIN).Count<SupportNoteComment>() > 0) // Only complain
+                    if (this.supportnotecomment_list.Where(t => t.note_id == ((SupportNote)row.Cells[0].Value).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMMENT).Count<SupportNoteComment>() == 0
+                        && this.supportnotecomment_list.Where(t => t.note_id == ((SupportNote)row.Cells[0].Value).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMPLAIN).Count<SupportNoteComment>() > 0) // Only complain
                     {
                         foreach (DataGridViewCell cell in row.Cells)
                         {
@@ -1128,8 +1077,8 @@ namespace SN_Net.Subform
                         return;
                     }
 
-                    if (this.supportnotecomment_list.Where(t => t.note_id == ((Note)row.Tag).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMMENT).Count<SupportNoteComment>() > 0
-                        && this.supportnotecomment_list.Where(t => t.note_id == ((Note)row.Tag).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMPLAIN).Count<SupportNoteComment>() > 0) // Both comment/complain
+                    if (this.supportnotecomment_list.Where(t => t.note_id == ((SupportNote)row.Cells[0].Value).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMMENT).Count<SupportNoteComment>() > 0
+                        && this.supportnotecomment_list.Where(t => t.note_id == ((SupportNote)row.Cells[0].Value).id && t.type == (int)CommentWindow.COMMENT_TYPE.COMPLAIN).Count<SupportNoteComment>() > 0) // Both comment/complain
                     {
                         foreach (DataGridViewCell cell in row.Cells)
                         {
@@ -1146,10 +1095,10 @@ namespace SN_Net.Subform
                 {
                     foreach (DataGridViewCell cell in row.Cells)
                     {
-                        row.Cells[cell.ColumnIndex].Style.BackColor = (((Note)row.Tag).is_break == "Y" ? ColorResource.DISABLE_ROW_BACKGROUND : Color.White);
-                        row.Cells[cell.ColumnIndex].Style.SelectionBackColor = (((Note)row.Tag).is_break == "Y" ? ColorResource.DISABLE_ROW_BACKGROUND : Color.White);
-                        row.Cells[cell.ColumnIndex].Style.ForeColor = (((Note)row.Tag).is_break == "Y" ? Color.Gray : Color.Black);
-                        row.Cells[cell.ColumnIndex].Style.SelectionForeColor = (((Note)row.Tag).is_break == "Y" ? Color.Gray : Color.Black);
+                        row.Cells[cell.ColumnIndex].Style.BackColor = (((SupportNote)row.Cells[0].Value).is_break == "Y" ? ColorResource.DISABLE_ROW_BACKGROUND : Color.White);
+                        row.Cells[cell.ColumnIndex].Style.SelectionBackColor = (((SupportNote)row.Cells[0].Value).is_break == "Y" ? ColorResource.DISABLE_ROW_BACKGROUND : Color.White);
+                        row.Cells[cell.ColumnIndex].Style.ForeColor = (((SupportNote)row.Cells[0].Value).is_break == "Y" ? Color.Gray : Color.Black);
+                        row.Cells[cell.ColumnIndex].Style.SelectionForeColor = (((SupportNote)row.Cells[0].Value).is_break == "Y" ? Color.Gray : Color.Black);
                     }
                 }
             }
@@ -1543,97 +1492,97 @@ namespace SN_Net.Subform
                                         using (Font font_wingdings = new Font("wingdings", 7f))
                                         {
                                             Rectangle rect8 = new Rectangle(x_pos, y_pos, col8_width, 13);
-                                            if (((Note)content[i]).map_drive)
+                                            if (((Note)content[i]).map_drive.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect8, str_format_center);
                                             x_pos += col8_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect9 = new Rectangle(x_pos, y_pos, col9_width, 13);
-                                            if (((Note)content[i]).install)
+                                            if (((Note)content[i]).install.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect9, str_format_center);
                                             x_pos += col9_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect10 = new Rectangle(x_pos, y_pos, col10_width, 13);
-                                            if (((Note)content[i]).error)
+                                            if (((Note)content[i]).error.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect10, str_format_center);
                                             x_pos += col10_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect11 = new Rectangle(x_pos, y_pos, col11_width, 13);
-                                            if (((Note)content[i]).fonts)
+                                            if (((Note)content[i]).fonts.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect11, str_format_center);
                                             x_pos += col11_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect12 = new Rectangle(x_pos, y_pos, col12_width, 13);
-                                            if (((Note)content[i]).print)
+                                            if (((Note)content[i]).print.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect12, str_format_center);
                                             x_pos += col12_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect13 = new Rectangle(x_pos, y_pos, col13_width, 13);
-                                            if (((Note)content[i]).training)
+                                            if (((Note)content[i]).training.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect13, str_format_center);
                                             x_pos += col13_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect14 = new Rectangle(x_pos, y_pos, col14_width, 13);
-                                            if (((Note)content[i]).stock)
+                                            if (((Note)content[i]).stock.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect14, str_format_center);
                                             x_pos += col14_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect15 = new Rectangle(x_pos, y_pos, col15_width, 13);
-                                            if (((Note)content[i]).form)
+                                            if (((Note)content[i]).form.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect15, str_format_center);
                                             x_pos += col15_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect16 = new Rectangle(x_pos, y_pos, col16_width, 13);
-                                            if (((Note)content[i]).rep_excel)
+                                            if (((Note)content[i]).rep_excel.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect16, str_format_center);
                                             x_pos += col16_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect17 = new Rectangle(x_pos, y_pos, col17_width, 13);
-                                            if (((Note)content[i]).statement)
+                                            if (((Note)content[i]).statement.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect17, str_format_center);
                                             x_pos += col17_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect18 = new Rectangle(x_pos, y_pos, col18_width, 13);
-                                            if (((Note)content[i]).asset)
+                                            if (((Note)content[i]).asset.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect18, str_format_center);
                                             x_pos += col18_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect19 = new Rectangle(x_pos, y_pos, col19_width, 13);
-                                            if (((Note)content[i]).secure)
+                                            if (((Note)content[i]).secure.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect19, str_format_center);
                                             x_pos += col19_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect20 = new Rectangle(x_pos, y_pos, col20_width, 13);
-                                            if (((Note)content[i]).year_end)
+                                            if (((Note)content[i]).year_end.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect20, str_format_center);
                                             x_pos += col20_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect21 = new Rectangle(x_pos, y_pos, col21_width, 13);
-                                            if (((Note)content[i]).period)
+                                            if (((Note)content[i]).period.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect21, str_format_center);
                                             x_pos += col21_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect22 = new Rectangle(x_pos, y_pos, col22_width, 13);
-                                            if (((Note)content[i]).mail_wait)
+                                            if (((Note)content[i]).mail_wait.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect22, str_format_center);
                                             x_pos += col22_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15);  // column separator
 
                                             Rectangle rect23 = new Rectangle(x_pos, y_pos, col23_width, 13);
-                                            if (((Note)content[i]).transfer_mkt)
+                                            if (((Note)content[i]).transfer_mkt.Length > 0)
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect23, str_format_center);
                                             x_pos += col23_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15); // column separator
@@ -1687,7 +1636,49 @@ namespace SN_Net.Subform
                                     row_num++;
                                     y_pos += 20;
                                 }
+                                #region draw summary data
+                                // draw separate column line
+                                pe.Graphics.DrawLine(p, 440, y_pos - 12, 440, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 465, y_pos - 12, 465, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 490, y_pos - 12, 490, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 515, y_pos - 12, 515, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 540, y_pos - 12, 540, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 565, y_pos - 12, 565, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 590, y_pos - 12, 590, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 615, y_pos - 12, 615, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 640, y_pos - 12, 640, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 665, y_pos - 12, 665, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 690, y_pos - 12, 690, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 715, y_pos - 12, 715, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 740, y_pos - 12, 740, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 765, y_pos - 12, 765, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 790, y_pos - 12, 790, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 815, y_pos - 12, 815, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 840, y_pos - 12, 840, y_pos + 15);
+                                // draw double horizontal line
+                                pe.Graphics.DrawLine(p, 440, y_pos + 13, 840, y_pos + 13);
+                                pe.Graphics.DrawLine(p, 440, y_pos + 15, 840, y_pos + 15);
 
+                                pe.Graphics.DrawString("รวม", font, brush, new RectangleF(350, y_pos, 80, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.map_drive.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(440, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.install.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(465, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.error.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(490, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.fonts.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(515, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.print.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(540, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.training.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(565, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.stock.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(590, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.form.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(615, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.rep_excel.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(640, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.statement.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(665, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.asset.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(690, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.secure.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(715, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.year_end.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(740, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.period.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(765, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.mail_wait.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(790, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.transfer_mkt.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(815, y_pos, 25, 15), str_format_right);
+                                #endregion draw summary data
+
+                                y_pos += 20;
                                 if (y_pos > pe.MarginBounds.Bottom)
                                 {
                                     pe.HasMorePages = true;
@@ -1697,10 +1688,18 @@ namespace SN_Net.Subform
                                 {
                                     pe.HasMorePages = false;
                                 }
-                                //pe.Graphics.DrawString(this.toolStripInfo.Text, font, brush, new Rectangle(10, y_pos, 400, 15));
-                                //pe.Graphics.DrawString("เวลารับสาย")
                                 pe.Graphics.DrawString("(เวลารับสาย : " + this.lblWorkTime.Text + ") + (เวลาพักสาย : " + this.lblBreakTime.Text + ") = (เวลารวม : " + this.lblTotalTime.Text + ")" , font, brush, new Rectangle(10, y_pos, 800, 15));
+
                                 y_pos += 20;
+                                if (y_pos > pe.MarginBounds.Bottom)
+                                {
+                                    pe.HasMorePages = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    pe.HasMorePages = false;
+                                }
                                 pe.Graphics.DrawString("จำนวนวันลา/ออกพบลูกค้า : " + this.lblPeriodAbsent.Text, font, brush, new Rectangle(10, y_pos, 400, 15));
                             }
                         }
@@ -2126,7 +2125,7 @@ namespace SN_Net.Subform
         private void toolStripEdit_Click(object sender, EventArgs e)
         {
             this.FormEdit();
-            string remark = (string)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[25].Value;
+            string remark = (string)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[27].Value;
 
             CustomTextBox ct = new CustomTextBox();
             ct.Read_Only = false;
@@ -2153,7 +2152,7 @@ namespace SN_Net.Subform
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
-            int note_id = ((Note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Tag).id;
+            int note_id = ((SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[0].Value).id;
             string remark = "";
             if (this.dgvNote.Parent.Controls.Find("txt_inline_remark", true).Length > 0)
             {
@@ -2212,9 +2211,9 @@ namespace SN_Net.Subform
             if (this.dgvNote.Parent.Controls.Find("txt_inline_remark", true).Length > 0)
             {
                 CustomTextBox ct = (CustomTextBox)this.dgvNote.Parent.Controls.Find("txt_inline_remark", true)[0];
-                Rectangle cell25_rect = this.dgvNote.GetCellDisplayRectangle(25, this.dgvNote.CurrentCell.RowIndex, true);
-                Console.WriteLine(" >>>> current cell.row_index : " + this.dgvNote.CurrentCell.RowIndex.ToString());
-                ct.SetBounds(cell25_rect.X + 3, cell25_rect.Y + 1, cell25_rect.Width - 1, cell25_rect.Height - 2);
+                Rectangle cell27_rect = this.dgvNote.GetCellDisplayRectangle(27, this.dgvNote.CurrentCell.RowIndex, true);
+                //Console.WriteLine(" >>>> current cell.row_index : " + this.dgvNote.CurrentCell.RowIndex.ToString());
+                ct.SetBounds(cell27_rect.X + 3, cell27_rect.Y + 1, cell27_rect.Width - 1, cell27_rect.Height - 2);
             }
         }
 
@@ -2305,6 +2304,18 @@ namespace SN_Net.Subform
                 {
                     this.main_form.leave_wind.CrossingCall(this.current_user_from, this.current_user_to, this.current_date_from, this.current_date_to);
                     this.main_form.leave_wind.Activate();
+                }
+            }
+        }
+
+        private void SupportStatWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if ((e.CloseReason == CloseReason.MdiFormClosing || e.CloseReason == CloseReason.UserClosing) && this.form_mode != FORM_MODE.READ)
+            {
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "SN_Net", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
                 }
             }
         }

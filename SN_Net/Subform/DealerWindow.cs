@@ -1573,24 +1573,15 @@ namespace SN_Net.Subform
 
         private void DealerWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (this.State == FormState.FORM_STATE_ADD || this.State == FormState.FORM_STATE_EDIT)
-            //{
-            //    if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "Warning", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
-            //    {
-            //        MainForm main_form = this.MdiParent as MainForm;
-            //        main_form.dealer_wind = null;
-            //        e.Cancel = false;
-            //    }
-            //    else
-            //    {
-            //        e.Cancel = true;
-            //    }
-            //}
-            //else
-            //{
-            //    MainForm main_form = this.MdiParent as MainForm;
-            //    main_form.dealer_wind = null;
-            //}
+            if ((e.CloseReason == CloseReason.MdiFormClosing || e.CloseReason == CloseReason.UserClosing) && (this.form_state != FORM_STATE.READ && this.form_state != FORM_STATE.READF7 && this.form_state != FORM_STATE.READF8))
+            {
+                this.Activate();
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "SN_Net", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
 
             MainForm main_form = this.MdiParent as MainForm;
             main_form.dealer_wind = null;

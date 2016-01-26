@@ -292,6 +292,12 @@
     <Compile Include="Subform\LeaveWindow.Designer.cs">
       <DependentUpon>LeaveWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\LoadingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\LoadingDialog.Designer.cs">
+      <DependentUpon>LoadingDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -592,6 +598,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\LeaveWindow.resx">
       <DependentUpon>LeaveWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\LoadingDialog.resx">
+      <DependentUpon>LoadingDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

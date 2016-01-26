@@ -21,15 +21,18 @@ namespace SN_Net.Subform
     {
         public MainForm main_form;
         public SnWindow parent_window;
+        //private BindingSource bs;
         private List<SupportNote> note_list = new List<SupportNote>();
         private List<Istab> probcod;
         public List<SerialPassword> password_list;
         public List<Istab> list_verext;
         private SupportNote note;
+        private Ma ma;
         public Serial serial = null;
         public List<Problem> list_problem = null;
+        public DateTime current_work_date;
         private System.Windows.Forms.Timer tm = new System.Windows.Forms.Timer();
-        private FORM_MODE form_mode;
+        public FORM_MODE form_mode;
         private string search_sn = "";
         public enum FORM_MODE
         {
@@ -66,9 +69,11 @@ namespace SN_Net.Subform
 
         private void SupportNote_Load(object sender, EventArgs e)
         {
+            this.btnViewNote.Width = 0;
             this.list_verext = this.main_form.data_resource.LIST_VEREXT;
             this.probcod = this.main_form.data_resource.LIST_PROBLEM_CODE.Where(t => t.typcod != "RG").ToList<Istab>();
             this.txtDummy.Width = 0;
+            this.current_work_date = DateTime.Now;
             this.PrepareControl();
             this.GetNote();
         }
@@ -80,6 +85,7 @@ namespace SN_Net.Subform
                 this.toolStripAdd.PerformClick();
                 this.txtSernum.Texts = this.serial.sernum;
                 this.ValidateSN(true);
+                Console.WriteLine(" >> show add form");
             }
         }
 
@@ -121,28 +127,27 @@ namespace SN_Net.Subform
             #region Add Support Code to cbSupportCode (ComboBox)
             List<Users> support_users = new List<Users>();
             
-            CRUDResult get_support_users = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_support_users");
+            CRUDResult get_support_users = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_operation_users");
             ServerResult sr_support_users = JsonConvert.DeserializeObject<ServerResult>(get_support_users.data);
             
             if (sr_support_users.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
                 foreach (Users u in sr_support_users.users)
                 {
-                    this.cbSupportCode.Items.Add(new ComboboxItem(u.username, 0, u.username){ Tag = u});
+                    this.cbUsersCode.Items.Add(new ComboboxItem(u.username, 0, u.username){ Tag = u});
                 }
             }
             #endregion Add Support Code to cbSupportCode (ComboBox)
 
             #region Set Selected Support Code to current loged_in_user_name
-            if (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT)
+            if (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES)
             {
-                //this.cbSupportCode.Text = this.main_form.G.loged_in_user_name;
-                this.cbSupportCode.SelectedItem = this.cbSupportCode.Items.Cast<ComboboxItem>().Where(i => ((Users)i.Tag).id == this.main_form.G.loged_in_user_id).First<ComboboxItem>();
-                this.cbSupportCode.Enabled = false;
+                this.cbUsersCode.SelectedItem = this.cbUsersCode.Items.Cast<ComboboxItem>().Where(i => ((Users)i.Tag).id == this.main_form.G.loged_in_user_id).First<ComboboxItem>();
+                this.cbUsersCode.Enabled = false;
             }
             else
             {
-                this.cbSupportCode.SelectedIndex = 0;
+                this.cbUsersCode.SelectedIndex = 0;
             }
             #endregion Set Selected Support Code to current loged_in_user_name
 
@@ -198,6 +203,38 @@ namespace SN_Net.Subform
             };
             #endregion txtSernum Text change
 
+
+            //this.dtWorkDate.textBox1.GotFocus += delegate
+            //{
+            //    Console.WriteLine(" >>>> + current_work_dat : " + this.current_work_date.ToString());
+            //    Console.WriteLine(" >>>> + dtWorkDate : " + this.dtWorkDate.ValDateTime.ToString());
+            //};
+
+            this.dtWorkDate.textBox1.Leave += delegate
+            {
+                if (!this.dtWorkDate.textBox1.Text.tryParseToDateTime())
+                {
+                    if (MessageAlert.Show("รูปแบบวันที่ไม่ถูกต้อง, โปรแกรมจะแสดงข้อมูลของวันที่ปัจจุบัน", "", MessageAlertButtons.OK, MessageAlertIcons.NONE) == DialogResult.OK)
+                        this.dtWorkDate.ValDateTime = DateTime.Now;
+
+                    return;
+                }
+
+                if (!(this.dtWorkDate.ValDateTime.ToMysqlDate() == this.current_work_date.ToMysqlDate()))
+                {
+                    this.GetNote();
+                }
+            };
+
+            this.dtWorkDate.dateTimePicker1.ValueChanged += delegate
+            {
+                if (this.dtWorkDate.ValDateTime.ToMysqlDate() != this.current_work_date.ToMysqlDate())
+                {
+                    this.current_work_date = this.dtWorkDate.ValDateTime;
+                    this.GetNote();
+                }
+            };
+
             #region chAlsoF8 enable when txtRemark is not empty
             this.txtRemark.TextChanged += delegate
             {
@@ -234,6 +271,18 @@ namespace SN_Net.Subform
             };
             #endregion DobleClick cell to edit
 
+            #region Detect remark column clicked
+            this.dgvNote.MouseClick += delegate(object sender, MouseEventArgs e)
+            {
+                int row_index = ((DataGridView)sender).HitTest(e.X, e.Y).RowIndex;
+                int col_index = ((DataGridView)sender).HitTest(e.X, e.Y).ColumnIndex;
+                if (row_index > -1 && col_index == 25)
+                {
+                    Console.WriteLine("  >>>> column remark clicked");
+                }
+            };
+            #endregion Detect remark column clicked
+
             #region Prevent change tab (TabControl1)
             this.tabControl1.Deselecting += delegate(object sender, TabControlCancelEventArgs e)
             {
@@ -257,13 +306,20 @@ namespace SN_Net.Subform
             #region dgvNote context menu
             this.dgvNote.MouseClick += delegate(object sender, MouseEventArgs e)
             {
-                if (e.Button == MouseButtons.Right)
+                int row_index = ((DataGridView)sender).HitTest(e.X, e.Y).RowIndex;
+                int col_index = ((DataGridView)sender).HitTest(e.X, e.Y).ColumnIndex;
+
+                if (row_index < 0)
+                    return;
+
+                //if (this.form_mode != FORM_MODE.READ && col_index == 25)
+                //{
+                //    this.txtRemark.Focus();
+                //    return;
+                //}
+
+                if (e.Button == MouseButtons.Right && this.form_mode == FORM_MODE.READ)
                 {
-                    int row_index = ((DataGridView)sender).HitTest(e.X, e.Y).RowIndex;
-
-                    if (row_index < 0)
-                        return;
-
                     ((DataGridView)sender).Rows[row_index].Cells[1].Selected = true;
                     ContextMenu c = new ContextMenu();
 
@@ -361,6 +417,17 @@ namespace SN_Net.Subform
                             this.btnViewPassword.Enabled = false;
                         }
 
+                        if (sr_exist_sernum.ma.Count > 0)
+                        {
+                            this.ma = sr_exist_sernum.ma[0];
+                            this.btnMA.Enabled = true;
+                        }
+                        else
+                        {
+                            this.ma = null;
+                            this.btnMA.Enabled = false;
+                        }
+
                         if (this.form_mode == FORM_MODE.ADD)
                         {
                             BackgroundWorker worker_spylog = new BackgroundWorker();
@@ -432,18 +499,66 @@ namespace SN_Net.Subform
             }
         }
 
+        private List<Note> SupportNote2Note(List<SupportNote> support_note_list)
+        {
+            List<Note> note_list = new List<Note>();
+            int seq = 0;
+            foreach (SupportNote snote in support_note_list)
+            {
+                note_list.Add(new Note()
+                {
+                    supportnote = snote,
+                    id = snote.id,
+                    is_break = snote.is_break,
+                    seq = (++seq).ToString(),
+                    users_name = snote.users_name,
+                    date = snote.date,
+                    start_time = snote.start_time,
+                    end_time = snote.end_time,
+                    duration = snote.duration,
+                    sernum = snote.sernum,
+                    contact = snote.contact,
+
+                    map_drive = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? "\u2713" : ""),
+                    install = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? "\u2713" : ""),
+                    error = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? "\u2713" : ""),
+                    fonts = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? "\u2713" : ""),
+                    print = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? "\u2713" : ""),
+                    training = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? "\u2713" : ""),
+                    stock = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? "\u2713" : ""),
+                    form = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? "\u2713" : ""),
+                    rep_excel = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? "\u2713" : ""),
+                    statement = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? "\u2713" : ""),
+                    asset = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? "\u2713" : ""),
+                    secure = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? "\u2713" : ""),
+                    year_end = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? "\u2713" : ""),
+                    period = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? "\u2713" : ""),
+                    mail_wait = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? "\u2713" : ""),
+                    transfer_mkt = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? "\u2713" : ""),
+
+                    remark = snote.remark,
+                    reason = snote.reason
+                });
+            }
+
+            return note_list;
+        }
+
         private void GetNote()
         {
-            string support_code = ((ComboboxItem)this.cbSupportCode.SelectedItem).string_value;
-            string start_date = this.dtWorkDate.ValDateTime.ToMysqlDate();
-            
+            string support_code = ((ComboboxItem)this.cbUsersCode.SelectedItem).string_value;
+            string start_date = this.current_work_date.ToMysqlDate();
+
             CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "supportnote/get_note&support_code=" + support_code + "&start_date=" + start_date + "&end_date=" + start_date);
             ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
-
             if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
             {
                 this.note_list = sr.support_note;
                 this.FillDataGrid();
+                if (this.note_list.Count == 0)
+                    MessageAlert.Show("ไม่มีข้อมูลของวันที่ " + this.dtWorkDate.Texts, "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+
+                Console.WriteLine(" >> getNote() complete");
             }
             else
             {
@@ -451,11 +566,13 @@ namespace SN_Net.Subform
             }
         }
 
+
         public void FillDataGrid(DataGridView dgv = null, List<SupportNote> notes = null)
         {
             DataGridView dgvNote = (dgv == null ? this.dgvNote : dgv);
-            note_list = (notes == null ? this.note_list : notes);
+            List<SupportNote> note_list = (notes == null ? this.note_list : notes);
 
+            dgvNote.Tag = HelperClass.DGV_TAG.READ;
             dgvNote.Rows.Clear();
             dgvNote.Columns.Clear();
             dgvNote.EnableHeadersVisualStyles = false;
@@ -518,112 +635,112 @@ namespace SN_Net.Subform
             col6.SortMode = DataGridViewColumnSortMode.NotSortable;
             dgvNote.Columns.Add(col6);
 
-            DataGridViewCheckBoxColumn col7 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col7 = new DataGridViewTextBoxColumn();
             col7.HeaderText = "Map Drive";
             col7.Width = 30;
             col7.SortMode = DataGridViewColumnSortMode.NotSortable;
             col7.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col7);
 
-            DataGridViewCheckBoxColumn col8 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col8 = new DataGridViewTextBoxColumn();
             col8.HeaderText = "Ins. /Up";
             col8.Width = 30;
             col8.SortMode = DataGridViewColumnSortMode.NotSortable;
             col8.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col8);
 
-            DataGridViewCheckBoxColumn col9 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col9 = new DataGridViewTextBoxColumn();
             col9.HeaderText = "Error";
             col9.Width = 30;
             col9.SortMode = DataGridViewColumnSortMode.NotSortable;
             col9.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col9);
 
-            DataGridViewCheckBoxColumn col10 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col10 = new DataGridViewTextBoxColumn();
             col10.HeaderText = "Ins. Fonts";
             col10.Width = 30;
             col10.SortMode = DataGridViewColumnSortMode.NotSortable;
             col10.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col10);
 
-            DataGridViewCheckBoxColumn col11 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col11 = new DataGridViewTextBoxColumn();
             col11.HeaderText = "Print";
             col11.Width = 30;
             col11.SortMode = DataGridViewColumnSortMode.NotSortable;
             col11.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col11);
 
-            DataGridViewCheckBoxColumn col12 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col12 = new DataGridViewTextBoxColumn();
             col12.HeaderText = "อบรม";
             col12.Width = 30;
             col12.SortMode = DataGridViewColumnSortMode.NotSortable;
             col12.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col12);
 
-            DataGridViewCheckBoxColumn col13 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col13 = new DataGridViewTextBoxColumn();
             col13.HeaderText = "สินค้า";
             col13.Width = 30;
             col13.SortMode = DataGridViewColumnSortMode.NotSortable;
             col13.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col13);
 
-            DataGridViewCheckBoxColumn col14 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col14 = new DataGridViewTextBoxColumn();
             col14.HeaderText = "Form Rep.";
             col14.Width = 30;
             col14.SortMode = DataGridViewColumnSortMode.NotSortable;
             col14.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col14);
 
-            DataGridViewCheckBoxColumn col15 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col15 = new DataGridViewTextBoxColumn();
             col15.HeaderText = "Rep> Excel";
             col15.Width = 30;
             col15.SortMode = DataGridViewColumnSortMode.NotSortable;
             col15.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col15);
 
-            DataGridViewCheckBoxColumn col16 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col16 = new DataGridViewTextBoxColumn();
             col16.HeaderText = "สร้างงบ";
             col16.Width = 30;
             col16.SortMode = DataGridViewColumnSortMode.NotSortable;
             col16.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col16);
 
-            DataGridViewCheckBoxColumn col17 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col17 = new DataGridViewTextBoxColumn();
             col17.HeaderText = "ท/ส. ค่าเสื่อม";
             col17.Width = 30;
             col17.SortMode = DataGridViewColumnSortMode.NotSortable;
             col17.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col17);
 
-            DataGridViewCheckBoxColumn col18 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col18 = new DataGridViewTextBoxColumn();
             col18.HeaderText = "Se cure";
             col18.Width = 30;
             col18.SortMode = DataGridViewColumnSortMode.NotSortable;
             col18.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col18);
 
-            DataGridViewCheckBoxColumn col19 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col19 = new DataGridViewTextBoxColumn();
             col19.HeaderText = "Year End";
             col19.Width = 30;
             col19.SortMode = DataGridViewColumnSortMode.NotSortable;
             col19.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col19);
 
-            DataGridViewCheckBoxColumn col20 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col20 = new DataGridViewTextBoxColumn();
             col20.HeaderText = "วันที่ ไม่อยู่ในงวด";
             col20.Width = 50;
             col20.SortMode = DataGridViewColumnSortMode.NotSortable;
             col20.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col20);
 
-            DataGridViewCheckBoxColumn col21 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col21 = new DataGridViewTextBoxColumn();
             col21.HeaderText = "Mail รอสาย";
             col21.Width = 30;
             col21.SortMode = DataGridViewColumnSortMode.NotSortable;
             col21.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col21);
 
-            DataGridViewCheckBoxColumn col22 = new DataGridViewCheckBoxColumn();
+            DataGridViewTextBoxColumn col22 = new DataGridViewTextBoxColumn();
             col22.HeaderText = "โอนฝ่ายขาย";
             col22.Width = 30;
             col22.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -702,101 +819,120 @@ namespace SN_Net.Subform
                 dgvNote.Rows[r].Cells[8].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[8].Value = (note.is_break != "Y" ? note.contact : this.ReadableBreakReason(note.reason));
 
+                //using (Font f = new Font("Tahoma", 12f))
+                //{
                 dgvNote.Rows[r].Cells[9].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[9].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[9].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[9].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[9].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[9].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[9].Style.Font = f;
+                dgvNote.Rows[r].Cells[9].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[10].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[10].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[10].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[10].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[10].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[10].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[10].Style.Font = f;
+                dgvNote.Rows[r].Cells[10].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[11].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[11].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[11].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[11].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[11].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[11].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[11].Style.Font = f;
+                dgvNote.Rows[r].Cells[11].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.ERROR.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[12].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[12].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[12].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[12].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[12].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[12].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[12].Style.Font = f;
+                dgvNote.Rows[r].Cells[12].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.FONTS.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[13].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[13].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[13].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[13].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[13].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[13].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[13].Style.Font = f;
+                dgvNote.Rows[r].Cells[13].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.PRINT.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[14].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[14].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[14].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[14].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[14].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[14].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[14].Style.Font = f;
+                dgvNote.Rows[r].Cells[14].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.TRAINING.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[15].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[15].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[15].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[15].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[15].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[15].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[15].Style.Font = f;
+                dgvNote.Rows[r].Cells[15].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.STOCK.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[16].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[16].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[16].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[16].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[16].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[16].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[16].Style.Font = f;
+                dgvNote.Rows[r].Cells[16].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.FORM.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[17].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[17].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[17].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[17].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[17].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[17].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[17].Style.Font = f;
+                dgvNote.Rows[r].Cells[17].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.REPORT_EXCEL.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[18].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[18].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[18].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[18].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[18].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[18].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[18].Style.Font = f;
+                dgvNote.Rows[r].Cells[18].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.STATEMENT.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[19].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[19].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[19].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[19].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[19].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[19].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[19].Style.Font = f;
+                dgvNote.Rows[r].Cells[19].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.ASSETS.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[20].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[20].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[20].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[20].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[20].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[20].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[20].Style.Font = f;
+                dgvNote.Rows[r].Cells[20].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[21].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[21].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[21].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[21].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[21].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[21].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[21].Style.Font = f;
+                dgvNote.Rows[r].Cells[21].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[22].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[22].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[22].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[22].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[22].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[22].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[22].Style.Font = f;
+                dgvNote.Rows[r].Cells[22].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[23].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[23].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[23].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[23].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[23].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[23].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[23].Style.Font = f;
+                dgvNote.Rows[r].Cells[23].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? "\u2713" : "");
 
                 dgvNote.Rows[r].Cells[24].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvNote.Rows[r].Cells[24].ValueType = typeof(bool);
+                dgvNote.Rows[r].Cells[24].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[24].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[24].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[24].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? true : false);
+                //dgvNote.Rows[r].Cells[24].Style.Font = f;
+                dgvNote.Rows[r].Cells[24].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? "\u2713" : "");
+                //}
 
                 dgvNote.Rows[r].Cells[25].ValueType = typeof(string);
                 dgvNote.Rows[r].Cells[25].Style.ForeColor = (note.is_break != "Y" ? Color.Black : Color.Gray);
@@ -805,7 +941,8 @@ namespace SN_Net.Subform
                 dgvNote.Rows[r].Cells[25].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[25].Value = note.remark;
             }
-            dgvNote.DrawLineEffect();
+            //dgvNote.DrawLineEffect();
+            dgvNote.DrawDgvRowBorder();
         }
 
         private void FillDgvProblem()
@@ -903,12 +1040,15 @@ namespace SN_Net.Subform
             this.btnViewDetail.Enabled = false;
             this.btnViewPassword.Enabled = false;
             this.picCheck.Visible = false;
+            this.btnMA.Enabled = false;
             #endregion FORM CONTROL
 
             this.splitContainer1.SplitterDistance = 78;
             this.tabControl1.Height = 0;
             this.main_form.lblTimeDuration.Visible = false;
             this.dgvNote.Enabled = true;
+            this.dgvNote.Tag = HelperClass.DGV_TAG.READ;
+            this.dgvNote.Refresh();
             this.dgvNote.Focus();
         }
 
@@ -951,10 +1091,17 @@ namespace SN_Net.Subform
             this.txtRemark.Enabled = true;
             this.btnViewNote.Enabled = false;
             this.btnViewPassword.Enabled = false;
+            this.btnMA.Enabled = (this.ma != null ? true : false);
             #endregion FORM CONTROL
 
+            if(this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
             this.tabControl1.Height = 220;
             this.splitContainer1.SplitterDistance = 302;
+            this.dgvNote.Tag = HelperClass.DGV_TAG.LEAVE;
+            this.dgvNote.Refresh();
             this.dgvNote.Enabled = false;
         }
 
@@ -996,10 +1143,17 @@ namespace SN_Net.Subform
             this.chYearEnd.Enabled = true;
             this.txtRemark.Enabled = true;
             this.btnViewNote.Enabled = false;
+            this.btnMA.Enabled = (this.ma != null ? true : false);
             #endregion FORM CONTROL
 
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
             this.tabControl1.Height = 220;
             this.splitContainer1.SplitterDistance = 302;
+            //this.dgvNote.Tag = HelperClass.DGV_TAG.LEAVE;
+            //this.dgvNote.Refresh();
             this.dgvNote.Enabled = false;
         }
 
@@ -1043,10 +1197,17 @@ namespace SN_Net.Subform
             this.btnViewNote.Enabled = false;
             this.dtBreakStart.Enabled = (PreferenceForm.BREAK_TIME_METHOD_CONFIGURATION() == (int)PreferenceForm.BREAK_TIME.MANUAL ? true : false);
             this.dtBreakEnd.Enabled = (PreferenceForm.BREAK_TIME_METHOD_CONFIGURATION() == (int)PreferenceForm.BREAK_TIME.MANUAL ? true : false);
+            this.btnMA.Enabled = false;
             #endregion FORM CONTROL
 
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
             this.tabControl1.Height = 220;
             this.splitContainer1.SplitterDistance = 302;
+            this.dgvNote.Tag = HelperClass.DGV_TAG.LEAVE;
+            this.dgvNote.Refresh();
             this.dgvNote.Enabled = false;
         }
 
@@ -1090,10 +1251,17 @@ namespace SN_Net.Subform
             this.btnViewNote.Enabled = false;
             this.dtBreakStart.Enabled = (PreferenceForm.BREAK_TIME_METHOD_CONFIGURATION() == (int)PreferenceForm.BREAK_TIME.MANUAL ? true : false);
             this.dtBreakEnd.Enabled = (PreferenceForm.BREAK_TIME_METHOD_CONFIGURATION() == (int)PreferenceForm.BREAK_TIME.MANUAL ? true : false);
+            this.btnMA.Enabled = false;
             #endregion FORM CONTROL
 
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
             this.tabControl1.Height = 220;
             this.splitContainer1.SplitterDistance = 302;
+            //this.dgvNote.Tag = HelperClass.DGV_TAG.LEAVE;
+            //this.dgvNote.Refresh();
             this.dgvNote.Enabled = false;
         }
 
@@ -1135,8 +1303,11 @@ namespace SN_Net.Subform
             this.chYearEnd.Enabled = false;
             this.txtRemark.Enabled = false;
             this.btnViewNote.Enabled = false;
+            this.btnMA.Enabled = false;
             #endregion FORM CONTROL
 
+            this.dgvNote.Tag = HelperClass.DGV_TAG.LEAVE;
+            this.dgvNote.Refresh();
             this.dgvNote.Enabled = false;
         }
         #endregion FORM MODE
@@ -1147,6 +1318,11 @@ namespace SN_Net.Subform
             this.parent_window.btnSupportNote.Enabled = true;
             this.serial = null;
             this.note = null;
+            this.ma = null;
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
             this.splitContainer1.SplitterDistance = 42;
 
             #region First tab
@@ -1214,7 +1390,6 @@ namespace SN_Net.Subform
                 if (MessageAlert.Show("คำเตือน : วันที่ทำการไม่เป็นปัจจุบัน\nต้องการกำหนดวันที่ให้เป็นปัจจุบันหรือไม่?", "คำเตือน", MessageAlertButtons.YES_NO, MessageAlertIcons.WARNING) == DialogResult.Yes)
                 {
                     this.dtWorkDate.ValDateTime = DateTime.Now;
-                    this.GetNote();
                 }
             }
             this.cbProbcod.SelectedIndex = this.probcod.FindIndex(t => t.typcod == "--");
@@ -1299,6 +1474,17 @@ namespace SN_Net.Subform
                                 {
                                     this.btnViewPassword.Enabled = false;
                                 }
+                                
+                                if (sr.ma.Count > 0)
+                                {
+                                    this.ma = sr.ma[0];
+                                    this.btnMA.Enabled = true;
+                                }
+                                else
+                                {
+                                    this.ma = null;
+                                    this.btnMA.Enabled = false;
+                                }
                             }
                             else
                             {
@@ -1345,7 +1531,7 @@ namespace SN_Net.Subform
                 {
                     if (((SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Tag).reason.Contains(SupportNote.BREAK_REASON.TRAINING_TRAINER.FormatBreakReson())) // if Trainer
                     {
-                        TrainerNoteDialog wind = new TrainerNoteDialog(this.main_form, (Users)((ComboboxItem)this.cbSupportCode.SelectedItem).Tag, this.dtWorkDate.dateTimePicker1.Value, (SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Tag);
+                        TrainerNoteDialog wind = new TrainerNoteDialog(this.main_form, (Users)((ComboboxItem)this.cbUsersCode.SelectedItem).Tag, this.dtWorkDate.dateTimePicker1.Value, (SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Tag);
                         if (wind.ShowDialog() == DialogResult.OK)
                         {
                             this.GetNote();
@@ -1428,8 +1614,8 @@ namespace SN_Net.Subform
             this.FormProcessing();
             bool get_success = false;
             string err_msg = "";
-            string support_code = ((ComboboxItem)this.cbSupportCode.SelectedItem).string_value;
-            string start_date = this.dtWorkDate.ValDateTime.ToMysqlDate();
+            string support_code = ((ComboboxItem)this.cbUsersCode.SelectedItem).string_value;
+            string start_date = this.current_work_date.ToMysqlDate();
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += delegate
@@ -1455,6 +1641,8 @@ namespace SN_Net.Subform
                 {
                     this.FillDataGrid();
                     this.FormRead();
+                    if (this.note_list.Count == 0)
+                        MessageAlert.Show("ไม่มีข้อมูลของวันที่ " + this.dtWorkDate.Texts, "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
                 }
                 else
                 {
@@ -1822,86 +2010,9 @@ namespace SN_Net.Subform
             this.ValidateSN();
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            this.ClearForm();
-            this.tm.Dispose();
-            this.tm = null;
-            this.parent_window.btnSupportNote.Enabled = true;
-            this.main_form.supportnote_wind = null;
-            this.main_form.lblTimeDuration.Visible = false;
-
-            base.OnClosing(e);
-        }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == Keys.Enter)
-            {
-                if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT)
-                {
-                    SendKeys.Send("{TAB}");
-                    return true;
-                }
-
-                if (this.form_mode == FORM_MODE.READ)
-                {
-                    if (this.dtWorkDate.textBox1.Focused)
-                    {
-                        this.btnViewNote.PerformClick();
-                        return true;
-                    }
-                }
-            }
-
-            if (keyData == Keys.Escape)
-            {
-                this.toolStripStop.PerformClick();
-                return true;
-            }
-
-            if (keyData == Keys.F9)
-            {
-                this.toolStripSave.PerformClick();
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.A) || keyData == (Keys.Alt | Keys.S))
-            {
-                this.toolStripAdd.PerformClick();
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.E))
-            {
-                this.toolStripEdit.PerformClick();
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.B))
-            {
-                this.toolStripBreak.PerformClick();
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.P))
-            {
-                this.toolStripPrint.PerformClick();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.S))
-            {
-                this.toolStripSearch.PerformClick();
-                return true;
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
         private void toolStripTeacher_Click(object sender, EventArgs e)
         {
-            TrainerNoteDialog dlg = new TrainerNoteDialog(this.main_form, (Users)((ComboboxItem)this.cbSupportCode.SelectedItem).Tag, this.dtWorkDate.ValDateTime);
+            TrainerNoteDialog dlg = new TrainerNoteDialog(this.main_form, (Users)((ComboboxItem)this.cbUsersCode.SelectedItem).Tag, this.dtWorkDate.ValDateTime);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 this.GetNote();
@@ -1926,7 +2037,7 @@ namespace SN_Net.Subform
                 string err_msg = "";
                 List<SupportNote> search_result = null;
 
-                string support_code = ((ComboboxItem)this.cbSupportCode.SelectedItem).string_value;
+                string support_code = ((ComboboxItem)this.cbUsersCode.SelectedItem).string_value;
                 string sernum = sb.search_sn;
 
                 BackgroundWorker worker = new BackgroundWorker();
@@ -1978,7 +2089,7 @@ namespace SN_Net.Subform
 
         private void toolStripPrint_Click(object sender, EventArgs e)
         {
-            this.btnViewNote.PerformClick();
+            this.GetNote();
             PrintDocument print_doc = new PrintDocument();
 
             PageSetupDialog page_setup = new PageSetupDialog();
@@ -2081,8 +2192,8 @@ namespace SN_Net.Subform
                                 pe.Graphics.DrawString("วันที่ " + this.dtWorkDate.Texts, font, brush, new RectangleF(x_pos, y_pos, box_date.Width, box_date.Height));
                                 pe.Graphics.DrawLine(new Pen(Color.Black), x_pos + pe.Graphics.MeasureString("วันที่ ", font).Width, y_pos + box_date.Height, x_pos + box_date.Width, y_pos + box_date.Height);
 
-                                SizeF box_user = pe.Graphics.MeasureString("รหัสพนักงาน : " + ((Users)((ComboboxItem)this.cbSupportCode.SelectedItem).Tag).username, font);
-                                pe.Graphics.DrawString("รหัสพนักงาน : " + ((Users)((ComboboxItem)this.cbSupportCode.SelectedItem).Tag).username, font, brush, new RectangleF(pe.MarginBounds.Right - box_user.Width, y_pos, box_user.Width, box_user.Height));
+                                SizeF box_user = pe.Graphics.MeasureString("รหัสพนักงาน : " + ((Users)((ComboboxItem)this.cbUsersCode.SelectedItem).Tag).username, font);
+                                pe.Graphics.DrawString("รหัสพนักงาน : " + ((Users)((ComboboxItem)this.cbUsersCode.SelectedItem).Tag).username, font, brush, new RectangleF(pe.MarginBounds.Right - box_user.Width, y_pos, box_user.Width, box_user.Height));
                                 pe.Graphics.DrawLine(new Pen(Color.Black), (pe.MarginBounds.Right - box_user.Width) + pe.Graphics.MeasureString("รหัสพนักงาน : ", font).Width, y_pos + box_user.Height, pe.MarginBounds.Right, y_pos + box_user.Height);
                             }
                         }
@@ -2256,7 +2367,7 @@ namespace SN_Net.Subform
                                                     for (int c = 9; c <= 24; c++)
                                                     {
                                                         pe.Graphics.DrawLine(p, x_pos, y_pos - 10, x_pos, y_pos + 20);
-                                                        if ((bool)row.Cells[c].Value)
+                                                        if (((string)row.Cells[c].Value).Length > 0)
                                                         {
                                                             pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), wingdings_font, brush, new RectangleF(x_pos, y_pos, col7, line_height), str_center);
                                                         }
@@ -2315,6 +2426,123 @@ namespace SN_Net.Subform
                 print_doc = null;
                 page_setup = null;
             }
+        }
+
+        private void SupportNoteWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.MdiFormClosing && this.form_mode != FORM_MODE.READ)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if ((e.CloseReason == CloseReason.UserClosing) && this.form_mode != FORM_MODE.READ)
+            {
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "SN_Net", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            this.ClearForm();
+            this.tm.Dispose();
+            this.tm = null;
+            this.parent_window.btnSupportNote.Enabled = true;
+            this.main_form.supportnote_wind = null;
+            this.main_form.lblTimeDuration.Visible = false;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Enter)
+            {
+                if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT)
+                {
+                    SendKeys.Send("{TAB}");
+                    return true;
+                }
+
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    if (this.dtWorkDate.textBox1.Focused)
+                    {
+                        //if (this.dtWorkDate.textBox1.Text.tryParseToDateTime() == false)
+                        //{
+                        //    if (MessageAlert.Show("รูปแบบวันที่ไม่ถูกต้อง, ต้องการให้โปรแกรมแสดงข้อมูลของวันที่ปัจจุบันหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.OK)
+                        //    {
+                        //        this.dtWorkDate.ValDateTime = DateTime.Now;
+                        //    }
+                        //    else
+                        //    {
+                        //        this.dtWorkDate.textBox1.Focus();
+                        //    }
+
+                        //}
+
+                        this.dtWorkDate.dateTimePicker1.Focus();
+                        this.dtWorkDate.textBox1.Focus();
+                        return true;
+                    }
+                }
+            }
+
+            if (keyData == Keys.Escape)
+            {
+                this.toolStripStop.PerformClick();
+                return true;
+            }
+
+            if (keyData == Keys.F9)
+            {
+                this.toolStripSave.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.A) || keyData == (Keys.Alt | Keys.S))
+            {
+                this.toolStripAdd.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.E))
+            {
+                this.toolStripEdit.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.B))
+            {
+                this.toolStripBreak.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.P))
+            {
+                this.toolStripPrint.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.S))
+            {
+                this.toolStripSearch.PerformClick();
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void btnMA_Click(object sender, EventArgs e)
+        {
+            MAFormDialog ma = new MAFormDialog(this.ma);
+            ma.btnOK.Visible = false;
+            ma.btnCancel.Text = "ปิด";
+            ma.btnCancel.Focus();
+
+            ma.maDateFrom.Read_Only = true;
+            ma.maDateTo.Read_Only = true;
+            ma.maEmail.Read_Only = true;
+
+            ma.ShowDialog();
         }
     }
 }

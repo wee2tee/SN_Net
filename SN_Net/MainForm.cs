@@ -305,30 +305,6 @@ namespace SN_Net
             Application.Exit();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //Console.WriteLine()
-
-            //e.Cancel = true;
-            //if (((MainForm)sender).MdiChildren.Count() > 0)
-            //{
-            //    foreach (Form mdichild in ((MainForm)sender).MdiChildren)
-            //    {
-            //        if (mdichild is SnWindow)
-            //        {
-            //            if (((SnWindow)mdichild).State != FormState.FORM_STATE_READY)
-            //            {
-            //                mdichild.Activate();
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    e.Cancel = false;
-            //}
-        }
-
         private void loadDataResource()
         {
             this.data_resource = new DataResource();

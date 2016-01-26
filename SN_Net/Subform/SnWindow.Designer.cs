@@ -33,6 +33,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnDeleteMA = new System.Windows.Forms.Button();
             this.btnEditMA = new System.Windows.Forms.Button();
             this.label32 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -168,7 +169,7 @@
             this.dtEndTime = new System.Windows.Forms.DateTimePicker();
             this.dtStartTime = new System.Windows.Forms.DateTimePicker();
             this.lblDuration = new System.Windows.Forms.Label();
-            this.btnSupportHistory = new System.Windows.Forms.Button();
+            this.btnSupportViewNote = new System.Windows.Forms.Button();
             this.btnSupportNote = new System.Windows.Forms.Button();
             this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
             this.txtSernum = new SN_Net.MiscClass.CustomMaskedTextBox();
@@ -188,7 +189,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnDeleteMA = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -277,6 +277,16 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             // 
+            // btnDeleteMA
+            // 
+            this.btnDeleteMA.Location = new System.Drawing.Point(563, 69);
+            this.btnDeleteMA.Name = "btnDeleteMA";
+            this.btnDeleteMA.Size = new System.Drawing.Size(64, 23);
+            this.btnDeleteMA.TabIndex = 143;
+            this.btnDeleteMA.Text = "ลบ  >>";
+            this.btnDeleteMA.UseVisualStyleBackColor = true;
+            this.btnDeleteMA.Click += new System.EventHandler(this.btnDeleteMA_Click);
+            // 
             // btnEditMA
             // 
             this.btnEditMA.Location = new System.Drawing.Point(563, 45);
@@ -344,10 +354,10 @@
             this.maDateTo.Read_Only = true;
             this.maDateTo.Size = new System.Drawing.Size(96, 23);
             this.maDateTo.TabIndex = 146;
-            this.maDateTo.Texts = "20/01/2559";
-            this.maDateTo.TextsMysql = "2016-01-20";
+            this.maDateTo.Texts = "25/01/2559";
+            this.maDateTo.TextsMysql = "2016-01-25";
             this.toolTip1.SetToolTip(this.maDateTo, "<F6> = Show Calendar");
-            this.maDateTo.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 516);
+            this.maDateTo.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 924);
             // 
             // maDateFrom
             // 
@@ -360,10 +370,10 @@
             this.maDateFrom.Read_Only = true;
             this.maDateFrom.Size = new System.Drawing.Size(96, 23);
             this.maDateFrom.TabIndex = 145;
-            this.maDateFrom.Texts = "20/01/2559";
-            this.maDateFrom.TextsMysql = "2016-01-20";
+            this.maDateFrom.Texts = "25/01/2559";
+            this.maDateFrom.TextsMysql = "2016-01-25";
             this.toolTip1.SetToolTip(this.maDateFrom, "<F6> = Show Calendar");
-            this.maDateFrom.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 517);
+            this.maDateFrom.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 926);
             // 
             // label35
             // 
@@ -406,10 +416,10 @@
             this.dtVerextdat.Read_Only = true;
             this.dtVerextdat.Size = new System.Drawing.Size(96, 23);
             this.dtVerextdat.TabIndex = 25;
-            this.dtVerextdat.Texts = "20/01/2559";
-            this.dtVerextdat.TextsMysql = "2016-01-20";
+            this.dtVerextdat.Texts = "25/01/2559";
+            this.dtVerextdat.TextsMysql = "2016-01-25";
             this.toolTip1.SetToolTip(this.dtVerextdat, "<F6> = Show Calendar");
-            this.dtVerextdat.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 519);
+            this.dtVerextdat.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 928);
             // 
             // dtManual
             // 
@@ -422,10 +432,10 @@
             this.dtManual.Read_Only = true;
             this.dtManual.Size = new System.Drawing.Size(96, 23);
             this.dtManual.TabIndex = 23;
-            this.dtManual.Texts = "20/01/2559";
-            this.dtManual.TextsMysql = "2016-01-20";
+            this.dtManual.Texts = "25/01/2559";
+            this.dtManual.TextsMysql = "2016-01-25";
             this.toolTip1.SetToolTip(this.dtManual, "<F6> = Show Calendar");
-            this.dtManual.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 521);
+            this.dtManual.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 930);
             // 
             // dtExpdat
             // 
@@ -438,10 +448,10 @@
             this.dtExpdat.Read_Only = true;
             this.dtExpdat.Size = new System.Drawing.Size(96, 23);
             this.dtExpdat.TabIndex = 21;
-            this.dtExpdat.Texts = "20/01/2559";
-            this.dtExpdat.TextsMysql = "2016-01-20";
+            this.dtExpdat.Texts = "25/01/2559";
+            this.dtExpdat.TextsMysql = "2016-01-25";
             this.toolTip1.SetToolTip(this.dtExpdat, "<F6> = Show Calendar");
-            this.dtExpdat.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 522);
+            this.dtExpdat.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 962);
             // 
             // dtPurdat
             // 
@@ -454,10 +464,10 @@
             this.dtPurdat.Read_Only = true;
             this.dtPurdat.Size = new System.Drawing.Size(96, 23);
             this.dtPurdat.TabIndex = 20;
-            this.dtPurdat.Texts = "20/01/2559";
-            this.dtPurdat.TextsMysql = "2016-01-20";
+            this.dtPurdat.Texts = "25/01/2559";
+            this.dtPurdat.TextsMysql = "2016-01-25";
             this.toolTip1.SetToolTip(this.dtPurdat, "<F6> = Show Calendar");
-            this.dtPurdat.ValDateTime = new System.DateTime(2016, 1, 20, 9, 53, 53, 524);
+            this.dtPurdat.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 964);
             // 
             // cbVerext
             // 
@@ -1610,7 +1620,7 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.panel1);
-            this.splitContainer2.Panel1.Controls.Add(this.btnSupportHistory);
+            this.splitContainer2.Panel1.Controls.Add(this.btnSupportViewNote);
             this.splitContainer2.Panel1.Controls.Add(this.btnSupportNote);
             this.splitContainer2.Panel1.Controls.Add(this.txtCompnam);
             this.splitContainer2.Panel1.Controls.Add(this.txtSernum);
@@ -1947,19 +1957,19 @@
             this.lblDuration.Text = "00:00:00";
             this.lblDuration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnSupportHistory
+            // btnSupportViewNote
             // 
-            this.btnSupportHistory.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnSupportHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportHistory.Location = new System.Drawing.Point(78, 112);
-            this.btnSupportHistory.Name = "btnSupportHistory";
-            this.btnSupportHistory.Size = new System.Drawing.Size(83, 29);
-            this.btnSupportHistory.TabIndex = 80;
-            this.btnSupportHistory.Text = "      View Note";
-            this.btnSupportHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.btnSupportHistory, "ดูรายละเอียดการปฏิบัติงาน");
-            this.btnSupportHistory.UseVisualStyleBackColor = true;
-            this.btnSupportHistory.Click += new System.EventHandler(this.btnSupportHistory_Click);
+            this.btnSupportViewNote.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnSupportViewNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportViewNote.Location = new System.Drawing.Point(78, 112);
+            this.btnSupportViewNote.Name = "btnSupportViewNote";
+            this.btnSupportViewNote.Size = new System.Drawing.Size(83, 29);
+            this.btnSupportViewNote.TabIndex = 80;
+            this.btnSupportViewNote.Text = "      View Note";
+            this.btnSupportViewNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.btnSupportViewNote, "ดูรายละเอียดการปฏิบัติงาน");
+            this.btnSupportViewNote.UseVisualStyleBackColor = true;
+            this.btnSupportViewNote.Click += new System.EventHandler(this.btnSupportHistory_Click);
             // 
             // btnSupportNote
             // 
@@ -2209,16 +2219,6 @@
             this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripProcessing.Visible = false;
             // 
-            // btnDeleteMA
-            // 
-            this.btnDeleteMA.Location = new System.Drawing.Point(563, 69);
-            this.btnDeleteMA.Name = "btnDeleteMA";
-            this.btnDeleteMA.Size = new System.Drawing.Size(64, 23);
-            this.btnDeleteMA.TabIndex = 143;
-            this.btnDeleteMA.Text = "ลบ  >>";
-            this.btnDeleteMA.UseVisualStyleBackColor = true;
-            this.btnDeleteMA.Click += new System.EventHandler(this.btnDeleteMA_Click);
-            // 
             // SnWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2239,6 +2239,7 @@
             this.MinimumSize = new System.Drawing.Size(870, 656);
             this.Name = "SnWindow";
             this.Text = "Serial Number";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SnWindow_FormClosing);
             this.Load += new System.EventHandler(this.SnWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -2388,7 +2389,7 @@
         private MiscClass.CustomDateTimePicker dtVerextdat;
         private MiscClass.CustomDateTimePicker dtManual;
         private MiscClass.CustomDateTimePicker dtExpdat;
-        private System.Windows.Forms.Button btnSupportHistory;
+        private System.Windows.Forms.Button btnSupportViewNote;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox checkBox15;

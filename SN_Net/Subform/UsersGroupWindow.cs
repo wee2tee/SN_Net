@@ -1314,10 +1314,17 @@ namespace SN_Net.Subform
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        private void UsersGroupWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if((e.CloseReason == CloseReason.MdiFormClosing || e.CloseReason == CloseReason.UserClosing) && (this.form_mode != FORM_MODE.READ && this.form_mode != FORM_MODE.READ_F7 && this.form_mode != FORM_MODE.READ_F8))
+            {
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "SN_Net", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
             this.main_form.usersgroup_wind = null;
-            base.OnClosing(e);
         }
     }
 }

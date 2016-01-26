@@ -73,7 +73,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbReason = new System.Windows.Forms.ComboBox();
             this.cbProblem = new System.Windows.Forms.ComboBox();
-            this.txtSernum = new SN_Net.MiscClass.CustomTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupPeriod = new System.Windows.Forms.GroupBox();
             this.lblTotalCall = new System.Windows.Forms.Label();
@@ -105,6 +104,7 @@
             this.txtDummy = new System.Windows.Forms.TextBox();
             this.dgvNote = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtSernum = new SN_Net.MiscClass.CustomTextBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -626,23 +626,6 @@
             this.cbProblem.Size = new System.Drawing.Size(199, 24);
             this.cbProblem.TabIndex = 9;
             // 
-            // txtSernum
-            // 
-            this.txtSernum.BackColor = System.Drawing.Color.White;
-            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSernum.CharUpperCase = false;
-            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSernum.Location = new System.Drawing.Point(13, 32);
-            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSernum.MaxChar = 0;
-            this.txtSernum.Name = "txtSernum";
-            this.txtSernum.Read_Only = false;
-            this.txtSernum.SelectionLength = 0;
-            this.txtSernum.SelectionStart = 0;
-            this.txtSernum.Size = new System.Drawing.Size(118, 23);
-            this.txtSernum.TabIndex = 7;
-            this.txtSernum.Texts = "";
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
@@ -996,7 +979,8 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvNote.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvNote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNote.ColumnHeadersHeight = 85;
+            this.dgvNote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -1022,6 +1006,23 @@
             this.dgvNote.StandardTab = true;
             this.dgvNote.TabIndex = 5;
             // 
+            // txtSernum
+            // 
+            this.txtSernum.BackColor = System.Drawing.Color.White;
+            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSernum.CharUpperCase = false;
+            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSernum.Location = new System.Drawing.Point(13, 32);
+            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSernum.MaxChar = 0;
+            this.txtSernum.Name = "txtSernum";
+            this.txtSernum.Read_Only = false;
+            this.txtSernum.SelectionLength = 0;
+            this.txtSernum.SelectionStart = 0;
+            this.txtSernum.Size = new System.Drawing.Size(118, 23);
+            this.txtSernum.TabIndex = 7;
+            this.txtSernum.Texts = "";
+            // 
             // SupportStatWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1034,6 +1035,7 @@
             this.KeyPreview = true;
             this.Name = "SupportStatWindow";
             this.Text = "ข้อมูลการปฏิบัติงาน (Support)";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SupportStatWindow_FormClosing);
             this.Load += new System.EventHandler(this.SupportStatWindow_Load);
             this.Shown += new System.EventHandler(this.SupportStatWindow_Shown);
             this.statusStrip1.ResumeLayout(false);

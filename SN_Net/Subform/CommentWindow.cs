@@ -46,7 +46,7 @@ namespace SN_Net.Subform
             InitializeComponent();
 
             this.parent_wind = parent_wind;
-            this.note_id = ((Note)parent_wind.dgvNote.Rows[parent_wind.dgvNote.CurrentCell.RowIndex].Tag).id;
+            this.note_id = ((SupportNote)parent_wind.dgvNote.Rows[parent_wind.dgvNote.CurrentCell.RowIndex].Cells[0].Value).id;
 
             this.BindingControlEvent();
         }

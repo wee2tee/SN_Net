@@ -22,6 +22,7 @@ namespace SN_Net.Subform
         public DateTime date_from;
         public DateTime date_to;
         public string email = "";
+        private Ma Read_only_ma = null;
 
         public MAFormDialog()
         {
@@ -35,6 +36,22 @@ namespace SN_Net.Subform
             this.parent_window = parent_window;
         }
 
+        public MAFormDialog(Ma ma_readonly)
+            : this()
+        {
+            this.Read_only_ma = new Ma()
+            {
+                id = ma_readonly.id,
+                email = ma_readonly.email,
+                start_date = ma_readonly.start_date,
+                end_date = ma_readonly.end_date,
+                sernum = ma_readonly.sernum,
+                rec_by = ma_readonly.rec_by,
+                rec_date = ma_readonly.rec_date,
+            };
+
+        }
+
         private void MAFormDialog_Load(object sender, EventArgs e)
         {
             this.BindingControlEvent();
@@ -42,11 +59,19 @@ namespace SN_Net.Subform
 
         private void MAFormDialog_Shown(object sender, EventArgs e)
         {
-            if (this.parent_window.ma.Count > 0)
+            if (this.parent_window != null && this.parent_window.ma.Count > 0)
             {
                 this.maDateFrom.TextsMysql = this.parent_window.ma[0].start_date;
                 this.maDateTo.TextsMysql = this.parent_window.ma[0].end_date;
                 this.maEmail.Texts = this.parent_window.ma[0].email;
+            }
+
+            if (this.Read_only_ma != null)
+            {
+                this.maDateFrom.TextsMysql = this.Read_only_ma.start_date;
+                this.maDateTo.TextsMysql = this.Read_only_ma.end_date;
+                this.maEmail.Texts = this.Read_only_ma.email;
+                this.btnCancel.Focus();
             }
         }
 

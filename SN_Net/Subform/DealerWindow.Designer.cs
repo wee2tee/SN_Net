@@ -552,6 +552,7 @@
             this.splitContainer_1st_Page.BackColor = System.Drawing.Color.WhiteSmoke;
             this.splitContainer_1st_Page.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer_1st_Page.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer_1st_Page.IsSplitterFixed = true;
             this.splitContainer_1st_Page.Location = new System.Drawing.Point(0, 0);
             this.splitContainer_1st_Page.Name = "splitContainer_1st_Page";
             this.splitContainer_1st_Page.Orientation = System.Windows.Forms.Orientation.Horizontal;

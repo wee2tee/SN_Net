@@ -100,7 +100,7 @@ namespace SN_Net.Subform
 
         private void SnWindow_Load(object sender, EventArgs e)
         {
-            this.btnSupportHistory.Visible = false;
+            this.btnSupportViewNote.Visible = false;
             this.btnSupportNote.Visible = false;
 
             if (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)
@@ -109,7 +109,7 @@ namespace SN_Net.Subform
                 this.btnUP.Visible = false;
                 this.btnUPNewRwt.Visible = false;
                 this.btnUPNewRwtJob.Visible = false;
-                this.btnSupportHistory.Visible = true;
+                this.btnSupportViewNote.Visible = true;
                 this.btnSupportNote.Visible = true;
             }
             if (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ACCOUNT)
@@ -494,7 +494,7 @@ namespace SN_Net.Subform
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
             this.btnSupportNote.Enabled = false;
-            this.btnSupportHistory.Enabled = false;
+            this.btnSupportViewNote.Enabled = false;
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -586,7 +586,7 @@ namespace SN_Net.Subform
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
             this.btnSupportNote.Enabled = false;
-            this.btnSupportHistory.Enabled = false;
+            this.btnSupportViewNote.Enabled = false;
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -654,8 +654,8 @@ namespace SN_Net.Subform
             this.btnUPNewRwt.Enabled = (this.btnUPNewRwt.Visible ? true : false);
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = (this.btnUPNewRwtJob.Visible ? true : false);
-            this.btnSupportNote.Enabled = ((this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT) ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
-            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? true : false);
+            this.btnSupportNote.Enabled = ((this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES) ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
+            this.btnSupportViewNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? true : false);
             this.btnPasswordAdd.Enabled = true;
             this.btnPasswordRemove.Enabled = true;
             this.btnEditMA.Enabled = true;
@@ -820,7 +820,7 @@ namespace SN_Net.Subform
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
             this.btnSupportNote.Enabled = false;
-            this.btnSupportHistory.Enabled = false;
+            this.btnSupportViewNote.Enabled = false;
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -980,7 +980,7 @@ namespace SN_Net.Subform
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
             this.btnSupportNote.Enabled = false;
-            this.btnSupportHistory.Enabled = false;
+            this.btnSupportViewNote.Enabled = false;
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -1087,8 +1087,8 @@ namespace SN_Net.Subform
             this.btnUPNewRwt.Enabled = false;
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
-            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
-            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? true : false);
+            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
+            this.btnSupportViewNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? true : false);
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -1192,8 +1192,8 @@ namespace SN_Net.Subform
             this.btnUPNewRwt.Enabled = false;
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
-            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
-            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? true : false);
+            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
+            this.btnSupportViewNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? true : false);
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -1293,8 +1293,8 @@ namespace SN_Net.Subform
             this.btnUPNewRwt.Enabled = false;
             this.btnUPNewRwtJob.Visible = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_ADMIN ? true : false);
             this.btnUPNewRwtJob.Enabled = false;
-            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
-            this.btnSupportHistory.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT ? true : false);
+            this.btnSupportNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? (this.main_form.lblTimeDuration.Visible ? false : true) : false);
+            this.btnSupportViewNote.Enabled = (this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SUPPORT || this.main_form.G.loged_in_user_level == GlobalVar.USER_LEVEL_SALES ? true : false);
             this.btnPasswordAdd.Enabled = false;
             this.btnPasswordRemove.Enabled = false;
             this.btnEditMA.Enabled = false;
@@ -3106,12 +3106,6 @@ namespace SN_Net.Subform
             }
         }
 
-        //private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
-        //{
-        //    MainForm main_form = this.MdiParent as MainForm;
-        //    main_form.sn_wind = null;
-        //}
-
         private void toolStripAdd_EnabledChanged(object sender, EventArgs e)
         {
             if (((ToolStripButton)sender).Enabled)
@@ -3821,15 +3815,15 @@ namespace SN_Net.Subform
             }
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            this.main_form.sn_wind = null;
-            if (this.main_form.supportnote_wind != null)
-            {
-                this.main_form.supportnote_wind.Close();
-            }
-            base.OnClosing(e);
-        }
+        //protected override void OnClosing(CancelEventArgs e)
+        //{
+        //    this.main_form.sn_wind = null;
+        //    if (this.main_form.supportnote_wind != null)
+        //    {
+        //        this.main_form.supportnote_wind.Close();
+        //    }
+        //    base.OnClosing(e);
+        //}
 
         private void btnPasswordAdd_Click(object sender, EventArgs e)
         {
@@ -3982,6 +3976,35 @@ namespace SN_Net.Subform
                 }
             };
             worker.RunWorkerAsync();
+        }
+
+        private void SnWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.MdiFormClosing && (this.form_mode != FORM_MODE.READ && this.form_mode != FORM_MODE.READ_ITEM))
+            {
+                this.Activate();
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "SN_Net", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            if (e.CloseReason == CloseReason.UserClosing && (this.form_mode != FORM_MODE.READ && this.form_mode != FORM_MODE.READ_ITEM))
+            {
+                this.Activate();
+                if (MessageAlert.Show(StringResource.CONFIRM_CLOSE_WINDOW, "SN_Net", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.WARNING) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            this.main_form.sn_wind = null;
+            if (this.main_form.supportnote_wind != null)
+            {
+                this.main_form.supportnote_wind.Close();
+            }
         }
     }
 

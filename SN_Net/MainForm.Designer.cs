@@ -59,13 +59,13 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripUserInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblTimeDuration = new System.Windows.Forms.Label();
-            this.changeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -316,6 +316,13 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.helpToolStripMenuItem.Text = "Help?";
             // 
+            // changeLogToolStripMenuItem
+            // 
+            this.changeLogToolStripMenuItem.Name = "changeLogToolStripMenuItem";
+            this.changeLogToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.changeLogToolStripMenuItem.Text = "ChangeLog";
+            this.changeLogToolStripMenuItem.Click += new System.EventHandler(this.changeLogToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -342,6 +349,22 @@
             this.toolStripInfo.Text = "     ";
             this.toolStripInfo.TextChanged += new System.EventHandler(this.toolStripInfo_TextChanged);
             // 
+            // toolStripProcessing
+            // 
+            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
+            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
+            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
+            this.toolStripProcessing.Name = "toolStripProcessing";
+            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProcessing.Size = new System.Drawing.Size(805, 17);
+            this.toolStripProcessing.Spring = true;
+            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripProcessing.Visible = false;
+            // 
             // toolStrip1
             // 
             this.toolStrip1.AutoSize = false;
@@ -366,29 +389,6 @@
             this.lblTimeDuration.Text = "00:00:00";
             this.lblTimeDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // changeLogToolStripMenuItem
-            // 
-            this.changeLogToolStripMenuItem.Name = "changeLogToolStripMenuItem";
-            this.changeLogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.changeLogToolStripMenuItem.Text = "ChangeLog";
-            this.changeLogToolStripMenuItem.Click += new System.EventHandler(this.changeLogToolStripMenuItem_Click);
-            // 
-            // toolStripProcessing
-            // 
-            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
-            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
-            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
-            this.toolStripProcessing.Name = "toolStripProcessing";
-            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(805, 17);
-            this.toolStripProcessing.Spring = true;
-            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripProcessing.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,7 +404,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SN";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MdiChildActivate += new System.EventHandler(this.MainForm_MdiChildActivate);
             this.Shown += new System.EventHandler(this.MainForm_Shown);

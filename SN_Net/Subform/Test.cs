@@ -25,5 +25,11 @@ namespace SN_Net.Subform
         {
             
         }
+
+        public void Terminate()
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
     }
 }

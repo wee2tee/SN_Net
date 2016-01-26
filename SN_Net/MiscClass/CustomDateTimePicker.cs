@@ -248,7 +248,16 @@ namespace SN_Net.MiscClass
                 DateTime out_date;
                 if (DateTime.TryParse(this.textBox1.Text, out out_date))
                 {
-                    this.dateTimePicker1.Value = out_date;
+                    if (out_date >= this.dateTimePicker1.MinDate && out_date <= this.dateTimePicker1.MaxDate)
+                    {
+                        this.dateTimePicker1.Value = out_date;
+                    }
+                    else
+                    {
+                        this.Texts = "";
+                        SendKeys.Send("{F6}");
+                    }
+
                 }
             };
 

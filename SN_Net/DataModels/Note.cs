@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SN_Net.DataModels
 {
@@ -20,22 +21,22 @@ namespace SN_Net.DataModels
         public string contact { get; set; }
 
         #region problem
-        public bool map_drive { get; set; }
-        public bool install { get; set; }
-        public bool error { get; set; }
-        public bool fonts { get; set; }
-        public bool print { get; set; }
-        public bool training { get; set; }
-        public bool stock { get; set; }
-        public bool form { get; set; }
-        public bool rep_excel { get; set; }
-        public bool statement { get; set; }
-        public bool asset { get; set; }
-        public bool secure { get; set; }
-        public bool year_end { get; set; }
-        public bool period { get; set; }
-        public bool mail_wait { get; set; }
-        public bool transfer_mkt { get; set; }
+        public string map_drive { get; set; }
+        public string install { get; set; }
+        public string error { get; set; }
+        public string fonts { get; set; }
+        public string print { get; set; }
+        public string training { get; set; }
+        public string stock { get; set; }
+        public string form { get; set; }
+        public string rep_excel { get; set; }
+        public string statement { get; set; }
+        public string asset { get; set; }
+        public string secure { get; set; }
+        public string year_end { get; set; }
+        public string period { get; set; }
+        public string mail_wait { get; set; }
+        public string transfer_mkt { get; set; }
         #endregion problem
 
         public string remark { get; set; }
@@ -49,6 +50,5 @@ namespace SN_Net.DataModels
         //public bool correct_data { get; set; }
         //public string break_reason { get; set; }
         #endregion break reason
-
     }
 }
