@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace SN_Net.Subform
 {
@@ -58,44 +59,63 @@ namespace SN_Net.Subform
                     this.lblSearchKey.Text = "Serial No.";
                     this.mskSearchKey.Visible = true;
                     this.txtSearchKey.Visible = false;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("en-US"));
                     break;
                 case SEARCH_MODE.CONTACT:
                     this.lblSearchKey.Text = "Contact";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("th-TH"));
                     break;
                 case SEARCH_MODE.COMPNAM:
                     this.lblSearchKey.Text = "Company";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("th-TH"));
                     break;
                 case SEARCH_MODE.DEALER:
                     this.lblSearchKey.Text = "Dealer Code";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("en-US"));
                     break;
                 case SEARCH_MODE.OLDNUM:
                     this.lblSearchKey.Text = "Old Serial";
                     this.mskSearchKey.Visible = true;
                     this.txtSearchKey.Visible = false;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("en-US"));
                     break;
                 case SEARCH_MODE.BUSITYP:
                     this.lblSearchKey.Text = "Business Type Code";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("en-US"));
                     break;
                 case SEARCH_MODE.AREA:
                     this.lblSearchKey.Text = "Area";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("th-TH"));
                     break;
                 case SEARCH_MODE.USERGROUP:
                     this.lblSearchKey.Text = "Group Code";
                     this.mskSearchKey.Visible = false;
                     this.txtSearchKey.Visible = true;
+                    this.SetInputLanguage(CultureInfo.GetCultureInfo("en-US"));
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void SetInputLanguage(CultureInfo culture)
+        {
+            foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            {
+                if (lang.Culture.Equals(culture))
+                {
+                    InputLanguage.CurrentInputLanguage = lang;
+                }
             }
         }
 

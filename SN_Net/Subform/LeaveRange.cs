@@ -114,6 +114,7 @@ namespace SN_Net.Subform
             #endregion Leave reason
 
             #region Medical Certificate
+            this.list_medcert.Add(new ComboboxItem("N/A (ไม่ระบุ)", 9, "X"));
             this.list_medcert.Add(new ComboboxItem("ไม่มีใบรับรองแพทย์", 0, "N"));
             this.list_medcert.Add(new ComboboxItem("มีใบรับรองแพทย์", 1, "Y"));
             #endregion Medical Certificate

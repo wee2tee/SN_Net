@@ -37,6 +37,9 @@
             this.mskMainURL = new System.Windows.Forms.MaskedTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbSearchDate = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cbSearchMethod = new System.Windows.Forms.ComboBox();
@@ -135,6 +138,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.cbSearchDate);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.cbSearchMethod);
@@ -144,17 +150,48 @@
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.groupBox1.Location = new System.Drawing.Point(12, 112);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(610, 100);
+            this.groupBox1.Size = new System.Drawing.Size(610, 137);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "บันทึกการปฏิบัติงานประจำวัน";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label7.ForeColor = System.Drawing.Color.DimGray;
+            this.label7.Location = new System.Drawing.Point(19, 114);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 11);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "[SEARCH_NOTE_DATE]";
+            // 
+            // cbSearchDate
+            // 
+            this.cbSearchDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSearchDate.Enabled = false;
+            this.cbSearchDate.FormattingEnabled = true;
+            this.cbSearchDate.Location = new System.Drawing.Point(197, 94);
+            this.cbSearchDate.Name = "cbSearchDate";
+            this.cbSearchDate.Size = new System.Drawing.Size(187, 24);
+            this.cbSearchDate.TabIndex = 11;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label8.Location = new System.Drawing.Point(18, 98);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(177, 16);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "ค้นหาประวัติการสนทนาในวันที่ :";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label6.ForeColor = System.Drawing.Color.DimGray;
-            this.label6.Location = new System.Drawing.Point(19, 76);
+            this.label6.Location = new System.Drawing.Point(19, 78);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(129, 11);
             this.label6.TabIndex = 9;
@@ -176,7 +213,7 @@
             this.cbSearchMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSearchMethod.Enabled = false;
             this.cbSearchMethod.FormattingEnabled = true;
-            this.cbSearchMethod.Location = new System.Drawing.Point(197, 56);
+            this.cbSearchMethod.Location = new System.Drawing.Point(197, 58);
             this.cbSearchMethod.Name = "cbSearchMethod";
             this.cbSearchMethod.Size = new System.Drawing.Size(287, 24);
             this.cbSearchMethod.TabIndex = 7;
@@ -185,7 +222,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(18, 60);
+            this.label3.Location = new System.Drawing.Point(18, 62);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(173, 16);
             this.label3.TabIndex = 6;
@@ -216,7 +253,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(633, 223);
+            this.ClientSize = new System.Drawing.Size(633, 278);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.mskMainURL);
@@ -259,5 +296,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbSearchDate;
+        private System.Windows.Forms.Label label8;
     }
 }

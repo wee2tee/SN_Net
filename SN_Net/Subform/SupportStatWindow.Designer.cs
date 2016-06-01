@@ -73,6 +73,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbReason = new System.Windows.Forms.ComboBox();
             this.cbProblem = new System.Windows.Forms.ComboBox();
+            this.txtSernum = new SN_Net.MiscClass.CustomTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupPeriod = new System.Windows.Forms.GroupBox();
             this.lblTotalCall = new System.Windows.Forms.Label();
@@ -104,7 +105,9 @@
             this.txtDummy = new System.Windows.Forms.TextBox();
             this.dgvNote = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtSernum = new SN_Net.MiscClass.CustomTextBox();
+            this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnAddTalk = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAddBreak = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -188,6 +191,7 @@
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAdd,
             this.toolStripEdit,
             this.toolStripSeparator2,
             this.toolStripStop,
@@ -626,6 +630,23 @@
             this.cbProblem.Size = new System.Drawing.Size(199, 24);
             this.cbProblem.TabIndex = 9;
             // 
+            // txtSernum
+            // 
+            this.txtSernum.BackColor = System.Drawing.Color.White;
+            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSernum.CharUpperCase = false;
+            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSernum.Location = new System.Drawing.Point(13, 32);
+            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSernum.MaxChar = 0;
+            this.txtSernum.Name = "txtSernum";
+            this.txtSernum.Read_Only = false;
+            this.txtSernum.SelectionLength = 0;
+            this.txtSernum.SelectionStart = 0;
+            this.txtSernum.Size = new System.Drawing.Size(118, 23);
+            this.txtSernum.TabIndex = 7;
+            this.txtSernum.Texts = "";
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
@@ -1006,22 +1027,37 @@
             this.dgvNote.StandardTab = true;
             this.dgvNote.TabIndex = 5;
             // 
-            // txtSernum
+            // btnAdd
             // 
-            this.txtSernum.BackColor = System.Drawing.Color.White;
-            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSernum.CharUpperCase = false;
-            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSernum.Location = new System.Drawing.Point(13, 32);
-            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSernum.MaxChar = 0;
-            this.txtSernum.Name = "txtSernum";
-            this.txtSernum.Read_Only = false;
-            this.txtSernum.SelectionLength = 0;
-            this.txtSernum.SelectionStart = 0;
-            this.txtSernum.Size = new System.Drawing.Size(118, 23);
-            this.txtSernum.TabIndex = 7;
-            this.txtSernum.Texts = "";
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAddTalk,
+            this.btnAddBreak});
+            this.btnAdd.Image = global::SN_Net.Properties.Resources.add;
+            this.btnAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(45, 40);
+            this.btnAdd.Text = "เพิ่ม";
+            this.btnAdd.ToolTipText = "เพิ่ม";
+            // 
+            // btnAddTalk
+            // 
+            this.btnAddTalk.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddTalk.Name = "btnAddTalk";
+            this.btnAddTalk.Size = new System.Drawing.Size(152, 22);
+            this.btnAddTalk.Text = "สายสนทนา";
+            this.btnAddTalk.ToolTipText = "เพิ่มบันทึกการสนทนา";
+            this.btnAddTalk.Click += new System.EventHandler(this.btnAddTalk_Click);
+            // 
+            // btnAddBreak
+            // 
+            this.btnAddBreak.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddBreak.Name = "btnAddBreak";
+            this.btnAddBreak.Size = new System.Drawing.Size(152, 22);
+            this.btnAddBreak.Text = "พักสาย";
+            this.btnAddBreak.ToolTipText = "เพิ่มบันทึการพักสาย";
+            this.btnAddBreak.Click += new System.EventHandler(this.btnAddBreak_Click);
             // 
             // SupportStatWindow
             // 
@@ -1137,5 +1173,8 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripDropDownButton btnAdd;
+        private System.Windows.Forms.ToolStripMenuItem btnAddTalk;
+        private System.Windows.Forms.ToolStripMenuItem btnAddBreak;
     }
 }

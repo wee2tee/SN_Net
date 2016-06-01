@@ -24,5 +24,6 @@ namespace SN_Net.DataModels
 
         public const string EVENT_TYPE_ABSENT_CAUSE = "06";
         public const string EVENT_TYPE_SERVICE_CASE = "07";
+        
     }
 }

@@ -178,7 +178,7 @@ namespace SN_Net.Subform
                 this.txtExpression.Text = "";
                 this.toolStripSelectedID.Text = "# ";
                 this.toolStripLoadedRow.Text = "0";
-                this.dgvDealer.DataSource = null;
+                //this.dgvDealer.DataSource = null;
                 this.dealer_list.Clear();
                 this.FillDataGrid();
                 this.btnOK.Enabled = false;

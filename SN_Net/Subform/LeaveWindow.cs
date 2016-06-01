@@ -79,6 +79,8 @@ namespace SN_Net.Subform
         {
             this.toolStripPrintSummary.Visible = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : true);
             this.toolStripExportSummary.Visible = (this.main_form.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR ? false : true);
+
+            this.PrepareSummaryDgv();
             this.LoadEventAndFill();
         }
 
@@ -232,6 +234,88 @@ namespace SN_Net.Subform
             this.LoadEventAndFill();
         }
 
+        private void PrepareSummaryDgv()
+        {
+            this.dgvAbsentSummary.Rows.Clear();
+            this.dgvAbsentSummary.Columns.Clear();
+
+            DataGridViewCheckBoxColumn abs_col0 = new DataGridViewCheckBoxColumn();
+            abs_col0.HeaderText = "";
+            abs_col0.Width = 30;
+            abs_col0.SortMode = DataGridViewColumnSortMode.NotSortable;
+            abs_col0.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvAbsentSummary.Columns.Add(abs_col0);
+
+            DataGridViewTextBoxColumn abs_col1 = new DataGridViewTextBoxColumn();
+            abs_col1.HeaderText = "เหตุผล";
+            abs_col1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            abs_col1.SortMode = DataGridViewColumnSortMode.NotSortable;
+            abs_col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvAbsentSummary.Columns.Add(abs_col1);
+
+            DataGridViewTextBoxColumn abs_col2 = new DataGridViewTextBoxColumn();
+            abs_col2.HeaderText = "จำนวนวัน";
+            abs_col2.Width = 150;
+            abs_col2.SortMode = DataGridViewColumnSortMode.NotSortable;
+            abs_col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvAbsentSummary.Columns.Add(abs_col2);
+
+
+            foreach (Istab l in this.leave_cause.Where(t => t.tabtyp == EventCalendar.EVENT_TYPE_ABSENT_CAUSE).ToList<Istab>())
+            {
+                int r = this.dgvAbsentSummary.Rows.Add();
+                this.dgvAbsentSummary.Rows[r].Tag = l;
+
+                this.dgvAbsentSummary.Rows[r].Cells[0].ValueType = typeof(bool);
+                this.dgvAbsentSummary.Rows[r].Cells[0].Value = true;
+
+                this.dgvAbsentSummary.Rows[r].Cells[1].ValueType = typeof(string);
+                this.dgvAbsentSummary.Rows[r].Cells[1].Value = l.typdes_th;
+
+                this.dgvAbsentSummary.Rows[r].Cells[2].ValueType = typeof(string);
+                this.dgvAbsentSummary.Rows[r].Cells[2].Value = "";
+            }
+
+            this.dgvServiceSummary.Rows.Clear();
+            this.dgvServiceSummary.Columns.Clear();
+
+            DataGridViewCheckBoxColumn srv_col0 = new DataGridViewCheckBoxColumn();
+            srv_col0.HeaderText = "";
+            srv_col0.Width = 30;
+            srv_col0.SortMode = DataGridViewColumnSortMode.NotSortable;
+            srv_col0.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvServiceSummary.Columns.Add(srv_col0);
+
+            DataGridViewTextBoxColumn srv_col1 = new DataGridViewTextBoxColumn();
+            srv_col1.HeaderText = "เหตุผล";
+            srv_col1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            srv_col1.SortMode = DataGridViewColumnSortMode.NotSortable;
+            srv_col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvServiceSummary.Columns.Add(srv_col1);
+
+            DataGridViewTextBoxColumn srv_col2 = new DataGridViewTextBoxColumn();
+            srv_col2.HeaderText = "จำนวนวัน";
+            srv_col2.Width = 150;
+            srv_col2.SortMode = DataGridViewColumnSortMode.NotSortable;
+            srv_col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvServiceSummary.Columns.Add(srv_col2);
+
+            foreach (Istab l in this.leave_cause.Where(t => t.tabtyp == EventCalendar.EVENT_TYPE_SERVICE_CASE).ToList<Istab>())
+            {
+                int r = this.dgvServiceSummary.Rows.Add();
+                this.dgvServiceSummary.Rows[r].Tag = l;
+
+                this.dgvServiceSummary.Rows[r].Cells[0].ValueType = typeof(bool);
+                this.dgvServiceSummary.Rows[r].Cells[0].Value = true;
+
+                this.dgvServiceSummary.Rows[r].Cells[1].ValueType = typeof(string);
+                this.dgvServiceSummary.Rows[r].Cells[1].Value = l.typdes_th;
+
+                this.dgvServiceSummary.Rows[r].Cells[2].ValueType = typeof(string);
+                this.dgvServiceSummary.Rows[r].Cells[2].Value = "";
+            }
+        }
+
         private void LoadEventAndFill(EventCalendar event_calendar = null)
         {
             this.lblUserFrom.Text = this.current_user_from.username;
@@ -281,107 +365,55 @@ namespace SN_Net.Subform
 
         private void FillDgvAbsentSummary()
         {
-            this.dgvAbsentSummary.Rows.Clear();
-            this.dgvAbsentSummary.Columns.Clear();
-
-            DataGridViewCheckBoxColumn col0 = new DataGridViewCheckBoxColumn();
-            col0.HeaderText = "";
-            col0.Width = 30;
-            col0.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col0.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dgvAbsentSummary.Columns.Add(col0);
-
-            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
-            col1.HeaderText = "เหตุผล";
-            col1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dgvAbsentSummary.Columns.Add(col1);
-
-            DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
-            col2.HeaderText = "จำนวนวัน";
-            col2.Width = 150;
-            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dgvAbsentSummary.Columns.Add(col2);
-
-            
             foreach (Istab l in this.leave_cause.Where(t => t.tabtyp == EventCalendar.EVENT_TYPE_ABSENT_CAUSE).ToList<Istab>())
             {
                 if (this.event_calendar.Where(t => t.event_type == l.tabtyp && t.event_code == l.typcod).ToList<EventCalendar>().Count > 0)
                 {
-                    int r = this.dgvAbsentSummary.Rows.Add();
-                    this.dgvAbsentSummary.Rows[r].Tag = l;
+                    string leave_day_string = this.event_calendar.Where<EventCalendar>(t => t.event_code == l.typcod && t.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().GetSummaryLeaveDayString();
 
-                    string leave_day_string = this.event_calendar.Where<EventCalendar>(t => t.event_code == l.typcod).ToList<EventCalendar>().GetSummaryLeaveDayString();
+                    this.dgvAbsentSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells[2].Value = (this.current_user_from.username == this.current_user_to.username ? leave_day_string : "-");
+                    foreach (DataGridViewCell cell in this.dgvAbsentSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells)
+                    {
+                        cell.Style.BackColor = Color.White;
+                        cell.Style.SelectionBackColor = Color.White;
+                    }
 
-                    this.dgvAbsentSummary.Rows[r].Cells[0].ValueType = typeof(bool);
-                    this.dgvAbsentSummary.Rows[r].Cells[0].Value = (this.event_calendar.Where(t => t.event_code == l.typcod).ToList<EventCalendar>().Count > 0 ? true : false);
-                    this.dgvAbsentSummary.Rows[r].Cells[0].Style.BackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-                    this.dgvAbsentSummary.Rows[r].Cells[0].Style.SelectionBackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-
-                    this.dgvAbsentSummary.Rows[r].Cells[1].ValueType = typeof(string);
-                    this.dgvAbsentSummary.Rows[r].Cells[1].Value = l.typdes_th;
-                    this.dgvAbsentSummary.Rows[r].Cells[1].Style.BackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-                    this.dgvAbsentSummary.Rows[r].Cells[1].Style.SelectionBackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-
-                    this.dgvAbsentSummary.Rows[r].Cells[2].ValueType = typeof(string);
-                    this.dgvAbsentSummary.Rows[r].Cells[2].Value = (this.current_user_from.username == this.current_user_to.username ? leave_day_string : "-");
-                    this.dgvAbsentSummary.Rows[r].Cells[2].Style.BackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-                    this.dgvAbsentSummary.Rows[r].Cells[2].Style.SelectionBackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
+                }
+                else
+                {
+                    this.dgvAbsentSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells[2].Value = "";
+                    foreach (DataGridViewCell cell in this.dgvAbsentSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells)
+                    {
+                        cell.Style.BackColor = Color.Gainsboro;
+                        cell.Style.SelectionBackColor = Color.Gainsboro;
+                    }
                 }
             }
         }
 
         private void FillDgvServiceSummary()
         {
-            this.dgvServiceSummary.Rows.Clear();
-            this.dgvServiceSummary.Columns.Clear();
-
-            DataGridViewCheckBoxColumn col0 = new DataGridViewCheckBoxColumn();
-            col0.HeaderText = "";
-            col0.Width = 30;
-            col0.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col0.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dgvServiceSummary.Columns.Add(col0);
-
-            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
-            col1.HeaderText = "เหตุผล";
-            col1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            col1.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col1.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dgvServiceSummary.Columns.Add(col1);
-
-            DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
-            col2.HeaderText = "จำนวนวัน";
-            col2.Width = 150;
-            col2.SortMode = DataGridViewColumnSortMode.NotSortable;
-            col2.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.dgvServiceSummary.Columns.Add(col2);
-
             foreach (Istab l in this.leave_cause.Where(t => t.tabtyp == EventCalendar.EVENT_TYPE_SERVICE_CASE).ToList<Istab>())
             {
                 if (this.event_calendar.Where(t => t.event_type == l.tabtyp && t.event_code == l.typcod).ToList<EventCalendar>().Count > 0)
                 {
-                    int r = this.dgvServiceSummary.Rows.Add();
-                    this.dgvServiceSummary.Rows[r].Tag = l;
+                    string leave_day_string = this.event_calendar.Where<EventCalendar>(t => t.event_code == l.typcod && t.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().GetSummaryLeaveDayString();
 
-                    string leave_day_string = this.event_calendar.Where<EventCalendar>(t => t.event_code == l.typcod).ToList<EventCalendar>().GetSummaryLeaveDayString();
-
-                    this.dgvServiceSummary.Rows[r].Cells[0].ValueType = typeof(bool);
-                    this.dgvServiceSummary.Rows[r].Cells[0].Value = (this.event_calendar.Where(t => t.event_code == l.typcod).ToList<EventCalendar>().Count > 0 ? true : false);
-                    this.dgvServiceSummary.Rows[r].Cells[0].Style.BackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-                    this.dgvServiceSummary.Rows[r].Cells[0].Style.SelectionBackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-
-                    this.dgvServiceSummary.Rows[r].Cells[1].ValueType = typeof(string);
-                    this.dgvServiceSummary.Rows[r].Cells[1].Value = l.typdes_th;
-                    this.dgvServiceSummary.Rows[r].Cells[1].Style.BackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-                    this.dgvServiceSummary.Rows[r].Cells[1].Style.SelectionBackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-
-                    this.dgvServiceSummary.Rows[r].Cells[2].ValueType = typeof(string);
-                    this.dgvServiceSummary.Rows[r].Cells[2].Value = (this.current_user_from.username == this.current_user_to.username ? leave_day_string : "-");
-                    this.dgvServiceSummary.Rows[r].Cells[2].Style.BackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
-                    this.dgvServiceSummary.Rows[r].Cells[2].Style.SelectionBackColor = (leave_day_string.Length == 0 ? Color.Gainsboro : Color.White);
+                    this.dgvServiceSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells[2].Value = (this.current_user_from.username == this.current_user_to.username ? leave_day_string : "-");
+                    foreach (DataGridViewCell cell in this.dgvServiceSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells)
+                    {
+                        cell.Style.BackColor = Color.White;
+                        cell.Style.SelectionBackColor = Color.White;
+                    }
+                }
+                else
+                {
+                    this.dgvServiceSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells[2].Value = "";
+                    foreach (DataGridViewCell cell in this.dgvServiceSummary.Rows.Cast<DataGridViewRow>().Where(r => ((Istab)r.Tag).typcod == l.typcod).First<DataGridViewRow>().Cells)
+                    {
+                        cell.Style.BackColor = Color.Gainsboro;
+                        cell.Style.SelectionBackColor = Color.Gainsboro;
+                    }
                 }
             }
         }
@@ -565,9 +597,11 @@ namespace SN_Net.Subform
                 this.dgvLeaveList.Rows[r].Cells[9].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgvLeaveList.Rows[r].Cells[10].ValueType = typeof(string);
-                this.dgvLeaveList.Rows[r].Cells[10].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : "");
+                this.dgvLeaveList.Rows[r].Cells[10].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : (ev.med_cert == "N" ? "ไม่มีใบรับรองแพทย์" : ""));
                 this.dgvLeaveList.Rows[r].Cells[10].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
                 this.dgvLeaveList.Rows[r].Cells[10].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgvLeaveList.Rows[r].Cells[10].Style.ForeColor = (ev.med_cert == "N" ? Color.Red : Color.Black);
+                this.dgvLeaveList.Rows[r].Cells[10].Style.SelectionForeColor = (ev.med_cert == "N" ? Color.Red : Color.Black);
 
                 this.dgvLeaveList.Rows[r].Cells[11].ValueType = typeof(string);
                 this.dgvLeaveList.Rows[r].Cells[11].Value = (ev.fine > 0 ? ev.fine.ToString() : "");
@@ -594,10 +628,10 @@ namespace SN_Net.Subform
                 {
                     users_year_event = new List<EventCalendar>();
                 }
-                List<EventCalendar> period_absent_day = this.sorted_list.Where(t => t.event_type == EventCalendar.EVENT_TYPE_ABSENT_CAUSE).ToList<EventCalendar>();
-                List<EventCalendar> period_service_day = this.sorted_list.Where(t => t.event_type == EventCalendar.EVENT_TYPE_SERVICE_CASE).ToList<EventCalendar>();
-                List<EventCalendar> total_absent_day = users_year_event.Where(t => t.event_type == EventCalendar.EVENT_TYPE_ABSENT_CAUSE).ToList<EventCalendar>();
-                List<EventCalendar> total_service_day = users_year_event.Where(t => t.event_type == EventCalendar.EVENT_TYPE_SERVICE_CASE).ToList<EventCalendar>();
+                List<EventCalendar> period_absent_day = this.sorted_list.Where(t => t.event_type == EventCalendar.EVENT_TYPE_ABSENT_CAUSE && t.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>();
+                List<EventCalendar> period_service_day = this.sorted_list.Where(t => t.event_type == EventCalendar.EVENT_TYPE_SERVICE_CASE && t.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>();
+                List<EventCalendar> total_absent_day = users_year_event.Where(t => t.event_type == EventCalendar.EVENT_TYPE_ABSENT_CAUSE && t.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>();
+                List<EventCalendar> total_service_day = users_year_event.Where(t => t.event_type == EventCalendar.EVENT_TYPE_SERVICE_CASE && t.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>();
 
 
                 if (this.current_user_from.username == this.current_user_to.username)
@@ -702,18 +736,18 @@ namespace SN_Net.Subform
                 this.dgvLeaveGroup.Rows[r].Cells[2].Value = user.name;
 
                 this.dgvLeaveGroup.Rows[r].Cells[3].ValueType = typeof(string);
-                this.dgvLeaveGroup.Rows[r].Cells[3].Value = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString()).ToList<EventCalendar>().GetSummaryLeaveDayString();
+                this.dgvLeaveGroup.Rows[r].Cells[3].Value = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString() && s.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().GetSummaryLeaveDayString();
 
                 this.dgvLeaveGroup.Rows[r].Cells[4].ValueType = typeof(string);
-                this.dgvLeaveGroup.Rows[r].Cells[4].Value = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString()).ToList<EventCalendar>().GetSummaryLeaveDayStringForCommission();
+                this.dgvLeaveGroup.Rows[r].Cells[4].Value = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString() && s.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().GetSummaryLeaveDayStringForCommission();
 
                 this.dgvLeaveGroup.Rows[r].Cells[5].ValueType = typeof(string);
-                int fine = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString()).ToList<EventCalendar>().GetSummaryFine();
+                int fine = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString() && s.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().GetSummaryFine();
                 this.dgvLeaveGroup.Rows[r].Cells[5].Value = (fine > 0 ? fine.ToString() : "");
                 this.dgvLeaveGroup.Rows[r].Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 
                 this.dgvLeaveGroup.Rows[r].Cells[6].ValueType = typeof(string);
-                this.dgvLeaveGroup.Rows[r].Cells[6].Value = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString()).ToList<EventCalendar>().GetSummaryMedCertRemark();
+                this.dgvLeaveGroup.Rows[r].Cells[6].Value = this.sorted_list.Where(s => s.users_name == user.username && s.event_type == Istab.TABTYP.ABSENT_CAUSE.ToTabtypString() && s.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().GetSummaryMedCertRemark();
             }
         }
 
@@ -750,6 +784,7 @@ namespace SN_Net.Subform
             inline_medcert.Name = "inline_medcert";
             inline_medcert.Read_Only = false;
             inline_medcert.BorderStyle = BorderStyle.None;
+            inline_medcert.AddItem(new ComboboxItem("N/A (ไม่ระบุ)", 9, "X"));
             inline_medcert.AddItem(new ComboboxItem("ไม่มีใบรับรองแพทย์", 0, "N"));
             inline_medcert.AddItem(new ComboboxItem("มีใบรับรองแพทย์", 1, "Y"));
             this.dgvLeaveList.Parent.Controls.Add(inline_medcert);

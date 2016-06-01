@@ -45,6 +45,8 @@ namespace SN_Net
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            this.toolStripInfo.Text = " [ ที่เก็บโปรแกรม : " + AppDomain.CurrentDomain.BaseDirectory + " ]";
+
             LoginForm login = new LoginForm();
             if (login.ShowDialog() == DialogResult.Cancel || login.loged_in == false)
             {
@@ -310,17 +312,10 @@ namespace SN_Net
             this.data_resource = new DataResource();
         }
 
-        private void toolStripInfo_TextChanged(object sender, EventArgs e)
-        {
-            if (((ToolStripStatusLabel)sender).Text.Length > 0)
-            {
-                this.toolStripUserInfo.Visible = false;
-            }
-            else
-            {
-                this.toolStripUserInfo.Visible = true;
-            }
-        }
+        //private void toolStripInfo_TextChanged(object sender, EventArgs e)
+        //{
+
+        //}
 
         private void RePositionLabelDuration()
         {

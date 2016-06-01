@@ -43,6 +43,9 @@
             this.dgv = new System.Windows.Forms.DataGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbGroupMaid = new SN_Net.MiscClass.CustomComboBox();
+            this.cbGroupWeekend = new SN_Net.MiscClass.CustomComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.leaveMax = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,10 +53,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.rbWeekday = new System.Windows.Forms.RadioButton();
             this.rbHoliday = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbGroupWeekend = new SN_Net.MiscClass.CustomComboBox();
             this.txtHoliday = new SN_Net.MiscClass.CustomTextBox();
-            this.cbGroupMaid = new SN_Net.MiscClass.CustomComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
@@ -93,7 +93,7 @@
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcessing.Name = "toolStripProcessing";
             this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(847, 17);
+            this.toolStripProcessing.Size = new System.Drawing.Size(856, 17);
             this.toolStripProcessing.Spring = true;
             this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -250,6 +250,41 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
+            // cbGroupMaid
+            // 
+            this.cbGroupMaid.BackColor = System.Drawing.Color.White;
+            this.cbGroupMaid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cbGroupMaid.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cbGroupMaid.Location = new System.Drawing.Point(156, 117);
+            this.cbGroupMaid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cbGroupMaid.Name = "cbGroupMaid";
+            this.cbGroupMaid.Read_Only = true;
+            this.cbGroupMaid.Size = new System.Drawing.Size(153, 25);
+            this.cbGroupMaid.TabIndex = 4;
+            this.cbGroupMaid.Texts = null;
+            // 
+            // cbGroupWeekend
+            // 
+            this.cbGroupWeekend.BackColor = System.Drawing.Color.White;
+            this.cbGroupWeekend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cbGroupWeekend.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cbGroupWeekend.Location = new System.Drawing.Point(156, 88);
+            this.cbGroupWeekend.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cbGroupWeekend.Name = "cbGroupWeekend";
+            this.cbGroupWeekend.Read_Only = true;
+            this.cbGroupWeekend.Size = new System.Drawing.Size(153, 25);
+            this.cbGroupWeekend.TabIndex = 3;
+            this.cbGroupWeekend.Texts = null;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(32, 92);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(122, 16);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "วันหยุดพิเศษสำหรับ :";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -299,7 +334,7 @@
             this.txtDummy.Name = "txtDummy";
             this.txtDummy.Size = new System.Drawing.Size(102, 23);
             this.txtDummy.TabIndex = 7;
-            this.txtDummy.Text = "throw focus here";
+            this.txtDummy.Text = "put focus here";
             // 
             // label2
             // 
@@ -334,28 +369,6 @@
             this.rbHoliday.Text = "วันหยุด";
             this.rbHoliday.UseVisualStyleBackColor = true;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(32, 92);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 16);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "วันหยุดพิเศษสำหรับ :";
-            // 
-            // cbGroupWeekend
-            // 
-            this.cbGroupWeekend.BackColor = System.Drawing.Color.White;
-            this.cbGroupWeekend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cbGroupWeekend.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbGroupWeekend.Location = new System.Drawing.Point(156, 88);
-            this.cbGroupWeekend.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cbGroupWeekend.Name = "cbGroupWeekend";
-            this.cbGroupWeekend.Read_Only = true;
-            this.cbGroupWeekend.Size = new System.Drawing.Size(153, 25);
-            this.cbGroupWeekend.TabIndex = 3;
-            this.cbGroupWeekend.Texts = null;
-            // 
             // txtHoliday
             // 
             this.txtHoliday.BackColor = System.Drawing.Color.White;
@@ -372,19 +385,6 @@
             this.txtHoliday.Size = new System.Drawing.Size(186, 23);
             this.txtHoliday.TabIndex = 1;
             this.txtHoliday.Texts = "";
-            // 
-            // cbGroupMaid
-            // 
-            this.cbGroupMaid.BackColor = System.Drawing.Color.White;
-            this.cbGroupMaid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cbGroupMaid.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbGroupMaid.Location = new System.Drawing.Point(156, 117);
-            this.cbGroupMaid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cbGroupMaid.Name = "cbGroupMaid";
-            this.cbGroupMaid.Read_Only = true;
-            this.cbGroupMaid.Size = new System.Drawing.Size(153, 25);
-            this.cbGroupMaid.TabIndex = 4;
-            this.cbGroupMaid.Texts = null;
             // 
             // DateEventWindow
             // 

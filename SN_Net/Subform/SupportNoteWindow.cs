@@ -32,6 +32,7 @@ namespace SN_Net.Subform
         public List<Problem> list_problem = null;
         public DateTime current_work_date;
         private System.Windows.Forms.Timer tm = new System.Windows.Forms.Timer();
+        private System.Windows.Forms.Timer t_notify;
         public FORM_MODE form_mode;
         private string search_sn = "";
         public enum FORM_MODE
@@ -85,7 +86,6 @@ namespace SN_Net.Subform
                 this.toolStripAdd.PerformClick();
                 this.txtSernum.Texts = this.serial.sernum;
                 this.ValidateSN(true);
-                Console.WriteLine(" >> show add form");
             }
         }
 
@@ -378,6 +378,32 @@ namespace SN_Net.Subform
                 }
 
                 this.main_form.lblTimeDuration.Text = ts.ToString();
+            };
+
+            this.txtSernum.textBox1.GotFocus += delegate
+            {
+                InputLanguage input_en = null;
+
+                foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+                {
+                    input_en = (lang.Culture.ToString().Equals("en-US") ? lang : input_en);
+                }
+
+                if (input_en != null)
+                    InputLanguage.CurrentInputLanguage = input_en;
+            };
+
+            this.txtContact.textBox1.GotFocus += delegate
+            {
+                InputLanguage input_th = null;
+
+                foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+                {
+                    input_th = (lang.Culture.ToString().Equals("th-TH") ? lang : input_th);
+                }
+
+                if (input_th != null)
+                    InputLanguage.CurrentInputLanguage = input_th;
             };
         }
 
@@ -1380,6 +1406,18 @@ namespace SN_Net.Subform
             // start counting duration
             this.tm.Enabled = true;
             this.tm.Start();
+
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.ShowBalloonTip(5000, "SN_Net", "กำลังบันทึกช่วงเวลาการปฏิบัติงาน", ToolTipIcon.Info);
+
+            this.t_notify = new System.Windows.Forms.Timer();
+            this.t_notify.Interval = 60000;
+            this.t_notify.Enabled = true;
+            this.t_notify.Tick += delegate
+            {
+                this.notifyIcon1.ShowBalloonTip(5000, "SN_Net", "กำลังบันทึกช่วงเวลาการปฏิบัติงาน", ToolTipIcon.Info);
+            };
+            this.t_notify.Start();
         }
 
         private void toolStripAdd_Click(object sender, EventArgs e)
@@ -1567,6 +1605,13 @@ namespace SN_Net.Subform
                 this.ClearForm();
                 this.FormRead();
             }
+
+            this.notifyIcon1.Visible = false;
+            if(this.t_notify != null){
+                this.t_notify.Enabled = false;
+                this.t_notify.Dispose();
+                this.t_notify = null;
+            }
         }
 
         private void toolStripSave_Click(object sender, EventArgs e)
@@ -1586,6 +1631,14 @@ namespace SN_Net.Subform
             else if (this.form_mode == FORM_MODE.EDIT_BREAK)
             {
                 this.SubmitEditBreak();
+            }
+
+            this.notifyIcon1.Visible = false;
+            if (this.t_notify != null)
+            {
+                this.t_notify.Enabled = false;
+                this.t_notify.Dispose();
+                this.t_notify = null;
             }
         }
 
@@ -1713,8 +1766,9 @@ namespace SN_Net.Subform
                     }
                     else
                     {
-                        this.ClearForm();
-                        this.FormRead();
+                        this.FormAdd();
+                        //this.ClearForm();
+                        //this.FormRead();
                     }
                 }
             };
@@ -1777,8 +1831,9 @@ namespace SN_Net.Subform
                     }
                     else
                     {
-                        this.ClearForm();
-                        this.FormRead();
+                        this.FormEdit();
+                        //this.ClearForm();
+                        //this.FormRead();
                     }
                 }
             };
@@ -1839,8 +1894,9 @@ namespace SN_Net.Subform
                     }
                     else
                     {
-                        this.ClearForm();
-                        this.FormRead();
+                        this.FormBreak();
+                        //this.ClearForm();
+                        //this.FormRead();
                     }
                 }
             };
@@ -1899,8 +1955,9 @@ namespace SN_Net.Subform
                     }
                     else
                     {
-                        this.ClearForm();
-                        this.FormRead();
+                        this.FormEditBreak();
+                        //this.ClearForm();
+                        //this.FormRead();
                     }
                 }
             };
@@ -2044,13 +2101,29 @@ namespace SN_Net.Subform
                 worker.DoWork += delegate
                 {
                     CRUDResult get;
+
+                    DateTime date_from = DateTime.Now;
+                    DateTime date_to = DateTime.Now;
+                    if (PreferenceForm.SEARCH_NOTE_DATE_CONFIGURATION() == (int)PreferenceForm.SEARCH_DATE.BACKWARD_WEEK)
+                    {
+                        date_from = date_from.AddDays(-7);
+                    }
+                    if (PreferenceForm.SEARCH_NOTE_DATE_CONFIGURATION() == (int)PreferenceForm.SEARCH_DATE.BACKWARD_MONTH)
+                    {
+                        date_from = date_from.AddDays(-30);
+                    }
+                    if (PreferenceForm.SEARCH_NOTE_DATE_CONFIGURATION() == (int)PreferenceForm.SEARCH_DATE.BACKWARD_YEAR)
+                    {
+                        date_from = date_from.AddDays(-365);
+                    }
+
                     if (PreferenceForm.SEARCH_NOTE_METHOD_CONFIGURATION() == (int)PreferenceForm.SEARCH_NOTE.PRIVATE)
                     {
-                        get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "supportnote/search_note&support_code=" + support_code + "&sernum=" + sernum);
+                        get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "supportnote/search_note&support_code=" + support_code + "&sernum=" + sernum + "&date_from=" + date_from.ToMysqlDate() + "&date_to=" + date_to.ToMysqlDate());
                     }
                     else
                     {
-                        get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "supportnote/search_note&support_code=*&sernum=" + sernum);
+                        get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "supportnote/search_note&support_code=*&sernum=" + sernum + "&date_from=" + date_from.ToMysqlDate() + "&date_to=" + date_to.ToMysqlDate());
                     }
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
 

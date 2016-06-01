@@ -17,6 +17,7 @@ namespace SN_Net.Subform
         const string MAIN_URL = "MAIN_URL";
         const string BREAK_TIME_METHOD = "BREAK_TIME_METHOD";
         const string SEARCH_NOTE_METHOD = "SEARCH_NOTE_METHOD";
+        const string SEARCH_NOTE_DATE = "SEARCH_NOTE_DATE";
         public enum BREAK_TIME : int
         {
             AUTO = 1,
@@ -27,6 +28,14 @@ namespace SN_Net.Subform
         {
             PRIVATE = 1,
             PUBLIC = 2
+        }
+
+        public enum SEARCH_DATE : int
+        {
+            CURRENT_DATE = 1,
+            BACKWARD_WEEK = 2,
+            BACKWARD_MONTH = 3,
+            BACKWARD_YEAR = 4
         }
 
         public PreferenceForm()
@@ -49,6 +58,11 @@ namespace SN_Net.Subform
 
             this.cbSearchMethod.Items.Add(new ComboboxItem("ค้นหาเฉพาะบันทึกของผู้ใชงานปัจจุบัน (Default)", (int)SEARCH_NOTE.PRIVATE, "PRIVATE"));
             this.cbSearchMethod.Items.Add(new ComboboxItem("ค้นหาทั้งหมด(รวมถึงบันทึกของผู้ใช้รายอื่น ๆ ด้วย)", (int)SEARCH_NOTE.PUBLIC, "PUBLIC"));
+
+            this.cbSearchDate.Items.Add(new ComboboxItem("เฉพาะวันที่ปัจจุบัน (Default)", (int)SEARCH_DATE.CURRENT_DATE, "CURRENT_DATE"));
+            this.cbSearchDate.Items.Add(new ComboboxItem("ย้อนหลัง 7 วัน", (int)SEARCH_DATE.BACKWARD_WEEK, "BACKWARD_WEEK"));
+            this.cbSearchDate.Items.Add(new ComboboxItem("ย้อนหลัง 30 วัน", (int)SEARCH_DATE.BACKWARD_MONTH, "BACKWARD_MONTH"));
+            this.cbSearchDate.Items.Add(new ComboboxItem("ย้อนหลัง 365 วัน", (int)SEARCH_DATE.BACKWARD_YEAR, "BACKWARD_YEAR"));
         }
 
         private void PreferenceForm_Shown(object sender, EventArgs e)
@@ -78,6 +92,15 @@ namespace SN_Net.Subform
                 else
                 {
                     this.cbSearchMethod.SelectedIndex = 0;
+                }
+
+                if (this.readPreferenceLine(SEARCH_NOTE_DATE).Length > 0 && Convert.ToInt32(this.readPreferenceLine(SEARCH_NOTE_DATE)) != 0)
+                {
+                    this.cbSearchDate.SelectedItem = this.cbSearchDate.Items.Cast<ComboboxItem>().Where(t => t.int_value == Convert.ToInt32(this.readPreferenceLine(SEARCH_NOTE_DATE))).First<ComboboxItem>();
+                }
+                else
+                {
+                    this.cbSearchDate.SelectedIndex = 0;
                 }
             }
             else
@@ -121,15 +144,17 @@ namespace SN_Net.Subform
             //using (StreamWriter file = new StreamWriter(this.appdata_path + "SN_pref.txt", false))
             using (StreamWriter file = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt"), false))
             {
-                file.WriteLine("MAIN_URL | " + this.mskMainURL.Text);
-                file.WriteLine("BREAK_TIME_METHOD | " + ((ComboboxItem)this.cbBreakTimeMethod.SelectedItem).int_value.ToString());
-                file.WriteLine("SEARCH_NOTE_METHOD | " + ((ComboboxItem)this.cbSearchMethod.SelectedItem).int_value.ToString());
+                file.WriteLine(MAIN_URL + " | " + this.mskMainURL.Text);
+                file.WriteLine(BREAK_TIME_METHOD + " | " + ((ComboboxItem)this.cbBreakTimeMethod.SelectedItem).int_value.ToString());
+                file.WriteLine(SEARCH_NOTE_METHOD + " | " + ((ComboboxItem)this.cbSearchMethod.SelectedItem).int_value.ToString());
+                file.WriteLine(SEARCH_NOTE_DATE + " | " + ((ComboboxItem)this.cbSearchDate.SelectedItem).int_value.ToString());
                 this.toolStripCancel.Enabled = false;
                 this.toolStripSave.Enabled = false;
                 this.toolStripEdit.Enabled = true;
                 this.mskMainURL.Enabled = false;
                 this.cbBreakTimeMethod.Enabled = false;
                 this.cbSearchMethod.Enabled = false;
+                this.cbSearchDate.Enabled = false;
             }
         }
 
@@ -141,6 +166,7 @@ namespace SN_Net.Subform
             this.mskMainURL.Enabled = true;
             this.cbBreakTimeMethod.Enabled = true;
             this.cbSearchMethod.Enabled = true;
+            this.cbSearchDate.Enabled = true;
             this.mskMainURL.Focus();
             this.mskMainURL.SelectionStart = this.mskMainURL.Text.Length;
         }
@@ -154,6 +180,7 @@ namespace SN_Net.Subform
             this.mskMainURL.Enabled = false;
             this.cbBreakTimeMethod.Enabled = false;
             this.cbSearchMethod.Enabled = false;
+            this.cbSearchDate.Enabled = false;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -233,6 +260,12 @@ namespace SN_Net.Subform
         {
             PreferenceForm pref = new PreferenceForm();
             return (pref.readPreferenceLine(SEARCH_NOTE_METHOD).Length == 0 ? (int)SEARCH_NOTE.PRIVATE : Convert.ToInt32(pref.readPreferenceLine(SEARCH_NOTE_METHOD)));
+        }
+
+        public static int SEARCH_NOTE_DATE_CONFIGURATION()
+        {
+            PreferenceForm pref = new PreferenceForm();
+            return (pref.readPreferenceLine(SEARCH_NOTE_DATE).Length == 0 ? (int)SEARCH_DATE.CURRENT_DATE : Convert.ToInt32(pref.readPreferenceLine(SEARCH_NOTE_DATE)));
         }
     }
 }

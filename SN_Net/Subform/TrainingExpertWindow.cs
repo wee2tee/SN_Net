@@ -563,7 +563,8 @@ namespace SN_Net.Subform
             this.inline_trainer = (this.inline_trainer == null ? new CustomComboBox() { Read_Only = false, BorderStyle = BorderStyle.None } : this.inline_trainer);
             this.inline_trainer.comboBox1.DropDownStyle = ComboBoxStyle.DropDown;
             this.inline_trainer.comboBox1.Items.Clear();
-            foreach (Users u in rest_users)
+            //foreach (Users u in rest_users)
+            foreach (Users u in this.list_trainer_all)
             {
                 this.inline_trainer.AddItem(new ComboboxItem(u.username + " : " + u.name, u.id, u.username) { Tag = u });
             }

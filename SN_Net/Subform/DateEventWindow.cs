@@ -427,7 +427,7 @@ namespace SN_Net.Subform
 
             DataGridViewTextBoxColumn col8 = new DataGridViewTextBoxColumn();
             col8.Width = 120;
-            col8.HeaderText = "ใบรับรองแพทย์";
+            col8.HeaderText = "เอกสารอ้างอิง";
             col8.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgv.Columns.Add(col8);
 
@@ -499,9 +499,11 @@ namespace SN_Net.Subform
                 this.dgv.Rows[r].Cells[7].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
 
                 this.dgv.Rows[r].Cells[8].ValueType = typeof(string);
-                this.dgv.Rows[r].Cells[8].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : "");
+                this.dgv.Rows[r].Cells[8].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : (ev.med_cert == "N" ? "ไม่มีเอกสาร" : ""));
                 this.dgv.Rows[r].Cells[8].Style.BackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
                 this.dgv.Rows[r].Cells[8].Style.SelectionBackColor = (ev.status == (int)CustomDateEvent.EVENT_STATUS.WAIT_FOR_CONFIRM ? CustomDateEvent.color_light_blue : (ev.status == (int)CustomDateEvent.EVENT_STATUS.CANCELED ? CustomDateEvent.color_light_red : Color.White));
+                this.dgv.Rows[r].Cells[8].Style.ForeColor = (ev.med_cert == "N" ? Color.Red : Color.Black);
+                this.dgv.Rows[r].Cells[8].Style.SelectionForeColor = (ev.med_cert == "N" ? Color.Red : Color.Black);
 
                 this.dgv.Rows[r].Cells[9].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[9].Value = (ev.fine > 0 ? ev.fine.ToString() : "");
@@ -556,9 +558,11 @@ namespace SN_Net.Subform
                 this.dgv.Rows[r].Cells[7].Style.SelectionBackColor = Color.Wheat;
 
                 this.dgv.Rows[r].Cells[8].ValueType = typeof(string);
-                this.dgv.Rows[r].Cells[8].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : "");
+                this.dgv.Rows[r].Cells[8].Value = (ev.med_cert == "Y" ? "มีใบรับรองแพทย์" : (ev.med_cert == "N" ? "ไม่มีเอกสาร" : ""));
                 this.dgv.Rows[r].Cells[8].Style.BackColor = Color.Wheat;
                 this.dgv.Rows[r].Cells[8].Style.SelectionBackColor = Color.Wheat;
+                this.dgv.Rows[r].Cells[8].Style.ForeColor = (ev.med_cert == "N" ? Color.Red : Color.Black);
+                this.dgv.Rows[r].Cells[8].Style.SelectionForeColor = (ev.med_cert == "N" ? Color.Red : Color.Black);
 
                 this.dgv.Rows[r].Cells[9].ValueType = typeof(string);
                 this.dgv.Rows[r].Cells[9].Value = (ev.fine > 0 ? ev.fine.ToString() : "");
@@ -755,7 +759,8 @@ namespace SN_Net.Subform
             inline_medcert.Name = "inline_medcert";
             inline_medcert.Read_Only = false;
             inline_medcert.BorderStyle = BorderStyle.None;
-            inline_medcert.AddItem(new ComboboxItem("ไม่มีใบรับรองแพทย์", 0, "N"));
+            inline_medcert.AddItem(new ComboboxItem("N/A (ไม่ระบุ)", 9, "X"));
+            inline_medcert.AddItem(new ComboboxItem("ไม่มีเอกสาร", 0, "N"));
             inline_medcert.AddItem(new ComboboxItem("มีใบรับรองแพทย์", 1, "Y"));
             this.dgv.Parent.Controls.Add(inline_medcert);
             inline_medcert.comboBox1.SelectedItem = (this.form_mode == FORM_MODE.EDIT_ITEM ? inline_medcert.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.string_value == ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).med_cert).First<ComboboxItem>() : (ComboboxItem)inline_medcert.comboBox1.Items[0]);

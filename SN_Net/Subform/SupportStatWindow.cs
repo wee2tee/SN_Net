@@ -19,10 +19,10 @@ namespace SN_Net.Subform
 {
     public partial class SupportStatWindow : Form
     {
-        private Users current_user_from;
-        private Users current_user_to;
-        private DateTime current_date_from;
-        private DateTime current_date_to;
+        public Users current_user_from;
+        public Users current_user_to;
+        public DateTime current_date_from;
+        public DateTime current_date_to;
         public MainForm main_form;
         public List<Users> list_support_users;
         public List<SupportNote> supportnote_list = new List<SupportNote>();
@@ -462,7 +462,29 @@ namespace SN_Net.Subform
                 if (e.Button == MouseButtons.Right)
                 {
                     ContextMenu mnu = new ContextMenu();
-                    MenuItem m_remark = new MenuItem("Edit remark");
+
+                    MenuItem add_talk = new MenuItem("บันทึกสายสนทนา");
+                    add_talk.Click += delegate
+                    {
+                        SupportNoteDialog sd = new SupportNoteDialog(this, false);
+                        if (sd.ShowDialog() == DialogResult.OK)
+                        {
+                            this.GetNote(0, sd.note.date, sd.note.start_time, sd.note.end_time);
+                        }
+                    };
+                    MenuItem add_break = new MenuItem("พักสาย");
+                    add_break.Click += delegate
+                    {
+                        SupportNoteDialog sd = new SupportNoteDialog(this, true);
+                        if (sd.ShowDialog() == DialogResult.OK)
+                        {
+                            this.GetNote(0, sd.note.date, sd.note.start_time, sd.note.end_time);
+                        }
+                    };
+                    MenuItem m_add = new MenuItem("เพิ่ม...", new MenuItem[]{ add_talk, add_break });
+                    mnu.MenuItems.Add(m_add);
+
+                    MenuItem m_remark = new MenuItem("แก้ไข");
                     m_remark.Click += delegate
                     {
                         this.toolStripEdit.PerformClick();
@@ -709,6 +731,7 @@ namespace SN_Net.Subform
             this.txtSernum.Focus();
 
             #region Toolstrip button
+            this.btnAdd.Enabled = true;
             this.toolStripPrint.Enabled = true;
             this.toolStripPrintDetail.Enabled = true;
             this.toolStripPrintSummary.Enabled = true;
@@ -732,6 +755,7 @@ namespace SN_Net.Subform
             this.toolStripProcessing.Visible = false;
 
             #region Toolstrip button
+            this.btnAdd.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintDetail.Enabled = false;
             this.toolStripPrintSummary.Enabled = false;
@@ -755,6 +779,7 @@ namespace SN_Net.Subform
             this.toolStripProcessing.Visible = true;
 
             #region Toolstrip button
+            this.btnAdd.Enabled = false;
             this.toolStripPrint.Enabled = false;
             this.toolStripPrintDetail.Enabled = false;
             this.toolStripPrintSummary.Enabled = false;
@@ -772,7 +797,7 @@ namespace SN_Net.Subform
             #endregion Control state
         }
 
-        private void GetNote(int selected_row_id = 0)
+        private void GetNote(int selected_row_id = 0, string date = "", string start_time = "", string end_time = "")
         {
             this.lblUserFrom.Text = this.current_user_from.username;
             this.lblUserTo.Text = this.current_user_to.username;
@@ -808,7 +833,7 @@ namespace SN_Net.Subform
                 {
                     List<EventCalendar> absent_day = this.event_calendar.Where(t => t.event_type == EventCalendar.EVENT_TYPE_ABSENT_CAUSE).ToList<EventCalendar>();
                     List<EventCalendar> service_day = this.event_calendar.Where(t => t.event_type == EventCalendar.EVENT_TYPE_SERVICE_CASE).ToList<EventCalendar>();
-                    this.FillDataGrid(selected_row_id);
+                    this.FillDataGrid(selected_row_id, date, start_time, end_time);
                     this.FormRead();
                 }
                 else
@@ -1013,7 +1038,7 @@ namespace SN_Net.Subform
             support_note = null;
         }
 
-        public void FillDataGrid(int selected_row_id = 0)
+        public void FillDataGrid(int selected_row_id = 0, string date = "", string start_time = "", string end_time = "")
         {
             this.FilterNoteList();
             this.dgvNote.DataSource = this.bs;
@@ -1039,10 +1064,18 @@ namespace SN_Net.Subform
 
             //int summary_row = this.dgvNote.Rows.Add();
 
-            if (this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((SupportNote)r.Cells[0].Value).id == selected_row_id).Count<DataGridViewRow>() > 0)
+            if (date.Length > 0 && start_time.Length > 0 && end_time.Length > 0)
+            {
+                if (this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[0].Value is SupportNote).Where(r => ((SupportNote)r.Cells[0].Value).date == date && ((SupportNote)r.Cells[0].Value).start_time == start_time && ((SupportNote)r.Cells[0].Value).end_time == end_time).Count<DataGridViewRow>() > 0)
+                {
+                    this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => r.Cells[0].Value is SupportNote).Where(r => ((SupportNote)r.Cells[0].Value).date == date && ((SupportNote)r.Cells[0].Value).start_time == start_time && ((SupportNote)r.Cells[0].Value).end_time == end_time).First<DataGridViewRow>().Cells[3].Selected = true;
+                }
+            }
+            else if(this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((SupportNote)r.Cells[0].Value).id == selected_row_id).Count<DataGridViewRow>() > 0)
             {
                 this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((SupportNote)r.Cells[0].Value).id == selected_row_id).First<DataGridViewRow>().Cells[3].Selected = true;
             }
+
         }
 
         private void SetRowBackground(DataGridViewRow row)
@@ -2124,24 +2157,42 @@ namespace SN_Net.Subform
 
         private void toolStripEdit_Click(object sender, EventArgs e)
         {
-            this.FormEdit();
-            string remark = (string)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[27].Value;
+            //this.FormEdit();
+            //string remark = (string)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[27].Value;
 
-            CustomTextBox ct = new CustomTextBox();
-            ct.Read_Only = false;
-            ct.BorderStyle = BorderStyle.None;
-            ct.Name = "txt_inline_remark";
-            ct.Texts = remark;
+            //CustomTextBox ct = new CustomTextBox();
+            //ct.Read_Only = false;
+            //ct.BorderStyle = BorderStyle.None;
+            //ct.Name = "txt_inline_remark";
+            //ct.Texts = remark;
             
-            this.dgvNote.Parent.Controls.Add(ct);
-            this.AdjustInlineFormPositon();
+            //this.dgvNote.Parent.Controls.Add(ct);
+            //this.AdjustInlineFormPositon();
 
-            this.dgvNote.Enabled = false;
-            this.dgvNote.SendToBack();
-            ct.BringToFront();
-            ct.Focus();
-            ct.SelectionStart = 0;
-            ct.SelectionLength = 0;
+            //this.dgvNote.Enabled = false;
+            //this.dgvNote.SendToBack();
+            //ct.BringToFront();
+            //ct.Focus();
+            //ct.SelectionStart = 0;
+            //ct.SelectionLength = 0;
+            if (this.dgvNote.CurrentCell == null)
+                return;
+
+            SupportNoteDialog sd;
+            if (((SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[0].Value).is_break == "Y")
+            {
+                sd = new SupportNoteDialog(this, true, (SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[0].Value);
+            }
+            else
+            {
+                sd = new SupportNoteDialog(this, false, (SupportNote)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[0].Value);
+            }
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                this.GetNote(0, sd.note.date, sd.note.start_time, sd.note.end_time);
+            }
+
         }
 
         private void toolStripStop_Click(object sender, EventArgs e)
@@ -2319,5 +2370,24 @@ namespace SN_Net.Subform
                 }
             }
         }
+
+        private void btnAddTalk_Click(object sender, EventArgs e)
+        {
+            SupportNoteDialog sd = new SupportNoteDialog(this, false);
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                this.GetNote(0, sd.note.date, sd.note.start_time, sd.note.end_time);
+            }
+        }
+
+        private void btnAddBreak_Click(object sender, EventArgs e)
+        {
+            SupportNoteDialog sd = new SupportNoteDialog(this, true);
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                this.GetNote(0, sd.note.date, sd.note.start_time, sd.note.end_time);
+            }
+        }
+
     }
 }
