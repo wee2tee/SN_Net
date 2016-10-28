@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SN_Net</RootNamespace>
     <AssemblyName>SN_Net</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -52,12 +52,34 @@
     <ApplicationIcon>eye-256.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraRichEdit.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DotNetDBF">
+      <HintPath>..\packages\dotnetdbf.3.1.0\lib\net35\DotNetDBF.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetDBF.Enumerable">
+      <HintPath>..\packages\dotnetdbf.enumerable.4.1.0\lib\net40\DotNetDBF.Enumerable.dll</HintPath>
+    </Reference>
     <Reference Include="GetMac">
       <HintPath>..\..\_DLL\GetMac.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="ImpromptuInterface">
+      <HintPath>..\packages\ImpromptuInterface.6.0.6\lib\net40\ImpromptuInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,6 +95,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModels\AbsentVM.cs" />
+    <Compile Include="DataModels\CloudSrv.cs" />
     <Compile Include="DataModels\Dealer.cs" />
     <Compile Include="DataModels\Dealer_list.cs" />
     <Compile Include="DataModels\D_msg.cs" />
@@ -80,6 +104,7 @@
     <Compile Include="DataModels\Istab.cs" />
     <Compile Include="DataModels\Ma.cs" />
     <Compile Include="DataModels\MacAllowed.cs" />
+    <Compile Include="DataModels\MACloud.cs" />
     <Compile Include="DataModels\Note.cs" />
     <Compile Include="DataModels\NoteCalendar.cs" />
     <Compile Include="DataModels\PrintPageSetup.cs" />
@@ -119,6 +144,12 @@
     </Compile>
     <Compile Include="MiscClass\CustomDateEvent.Designer.cs">
       <DependentUpon>CustomDateEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateEvent2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateEvent2.Designer.cs">
+      <DependentUpon>CustomDateEvent2.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscClass\CustomDateTimePicker.cs">
       <SubType>UserControl</SubType>
@@ -184,6 +215,12 @@
     <Compile Include="Subform\ApiMainUrlFirstSetting.Designer.cs">
       <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\Calendar2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\Calendar2.Designer.cs">
+      <DependentUpon>Calendar2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\CalendarWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +238,12 @@
     </Compile>
     <Compile Include="Subform\ChangePasswordForm.Designer.cs">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\CloudsrvFormDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\CloudsrvFormDialog.Designer.cs">
+      <DependentUpon>CloudsrvFormDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\CommentWindow.cs">
       <SubType>Form</SubType>
@@ -261,6 +304,12 @@
     </Compile>
     <Compile Include="Subform\InquiryConditionForm.Designer.cs">
       <DependentUpon>InquiryConditionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\InquiryMaAndCloud.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\InquiryMaAndCloud.Designer.cs">
+      <DependentUpon>InquiryMaAndCloud.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\IstabAddEditForm.cs">
       <SubType>Form</SubType>
@@ -520,6 +569,9 @@
     <EmbeddedResource Include="MiscClass\CustomDateEvent.resx">
       <DependentUpon>CustomDateEvent.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomDateEvent2.resx">
+      <DependentUpon>CustomDateEvent2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomDateTimePicker.resx">
       <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -538,6 +590,7 @@
     <EmbeddedResource Include="MiscClass\CustomTimePicker.resx">
       <DependentUpon>CustomTimePicker.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -551,6 +604,9 @@
     <EmbeddedResource Include="Subform\ApiMainUrlFirstSetting.resx">
       <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\Calendar2.resx">
+      <DependentUpon>Calendar2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\CalendarWindow.resx">
       <DependentUpon>CalendarWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -559,6 +615,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\CloudsrvFormDialog.resx">
+      <DependentUpon>CloudsrvFormDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\CommentWindow.resx">
       <DependentUpon>CommentWindow.cs</DependentUpon>
@@ -589,6 +648,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\InquiryConditionForm.resx">
       <DependentUpon>InquiryConditionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\InquiryMaAndCloud.resx">
+      <DependentUpon>InquiryMaAndCloud.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\IstabAddEditForm.resx">
       <DependentUpon>IstabAddEditForm.cs</DependentUpon>
@@ -807,6 +869,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\menu.png" />
+    <None Include="Resources\plus1.png" />
     <None Include="Resources\save2.png" />
     <None Include="Resources\save1.png" />
     <None Include="Resources\trash2.png" />

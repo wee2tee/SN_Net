@@ -68,9 +68,9 @@
             this.maDateTo.Read_Only = false;
             this.maDateTo.Size = new System.Drawing.Size(96, 23);
             this.maDateTo.TabIndex = 1;
-            this.maDateTo.Texts = "26/01/2559";
-            this.maDateTo.TextsMysql = "2016-01-26";
-            this.maDateTo.ValDateTime = new System.DateTime(2016, 1, 26, 17, 23, 50, 933);
+            this.maDateTo.Texts = "22/08/2559";
+            this.maDateTo.TextsMysql = "2016-08-22";
+            this.maDateTo.ValDateTime = new System.DateTime(2016, 8, 22, 15, 42, 18, 484);
             // 
             // maDateFrom
             // 
@@ -83,9 +83,9 @@
             this.maDateFrom.Read_Only = false;
             this.maDateFrom.Size = new System.Drawing.Size(96, 23);
             this.maDateFrom.TabIndex = 0;
-            this.maDateFrom.Texts = "26/01/2559";
-            this.maDateFrom.TextsMysql = "2016-01-26";
-            this.maDateFrom.ValDateTime = new System.DateTime(2016, 1, 26, 17, 23, 50, 936);
+            this.maDateFrom.Texts = "22/08/2559";
+            this.maDateFrom.TextsMysql = "2016-08-22";
+            this.maDateFrom.ValDateTime = new System.DateTime(2016, 8, 22, 15, 42, 18, 486);
             // 
             // label35
             // 

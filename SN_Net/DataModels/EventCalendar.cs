@@ -21,9 +21,36 @@ namespace SN_Net.DataModels
         public int fine { get; set; }
         public string rec_by { get; set; }
 
+        public string type_desc
+        {
+            get
+            {
+                if (this.event_type == EVENT_TYPE_ABSENT_CAUSE)
+                {
+                    return "";
+                }
+                else if(this.event_type == EVENT_TYPE_SERVICE_CASE)
+                {
+                    return this.event_code;
+                }
+                else
+                {
+                    return this.event_code;
+                }
+            }
+        }
 
         public const string EVENT_TYPE_ABSENT_CAUSE = "06";
         public const string EVENT_TYPE_SERVICE_CASE = "07";
-        
+
+        public enum EVENT_STATUS : int
+        {
+            WAIT = 0,
+            CONFIRMED = 1,
+            CANCELED = 2
+        }
+        //public const int EVENT_STATUS_WAIT = 0;
+        //public const int EVENT_STATUS_CONFIRM = 1;
+        //public const int EVENT_STATUS_CANCELED = 2;
     }
 }

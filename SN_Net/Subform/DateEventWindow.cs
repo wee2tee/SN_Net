@@ -17,7 +17,7 @@ namespace SN_Net.Subform
 {
     public partial class DateEventWindow : Form
     {
-        private CustomDateEvent cde;
+        private CustomDateEvent2 cde;
         private bool begin_add_at_first_show = false;
         private bool begin_edit_at_first_show = false;
         private EventCalendar current_event = null;
@@ -54,20 +54,41 @@ namespace SN_Net.Subform
             InitializeComponent();
         }
 
-        public DateEventWindow(CustomDateEvent cde)
+        //public DateEventWindow(CustomDateEvent cde)
+        //    : this()
+        //{
+        //    this.cde = cde;
+        //}
+
+        //public DateEventWindow(CustomDateEvent cde, bool begin_add_at_first_show)
+        //    : this()
+        //{
+        //    this.cde = cde;
+        //    this.begin_add_at_first_show = begin_add_at_first_show;
+        //}
+
+        //public DateEventWindow(CustomDateEvent cde, bool begin_edit_at_first_show, EventCalendar ev)
+        //    : this()
+        //{
+        //    this.cde = cde;
+        //    this.begin_edit_at_first_show = begin_edit_at_first_show;
+        //    this.current_event = ev;
+        //}
+
+        public DateEventWindow(CustomDateEvent2 cde)
             : this()
         {
             this.cde = cde;
         }
 
-        public DateEventWindow(CustomDateEvent cde, bool begin_add_at_first_show)
+        public DateEventWindow(CustomDateEvent2 cde, bool begin_add_at_first_show)
             : this()
         {
             this.cde = cde;
             this.begin_add_at_first_show = begin_add_at_first_show;
         }
 
-        public DateEventWindow(CustomDateEvent cde, bool begin_edit_at_first_show, EventCalendar ev)
+        public DateEventWindow(CustomDateEvent2 cde, bool begin_edit_at_first_show, EventCalendar ev)
             : this()
         {
             this.cde = cde;
@@ -80,7 +101,8 @@ namespace SN_Net.Subform
             this.txtDummy.Width = 0;
             this.BindingControlEvent();
 
-            this.groupBox1.Text = this.cde.Date.ThaiDayOfWeek() + " ที่ " + this.cde.Date.ToString("d MMMM yyyy", cinfo_th);
+            //this.groupBox1.Text = this.cde.Date.ThaiDayOfWeek() + " ที่ " + this.cde.Date.ToString("d MMMM yyyy", cinfo_th);
+            this.groupBox1.Text = this.cde.date.ThaiDayOfWeek() + " ที่ " + this.cde.date.ToString("d MMMM yyyy", cinfo_th);
 
             #region Load users_list from server
             CRUDResult get_user = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_all");
@@ -133,7 +155,7 @@ namespace SN_Net.Subform
         {
             if (this.begin_add_at_first_show)
             {
-                this.dgv.Rows[this.cde.event_list.Count].Cells[1].Selected = true;
+                this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().Count].Cells[1].Selected = true;
                 this.FormAddItem();
                 this.ShowInlineForm();
 
@@ -168,20 +190,20 @@ namespace SN_Net.Subform
 
         private void InitControl()
         {
-            this.rbHoliday.Checked = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? true : false);
-            this.rbWeekday.Checked = ((this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.NOTE) || this.cde.note_calendar == null ? true : false);
-            this.txtHoliday.Texts = (this.cde.note_calendar != null && ((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cde.note_calendar.description : "");
-            if (this.cde.note_calendar != null)
+            this.rbHoliday.Checked = (this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? true : false);
+            this.rbWeekday.Checked = ((this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.WEEKDAY) || this.cde.note == null ? true : false);
+            this.txtHoliday.Texts = (this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? this.cde.note.description : "");
+            if (this.cde.note != null)
             {
-                this.cbGroupMaid.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cbGroupMaid.comboBox1.Items[0] : (this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_maid).Count<ComboboxItem>() > 0 ? this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_maid).First<ComboboxItem>() : this.cbGroupMaid.comboBox1.Items[0]));
-                this.cbGroupWeekend.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note_calendar).type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.cbGroupWeekend.comboBox1.Items[0] : (this.cbGroupWeekend.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_weekend).Count<ComboboxItem>() > 0 ? this.cbGroupWeekend.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note_calendar.group_weekend).First<ComboboxItem>() : this.cbGroupWeekend.comboBox1.Items[0]));
+                this.cbGroupMaid.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? this.cbGroupMaid.comboBox1.Items[0] : (this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note.group_maid).Count<ComboboxItem>() > 0 ? this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note.group_maid).First<ComboboxItem>() : this.cbGroupMaid.comboBox1.Items[0]));
+                this.cbGroupWeekend.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? this.cbGroupWeekend.comboBox1.Items[0] : (this.cbGroupWeekend.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note.group_weekend).Count<ComboboxItem>() > 0 ? this.cbGroupWeekend.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note.group_weekend).First<ComboboxItem>() : this.cbGroupWeekend.comboBox1.Items[0]));
             }
             else
             {
                 this.cbGroupMaid.comboBox1.SelectedItem = this.cbGroupMaid.comboBox1.Items[0];
                 this.cbGroupWeekend.comboBox1.SelectedItem = this.cbGroupWeekend.comboBox1.Items[0];
             }
-            this.leaveMax.Value = (this.cde.note_calendar != null ? this.cde.note_calendar.max_leave : -1);
+            this.leaveMax.Value = (this.cde.note != null ? this.cde.note.max_leave : -1);
         }
 
         private void BindingControlEvent()
@@ -216,7 +238,7 @@ namespace SN_Net.Subform
                 else
                 {
                     this.FormAddItem();
-                    this.dgv.Rows[this.cde.event_list.Count].Cells[1].Selected = true;
+                    this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().Count].Cells[1].Selected = true;
                 }
                 this.ShowInlineForm();
             };
@@ -239,7 +261,7 @@ namespace SN_Net.Subform
                         MenuItem m_add = new MenuItem("เพิ่ม <Alt+A>");
                         m_add.Click += delegate
                         {
-                            this.dgv.Rows[this.cde.event_list.Count].Cells[1].Selected = true;
+                            this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().Count].Cells[1].Selected = true;
                             this.FormAddItem();
                             this.ShowInlineForm();
                         };
@@ -258,7 +280,7 @@ namespace SN_Net.Subform
                         MenuItem m_copy = new MenuItem("คัดลอกไปยังวันที่ ... <Alt+C>");
                         m_copy.Click += delegate
                         {
-                            DateSelectorDialog ds = new DateSelectorDialog(this.cde.Date);
+                            DateSelectorDialog ds = new DateSelectorDialog(this.cde.date);
                             if (ds.ShowDialog() == DialogResult.OK)
                             {
                                 this.DoCopy(ds.selected_date, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
@@ -441,7 +463,7 @@ namespace SN_Net.Subform
 
             List<EventCalendar> support_list = new List<EventCalendar>();
             List<EventCalendar> supervisor_list = new List<EventCalendar>();
-            foreach (EventCalendar e in this.cde.event_list)
+            foreach (EventCalendar e in this.cde.absent_list.ExtractToEventCalendar())
             {
                 if (this.users_list.Where(u => u.username == e.users_name && u.level >= GlobalVar.USER_LEVEL_SUPERVISOR).Count<Users>() > 0)
                 {
@@ -572,7 +594,7 @@ namespace SN_Net.Subform
                 this.dgv.Rows[r].Cells[9].Style.ForeColor = Color.Red;
                 this.dgv.Rows[r].Cells[9].Style.SelectionForeColor = Color.Red;
             }
-            this.dgv.FillLine(this.cde.event_list.Count + 4);
+            this.dgv.FillLine(this.cde.absent_list.ExtractToEventCalendar().Count + 4);
 
             if (selected_item != null)
             {
@@ -601,7 +623,7 @@ namespace SN_Net.Subform
             json_data += "\"status\":\"" + event_calendar.status.ToString() + "\",";
             json_data += "\"med_cert\":\"" + event_calendar.med_cert + "\",";
             json_data += "\"fine\":" + event_calendar.fine.ToString() + ",";
-            json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
+            json_data += "\"rec_by\":\"" + this.cde.main_form.G.loged_in_user_name + "\"}";
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += delegate
@@ -632,10 +654,10 @@ namespace SN_Net.Subform
                             ct.RefreshView();
                         }
                     }
-                    if (this.cde.Date.ToDMYDateValue() == date.ToDMYDateValue())
+                    if (this.cde.date.ToDMYDateValue() == date.ToDMYDateValue())
                     {
                         this.FillDataGrid();
-                        this.dgv.Rows[this.cde.event_list.FindIndex(t => t.id == inserted_id)].Cells[1].Selected = true;
+                        this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().FindIndex(t => t.id == inserted_id)].Cells[1].Selected = true;
                     }
                     this.FormReadItem();
                 }
@@ -735,7 +757,7 @@ namespace SN_Net.Subform
             inline_to_time.BorderStyle = BorderStyle.None;
             inline_to_time.Show_Second = false;
             this.dgv.Parent.Controls.Add(inline_to_time);
-            inline_to_time.Time = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).to_time.TimeString2DateTime() : (this.cde.Date.GetDayIntOfWeek() == 7 ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 00, 0) : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0)));
+            inline_to_time.Time = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).to_time.TimeString2DateTime() : (this.cde.date.GetDayIntOfWeek() == 7 ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 00, 0) : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0)));
 
             CustomComboBox inline_status = new CustomComboBox();
             inline_status.Name = "inline_status";
@@ -1140,13 +1162,13 @@ namespace SN_Net.Subform
                 string description = (type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.txtHoliday.Texts : "");
                 this.FormProcessing();
 
-                string json_data = "{\"date\":\"" + this.cde.Date.ToMysqlDate() + "\",";
+                string json_data = "{\"date\":\"" + this.cde.date.ToMysqlDate() + "\",";
                 json_data += "\"type\":\"" + type.ToString() + "\",";
                 json_data += "\"description\":\"" + description + "\",";
                 json_data += "\"group_maid\":\"" + ((ComboboxItem)this.cbGroupMaid.comboBox1.SelectedItem).string_value + "\",";
                 json_data += "\"group_weekend\":\"" + ((ComboboxItem)this.cbGroupWeekend.comboBox1.SelectedItem).string_value + "\",";
                 json_data += "\"max_leave\":" + this.leaveMax.Value.ToString() + ",";
-                json_data += "\"rec_by\":\"" + this.cde.G.loged_in_user_name + "\"}";
+                json_data += "\"rec_by\":\"" + this.cde.main_form.G.loged_in_user_name + "\"}";
 
                 BackgroundWorker worker = new BackgroundWorker();
                 worker.DoWork += delegate
@@ -1228,7 +1250,7 @@ namespace SN_Net.Subform
                         this.cde.RefreshData();
                         this.cde.RefreshView();
                         this.FillDataGrid();
-                        this.dgv.Rows[this.cde.event_list.FindIndex(t => t.id == inserted_id)].Cells[1].Selected = true;
+                        this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().FindIndex(t => t.id == inserted_id)].Cells[1].Selected = true;
                         this.FormReadItem();
                     }
                     else
@@ -1289,7 +1311,7 @@ namespace SN_Net.Subform
                         this.FillDataGrid();
                         if (edited_id > -1)
                         {
-                            this.dgv.Rows[this.cde.event_list.FindIndex(t => t.id == edited_id)].Cells[1].Selected = true;
+                            this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().FindIndex(t => t.id == edited_id)].Cells[1].Selected = true;
                         }
                         else
                         {
@@ -1321,7 +1343,7 @@ namespace SN_Net.Subform
                 ev.id = ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).id;
             }
 
-            ev.date = this.cde.Date.ToMysqlDate();
+            ev.date = this.cde.date.ToMysqlDate();
             if (this.dgv.Parent.Controls.Find("inline_users_name", true).Length > 0)
             {
                 ev.users_name = ((ComboboxItem)((CustomComboBox)this.dgv.Parent.Controls.Find("inline_users_name", true)[0]).comboBox1.SelectedItem).string_value;
@@ -1360,7 +1382,7 @@ namespace SN_Net.Subform
                 NumericUpDown inline_fine = (NumericUpDown)this.dgv.Parent.Controls.Find("inline_fine", true)[0];
                 ev.fine = Convert.ToInt32(inline_fine.Value);
             }
-            ev.rec_by = this.cde.G.loged_in_user_name;
+            ev.rec_by = this.cde.main_form.G.loged_in_user_name;
 
             return ev;
         }
@@ -1472,7 +1494,7 @@ namespace SN_Net.Subform
             {
                 if (this.form_mode == FORM_MODE.READ_ITEM)
                 {
-                    this.dgv.Rows[this.cde.event_list.Count].Cells[1].Selected = true;
+                    this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().Count].Cells[1].Selected = true;
                     this.FormAddItem();
                     this.ShowInlineForm();
                     return true;
@@ -1495,7 +1517,7 @@ namespace SN_Net.Subform
 
                     if (this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag is EventCalendar)
                     {
-                        DateSelectorDialog ds = new DateSelectorDialog(this.cde.Date);
+                        DateSelectorDialog ds = new DateSelectorDialog(this.cde.date);
                         if (ds.ShowDialog() == DialogResult.OK)
                         {
                             this.DoCopy(ds.selected_date, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);

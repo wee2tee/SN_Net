@@ -42,6 +42,7 @@ namespace SN_Net.MiscClass
         public List<SupportNote> support_note { get; set; } // for retrieve support note data from server
         public List<SupportNoteComment> support_note_comment { get; set; } // for retrieve support note comment data from server
         public List<Serial_list> serial_list { get; set; } // for inquiry window
+        public List<MACloud> macloud_list { get; set; } // for inquiry window
         public List<Dealer_list> dealer_list { get; set; } // for inquiry window
         public List<RegisterData> register_data { get; set; }
         public List<D_msg> d_msg { get; set; } // for retrieve d_msg (F8 in dealer window)
@@ -51,6 +52,7 @@ namespace SN_Net.MiscClass
         public List<SpyLog> spy_log { get; set; } // for retrieve spy_log (Search history)
         public List<SerialPassword> serial_password { get; set; } // for retrieve password data for service to customer (display in SnWindow, SupportNoteWindow)
         public List<Ma> ma { get; set; } // for retrieve ma data to show in SnWindow
+        public List<CloudSrv> cloudsrv { get; set; } // for retrieve cloudsrv data to show in SnWindow
         public PrintPageSetup print_page_setup { get; set; } // for retrieve print page setup of each form
     }
 }

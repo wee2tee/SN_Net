@@ -166,8 +166,8 @@ namespace SN_Net.MiscClass
                             MenuItem m_edit = new MenuItem("แก้ไข");
                             m_edit.Click += delegate
                             {
-                                DateEventWindow wind = new DateEventWindow(this, true, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
-                                wind.ShowDialog();
+                                //DateEventWindow wind = new DateEventWindow(this, true, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
+                                //wind.ShowDialog();
                             };
                             m.MenuItems.Add(m_edit);
 
@@ -561,7 +561,7 @@ namespace SN_Net.MiscClass
                 {
                     if (support_list.Where(e => e.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().Count < this.note_calendar.max_leave)
                     {
-                        for (int i = support_list.Where(e => e.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().Count ; i < this.note_calendar.max_leave; i++)
+                        for (int i = support_list.Where(e => e.status != (int)CustomDateEvent.EVENT_STATUS.CANCELED).ToList<EventCalendar>().Count; i < this.note_calendar.max_leave; i++)
                         {
                             int r = dgv.Rows.Add();
                             dgv.Rows[r].Cells[1].ValueType = typeof(int);
@@ -611,6 +611,7 @@ namespace SN_Net.MiscClass
                 }
                 dgv.CurrentCell = null;
             }
+            //Console.WriteLine(".. datagrid filled.");
         }
 
         private string GetTrainerName()
@@ -682,14 +683,14 @@ namespace SN_Net.MiscClass
 
         private void btnDetail_Click(object sender, EventArgs e)
         {
-            DateEventWindow wind = new DateEventWindow(this);
-            wind.ShowDialog();
+            //DateEventWindow wind = new DateEventWindow(this);
+            //wind.ShowDialog();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            DateEventWindow wind = new DateEventWindow(this, true);
-            wind.ShowDialog();
+            //DateEventWindow wind = new DateEventWindow(this, true);
+            //wind.ShowDialog();
         }
 
         private void btnTraining_Click(object sender, EventArgs e)
@@ -715,6 +716,11 @@ namespace SN_Net.MiscClass
                 this.lblDay.BackColor = (this.date.Month != target_month ? Color.LightGray : color_light_purple);
                 this.lblMontYear.ForeColor = (this.date.Month != target_month ? Color.LightGray : color_light_purple);
             }
+        }
+
+        public void FillGrid(List<EventCalendar> cal_event)
+        {
+            this.dgv.DataSource = cal_event;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace SN_Net.Subform
     {
         private DateTime current_event_date;
         private CustomDateEvent date_event;
+        private CustomDateEvent2 date_event2;
         private List<Users> list_trainer_all;
         private List<Users> list_trainer_selected;
         private List<Users> list_trainer_rest;
@@ -63,6 +64,13 @@ namespace SN_Net.Subform
             InitializeComponent();
             this.date_event = date_event;
             this.current_event_date = date_event.Date;
+        }
+
+        public TrainingExpertWindow(CustomDateEvent2 date_event)
+        {
+            InitializeComponent();
+            this.date_event2 = date_event;
+            this.current_event_date = date_event.date;
         }
 
         private void TrainingExpertWindow_Load(object sender, EventArgs e)
@@ -726,7 +734,8 @@ namespace SN_Net.Subform
             tc.status = (this.inline_status != null ? ((ComboboxItem)this.inline_status.comboBox1.SelectedItem).int_value : 0);
             tc.term = (this.inline_term != null ? ((ComboboxItem)this.inline_term.comboBox1.SelectedItem).int_value : 0);
             tc.remark = (this.inline_remark != null ? ((CustomTextBox)this.inline_remark).Texts.cleanString() : "");
-            tc.rec_by = this.date_event.G.loged_in_user_name;
+            //tc.rec_by = this.date_event.G.loged_in_user_name;
+            tc.rec_by = this.date_event2.main_form.G.loged_in_user_name;
 
             return tc;
         }
@@ -762,12 +771,14 @@ namespace SN_Net.Subform
                     BackgroundWorker subworker = new BackgroundWorker();
                     subworker.DoWork += delegate
                     {
-                        this.date_event.RefreshData();
+                        //this.date_event.RefreshData();
+                        this.date_event2.RefreshData();
                         this.LoadDependenciesData();
                     };
                     subworker.RunWorkerCompleted += delegate
                     {
-                        this.date_event.RefreshView();
+                        //this.date_event.RefreshView();
+                        this.date_event2.RefreshView();
                         this.dgvTrainer.Tag = HelperClass.DGV_TAG.READ;
                         this.FormReadF8();
                         this.FillForm();
@@ -1010,12 +1021,14 @@ namespace SN_Net.Subform
                         BackgroundWorker subwork = new BackgroundWorker();
                         subwork.DoWork += delegate
                         {
-                            this.date_event.RefreshData();
+                            //this.date_event.RefreshData();
+                            this.date_event2.RefreshData();
                             this.LoadDependenciesData();
                         };
                         subwork.RunWorkerCompleted += delegate
                         {
-                            this.date_event.RefreshView();
+                            //this.date_event.RefreshView();
+                            this.date_event2.RefreshView();
                             this.FillForm();
                             if (this.dgvTrainer.Rows.Cast<DataGridViewRow>().Where(r => r.Tag is TrainingCalendar).Where(r => ((TrainingCalendar)r.Tag).id == processed_item.id).Count<DataGridViewRow>() > 0)
                                 this.dgvTrainer.Rows.Cast<DataGridViewRow>().Where(r => r.Tag is TrainingCalendar).Where(r => ((TrainingCalendar)r.Tag).id == processed_item.id).First<DataGridViewRow>().Cells[0].Selected = true;
@@ -1090,7 +1103,8 @@ namespace SN_Net.Subform
         {
             string json_data = "{\"from_date\":\"" + this.current_event_date.ToMysqlDate() + "\",";
             json_data += "\"to_date\":\"" + date.ToMysqlDate() + "\",";
-            json_data += "\"rec_by\":\"" + this.date_event.G.loged_in_user_name + "\"}";
+            //json_data += "\"rec_by\":\"" + this.date_event.G.loged_in_user_name + "\"}";
+            json_data += "\"rec_by\":\"" + this.date_event2.main_form.G.loged_in_user_name + "\"}";
 
             this.FormProcessing();
             bool post_success = false;
@@ -1116,14 +1130,25 @@ namespace SN_Net.Subform
             {
                 if (post_success)
                 {
-                    foreach (Control ct in this.date_event.Parent.Controls)
-	                {
-                        if (((CustomDateEvent)ct).Date.ToDMYDateValue() == date.ToDMYDateValue())
+                    //foreach (Control ct in this.date_event.Parent.Controls)
+                    //{
+                    //    if (((CustomDateEvent)ct).Date.ToDMYDateValue() == date.ToDMYDateValue())
+                    //    {
+                    //        ((CustomDateEvent)ct).RefreshData();
+                    //        ((CustomDateEvent)ct).RefreshView();
+                    //    }
+                    //}
+                    foreach (Control ct in this.date_event2.ParentForm.Controls["tableLayoutPanel1"].Controls)
+                    {
+                        if (ct.GetType() == typeof(CustomDateEvent2))
                         {
-                            ((CustomDateEvent)ct).RefreshData();
-                            ((CustomDateEvent)ct).RefreshView();
+                            if (((CustomDateEvent2)ct).date.ToDMYDateValue() == date.ToDMYDateValue())
+                            {
+                                ((CustomDateEvent2)ct).RefreshData();
+                                ((CustomDateEvent2)ct).RefreshView();
+                            }
                         }
-	                }
+                    }
                     MessageAlert.Show("คัดลอกข้อมูลเรียบร้อย");
                 }
                 else

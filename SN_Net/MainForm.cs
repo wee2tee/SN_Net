@@ -22,7 +22,7 @@ namespace SN_Net
         public DealerWindow dealer_wind;
         public SupportNoteWindow supportnote_wind;
         public SupportStatWindow supportstat_wind;
-        public CalendarWindow calendar_wind;
+        public Calendar2 calendar_wind;
         public LeaveWindow leave_wind;
         public IstabWindow area_wind;
         public IstabWindow verext_wind;
@@ -377,7 +377,7 @@ namespace SN_Net
         {
             if (this.calendar_wind == null)
             {
-                this.calendar_wind = new CalendarWindow(this);
+                this.calendar_wind = new Calendar2(this);
                 this.calendar_wind.MdiParent = this;
                 this.calendar_wind.Show();
             }
@@ -413,5 +413,6 @@ namespace SN_Net
             ChangeLog cl = new ChangeLog();
             cl.ShowDialog();
         }
+
     }
 }

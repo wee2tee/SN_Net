@@ -33,6 +33,18 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblMAExpireWarning = new System.Windows.Forms.Label();
+            this.lblCloudExpireWarning = new System.Windows.Forms.Label();
+            this.btnDeleteCloud = new System.Windows.Forms.Button();
+            this.btnEditCloud = new System.Windows.Forms.Button();
+            this.label36 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.cloudEmail = new SN_Net.MiscClass.CustomTextBox();
+            this.cloudDateTo = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.cloudDateFrom = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
             this.btnDeleteMA = new System.Windows.Forms.Button();
             this.btnEditMA = new System.Windows.Forms.Button();
             this.label32 = new System.Windows.Forms.Label();
@@ -123,6 +135,8 @@
             this.toolStripSearch = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripInquiryAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripInquiryRest = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripInquiryMA = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripInquiryCloud = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSearchSN = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSearchContact = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,34 +155,6 @@
             this.btnSwithToRefnum = new System.Windows.Forms.Button();
             this.btnLostRenew = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox15 = new System.Windows.Forms.CheckBox();
-            this.checkBox14 = new System.Windows.Forms.CheckBox();
-            this.checkBox12 = new System.Windows.Forms.CheckBox();
-            this.checkBox13 = new System.Windows.Forms.CheckBox();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.dtEndTime = new System.Windows.Forms.DateTimePicker();
-            this.dtStartTime = new System.Windows.Forms.DateTimePicker();
-            this.lblDuration = new System.Windows.Forms.Label();
             this.btnSupportViewNote = new System.Windows.Forms.Button();
             this.btnSupportNote = new System.Windows.Forms.Button();
             this.txtCompnam = new SN_Net.MiscClass.CustomTextBox();
@@ -192,6 +178,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPassword)).BeginInit();
@@ -204,8 +191,6 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -216,10 +201,10 @@
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
-            this.tabControl1.MinimumSize = new System.Drawing.Size(600, 400);
+            this.tabControl1.MinimumSize = new System.Drawing.Size(943, 520);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(844, 440);
+            this.tabControl1.Size = new System.Drawing.Size(943, 520);
             this.tabControl1.TabIndex = 99;
             this.tabControl1.TabStop = false;
             this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.DisableChangeTabWhileAddEdit);
@@ -232,7 +217,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(836, 414);
+            this.tabPage1.Size = new System.Drawing.Size(935, 494);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "รายละเอียด";
             // 
@@ -240,6 +225,12 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.lblMAExpireWarning);
+            this.groupBox2.Controls.Add(this.lblCloudExpireWarning);
+            this.groupBox2.Controls.Add(this.btnDeleteCloud);
+            this.groupBox2.Controls.Add(this.btnEditCloud);
+            this.groupBox2.Controls.Add(this.label36);
+            this.groupBox2.Controls.Add(this.panel2);
             this.groupBox2.Controls.Add(this.btnDeleteMA);
             this.groupBox2.Controls.Add(this.btnEditMA);
             this.groupBox2.Controls.Add(this.label32);
@@ -271,15 +262,168 @@
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Location = new System.Drawing.Point(8, 213);
-            this.groupBox2.MaximumSize = new System.Drawing.Size(1000, 193);
+            this.groupBox2.MaximumSize = new System.Drawing.Size(1000, 293);
+            this.groupBox2.MinimumSize = new System.Drawing.Size(900, 273);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(822, 193);
+            this.groupBox2.Size = new System.Drawing.Size(921, 273);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             // 
+            // lblMAExpireWarning
+            // 
+            this.lblMAExpireWarning.AutoSize = true;
+            this.lblMAExpireWarning.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblMAExpireWarning.ForeColor = System.Drawing.Color.Red;
+            this.lblMAExpireWarning.Location = new System.Drawing.Point(418, 71);
+            this.lblMAExpireWarning.Name = "lblMAExpireWarning";
+            this.lblMAExpireWarning.Size = new System.Drawing.Size(187, 19);
+            this.lblMAExpireWarning.TabIndex = 148;
+            this.lblMAExpireWarning.Text = "** MA. ใกล้หมดอายุ **";
+            this.lblMAExpireWarning.Visible = false;
+            // 
+            // lblCloudExpireWarning
+            // 
+            this.lblCloudExpireWarning.AutoSize = true;
+            this.lblCloudExpireWarning.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblCloudExpireWarning.ForeColor = System.Drawing.Color.Red;
+            this.lblCloudExpireWarning.Location = new System.Drawing.Point(310, 155);
+            this.lblCloudExpireWarning.Name = "lblCloudExpireWarning";
+            this.lblCloudExpireWarning.Size = new System.Drawing.Size(295, 19);
+            this.lblCloudExpireWarning.TabIndex = 148;
+            this.lblCloudExpireWarning.Text = "** Express on Cloud ใกล้หมดอายุ **";
+            this.lblCloudExpireWarning.Visible = false;
+            // 
+            // btnDeleteCloud
+            // 
+            this.btnDeleteCloud.Location = new System.Drawing.Point(607, 154);
+            this.btnDeleteCloud.Name = "btnDeleteCloud";
+            this.btnDeleteCloud.Size = new System.Drawing.Size(64, 23);
+            this.btnDeleteCloud.TabIndex = 147;
+            this.btnDeleteCloud.Text = "ลบ  >>";
+            this.btnDeleteCloud.UseVisualStyleBackColor = true;
+            this.btnDeleteCloud.Click += new System.EventHandler(this.btnDeleteCloud_Click);
+            // 
+            // btnEditCloud
+            // 
+            this.btnEditCloud.Location = new System.Drawing.Point(607, 130);
+            this.btnEditCloud.Name = "btnEditCloud";
+            this.btnEditCloud.Size = new System.Drawing.Size(64, 23);
+            this.btnEditCloud.TabIndex = 146;
+            this.btnEditCloud.Text = "แก้ไข  >>";
+            this.btnEditCloud.UseVisualStyleBackColor = true;
+            this.btnEditCloud.Click += new System.EventHandler(this.btnEditCloud_Click);
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label36.Location = new System.Drawing.Point(513, 112);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(160, 16);
+            this.label36.TabIndex = 145;
+            this.label36.Text = "บริการ Express on Cloud";
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.cloudEmail);
+            this.panel2.Controls.Add(this.cloudDateTo);
+            this.panel2.Controls.Add(this.cloudDateFrom);
+            this.panel2.Controls.Add(this.label37);
+            this.panel2.Controls.Add(this.label38);
+            this.panel2.Controls.Add(this.label39);
+            this.panel2.Location = new System.Drawing.Point(675, 105);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(240, 81);
+            this.panel2.TabIndex = 144;
+            // 
+            // cloudEmail
+            // 
+            this.cloudEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cloudEmail.BackColor = System.Drawing.Color.White;
+            this.cloudEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cloudEmail.CharUpperCase = false;
+            this.cloudEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cloudEmail.Location = new System.Drawing.Point(45, 53);
+            this.cloudEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cloudEmail.MaxChar = 0;
+            this.cloudEmail.Name = "cloudEmail";
+            this.cloudEmail.Read_Only = true;
+            this.cloudEmail.SelectionLength = 0;
+            this.cloudEmail.SelectionStart = 0;
+            this.cloudEmail.Size = new System.Drawing.Size(190, 23);
+            this.cloudEmail.TabIndex = 147;
+            this.cloudEmail.Texts = "";
+            // 
+            // cloudDateTo
+            // 
+            this.cloudDateTo.BackColor = System.Drawing.Color.White;
+            this.cloudDateTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cloudDateTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cloudDateTo.Location = new System.Drawing.Point(45, 29);
+            this.cloudDateTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cloudDateTo.Name = "cloudDateTo";
+            this.cloudDateTo.Read_Only = true;
+            this.cloudDateTo.Size = new System.Drawing.Size(96, 23);
+            this.cloudDateTo.TabIndex = 146;
+            this.cloudDateTo.Texts = "23/08/2559";
+            this.cloudDateTo.TextsMysql = "2016-08-23";
+            this.toolTip1.SetToolTip(this.cloudDateTo, "<F6> = Show Calendar");
+            this.cloudDateTo.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 219);
+            // 
+            // cloudDateFrom
+            // 
+            this.cloudDateFrom.BackColor = System.Drawing.Color.White;
+            this.cloudDateFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cloudDateFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.cloudDateFrom.Location = new System.Drawing.Point(45, 3);
+            this.cloudDateFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cloudDateFrom.Name = "cloudDateFrom";
+            this.cloudDateFrom.Read_Only = true;
+            this.cloudDateFrom.Size = new System.Drawing.Size(96, 23);
+            this.cloudDateFrom.TabIndex = 145;
+            this.cloudDateFrom.Texts = "23/08/2559";
+            this.cloudDateFrom.TextsMysql = "2016-08-23";
+            this.toolTip1.SetToolTip(this.cloudDateFrom, "<F6> = Show Calendar");
+            this.cloudDateFrom.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 221);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label37.Location = new System.Drawing.Point(2, 56);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(36, 16);
+            this.label37.TabIndex = 144;
+            this.label37.Text = "อีเมล์";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label38.Location = new System.Drawing.Point(2, 31);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(40, 16);
+            this.label38.TabIndex = 143;
+            this.label38.Text = "สิ้นสุด";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label39.Location = new System.Drawing.Point(2, 6);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(26, 16);
+            this.label39.TabIndex = 142;
+            this.label39.Text = "เริ่ม";
+            // 
             // btnDeleteMA
             // 
-            this.btnDeleteMA.Location = new System.Drawing.Point(563, 69);
+            this.btnDeleteMA.Location = new System.Drawing.Point(607, 69);
             this.btnDeleteMA.Name = "btnDeleteMA";
             this.btnDeleteMA.Size = new System.Drawing.Size(64, 23);
             this.btnDeleteMA.TabIndex = 143;
@@ -289,7 +433,7 @@
             // 
             // btnEditMA
             // 
-            this.btnEditMA.Location = new System.Drawing.Point(563, 45);
+            this.btnEditMA.Location = new System.Drawing.Point(607, 45);
             this.btnEditMA.Name = "btnEditMA";
             this.btnEditMA.Size = new System.Drawing.Size(64, 23);
             this.btnEditMA.TabIndex = 142;
@@ -300,10 +444,10 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label32.Location = new System.Drawing.Point(562, 27);
+            this.label32.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label32.Location = new System.Drawing.Point(597, 27);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(68, 16);
+            this.label32.Size = new System.Drawing.Size(76, 16);
             this.label32.TabIndex = 141;
             this.label32.Text = "บริการ MA.";
             // 
@@ -319,9 +463,9 @@
             this.panel4.Controls.Add(this.label35);
             this.panel4.Controls.Add(this.label34);
             this.panel4.Controls.Add(this.label33);
-            this.panel4.Location = new System.Drawing.Point(631, 20);
+            this.panel4.Location = new System.Drawing.Point(675, 20);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(184, 81);
+            this.panel4.Size = new System.Drawing.Size(240, 81);
             this.panel4.TabIndex = 140;
             // 
             // maEmail
@@ -339,7 +483,7 @@
             this.maEmail.Read_Only = true;
             this.maEmail.SelectionLength = 0;
             this.maEmail.SelectionStart = 0;
-            this.maEmail.Size = new System.Drawing.Size(134, 23);
+            this.maEmail.Size = new System.Drawing.Size(190, 23);
             this.maEmail.TabIndex = 147;
             this.maEmail.Texts = "";
             // 
@@ -354,10 +498,10 @@
             this.maDateTo.Read_Only = true;
             this.maDateTo.Size = new System.Drawing.Size(96, 23);
             this.maDateTo.TabIndex = 146;
-            this.maDateTo.Texts = "25/01/2559";
-            this.maDateTo.TextsMysql = "2016-01-25";
+            this.maDateTo.Texts = "23/08/2559";
+            this.maDateTo.TextsMysql = "2016-08-23";
             this.toolTip1.SetToolTip(this.maDateTo, "<F6> = Show Calendar");
-            this.maDateTo.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 924);
+            this.maDateTo.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 224);
             // 
             // maDateFrom
             // 
@@ -370,10 +514,10 @@
             this.maDateFrom.Read_Only = true;
             this.maDateFrom.Size = new System.Drawing.Size(96, 23);
             this.maDateFrom.TabIndex = 145;
-            this.maDateFrom.Texts = "25/01/2559";
-            this.maDateFrom.TextsMysql = "2016-01-25";
+            this.maDateFrom.Texts = "23/08/2559";
+            this.maDateFrom.TextsMysql = "2016-08-23";
             this.toolTip1.SetToolTip(this.maDateFrom, "<F6> = Show Calendar");
-            this.maDateFrom.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 926);
+            this.maDateFrom.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 226);
             // 
             // label35
             // 
@@ -410,71 +554,71 @@
             this.dtVerextdat.BackColor = System.Drawing.Color.White;
             this.dtVerextdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtVerextdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtVerextdat.Location = new System.Drawing.Point(668, 156);
+            this.dtVerextdat.Location = new System.Drawing.Point(668, 240);
             this.dtVerextdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtVerextdat.Name = "dtVerextdat";
             this.dtVerextdat.Read_Only = true;
             this.dtVerextdat.Size = new System.Drawing.Size(96, 23);
             this.dtVerextdat.TabIndex = 25;
-            this.dtVerextdat.Texts = "25/01/2559";
-            this.dtVerextdat.TextsMysql = "2016-01-25";
+            this.dtVerextdat.Texts = "23/08/2559";
+            this.dtVerextdat.TextsMysql = "2016-08-23";
             this.toolTip1.SetToolTip(this.dtVerextdat, "<F6> = Show Calendar");
-            this.dtVerextdat.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 928);
+            this.dtVerextdat.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 228);
             // 
             // dtManual
             // 
             this.dtManual.BackColor = System.Drawing.Color.White;
             this.dtManual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtManual.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtManual.Location = new System.Drawing.Point(668, 131);
+            this.dtManual.Location = new System.Drawing.Point(668, 215);
             this.dtManual.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtManual.Name = "dtManual";
             this.dtManual.Read_Only = true;
             this.dtManual.Size = new System.Drawing.Size(96, 23);
             this.dtManual.TabIndex = 23;
-            this.dtManual.Texts = "25/01/2559";
-            this.dtManual.TextsMysql = "2016-01-25";
+            this.dtManual.Texts = "23/08/2559";
+            this.dtManual.TextsMysql = "2016-08-23";
             this.toolTip1.SetToolTip(this.dtManual, "<F6> = Show Calendar");
-            this.dtManual.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 930);
+            this.dtManual.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 230);
             // 
             // dtExpdat
             // 
             this.dtExpdat.BackColor = System.Drawing.Color.White;
             this.dtExpdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtExpdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtExpdat.Location = new System.Drawing.Point(359, 156);
+            this.dtExpdat.Location = new System.Drawing.Point(359, 240);
             this.dtExpdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtExpdat.Name = "dtExpdat";
             this.dtExpdat.Read_Only = true;
             this.dtExpdat.Size = new System.Drawing.Size(96, 23);
             this.dtExpdat.TabIndex = 21;
-            this.dtExpdat.Texts = "25/01/2559";
-            this.dtExpdat.TextsMysql = "2016-01-25";
+            this.dtExpdat.Texts = "23/08/2559";
+            this.dtExpdat.TextsMysql = "2016-08-23";
             this.toolTip1.SetToolTip(this.dtExpdat, "<F6> = Show Calendar");
-            this.dtExpdat.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 962);
+            this.dtExpdat.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 232);
             // 
             // dtPurdat
             // 
             this.dtPurdat.BackColor = System.Drawing.Color.White;
             this.dtPurdat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dtPurdat.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtPurdat.Location = new System.Drawing.Point(110, 156);
+            this.dtPurdat.Location = new System.Drawing.Point(110, 240);
             this.dtPurdat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtPurdat.Name = "dtPurdat";
             this.dtPurdat.Read_Only = true;
             this.dtPurdat.Size = new System.Drawing.Size(96, 23);
             this.dtPurdat.TabIndex = 20;
-            this.dtPurdat.Texts = "25/01/2559";
-            this.dtPurdat.TextsMysql = "2016-01-25";
+            this.dtPurdat.Texts = "23/08/2559";
+            this.dtPurdat.TextsMysql = "2016-08-23";
             this.toolTip1.SetToolTip(this.dtPurdat, "<F6> = Show Calendar");
-            this.dtPurdat.ValDateTime = new System.DateTime(2016, 1, 25, 14, 10, 42, 964);
+            this.dtPurdat.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 234);
             // 
             // cbVerext
             // 
             this.cbVerext.BackColor = System.Drawing.Color.White;
             this.cbVerext.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cbVerext.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cbVerext.Location = new System.Drawing.Point(477, 156);
+            this.cbVerext.Location = new System.Drawing.Point(477, 240);
             this.cbVerext.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cbVerext.Name = "cbVerext";
             this.cbVerext.Read_Only = true;
@@ -489,7 +633,7 @@
             this.txtUpfree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpfree.CharUpperCase = false;
             this.txtUpfree.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtUpfree.Location = new System.Drawing.Point(668, 106);
+            this.txtUpfree.Location = new System.Drawing.Point(668, 190);
             this.txtUpfree.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtUpfree.MaxChar = 0;
             this.txtUpfree.Name = "txtUpfree";
@@ -506,7 +650,7 @@
             this.txtHowknown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtHowknown.CharUpperCase = false;
             this.txtHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtHowknown.Location = new System.Drawing.Point(110, 131);
+            this.txtHowknown.Location = new System.Drawing.Point(110, 215);
             this.txtHowknown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtHowknown.MaxChar = 0;
             this.txtHowknown.Name = "txtHowknown";
@@ -592,7 +736,7 @@
             // 
             this.lblHowknownTypdes.AutoSize = true;
             this.lblHowknownTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblHowknownTypdes.Location = new System.Drawing.Point(205, 134);
+            this.lblHowknownTypdes.Location = new System.Drawing.Point(205, 218);
             this.lblHowknownTypdes.Name = "lblHowknownTypdes";
             this.lblHowknownTypdes.Size = new System.Drawing.Size(0, 16);
             this.lblHowknownTypdes.TabIndex = 56;
@@ -600,7 +744,7 @@
             // btnBrowseHowknown
             // 
             this.btnBrowseHowknown.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnBrowseHowknown.Location = new System.Drawing.Point(178, 130);
+            this.btnBrowseHowknown.Location = new System.Drawing.Point(178, 214);
             this.btnBrowseHowknown.Name = "btnBrowseHowknown";
             this.btnBrowseHowknown.Size = new System.Drawing.Size(25, 25);
             this.btnBrowseHowknown.TabIndex = 55;
@@ -621,11 +765,10 @@
             // 
             // lblBusitypTypdes
             // 
-            this.lblBusitypTypdes.AutoSize = true;
             this.lblBusitypTypdes.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblBusitypTypdes.Location = new System.Drawing.Point(205, 73);
             this.lblBusitypTypdes.Name = "lblBusitypTypdes";
-            this.lblBusitypTypdes.Size = new System.Drawing.Size(0, 16);
+            this.lblBusitypTypdes.Size = new System.Drawing.Size(215, 16);
             this.lblBusitypTypdes.TabIndex = 51;
             // 
             // btnBrowseBusityp
@@ -643,7 +786,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label27.Location = new System.Drawing.Point(630, 133);
+            this.label27.Location = new System.Drawing.Point(630, 217);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(34, 16);
             this.label27.TabIndex = 45;
@@ -653,7 +796,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label26.Location = new System.Drawing.Point(610, 110);
+            this.label26.Location = new System.Drawing.Point(610, 194);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(55, 16);
             this.label26.TabIndex = 44;
@@ -663,7 +806,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label25.Location = new System.Drawing.Point(281, 159);
+            this.label25.Location = new System.Drawing.Point(281, 243);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(75, 16);
             this.label25.TabIndex = 42;
@@ -673,7 +816,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label24.Location = new System.Drawing.Point(16, 159);
+            this.label24.Location = new System.Drawing.Point(16, 243);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(90, 16);
             this.label24.TabIndex = 40;
@@ -683,7 +826,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label22.Location = new System.Drawing.Point(24, 134);
+            this.label22.Location = new System.Drawing.Point(24, 218);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(82, 16);
             this.label22.TabIndex = 37;
@@ -765,14 +908,14 @@
             this.groupBox1.Location = new System.Drawing.Point(8, 6);
             this.groupBox1.MaximumSize = new System.Drawing.Size(1000, 205);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(822, 205);
+            this.groupBox1.Size = new System.Drawing.Size(921, 205);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             // 
             // btnPasswordRemove
             // 
             this.btnPasswordRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPasswordRemove.Location = new System.Drawing.Point(723, 123);
+            this.btnPasswordRemove.Location = new System.Drawing.Point(822, 123);
             this.btnPasswordRemove.Name = "btnPasswordRemove";
             this.btnPasswordRemove.Size = new System.Drawing.Size(92, 23);
             this.btnPasswordRemove.TabIndex = 32;
@@ -816,7 +959,7 @@
             this.dgvPassword.RowTemplate.ReadOnly = true;
             this.dgvPassword.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPassword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPassword.Size = new System.Drawing.Size(182, 103);
+            this.dgvPassword.Size = new System.Drawing.Size(281, 103);
             this.dgvPassword.TabIndex = 30;
             // 
             // label31
@@ -1058,7 +1201,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(836, 414);
+            this.tabPage2.Size = new System.Drawing.Size(935, 494);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "ประวัติการติดต่อ <F8>";
             // 
@@ -1085,7 +1228,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvProblem);
-            this.splitContainer1.Size = new System.Drawing.Size(830, 408);
+            this.splitContainer1.Size = new System.Drawing.Size(929, 488);
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 99;
             this.splitContainer1.TabStop = false;
@@ -1195,7 +1338,7 @@
             this.dgvProblem.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.dgvProblem.RowTemplate.Height = 25;
             this.dgvProblem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProblem.Size = new System.Drawing.Size(830, 377);
+            this.dgvProblem.Size = new System.Drawing.Size(929, 457);
             this.dgvProblem.TabIndex = 0;
             this.dgvProblem.TabStop = false;
             this.dgvProblem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProblem_CellDoubleClick);
@@ -1230,7 +1373,7 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(854, 43);
+            this.toolStrip1.Size = new System.Drawing.Size(953, 43);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1429,6 +1572,8 @@
             this.toolStripSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripInquiryAll,
             this.toolStripInquiryRest,
+            this.toolStripInquiryMA,
+            this.toolStripInquiryCloud,
             this.toolStripSeparator3,
             this.toolStripSearchSN,
             this.toolStripSearchContact,
@@ -1449,68 +1594,82 @@
             // toolStripInquiryAll
             // 
             this.toolStripInquiryAll.Name = "toolStripInquiryAll";
-            this.toolStripInquiryAll.Size = new System.Drawing.Size(265, 22);
+            this.toolStripInquiryAll.Size = new System.Drawing.Size(313, 22);
             this.toolStripInquiryAll.Text = "Inquiry All <Ctrl+L>";
             this.toolStripInquiryAll.Click += new System.EventHandler(this.toolStripInquiryAll_Click);
             // 
             // toolStripInquiryRest
             // 
             this.toolStripInquiryRest.Name = "toolStripInquiryRest";
-            this.toolStripInquiryRest.Size = new System.Drawing.Size(265, 22);
+            this.toolStripInquiryRest.Size = new System.Drawing.Size(313, 22);
             this.toolStripInquiryRest.Text = "Inquiry Rest <Alt+L>";
             this.toolStripInquiryRest.Click += new System.EventHandler(this.toolStripInquiryRest_Click);
+            // 
+            // toolStripInquiryMA
+            // 
+            this.toolStripInquiryMA.Name = "toolStripInquiryMA";
+            this.toolStripInquiryMA.Size = new System.Drawing.Size(313, 22);
+            this.toolStripInquiryMA.Text = "Inquiry All for MA. Customer <Ctrl+Alt+M>";
+            this.toolStripInquiryMA.Click += new System.EventHandler(this.toolStripInquiryMA_Click);
+            // 
+            // toolStripInquiryCloud
+            // 
+            this.toolStripInquiryCloud.Name = "toolStripInquiryCloud";
+            this.toolStripInquiryCloud.Size = new System.Drawing.Size(313, 22);
+            this.toolStripInquiryCloud.Text = "Inquiry All for Cloud Customer <Ctrl+Alt+C>";
+            this.toolStripInquiryCloud.Click += new System.EventHandler(this.toolStripInquiryCloud_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(262, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(310, 6);
             // 
             // toolStripSearchSN
             // 
             this.toolStripSearchSN.Name = "toolStripSearchSN";
-            this.toolStripSearchSN.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchSN.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchSN.Text = "Search Serial No. <Alt+S>";
             this.toolStripSearchSN.Click += new System.EventHandler(this.toolStripSearch_ButtonClick);
             // 
             // toolStripSearchContact
             // 
             this.toolStripSearchContact.Name = "toolStripSearchContact";
-            this.toolStripSearchContact.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchContact.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchContact.Text = "Search Contact <Alt+2>";
             this.toolStripSearchContact.Click += new System.EventHandler(this.searchContactToolStripMenuItem_Click);
             // 
             // toolStripSearchCompany
             // 
             this.toolStripSearchCompany.Name = "toolStripSearchCompany";
-            this.toolStripSearchCompany.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchCompany.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchCompany.Text = "Search Company <Alt+3>";
             this.toolStripSearchCompany.Click += new System.EventHandler(this.searchCompanyToolStripMenuItem_Click);
             // 
             // toolStripSearchDealer
             // 
             this.toolStripSearchDealer.Name = "toolStripSearchDealer";
-            this.toolStripSearchDealer.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchDealer.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchDealer.Text = "Search Dealer Code <Alt+4>";
             this.toolStripSearchDealer.Click += new System.EventHandler(this.searchDealerCodeToolStripMenuItem_Click);
             // 
             // toolStripSearchOldnum
             // 
             this.toolStripSearchOldnum.Name = "toolStripSearchOldnum";
-            this.toolStripSearchOldnum.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchOldnum.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchOldnum.Text = "Search Old Serial <Alt+5>";
             this.toolStripSearchOldnum.Click += new System.EventHandler(this.searchOldSerialToolStripMenuItem_Click);
             // 
             // toolStripSearchBusityp
             // 
             this.toolStripSearchBusityp.Name = "toolStripSearchBusityp";
-            this.toolStripSearchBusityp.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchBusityp.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchBusityp.Text = "Search Business Type Code <Alt+6>";
             this.toolStripSearchBusityp.Click += new System.EventHandler(this.searchBusinessTypeToolStripMenuItem_Click);
             // 
             // toolStripSearchArea
             // 
             this.toolStripSearchArea.Name = "toolStripSearchArea";
-            this.toolStripSearchArea.Size = new System.Drawing.Size(265, 22);
+            this.toolStripSearchArea.Size = new System.Drawing.Size(313, 22);
             this.toolStripSearchArea.Text = "Search Area <Alt+7>";
             this.toolStripSearchArea.Click += new System.EventHandler(this.searchAreaToolStripMenuItem_Click);
             // 
@@ -1619,7 +1778,6 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.panel1);
             this.splitContainer2.Panel1.Controls.Add(this.btnSupportViewNote);
             this.splitContainer2.Panel1.Controls.Add(this.btnSupportNote);
             this.splitContainer2.Panel1.Controls.Add(this.txtCompnam);
@@ -1642,320 +1800,10 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(5, 5, 5, 25);
-            this.splitContainer2.Size = new System.Drawing.Size(854, 617);
+            this.splitContainer2.Size = new System.Drawing.Size(953, 697);
             this.splitContainer2.SplitterDistance = 143;
             this.splitContainer2.TabIndex = 16;
             this.splitContainer2.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.groupBox3);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label30);
-            this.panel1.Controls.Add(this.label21);
-            this.panel1.Controls.Add(this.label29);
-            this.panel1.Controls.Add(this.label23);
-            this.panel1.Controls.Add(this.label28);
-            this.panel1.Controls.Add(this.dtEndTime);
-            this.panel1.Controls.Add(this.dtStartTime);
-            this.panel1.Controls.Add(this.lblDuration);
-            this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(6, 144);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(842, 193);
-            this.panel1.TabIndex = 88;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.checkBox15);
-            this.groupBox3.Controls.Add(this.checkBox14);
-            this.groupBox3.Controls.Add(this.checkBox12);
-            this.groupBox3.Controls.Add(this.checkBox13);
-            this.groupBox3.Controls.Add(this.checkBox11);
-            this.groupBox3.Controls.Add(this.checkBox10);
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.checkBox9);
-            this.groupBox3.Controls.Add(this.checkBox8);
-            this.groupBox3.Controls.Add(this.checkBox7);
-            this.groupBox3.Controls.Add(this.checkBox6);
-            this.groupBox3.Controls.Add(this.checkBox5);
-            this.groupBox3.Controls.Add(this.checkBox4);
-            this.groupBox3.Controls.Add(this.checkBox3);
-            this.groupBox3.Controls.Add(this.checkBox2);
-            this.groupBox3.Controls.Add(this.checkBox1);
-            this.groupBox3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.groupBox3.Location = new System.Drawing.Point(242, 2);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(590, 183);
-            this.groupBox3.TabIndex = 90;
-            this.groupBox3.TabStop = false;
-            // 
-            // checkBox15
-            // 
-            this.checkBox15.AutoSize = true;
-            this.checkBox15.Location = new System.Drawing.Point(113, 125);
-            this.checkBox15.Name = "checkBox15";
-            this.checkBox15.Size = new System.Drawing.Size(115, 20);
-            this.checkBox15.TabIndex = 98;
-            this.checkBox15.Text = "วันที่ไม่อยู่ในงวด";
-            this.checkBox15.UseVisualStyleBackColor = true;
-            // 
-            // checkBox14
-            // 
-            this.checkBox14.AutoSize = true;
-            this.checkBox14.Location = new System.Drawing.Point(6, 125);
-            this.checkBox14.Name = "checkBox14";
-            this.checkBox14.Size = new System.Drawing.Size(101, 20);
-            this.checkBox14.TabIndex = 97;
-            this.checkBox14.Text = "ปิดประมวลผล";
-            this.checkBox14.UseVisualStyleBackColor = true;
-            // 
-            // checkBox12
-            // 
-            this.checkBox12.AutoSize = true;
-            this.checkBox12.Location = new System.Drawing.Point(213, 99);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Size = new System.Drawing.Size(131, 20);
-            this.checkBox12.TabIndex = 96;
-            this.checkBox12.Text = "ระบบความปลอดภัย";
-            this.checkBox12.UseVisualStyleBackColor = true;
-            // 
-            // checkBox13
-            // 
-            this.checkBox13.AutoSize = true;
-            this.checkBox13.Location = new System.Drawing.Point(86, 99);
-            this.checkBox13.Name = "checkBox13";
-            this.checkBox13.Size = new System.Drawing.Size(129, 20);
-            this.checkBox13.TabIndex = 95;
-            this.checkBox13.Text = "ทรัพย์สิน/ค่าเสื่อมฯ";
-            this.checkBox13.UseVisualStyleBackColor = true;
-            // 
-            // checkBox11
-            // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.Location = new System.Drawing.Point(213, 75);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Size = new System.Drawing.Size(110, 20);
-            this.checkBox11.TabIndex = 94;
-            this.checkBox11.Text = "รายงาน->Excel";
-            this.checkBox11.UseVisualStyleBackColor = true;
-            // 
-            // checkBox10
-            // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Location = new System.Drawing.Point(71, 75);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(134, 20);
-            this.checkBox10.TabIndex = 93;
-            this.checkBox10.Text = "แก้ไขฟอร์ม/รายงาน";
-            this.checkBox10.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.button1.Location = new System.Drawing.Point(493, 145);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(92, 33);
-            this.button1.TabIndex = 92;
-            this.button1.Text = "Finish";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(344, 15);
-            this.textBox2.MaxLength = 255;
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(240, 125);
-            this.textBox2.TabIndex = 8;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.checkBox9.Location = new System.Drawing.Point(315, 152);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(177, 20);
-            this.checkBox9.TabIndex = 91;
-            this.checkBox9.Text = "บันทึกในประวัติฯ <F8> ด้วย";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Location = new System.Drawing.Point(6, 161);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(91, 20);
-            this.checkBox8.TabIndex = 7;
-            this.checkBox8.Text = "Mail/รอสาย";
-            this.checkBox8.UseVisualStyleBackColor = true;
-            // 
-            // checkBox7
-            // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(6, 37);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(53, 20);
-            this.checkBox7.TabIndex = 6;
-            this.checkBox7.Text = "Print";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(6, 99);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(74, 20);
-            this.checkBox6.TabIndex = 5;
-            this.checkBox6.Text = "สร้างงบฯ";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(256, 13);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(58, 20);
-            this.checkBox5.TabIndex = 4;
-            this.checkBox5.Text = "Fonts";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(96, 13);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(81, 20);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "Install/Up";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(188, 13);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(56, 20);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Error";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 13);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(84, 20);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Map Drive";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 75);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(57, 20);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "สินค้า";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.textBox1.Location = new System.Drawing.Point(93, 110);
-            this.textBox1.MaxLength = 20;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(113, 23);
-            this.textBox1.TabIndex = 89;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label30.Location = new System.Drawing.Point(6, 113);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(88, 16);
-            this.label30.TabIndex = 88;
-            this.label30.Text = "Contact Name";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label21.Location = new System.Drawing.Point(7, 18);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(37, 16);
-            this.label21.TabIndex = 81;
-            this.label21.Text = "Time";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label29.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.label29.Location = new System.Drawing.Point(63, 85);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(66, 16);
-            this.label29.TabIndex = 87;
-            this.label29.Text = "hh:mm:ss";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label23.Location = new System.Drawing.Point(6, 63);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(56, 16);
-            this.label23.TabIndex = 82;
-            this.label23.Text = "Duration";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label28.Location = new System.Drawing.Point(139, 19);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(13, 16);
-            this.label28.TabIndex = 85;
-            this.label28.Text = "-";
-            // 
-            // dtEndTime
-            // 
-            this.dtEndTime.Enabled = false;
-            this.dtEndTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtEndTime.Location = new System.Drawing.Point(153, 15);
-            this.dtEndTime.Name = "dtEndTime";
-            this.dtEndTime.ShowUpDown = true;
-            this.dtEndTime.Size = new System.Drawing.Size(83, 23);
-            this.dtEndTime.TabIndex = 84;
-            // 
-            // dtStartTime
-            // 
-            this.dtStartTime.Enabled = false;
-            this.dtStartTime.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtStartTime.Location = new System.Drawing.Point(54, 15);
-            this.dtStartTime.Name = "dtStartTime";
-            this.dtStartTime.ShowUpDown = true;
-            this.dtStartTime.Size = new System.Drawing.Size(83, 23);
-            this.dtStartTime.TabIndex = 83;
-            this.dtStartTime.Value = new System.DateTime(2015, 10, 2, 13, 52, 0, 0);
-            // 
-            // lblDuration
-            // 
-            this.lblDuration.Font = new System.Drawing.Font("Tahoma", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDuration.ForeColor = System.Drawing.Color.Red;
-            this.lblDuration.Location = new System.Drawing.Point(59, 49);
-            this.lblDuration.Name = "lblDuration";
-            this.lblDuration.Size = new System.Drawing.Size(152, 36);
-            this.lblDuration.TabIndex = 86;
-            this.lblDuration.Text = "00:00:00";
-            this.lblDuration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnSupportViewNote
             // 
@@ -2189,9 +2037,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripInfo,
             this.toolStripProcessing});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 595);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 675);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(854, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(953, 22);
             this.statusStrip1.TabIndex = 28;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -2212,7 +2060,7 @@
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcessing.Name = "toolStripProcessing";
             this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(807, 17);
+            this.toolStripProcessing.Size = new System.Drawing.Size(906, 17);
             this.toolStripProcessing.Spring = true;
             this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -2225,7 +2073,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(854, 617);
+            this.ClientSize = new System.Drawing.Size(953, 697);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnLostRenew);
@@ -2236,7 +2084,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer2);
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(870, 656);
             this.Name = "SnWindow";
             this.Text = "Serial Number";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SnWindow_FormClosing);
@@ -2245,6 +2092,8 @@
             this.tabPage1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -2262,10 +2111,6 @@
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -2390,34 +2235,6 @@
         private MiscClass.CustomDateTimePicker dtManual;
         private MiscClass.CustomDateTimePicker dtExpdat;
         private System.Windows.Forms.Button btnSupportViewNote;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox checkBox15;
-        private System.Windows.Forms.CheckBox checkBox14;
-        private System.Windows.Forms.CheckBox checkBox12;
-        private System.Windows.Forms.CheckBox checkBox13;
-        private System.Windows.Forms.CheckBox checkBox11;
-        private System.Windows.Forms.CheckBox checkBox10;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox9;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.DateTimePicker dtEndTime;
-        private System.Windows.Forms.DateTimePicker dtStartTime;
-        private System.Windows.Forms.Label lblDuration;
         public System.Windows.Forms.Button btnSupportNote;
         public System.Windows.Forms.ToolStripButton toolStripReload;
         private System.Windows.Forms.Button btnPasswordRemove;
@@ -2434,5 +2251,19 @@
         private MiscClass.CustomDateTimePicker maDateTo;
         private MiscClass.CustomDateTimePicker maDateFrom;
         private System.Windows.Forms.Button btnDeleteMA;
+        private System.Windows.Forms.Button btnDeleteCloud;
+        private System.Windows.Forms.Button btnEditCloud;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Panel panel2;
+        private MiscClass.CustomTextBox cloudEmail;
+        private MiscClass.CustomDateTimePicker cloudDateTo;
+        private MiscClass.CustomDateTimePicker cloudDateFrom;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label lblCloudExpireWarning;
+        private System.Windows.Forms.Label lblMAExpireWarning;
+        private System.Windows.Forms.ToolStripMenuItem toolStripInquiryMA;
+        private System.Windows.Forms.ToolStripMenuItem toolStripInquiryCloud;
     }
 }

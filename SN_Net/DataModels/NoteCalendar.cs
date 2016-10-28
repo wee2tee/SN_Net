@@ -7,6 +7,12 @@ namespace SN_Net.DataModels
 {
     public class NoteCalendar
     {
+        public enum NOTE_TYPE : int
+        {
+            WEEKDAY = 0,
+            HOLIDAY = 1
+        }
+
         public int id { get; set; }
         public string date { get; set; }
         public int type { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SN_Net.DataModels;
+using SN_Net.Subform;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
@@ -499,6 +500,71 @@ namespace SN_Net.MiscClass
                 {
                     yield return element;
                 }
+            }
+        }
+
+        public static List<AbsentVM> ToAbsentViewModel(this IEnumerable<EventCalendar> ev, List<Istab> absent_cause, List<Users> users_list, int max_leave_person)
+        {
+            List<AbsentVM> absent = new List<AbsentVM>();
+
+            int seq = 0;
+            foreach (var item in ev)
+            {
+                Users user = users_list.Where(u => u.username == item.users_name).FirstOrDefault();
+                int countable = user != null && user.level >= (int)USER_LEVEL.SUPERVISOR ? 0 : 1;
+                absent.Add(new AbsentVM
+                {
+                    event_calendar = item,
+                    seq = (item.status == (int)EventCalendar.EVENT_STATUS.CANCELED || countable == 0 ? "" : (++seq).ToString()),
+                    name = item.realname,
+                    event_code = (item.event_type == EventCalendar.EVENT_TYPE_SERVICE_CASE ? item.event_code : absent_cause.Where(a => a.typcod == item.event_code).First().abbreviate_th),
+                    event_desc = item.customer.Trim().Length > 0 ? item.customer : item.GetEventCalendarTimeString(),
+                    countable_leave_person = countable
+                });
+            }
+            for (int i = seq; i < max_leave_person; i++)
+            {
+                absent.Add(new AbsentVM
+                {
+                    event_calendar = null,
+                    seq = (++seq).ToString(),
+                    name = "",
+                    event_code = "",
+                    event_desc = "",
+                    countable_leave_person = 1
+                });
+            }
+
+            return absent.OrderByDescending(a => a.countable_leave_person).ToList();
+        }
+
+        public static List<EventCalendar> ExtractToEventCalendar(this IEnumerable<AbsentVM> absent_list)
+        {
+            List<EventCalendar> event_calendar = new List<EventCalendar>();
+            foreach (var item in absent_list)
+            {
+                if (item.event_calendar != null)
+                {
+                    event_calendar.Add(item.event_calendar);
+                }
+            }
+
+            return event_calendar;
+        }
+
+        public static string GetEventCalendarTimeString(this EventCalendar ev)
+        {
+            TimeSpan to_time = new TimeSpan(Convert.ToInt32(ev.to_time.Split(':')[0]), Convert.ToInt32(ev.to_time.Split(':')[1]), 0);
+            TimeSpan from_time = new TimeSpan(Convert.ToInt32(ev.from_time.Split(':')[0]), Convert.ToInt32(ev.from_time.Split(':')[1]), 0);
+            DateTime event_date = DateTime.Parse(ev.date, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.None);
+
+            if (from_time.Hours <= 12 && to_time.Hours >= 13)
+            {
+                return ((to_time - from_time - TimeSpan.Parse("01:00:00")).Hours >= 1 ? (to_time - from_time - TimeSpan.Parse("01:00:00")).Hours.ToString() + ((to_time - from_time - TimeSpan.Parse("01:00:00")).Minutes > 1 ? ":" + (to_time - from_time - TimeSpan.Parse("01:00:00")).Minutes.ToString() + " ชม." : " ชม.") : (to_time - from_time - TimeSpan.Parse("01:00:00")).Minutes.ToString() + " นาที") + ((event_date.GetDayIntOfWeek() >= 2 && event_date.GetDayIntOfWeek() <= 6) && (from_time.Equals(TimeSpan.Parse("08:30:00")) && to_time.Equals(TimeSpan.Parse("17:30:00"))) ? "(เต็มวัน)" : "(" + from_time.ToString().Substring(0, 5) + " - " + to_time.ToString().Substring(0, 5) + ")");
+            }
+            else
+            {
+                return ((to_time - from_time).Hours >= 1 ? (to_time - from_time).Hours.ToString() + ((to_time - from_time).Minutes > 1 ? ":" + (to_time - from_time).Minutes.ToString() + " ชม." : " ชม.") : (to_time - from_time).Minutes.ToString() + " นาที") + ((event_date.GetDayIntOfWeek() >= 2 && event_date.GetDayIntOfWeek() <= 6) && (from_time.Equals(TimeSpan.Parse("08:30:00")) && to_time.Equals(TimeSpan.Parse("17:30:00"))) ? "(เต็มวัน)" : "(" + from_time.ToString().Substring(0, 5) + " - " + to_time.ToString().Substring(0, 5) + ")");
             }
         }
     }

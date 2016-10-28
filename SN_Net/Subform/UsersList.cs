@@ -14,6 +14,15 @@ using Newtonsoft.Json;
 
 namespace SN_Net.Subform
 {
+    public enum USER_LEVEL : int
+    {
+        SUPPORT = 0,
+        SALES = 1,
+        ACCOUNT = 2,
+        SUPERVISOR = 8,
+        ADMIN = 9
+    }
+
     public partial class UsersList : Form
     {
         private List<Users> users;
@@ -459,6 +468,21 @@ namespace SN_Net.Subform
                 }
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        public static List<Users> GetUsers()
+        {
+            CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_all");
+            ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(get.data);
+            return sr.users;
+            //if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            //{
+            //    return sr.users;
+            //}
+            //else
+            //{
+            //    return new List<Users>();
+            //}
         }
     }
 }

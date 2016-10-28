@@ -21,6 +21,7 @@ namespace SN_Net.Subform
         public MainForm main_form;
         public GlobalVar G;
         public List<Serial> serial_id_list;
+        //public int macloud_exp_prd = 0;
 
 
         #region declare Data Model
@@ -33,6 +34,7 @@ namespace SN_Net.Subform
         public List<Problem> problem;
         public List<Problem> problem_im_only;
         public List<Ma> ma;
+        public List<CloudSrv> cloudsrv;
 
         private List<Problem> problem_not_found = new List<Problem>();
 
@@ -1980,6 +1982,7 @@ namespace SN_Net.Subform
                     this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
                     this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                     this.ma = sr.ma;
+                    this.cloudsrv = sr.cloudsrv;
                 }
             }
             else
@@ -2000,6 +2003,7 @@ namespace SN_Net.Subform
                     this.problem = (sr.problem.Count > 0 ? sr.problem : this.problem_not_found);
                     this.problem_im_only = (sr.problem.Count > 0 ? sr.problem.Where<Problem>(t => t.probcod == "IM").ToList<Problem>() : this.problem_not_found);
                     this.ma = sr.ma;
+                    this.cloudsrv = sr.cloudsrv;
                 }
                 else
                 {
@@ -2058,7 +2062,25 @@ namespace SN_Net.Subform
             this.maDateFrom.Texts = (this.ma.Count > 0 ? this.ma[0].start_date.M2WDate() : "  /  /  ");
             this.maDateTo.Texts = (this.ma.Count > 0 ? this.ma[0].end_date.M2WDate() : "  /  /  ");
             this.maEmail.Texts = (this.ma.Count > 0 ? this.ma[0].email : "");
-
+            this.cloudDateFrom.Texts = (this.cloudsrv.Count > 0 ? this.cloudsrv[0].start_date.M2WDate() : "  /  /  ");
+            this.cloudDateTo.Texts = (this.cloudsrv.Count > 0 ? this.cloudsrv[0].end_date.M2WDate() : "  /  /  ");
+            this.cloudEmail.Texts = (this.cloudsrv.Count > 0 ? this.cloudsrv[0].email : "");
+            if (this.ma.Count > 0)
+            {
+                this.lblMAExpireWarning.Visible = ((DateTime.Parse(this.ma.First().end_date, CultureInfo.GetCultureInfo("en-US")) - DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"))).TotalDays > 30 ? false : true);
+            }
+            else
+            {
+                this.lblMAExpireWarning.Visible = false;
+            }
+            if (this.cloudsrv.Count > 0)
+            {
+                this.lblCloudExpireWarning.Visible = ((DateTime.Parse(this.cloudsrv.First().end_date, CultureInfo.GetCultureInfo("en-US")) - DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"))).TotalDays > 30 ? false : true);
+            }
+            else
+            {
+                this.lblCloudExpireWarning.Visible = false;
+            }
             #endregion Fill first tab data
 
             #region Fill second tab data
@@ -3769,6 +3791,17 @@ namespace SN_Net.Subform
                 this.btnSupportNote.PerformClick();
                 return true;
             }
+            if (keyData == (Keys.Control | Keys.Alt | Keys.M))
+            {
+                //MessageBox.Show("Control + Alt. + M");
+                this.toolStripInquiryMA.PerformClick();
+            }
+            if (keyData == (Keys.Control | Keys.Alt | Keys.C))
+            {
+                //MessageBox.Show("Control + Alt. + C");
+                this.toolStripInquiryCloud.PerformClick();
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -4004,6 +4037,100 @@ namespace SN_Net.Subform
             if (this.main_form.supportnote_wind != null)
             {
                 this.main_form.supportnote_wind.Close();
+            }
+        }
+
+        private void btnEditCloud_Click(object sender, EventArgs e)
+        {
+            CloudSrv cs = this.cloudsrv.Count > 0 ? this.cloudsrv.First() : null;
+
+            CloudsrvFormDialog csf = new CloudsrvFormDialog(this, cs);
+            if (csf.ShowDialog() == DialogResult.OK)
+            {
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
+                {
+                    this.getSerial(this.serial.id);
+                };
+                worker.RunWorkerCompleted += delegate
+                {
+                    this.fillSerialInForm();
+                };
+                worker.RunWorkerAsync();
+            }
+        }
+
+        private void btnDeleteCloud_Click(object sender, EventArgs e)
+        {
+            this.DeleteCloudSrv();
+        }
+
+        private void DeleteCloudSrv()
+        {
+            if (this.cloudsrv.Count == 0)
+                return;
+
+            if (MessageAlert.Show("ลบข้อมูลบริการ Express on Cloud, ทำต่อ?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.Cancel)
+                return;
+
+
+            bool delete_success = false;
+            string err_msg = "";
+
+            this.FormProcessing();
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += delegate
+            {
+                CRUDResult delete = ApiActions.DELETE(PreferenceForm.API_MAIN_URL() + "cloudsrv/delete&id=" + this.cloudsrv[0].id.ToString());
+                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(delete.data);
+
+                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+                {
+                    delete_success = true;
+                }
+                else
+                {
+                    delete_success = false;
+                    err_msg = sr.message;
+                }
+            };
+            worker.RunWorkerCompleted += delegate
+            {
+                if (delete_success)
+                {
+                    this.cloudsrv.RemoveAll(t => t.id > -1);
+                    this.fillSerialInForm();
+                    this.FormRead();
+                }
+                else
+                {
+                    if (MessageAlert.Show(err_msg, "Error", MessageAlertButtons.RETRY_CANCEL, MessageAlertIcons.ERROR) == DialogResult.Retry)
+                    {
+                        this.DeleteCloudSrv();
+                    }
+                    this.FormRead();
+                }
+            };
+            worker.RunWorkerAsync();
+        }
+
+        private void toolStripInquiryMA_Click(object sender, EventArgs e)
+        {
+            InquiryMaAndCloud im = new InquiryMaAndCloud(this, INQUIRY_SERVICE_TYPE.MA);
+            if (im.ShowDialog() == DialogResult.OK)
+            {
+                this.getSerial(im.selected_id);
+                this.fillSerialInForm();
+            }
+        }
+
+        private void toolStripInquiryCloud_Click(object sender, EventArgs e)
+        {
+            InquiryMaAndCloud im = new InquiryMaAndCloud(this, INQUIRY_SERVICE_TYPE.CLOUD);
+            if (im.ShowDialog() == DialogResult.OK)
+            {
+                this.getSerial(im.selected_id);
+                this.fillSerialInForm();
             }
         }
     }
