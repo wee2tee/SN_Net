@@ -21,6 +21,7 @@ namespace SN_Net.Subform
         private MainForm main_form;
         private int year;
         private int month;
+        public DateTime current_date = DateTime.Now;
         private enum MONTH : int
         {
             มกราคม = 1,
@@ -127,7 +128,7 @@ namespace SN_Net.Subform
                     var trainer = training_cal.Where(t => t.date == first_date.AddDays(increase_date).ToString("yyyy-MM-dd", CultureInfo.GetCultureInfo("en-US"))).ToList();
                     //var note = note_cal;
 
-                    CustomDateEvent2 de = new CustomDateEvent2(this.main_form, first_date.AddDays(increase_date), this.month, absent_list, absent_cause, trainer, note, users_list, max_leave);
+                    CustomDateEvent2 de = new CustomDateEvent2(this.main_form, this, first_date.AddDays(increase_date), this.month, absent_list, absent_cause, trainer, note, users_list, max_leave);
                     this.tableLayoutPanel1.Controls.Add(de, j, i);
                     increase_date++;
                 }
@@ -206,6 +207,22 @@ namespace SN_Net.Subform
             else
             {
                 this.main_form.usersgroup_wind.Activate();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            this.main_form.calendar_wind = null;
+            base.OnClosing(e);
+        }
+
+        private void btnYearlyHoliday_Click(object sender, EventArgs e)
+        {
+            YearSelectDialog ys = new YearSelectDialog(DateTime.Now.Year);
+            if (ys.ShowDialog() == DialogResult.OK)
+            {
+                YearlyHolidayDialog yh = new YearlyHolidayDialog(ys.selected_year);
+                yh.ShowDialog();
             }
         }
     }

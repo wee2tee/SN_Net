@@ -102,7 +102,7 @@ namespace SN_Net.Subform
             this.BindingControlEvent();
 
             //this.groupBox1.Text = this.cde.Date.ThaiDayOfWeek() + " ที่ " + this.cde.Date.ToString("d MMMM yyyy", cinfo_th);
-            this.groupBox1.Text = this.cde.date.ThaiDayOfWeek() + " ที่ " + this.cde.date.ToString("d MMMM yyyy", cinfo_th);
+            this.groupBox1.Text = this.cde.date.Value.ThaiDayOfWeek() + " ที่ " + this.cde.date.Value.ToString("d MMMM yyyy", cinfo_th);
 
             #region Load users_list from server
             CRUDResult get_user = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "users/get_all");
@@ -280,7 +280,7 @@ namespace SN_Net.Subform
                         MenuItem m_copy = new MenuItem("คัดลอกไปยังวันที่ ... <Alt+C>");
                         m_copy.Click += delegate
                         {
-                            DateSelectorDialog ds = new DateSelectorDialog(this.cde.date);
+                            DateSelectorDialog ds = new DateSelectorDialog(this.cde.date.Value);
                             if (ds.ShowDialog() == DialogResult.OK)
                             {
                                 this.DoCopy(ds.selected_date, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);
@@ -654,7 +654,7 @@ namespace SN_Net.Subform
                             ct.RefreshView();
                         }
                     }
-                    if (this.cde.date.ToDMYDateValue() == date.ToDMYDateValue())
+                    if (this.cde.date.Value.ToDMYDateValue() == date.ToDMYDateValue())
                     {
                         this.FillDataGrid();
                         this.dgv.Rows[this.cde.absent_list.ExtractToEventCalendar().FindIndex(t => t.id == inserted_id)].Cells[1].Selected = true;
@@ -757,7 +757,7 @@ namespace SN_Net.Subform
             inline_to_time.BorderStyle = BorderStyle.None;
             inline_to_time.Show_Second = false;
             this.dgv.Parent.Controls.Add(inline_to_time);
-            inline_to_time.Time = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).to_time.TimeString2DateTime() : (this.cde.date.GetDayIntOfWeek() == 7 ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 00, 0) : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0)));
+            inline_to_time.Time = (this.form_mode == FORM_MODE.EDIT_ITEM ? ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).to_time.TimeString2DateTime() : (this.cde.date.Value.GetDayIntOfWeek() == 7 ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 00, 0) : new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0)));
 
             CustomComboBox inline_status = new CustomComboBox();
             inline_status.Name = "inline_status";
@@ -1162,7 +1162,7 @@ namespace SN_Net.Subform
                 string description = (type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.txtHoliday.Texts : "");
                 this.FormProcessing();
 
-                string json_data = "{\"date\":\"" + this.cde.date.ToMysqlDate() + "\",";
+                string json_data = "{\"date\":\"" + this.cde.date.Value.ToMysqlDate() + "\",";
                 json_data += "\"type\":\"" + type.ToString() + "\",";
                 json_data += "\"description\":\"" + description + "\",";
                 json_data += "\"group_maid\":\"" + ((ComboboxItem)this.cbGroupMaid.comboBox1.SelectedItem).string_value + "\",";
@@ -1343,7 +1343,7 @@ namespace SN_Net.Subform
                 ev.id = ((EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag).id;
             }
 
-            ev.date = this.cde.date.ToMysqlDate();
+            ev.date = this.cde.date.Value.ToMysqlDate();
             if (this.dgv.Parent.Controls.Find("inline_users_name", true).Length > 0)
             {
                 ev.users_name = ((ComboboxItem)((CustomComboBox)this.dgv.Parent.Controls.Find("inline_users_name", true)[0]).comboBox1.SelectedItem).string_value;
@@ -1517,7 +1517,7 @@ namespace SN_Net.Subform
 
                     if (this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag is EventCalendar)
                     {
-                        DateSelectorDialog ds = new DateSelectorDialog(this.cde.date);
+                        DateSelectorDialog ds = new DateSelectorDialog(this.cde.date.Value);
                         if (ds.ShowDialog() == DialogResult.OK)
                         {
                             this.DoCopy(ds.selected_date, (EventCalendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Tag);

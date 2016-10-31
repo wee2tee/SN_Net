@@ -70,7 +70,7 @@ namespace SN_Net.Subform
         {
             InitializeComponent();
             this.date_event2 = date_event;
-            this.current_event_date = date_event.date;
+            this.current_event_date = date_event.date.Value;
         }
 
         private void TrainingExpertWindow_Load(object sender, EventArgs e)
@@ -1142,7 +1142,7 @@ namespace SN_Net.Subform
                     {
                         if (ct.GetType() == typeof(CustomDateEvent2))
                         {
-                            if (((CustomDateEvent2)ct).date.ToDMYDateValue() == date.ToDMYDateValue())
+                            if (((CustomDateEvent2)ct).date.Value.ToDMYDateValue() == date.ToDMYDateValue())
                             {
                                 ((CustomDateEvent2)ct).RefreshData();
                                 ((CustomDateEvent2)ct).RefreshView();

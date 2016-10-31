@@ -557,6 +557,18 @@
     <Compile Include="Subform\UsersList.Designer.cs">
       <DependentUpon>UsersList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\YearlyHolidayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\YearlyHolidayDialog.Designer.cs">
+      <DependentUpon>YearlyHolidayDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subform\YearSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\YearSelectDialog.Designer.cs">
+      <DependentUpon>YearSelectDialog.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -775,6 +787,12 @@
     <EmbeddedResource Include="Subform\UsersList.resx">
       <DependentUpon>UsersList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Subform\YearlyHolidayDialog.resx">
+      <DependentUpon>YearlyHolidayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\YearSelectDialog.resx">
+      <DependentUpon>YearSelectDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -869,6 +887,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <None Include="Resources\Holiday.png" />
     <None Include="Resources\menu.png" />
     <None Include="Resources\plus1.png" />
     <None Include="Resources\save2.png" />
