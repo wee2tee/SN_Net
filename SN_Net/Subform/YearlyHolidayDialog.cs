@@ -46,6 +46,8 @@ namespace SN_Net.Subform
 
             this.dgv.DataSource = this.bs;
             this.dgv.DefaultCellStyle.FormatProvider = CultureInfo.GetCultureInfo("th-TH");
+
+            this.btnAdd.Enabled = this.main_form.G.loged_in_user_level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
         }
 
         public static List<NoteCalendar> GetNoteCalendarList(int year)
@@ -183,8 +185,8 @@ namespace SN_Net.Subform
 
             if (((DataGridView)sender).Rows.Count > 0 && ((DataGridView)sender).Rows[((DataGridView)sender).CurrentCell.RowIndex].Cells["colNoteCalendar"].Value.GetType() == typeof(NoteCalendar))
             {
-                this.btnEdit.Enabled = true;
-                this.btnDelete.Enabled = true;
+                this.btnEdit.Enabled = this.main_form.G.loged_in_user_level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+                this.btnDelete.Enabled = this.main_form.G.loged_in_user_level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             }
             else
             {
