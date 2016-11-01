@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Data;
 using System.Reflection;
+using SN_Net.ViewModels;
 
 namespace SN_Net.MiscClass
 {
@@ -566,6 +567,29 @@ namespace SN_Net.MiscClass
             {
                 return ((to_time - from_time).Hours >= 1 ? (to_time - from_time).Hours.ToString() + ((to_time - from_time).Minutes > 1 ? ":" + (to_time - from_time).Minutes.ToString() + " ชม." : " ชม.") : (to_time - from_time).Minutes.ToString() + " นาที") + ((event_date.GetDayIntOfWeek() >= 2 && event_date.GetDayIntOfWeek() <= 6) && (from_time.Equals(TimeSpan.Parse("08:30:00")) && to_time.Equals(TimeSpan.Parse("17:30:00"))) ? "(เต็มวัน)" : "(" + from_time.ToString().Substring(0, 5) + " - " + to_time.ToString().Substring(0, 5) + ")");
             }
+        }
+
+        public static List<NoteCalendarVM> ToHolidayViewModel(this List<NoteCalendar> note_list)
+        {
+            List<NoteCalendarVM> note = new List<NoteCalendarVM>();
+
+            int count = 0;
+            foreach (var n in note_list)
+            {
+                if (n.type == (int)NoteCalendar.NOTE_TYPE.WEEKDAY) // skip if it's normal weekday
+                    continue;
+
+                note.Add(new NoteCalendarVM // add holiday to list
+                {
+                    noteCalendar = n,
+                    seq = ++count,
+                    date = n.date,
+                    description = n.description,
+                    rec_by = n.rec_by
+                });
+            }
+
+            return note;
         }
     }
 }

@@ -221,8 +221,24 @@ namespace SN_Net.Subform
             YearSelectDialog ys = new YearSelectDialog(DateTime.Now.Year);
             if (ys.ShowDialog() == DialogResult.OK)
             {
-                YearlyHolidayDialog yh = new YearlyHolidayDialog(ys.selected_year);
+                YearlyHolidayDialog yh = new YearlyHolidayDialog(this.main_form, this, ys.selected_year);
                 yh.ShowDialog();
+            }
+        }
+
+        public void RefreshAtDate(DateTime date)
+        {
+            foreach (var ct in this.tableLayoutPanel1.Controls)
+            {
+                if (ct.GetType() != typeof(CustomDateEvent2))
+                    continue;
+
+                CustomDateEvent2 de = ct as CustomDateEvent2;
+                if (de.date.HasValue && de.date.Value == date)
+                {
+                    de.RefreshData();
+                    de.RefreshView();
+                }
             }
         }
     }

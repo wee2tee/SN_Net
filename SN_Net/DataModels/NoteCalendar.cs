@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -21,5 +22,13 @@ namespace SN_Net.DataModels
         public string group_weekend { get; set; }
         public int max_leave { get; set; }
         public string rec_by { get; set; }
+
+        public DateTime _Date
+        {
+            get
+            {
+                return DateTime.Parse(this.date, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.None);
+            }
+        }
     }
 }

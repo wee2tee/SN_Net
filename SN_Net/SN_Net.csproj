@@ -557,6 +557,12 @@
     <Compile Include="Subform\UsersList.Designer.cs">
       <DependentUpon>UsersList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Subform\YearlyHolidayAddEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subform\YearlyHolidayAddEditDialog.Designer.cs">
+      <DependentUpon>YearlyHolidayAddEditDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\YearlyHolidayDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -569,6 +575,7 @@
     <Compile Include="Subform\YearSelectDialog.Designer.cs">
       <DependentUpon>YearSelectDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\NoteCalendarVM.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -786,6 +793,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\UsersList.resx">
       <DependentUpon>UsersList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subform\YearlyHolidayAddEditDialog.resx">
+      <DependentUpon>YearlyHolidayAddEditDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\YearlyHolidayDialog.resx">
       <DependentUpon>YearlyHolidayDialog.cs</DependentUpon>
