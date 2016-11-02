@@ -17,7 +17,7 @@ namespace SN_Net.Subform
 
         public YearSelectDialog(int default_year)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             InitializeComponent();
 
             this.selected_year = default_year;

@@ -27,7 +27,7 @@ namespace SN_Net.Subform
 
         public YearlyHolidayDialog(MainForm main_form, Calendar2 calendar, int year)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             InitializeComponent();
 
             this.main_form = main_form;

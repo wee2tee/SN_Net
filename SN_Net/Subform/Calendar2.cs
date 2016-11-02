@@ -40,7 +40,8 @@ namespace SN_Net.Subform
 
         public Calendar2(MainForm main_form)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
             InitializeComponent();
             this.main_form = main_form;
         }
@@ -61,6 +62,8 @@ namespace SN_Net.Subform
             }
             this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => (y - 543) == DateTime.Now.Year).First());
 
+            this.btnRangeLeave.Visible = this.main_form.G.loged_in_user_level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            this.btnUserGroup.Visible = this.main_form.G.loged_in_user_level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             this.btnGo.PerformClick();
         }
 
@@ -75,7 +78,7 @@ namespace SN_Net.Subform
         {
             if (((ToolStripComboBox)sender).Items == null)
                 return;
-            this.year = Convert.ToInt32(((ToolStripComboBox)sender).Text) - 543;
+            this.year = Convert.ToInt32(((ToolStripComboBox)sender).Text);
         }
 
         private void btnGo_Click(object sender, EventArgs e)
@@ -141,11 +144,11 @@ namespace SN_Net.Subform
         {
             if (this.month == 1)
             {
-                if (this.year + 543 - 1 < this.cbYear.Items.Cast<int>().Min())
+                if (this.year - 1 < this.cbYear.Items.Cast<int>().Min())
                     return;
 
 
-                this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == this.year + 543 - 1).First());
+                this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == this.year - 1).First());
                 this.cbMonth.SelectedIndex = 11; // set to december
             }
             else
@@ -160,10 +163,10 @@ namespace SN_Net.Subform
         {
             if (this.month == 12)
             {
-                if (this.year + 543 + 1 > this.cbYear.Items.Cast<int>().Max())
+                if (this.year + 1 > this.cbYear.Items.Cast<int>().Max())
                     return;
 
-                this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == this.year + 543 + 1).First());
+                this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == this.year + 1).First());
                 this.cbMonth.SelectedIndex = 0; // set to January
             }
             else

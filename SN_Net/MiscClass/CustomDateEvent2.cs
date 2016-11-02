@@ -39,7 +39,7 @@ namespace SN_Net.MiscClass
 
         public CustomDateEvent2(MainForm main_form, Calendar2 calendar, DateTime date, int current_month, List<AbsentVM> absent_list, List<Istab> absent_cause, List<TrainingCalendar> trainer_list, NoteCalendar note, List<Users> users_list, int max_leave)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             InitializeComponent();
             this.main_form = main_form;
             this.date = date;
