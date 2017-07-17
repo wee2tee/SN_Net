@@ -40,6 +40,9 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnAddTalk = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAddBreak = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripStop = new System.Windows.Forms.ToolStripButton();
@@ -105,11 +108,13 @@
             this.txtDummy = new System.Windows.Forms.TextBox();
             this.dgvNote = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnAddTalk = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAddBreak = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblTalkCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblBreakCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -127,6 +132,10 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripInfo,
+            this.toolStripStatusLabel4,
+            this.lblTalkCount,
+            this.toolStripStatusLabel5,
+            this.lblBreakCount,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel3,
@@ -180,7 +189,7 @@
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcessing.Name = "toolStripProcessing";
             this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(864, 17);
+            this.toolStripProcessing.Size = new System.Drawing.Size(651, 17);
             this.toolStripProcessing.Spring = true;
             this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -206,6 +215,38 @@
             this.toolStrip1.Size = new System.Drawing.Size(1235, 43);
             this.toolStrip1.TabIndex = 31;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAddTalk,
+            this.btnAddBreak});
+            this.btnAdd.Image = global::SN_Net.Properties.Resources.add;
+            this.btnAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(45, 40);
+            this.btnAdd.Text = "เพิ่ม";
+            this.btnAdd.ToolTipText = "เพิ่ม";
+            // 
+            // btnAddTalk
+            // 
+            this.btnAddTalk.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddTalk.Name = "btnAddTalk";
+            this.btnAddTalk.Size = new System.Drawing.Size(136, 22);
+            this.btnAddTalk.Text = "สายสนทนา";
+            this.btnAddTalk.ToolTipText = "เพิ่มบันทึกการสนทนา";
+            this.btnAddTalk.Click += new System.EventHandler(this.btnAddTalk_Click);
+            // 
+            // btnAddBreak
+            // 
+            this.btnAddBreak.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddBreak.Name = "btnAddBreak";
+            this.btnAddBreak.Size = new System.Drawing.Size(136, 22);
+            this.btnAddBreak.Text = "พักสาย";
+            this.btnAddBreak.ToolTipText = "เพิ่มบันทึการพักสาย";
+            this.btnAddBreak.Click += new System.EventHandler(this.btnAddBreak_Click);
             // 
             // toolStripEdit
             // 
@@ -1027,37 +1068,33 @@
             this.dgvNote.StandardTab = true;
             this.dgvNote.TabIndex = 5;
             // 
-            // btnAdd
+            // toolStripStatusLabel4
             // 
-            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAddTalk,
-            this.btnAddBreak});
-            this.btnAdd.Image = global::SN_Net.Properties.Resources.add;
-            this.btnAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(45, 40);
-            this.btnAdd.Text = "เพิ่ม";
-            this.btnAdd.ToolTipText = "เพิ่ม";
+            this.toolStripStatusLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(82, 17);
+            this.toolStripStatusLabel4.Text = "รวมสายสนทนา : ";
             // 
-            // btnAddTalk
+            // lblTalkCount
             // 
-            this.btnAddTalk.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnAddTalk.Name = "btnAddTalk";
-            this.btnAddTalk.Size = new System.Drawing.Size(152, 22);
-            this.btnAddTalk.Text = "สายสนทนา";
-            this.btnAddTalk.ToolTipText = "เพิ่มบันทึกการสนทนา";
-            this.btnAddTalk.Click += new System.EventHandler(this.btnAddTalk_Click);
+            this.lblTalkCount.BackColor = System.Drawing.Color.Transparent;
+            this.lblTalkCount.Name = "lblTalkCount";
+            this.lblTalkCount.Size = new System.Drawing.Size(13, 17);
+            this.lblTalkCount.Text = "0";
             // 
-            // btnAddBreak
+            // toolStripStatusLabel5
             // 
-            this.btnAddBreak.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnAddBreak.Name = "btnAddBreak";
-            this.btnAddBreak.Size = new System.Drawing.Size(152, 22);
-            this.btnAddBreak.Text = "พักสาย";
-            this.btnAddBreak.ToolTipText = "เพิ่มบันทึการพักสาย";
-            this.btnAddBreak.Click += new System.EventHandler(this.btnAddBreak_Click);
+            this.toolStripStatusLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(74, 17);
+            this.toolStripStatusLabel5.Text = " , รวมพักสาย : ";
+            // 
+            // lblBreakCount
+            // 
+            this.lblBreakCount.BackColor = System.Drawing.Color.Transparent;
+            this.lblBreakCount.Name = "lblBreakCount";
+            this.lblBreakCount.Size = new System.Drawing.Size(13, 17);
+            this.lblBreakCount.Text = "0";
             // 
             // SupportStatWindow
             // 
@@ -1081,6 +1118,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -1176,5 +1214,9 @@
         private System.Windows.Forms.ToolStripDropDownButton btnAdd;
         private System.Windows.Forms.ToolStripMenuItem btnAddTalk;
         private System.Windows.Forms.ToolStripMenuItem btnAddBreak;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel lblTalkCount;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
+        private System.Windows.Forms.ToolStripStatusLabel lblBreakCount;
     }
 }

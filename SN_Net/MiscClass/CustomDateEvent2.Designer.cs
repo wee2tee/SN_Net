@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv = new System.Windows.Forms.DataGridView();
@@ -47,6 +48,7 @@
             this.btnDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.lblBottomText = new System.Windows.Forms.Label();
             this.lblNoteDescription = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -324,5 +326,6 @@
         private System.Windows.Forms.ToolStripButton btnHoliday;
         private System.Windows.Forms.ToolStripButton btnMaid;
         private System.Windows.Forms.Label lblNoteDescription;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

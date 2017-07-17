@@ -85,13 +85,13 @@ namespace SN_Net.Subform
         {
             this.tableLayoutPanel1.Visible = false;
 
-            DateTime first_date = DateTime.Parse(this.year.ToString() + "-" + this.month.ToString() + "-1", CultureInfo.CurrentCulture);
-            int days_in_month = DateTime.DaysInMonth(this.year, this.month);
+            DateTime first_date = DateTime.Parse(this.year.ToString() + "-" + this.month.ToString() + "-1", CultureInfo.GetCultureInfo("th-TH"));
+            int days_in_month = DateTime.DaysInMonth((this.year - 543), this.month);
             DateTime last_date = first_date.AddDays(days_in_month - 1);
             int first_day_of_week = first_date.GetDayIntOfWeek();
 
-            string from_date = DateTime.Parse(this.year.ToString() + "/" + this.month.ToString() + "/1", CultureInfo.CurrentCulture, DateTimeStyles.None).ToMysqlDate();
-            string to_date = DateTime.Parse(this.year.ToString() + "/" + this.month.ToString() + "/" + days_in_month.ToString(), CultureInfo.CurrentCulture, DateTimeStyles.None).ToMysqlDate();
+            string from_date = DateTime.Parse(this.year.ToString() + "/" + this.month.ToString() + "/1", CultureInfo.GetCultureInfo("th-TH"), DateTimeStyles.None).ToMysqlDate();
+            string to_date = DateTime.Parse(this.year.ToString() + "/" + this.month.ToString() + "/" + days_in_month.ToString(), CultureInfo.GetCultureInfo("th-TH"), DateTimeStyles.None).ToMysqlDate();
 
             List<EventCalendar> event_cal;
             List<TrainingCalendar> training_cal;
@@ -191,7 +191,12 @@ namespace SN_Net.Subform
             {
                 MessageAlert.Show("บันทึกข้อมูลเรียบร้อย", "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
 
-                if ((wind.dtDateStart.Value.Year == this.year && wind.dtDateStart.Value.Month == this.month) || (wind.dtDateEnd.Value.Year == this.year && wind.dtDateEnd.Value.Month == this.month))
+                //Console.WriteLine(" .. >> wind.dtDateStart.Value.Year : " + wind.dtDateStart.Value.Year);
+                //Console.WriteLine(" .. >>> this.year : " + this.year);
+                //Console.WriteLine(" .. >> wind.dtDateStart.Value.Month : " + wind.dtDateStart.Value.Month);
+                //Console.WriteLine(" .. >>> this.month : " + this.month);
+
+                if ((wind.dtDateStart.Value.Year == (this.year - 543) && wind.dtDateStart.Value.Month == this.month) || (wind.dtDateEnd.Value.Year == (this.year - 543) && wind.dtDateEnd.Value.Month == this.month))
                 {
                     //this.LoadCalendar(this.curr_month, this.curr_year);
                     this.btnGo.PerformClick();

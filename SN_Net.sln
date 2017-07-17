@@ -1,16 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SN_Net", "SN_Net\SN_Net.csproj", "{45A70A4C-942D-4364-8B7D-DF2F0F5977C0}"
-EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "SetupSNNet", "SetupSNNet\SetupSNNet.isproj", "{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{45A70A4C-942D-4364-8B7D-DF2F0F5977C0} = {45A70A4C-942D-4364-8B7D-DF2F0F5977C0}
-	EndProjectSection
-EndProject
-Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Setup_SNNet", "Setup_SNNet\Setup_SNNet.aiproj", "{FDFA3432-C700-42FF-84B9-5020FFAB7641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,26 +24,6 @@ Global
 		{45A70A4C-942D-4364-8B7D-DF2F0F5977C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45A70A4C-942D-4364-8B7D-DF2F0F5977C0}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{45A70A4C-942D-4364-8B7D-DF2F0F5977C0}.SingleImage|Any CPU.Build.0 = Release|Any CPU
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.CD_ROM|Any CPU.Build.0 = CD_ROM
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.Debug|Any CPU.ActiveCfg = DVD-5
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.Debug|Any CPU.Build.0 = DVD-5
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.DVD-5|Any CPU.ActiveCfg = DVD-5
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.DVD-5|Any CPU.Build.0 = DVD-5
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.Release|Any CPU.ActiveCfg = SingleImage
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.Release|Any CPU.Build.0 = SingleImage
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.SingleImage|Any CPU.ActiveCfg = SingleImage
-		{85F971C2-CF7E-4BD4-8814-1E7B6F77BAA5}.SingleImage|Any CPU.Build.0 = SingleImage
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.CD_ROM|Any CPU.ActiveCfg = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.CD_ROM|Any CPU.Build.0 = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.Debug|Any CPU.ActiveCfg = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.Debug|Any CPU.Build.0 = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.DVD-5|Any CPU.ActiveCfg = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.DVD-5|Any CPU.Build.0 = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.Release|Any CPU.ActiveCfg = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.Release|Any CPU.Build.0 = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.SingleImage|Any CPU.ActiveCfg = All
-		{FDFA3432-C700-42FF-84B9-5020FFAB7641}.SingleImage|Any CPU.Build.0 = All
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

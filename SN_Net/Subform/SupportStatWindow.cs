@@ -1076,6 +1076,8 @@ namespace SN_Net.Subform
                 this.dgvNote.Rows.Cast<DataGridViewRow>().Where(r => ((SupportNote)r.Cells[0].Value).id == selected_row_id).First<DataGridViewRow>().Cells[3].Selected = true;
             }
 
+            this.lblTalkCount.Text = this.note_list.Where(n => n.is_break != "Y").Count().ToString();
+            this.lblBreakCount.Text = this.note_list.Where(n => n.is_break == "Y").Count().ToString();
         }
 
         private void SetRowBackground(DataGridViewRow row)

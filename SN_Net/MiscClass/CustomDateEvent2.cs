@@ -148,8 +148,8 @@ namespace SN_Net.MiscClass
                     {
                         this.btnHoliday.Text = this.note.group_weekend;
                         this.btnMaid.Text = this.note.group_maid;
-                        this.btnHoliday.Visible = true;
-                        this.btnMaid.Visible = true;
+                        this.btnHoliday.Visible = this.note.group_weekend.Trim().Length > 0 ? true : false;
+                        this.btnMaid.Visible = this.note.group_maid.Trim().Length > 0 ? true : false;
                     }
                 }
                 else
@@ -174,6 +174,7 @@ namespace SN_Net.MiscClass
             }
             bottom_text += this.trainer_list.Count > 0 ? ")" : "";
             this.lblBottomText.Text = bottom_text;
+            this.toolTip1.SetToolTip(this.lblBottomText, this.lblBottomText.Text);
             
             // Fill a datagrid
             this.FillDataGrid();
