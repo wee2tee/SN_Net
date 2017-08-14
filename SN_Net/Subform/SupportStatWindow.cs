@@ -121,14 +121,14 @@ namespace SN_Net.Subform
             this.dgvNote.Columns[8].Width = 65;
             this.dgvNote.Columns[9].Width = 120;
             this.dgvNote.Columns[10].Width = 100;
-            for (int i = 11; i <= 26; i++)
+            for (int i = 11; i <= 27; i++)
             {
                 this.dgvNote.Columns[i].Width = 35;
                 this.dgvNote.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 this.dgvNote.Columns[i].HeaderCell.Style.Font = new Font("Tahoma", 7f);
             }
-            this.dgvNote.Columns[27].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.dgvNote.Columns[28].Visible = false;
+            this.dgvNote.Columns[28].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvNote.Columns[29].Visible = false;
 
             this.dgvNote.Columns[3].HeaderText = "ลำดับ";
             this.dgvNote.Columns[4].HeaderText = "Support#";
@@ -154,7 +154,8 @@ namespace SN_Net.Subform
             this.dgvNote.Columns[24].HeaderText = "วันที่ ไม่อยู่ในงวด";
             this.dgvNote.Columns[25].HeaderText = "Mail รอสาย";
             this.dgvNote.Columns[26].HeaderText = "โอน ฝ่าย ขาย";
-            this.dgvNote.Columns[27].HeaderText = "ปัญหาอื่น ๆ / หมายเหตุ";
+            this.dgvNote.Columns[27].HeaderText = "อื่น ๆ";
+            this.dgvNote.Columns[28].HeaderText = "หมายเหตุ";
 
             foreach (DataGridViewColumn col in this.dgvNote.Columns)
             {
@@ -280,7 +281,7 @@ namespace SN_Net.Subform
                 {
                     e.PaintBackground(e.CellBounds, true);
                     e.PaintContent(e.CellBounds);
-                    if (e.ColumnIndex >= 11 && e.ColumnIndex <= 26)
+                    if (e.ColumnIndex >= 11 && e.ColumnIndex <= 27)
                     {
                         RectangleF summary_bound = new RectangleF(e.CellBounds.X + 1, (e.CellBounds.Y + e.CellBounds.Height) - 18, e.CellBounds.Width - 2, 17);
 
@@ -378,6 +379,11 @@ namespace SN_Net.Subform
                                     if (e.ColumnIndex == 26) // โอนฝ่ายขาย
                                     {
                                         int sum = this.note_list.Where(r => r.transfer_mkt.Length > 0).Count<Note>();
+                                        e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
+                                    }
+                                    if (e.ColumnIndex == 27) // other problem
+                                    {
+                                        int sum = this.note_list.Where(r => r.other.Length > 0).Count<Note>();
                                         e.Graphics.DrawString(sum.ToString(), font, brush, summary_bound, format);
                                     }
                                 }
@@ -956,7 +962,7 @@ namespace SN_Net.Subform
 	            {
                     if (((ComboboxItem)r.Tag).string_value == "*")
                     {
-                        tmp_note = tmp_note.Concat<SupportNote>(support_note.Where(n => n.is_break == "N" && n.problem.Trim().Length == 0).ToList<SupportNote>()).ToList<SupportNote>();
+                        tmp_note = tmp_note.Concat<SupportNote>(support_note.Where(n => n.is_break == "N" && n.remark.Contains("{problem}") /*n.problem.Trim().Length == 0*/).ToList<SupportNote>()).ToList<SupportNote>();
                     }
                     else
                     {
@@ -1012,7 +1018,7 @@ namespace SN_Net.Subform
                 note.duration = snote.duration;
                 note.sernum = snote.sernum;
                 note.contact = (snote.is_break != "Y" ? snote.contact : this.GetReason(snote.reason));
-                note.remark = snote.remark;
+                note.remark = snote.remark.Replace("{problem}", "");
 
                 note.map_drive = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAP_DRIVE.FormatNoteProblem()) ? "\u2713" : "");
                 note.install = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.INSTALL_UPDATE.FormatNoteProblem()) ? "\u2713" : "");
@@ -1030,6 +1036,7 @@ namespace SN_Net.Subform
                 note.period = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()) ? "\u2713" : "");
                 note.mail_wait = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()) ? "\u2713" : "");
                 note.transfer_mkt = (snote.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? "\u2713" : "");
+                note.other = (snote.remark.Contains("{problem}") ? "\u2713" : "");
 
                 this.note_list.Add(note);
             }
@@ -1265,7 +1272,8 @@ namespace SN_Net.Subform
                                 int col21_width = 25; // period
                                 int col22_width = 25; // mail
                                 int col23_width = 25; // transfer -> mkt
-                                int col24_width = 305; // remark
+                                int col24_width = 280; // remark
+                                int col25_width = 25; // other
                                 #endregion declare column width
                                 StringFormat str_format_left = new StringFormat();
                                 str_format_left.Alignment = StringAlignment.Near;
@@ -1455,8 +1463,13 @@ namespace SN_Net.Subform
                                             x_pos += col23_width;
 
                                             pe.Graphics.DrawLine(pen_darkgray, x_pos, y_pos, x_pos, y_pos + 25); // column separator
+                                            Rectangle header_rect25 = new Rectangle(x_pos, y_pos, col25_width, 25);
+                                            pe.Graphics.DrawString("อื่น ๆ", fontsmall, brush, header_rect25, str_format_center);
+                                            x_pos += col25_width;
+
+                                            pe.Graphics.DrawLine(pen_darkgray, x_pos, y_pos, x_pos, y_pos + 25); // column separator
                                             Rectangle header_rect24 = new Rectangle(x_pos, y_pos, col24_width, 25);
-                                            pe.Graphics.DrawString("ปัญหาอื่น ๆ", font, brush, header_rect24, str_format_center);
+                                            pe.Graphics.DrawString("หมายเหตุ", font, brush, header_rect24, str_format_center);
                                             x_pos += col24_width;
                                             pe.Graphics.DrawLine(pen_darkgray, x_pos, y_pos, x_pos, y_pos + 25); // column separator
 
@@ -1621,6 +1634,12 @@ namespace SN_Net.Subform
                                                 pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect23, str_format_center);
                                             x_pos += col23_width;
                                             pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15); // column separator
+
+                                            Rectangle rect25 = new Rectangle(x_pos, y_pos, col25_width, 13);
+                                            if (((Note)content[i]).other.Length > 0)
+                                                pe.Graphics.DrawString(((char)(byte)0xFC).ToString(), font_wingdings, brush, rect25, str_format_center);
+                                            x_pos += col25_width;
+                                            pe.Graphics.DrawLine(p, x_pos, y_pos - 6, x_pos, y_pos + 15); // column separator
                                         }
 
                                         Rectangle rect24 = new Rectangle(x_pos, y_pos, col24_width, 13);
@@ -1690,9 +1709,10 @@ namespace SN_Net.Subform
                                 pe.Graphics.DrawLine(p, 790, y_pos - 12, 790, y_pos + 15);
                                 pe.Graphics.DrawLine(p, 815, y_pos - 12, 815, y_pos + 15);
                                 pe.Graphics.DrawLine(p, 840, y_pos - 12, 840, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 865, y_pos - 12, 865, y_pos + 15);
                                 // draw double horizontal line
-                                pe.Graphics.DrawLine(p, 440, y_pos + 13, 840, y_pos + 13);
-                                pe.Graphics.DrawLine(p, 440, y_pos + 15, 840, y_pos + 15);
+                                pe.Graphics.DrawLine(p, 440, y_pos + 13, 865, y_pos + 13);
+                                pe.Graphics.DrawLine(p, 440, y_pos + 15, 865, y_pos + 15);
 
                                 pe.Graphics.DrawString("รวม", font, brush, new RectangleF(350, y_pos, 80, 15), str_format_right);
                                 pe.Graphics.DrawString(this.note_list.Where(n => n.map_drive.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(440, y_pos, 25, 15), str_format_right);
@@ -1711,6 +1731,7 @@ namespace SN_Net.Subform
                                 pe.Graphics.DrawString(this.note_list.Where(n => n.period.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(765, y_pos, 25, 15), str_format_right);
                                 pe.Graphics.DrawString(this.note_list.Where(n => n.mail_wait.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(790, y_pos, 25, 15), str_format_right);
                                 pe.Graphics.DrawString(this.note_list.Where(n => n.transfer_mkt.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(815, y_pos, 25, 15), str_format_right);
+                                pe.Graphics.DrawString(this.note_list.Where(n => n.other.Length > 0).Count<Note>().ToString(), font, brush, new RectangleF(840, y_pos, 25, 15), str_format_right);
                                 #endregion draw summary data
 
                                 y_pos += 20;
@@ -2390,6 +2411,5 @@ namespace SN_Net.Subform
                 this.GetNote(0, sd.note.date, sd.note.start_time, sd.note.end_time);
             }
         }
-
     }
 }

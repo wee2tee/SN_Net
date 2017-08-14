@@ -885,6 +885,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="eye-256.ico" />
+    <Content Include="Icons\icon-eye.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\Holiday.png" />
     <None Include="Resources\menu.png" />
     <None Include="Resources\plus1.png" />

@@ -773,8 +773,15 @@ namespace SN_Net.Subform
             col22.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col22);
 
+            DataGridViewTextBoxColumn col24 = new DataGridViewTextBoxColumn();
+            col24.HeaderText = "อื่น ๆ";
+            col24.Width = 30;
+            col24.SortMode = DataGridViewColumnSortMode.NotSortable;
+            col24.HeaderCell.Style.Font = new Font("tahoma", 7f);
+            dgvNote.Columns.Add(col24);
+
             DataGridViewTextBoxColumn col23 = new DataGridViewTextBoxColumn();
-            col23.HeaderText = "ปัญหาอื่น ๆ";
+            col23.HeaderText = "หมายเหตุ";
             col23.SortMode = DataGridViewColumnSortMode.NotSortable;
             col23.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgvNote.Columns.Add(col23);
@@ -958,14 +965,20 @@ namespace SN_Net.Subform
                 dgvNote.Rows[r].Cells[24].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 //dgvNote.Rows[r].Cells[24].Style.Font = f;
                 dgvNote.Rows[r].Cells[24].Value = (note.problem.Contains(SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()) ? "\u2713" : "");
-                //}
 
+                dgvNote.Rows[r].Cells[25].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvNote.Rows[r].Cells[25].ValueType = typeof(string);
-                dgvNote.Rows[r].Cells[25].Style.ForeColor = (note.is_break != "Y" ? Color.Black : Color.Gray);
-                dgvNote.Rows[r].Cells[25].Style.SelectionForeColor = (note.is_break != "Y" ? Color.Black : Color.Gray);
                 dgvNote.Rows[r].Cells[25].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
                 dgvNote.Rows[r].Cells[25].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
-                dgvNote.Rows[r].Cells[25].Value = note.remark;
+                //dgvNote.Rows[r].Cells[24].Style.Font = f;
+                dgvNote.Rows[r].Cells[25].Value = (note.remark.Contains("{problem}") ? "\u2713" : "");
+
+                dgvNote.Rows[r].Cells[26].ValueType = typeof(string);
+                dgvNote.Rows[r].Cells[26].Style.ForeColor = (note.is_break != "Y" ? Color.Black : Color.Gray);
+                dgvNote.Rows[r].Cells[26].Style.SelectionForeColor = (note.is_break != "Y" ? Color.Black : Color.Gray);
+                dgvNote.Rows[r].Cells[26].Style.BackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
+                dgvNote.Rows[r].Cells[26].Style.SelectionBackColor = (note.is_break != "Y" ? Color.White : ColorResource.DISABLE_ROW_BACKGROUND);
+                dgvNote.Rows[r].Cells[26].Value = note.remark.Replace("{problem}", "");
             }
             //dgvNote.DrawLineEffect();
             dgvNote.DrawDgvRowBorder();
@@ -1061,6 +1074,7 @@ namespace SN_Net.Subform
             this.chStock.Enabled = false;
             this.chTraining.Enabled = false;
             this.chYearEnd.Enabled = false;
+            this.chOther.Enabled = false;
             this.txtRemark.Enabled = false;
             this.btnViewNote.Enabled = true;
             this.btnViewDetail.Enabled = false;
@@ -1114,6 +1128,8 @@ namespace SN_Net.Subform
             this.chStock.Enabled = true;
             this.chTraining.Enabled = true;
             this.chYearEnd.Enabled = true;
+            this.chOther.Enabled = true;
+            this.chOther.Checked = false;
             this.txtRemark.Enabled = true;
             this.btnViewNote.Enabled = false;
             this.btnViewPassword.Enabled = false;
@@ -1167,6 +1183,7 @@ namespace SN_Net.Subform
             this.chStock.Enabled = true;
             this.chTraining.Enabled = true;
             this.chYearEnd.Enabled = true;
+            this.chOther.Enabled = true;
             this.txtRemark.Enabled = true;
             this.btnViewNote.Enabled = false;
             this.btnMA.Enabled = (this.ma != null ? true : false);
@@ -1483,6 +1500,8 @@ namespace SN_Net.Subform
                     this.txtRemark.Text = this.note.remark;
                     this.txtContact.Texts = this.note.contact;
                     this.CheckedProblem(this.note.problem);
+                    this.chOther.Checked = this.note.remark.Contains("{problem}") ? true : false;
+                    this.txtRemark.Text = this.note.remark.Replace("{problem}", "");
                     this.txtContact.Focus();
 
                     if (this.txtSernum.Texts.Replace("-", "").Trim().Length > 0)
@@ -1709,6 +1728,13 @@ namespace SN_Net.Subform
 
         private void SubmitAdd()
         {
+            if(this.chOther.Checked && this.txtRemark.Text.Trim().Length == 0)
+            {
+                MessageAlert.Show("กรุณาป้อนปัญหาอื่น ๆ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                this.txtRemark.Focus();
+                return;
+            }
+
             this.FormProcessing();
             bool post_success = false;
             string err_msg = "";
@@ -1721,7 +1747,7 @@ namespace SN_Net.Subform
             json_data += "\"end_time\":\"" + this.dtEndTime.Text + "\",";
             json_data += "\"duration\":\"" + ts.ToString().Substring(0, 8) + "\",";
             json_data += "\"problem\":\"" + this.GetProblemString() +"\",";
-            json_data += "\"remark\":\"" + this.txtRemark.Text.cleanString() + "\",";
+            json_data += "\"remark\":\"" + (this.chOther.Checked ? "{problem}" : "") + this.txtRemark.Text.cleanString() + "\",";
             json_data += "\"also_f8\":\"" + this.chAlsoF8.CheckState.ToYesOrNoString() + "\",";
             json_data += "\"probcod\":\"" + ((ComboboxItem)this.cbProbcod.SelectedItem).string_value + "\",";
             json_data += "\"is_break\":\"N\",";
@@ -1778,6 +1804,13 @@ namespace SN_Net.Subform
 
         private void SubmitEdit()
         {
+            if (this.chOther.Checked && this.txtRemark.Text.Trim().Length == 0)
+            {
+                MessageAlert.Show("กรุณาป้อนปัญหาอื่น ๆ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                this.txtRemark.Focus();
+                return;
+            }
+
             this.FormProcessing();
             bool post_success = false;
             string err_msg = "";
@@ -1787,7 +1820,7 @@ namespace SN_Net.Subform
             json_data += "\"sernum\":\"" + this.txtSernum.Texts.cleanString() + "\",";
             json_data += "\"contact\":\"" + this.txtContact.Texts.cleanString() + "\",";
             json_data += "\"problem\":\"" + this.GetProblemString() + "\",";
-            json_data += "\"remark\":\"" + this.txtRemark.Text.cleanString() + "\",";
+            json_data += "\"remark\":\"" + (this.chOther.Checked ? "{problem}" : "") + this.txtRemark.Text.cleanString() + "\",";
             json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\",";
             json_data += "\"also_f8\":\"" + this.chAlsoF8.CheckState.ToYesOrNoString() + "\",";
             json_data += "\"probcod\":\"" + (this.cbProbcod.SelectedItem != null ? ((ComboboxItem)this.cbProbcod.SelectedItem).string_value : "") + "\",";
@@ -2616,6 +2649,39 @@ namespace SN_Net.Subform
             ma.maEmail.Read_Only = true;
 
             ma.ShowDialog();
+        }
+
+        private void chOther_CheckedChanged(object sender, EventArgs e)
+        {
+            //if (((CheckBox)sender).Checked)
+            //{
+            //    this.txtRemark.ReadOnly = false;
+            //    this.txtRemark.Focus();
+            //}
+            //else
+            //{
+            //    if(this.txtRemark.Text.Trim().Length > 0)
+            //    {
+            //        if (MessageAlert.Show("ลบปัญหาอื่น ๆ ที่ป้อนไว้, ทำต่อหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+            //        {
+            //            ((CheckBox)sender).Checked = true;
+            //            return;
+            //        }
+            //    }
+
+            //    this.txtRemark.ReadOnly = true;
+            //    this.txtRemark.Text = string.Empty;
+            //}
+        }
+
+        private void txtRemark_DoubleClick(object sender, EventArgs e)
+        {
+            //if (((TextBox)sender).ReadOnly)
+            //{
+            //    this.chOther.Checked = true;
+            //    ((TextBox)sender).ReadOnly = false;
+            //    ((TextBox)sender).Focus();
+            //}
         }
     }
 }

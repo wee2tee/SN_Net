@@ -193,6 +193,7 @@ namespace SN_Net.Subform
             this.rbHoliday.Checked = (this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? true : false);
             this.rbWeekday.Checked = ((this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.WEEKDAY) || this.cde.note == null ? true : false);
             this.txtHoliday.Texts = (this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? this.cde.note.description : "");
+            this.txtRemark.Texts = (this.cde.note != null && ((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.WEEKDAY ? this.cde.note.description : "");
             if (this.cde.note != null)
             {
                 this.cbGroupMaid.comboBox1.SelectedItem = (((NoteCalendar)this.cde.note).type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY ? this.cbGroupMaid.comboBox1.Items[0] : (this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note.group_maid).Count<ComboboxItem>() > 0 ? this.cbGroupMaid.comboBox1.Items.Cast<ComboboxItem>().Where(i => i.Tag != null).Where(i => ((Istab)i.Tag).typcod == this.cde.note.group_maid).First<ComboboxItem>() : this.cbGroupMaid.comboBox1.Items[0]));
@@ -306,6 +307,7 @@ namespace SN_Net.Subform
             ct.Add(this.txtHoliday.label1);
             ct.Add(this.cbGroupMaid.label1);
             ct.Add(this.cbGroupWeekend.label1);
+            ct.Add(this.txtRemark.label1);
             ct.Add(this.leaveMax);
             foreach (Control c in ct)
             {
@@ -334,12 +336,14 @@ namespace SN_Net.Subform
                     this.cbGroupWeekend.Read_Only = false;
                     this.cbGroupMaid.Read_Only = false;
                     this.leaveMax.Enabled = true;
+                    this.txtRemark.Read_Only = false;
                 }
                 else
                 {
                     this.cbGroupWeekend.Read_Only = true;
                     this.cbGroupMaid.Read_Only = true;
                     this.leaveMax.Enabled = false;
+                    this.txtRemark.Read_Only = true;
                 }
             };
 
@@ -363,12 +367,15 @@ namespace SN_Net.Subform
                     this.cbGroupWeekend.Read_Only = false;
                     this.cbGroupMaid.Read_Only = false;
                     this.leaveMax.Enabled = true;
+                    this.txtRemark.Read_Only = false;
                 }
                 else
                 {
                     this.cbGroupWeekend.Read_Only = true;
                     this.cbGroupMaid.Read_Only = true;
                     this.leaveMax.Enabled = false;
+                    this.txtRemark.Read_Only = true;
+                    this.txtRemark.Texts = string.Empty;
                 }
             };
 
@@ -1159,7 +1166,7 @@ namespace SN_Net.Subform
                 bool post_success = false;
 
                 int type = (this.rbHoliday.Checked ? (int)CustomDateEvent.NOTE_TYPE.HOLIDAY : (int)CustomDateEvent.NOTE_TYPE.NOTE);
-                string description = (type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.txtHoliday.Texts : "");
+                string description = (type == (int)CustomDateEvent.NOTE_TYPE.HOLIDAY ? this.txtHoliday.Texts : this.txtRemark.Texts);
                 this.FormProcessing();
 
                 string json_data = "{\"date\":\"" + this.cde.date.Value.ToMysqlDate() + "\",";

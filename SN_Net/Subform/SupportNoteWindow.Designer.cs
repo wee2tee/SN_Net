@@ -71,19 +71,17 @@
             this.picCheck = new System.Windows.Forms.PictureBox();
             this.lblAddr = new System.Windows.Forms.Label();
             this.lblCompnam = new System.Windows.Forms.Label();
-            this.txtSernum = new SN_Net.MiscClass.CustomMaskedTextBox();
-            this.txtContact = new SN_Net.MiscClass.CustomTextBox();
             this.dtStartTime = new System.Windows.Forms.DateTimePicker();
             this.dtEndTime = new System.Windows.Forms.DateTimePicker();
             this.label28 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chOther = new System.Windows.Forms.CheckBox();
             this.chTransferMkt = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.chTraining = new System.Windows.Forms.CheckBox();
             this.cbProbcod = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.chPeriod = new System.Windows.Forms.CheckBox();
             this.chYearEnd = new System.Windows.Forms.CheckBox();
             this.chSecure = new System.Windows.Forms.CheckBox();
@@ -111,15 +109,17 @@
             this.txtRemark2 = new System.Windows.Forms.TextBox();
             this.rbTraining = new System.Windows.Forms.RadioButton();
             this.rbMeetCust = new System.Windows.Forms.RadioButton();
-            this.txtSernum2 = new SN_Net.MiscClass.CustomMaskedTextBox();
             this.lblCompnam2 = new System.Windows.Forms.Label();
             this.rbCorrectData = new System.Windows.Forms.RadioButton();
             this.rbQt = new System.Windows.Forms.RadioButton();
             this.rbToilet = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dtWorkDate = new SN_Net.MiscClass.CustomDateTimePicker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.txtSernum = new SN_Net.MiscClass.CustomMaskedTextBox();
+            this.txtContact = new SN_Net.MiscClass.CustomTextBox();
+            this.txtSernum2 = new SN_Net.MiscClass.CustomMaskedTextBox();
+            this.dtWorkDate = new SN_Net.MiscClass.CustomDateTimePicker();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -133,6 +133,7 @@
             this.groupBox3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -588,39 +589,6 @@
             this.lblCompnam.TabIndex = 114;
             this.lblCompnam.Text = "Serial.Compnam";
             // 
-            // txtSernum
-            // 
-            this.txtSernum.BackColor = System.Drawing.Color.White;
-            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSernum.Location = new System.Drawing.Point(73, 10);
-            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSernum.MaskString = ">A-AAA-AAAAAA";
-            this.txtSernum.Name = "txtSernum";
-            this.txtSernum.Read_Only = true;
-            this.txtSernum.SelectedStringBegin = 0;
-            this.txtSernum.SelectedStringEnd = 0;
-            this.txtSernum.Size = new System.Drawing.Size(118, 23);
-            this.txtSernum.TabIndex = 105;
-            this.txtSernum.Texts = "";
-            // 
-            // txtContact
-            // 
-            this.txtContact.BackColor = System.Drawing.Color.White;
-            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtContact.CharUpperCase = false;
-            this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtContact.Location = new System.Drawing.Point(74, 165);
-            this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtContact.MaxChar = 20;
-            this.txtContact.Name = "txtContact";
-            this.txtContact.Read_Only = true;
-            this.txtContact.SelectionLength = 0;
-            this.txtContact.SelectionStart = 0;
-            this.txtContact.Size = new System.Drawing.Size(204, 23);
-            this.txtContact.TabIndex = 106;
-            this.txtContact.Texts = "";
-            // 
             // dtStartTime
             // 
             this.dtStartTime.CustomFormat = "HH:mm:ss";
@@ -678,11 +646,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chOther);
             this.groupBox3.Controls.Add(this.chTransferMkt);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.chTraining);
             this.groupBox3.Controls.Add(this.cbProbcod);
-            this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.chPeriod);
             this.groupBox3.Controls.Add(this.chYearEnd);
             this.groupBox3.Controls.Add(this.chSecure);
@@ -706,10 +674,21 @@
             this.groupBox3.TabIndex = 112;
             this.groupBox3.TabStop = false;
             // 
+            // chOther
+            // 
+            this.chOther.AutoSize = true;
+            this.chOther.Location = new System.Drawing.Point(6, 133);
+            this.chOther.Name = "chOther";
+            this.chOther.Size = new System.Drawing.Size(53, 20);
+            this.chOther.TabIndex = 17;
+            this.chOther.Text = "อื่น ๆ";
+            this.chOther.UseVisualStyleBackColor = true;
+            this.chOther.CheckedChanged += new System.EventHandler(this.chOther_CheckedChanged);
+            // 
             // chTransferMkt
             // 
             this.chTransferMkt.AutoSize = true;
-            this.chTransferMkt.Location = new System.Drawing.Point(113, 110);
+            this.chTransferMkt.Location = new System.Drawing.Point(113, 106);
             this.chTransferMkt.Name = "chTransferMkt";
             this.chTransferMkt.Size = new System.Drawing.Size(115, 20);
             this.chTransferMkt.TabIndex = 17;
@@ -721,11 +700,11 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label6.ForeColor = System.Drawing.Color.DarkGray;
-            this.label6.Location = new System.Drawing.Point(80, 137);
+            this.label6.Location = new System.Drawing.Point(57, 136);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 13);
+            this.label6.Size = new System.Drawing.Size(98, 13);
             this.label6.TabIndex = 116;
-            this.label6.Text = "(สูงสุด 100 ตัวอักษร)";
+            this.label6.Text = "(สูงสุด 90 ตัวอักษร)";
             // 
             // chTraining
             // 
@@ -751,16 +730,6 @@
             this.cbProbcod.Size = new System.Drawing.Size(49, 24);
             this.cbProbcod.TabIndex = 20;
             this.cbProbcod.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label4.Location = new System.Drawing.Point(6, 135);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 16);
-            this.label4.TabIndex = 115;
-            this.label4.Text = "ปัญหาอื่น ๆ :";
             // 
             // chPeriod
             // 
@@ -827,11 +796,12 @@
             this.txtRemark.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRemark.Location = new System.Drawing.Point(6, 154);
-            this.txtRemark.MaxLength = 100;
+            this.txtRemark.MaxLength = 90;
             this.txtRemark.Multiline = true;
             this.txtRemark.Name = "txtRemark";
             this.txtRemark.Size = new System.Drawing.Size(558, 26);
             this.txtRemark.TabIndex = 18;
+            this.txtRemark.DoubleClick += new System.EventHandler(this.txtRemark_DoubleClick);
             // 
             // chAlsoF8
             // 
@@ -850,7 +820,7 @@
             // chMailWait
             // 
             this.chMailWait.AutoSize = true;
-            this.chMailWait.Location = new System.Drawing.Point(6, 110);
+            this.chMailWait.Location = new System.Drawing.Point(6, 106);
             this.chMailWait.Name = "chMailWait";
             this.chMailWait.Size = new System.Drawing.Size(91, 20);
             this.chMailWait.TabIndex = 16;
@@ -1053,22 +1023,6 @@
             this.rbMeetCust.Text = "ลูกค้ามาพบ";
             this.rbMeetCust.UseVisualStyleBackColor = true;
             // 
-            // txtSernum2
-            // 
-            this.txtSernum2.BackColor = System.Drawing.Color.White;
-            this.txtSernum2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSernum2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtSernum2.Location = new System.Drawing.Point(170, 83);
-            this.txtSernum2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSernum2.MaskString = ">A-AAA-AAAAAA";
-            this.txtSernum2.Name = "txtSernum2";
-            this.txtSernum2.Read_Only = false;
-            this.txtSernum2.SelectedStringBegin = 0;
-            this.txtSernum2.SelectedStringEnd = 0;
-            this.txtSernum2.Size = new System.Drawing.Size(118, 23);
-            this.txtSernum2.TabIndex = 5;
-            this.txtSernum2.Texts = "";
-            // 
             // lblCompnam2
             // 
             this.lblCompnam2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -1148,6 +1102,63 @@
             this.splitContainer1.SplitterDistance = 298;
             this.splitContainer1.TabIndex = 0;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon1.BalloonTipText = "ทดสอบ";
+            this.notifyIcon1.BalloonTipTitle = "Test";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "บันทึกการปฏิบัติงาน (SN_Net)";
+            // 
+            // txtSernum
+            // 
+            this.txtSernum.BackColor = System.Drawing.Color.White;
+            this.txtSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSernum.Location = new System.Drawing.Point(73, 10);
+            this.txtSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSernum.MaskString = ">A-AAA-AAAAAA";
+            this.txtSernum.Name = "txtSernum";
+            this.txtSernum.Read_Only = true;
+            this.txtSernum.SelectedStringBegin = 0;
+            this.txtSernum.SelectedStringEnd = 0;
+            this.txtSernum.Size = new System.Drawing.Size(118, 23);
+            this.txtSernum.TabIndex = 105;
+            this.txtSernum.Texts = "";
+            // 
+            // txtContact
+            // 
+            this.txtContact.BackColor = System.Drawing.Color.White;
+            this.txtContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtContact.CharUpperCase = false;
+            this.txtContact.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtContact.Location = new System.Drawing.Point(74, 165);
+            this.txtContact.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtContact.MaxChar = 20;
+            this.txtContact.Name = "txtContact";
+            this.txtContact.Read_Only = true;
+            this.txtContact.SelectionLength = 0;
+            this.txtContact.SelectionStart = 0;
+            this.txtContact.Size = new System.Drawing.Size(204, 23);
+            this.txtContact.TabIndex = 106;
+            this.txtContact.Texts = "";
+            // 
+            // txtSernum2
+            // 
+            this.txtSernum2.BackColor = System.Drawing.Color.White;
+            this.txtSernum2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSernum2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtSernum2.Location = new System.Drawing.Point(170, 83);
+            this.txtSernum2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSernum2.MaskString = ">A-AAA-AAAAAA";
+            this.txtSernum2.Name = "txtSernum2";
+            this.txtSernum2.Read_Only = false;
+            this.txtSernum2.SelectedStringBegin = 0;
+            this.txtSernum2.SelectedStringEnd = 0;
+            this.txtSernum2.Size = new System.Drawing.Size(118, 23);
+            this.txtSernum2.TabIndex = 5;
+            this.txtSernum2.Texts = "";
+            // 
             // dtWorkDate
             // 
             this.dtWorkDate.BackColor = System.Drawing.Color.White;
@@ -1159,17 +1170,9 @@
             this.dtWorkDate.Read_Only = false;
             this.dtWorkDate.Size = new System.Drawing.Size(96, 23);
             this.dtWorkDate.TabIndex = 1;
-            this.dtWorkDate.Texts = "09/03/2559";
-            this.dtWorkDate.TextsMysql = "2016-03-09";
-            this.dtWorkDate.ValDateTime = new System.DateTime(2016, 3, 9, 13, 55, 42, 108);
-            // 
-            // notifyIcon1
-            // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.BalloonTipText = "ทดสอบ";
-            this.notifyIcon1.BalloonTipTitle = "Test";
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "บันทึกการปฏิบัติงาน (SN_Net)";
+            this.dtWorkDate.Texts = "14/08/2560";
+            this.dtWorkDate.TextsMysql = "2017-08-14";
+            this.dtWorkDate.ValDateTime = new System.DateTime(2017, 8, 14, 8, 40, 29, 177);
             // 
             // SupportNoteWindow
             // 
@@ -1208,6 +1211,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1263,7 +1267,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox chTraining;
         private System.Windows.Forms.ComboBox cbProbcod;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chPeriod;
         private System.Windows.Forms.CheckBox chYearEnd;
         private System.Windows.Forms.CheckBox chSecure;
@@ -1300,5 +1303,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnMA;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.CheckBox chOther;
     }
 }

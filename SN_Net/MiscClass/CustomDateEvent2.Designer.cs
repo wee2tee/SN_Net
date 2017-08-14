@@ -91,7 +91,7 @@
             this.dgv.RowTemplate.Height = 18;
             this.dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv.Size = new System.Drawing.Size(398, 113);
+            this.dgv.Size = new System.Drawing.Size(398, 116);
             this.dgv.StandardTab = true;
             this.dgv.TabIndex = 2;
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
@@ -229,7 +229,7 @@
             this.btnTrainer.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnTrainer.Name = "btnTrainer";
             this.btnTrainer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnTrainer.Size = new System.Drawing.Size(136, 24);
+            this.btnTrainer.Size = new System.Drawing.Size(152, 24);
             this.btnTrainer.Text = "วิทยากรอบรม";
             this.btnTrainer.Click += new System.EventHandler(this.btnTrainer_Click);
             // 
@@ -240,7 +240,7 @@
             this.btnAdd.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnAdd.Size = new System.Drawing.Size(136, 24);
+            this.btnAdd.Size = new System.Drawing.Size(152, 24);
             this.btnAdd.Text = "เพิ่มรายการ";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -251,7 +251,7 @@
             this.btnDetail.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnDetail.Name = "btnDetail";
             this.btnDetail.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnDetail.Size = new System.Drawing.Size(136, 24);
+            this.btnDetail.Size = new System.Drawing.Size(152, 24);
             this.btnDetail.Text = "ดูรายละเอียด";
             this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
             // 
@@ -262,9 +262,9 @@
             this.lblBottomText.BackColor = System.Drawing.Color.Transparent;
             this.lblBottomText.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblBottomText.ForeColor = System.Drawing.Color.Blue;
-            this.lblBottomText.Location = new System.Drawing.Point(3, 145);
+            this.lblBottomText.Location = new System.Drawing.Point(3, 148);
             this.lblBottomText.Name = "lblBottomText";
-            this.lblBottomText.Size = new System.Drawing.Size(394, 21);
+            this.lblBottomText.Size = new System.Drawing.Size(394, 18);
             this.lblBottomText.TabIndex = 5;
             this.lblBottomText.Text = "label1";
             this.lblBottomText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
