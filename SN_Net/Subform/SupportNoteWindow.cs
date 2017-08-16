@@ -760,8 +760,8 @@ namespace SN_Net.Subform
             dgvNote.Columns.Add(col20);
 
             DataGridViewTextBoxColumn col21 = new DataGridViewTextBoxColumn();
-            col21.HeaderText = "Mail รอสาย";
-            col21.Width = 30;
+            col21.HeaderText = "Mail รอสาย/หลุด";
+            col21.Width = 50;
             col21.SortMode = DataGridViewColumnSortMode.NotSortable;
             col21.HeaderCell.Style.Font = new Font("tahoma", 7f);
             dgvNote.Columns.Add(col21);
@@ -2377,7 +2377,7 @@ namespace SN_Net.Subform
                                         pe.Graphics.DrawString("Secure", font, brush, new RectangleF(x_pos += col17, y_pos, col18, column_header_height), str_format_center);
                                         pe.Graphics.DrawString("Year End", font, brush, new RectangleF(x_pos += col18, y_pos, col19, column_header_height), str_format_center);
                                         pe.Graphics.DrawString("วันที่ไม่อยู่ในงวด", font, brush, new RectangleF(x_pos += col19, y_pos, col20, column_header_height), str_format_center);
-                                        pe.Graphics.DrawString("Mail/รอสาย", font, brush, new RectangleF(x_pos += col20, y_pos, col21, column_header_height), str_format_center);
+                                        pe.Graphics.DrawString("Mail/รอสาย/หลุด", font, brush, new RectangleF(x_pos += col20, y_pos, col21, column_header_height), str_format_center);
                                         pe.Graphics.DrawString("โอนฝ่ายขาย", font, brush, new RectangleF(x_pos += col21, y_pos, col22, column_header_height), str_format_center);
                                         pe.Graphics.DrawString("ปัญหาอื่น ๆ", font, brush, new RectangleF(x_pos += col22, y_pos, col23, column_header_height), str_format_center);
                                     }

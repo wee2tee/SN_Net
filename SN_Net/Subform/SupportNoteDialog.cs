@@ -120,11 +120,13 @@ namespace SN_Net.Subform
                 this.txtSernum.Texts = this.note.sernum;
                 this.txtSernum2.Texts = this.note.sernum;
                 this.txtContact.Texts = this.note.contact;
-                this.txtRemark.Text = this.note.remark;
-                this.txtRemark2.Text = this.note.remark;
+                this.txtRemark.Text = this.note.remark.Replace("{problem}", "");
+                this.txtRemark2.Text = this.note.remark.Replace("{problem}", "");
 
                 this.CheckedProblem(this.note.problem);
                 this.CheckedReason(this.note.reason);
+
+                this.chOther.Checked = this.note.remark.Contains("{problem}") ? true : false;
             }
 
             if (this.IS_BREAK == "Y")
@@ -231,6 +233,13 @@ namespace SN_Net.Subform
 
         private void SaveToDB(SupportNote note)
         {
+            if(this.chOther.Checked && this.txtRemark.Text.Trim().Length == 0)
+            {
+                MessageAlert.Show("กรุณาป้อนปัญหาอื่น ๆ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                this.txtRemark.Focus();
+                return;
+            }
+
             bool save_success = false;
             string err_msg = string.Empty;
 
@@ -242,7 +251,7 @@ namespace SN_Net.Subform
             json_data += "\"end_time\":\"" + note.end_time + "\",";
             json_data += "\"duration\":\"" + note.duration.Substring(0, 8) + "\",";
             json_data += "\"problem\":\"" + note.problem.cleanString() + "\",";
-            json_data += "\"remark\":\"" + note.remark.cleanString() + "\",";
+            json_data += "\"remark\":\"" + (this.chOther.Checked ? "{problem}" : "") + note.remark.cleanString() + "\",";
             json_data += "\"also_f8\":\"" + "N" + "\",";
             json_data += "\"probcod\":\"" + "" + "\",";
             json_data += "\"is_break\":\"" + this.IS_BREAK + "\",";

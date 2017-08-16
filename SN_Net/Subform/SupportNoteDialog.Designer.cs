@@ -32,10 +32,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dtWorkDate = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbUser = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.txtSernum = new SN_Net.MiscClass.CustomMaskedTextBox();
             this.txtContact = new SN_Net.MiscClass.CustomTextBox();
             this.dtStartTime = new System.Windows.Forms.DateTimePicker();
@@ -45,6 +41,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chOther = new System.Windows.Forms.CheckBox();
             this.chTransferMkt = new System.Windows.Forms.CheckBox();
             this.chTraining = new System.Windows.Forms.CheckBox();
             this.chPeriod = new System.Windows.Forms.CheckBox();
@@ -62,7 +59,6 @@
             this.chMapDrive = new System.Windows.Forms.CheckBox();
             this.chStock = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.txtRemark = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label12 = new System.Windows.Forms.Label();
@@ -79,6 +75,10 @@
             this.rbQt = new System.Windows.Forms.RadioButton();
             this.rbToilet = new System.Windows.Forms.RadioButton();
             this.label14 = new System.Windows.Forms.Label();
+            this.dtWorkDate = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbUser = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -89,7 +89,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnOK.Location = new System.Drawing.Point(353, 314);
+            this.btnOK.Location = new System.Drawing.Point(353, 323);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 31);
@@ -102,7 +102,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(449, 314);
+            this.btnCancel.Location = new System.Drawing.Point(449, 323);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 31);
@@ -139,43 +139,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "สายสนทนา";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dtWorkDate
-            // 
-            this.dtWorkDate.CustomFormat = "dd/MM/yyyy";
-            this.dtWorkDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtWorkDate.Location = new System.Drawing.Point(85, 43);
-            this.dtWorkDate.Name = "dtWorkDate";
-            this.dtWorkDate.Size = new System.Drawing.Size(105, 23);
-            this.dtWorkDate.TabIndex = 1;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(17, 48);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 16);
-            this.label5.TabIndex = 146;
-            this.label5.Text = "วันที่";
-            // 
-            // cbUser
-            // 
-            this.cbUser.FormattingEnabled = true;
-            this.cbUser.Location = new System.Drawing.Point(85, 16);
-            this.cbUser.Name = "cbUser";
-            this.cbUser.Size = new System.Drawing.Size(137, 24);
-            this.cbUser.TabIndex = 0;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label7.Location = new System.Drawing.Point(17, 19);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 16);
-            this.label7.TabIndex = 144;
-            this.label7.Text = "พนักงาน";
             // 
             // txtSernum
             // 
@@ -277,6 +240,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chOther);
             this.groupBox1.Controls.Add(this.chTransferMkt);
             this.groupBox1.Controls.Add(this.chTraining);
             this.groupBox1.Controls.Add(this.chPeriod);
@@ -294,7 +258,6 @@
             this.groupBox1.Controls.Add(this.chMapDrive);
             this.groupBox1.Controls.Add(this.chStock);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.txtRemark);
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.groupBox1.Location = new System.Drawing.Point(291, 2);
@@ -303,10 +266,20 @@
             this.groupBox1.TabIndex = 112;
             this.groupBox1.TabStop = false;
             // 
+            // chOther
+            // 
+            this.chOther.AutoSize = true;
+            this.chOther.Location = new System.Drawing.Point(10, 134);
+            this.chOther.Name = "chOther";
+            this.chOther.Size = new System.Drawing.Size(53, 20);
+            this.chOther.TabIndex = 21;
+            this.chOther.Text = "อื่น ๆ";
+            this.chOther.UseVisualStyleBackColor = true;
+            // 
             // chTransferMkt
             // 
             this.chTransferMkt.AutoSize = true;
-            this.chTransferMkt.Location = new System.Drawing.Point(117, 111);
+            this.chTransferMkt.Location = new System.Drawing.Point(147, 106);
             this.chTransferMkt.Name = "chTransferMkt";
             this.chTransferMkt.Size = new System.Drawing.Size(115, 20);
             this.chTransferMkt.TabIndex = 21;
@@ -386,11 +359,11 @@
             // chMailWait
             // 
             this.chMailWait.AutoSize = true;
-            this.chMailWait.Location = new System.Drawing.Point(10, 111);
+            this.chMailWait.Location = new System.Drawing.Point(10, 106);
             this.chMailWait.Name = "chMailWait";
-            this.chMailWait.Size = new System.Drawing.Size(91, 20);
+            this.chMailWait.Size = new System.Drawing.Size(120, 20);
             this.chMailWait.TabIndex = 20;
-            this.chMailWait.Text = "Mail/รอสาย";
+            this.chMailWait.Text = "Mail/รอสาย/หลุด";
             this.chMailWait.UseVisualStyleBackColor = true;
             // 
             // chPrint
@@ -468,21 +441,11 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label9.ForeColor = System.Drawing.Color.DarkGray;
-            this.label9.Location = new System.Drawing.Point(80, 137);
+            this.label9.Location = new System.Drawing.Point(61, 137);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(104, 13);
+            this.label9.Size = new System.Drawing.Size(98, 13);
             this.label9.TabIndex = 116;
-            this.label9.Text = "(สูงสุด 100 ตัวอักษร)";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label10.Location = new System.Drawing.Point(6, 135);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(76, 16);
-            this.label10.TabIndex = 115;
-            this.label10.Text = "ปัญหาอื่น ๆ :";
+            this.label9.Text = "(สูงสุด 90 ตัวอักษร)";
             // 
             // txtRemark
             // 
@@ -666,12 +629,49 @@
             this.label14.TabIndex = 112;
             this.label14.Text = "พักสายเนื่องจาก";
             // 
+            // dtWorkDate
+            // 
+            this.dtWorkDate.CustomFormat = "dd/MM/yyyy";
+            this.dtWorkDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtWorkDate.Location = new System.Drawing.Point(85, 43);
+            this.dtWorkDate.Name = "dtWorkDate";
+            this.dtWorkDate.Size = new System.Drawing.Size(105, 23);
+            this.dtWorkDate.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(17, 48);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 16);
+            this.label5.TabIndex = 146;
+            this.label5.Text = "วันที่";
+            // 
+            // cbUser
+            // 
+            this.cbUser.FormattingEnabled = true;
+            this.cbUser.Location = new System.Drawing.Point(85, 16);
+            this.cbUser.Name = "cbUser";
+            this.cbUser.Size = new System.Drawing.Size(137, 24);
+            this.cbUser.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label7.Location = new System.Drawing.Point(17, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 16);
+            this.label7.TabIndex = 144;
+            this.label7.Text = "พนักงาน";
+            // 
             // SupportNoteDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(887, 361);
+            this.ClientSize = new System.Drawing.Size(887, 370);
             this.Controls.Add(this.dtWorkDate);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label5);
@@ -724,7 +724,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtRemark;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label12;
@@ -757,6 +756,6 @@
         private System.Windows.Forms.CheckBox chError;
         private System.Windows.Forms.CheckBox chMapDrive;
         private System.Windows.Forms.CheckBox chStock;
-
+        private System.Windows.Forms.CheckBox chOther;
     }
 }

@@ -13,6 +13,7 @@ using SN_Net.DataModels;
 using WebAPI;
 using WebAPI.ApiResult;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace SN_Net
 {
@@ -84,6 +85,9 @@ namespace SN_Net
             {
                 this.supportnote_wind.Activate();
             };
+
+            var ver = Assembly.GetExecutingAssembly().GetName().Version;
+            this.lblVersion.Text = "V." + ver.ToString();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

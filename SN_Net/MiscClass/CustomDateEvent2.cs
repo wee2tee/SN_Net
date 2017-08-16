@@ -118,6 +118,21 @@ namespace SN_Net.MiscClass
                 }
             }
 
+            // lblBottomText
+            string bottom_text = this.trainer_list.Count > 0 ? "อบรม(" : "";
+
+            foreach (var trainer in this.trainer_list.OrderBy(t => t.term.ToString() + t.status.ToString()))
+            {
+                bottom_text += trainer.id == this.trainer_list.OrderBy(t => t.term.ToString() + t.status.ToString()).First().id ? "" : ",";
+                bottom_text += this.users_list.Where(u => u.username.Trim() == trainer.trainer.Trim()).First().name;
+            }
+            bottom_text += this.trainer_list.Count > 0 ? ")" : "";
+            this.lblBottomText.Height = this.trainer_list.Count > 0 ? 14 : 0;
+            this.lblBottomText.Text = bottom_text;
+            this.toolTip1.SetToolTip(this.lblBottomText, this.lblBottomText.Text);
+
+            this.lblNoteDescription.Height = this.Height - this.lblDay.Height - this.lblBottomText.Height - 6;
+
             // lblNoteDescription
             if (this.note != null && this.note.type == (int)NoteCalendar.NOTE_TYPE.HOLIDAY)
             {
@@ -125,11 +140,25 @@ namespace SN_Net.MiscClass
                 this.dgv.SendToBack();
                 this.lblNoteDescription.BringToFront();
             }
-            else
+            //else
+            //{
+            //    this.lblNoteDescription.Text = "";
+            //    this.lblNoteDescription.SendToBack();
+            //    this.dgv.BringToFront();
+            //}
+            else if(this.note != null && this.note.type == (int)NoteCalendar.NOTE_TYPE.WEEKDAY)
             {
-                this.lblNoteDescription.Text = "";
+                //this.lblNoteDescription.Height += 14 - this.lblBottomText.Height;
+                this.lblNoteDescription.Text = this.note.description;
+                this.lblNoteDescription.Font = new Font("tahoma", 8f, FontStyle.Regular);
+                this.lblNoteDescription.TextAlign = ContentAlignment.BottomLeft;
                 this.lblNoteDescription.SendToBack();
                 this.dgv.BringToFront();
+                this.dgv.Height = this.note.description.Trim().Length > 0 ? this.Height - lblDay.Height - lblBottomText.Height - 14 - 6 : this.Height - lblDay.Height - lblBottomText.Height - 6;
+            }
+            else if(this.note == null)
+            {
+                this.dgv.Height = this.Height - lblDay.Height - this.lblBottomText.Height - 6;
             }
 
             // btnHoliday, btnMaid text and visibilities
@@ -164,18 +193,6 @@ namespace SN_Net.MiscClass
                 this.btnMaid.Visible = false;
             }
 
-            // lblBottomText
-            string bottom_text = this.trainer_list.Count > 0 ? "อบรม(" : "";
-
-            foreach (var trainer in this.trainer_list.OrderBy(t => t.term.ToString() + t.status.ToString()))
-            {
-                bottom_text += trainer.id == this.trainer_list.OrderBy(t => t.term.ToString() + t.status.ToString()).First().id ? "" : ",";
-                bottom_text += this.users_list.Where(u => u.username.Trim() == trainer.trainer.Trim()).First().name;
-            }
-            bottom_text += this.trainer_list.Count > 0 ? ")" : "";
-            this.lblBottomText.Text = bottom_text;
-            this.toolTip1.SetToolTip(this.lblBottomText, this.lblBottomText.Text);
-            
             // Fill a datagrid
             this.FillDataGrid();
         }

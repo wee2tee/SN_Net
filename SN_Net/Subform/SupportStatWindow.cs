@@ -77,7 +77,7 @@ namespace SN_Net.Subform
             this.list_problem_all.Add(new ComboboxItem("ระบบความปลอดภัย", 11, SupportNote.NOTE_PROBLEM.SECURE.FormatNoteProblem()));
             this.list_problem_all.Add(new ComboboxItem("ปิดประมวลผล", 12, SupportNote.NOTE_PROBLEM.YEAR_END.FormatNoteProblem()));
             this.list_problem_all.Add(new ComboboxItem("วันที่ไม่อยู่ในงวด", 13, SupportNote.NOTE_PROBLEM.PERIOD.FormatNoteProblem()));
-            this.list_problem_all.Add(new ComboboxItem("Mail/รอสาย", 14, SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()));
+            this.list_problem_all.Add(new ComboboxItem("Mail/รอสาย/หลุด", 14, SupportNote.NOTE_PROBLEM.MAIL_WAIT.FormatNoteProblem()));
             this.list_problem_all.Add(new ComboboxItem("โอนสายฝ่ายขาย", 15, SupportNote.NOTE_PROBLEM.TRANSFER_MKT.FormatNoteProblem()));
             this.list_problem_all.Add(new ComboboxItem("ปัญหาอื่น ๆ", 16, "*"));
             #endregion add problem to list_problem
@@ -152,7 +152,7 @@ namespace SN_Net.Subform
             this.dgvNote.Columns[22].HeaderText = "Se cure";
             this.dgvNote.Columns[23].HeaderText = "Year End";
             this.dgvNote.Columns[24].HeaderText = "วันที่ ไม่อยู่ในงวด";
-            this.dgvNote.Columns[25].HeaderText = "Mail รอสาย";
+            this.dgvNote.Columns[25].HeaderText = "Mail รอสาย /หลุด";
             this.dgvNote.Columns[26].HeaderText = "โอน ฝ่าย ขาย";
             this.dgvNote.Columns[27].HeaderText = "อื่น ๆ";
             this.dgvNote.Columns[28].HeaderText = "หมายเหตุ";
@@ -1454,7 +1454,7 @@ namespace SN_Net.Subform
 
                                             pe.Graphics.DrawLine(pen_darkgray, x_pos, y_pos, x_pos, y_pos + 25); // column separator
                                             Rectangle header_rect22 = new Rectangle(x_pos, y_pos, col22_width, 25);
-                                            pe.Graphics.DrawString("Mail,รอสาย", fontsmall, brush, header_rect22, str_format_center);
+                                            pe.Graphics.DrawString("Mail,รอสาย/หลุด", fontsmall, brush, header_rect22, str_format_center);
                                             x_pos += col22_width;
 
                                             pe.Graphics.DrawLine(pen_darkgray, x_pos, y_pos, x_pos, y_pos + 25); // column separator
@@ -2070,7 +2070,7 @@ namespace SN_Net.Subform
                 //sb.AppendLine(string.Join(",", columnNames));
 
                 // Create custom column header as we need
-                sb.AppendLine("ลำดับ,Support#,วันที่,รับสาย,วางสาย,ระยะเวลา,S/N,ชื่อลูกค้า,Map Drive,Ins./Up,Error,Ins.Fonts,Print,อบรม,สินค้า,Form Rep.,Rep.>Excel,สร้างงบ,ท/ส ค่าเสื่อม,Secure,Year End,วันที่ไม่อยู่ในงวด,Mail รอสาย,ปัญหาอื่น ๆ");
+                sb.AppendLine("ลำดับ,Support#,วันที่,รับสาย,วางสาย,ระยะเวลา,S/N,ชื่อลูกค้า,Map Drive,Ins./Up,Error,Ins.Fonts,Print,อบรม,สินค้า,Form Rep.,Rep.>Excel,สร้างงบ,ท/ส ค่าเสื่อม,Secure,Year End,วันที่ไม่อยู่ในงวด,Mail รอสาย/หลุด,ปัญหาอื่น ๆ");
 
                 foreach (DataRow row in dt.Rows)
                 {
