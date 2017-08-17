@@ -73,6 +73,8 @@ namespace SN_Net.Subform
                 this.maEmail.Texts = this.Read_only_ma.email;
                 this.btnCancel.Focus();
             }
+
+            this.maDateFrom.textBox1.SelectionStart = 0;
         }
 
         private void BindingControlEvent()

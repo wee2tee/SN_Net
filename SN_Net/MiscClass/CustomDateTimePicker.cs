@@ -42,6 +42,12 @@ namespace SN_Net.MiscClass
             this.label1.ForeColor = Color.Black;
             this.Height = 23;
             this.Width = 96;
+
+            this.textBox1.GotFocus += delegate (object obj, EventArgs ev)
+            {
+                ((MaskedTextBox)obj).SelectionStart = 0;
+                ((MaskedTextBox)obj).SelectionLength = 0;
+            };
         }
 
         public bool Read_Only
