@@ -1,0 +1,1547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="snModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cloud_srv">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="email" Type="char" MaxLength="100" />
+          <Property Name="serial_id" Type="int" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="d_msg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dealer_id" Type="int" />
+          <Property Name="date" Type="date" />
+          <Property Name="name" Type="char" MaxLength="3" />
+          <Property Name="description" Type="char" MaxLength="100" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="dealer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dealercod" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="prenam" Type="varchar" MaxLength="30" />
+          <Property Name="compnam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="addr01" Type="varchar" MaxLength="50" />
+          <Property Name="addr02" Type="varchar" MaxLength="50" />
+          <Property Name="addr03" Type="varchar" MaxLength="30" />
+          <Property Name="zipcod" Type="varchar" MaxLength="5" />
+          <Property Name="telnum" Type="varchar" MaxLength="40" />
+          <Property Name="faxnum" Type="varchar" MaxLength="40" />
+          <Property Name="contact" Type="varchar" MaxLength="100" />
+          <Property Name="position" Type="varchar" MaxLength="50" />
+          <Property Name="busides" Type="varchar" MaxLength="40" />
+          <Property Name="area_id" Type="int" />
+          <Property Name="remark" Type="varchar" MaxLength="50" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="istab">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tabtyp" Type="varchar" MaxLength="4" />
+          <Property Name="typcod" Type="varchar" MaxLength="10" />
+          <Property Name="abbreviate_en" Type="varchar" MaxLength="20" />
+          <Property Name="abbreviate_th" Type="varchar" MaxLength="20" />
+          <Property Name="typdes_en" Type="varchar" MaxLength="50" />
+          <Property Name="typdes_th" Type="varchar" MaxLength="50" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="ma">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="email" Type="char" MaxLength="100" />
+          <Property Name="serial_id" Type="int" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="mac_allowed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mac_address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="creby_id" Type="int" Nullable="false" />
+          <Property Name="credat" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="problem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="probdesc" Type="varchar" MaxLength="100" />
+          <Property Name="date" Type="date" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="serial_id" Type="int" />
+          <Property Name="probcod_id" Type="int" />
+          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="serial">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sernum" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="oldnum" Type="char" MaxLength="20" />
+          <Property Name="version" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="contact" Type="varchar" MaxLength="100" />
+          <Property Name="position" Type="varchar" MaxLength="50" />
+          <Property Name="prenam" Type="varchar" MaxLength="30" />
+          <Property Name="compnam" Type="varchar" MaxLength="100" />
+          <Property Name="addr01" Type="varchar" MaxLength="50" />
+          <Property Name="addr02" Type="varchar" MaxLength="50" />
+          <Property Name="addr03" Type="varchar" MaxLength="30" />
+          <Property Name="zipcod" Type="varchar" MaxLength="5" />
+          <Property Name="telnum" Type="varchar" MaxLength="40" />
+          <Property Name="faxnum" Type="varchar" MaxLength="40" />
+          <Property Name="busides" Type="varchar" MaxLength="40" />
+          <Property Name="purdat" Type="date" />
+          <Property Name="expdat" Type="date" />
+          <Property Name="branch" Type="varchar" MaxLength="1" />
+          <Property Name="manual" Type="date" />
+          <Property Name="upfree" Type="varchar" MaxLength="1" />
+          <Property Name="refnum" Type="varchar" MaxLength="12" />
+          <Property Name="remark" Type="varchar" MaxLength="50" />
+          <Property Name="dealer_id" Type="int" />
+          <Property Name="verextdat" Type="date" />
+          <Property Name="area_id" Type="int" />
+          <Property Name="busityp_id" Type="int" />
+          <Property Name="howknown_id" Type="int" />
+          <Property Name="verext_id" Type="int" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="chgby_id" Type="int" />
+          <Property Name="chgdat" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="serial_password">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pass_word" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="serial_id" Type="int" />
+          <Property Name="creby_id" Type="int" />
+          <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="userpassword" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="name" Type="char" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="level" Type="int" Nullable="false" />
+          <Property Name="usergroup" Type="varchar" MaxLength="10" />
+          <Property Name="status" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="allowed_web_login" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="training_expert" Type="char" MaxLength="1" />
+          <Property Name="max_absent" Type="int" Nullable="false" />
+          <Property Name="create_at" Type="timestamp" Precision="0" />
+          <Property Name="last_use" Type="timestamp" Precision="0" />
+          <Property Name="rec_by" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="fk-cloud_srv-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cloud_srv">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-cloud_srv-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cloud_srv">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-cloud_srv-serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cloud_srv">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-d_msg-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="d_msg" Type="Self.d_msg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="d_msg">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-d_msg-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="d_msg" Type="Self.d_msg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="d_msg">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-d_msg-dealer_id">
+          <End Role="dealer" Type="Self.dealer" Multiplicity="0..1" />
+          <End Role="d_msg" Type="Self.d_msg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="d_msg">
+              <PropertyRef Name="dealer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-dealer-area_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="dealer" Type="Self.dealer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dealer">
+              <PropertyRef Name="area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-dealer-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="dealer" Type="Self.dealer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dealer">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-dealer-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="dealer" Type="Self.dealer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dealer">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-istab-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="istab" Type="Self.istab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="istab">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-istab-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="istab" Type="Self.istab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="istab">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-mac_allowed-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="mac_allowed" Type="Self.mac_allowed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="mac_allowed">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-ma-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="ma" Type="Self.ma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ma">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-ma-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="ma" Type="Self.ma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ma">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-ma-serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="ma" Type="Self.ma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ma">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-problem-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-problem-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-problem-probcod_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="probcod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-problem-serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial_password-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="serial_password" Type="Self.serial_password" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial_password">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial_password-serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="serial_password" Type="Self.serial_password" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial_password">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-area_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-busityp_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="busityp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-dealer_id">
+          <End Role="dealer" Type="Self.dealer" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="dealer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-howknown_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="howknown_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk-serial-verext_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="verext_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="snModelStoreContainer">
+          <EntitySet Name="cloud_srv" EntityType="Self.cloud_srv" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="d_msg" EntityType="Self.d_msg" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="dealer" EntityType="Self.dealer" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="istab" EntityType="Self.istab" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="ma" EntityType="Self.ma" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="mac_allowed" EntityType="Self.mac_allowed" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="problem" EntityType="Self.problem" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="serial" EntityType="Self.serial" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="serial_password" EntityType="Self.serial_password" Schema="sn" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="sn" store:Type="Tables" />
+          <AssociationSet Name="fk-cloud_srv-chgby_id" Association="Self.fk-cloud_srv-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="cloud_srv" EntitySet="cloud_srv" />
+          </AssociationSet>
+          <AssociationSet Name="fk-cloud_srv-creby_id" Association="Self.fk-cloud_srv-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="cloud_srv" EntitySet="cloud_srv" />
+          </AssociationSet>
+          <AssociationSet Name="fk-cloud_srv-serial_id" Association="Self.fk-cloud_srv-serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="cloud_srv" EntitySet="cloud_srv" />
+          </AssociationSet>
+          <AssociationSet Name="fk-d_msg-chgby_id" Association="Self.fk-d_msg-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="d_msg" EntitySet="d_msg" />
+          </AssociationSet>
+          <AssociationSet Name="fk-d_msg-creby_id" Association="Self.fk-d_msg-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="d_msg" EntitySet="d_msg" />
+          </AssociationSet>
+          <AssociationSet Name="fk-d_msg-dealer_id" Association="Self.fk-d_msg-dealer_id">
+            <End Role="dealer" EntitySet="dealer" />
+            <End Role="d_msg" EntitySet="d_msg" />
+          </AssociationSet>
+          <AssociationSet Name="fk-dealer-area_id" Association="Self.fk-dealer-area_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="dealer" EntitySet="dealer" />
+          </AssociationSet>
+          <AssociationSet Name="fk-dealer-chgby_id" Association="Self.fk-dealer-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="dealer" EntitySet="dealer" />
+          </AssociationSet>
+          <AssociationSet Name="fk-dealer-creby_id" Association="Self.fk-dealer-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="dealer" EntitySet="dealer" />
+          </AssociationSet>
+          <AssociationSet Name="fk-istab-chgby_id" Association="Self.fk-istab-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="istab" EntitySet="istab" />
+          </AssociationSet>
+          <AssociationSet Name="fk-istab-creby_id" Association="Self.fk-istab-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="istab" EntitySet="istab" />
+          </AssociationSet>
+          <AssociationSet Name="fk-mac_allowed-creby_id" Association="Self.fk-mac_allowed-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="mac_allowed" EntitySet="mac_allowed" />
+          </AssociationSet>
+          <AssociationSet Name="fk-ma-chgby_id" Association="Self.fk-ma-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="ma" EntitySet="ma" />
+          </AssociationSet>
+          <AssociationSet Name="fk-ma-creby_id" Association="Self.fk-ma-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="ma" EntitySet="ma" />
+          </AssociationSet>
+          <AssociationSet Name="fk-ma-serial_id" Association="Self.fk-ma-serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="ma" EntitySet="ma" />
+          </AssociationSet>
+          <AssociationSet Name="fk-problem-chgby_id" Association="Self.fk-problem-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk-problem-creby_id" Association="Self.fk-problem-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk-problem-probcod_id" Association="Self.fk-problem-probcod_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk-problem-serial_id" Association="Self.fk-problem-serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial_password-creby_id" Association="Self.fk-serial_password-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="serial_password" EntitySet="serial_password" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial_password-serial_id" Association="Self.fk-serial_password-serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="serial_password" EntitySet="serial_password" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-area_id" Association="Self.fk-serial-area_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-busityp_id" Association="Self.fk-serial-busityp_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-chgby_id" Association="Self.fk-serial-chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-creby_id" Association="Self.fk-serial-creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-dealer_id" Association="Self.fk-serial-dealer_id">
+            <End Role="dealer" EntitySet="dealer" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-howknown_id" Association="Self.fk-serial-howknown_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk-serial-verext_id" Association="Self.fk-serial-verext_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="snModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cloud_srv">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start_date" Type="DateTime" />
+          <Property Name="end_date" Type="DateTime" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="serial_id" Type="Int32" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="users" Relationship="Self.fk_cloud_srv_chgby_id" FromRole="cloud_srv" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_cloud_srv_creby_id" FromRole="cloud_srv" ToRole="users" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_cloud_srv_serial_id" FromRole="cloud_srv" ToRole="serial" />
+        </EntityType>
+        <EntityType Name="d_msg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dealer_id" Type="Int32" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="name" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="users" Relationship="Self.fk_d_msg_chgby_id" FromRole="d_msg" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_d_msg_creby_id" FromRole="d_msg" ToRole="users" />
+          <NavigationProperty Name="dealer" Relationship="Self.fk_d_msg_dealer_id" FromRole="d_msg" ToRole="dealer" />
+        </EntityType>
+        <EntityType Name="dealer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dealercod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenam" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="compnam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="addr01" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addr02" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addr03" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="zipcod" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="telnum" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="faxnum" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="busides" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="area_id" Type="Int32" />
+          <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="d_msg" Relationship="Self.fk_d_msg_dealer_id" FromRole="dealer" ToRole="d_msg" />
+          <NavigationProperty Name="istab" Relationship="Self.fk_dealer_area_id" FromRole="dealer" ToRole="istab" />
+          <NavigationProperty Name="users" Relationship="Self.fk_dealer_chgby_id" FromRole="dealer" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_dealer_creby_id" FromRole="dealer" ToRole="users" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_serial_dealer_id" FromRole="dealer" ToRole="serial" />
+        </EntityType>
+        <EntityType Name="istab">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tabtyp" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="typcod" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="abbreviate_en" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="abbreviate_th" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="typdes_en" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="typdes_th" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="dealer" Relationship="Self.fk_dealer_area_id" FromRole="istab" ToRole="dealer" />
+          <NavigationProperty Name="users" Relationship="Self.fk_istab_chgby_id" FromRole="istab" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_istab_creby_id" FromRole="istab" ToRole="users" />
+          <NavigationProperty Name="problem" Relationship="Self.fk_problem_probcod_id" FromRole="istab" ToRole="problem" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_serial_area_id" FromRole="istab" ToRole="serial" />
+          <NavigationProperty Name="serial1" Relationship="Self.fk_serial_busityp_id" FromRole="istab" ToRole="serial" />
+          <NavigationProperty Name="serial2" Relationship="Self.fk_serial_howknown_id" FromRole="istab" ToRole="serial" />
+          <NavigationProperty Name="serial3" Relationship="Self.fk_serial_verext_id" FromRole="istab" ToRole="serial" />
+        </EntityType>
+        <EntityType Name="ma">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start_date" Type="DateTime" />
+          <Property Name="end_date" Type="DateTime" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="serial_id" Type="Int32" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="users" Relationship="Self.fk_ma_chgby_id" FromRole="ma" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_ma_creby_id" FromRole="ma" ToRole="users" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_ma_serial_id" FromRole="ma" ToRole="serial" />
+        </EntityType>
+        <EntityType Name="mac_allowed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mac_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="creby_id" Type="Int32" Nullable="false" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.fk_mac_allowed_creby_id" FromRole="mac_allowed" ToRole="users" />
+        </EntityType>
+        <EntityType Name="problem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="probdesc" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="serial_id" Type="Int32" />
+          <Property Name="probcod_id" Type="Int32" />
+          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="istab" Relationship="Self.fk_problem_probcod_id" FromRole="problem" ToRole="istab" />
+          <NavigationProperty Name="users" Relationship="Self.fk_problem_chgby_id" FromRole="problem" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_problem_creby_id" FromRole="problem" ToRole="users" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_problem_serial_id" FromRole="problem" ToRole="serial" />
+        </EntityType>
+        <EntityType Name="serial">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sernum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="oldnum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="version" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="prenam" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="compnam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="addr01" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addr02" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addr03" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="zipcod" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="telnum" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="faxnum" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="busides" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="purdat" Type="DateTime" />
+          <Property Name="expdat" Type="DateTime" />
+          <Property Name="branch" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="manual" Type="DateTime" />
+          <Property Name="upfree" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="refnum" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dealer_id" Type="Int32" />
+          <Property Name="verextdat" Type="DateTime" />
+          <Property Name="area_id" Type="Int32" />
+          <Property Name="busityp_id" Type="Int32" />
+          <Property Name="howknown_id" Type="Int32" />
+          <Property Name="verext_id" Type="Int32" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <Property Name="chgby_id" Type="Int32" />
+          <Property Name="chgdat" Type="DateTime" />
+          <NavigationProperty Name="cloud_srv" Relationship="Self.fk_cloud_srv_serial_id" FromRole="serial" ToRole="cloud_srv" />
+          <NavigationProperty Name="dealer" Relationship="Self.fk_serial_dealer_id" FromRole="serial" ToRole="dealer" />
+          <NavigationProperty Name="istab" Relationship="Self.fk_serial_area_id" FromRole="serial" ToRole="istab" />
+          <NavigationProperty Name="istab1" Relationship="Self.fk_serial_busityp_id" FromRole="serial" ToRole="istab" />
+          <NavigationProperty Name="istab2" Relationship="Self.fk_serial_howknown_id" FromRole="serial" ToRole="istab" />
+          <NavigationProperty Name="istab3" Relationship="Self.fk_serial_verext_id" FromRole="serial" ToRole="istab" />
+          <NavigationProperty Name="ma" Relationship="Self.fk_ma_serial_id" FromRole="serial" ToRole="ma" />
+          <NavigationProperty Name="problem" Relationship="Self.fk_problem_serial_id" FromRole="serial" ToRole="problem" />
+          <NavigationProperty Name="serial_password" Relationship="Self.fk_serial_password_serial_id" FromRole="serial" ToRole="serial_password" />
+          <NavigationProperty Name="users" Relationship="Self.fk_serial_chgby_id" FromRole="serial" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_serial_creby_id" FromRole="serial" ToRole="users" />
+        </EntityType>
+        <EntityType Name="serial_password">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pass_word" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="serial_id" Type="Int32" />
+          <Property Name="creby_id" Type="Int32" />
+          <Property Name="credat" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_serial_password_serial_id" FromRole="serial_password" ToRole="serial" />
+          <NavigationProperty Name="users" Relationship="Self.fk_serial_password_creby_id" FromRole="serial_password" ToRole="users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userpassword" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="level" Type="Int32" Nullable="false" />
+          <Property Name="usergroup" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="allowed_web_login" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="training_expert" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="max_absent" Type="Int32" Nullable="false" />
+          <Property Name="create_at" Type="DateTime" />
+          <Property Name="last_use" Type="DateTime" />
+          <Property Name="rec_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cloud_srv" Relationship="Self.fk_cloud_srv_chgby_id" FromRole="users" ToRole="cloud_srv" />
+          <NavigationProperty Name="cloud_srv1" Relationship="Self.fk_cloud_srv_creby_id" FromRole="users" ToRole="cloud_srv" />
+          <NavigationProperty Name="d_msg" Relationship="Self.fk_d_msg_chgby_id" FromRole="users" ToRole="d_msg" />
+          <NavigationProperty Name="d_msg1" Relationship="Self.fk_d_msg_creby_id" FromRole="users" ToRole="d_msg" />
+          <NavigationProperty Name="dealer" Relationship="Self.fk_dealer_chgby_id" FromRole="users" ToRole="dealer" />
+          <NavigationProperty Name="dealer1" Relationship="Self.fk_dealer_creby_id" FromRole="users" ToRole="dealer" />
+          <NavigationProperty Name="istab" Relationship="Self.fk_istab_chgby_id" FromRole="users" ToRole="istab" />
+          <NavigationProperty Name="istab1" Relationship="Self.fk_istab_creby_id" FromRole="users" ToRole="istab" />
+          <NavigationProperty Name="ma" Relationship="Self.fk_ma_chgby_id" FromRole="users" ToRole="ma" />
+          <NavigationProperty Name="ma1" Relationship="Self.fk_ma_creby_id" FromRole="users" ToRole="ma" />
+          <NavigationProperty Name="mac_allowed" Relationship="Self.fk_mac_allowed_creby_id" FromRole="users" ToRole="mac_allowed" />
+          <NavigationProperty Name="problem" Relationship="Self.fk_problem_chgby_id" FromRole="users" ToRole="problem" />
+          <NavigationProperty Name="problem1" Relationship="Self.fk_problem_creby_id" FromRole="users" ToRole="problem" />
+          <NavigationProperty Name="serial" Relationship="Self.fk_serial_chgby_id" FromRole="users" ToRole="serial" />
+          <NavigationProperty Name="serial1" Relationship="Self.fk_serial_creby_id" FromRole="users" ToRole="serial" />
+          <NavigationProperty Name="serial_password" Relationship="Self.fk_serial_password_creby_id" FromRole="users" ToRole="serial_password" />
+        </EntityType>
+        <Association Name="fk_cloud_srv_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cloud_srv">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cloud_srv_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cloud_srv">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cloud_srv_serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cloud_srv">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_d_msg_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="d_msg" Type="Self.d_msg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="d_msg">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_d_msg_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="d_msg" Type="Self.d_msg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="d_msg">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_d_msg_dealer_id">
+          <End Role="dealer" Type="Self.dealer" Multiplicity="0..1" />
+          <End Role="d_msg" Type="Self.d_msg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="d_msg">
+              <PropertyRef Name="dealer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dealer_area_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="dealer" Type="Self.dealer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dealer">
+              <PropertyRef Name="area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dealer_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="dealer" Type="Self.dealer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dealer">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dealer_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="dealer" Type="Self.dealer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dealer">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_dealer_id">
+          <End Role="dealer" Type="Self.dealer" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="dealer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_istab_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="istab" Type="Self.istab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="istab">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_istab_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="istab" Type="Self.istab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="istab">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_problem_probcod_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="probcod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_area_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="area_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_busityp_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="busityp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_howknown_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="howknown_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_verext_id">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="verext_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ma_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="ma" Type="Self.ma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ma">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ma_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="ma" Type="Self.ma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ma">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ma_serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="ma" Type="Self.ma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ma">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mac_allowed_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="mac_allowed" Type="Self.mac_allowed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="mac_allowed">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_problem_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_problem_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_problem_serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="problem" Type="Self.problem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="problem">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_password_serial_id">
+          <End Role="serial" Type="Self.serial" Multiplicity="0..1" />
+          <End Role="serial_password" Type="Self.serial_password" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="serial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial_password">
+              <PropertyRef Name="serial_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_chgby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="chgby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="serial" Type="Self.serial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_serial_password_creby_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="serial_password" Type="Self.serial_password" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="serial_password">
+              <PropertyRef Name="creby_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="snEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cloud_srv" EntityType="Self.cloud_srv" />
+          <EntitySet Name="d_msg" EntityType="Self.d_msg" />
+          <EntitySet Name="dealer" EntityType="Self.dealer" />
+          <EntitySet Name="istab" EntityType="Self.istab" />
+          <EntitySet Name="ma" EntityType="Self.ma" />
+          <EntitySet Name="mac_allowed" EntityType="Self.mac_allowed" />
+          <EntitySet Name="problem" EntityType="Self.problem" />
+          <EntitySet Name="serial" EntityType="Self.serial" />
+          <EntitySet Name="serial_password" EntityType="Self.serial_password" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="fk_cloud_srv_chgby_id" Association="Self.fk_cloud_srv_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="cloud_srv" EntitySet="cloud_srv" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cloud_srv_creby_id" Association="Self.fk_cloud_srv_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="cloud_srv" EntitySet="cloud_srv" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cloud_srv_serial_id" Association="Self.fk_cloud_srv_serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="cloud_srv" EntitySet="cloud_srv" />
+          </AssociationSet>
+          <AssociationSet Name="fk_d_msg_chgby_id" Association="Self.fk_d_msg_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="d_msg" EntitySet="d_msg" />
+          </AssociationSet>
+          <AssociationSet Name="fk_d_msg_creby_id" Association="Self.fk_d_msg_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="d_msg" EntitySet="d_msg" />
+          </AssociationSet>
+          <AssociationSet Name="fk_d_msg_dealer_id" Association="Self.fk_d_msg_dealer_id">
+            <End Role="dealer" EntitySet="dealer" />
+            <End Role="d_msg" EntitySet="d_msg" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dealer_area_id" Association="Self.fk_dealer_area_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="dealer" EntitySet="dealer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dealer_chgby_id" Association="Self.fk_dealer_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="dealer" EntitySet="dealer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dealer_creby_id" Association="Self.fk_dealer_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="dealer" EntitySet="dealer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_dealer_id" Association="Self.fk_serial_dealer_id">
+            <End Role="dealer" EntitySet="dealer" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_istab_chgby_id" Association="Self.fk_istab_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="istab" EntitySet="istab" />
+          </AssociationSet>
+          <AssociationSet Name="fk_istab_creby_id" Association="Self.fk_istab_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="istab" EntitySet="istab" />
+          </AssociationSet>
+          <AssociationSet Name="fk_problem_probcod_id" Association="Self.fk_problem_probcod_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_area_id" Association="Self.fk_serial_area_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_busityp_id" Association="Self.fk_serial_busityp_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_howknown_id" Association="Self.fk_serial_howknown_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_verext_id" Association="Self.fk_serial_verext_id">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ma_chgby_id" Association="Self.fk_ma_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="ma" EntitySet="ma" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ma_creby_id" Association="Self.fk_ma_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="ma" EntitySet="ma" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ma_serial_id" Association="Self.fk_ma_serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="ma" EntitySet="ma" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mac_allowed_creby_id" Association="Self.fk_mac_allowed_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="mac_allowed" EntitySet="mac_allowed" />
+          </AssociationSet>
+          <AssociationSet Name="fk_problem_chgby_id" Association="Self.fk_problem_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_problem_creby_id" Association="Self.fk_problem_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_problem_serial_id" Association="Self.fk_problem_serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="problem" EntitySet="problem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_password_serial_id" Association="Self.fk_serial_password_serial_id">
+            <End Role="serial" EntitySet="serial" />
+            <End Role="serial_password" EntitySet="serial_password" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_chgby_id" Association="Self.fk_serial_chgby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_creby_id" Association="Self.fk_serial_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="serial" EntitySet="serial" />
+          </AssociationSet>
+          <AssociationSet Name="fk_serial_password_creby_id" Association="Self.fk_serial_password_creby_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="serial_password" EntitySet="serial_password" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="snModelStoreContainer" CdmEntityContainer="snEntities">
+          <EntitySetMapping Name="cloud_srv">
+            <EntityTypeMapping TypeName="snModel.cloud_srv">
+              <MappingFragment StoreEntitySet="cloud_srv">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="serial_id" ColumnName="serial_id" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="d_msg">
+            <EntityTypeMapping TypeName="snModel.d_msg">
+              <MappingFragment StoreEntitySet="d_msg">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="dealer_id" ColumnName="dealer_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dealer">
+            <EntityTypeMapping TypeName="snModel.dealer">
+              <MappingFragment StoreEntitySet="dealer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="dealercod" ColumnName="dealercod" />
+                <ScalarProperty Name="prenam" ColumnName="prenam" />
+                <ScalarProperty Name="compnam" ColumnName="compnam" />
+                <ScalarProperty Name="addr01" ColumnName="addr01" />
+                <ScalarProperty Name="addr02" ColumnName="addr02" />
+                <ScalarProperty Name="addr03" ColumnName="addr03" />
+                <ScalarProperty Name="zipcod" ColumnName="zipcod" />
+                <ScalarProperty Name="telnum" ColumnName="telnum" />
+                <ScalarProperty Name="faxnum" ColumnName="faxnum" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="busides" ColumnName="busides" />
+                <ScalarProperty Name="area_id" ColumnName="area_id" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="istab">
+            <EntityTypeMapping TypeName="snModel.istab">
+              <MappingFragment StoreEntitySet="istab">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tabtyp" ColumnName="tabtyp" />
+                <ScalarProperty Name="typcod" ColumnName="typcod" />
+                <ScalarProperty Name="abbreviate_en" ColumnName="abbreviate_en" />
+                <ScalarProperty Name="abbreviate_th" ColumnName="abbreviate_th" />
+                <ScalarProperty Name="typdes_en" ColumnName="typdes_en" />
+                <ScalarProperty Name="typdes_th" ColumnName="typdes_th" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ma">
+            <EntityTypeMapping TypeName="snModel.ma">
+              <MappingFragment StoreEntitySet="ma">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="serial_id" ColumnName="serial_id" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mac_allowed">
+            <EntityTypeMapping TypeName="snModel.mac_allowed">
+              <MappingFragment StoreEntitySet="mac_allowed">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="mac_address" ColumnName="mac_address" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="problem">
+            <EntityTypeMapping TypeName="snModel.problem">
+              <MappingFragment StoreEntitySet="problem">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="probdesc" ColumnName="probdesc" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="serial_id" ColumnName="serial_id" />
+                <ScalarProperty Name="probcod_id" ColumnName="probcod_id" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="serial">
+            <EntityTypeMapping TypeName="snModel.serial">
+              <MappingFragment StoreEntitySet="serial">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sernum" ColumnName="sernum" />
+                <ScalarProperty Name="oldnum" ColumnName="oldnum" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="prenam" ColumnName="prenam" />
+                <ScalarProperty Name="compnam" ColumnName="compnam" />
+                <ScalarProperty Name="addr01" ColumnName="addr01" />
+                <ScalarProperty Name="addr02" ColumnName="addr02" />
+                <ScalarProperty Name="addr03" ColumnName="addr03" />
+                <ScalarProperty Name="zipcod" ColumnName="zipcod" />
+                <ScalarProperty Name="telnum" ColumnName="telnum" />
+                <ScalarProperty Name="faxnum" ColumnName="faxnum" />
+                <ScalarProperty Name="busides" ColumnName="busides" />
+                <ScalarProperty Name="purdat" ColumnName="purdat" />
+                <ScalarProperty Name="expdat" ColumnName="expdat" />
+                <ScalarProperty Name="branch" ColumnName="branch" />
+                <ScalarProperty Name="manual" ColumnName="manual" />
+                <ScalarProperty Name="upfree" ColumnName="upfree" />
+                <ScalarProperty Name="refnum" ColumnName="refnum" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="dealer_id" ColumnName="dealer_id" />
+                <ScalarProperty Name="verextdat" ColumnName="verextdat" />
+                <ScalarProperty Name="area_id" ColumnName="area_id" />
+                <ScalarProperty Name="busityp_id" ColumnName="busityp_id" />
+                <ScalarProperty Name="howknown_id" ColumnName="howknown_id" />
+                <ScalarProperty Name="verext_id" ColumnName="verext_id" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+                <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />
+                <ScalarProperty Name="chgdat" ColumnName="chgdat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="serial_password">
+            <EntityTypeMapping TypeName="snModel.serial_password">
+              <MappingFragment StoreEntitySet="serial_password">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pass_word" ColumnName="pass_word" />
+                <ScalarProperty Name="serial_id" ColumnName="serial_id" />
+                <ScalarProperty Name="creby_id" ColumnName="creby_id" />
+                <ScalarProperty Name="credat" ColumnName="credat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="snModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userpassword" ColumnName="userpassword" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="usergroup" ColumnName="usergroup" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="allowed_web_login" ColumnName="allowed_web_login" />
+                <ScalarProperty Name="training_expert" ColumnName="training_expert" />
+                <ScalarProperty Name="max_absent" ColumnName="max_absent" />
+                <ScalarProperty Name="create_at" ColumnName="create_at" />
+                <ScalarProperty Name="last_use" ColumnName="last_use" />
+                <ScalarProperty Name="rec_by" ColumnName="rec_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

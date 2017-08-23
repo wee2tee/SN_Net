@@ -183,11 +183,13 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPassword)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -370,10 +372,10 @@
             this.cloudDateTo.Read_Only = true;
             this.cloudDateTo.Size = new System.Drawing.Size(96, 23);
             this.cloudDateTo.TabIndex = 146;
-            this.cloudDateTo.Texts = "23/08/2559";
-            this.cloudDateTo.TextsMysql = "2016-08-23";
+            this.cloudDateTo.Texts = "22/08/2560";
+            this.cloudDateTo.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.cloudDateTo, "<F6> = Show Calendar");
-            this.cloudDateTo.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 219);
+            this.cloudDateTo.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 441);
             // 
             // cloudDateFrom
             // 
@@ -386,10 +388,10 @@
             this.cloudDateFrom.Read_Only = true;
             this.cloudDateFrom.Size = new System.Drawing.Size(96, 23);
             this.cloudDateFrom.TabIndex = 145;
-            this.cloudDateFrom.Texts = "23/08/2559";
-            this.cloudDateFrom.TextsMysql = "2016-08-23";
+            this.cloudDateFrom.Texts = "22/08/2560";
+            this.cloudDateFrom.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.cloudDateFrom, "<F6> = Show Calendar");
-            this.cloudDateFrom.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 221);
+            this.cloudDateFrom.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 444);
             // 
             // label37
             // 
@@ -498,10 +500,10 @@
             this.maDateTo.Read_Only = true;
             this.maDateTo.Size = new System.Drawing.Size(96, 23);
             this.maDateTo.TabIndex = 146;
-            this.maDateTo.Texts = "23/08/2559";
-            this.maDateTo.TextsMysql = "2016-08-23";
+            this.maDateTo.Texts = "22/08/2560";
+            this.maDateTo.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.maDateTo, "<F6> = Show Calendar");
-            this.maDateTo.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 224);
+            this.maDateTo.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 450);
             // 
             // maDateFrom
             // 
@@ -514,10 +516,10 @@
             this.maDateFrom.Read_Only = true;
             this.maDateFrom.Size = new System.Drawing.Size(96, 23);
             this.maDateFrom.TabIndex = 145;
-            this.maDateFrom.Texts = "23/08/2559";
-            this.maDateFrom.TextsMysql = "2016-08-23";
+            this.maDateFrom.Texts = "22/08/2560";
+            this.maDateFrom.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.maDateFrom, "<F6> = Show Calendar");
-            this.maDateFrom.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 226);
+            this.maDateFrom.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 453);
             // 
             // label35
             // 
@@ -560,10 +562,10 @@
             this.dtVerextdat.Read_Only = true;
             this.dtVerextdat.Size = new System.Drawing.Size(96, 23);
             this.dtVerextdat.TabIndex = 25;
-            this.dtVerextdat.Texts = "23/08/2559";
-            this.dtVerextdat.TextsMysql = "2016-08-23";
+            this.dtVerextdat.Texts = "22/08/2560";
+            this.dtVerextdat.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.dtVerextdat, "<F6> = Show Calendar");
-            this.dtVerextdat.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 228);
+            this.dtVerextdat.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 456);
             // 
             // dtManual
             // 
@@ -576,10 +578,10 @@
             this.dtManual.Read_Only = true;
             this.dtManual.Size = new System.Drawing.Size(96, 23);
             this.dtManual.TabIndex = 23;
-            this.dtManual.Texts = "23/08/2559";
-            this.dtManual.TextsMysql = "2016-08-23";
+            this.dtManual.Texts = "22/08/2560";
+            this.dtManual.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.dtManual, "<F6> = Show Calendar");
-            this.dtManual.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 230);
+            this.dtManual.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 459);
             // 
             // dtExpdat
             // 
@@ -592,10 +594,10 @@
             this.dtExpdat.Read_Only = true;
             this.dtExpdat.Size = new System.Drawing.Size(96, 23);
             this.dtExpdat.TabIndex = 21;
-            this.dtExpdat.Texts = "23/08/2559";
-            this.dtExpdat.TextsMysql = "2016-08-23";
+            this.dtExpdat.Texts = "22/08/2560";
+            this.dtExpdat.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.dtExpdat, "<F6> = Show Calendar");
-            this.dtExpdat.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 232);
+            this.dtExpdat.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 461);
             // 
             // dtPurdat
             // 
@@ -608,10 +610,10 @@
             this.dtPurdat.Read_Only = true;
             this.dtPurdat.Size = new System.Drawing.Size(96, 23);
             this.dtPurdat.TabIndex = 20;
-            this.dtPurdat.Texts = "23/08/2559";
-            this.dtPurdat.TextsMysql = "2016-08-23";
+            this.dtPurdat.Texts = "22/08/2560";
+            this.dtPurdat.TextsMysql = "2017-08-22";
             this.toolTip1.SetToolTip(this.dtPurdat, "<F6> = Show Calendar");
-            this.dtPurdat.ValDateTime = new System.DateTime(2016, 8, 23, 14, 30, 38, 234);
+            this.dtPurdat.ValDateTime = new System.DateTime(2017, 8, 22, 11, 18, 32, 464);
             // 
             // cbVerext
             // 
@@ -1865,6 +1867,7 @@
             this.txtSernum.Size = new System.Drawing.Size(118, 23);
             this.txtSernum.TabIndex = 0;
             this.txtSernum.Texts = "";
+            this.txtSernum.Leave += new System.EventHandler(this.txtSernum_Leave);
             // 
             // txtRefnum
             // 
@@ -2103,6 +2106,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProblem)).EndInit();
             this.toolStrip1.ResumeLayout(false);
@@ -2110,6 +2114,7 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

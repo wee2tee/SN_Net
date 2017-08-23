@@ -58,15 +58,17 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuImportData = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripUserInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblTimeDuration = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -104,7 +106,8 @@
             this.preferenceToolStripMenuItem,
             this.toolStripSeparator4,
             this.exitToolStripMenuItem,
-            this.testToolStripMenuItem});
+            this.testToolStripMenuItem,
+            this.mnuImportData});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
             this.modeToolStripMenuItem.Size = new System.Drawing.Size(36, 20);
             this.modeToolStripMenuItem.Text = "File";
@@ -309,10 +312,18 @@
             this.testToolStripMenuItem.Visible = false;
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
+            // mnuImportData
+            // 
+            this.mnuImportData.Name = "mnuImportData";
+            this.mnuImportData.Size = new System.Drawing.Size(337, 22);
+            this.mnuImportData.Text = "Import Old Data";
+            this.mnuImportData.Click += new System.EventHandler(this.mnuImportData_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeLogToolStripMenuItem});
+            this.changeLogToolStripMenuItem,
+            this.testToolStripMenuItem1});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.helpToolStripMenuItem.Text = "Help?";
@@ -323,6 +334,13 @@
             this.changeLogToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.changeLogToolStripMenuItem.Text = "ChangeLog";
             this.changeLogToolStripMenuItem.Click += new System.EventHandler(this.changeLogToolStripMenuItem_Click);
+            // 
+            // testToolStripMenuItem1
+            // 
+            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
+            this.testToolStripMenuItem1.Size = new System.Drawing.Size(135, 22);
+            this.testToolStripMenuItem1.Text = "test";
+            this.testToolStripMenuItem1.Click += new System.EventHandler(this.testToolStripMenuItem1_Click);
             // 
             // statusStrip1
             // 
@@ -350,21 +368,12 @@
             this.toolStripInfo.Size = new System.Drawing.Size(22, 17);
             this.toolStripInfo.Text = "     ";
             // 
-            // toolStripProcessing
+            // lblVersion
             // 
-            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
-            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
-            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
-            this.toolStripProcessing.Name = "toolStripProcessing";
-            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(469, 17);
-            this.toolStripProcessing.Spring = true;
-            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.toolStripProcessing.Visible = false;
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(990, 17);
+            this.lblVersion.Spring = true;
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // toolStrip1
             // 
@@ -390,12 +399,21 @@
             this.lblTimeDuration.Text = "00:00:00";
             this.lblTimeDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lblVersion
+            // toolStripProcessing
             // 
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(479, 17);
-            this.lblVersion.Spring = true;
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripProcessing.ForeColor = System.Drawing.Color.Green;
+            this.toolStripProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripProcessing.Image")));
+            this.toolStripProcessing.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
+            this.toolStripProcessing.Name = "toolStripProcessing";
+            this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProcessing.Size = new System.Drawing.Size(485, 17);
+            this.toolStripProcessing.Spring = true;
+            this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripProcessing.Visible = false;
             // 
             // MainForm
             // 
@@ -465,6 +483,8 @@
         private System.Windows.Forms.ToolStripMenuItem usersGroupMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel lblVersion;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem mnuImportData;
     }
 }
 

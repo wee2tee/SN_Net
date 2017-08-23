@@ -13,6 +13,7 @@ using SN_Net.DataModels;
 using WebAPI;
 using WebAPI.ApiResult;
 using Newtonsoft.Json;
+using SN_Net.Model;
 
 namespace SN_Net.Subform
 {
@@ -22,7 +23,7 @@ namespace SN_Net.Subform
         public GlobalVar G;
         public List<Serial> serial_id_list;
         //public int macloud_exp_prd = 0;
-
+        private List<serial> s;
 
         #region declare Data Model
         public Serial serial;
@@ -259,13 +260,13 @@ namespace SN_Net.Subform
                 }
             }
 
-            this.txtSernum.Leave += delegate(object sender, EventArgs e) // Validate S/N while add new S/N
-            {
-                if (!ValidateSN.Check(((CustomMaskedTextBox)sender).Texts) && this.form_mode == FORM_MODE.ADD)
-                {
-                    ((CustomMaskedTextBox)sender).Focus();
-                }
-            };
+            //this.txtSernum.Leave += delegate(object sender, EventArgs e) // Validate S/N while add new S/N
+            //{
+            //    if (!ValidateSN.Check(((CustomMaskedTextBox)sender).Texts) && this.form_mode == FORM_MODE.ADD)
+            //    {
+            //        ((CustomMaskedTextBox)sender).Focus();
+            //    }
+            //};
 
             this.txtArea.Leave += delegate(object sender, EventArgs e) // Validate area code
             {
@@ -1969,6 +1970,28 @@ namespace SN_Net.Subform
             }
         }
 
+        private bool IsSerialExist(string sernum)
+        {
+            CRUDResult serial_exist = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_isexist&sernum=" + sernum);
+            ServerResult serial = JsonConvert.DeserializeObject<ServerResult>(serial_exist.data);
+            if (serial.result == ServerResult.SERVER_RESULT_SUCCESS)
+            {
+                var serials = serial.serial;
+                if (serials.Where(s => s.sernum.Trim() == sernum.Trim()).FirstOrDefault() != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void getLastSerial()
         {
             CRUDResult get = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "serial/get_last");
@@ -2280,7 +2303,7 @@ namespace SN_Net.Subform
                 worker.DoWork += delegate
                 {
                     CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/create_new", json_data);
-                    Console.WriteLine(post.data);
+                    //Console.WriteLine(post.data);
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
                     {
@@ -2300,8 +2323,8 @@ namespace SN_Net.Subform
                     {
                         this.FormRead();
                         this.fillSerialInForm();
-                        this.toolStripItem.PerformClick();
-                        this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
+                        //this.toolStripItem.PerformClick();
+                        //this.showInlineProblemForm(this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex]);
                     }
                     else
                     {
@@ -3273,9 +3296,9 @@ namespace SN_Net.Subform
                 {
                     string json_data = "{\"id\":" + this.serial.id.ToString() + ",";
                     json_data += "\"users_name\":\"" + this.main_form.G.loged_in_user_name + "\"}";
-                    Console.WriteLine(json_data);
+                    //Console.WriteLine(json_data);
                     CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "serial/gen_cd_training_date", json_data);
-                    Console.WriteLine("post.data = " + post.data);
+                    //Console.WriteLine("post.data = " + post.data);
                     ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(post.data);
 
                     if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
@@ -3536,6 +3559,7 @@ namespace SN_Net.Subform
             }
             if (keyData == Keys.Enter && (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM))
             {
+                //Console.WriteLine(" ==> " + this.ActiveControl.Name);
                 if (this.current_focused_control == this.dtVerextdat || this.current_focused_control.Name == "inline_problem_probdesc")
                 {
                     this.toolStripSave.PerformClick();
@@ -4131,6 +4155,62 @@ namespace SN_Net.Subform
             {
                 this.getSerial(im.selected_id);
                 this.fillSerialInForm();
+            }
+        }
+
+
+        /** Additinal 2017-08-21 **/
+        private void txtSernum_Leave(object sender, EventArgs e)
+        {
+            if (this.form_mode != FORM_MODE.ADD)
+                return;
+
+            string txt = ((CustomMaskedTextBox)sender).Texts;
+
+            if(txt.Trim().Length == 0)
+            {
+                ((CustomMaskedTextBox)sender).Focus();
+            }
+            else
+            {
+                if (ValidateSN.Check(txt))
+                {
+                    bool is_exist = true;
+                    BackgroundWorker work = new BackgroundWorker();
+                    work.DoWork += delegate
+                    {
+                        is_exist = this.IsSerialExist(txt);
+                    };
+                    work.RunWorkerCompleted += delegate
+                    {
+                        if (is_exist)
+                        {
+                            ((CustomMaskedTextBox)sender).Focus();
+                            MessageAlert.Show("หมายเลข S/N นี้มีอยู่แล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                            return;
+                        }
+                        else
+                        {
+                            if (txt.Substring(2, 1) == "1" && txt.Substring(3, 1) == "0")
+                                this.txtVersion.Texts = "1.0";
+
+                            if (txt.Substring(2, 1) == "1" && txt.Substring(3, 1) == "5")
+                                this.txtVersion.Texts = "1.5";
+
+                            if (txt.Substring(2, 1) == "2")
+                                this.txtVersion.Texts = "2.0";
+
+                            if (txt.Substring(2, 1) == "3")
+                                this.txtVersion.Texts = "2.5";
+                        }
+                    };
+                    work.RunWorkerAsync();
+                }
+                else
+                {
+                    MessageAlert.Show("กรุณาป้อน S/N ให้ถูกต้อง", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    ((CustomMaskedTextBox)sender).Focus();
+                }
             }
         }
     }

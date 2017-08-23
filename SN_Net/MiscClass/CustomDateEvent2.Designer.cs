@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.colEventCalendar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSeq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,8 +50,16 @@
             this.lblBottomText = new System.Windows.Forms.Label();
             this.lblNoteDescription = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.customDatagridview1 = new SN_Net.MiscClass.CustomDatagridview();
+            this.col_event_calendar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_event_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_event_desc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_countable = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customDatagridview1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv
@@ -83,7 +92,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv.GridColor = System.Drawing.Color.White;
-            this.dgv.Location = new System.Drawing.Point(1, 28);
+            this.dgv.Location = new System.Drawing.Point(1, 31);
             this.dgv.MultiSelect = false;
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
@@ -91,7 +100,7 @@
             this.dgv.RowTemplate.Height = 18;
             this.dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv.Size = new System.Drawing.Size(398, 122);
+            this.dgv.Size = new System.Drawing.Size(397, 117);
             this.dgv.StandardTab = true;
             this.dgv.TabIndex = 2;
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
@@ -285,11 +294,102 @@
             this.lblNoteDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblNoteDescription.Click += new System.EventHandler(this.lblNoteDescription_Click);
             // 
+            // customDatagridview1
+            // 
+            this.customDatagridview1._BackgroundText = "Sample";
+            this.customDatagridview1._BackgroundTextcolor = System.Drawing.Color.Red;
+            this.customDatagridview1._BackgroundTextFont = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customDatagridview1.AllowUserToAddRows = false;
+            this.customDatagridview1.AllowUserToDeleteRows = false;
+            this.customDatagridview1.AllowUserToResizeColumns = false;
+            this.customDatagridview1.AllowUserToResizeRows = false;
+            this.customDatagridview1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.customDatagridview1.BackgroundColor = System.Drawing.Color.White;
+            this.customDatagridview1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.customDatagridview1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.customDatagridview1.ColumnHeadersVisible = false;
+            this.customDatagridview1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_event_calendar,
+            this.col_seq,
+            this.col_name,
+            this.col_event_code,
+            this.col_event_desc,
+            this.col_countable});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.customDatagridview1.DefaultCellStyle = dataGridViewCellStyle3;
+            this.customDatagridview1.Location = new System.Drawing.Point(1, 31);
+            this.customDatagridview1.Name = "customDatagridview1";
+            this.customDatagridview1.RowHeadersVisible = false;
+            this.customDatagridview1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.customDatagridview1.Size = new System.Drawing.Size(87, 57);
+            this.customDatagridview1.TabIndex = 7;
+            this.customDatagridview1.Visible = false;
+            // 
+            // col_event_calendar
+            // 
+            this.col_event_calendar.DataPropertyName = "event_calendar";
+            this.col_event_calendar.HeaderText = "Event_cal";
+            this.col_event_calendar.Name = "col_event_calendar";
+            this.col_event_calendar.ReadOnly = true;
+            this.col_event_calendar.Visible = false;
+            // 
+            // col_seq
+            // 
+            this.col_seq.DataPropertyName = "seq";
+            this.col_seq.HeaderText = "Seq";
+            this.col_seq.MinimumWidth = 20;
+            this.col_seq.Name = "col_seq";
+            this.col_seq.ReadOnly = true;
+            this.col_seq.Width = 20;
+            // 
+            // col_name
+            // 
+            this.col_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_name.DataPropertyName = "name";
+            this.col_name.FillWeight = 30F;
+            this.col_name.HeaderText = "Name";
+            this.col_name.Name = "col_name";
+            this.col_name.ReadOnly = true;
+            // 
+            // col_event_code
+            // 
+            this.col_event_code.DataPropertyName = "event_code";
+            this.col_event_code.HeaderText = "Event code";
+            this.col_event_code.Name = "col_event_code";
+            this.col_event_code.ReadOnly = true;
+            this.col_event_code.Visible = false;
+            // 
+            // col_event_desc
+            // 
+            this.col_event_desc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_event_desc.DataPropertyName = "event_desc";
+            this.col_event_desc.FillWeight = 70F;
+            this.col_event_desc.HeaderText = "Event desc";
+            this.col_event_desc.Name = "col_event_desc";
+            this.col_event_desc.ReadOnly = true;
+            // 
+            // col_countable
+            // 
+            this.col_countable.DataPropertyName = "countable_leave_person";
+            this.col_countable.HeaderText = "Countable";
+            this.col_countable.Name = "col_countable";
+            this.col_countable.ReadOnly = true;
+            this.col_countable.Visible = false;
+            // 
             // CustomDateEvent2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.customDatagridview1);
             this.Controls.Add(this.lblDay);
             this.Controls.Add(this.lblBottomText);
             this.Controls.Add(this.toolStrip1);
@@ -302,6 +402,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customDatagridview1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,5 +428,12 @@
         private System.Windows.Forms.ToolStripButton btnMaid;
         private System.Windows.Forms.Label lblNoteDescription;
         private System.Windows.Forms.ToolTip toolTip1;
+        private CustomDatagridview customDatagridview1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_event_calendar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_seq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_event_code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_event_desc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_countable;
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="eb2110bdd490407a8e1f491035ea9ca3" Name="Diagram1">
+        <EntityTypeShape EntityType="snModel.cloud_srv" Width="1.5" PointX="3" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.d_msg" Width="1.5" PointX="6" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.dealer" Width="1.5" PointX="5.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.istab" Width="1.5" PointX="3" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.ma" Width="1.5" PointX="9.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.mac_allowed" Width="1.5" PointX="3" PointY="32.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.problem" Width="1.5" PointX="9.75" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.serial" Width="1.5" PointX="7.5" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.serial_password" Width="1.5" PointX="12.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.users" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <AssociationConnector Association="snModel.fk_cloud_srv_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_cloud_srv_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_cloud_srv_serial_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_d_msg_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_d_msg_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_d_msg_dealer_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_dealer_area_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_dealer_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_dealer_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_dealer_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_istab_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_istab_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_problem_probcod_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_area_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_busityp_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_howknown_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_verext_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_ma_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_ma_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_ma_serial_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_mac_allowed_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_problem_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_problem_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_problem_serial_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_password_serial_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_chgby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_creby_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_serial_password_creby_id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

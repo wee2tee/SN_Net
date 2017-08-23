@@ -140,25 +140,18 @@ namespace SN_Net.MiscClass
                 this.dgv.SendToBack();
                 this.lblNoteDescription.BringToFront();
             }
-            //else
-            //{
-            //    this.lblNoteDescription.Text = "";
-            //    this.lblNoteDescription.SendToBack();
-            //    this.dgv.BringToFront();
-            //}
             else if(this.note != null && this.note.type == (int)NoteCalendar.NOTE_TYPE.WEEKDAY)
             {
-                //this.lblNoteDescription.Height += 14 - this.lblBottomText.Height;
                 this.lblNoteDescription.Text = this.note.description;
                 this.lblNoteDescription.Font = new Font("tahoma", 8f, FontStyle.Regular);
                 this.lblNoteDescription.TextAlign = ContentAlignment.BottomLeft;
                 this.lblNoteDescription.SendToBack();
                 this.dgv.BringToFront();
-                this.dgv.Height = this.note.description.Trim().Length > 0 ? this.Height - lblDay.Height - lblBottomText.Height - 14 - 6 : this.Height - lblDay.Height - lblBottomText.Height - 6;
+                this.dgv.Height = this.note.description.Trim().Length > 0 ? this.Height - lblDay.Height - lblBottomText.Height - 14 - 9 : this.Height - lblDay.Height - lblBottomText.Height - 9;
             }
             else if(this.note == null)
             {
-                this.dgv.Height = this.Height - lblDay.Height - this.lblBottomText.Height - 6;
+                this.dgv.Height = this.Height - lblDay.Height - this.lblBottomText.Height - 9;
             }
 
             // btnHoliday, btnMaid text and visibilities
@@ -202,6 +195,7 @@ namespace SN_Net.MiscClass
             this.dgv.DataSource = this.bs;
             this.bs.ResetBindings(true);
             this.bs.DataSource = this.absent_list;
+            this.customDatagridview1.DataSource = this.bs;
         }
 
         private bool IsLastSaturday(DateTime date_to_check)

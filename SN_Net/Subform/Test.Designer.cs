@@ -40,10 +40,10 @@
             this.toolStripNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripLast = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.customTimePicker1 = new SN_Net.MiscClass.CustomTimePicker();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.customDatagridview1 = new SN_Net.MiscClass.CustomDatagridview();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customDatagridview1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -63,7 +63,7 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1134, 43);
+            this.toolStrip1.Size = new System.Drawing.Size(521, 43);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -169,37 +169,28 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.customTimePicker1);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.customDatagridview1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 43);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1134, 630);
+            this.panel1.Size = new System.Drawing.Size(521, 330);
             this.panel1.TabIndex = 4;
             // 
-            // customTimePicker1
+            // customDatagridview1
             // 
-            this.customTimePicker1.BackColor = System.Drawing.Color.White;
-            this.customTimePicker1.Location = new System.Drawing.Point(24, 3);
-            this.customTimePicker1.Name = "customTimePicker1";
-            this.customTimePicker1.Read_Only = true;
-            this.customTimePicker1.Show_Second = true;
-            this.customTimePicker1.Size = new System.Drawing.Size(75, 23);
-            this.customTimePicker1.TabIndex = 2;
-            this.customTimePicker1.Time = new System.DateTime(2016, 1, 25, 9, 10, 26, 841);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(8, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.customDatagridview1.BackgroundColor = System.Drawing.Color.White;
+            this.customDatagridview1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.customDatagridview1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.customDatagridview1.Location = new System.Drawing.Point(0, 0);
+            this.customDatagridview1.Name = "customDatagridview1";
+            this.customDatagridview1.Size = new System.Drawing.Size(521, 330);
+            this.customDatagridview1.TabIndex = 3;
             // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1134, 673);
+            this.ClientSize = new System.Drawing.Size(521, 373);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "Test";
@@ -208,7 +199,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customDatagridview1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,7 +219,6 @@
         private System.Windows.Forms.ToolStripButton toolStripNext;
         private System.Windows.Forms.ToolStripButton toolStripLast;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
-        private MiscClass.CustomTimePicker customTimePicker1;
+        private MiscClass.CustomDatagridview customDatagridview1;
     }
 }

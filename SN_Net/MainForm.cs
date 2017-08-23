@@ -418,5 +418,17 @@ namespace SN_Net
             cl.ShowDialog();
         }
 
+        private void testToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Test t = new Test();
+            t.MdiParent = this;
+            t.Show();
+        }
+
+        private void mnuImportData_Click(object sender, EventArgs e)
+        {
+            FormImportData im = new FormImportData();
+            im.ShowDialog();
+        }
     }
 }
