@@ -32,10 +32,13 @@ namespace SN_Net.Model
         public string abbreviate_th { get; set; }
         public string typdes_en { get; set; }
         public string typdes_th { get; set; }
+        public bool use_pattern { get; set; }
+        public string pattern { get; set; }
         public Nullable<int> creby_id { get; set; }
         public System.DateTime credat { get; set; }
         public Nullable<int> chgby_id { get; set; }
         public Nullable<System.DateTime> chgdat { get; set; }
+        public string flag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dealer> dealer { get; set; }

@@ -231,6 +231,33 @@ namespace SN_Net.Model
             return d;
         }
 
+        public static d_msgDbf ToDmsgDbf(this DataRow row)
+        {
+            if (row == null)
+                return null;
+
+            d_msgDbf d = new d_msgDbf
+            {
+                dealer = row.Field<string>("dealer").Trim(),
+                date = !row.IsNull("date") ? (DateTime?)row.Field<DateTime>("date") : null,
+                time = row.Field<string>("time").Trim(),
+                name = row.Field<string>("name").Trim(),
+                descrp = row.Field<string>("descrp").Trim()
+            };
+            return d;
+        }
+
+        public static List<d_msgDbf> ToDmsgDbfList(this DataTable dmsgs)
+        {
+            List<d_msgDbf> d = new List<d_msgDbf>();
+
+            foreach (DataRow row in dmsgs.Rows)
+            {
+                d.Add(row.ToDmsgDbf());
+            }
+            return d;
+        }
+
         public static serialDbf ToSerialDbf(this DataRow row)
         {
             if (row == null)
@@ -279,6 +306,34 @@ namespace SN_Net.Model
                 s.Add(row.ToSerialDbf());
             }
             return s;
+        }
+
+        public static problemDbf ToProblemDbf(this DataRow row)
+        {
+            if (row == null)
+                return null;
+
+            problemDbf p = new problemDbf
+            {
+                probcod = row.Field<string>("probcod").Trim(),
+                probdesc = row.Field<string>("probdesc").Trim(),
+                date = !row.IsNull("date") ? (DateTime?)row.Field<DateTime>("date") : null,
+                name = row.Field<string>("name").Trim(),
+                sernum = row.Field<string>("sernum").Trim(),
+                time = row.Field<string>("time").Trim(),
+                userid = row.Field<string>("userid").Trim()
+            };
+            return p;
+        }
+
+        public static List<problemDbf> ToProblemDbfList(this DataTable problems)
+        {
+            List<problemDbf> p = new List<problemDbf>();
+            foreach (DataRow row in problems.Rows)
+            {
+                p.Add(row.ToProblemDbf());
+            }
+            return p;
         }
     }
     #endregion DbfTable Helper
@@ -344,9 +399,10 @@ namespace SN_Net.Model
         public string probcod { get; set; }
         public string probdesc { get; set; }
         public DateTime? date { get; set; }
+        public string time { get; set; }
         public string name { get; set; }
         public string sernum { get; set; }
-        public string recby { get; set; }
+        public string userid { get; set; }
     }
 
     public class dealerDbf
@@ -371,11 +427,10 @@ namespace SN_Net.Model
     public class d_msgDbf
     {
         public string dealer { get; set; }
-        public string description { get; set; }
+        public string descrp { get; set; }
         public DateTime? date { get; set; }
+        public string time { get; set; }
         public string name { get; set; }
-        public string recby { get; set; }
-
     }
     #endregion Table Class
 }

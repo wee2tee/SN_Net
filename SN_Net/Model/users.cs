@@ -33,6 +33,7 @@ namespace SN_Net.Model
             this.serial = new HashSet<serial>();
             this.serial1 = new HashSet<serial>();
             this.serial_password = new HashSet<serial_password>();
+            this.serial_password1 = new HashSet<serial_password>();
         }
     
         public int id { get; set; }
@@ -82,5 +83,7 @@ namespace SN_Net.Model
         public virtual ICollection<serial> serial1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<serial_password> serial_password { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<serial_password> serial_password1 { get; set; }
     }
 }

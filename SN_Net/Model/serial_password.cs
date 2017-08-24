@@ -19,8 +19,12 @@ namespace SN_Net.Model
         public Nullable<int> serial_id { get; set; }
         public Nullable<int> creby_id { get; set; }
         public System.DateTime credat { get; set; }
+        public Nullable<int> chgby_id { get; set; }
+        public Nullable<System.DateTime> chgdat { get; set; }
+        public string flag { get; set; }
     
         public virtual serial serial { get; set; }
         public virtual users users { get; set; }
+        public virtual users users1 { get; set; }
     }
 }

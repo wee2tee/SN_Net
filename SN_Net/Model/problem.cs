@@ -17,14 +17,15 @@ namespace SN_Net.Model
         public int id { get; set; }
         public string probdesc { get; set; }
         public Nullable<System.DateTime> date { get; set; }
+        public string time { get; set; }
         public string name { get; set; }
         public Nullable<int> serial_id { get; set; }
         public Nullable<int> probcod_id { get; set; }
-        public string flag { get; set; }
         public Nullable<int> creby_id { get; set; }
         public System.DateTime credat { get; set; }
         public Nullable<int> chgby_id { get; set; }
         public Nullable<System.DateTime> chgdat { get; set; }
+        public string flag { get; set; }
     
         public virtual istab istab { get; set; }
         public virtual users users { get; set; }
