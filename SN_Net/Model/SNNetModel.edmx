@@ -18,7 +18,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="d_msg">
           <Key>
@@ -34,7 +34,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="dealer">
           <Key>
@@ -59,7 +59,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="istab">
           <Key>
@@ -73,12 +73,11 @@
           <Property Name="typdes_en" Type="varchar" MaxLength="50" />
           <Property Name="typdes_th" Type="varchar" MaxLength="50" />
           <Property Name="use_pattern" Type="bool" Nullable="false" />
-          <Property Name="pattern" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="creby_id" Type="int" />
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ma">
           <Key>
@@ -93,7 +92,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="mac_allowed">
           <Key>
@@ -119,7 +118,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="serial">
           <Key>
@@ -157,7 +156,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="serial_password">
           <Key>
@@ -170,7 +169,7 @@
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="chgby_id" Type="int" />
           <Property Name="chgdat" Type="datetime" Precision="0" />
-          <Property Name="flag" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="flag" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -685,7 +684,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="users" Relationship="Self.fk_cloud_srv_chgby_id" FromRole="cloud_srv" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.fk_cloud_srv_creby_id" FromRole="cloud_srv" ToRole="users" />
           <NavigationProperty Name="serial" Relationship="Self.fk_cloud_srv_serial_id" FromRole="cloud_srv" ToRole="serial" />
@@ -704,7 +703,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="users" Relationship="Self.fk_d_msg_chgby_id" FromRole="d_msg" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.fk_d_msg_creby_id" FromRole="d_msg" ToRole="users" />
           <NavigationProperty Name="dealer" Relationship="Self.fk_d_msg_dealer_id" FromRole="d_msg" ToRole="dealer" />
@@ -732,7 +731,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="d_msg" Relationship="Self.fk_d_msg_dealer_id" FromRole="dealer" ToRole="d_msg" />
           <NavigationProperty Name="istab" Relationship="Self.fk_dealer_area_id" FromRole="dealer" ToRole="istab" />
           <NavigationProperty Name="users" Relationship="Self.fk_dealer_chgby_id" FromRole="dealer" ToRole="users" />
@@ -751,12 +750,11 @@
           <Property Name="typdes_en" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="typdes_th" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="use_pattern" Type="Boolean" Nullable="false" />
-          <Property Name="pattern" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="creby_id" Type="Int32" />
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="dealer" Relationship="Self.fk_dealer_area_id" FromRole="istab" ToRole="dealer" />
           <NavigationProperty Name="users" Relationship="Self.fk_istab_chgby_id" FromRole="istab" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.fk_istab_creby_id" FromRole="istab" ToRole="users" />
@@ -779,7 +777,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="users" Relationship="Self.fk_ma_chgby_id" FromRole="ma" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.fk_ma_creby_id" FromRole="ma" ToRole="users" />
           <NavigationProperty Name="serial" Relationship="Self.fk_ma_serial_id" FromRole="ma" ToRole="serial" />
@@ -809,7 +807,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="istab" Relationship="Self.fk_problem_probcod_id" FromRole="problem" ToRole="istab" />
           <NavigationProperty Name="users" Relationship="Self.fk_problem_chgby_id" FromRole="problem" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.fk_problem_creby_id" FromRole="problem" ToRole="users" />
@@ -851,7 +849,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="cloud_srv" Relationship="Self.fk_cloud_srv_serial_id" FromRole="serial" ToRole="cloud_srv" />
           <NavigationProperty Name="dealer" Relationship="Self.fk_serial_dealer_id" FromRole="serial" ToRole="dealer" />
           <NavigationProperty Name="istab" Relationship="Self.fk_serial_area_id" FromRole="serial" ToRole="istab" />
@@ -875,7 +873,7 @@
           <Property Name="credat" Type="DateTime" Nullable="false" />
           <Property Name="chgby_id" Type="Int32" />
           <Property Name="chgdat" Type="DateTime" />
-          <Property Name="flag" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="serial" Relationship="Self.fk_serial_password_serial_id" FromRole="serial_password" ToRole="serial" />
           <NavigationProperty Name="users" Relationship="Self.fk_serial_password_chgby_id" FromRole="serial_password" ToRole="users" />
           <NavigationProperty Name="users1" Relationship="Self.fk_serial_password_creby_id" FromRole="serial_password" ToRole="users" />
@@ -1468,7 +1466,6 @@
                 <ScalarProperty Name="typdes_en" ColumnName="typdes_en" />
                 <ScalarProperty Name="typdes_th" ColumnName="typdes_th" />
                 <ScalarProperty Name="use_pattern" ColumnName="use_pattern" />
-                <ScalarProperty Name="pattern" ColumnName="pattern" />
                 <ScalarProperty Name="creby_id" ColumnName="creby_id" />
                 <ScalarProperty Name="credat" ColumnName="credat" />
                 <ScalarProperty Name="chgby_id" ColumnName="chgby_id" />

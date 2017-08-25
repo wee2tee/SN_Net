@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fc604b7b8a4b4c37abc45d4e017072f1" Name="Diagram1">
-        <EntityTypeShape EntityType="snModel.cloud_srv" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
+      <Diagram DiagramId="50a9cbd83a84491ba84cfe39ebfc6ade" Name="Diagram1">
+        <EntityTypeShape EntityType="snModel.cloud_srv" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.d_msg" Width="1.5" PointX="6" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.dealer" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.dealer" Width="1.5" PointX="5.25" PointY="20.625" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.istab" Width="1.5" PointX="3" PointY="28.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.ma" Width="1.5" PointX="9.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.mac_allowed" Width="1.5" PointX="3" PointY="34.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.problem" Width="1.5" PointX="9.75" PointY="24.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.serial" Width="1.5" PointX="7.5" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.serial_password" Width="1.5" PointX="12.75" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.ma" Width="1.5" PointX="9.75" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.mac_allowed" Width="1.5" PointX="3" PointY="34.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.problem" Width="1.5" PointX="9.75" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.serial" Width="1.5" PointX="7.5" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.serial_password" Width="1.5" PointX="12.75" PointY="19.875" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.users" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
         <AssociationConnector Association="snModel.fk_cloud_srv_chgby_id" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_cloud_srv_creby_id" ManuallyRouted="false" />

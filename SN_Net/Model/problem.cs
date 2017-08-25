@@ -25,7 +25,7 @@ namespace SN_Net.Model
         public System.DateTime credat { get; set; }
         public Nullable<int> chgby_id { get; set; }
         public Nullable<System.DateTime> chgdat { get; set; }
-        public string flag { get; set; }
+        public int flag { get; set; }
     
         public virtual istab istab { get; set; }
         public virtual users users { get; set; }

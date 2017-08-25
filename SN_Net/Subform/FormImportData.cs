@@ -16,11 +16,7 @@ namespace SN_Net.Subform
     {
         private string data_path = string.Empty;
         private BackgroundWorker wrk;
-        //private BackgroundWorker wrk_istab = new BackgroundWorker() { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
-        //private BackgroundWorker wrk_serial = new BackgroundWorker() { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
-        //private BackgroundWorker wrk_problem = new BackgroundWorker() { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
-        //private BackgroundWorker wrk_dealer = new BackgroundWorker() { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
-        //private BackgroundWorker wrk_dmsg = new BackgroundWorker() { WorkerSupportsCancellation = true, WorkerReportsProgress = true };
+        BindingList<ImportLog> import_logs;
 
         public FormImportData()
         {
@@ -29,13 +25,14 @@ namespace SN_Net.Subform
 
         private void FormImportData_Load(object sender, EventArgs e)
         {
-
+            this.import_logs = new BindingList<ImportLog>();
+            this.dgvLog.DataSource = this.import_logs;
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fol = new FolderBrowserDialog();
-            fol.RootFolder = Environment.SpecialFolder.MyComputer; //AppDomain.CurrentDomain.BaseDirectory
+            fol.RootFolder = Environment.SpecialFolder.MyComputer;
             fol.SelectedPath = this.data_path.Trim().Length > 0 ? this.data_path : string.Empty;
             fol.ShowNewFolderButton = false;
             if(fol.ShowDialog() == DialogResult.OK)
@@ -73,7 +70,7 @@ namespace SN_Net.Subform
                 int succeed_rows = 0;
                 int failed_rows = 0;
                 this.KeepLog("    ", "Reading istab source data");
-                istab_dbf = DbfTable.istab(this.data_path).ToIstabDbfList();
+                istab_dbf = DbfTable.istab(this.data_path).ToIstabDbfList().GroupBy(i => i.tabtyp+i.typcod.ToUpper()).Select(i => new istabDbf { tabtyp = i.First().tabtyp, typcod = i.First().typcod, depcod = i.First().depcod, shortnam = i.First().shortnam, shortnam2 = i.First().shortnam2, typdes = i.First().typdes, typdes2 = i.First().typdes2, fld01 = i.First().fld01, fld02 = i.First().fld02, status = i.First().status }).ToList();
                 wrk = null;
                 wrk = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
 
@@ -84,7 +81,7 @@ namespace SN_Net.Subform
                 var area_serial = DbfTable.serial(this.data_path).ToSerialDbfList().GroupBy(d => d.area).Select(s => new { area = s.Key }).ToList();
 
                 // Mixed area code from Dealer & Serial
-                var areas = area_dealers.Concat(area_serial).GroupBy(a => a.area).Select(a => new { area = a.Key }).ToList();
+                var areas = area_dealers.Concat(area_serial).GroupBy(a => a.area.ToUpper()).Select(a => new { area = a.Key }).ToList();
 
                 // Collect verext from Serial
                 var verext = DbfTable.serial(this.data_path).ToSerialDbfList().GroupBy(s => s.verext).Select(s => new { verext = s.Key }).ToList();
@@ -116,12 +113,12 @@ namespace SN_Net.Subform
                                         typdes_en = i.typdes2,
                                         typdes_th = i.typdes,
                                         use_pattern = false,
-                                        pattern = string.Empty,
                                         credat = DateTime.Now,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.istab.Add(istab);
                                     sn.SaveChanges();
+                                    istab = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -129,7 +126,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("istab", ex.Message);
+                            this.KeepLog("istab", ex.InnerException.Message);
                             failed_rows++;
                             wrk.ReportProgress(++curr_row);
                             continue;
@@ -157,12 +154,12 @@ namespace SN_Net.Subform
                                         abbreviate_th = a.area,
                                         typdes_th = a.area,
                                         use_pattern = false,
-                                        pattern = string.Empty,
                                         credat = DateTime.Now,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.istab.Add(istab);
                                     sn.SaveChanges();
+                                    istab = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -170,7 +167,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("istab", ex.Message);
+                            this.KeepLog("istab", ex.InnerException.Message);
                             failed_rows++;
                             wrk.ReportProgress(++curr_row);
                             continue;
@@ -198,12 +195,12 @@ namespace SN_Net.Subform
                                         abbreviate_th = a.verext,
                                         typdes_th = a.verext,
                                         use_pattern = false,
-                                        pattern = string.Empty,
                                         credat = DateTime.Now,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.istab.Add(istab);
                                     sn.SaveChanges();
+                                    istab = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -211,7 +208,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("istab", ex.Message);
+                            this.KeepLog("istab", ex.InnerException.Message);
                             failed_rows++;
                             wrk.ReportProgress(++curr_row);
                             continue;
@@ -228,7 +225,6 @@ namespace SN_Net.Subform
                 {
                     this.KeepLog("    ", "Import istab succeed : " + succeed_rows.ToString() + " row(s) , failed :" + failed_rows.ToString() + " row(s)");
                     this.KeepLog("", "------------------------------------------------------------------------------", false);
-                    this.KeepLog("", "", false);
 
                     // Continue to import dealer.dbf
                     if (!e.Cancelled)
@@ -293,10 +289,11 @@ namespace SN_Net.Subform
                                         area_id = area != null ? (int?)area.id : null,
                                         remark = d.remark,
                                         credat = DateTime.Now,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.dealer.Add(dealer);
                                     sn.SaveChanges();
+                                    dealer = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -304,7 +301,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("dealer", ex.Message);
+                            this.KeepLog("dealer", ex.InnerException.Message);
                             failed_rows++;
                             wrk.ReportProgress(++curr_row);
                             continue;
@@ -321,7 +318,6 @@ namespace SN_Net.Subform
                 {
                     this.KeepLog("    ", "Import dealer succeed : " + succeed_rows.ToString() + " row(s) , failed :" + failed_rows.ToString() + " row(s)");
                     this.KeepLog("", "------------------------------------------------------------------------------", false);
-                    this.KeepLog("", "", false);
 
                     // Continue to import d_msg.dbf
                     if (!e.Cancelled)
@@ -339,8 +335,7 @@ namespace SN_Net.Subform
 
         private void ImportDmsg()
         {
-            try
-            {
+            
                 List<d_msgDbf> dmsg_dbf = null;
                 int total_row = 0;
                 int curr_row = 0;
@@ -372,7 +367,10 @@ namespace SN_Net.Subform
 
                                     if(dealer == null)
                                     {
+                                        failed_rows++;
                                         this.KeepLog("d_msg", "Cannot find dealer code = '" + d.dealer + "'");
+                                        //this.import_logs.Add(new ImportLog { time = DateTime.Now, table_name = "d_msg", desc = "Cannot find dealer code '" + d.dealer + "'" });
+                                        //this.dgvLog.Invoke(new Action(() => { this.dgvLog.Refresh(); }));
                                         wrk.ReportProgress(++curr_row);
                                         continue;
                                     }
@@ -385,10 +383,11 @@ namespace SN_Net.Subform
                                         name = d.name,
                                         description = d.descrp,
                                         credat = DateTime.Now,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.d_msg.Add(dmsg);
                                     sn.SaveChanges();
+                                    dmsg = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -396,8 +395,8 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("d_msg", ex.Message);
                             failed_rows++;
+                            this.KeepLog("d_msg", ex.InnerException.Message);
                             wrk.ReportProgress(++curr_row);
                             continue;
                         }
@@ -413,7 +412,6 @@ namespace SN_Net.Subform
                 {
                     this.KeepLog("    ", "Import d_msg succeed : " + succeed_rows.ToString() + " row(s) , failed :" + failed_rows.ToString() + " row(s)");
                     this.KeepLog("", "------------------------------------------------------------------------------", false);
-                    this.KeepLog("", "", false);
                     
                     // Continue to import serial.dbf
                     if (!e.Cancelled)
@@ -422,11 +420,7 @@ namespace SN_Net.Subform
                 this.KeepLog("    ", "Start import d_msg " + total_row.ToString() + " row(s)");
 
                 wrk.RunWorkerAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-            }
+            
         }
 
         private void ImportSerial()
@@ -496,10 +490,11 @@ namespace SN_Net.Subform
                                         verext_id = verext != null ? (int?)verext.id : null,
                                         credat = s.chgdat.HasValue ? s.chgdat.Value : DateTime.Now,
                                         chgdat = s.chgdat,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.serial.Add(serial);
                                     sn.SaveChanges();
+                                    serial = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -507,7 +502,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("serial", ex.Message);
+                            this.KeepLog("serial", ex.InnerException.Message);
                             failed_rows++;
                             wrk.ReportProgress(++curr_row);
                             continue;
@@ -524,7 +519,6 @@ namespace SN_Net.Subform
                 {
                     this.KeepLog("    ", "Import serial succeed : " + succeed_rows.ToString() + " row(s) , failed :" + failed_rows.ToString() + " row(s)");
                     this.KeepLog("", "------------------------------------------------------------------------------", false);
-                    this.KeepLog("", "", false);
 
                     // Continue to import problem.dbf
                     if (!e.Cancelled)
@@ -577,6 +571,7 @@ namespace SN_Net.Subform
                                     if(serial == null)
                                     {
                                         this.KeepLog("problem", "Cannot find serial number '" + p.sernum + "'");
+                                        failed_rows++;
                                         wrk.ReportProgress(++curr_row);
                                         continue;
                                     }
@@ -590,10 +585,11 @@ namespace SN_Net.Subform
                                         serial_id = serial != null ? (int?)serial.id : null,
                                         probcod_id = probcod != null ? (int?)probcod.id : null,
                                         credat = DateTime.Now,
-                                        flag = "1"
+                                        //flag = 0
                                     };
                                     sn.problem.Add(problem);
                                     sn.SaveChanges();
+                                    problem = null;
                                     succeed_rows++;
                                     wrk.ReportProgress(++curr_row);
                                 }
@@ -601,7 +597,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            this.KeepLog("problem", ex.Message);
+                            this.KeepLog("problem", ex.InnerException.Message);
                             failed_rows++;
                             wrk.ReportProgress(++curr_row);
                             continue;
@@ -618,11 +614,12 @@ namespace SN_Net.Subform
                 {
                     this.KeepLog("    ", "Import problem succeed : " + succeed_rows.ToString() + " row(s) , failed :" + failed_rows.ToString() + " row(s)");
                     this.KeepLog("", "------------------------------------------------------------------------------", false);
-                    this.KeepLog("", "", false);
 
                     // Import process completed
                     if (!e.Cancelled)
+                    {
                         MessageAlert.Show("Import data successfully");
+                    }
                 };
                 this.KeepLog("    ", "Start import problem " + total_row.ToString() + " row(s)");
 
@@ -642,10 +639,29 @@ namespace SN_Net.Subform
 
         private void KeepLog(string table_name, string log_desc, bool perform_formatting = true)
         {
-            string log = perform_formatting ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.GetCultureInfo("th-TH")) + "\t" + table_name + "\t" + log_desc + Environment.NewLine : table_name + log_desc + Environment.NewLine;
-            //this.richTextBox1.Text += log;
-            File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\importLog.txt", log, Encoding.UTF8);
+            this.dgvLog.Invoke(new Action(() => {
+                BindingList<ImportLog> logs = (BindingList<ImportLog>)this.dgvLog.DataSource;
+                if (perform_formatting)
+                {
+                    logs.Add(new ImportLog { time = DateTime.Now, table_name = table_name, desc = log_desc });
+                }
+                else
+                {
+                    logs.Add(new ImportLog { time = null, table_name = table_name, desc = log_desc });
+                }
+                
+                this.dgvLog.FirstDisplayedScrollingRowIndex = this.dgvLog.Rows.Count - 1;
+            }));
+            
+            //    File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\importLog.txt", log, Encoding.UTF8);
         }
     }
 
+    internal class ImportLog
+    {
+        public DateTime? time { get; set; }
+        public string table_name { get; set; }
+        public string desc { get; set; }
+
+    }
 }

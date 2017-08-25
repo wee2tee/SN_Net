@@ -40,7 +40,7 @@ namespace SN_Net.Model
         public System.DateTime credat { get; set; }
         public Nullable<int> chgby_id { get; set; }
         public Nullable<System.DateTime> chgdat { get; set; }
-        public string flag { get; set; }
+        public int flag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<d_msg> d_msg { get; set; }
