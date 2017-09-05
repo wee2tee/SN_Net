@@ -10,6 +10,7 @@ using System.IO;
 using SN_Net.MiscClass;
 using SN_Net.Subform;
 using SN_Net.DataModels;
+using SN_Net.Model;
 using WebAPI;
 using WebAPI.ApiResult;
 using Newtonsoft.Json;
@@ -17,6 +18,16 @@ using System.Reflection;
 
 namespace SN_Net
 {
+    public enum FORM_MODE
+    {
+        READ,
+        ADD,
+        EDIT,
+        READ_ITEM,
+        ADD_ITEM,
+        EDIT_ITEM
+    }
+
     public partial class MainForm : Form
     {
         public SnWindow sn_wind;
@@ -38,6 +49,7 @@ namespace SN_Net
         public string my_mac = string.Empty;
         public GlobalVar G;
         public DataResource data_resource;
+        public users loged_in_user;
         
         public MainForm()
         {
@@ -49,30 +61,32 @@ namespace SN_Net
             this.toolStripInfo.Text = " [ ที่เก็บโปรแกรม : " + AppDomain.CurrentDomain.BaseDirectory + " ]";
 
             LoginForm login = new LoginForm();
-            if (login.ShowDialog() == DialogResult.Cancel || login.loged_in == false)
+            if (login.ShowDialog() == DialogResult.Cancel/* || login.loged_in == false*/)
             {
                 Application.Exit();
             }
             else
             {
-                this.G = login.G;
-                this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
-                if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)
-                {
-                    this.macAddressAllowedToolStripMenuItem.Visible = false;
-                }
-                if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR)
-                {
-                    this.userInformationToolStripMenuItem.Visible = false;
-                    this.supportStatMenuItem.Visible = false;
-                    this.SearchHistoryMenuItem.Visible = false;
-                    this.usersGroupMenuItem.Visible = false;
-                    this.preferenceToolStripMenuItem.Enabled = false;
-                }
+                this.loged_in_user = login.loged_in_user;
+                //this.G = login.G;
+                //this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
+                //if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)
+                //{
+                //    this.macAddressAllowedToolStripMenuItem.Visible = false;
+                //}
+                //if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_SUPERVISOR)
+                //{
+                //    this.userInformationToolStripMenuItem.Visible = false;
+                //    this.supportStatMenuItem.Visible = false;
+                //    this.SearchHistoryMenuItem.Visible = false;
+                //    this.usersGroupMenuItem.Visible = false;
+                //    this.preferenceToolStripMenuItem.Enabled = false;
+                //}
 
-                this.loadDataResource();
-                this.sNToolStripMenuItem.PerformClick();
+                //this.loadDataResource();
+                //this.sNToolStripMenuItem.PerformClick();
 
+                this.mnuSN2.PerformClick();
             }
         }
 
@@ -429,6 +443,13 @@ namespace SN_Net
         {
             FormImportData im = new FormImportData();
             im.ShowDialog();
+        }
+
+        private void mnuSN2_Click(object sender, EventArgs e)
+        {
+            FormSn s = new FormSn(this);
+            s.MdiParent = this;
+            s.Show();
         }
     }
 }

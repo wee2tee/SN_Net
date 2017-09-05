@@ -240,7 +240,7 @@ namespace SN_Net.Subform
                 var area_serial = DbfTable.serial(this.data_path).ToSerialDbfList().GroupBy(d => d.area).Select(s => new { area = s.Key }).ToList();
 
                 // Mixed area code from Dealer & Serial
-                var areas = area_dealers.Concat(area_serial).GroupBy(a => a.area.ToUpper()).Select(a => new { area = a.Key }).ToList();
+                var areas = area_dealers.Concat(area_serial).Where(a => a.area.Trim().Length > 0).GroupBy(a => a.area.ToUpper()).Select(a => new { area = a.Key }).ToList();
 
                 // Collect verext from Serial
                 var verext = DbfTable.serial(this.data_path).ToSerialDbfList().GroupBy(s => s.verext).Select(s => new { verext = s.Key }).ToList();
@@ -448,7 +448,7 @@ namespace SN_Net.Subform
 
                 wrk.DoWork += delegate (object sender, DoWorkEventArgs e)
                 {
-                    for (int i = this.offsetDealer; i < dealer_dbf.Count - 1; i++)
+                    for (int i = this.offsetDealer; i < total_row; i++)
                     {
                         try
                         {
@@ -570,7 +570,7 @@ namespace SN_Net.Subform
 
                 wrk.DoWork += delegate (object sender, DoWorkEventArgs e)
                 {
-                    for (int i = this.offsetDmsg; i < dmsg_dbf.Count - 1; i++)
+                    for (int i = this.offsetDmsg; i < total_row; i++)
                     {
                         try
                         {
@@ -690,7 +690,7 @@ namespace SN_Net.Subform
 
                 wrk.DoWork += delegate (object sender, DoWorkEventArgs e)
                 {
-                    for (int i = this.offsetSerial; i < serial_dbf.Count - 1; i++)
+                    for (int i = this.offsetSerial; i < total_row; i++)
                     {
                         try
                         {
@@ -829,7 +829,7 @@ namespace SN_Net.Subform
 
                 wrk.DoWork += delegate (object sender, DoWorkEventArgs e)
                 {
-                    for (int i = this.offsetProblem; i < problem_dbf.Count - 1; i++)
+                    for (int i = this.offsetProblem; i < total_row; i++)
                     {
                         try
                         {
@@ -916,24 +916,27 @@ namespace SN_Net.Subform
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (this.wrk != null && this.wrk.WorkerSupportsCancellation)
+            if(MessageAlert.Show("Stop import data process, Do you want to continue?") == DialogResult.OK)
             {
-                this.wrk.CancelAsync();
+                if (this.wrk != null && this.wrk.WorkerSupportsCancellation)
+                {
+                    this.wrk.CancelAsync();
 
-                this.chIstab.Enabled = true;
-                this.chDealer.Enabled = true;
-                this.chDmsg.Enabled = true;
-                this.chSerial.Enabled = true;
-                this.chProblem.Enabled = true;
+                    this.chIstab.Enabled = true;
+                    this.chDealer.Enabled = true;
+                    this.chDmsg.Enabled = true;
+                    this.chSerial.Enabled = true;
+                    this.chProblem.Enabled = true;
 
-                this.numDealer.Enabled = true;
-                this.numDmsg.Enabled = true;
-                this.numSerial.Enabled = true;
-                this.numProblem.Enabled = true;
+                    this.numDealer.Enabled = true;
+                    this.numDmsg.Enabled = true;
+                    this.numSerial.Enabled = true;
+                    this.numProblem.Enabled = true;
 
-                this.btnBrowse.Enabled = true;
-                this.btnGo.Enabled = true;
-                this.btnStop.Enabled = false;
+                    this.btnBrowse.Enabled = true;
+                    this.btnGo.Enabled = true;
+                    this.btnStop.Enabled = false;
+                }
             }
         }
 
@@ -941,19 +944,26 @@ namespace SN_Net.Subform
         {
             this.dgvLog.Invoke(new Action(() => {
                 BindingList<ImportLog> logs = (BindingList<ImportLog>)this.dgvLog.DataSource;
+                ImportLog l;
                 if (perform_formatting)
                 {
-                    logs.Add(new ImportLog { time = DateTime.Now, table_name = table_name, desc = log_desc });
+                    l = new ImportLog { time = DateTime.Now, table_name = table_name, desc = log_desc };
+                    logs.Add(l);
+
+                    string log_text = l.time.Value.ToString("dd/MM/yyyy H:mm:ss", CultureInfo.GetCultureInfo("th-TH")) + "\t" + l.table_name + "\t" + l.desc + Environment.NewLine;
+                    File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\importLog.txt", log_text, Encoding.UTF8);
                 }
                 else
                 {
-                    logs.Add(new ImportLog { time = null, table_name = table_name, desc = log_desc });
+                    l = new ImportLog { time = null, table_name = table_name, desc = log_desc };
+                    logs.Add(l);
+
+                    string log_text = l.table_name + "\t" + l.desc + Environment.NewLine;
+                    File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\importLog.txt", log_text, Encoding.UTF8);
                 }
                 
                 this.dgvLog.FirstDisplayedScrollingRowIndex = this.dgvLog.Rows.Count - 1;
             }));
-            
-            //    File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + @"\importLog.txt", log, Encoding.UTF8);
         }
     }
 

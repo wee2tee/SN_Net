@@ -216,7 +216,7 @@ namespace SN_Net.Model
                 area = row.Field<string>("area").Trim(),
                 remark = row.Field<string>("remark").Trim(),
                 userid = row.Field<string>("userid").Trim(),
-                chgdat = !row.IsNull("chgdat") ? (DateTime?)row.Field<DateTime>("chgdat") : null
+                chgdat = !row.IsNull("chgdat") && row.Field<DateTime>("chgdat") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("chgdat") : null
             };
             return d;
         }
@@ -239,7 +239,7 @@ namespace SN_Net.Model
             d_msgDbf d = new d_msgDbf
             {
                 dealer = row.Field<string>("dealer").Trim(),
-                date = !row.IsNull("date") ? (DateTime?)row.Field<DateTime>("date") : null,
+                date = !row.IsNull("date") && row.Field<DateTime>("date") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("date") : null,
                 time = row.Field<string>("time").Trim(),
                 name = row.Field<string>("name").Trim(),
                 descrp = row.Field<string>("descrp").Trim()
@@ -278,16 +278,16 @@ namespace SN_Net.Model
                 zipcod = row.Field<string>("zipcod").Trim(),
                 telnum = row.Field<string>("telnum").Trim(),
                 busides = row.Field<string>("busides").Trim(),
-                purdat = !row.IsNull("purdat") ? (DateTime?)row.Field<DateTime>("purdat") : null,
-                expdat = !row.IsNull("expdat") ? (DateTime?)row.Field<DateTime>("expdat") : null,
+                purdat = !row.IsNull("purdat") && row.Field<DateTime>("purdat") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("purdat") : null,
+                expdat = !row.IsNull("expdat") && row.Field<DateTime>("expdat") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("expdat") : null,
                 branch = row.Field<string>("branch").Trim(),
-                manual = !row.IsNull("manual") ? (DateTime?)row.Field<DateTime>("manual") : null,
+                manual = !row.IsNull("manual") && row.Field<DateTime>("manual") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("manual") : null,
                 upfree = row.Field<string>("upfree").Trim(),
                 refnum = row.Field<string>("refnum").Trim(),
                 remark = row.Field<string>("remark").Trim(),
-                verextdat = !row.IsNull("verextdat") ? (DateTime?)row.Field<DateTime>("verextdat") : null,
+                verextdat = !row.IsNull("verextdat") && row.Field<DateTime>("verextdat") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("verextdat") : null,
                 userid = row.Field<string>("userid").Trim(),
-                chgdat = !row.IsNull("chgdat") ? (DateTime?)row.Field<DateTime>("chgdat") : null,
+                chgdat = !row.IsNull("chgdat") && row.Field<DateTime>("chgdat") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("chgdat") : null,
 
                 area = row.Field<string>("area").Trim(),
                 busityp = row.Field<string>("busityp").Trim(),
@@ -317,7 +317,7 @@ namespace SN_Net.Model
             {
                 probcod = row.Field<string>("probcod").Trim(),
                 probdesc = row.Field<string>("probdesc").Trim(),
-                date = !row.IsNull("date") ? (DateTime?)row.Field<DateTime>("date") : null,
+                date = !row.IsNull("date") && row.Field<DateTime>("date") > DateTime.Now.AddYears(-100) ? (DateTime?)row.Field<DateTime>("date") : null,
                 name = row.Field<string>("name").Trim(),
                 sernum = row.Field<string>("sernum").Trim(),
                 time = row.Field<string>("time").Trim(),

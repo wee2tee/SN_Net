@@ -17,6 +17,7 @@ using System.IO;
 using SN_Net.MiscClass;
 using WebAPI;
 using WebAPI.ApiResult;
+using SN_Net.Model;
 
 namespace SN_Net.Subform
 {
@@ -32,6 +33,7 @@ namespace SN_Net.Subform
         private string system_path;
         private string appdata_path;
         private Control current_focused_control;
+        public users loged_in_user;
 
         public LoginForm()
         {
@@ -105,56 +107,72 @@ namespace SN_Net.Subform
 
         private void btnLoginSubmit_Click(object sender, EventArgs e)
         {
-            this.submitLogin();
-        }
-
-        private void submitLogin()
-        {
-            string json_data = "{\"username\":\"" + this.txtUser.Text.cleanString() + "\",";
-            json_data += "\"userpassword\":\"" + this.txtPassword.Text.cleanString() + "\",";
-            json_data += "\"mac_address\":\"" + this.G.current_mac_address + "\"}";
-
-            CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/validate_login", json_data);
-            ServerResult res = JsonConvert.DeserializeObject<ServerResult>(post.data);
-
-            switch (res.result)
+            //this.submitLogin();
+            using (snEntities sn = DBX.DataSet())
             {
-                case LOGIN_SUCCESS:
-                    Users user = res.users.First<Users>();
+                var user = sn.users.Where(u => u.status == "N" && u.username == this.txtUser.Text.Trim() && u.userpassword == this.txtUser.Text.Trim()).FirstOrDefault();
 
-                    Console.WriteLine("Login success");
-
-                    this.G.loged_in_user_id = user.id;
-                    this.G.loged_in_user_name = user.username;
-                    this.G.loged_in_user_realname = user.name;
-                    this.G.loged_in_user_email = user.email;
-                    this.G.loged_in_user_status = user.status;
-                    this.G.loged_in_user_level = user.level;
-                    this.G.loged_in_user_allowed_web_login = user.allowed_web_login;
-                    this.G.loged_in_user_training_expert = (user.training_expert == "Y" ? true : false);
-
-                    this.loged_in = true;
+                if(user != null)
+                {
+                    this.loged_in_user = user;
                     this.DialogResult = DialogResult.OK;
                     this.Close();
-                    break;
-
-                case LOGIN_FAILED_MAC_DENIED:
-                    MessageAlert.Show(res.message, "Forbidden", MessageAlertButtons.OK, MessageAlertIcons.STOP);
-                    break;
-
-                case LOGIN_FAILED_USER_FORBIDDEN:
-                    MessageAlert.Show(res.message, "Forbidden", MessageAlertButtons.OK, MessageAlertIcons.STOP);
-                    break;
-
-                case LOGIN_FAILED_USER_PASSWORD_INCORRECT:
-                    MessageAlert.Show(res.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                    break;
-
-                default:
-                    MessageAlert.Show(res.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
-                    break;
+                }
+                else
+                {
+                    MessageAlert.Show("รหัสผู้ใช้/รหัสผ่าน ไม่ถูกต้อง", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
             }
         }
+
+        //private void submitLogin()
+        //{
+        //    string json_data = "{\"username\":\"" + this.txtUser.Text.cleanString() + "\",";
+        //    json_data += "\"userpassword\":\"" + this.txtPassword.Text.cleanString() + "\",";
+        //    json_data += "\"mac_address\":\"" + this.G.current_mac_address + "\"}";
+
+        //    CRUDResult post = ApiActions.POST(PreferenceForm.API_MAIN_URL() + "users/validate_login", json_data);
+        //    ServerResult res = JsonConvert.DeserializeObject<ServerResult>(post.data);
+
+        //    switch (res.result)
+        //    {
+        //        case LOGIN_SUCCESS:
+        //            Users user = res.users.First<Users>();
+
+        //            Console.WriteLine("Login success");
+
+        //            this.G.loged_in_user_id = user.id;
+        //            this.G.loged_in_user_name = user.username;
+        //            this.G.loged_in_user_realname = user.name;
+        //            this.G.loged_in_user_email = user.email;
+        //            this.G.loged_in_user_status = user.status;
+        //            this.G.loged_in_user_level = user.level;
+        //            this.G.loged_in_user_allowed_web_login = user.allowed_web_login;
+        //            this.G.loged_in_user_training_expert = (user.training_expert == "Y" ? true : false);
+
+        //            this.loged_in = true;
+        //            this.DialogResult = DialogResult.OK;
+        //            this.Close();
+        //            break;
+
+        //        case LOGIN_FAILED_MAC_DENIED:
+        //            MessageAlert.Show(res.message, "Forbidden", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+        //            break;
+
+        //        case LOGIN_FAILED_USER_FORBIDDEN:
+        //            MessageAlert.Show(res.message, "Forbidden", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+        //            break;
+
+        //        case LOGIN_FAILED_USER_PASSWORD_INCORRECT:
+        //            MessageAlert.Show(res.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+        //            break;
+
+        //        default:
+        //            MessageAlert.Show(res.message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+        //            break;
+        //    }
+        //}
 
         private void btnPreference_Click(object sender, EventArgs e)
         {
@@ -170,7 +188,8 @@ namespace SN_Net.Subform
                 {
                     if (this.current_focused_control == this.txtPassword)
                     {
-                        this.submitLogin();
+                        //this.submitLogin();
+                        this.btnLoginSubmit.PerformClick();
                         return true;
                     }
 

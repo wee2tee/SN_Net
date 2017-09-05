@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5FA93DA-DB64-46A5-B36D-A1E574DD2C42}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CC</RootNamespace>
+    <AssemblyName>CC</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog\CalendarDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\CalendarDialog.Designer.cs">
+      <DependentUpon>CalendarDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ListDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\ListDialog.Designer.cs">
+      <DependentUpon>ListDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper.cs" />
+    <Compile Include="XLoadingIcon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XLoadingIcon.Designer.cs">
+      <DependentUpon>XLoadingIcon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XMaskedTextEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XPrintPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XPrintPreview.Designer.cs">
+      <DependentUpon>XPrintPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AppResource.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="XBrowseBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XBrowseBox.Designer.cs">
+      <DependentUpon>XBrowseBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XComboBox.Designer.cs">
+      <DependentUpon>XComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XDatagrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XDatagrid.Designer.cs">
+      <DependentUpon>XDatagrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XDatePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XDatePicker.Designer.cs">
+      <DependentUpon>XDatePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XDropdownList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XDropdownList.Designer.cs">
+      <DependentUpon>XDropdownList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XInlineNumEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XInlineNumEdit.Designer.cs">
+      <DependentUpon>XInlineNumEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XNumEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XNumEdit.Designer.cs">
+      <DependentUpon>XNumEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XNumTextEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XNumTextEdit.Designer.cs">
+      <DependentUpon>XNumTextEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XTextEditMasked.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XTextEditMasked.Designer.cs">
+      <DependentUpon>XTextEditMasked.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_XPrintPreviewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XTextEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XTextEdit.Designer.cs">
+      <DependentUpon>XTextEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XTimePicker.Designer.cs">
+      <DependentUpon>XTimePicker.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dialog\CalendarDialog.resx">
+      <DependentUpon>CalendarDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\ListDialog.resx">
+      <DependentUpon>ListDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XLoadingIcon.resx">
+      <DependentUpon>XLoadingIcon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XMessageBox.en-US.resx">
+      <DependentUpon>XMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XMessageBox.resx">
+      <DependentUpon>XMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XMessageBox.th-TH.resx">
+      <DependentUpon>XMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XPrintPreview.resx">
+      <DependentUpon>XPrintPreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XBrowseBox.resx">
+      <DependentUpon>XBrowseBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XDatePicker.resx">
+      <DependentUpon>XDatePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XDropdownList.resx">
+      <DependentUpon>XDropdownList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XInlineNumEdit.resx">
+      <DependentUpon>XInlineNumEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XNumEdit.resx">
+      <DependentUpon>XNumEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XNumTextEdit.resx">
+      <DependentUpon>XNumTextEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XTextEditMasked.resx">
+      <DependentUpon>XTextEditMasked.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_XPrintPreviewDialog.resx">
+      <DependentUpon>_XPrintPreviewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XTextEdit.resx">
+      <DependentUpon>XTextEdit.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok_12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel_12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer_small.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_fit_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_in_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_out_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\first_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\last_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\previous_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_split_none_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_split2_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_split4_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

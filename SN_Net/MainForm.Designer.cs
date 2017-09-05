@@ -69,6 +69,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblTimeDuration = new System.Windows.Forms.Label();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mnuSN2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -90,6 +91,7 @@
             // 
             this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sNToolStripMenuItem,
+            this.mnuSN2,
             this.dealerToolStripMenuItem,
             this.toolStripSeparator5,
             this.calendarMenuItem,
@@ -415,6 +417,13 @@
             this.toolStripProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripProcessing.Visible = false;
             // 
+            // mnuSN2
+            // 
+            this.mnuSN2.Name = "mnuSN2";
+            this.mnuSN2.Size = new System.Drawing.Size(337, 22);
+            this.mnuSN2.Text = "S/N 2";
+            this.mnuSN2.Click += new System.EventHandler(this.mnuSN2_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -485,6 +494,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lblVersion;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuImportData;
+        private System.Windows.Forms.ToolStripMenuItem mnuSN2;
     }
 }
 
