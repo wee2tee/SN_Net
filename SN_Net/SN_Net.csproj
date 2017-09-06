@@ -270,6 +270,12 @@
     <Compile Include="Model\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubformV2\DialogPasswordSn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogPasswordSn.Designer.cs">
+      <DependentUpon>DialogPasswordSn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subform\ApiMainUrlFirstSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,22 +354,28 @@
     <Compile Include="Subform\DealerWindow.Designer.cs">
       <DependentUpon>DealerWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Subform\DialogInquirySn.cs">
+    <Compile Include="SubformV2\DialogInquirySn.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Subform\DialogInquirySn.Designer.cs">
+    <Compile Include="SubformV2\DialogInquirySn.Designer.cs">
       <DependentUpon>DialogInquirySn.cs</DependentUpon>
     </Compile>
-    <Compile Include="Subform\DialogSimpleSearch.cs">
+    <Compile Include="SubformV2\DialogMaCloud.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Subform\DialogSimpleSearch.Designer.cs">
+    <Compile Include="SubformV2\DialogMaCloud.Designer.cs">
+      <DependentUpon>DialogMaCloud.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSimpleSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSimpleSearch.Designer.cs">
       <DependentUpon>DialogSimpleSearch.cs</DependentUpon>
     </Compile>
-    <Compile Include="Subform\FormImportData.cs">
+    <Compile Include="SubformV2\FormImportData.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Subform\FormImportData.Designer.cs">
+    <Compile Include="SubformV2\FormImportData.Designer.cs">
       <DependentUpon>FormImportData.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\GenerateSNForm.cs">
@@ -552,10 +564,10 @@
     <Compile Include="Subform\IstabList.Designer.cs">
       <DependentUpon>IstabList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Subform\FormSn.cs">
+    <Compile Include="SubformV2\FormSn.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Subform\FormSn.Designer.cs">
+    <Compile Include="SubformV2\FormSn.Designer.cs">
       <DependentUpon>FormSn.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\SplashPreventMenustripActive.cs">
@@ -705,6 +717,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubformV2\DialogPasswordSn.resx">
+      <DependentUpon>DialogPasswordSn.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Subform\ApiMainUrlFirstSetting.resx">
       <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
     </EmbeddedResource>
@@ -744,13 +759,16 @@
     <EmbeddedResource Include="Subform\DealerWindow.resx">
       <DependentUpon>DealerWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Subform\DialogInquirySn.resx">
+    <EmbeddedResource Include="SubformV2\DialogInquirySn.resx">
       <DependentUpon>DialogInquirySn.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Subform\DialogSimpleSearch.resx">
+    <EmbeddedResource Include="SubformV2\DialogMaCloud.resx">
+      <DependentUpon>DialogMaCloud.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSimpleSearch.resx">
       <DependentUpon>DialogSimpleSearch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Subform\FormImportData.resx">
+    <EmbeddedResource Include="SubformV2\FormImportData.resx">
       <DependentUpon>FormImportData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\GenerateSNForm.resx">
@@ -846,7 +864,7 @@
     <EmbeddedResource Include="Subform\IstabList.resx">
       <DependentUpon>IstabList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Subform\FormSn.resx">
+    <EmbeddedResource Include="SubformV2\FormSn.resx">
       <DependentUpon>FormSn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\SplashPreventMenustripActive.resx">

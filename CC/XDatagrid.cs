@@ -119,8 +119,8 @@ namespace CC
             //    this.Rows[this.FirstDisplayedScrollingRowIndex].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
             //    return;
             //}
-
-            this.Rows[this.FirstDisplayedScrollingRowIndex].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
+            if (e.Type == ScrollEventType.EndScroll)
+                this.Rows[this.FirstDisplayedScrollingRowIndex].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
         }
 
         protected override void OnCreateControl()

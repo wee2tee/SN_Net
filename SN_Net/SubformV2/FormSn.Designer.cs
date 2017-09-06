@@ -77,8 +77,6 @@
             this.btnCD = new System.Windows.Forms.Button();
             this.btnUP = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnSupportViewNote = new System.Windows.Forms.Button();
-            this.btnSupportNote = new System.Windows.Forms.Button();
             this.btnUPNewRwtJob = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -89,18 +87,18 @@
             this.btnDeleteCloud = new System.Windows.Forms.Button();
             this.btnEditCloud = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.cloudEmail = new SN_Net.MiscClass.CustomTextBox();
-            this.cloudDateTo = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.cloudDateFrom = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.txtCloudEmail = new CC.XTextEdit();
             this.label37 = new System.Windows.Forms.Label();
+            this.dtCloudTo = new CC.XDatePicker();
             this.label38 = new System.Windows.Forms.Label();
+            this.dtCloudFrom = new CC.XDatePicker();
             this.label39 = new System.Windows.Forms.Label();
             this.btnDeleteMA = new System.Windows.Forms.Button();
             this.btnEditMA = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.maEmail = new SN_Net.MiscClass.CustomTextBox();
-            this.maDateTo = new SN_Net.MiscClass.CustomDateTimePicker();
-            this.maDateFrom = new SN_Net.MiscClass.CustomDateTimePicker();
+            this.txtMaEmail = new CC.XTextEdit();
+            this.dtMaTo = new CC.XDatePicker();
+            this.dtMaFrom = new CC.XDatePicker();
             this.label35 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
@@ -173,6 +171,11 @@
             this.txtPrenam = new CC.XTextEdit();
             this.txtVersion = new CC.XTextEdit();
             this.brArea = new CC.XBrowseBox();
+            this.btnSupportViewNote = new System.Windows.Forms.Button();
+            this.btnSupportNote = new System.Windows.Forms.Button();
+            this.col_password_serial_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_password_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_password_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -595,7 +598,6 @@
             // chkIMOnly
             // 
             this.chkIMOnly.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chkIMOnly.Enabled = false;
             this.chkIMOnly.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.chkIMOnly.Location = new System.Drawing.Point(654, 80);
             this.chkIMOnly.Name = "chkIMOnly";
@@ -609,7 +611,6 @@
             // 
             // btnLostRenew
             // 
-            this.btnLostRenew.Enabled = false;
             this.btnLostRenew.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnLostRenew.Location = new System.Drawing.Point(747, 80);
             this.btnLostRenew.Name = "btnLostRenew";
@@ -653,32 +654,6 @@
             this.label1.Size = new System.Drawing.Size(64, 16);
             this.label1.TabIndex = 81;
             this.label1.Text = "Serial No.";
-            // 
-            // btnSupportViewNote
-            // 
-            this.btnSupportViewNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSupportViewNote.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnSupportViewNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportViewNote.Location = new System.Drawing.Point(78, 112);
-            this.btnSupportViewNote.Name = "btnSupportViewNote";
-            this.btnSupportViewNote.Size = new System.Drawing.Size(83, 29);
-            this.btnSupportViewNote.TabIndex = 94;
-            this.btnSupportViewNote.Text = "      View Note";
-            this.btnSupportViewNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportViewNote.UseVisualStyleBackColor = true;
-            // 
-            // btnSupportNote
-            // 
-            this.btnSupportNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
-            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportNote.Location = new System.Drawing.Point(12, 112);
-            this.btnSupportNote.Name = "btnSupportNote";
-            this.btnSupportNote.Size = new System.Drawing.Size(65, 29);
-            this.btnSupportNote.TabIndex = 89;
-            this.btnSupportNote.Text = "       Note";
-            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportNote.UseVisualStyleBackColor = true;
             // 
             // btnUPNewRwtJob
             // 
@@ -820,68 +795,35 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.cloudEmail);
-            this.panel2.Controls.Add(this.cloudDateTo);
-            this.panel2.Controls.Add(this.cloudDateFrom);
+            this.panel2.Controls.Add(this.txtCloudEmail);
             this.panel2.Controls.Add(this.label37);
+            this.panel2.Controls.Add(this.dtCloudTo);
             this.panel2.Controls.Add(this.label38);
+            this.panel2.Controls.Add(this.dtCloudFrom);
             this.panel2.Controls.Add(this.label39);
             this.panel2.Location = new System.Drawing.Point(670, 105);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(222, 81);
             this.panel2.TabIndex = 168;
             // 
-            // cloudEmail
+            // txtCloudEmail
             // 
-            this.cloudEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtCloudEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCloudEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtCloudEmail._MaxLength = 32767;
+            this.txtCloudEmail._ReadOnly = true;
+            this.txtCloudEmail._Text = "";
+            this.txtCloudEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtCloudEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cloudEmail.BackColor = System.Drawing.Color.White;
-            this.cloudEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cloudEmail.CharUpperCase = false;
-            this.cloudEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cloudEmail.Location = new System.Drawing.Point(45, 53);
-            this.cloudEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cloudEmail.MaxChar = 0;
-            this.cloudEmail.Name = "cloudEmail";
-            this.cloudEmail.Read_Only = true;
-            this.cloudEmail.SelectionLength = 0;
-            this.cloudEmail.SelectionStart = 0;
-            this.cloudEmail.Size = new System.Drawing.Size(172, 23);
-            this.cloudEmail.TabIndex = 147;
-            this.cloudEmail.TabStop = false;
-            this.cloudEmail.Texts = "";
-            // 
-            // cloudDateTo
-            // 
-            this.cloudDateTo.BackColor = System.Drawing.Color.White;
-            this.cloudDateTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cloudDateTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cloudDateTo.Location = new System.Drawing.Point(45, 29);
-            this.cloudDateTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cloudDateTo.Name = "cloudDateTo";
-            this.cloudDateTo.Read_Only = true;
-            this.cloudDateTo.Size = new System.Drawing.Size(96, 23);
-            this.cloudDateTo.TabIndex = 146;
-            this.cloudDateTo.TabStop = false;
-            this.cloudDateTo.Texts = "02/09/2560";
-            this.cloudDateTo.TextsMysql = "2017-09-02";
-            this.cloudDateTo.ValDateTime = new System.DateTime(2017, 9, 2, 11, 33, 50, 648);
-            // 
-            // cloudDateFrom
-            // 
-            this.cloudDateFrom.BackColor = System.Drawing.Color.White;
-            this.cloudDateFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cloudDateFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cloudDateFrom.Location = new System.Drawing.Point(45, 3);
-            this.cloudDateFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cloudDateFrom.Name = "cloudDateFrom";
-            this.cloudDateFrom.Read_Only = true;
-            this.cloudDateFrom.Size = new System.Drawing.Size(96, 23);
-            this.cloudDateFrom.TabIndex = 145;
-            this.cloudDateFrom.TabStop = false;
-            this.cloudDateFrom.Texts = "02/09/2560";
-            this.cloudDateFrom.TextsMysql = "2017-09-02";
-            this.cloudDateFrom.ValDateTime = new System.DateTime(2017, 9, 2, 11, 33, 50, 650);
+            this.txtCloudEmail.BackColor = System.Drawing.Color.White;
+            this.txtCloudEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCloudEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtCloudEmail.Location = new System.Drawing.Point(44, 53);
+            this.txtCloudEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtCloudEmail.Name = "txtCloudEmail";
+            this.txtCloudEmail.Size = new System.Drawing.Size(173, 23);
+            this.txtCloudEmail.TabIndex = 146;
             // 
             // label37
             // 
@@ -893,6 +835,19 @@
             this.label37.TabIndex = 144;
             this.label37.Text = "อีเมล์";
             // 
+            // dtCloudTo
+            // 
+            this.dtCloudTo._ReadOnly = true;
+            this.dtCloudTo._SelectedDate = null;
+            this.dtCloudTo.BackColor = System.Drawing.Color.White;
+            this.dtCloudTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtCloudTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtCloudTo.Location = new System.Drawing.Point(44, 28);
+            this.dtCloudTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtCloudTo.Name = "dtCloudTo";
+            this.dtCloudTo.Size = new System.Drawing.Size(103, 23);
+            this.dtCloudTo.TabIndex = 145;
+            // 
             // label38
             // 
             this.label38.AutoSize = true;
@@ -902,6 +857,19 @@
             this.label38.Size = new System.Drawing.Size(40, 16);
             this.label38.TabIndex = 143;
             this.label38.Text = "สิ้นสุด";
+            // 
+            // dtCloudFrom
+            // 
+            this.dtCloudFrom._ReadOnly = true;
+            this.dtCloudFrom._SelectedDate = null;
+            this.dtCloudFrom.BackColor = System.Drawing.Color.White;
+            this.dtCloudFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtCloudFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtCloudFrom.Location = new System.Drawing.Point(44, 3);
+            this.dtCloudFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtCloudFrom.Name = "dtCloudFrom";
+            this.dtCloudFrom.Size = new System.Drawing.Size(103, 23);
+            this.dtCloudFrom.TabIndex = 145;
             // 
             // label39
             // 
@@ -939,9 +907,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.maEmail);
-            this.panel4.Controls.Add(this.maDateTo);
-            this.panel4.Controls.Add(this.maDateFrom);
+            this.panel4.Controls.Add(this.txtMaEmail);
+            this.panel4.Controls.Add(this.dtMaTo);
+            this.panel4.Controls.Add(this.dtMaFrom);
             this.panel4.Controls.Add(this.label35);
             this.panel4.Controls.Add(this.label34);
             this.panel4.Controls.Add(this.label33);
@@ -950,57 +918,50 @@
             this.panel4.Size = new System.Drawing.Size(222, 81);
             this.panel4.TabIndex = 165;
             // 
-            // maEmail
+            // txtMaEmail
             // 
-            this.maEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtMaEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMaEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMaEmail._MaxLength = 32767;
+            this.txtMaEmail._ReadOnly = true;
+            this.txtMaEmail._Text = "";
+            this.txtMaEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtMaEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.maEmail.BackColor = System.Drawing.Color.White;
-            this.maEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.maEmail.CharUpperCase = false;
-            this.maEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.maEmail.Location = new System.Drawing.Point(45, 53);
-            this.maEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.maEmail.MaxChar = 0;
-            this.maEmail.Name = "maEmail";
-            this.maEmail.Read_Only = true;
-            this.maEmail.SelectionLength = 0;
-            this.maEmail.SelectionStart = 0;
-            this.maEmail.Size = new System.Drawing.Size(172, 23);
-            this.maEmail.TabIndex = 147;
-            this.maEmail.TabStop = false;
-            this.maEmail.Texts = "";
+            this.txtMaEmail.BackColor = System.Drawing.Color.White;
+            this.txtMaEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMaEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtMaEmail.Location = new System.Drawing.Point(44, 53);
+            this.txtMaEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMaEmail.Name = "txtMaEmail";
+            this.txtMaEmail.Size = new System.Drawing.Size(173, 23);
+            this.txtMaEmail.TabIndex = 146;
             // 
-            // maDateTo
+            // dtMaTo
             // 
-            this.maDateTo.BackColor = System.Drawing.Color.White;
-            this.maDateTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.maDateTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.maDateTo.Location = new System.Drawing.Point(45, 29);
-            this.maDateTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.maDateTo.Name = "maDateTo";
-            this.maDateTo.Read_Only = true;
-            this.maDateTo.Size = new System.Drawing.Size(96, 23);
-            this.maDateTo.TabIndex = 146;
-            this.maDateTo.TabStop = false;
-            this.maDateTo.Texts = "02/09/2560";
-            this.maDateTo.TextsMysql = "2017-09-02";
-            this.maDateTo.ValDateTime = new System.DateTime(2017, 9, 2, 11, 33, 50, 654);
+            this.dtMaTo._ReadOnly = true;
+            this.dtMaTo._SelectedDate = null;
+            this.dtMaTo.BackColor = System.Drawing.Color.White;
+            this.dtMaTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtMaTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtMaTo.Location = new System.Drawing.Point(44, 28);
+            this.dtMaTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtMaTo.Name = "dtMaTo";
+            this.dtMaTo.Size = new System.Drawing.Size(103, 23);
+            this.dtMaTo.TabIndex = 145;
             // 
-            // maDateFrom
+            // dtMaFrom
             // 
-            this.maDateFrom.BackColor = System.Drawing.Color.White;
-            this.maDateFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.maDateFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.maDateFrom.Location = new System.Drawing.Point(45, 3);
-            this.maDateFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.maDateFrom.Name = "maDateFrom";
-            this.maDateFrom.Read_Only = true;
-            this.maDateFrom.Size = new System.Drawing.Size(96, 23);
-            this.maDateFrom.TabIndex = 145;
-            this.maDateFrom.TabStop = false;
-            this.maDateFrom.Texts = "02/09/2560";
-            this.maDateFrom.TextsMysql = "2017-09-02";
-            this.maDateFrom.ValDateTime = new System.DateTime(2017, 9, 2, 11, 33, 50, 657);
+            this.dtMaFrom._ReadOnly = true;
+            this.dtMaFrom._SelectedDate = null;
+            this.dtMaFrom.BackColor = System.Drawing.Color.White;
+            this.dtMaFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtMaFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtMaFrom.Location = new System.Drawing.Point(44, 3);
+            this.dtMaFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtMaFrom.Name = "dtMaFrom";
+            this.dtMaFrom.Size = new System.Drawing.Size(103, 23);
+            this.dtMaFrom.TabIndex = 145;
             // 
             // label35
             // 
@@ -1464,6 +1425,10 @@
             this.dgvPassword.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvPassword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPassword.ColumnHeadersVisible = false;
+            this.dgvPassword.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_password_serial_password,
+            this.col_password_id,
+            this.col_password_password});
             this.dgvPassword.GridColor = System.Drawing.Color.White;
             this.dgvPassword.Location = new System.Drawing.Point(630, 17);
             this.dgvPassword.MultiSelect = false;
@@ -2061,6 +2026,56 @@
             this.brArea._Leave += new System.EventHandler(this.brArea__Leave);
             this.brArea.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
+            // btnSupportViewNote
+            // 
+            this.btnSupportViewNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSupportViewNote.Image = global::SN_Net.Properties.Resources.zoom;
+            this.btnSupportViewNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportViewNote.Location = new System.Drawing.Point(78, 112);
+            this.btnSupportViewNote.Name = "btnSupportViewNote";
+            this.btnSupportViewNote.Size = new System.Drawing.Size(83, 29);
+            this.btnSupportViewNote.TabIndex = 94;
+            this.btnSupportViewNote.Text = "      View Note";
+            this.btnSupportViewNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportViewNote.UseVisualStyleBackColor = true;
+            // 
+            // btnSupportNote
+            // 
+            this.btnSupportNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
+            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.Location = new System.Drawing.Point(12, 112);
+            this.btnSupportNote.Name = "btnSupportNote";
+            this.btnSupportNote.Size = new System.Drawing.Size(65, 29);
+            this.btnSupportNote.TabIndex = 89;
+            this.btnSupportNote.Text = "       Note";
+            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.UseVisualStyleBackColor = true;
+            // 
+            // col_password_serial_password
+            // 
+            this.col_password_serial_password.DataPropertyName = "serial_password";
+            this.col_password_serial_password.HeaderText = "Serial Password";
+            this.col_password_serial_password.Name = "col_password_serial_password";
+            this.col_password_serial_password.ReadOnly = true;
+            this.col_password_serial_password.Visible = false;
+            // 
+            // col_password_id
+            // 
+            this.col_password_id.DataPropertyName = "id";
+            this.col_password_id.HeaderText = "ID";
+            this.col_password_id.Name = "col_password_id";
+            this.col_password_id.ReadOnly = true;
+            this.col_password_id.Visible = false;
+            // 
+            // col_password_password
+            // 
+            this.col_password_password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_password_password.DataPropertyName = "password";
+            this.col_password_password.HeaderText = "Password";
+            this.col_password_password.Name = "col_password_password";
+            this.col_password_password.ReadOnly = true;
+            // 
             // FormSn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -2223,18 +2238,12 @@
         private System.Windows.Forms.Button btnDeleteCloud;
         private System.Windows.Forms.Button btnEditCloud;
         private System.Windows.Forms.Panel panel2;
-        private MiscClass.CustomTextBox cloudEmail;
-        private MiscClass.CustomDateTimePicker cloudDateTo;
-        private MiscClass.CustomDateTimePicker cloudDateFrom;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Button btnDeleteMA;
         private System.Windows.Forms.Button btnEditMA;
         private System.Windows.Forms.Panel panel4;
-        private MiscClass.CustomTextBox maEmail;
-        private MiscClass.CustomDateTimePicker maDateTo;
-        private MiscClass.CustomDateTimePicker maDateFrom;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label33;
@@ -2262,5 +2271,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_probcod;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_probdesc;
+        private CC.XTextEdit txtMaEmail;
+        private CC.XDatePicker dtMaTo;
+        private CC.XDatePicker dtMaFrom;
+        private CC.XTextEdit txtCloudEmail;
+        private CC.XDatePicker dtCloudTo;
+        private CC.XDatePicker dtCloudFrom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_password_serial_password;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_password_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_password_password;
     }
 }

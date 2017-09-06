@@ -134,6 +134,14 @@ namespace SN_Net.Model
         public Nullable<System.DateTime> chgdat { get { return this.serial.chgdat; } }
     }
 
+    public class serialPasswordVM
+    {
+        public serial_password serial_password;
+
+        public int id { get { return this.serial_password.id; } }
+        public string password { get { return this.serial_password.pass_word; } }
+    }
+
     public class problemVM
     {
         public problem problem { get; set; }
@@ -174,6 +182,30 @@ namespace SN_Net.Model
             List<serialVM> s = new List<serialVM>();
 
             foreach (var item in serials)
+            {
+                s.Add(item.ToViewModel());
+            }
+
+            return s;
+        }
+
+        public static serialPasswordVM ToViewModel(this serial_password sp)
+        {
+            if (sp == null)
+                return null;
+
+            serialPasswordVM s = new serialPasswordVM
+            {
+                serial_password = sp
+            };
+
+            return s;     
+        }
+
+        public static List<serialPasswordVM> ToViewModel(this IEnumerable<serial_password> sp)
+        {
+            List<serialPasswordVM> s = new List<serialPasswordVM>();
+            foreach (var item in sp)
             {
                 s.Add(item.ToViewModel());
             }

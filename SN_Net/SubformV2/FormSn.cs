@@ -20,6 +20,7 @@ namespace SN_Net.Subform
         private FORM_MODE form_mode;
         private serial curr_serial;
         private serial tmp_serial;
+        private BindingList<serialPasswordVM> password_list;
         private BindingList<problemVM> problem_list;
         private Control focused_control;
 
@@ -38,6 +39,10 @@ namespace SN_Net.Subform
         {
             this.BackColor = ColorResource.BACKGROUND_COLOR_BEIGE;
             this.SetVerextSelection();
+
+            this.password_list = new BindingList<serialPasswordVM>();
+            this.dgvPassword.DataSource = this.password_list;
+
             this.problem_list = new BindingList<problemVM>();
             this.dgvProblem.DataSource = this.problem_list;
 
@@ -181,6 +186,37 @@ namespace SN_Net.Subform
                 this.txtTelnum2._Text = serial.telnum;
                 this.txtContact2._Text = serial.contact;
                 this.txtUpfree2._Text = serial.upfree;
+
+                this.dtMaFrom._SelectedDate = serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0 ? serial.ma.Where(m => m.flag == 0).First().start_date : null;
+                this.dtMaTo._SelectedDate = serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0 ? serial.ma.Where(m => m.flag == 0).First().end_date : null;
+                this.txtMaEmail._Text = serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0 ? serial.ma.Where(m => m.flag == 0).First().email : string.Empty;
+                if(serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0)
+                {
+                    DateTime expire_date = serial.ma.Where(m => m.flag == 0).First().end_date.Value;
+                    this.lblMAExpireWarning.Visible = expire_date.CompareTo(DateTime.Now.AddDays(15)) <= 0 ? true : false;
+                }
+                else
+                {
+                    this.lblMAExpireWarning.Visible = false;
+                }
+                
+
+                this.dtCloudFrom._SelectedDate = serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0 ? serial.cloud_srv.Where(c => c.flag == 0).First().start_date : null;
+                this.dtCloudTo._SelectedDate = serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0 ? serial.cloud_srv.Where(c => c.flag == 0).First().end_date : null;
+                this.txtCloudEmail._Text = serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0 ? serial.cloud_srv.Where(c => c.flag == 0).First().email : string.Empty;
+                if(serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0)
+                {
+                    DateTime expire_date = serial.cloud_srv.Where(c => c.flag == 0).First().end_date.Value;
+                    this.lblCloudExpireWarning.Visible = expire_date.CompareTo(DateTime.Now.AddDays(15)) <= 0 ? true: false;
+                }
+                else
+                {
+                    this.lblCloudExpireWarning.Visible = false;
+                }
+
+                this.password_list = null;
+                this.password_list = new BindingList<serialPasswordVM>(serial.serial_password.AsEnumerable().ToViewModel());
+                this.dgvPassword.DataSource = this.password_list;
 
                 this.problem_list = null;
                 this.problem_list = new BindingList<problemVM>(serial.problem.ToViewModel());
@@ -595,24 +631,72 @@ namespace SN_Net.Subform
         {
             DialogInquirySn inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM);
 
-            inq.ShowDialog();
+            if (inq.ShowDialog() == DialogResult.OK)
+            {
+                var ser = this.GetSerial(inq.selected_serial.id);
+                if (ser == null)
+                {
+                    MessageAlert.Show("ค้นหาข้อมูลไม่พบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+
+                this.curr_serial = ser;
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripInquiryRest_Click(object sender, EventArgs e)
         {
             DialogInquirySn inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM, this.curr_serial);
 
-            inq.ShowDialog();
+            if(inq.ShowDialog() == DialogResult.OK)
+            {
+                var ser = this.GetSerial(inq.selected_serial.id);
+                if(ser == null)
+                {
+                    MessageAlert.Show("ค้นหาข้อมูลไม่พบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+
+                this.curr_serial = ser;
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripInquiryMA_Click(object sender, EventArgs e)
         {
+            DialogInquirySn inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM, this.curr_serial, DialogInquirySn.INQUIRY_FILTER.MA);
 
+            if (inq.ShowDialog() == DialogResult.OK)
+            {
+                var ser = this.GetSerial(inq.selected_serial.id);
+                if (ser == null)
+                {
+                    MessageAlert.Show("ค้นหาข้อมูลไม่พบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+
+                this.curr_serial = ser;
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripInquiryCloud_Click(object sender, EventArgs e)
         {
+            DialogInquirySn inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM, this.curr_serial, DialogInquirySn.INQUIRY_FILTER.CLOUD);
 
+            if (inq.ShowDialog() == DialogResult.OK)
+            {
+                var ser = this.GetSerial(inq.selected_serial.id);
+                if (ser == null)
+                {
+                    MessageAlert.Show("ค้นหาข้อมูลไม่พบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+
+                this.curr_serial = ser;
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripSearchSN_Click(object sender, EventArgs e)
@@ -712,12 +796,66 @@ namespace SN_Net.Subform
         /* Password start */
         private void btnPasswordAdd_Click(object sender, EventArgs e)
         {
+            DialogPasswordSn pwd = new DialogPasswordSn();
+            if(pwd.ShowDialog() == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        serial_password p = new serial_password
+                        {
+                            serial_id = this.curr_serial.id,
+                            pass_word = pwd.password,
+                            creby_id = this.main_form.loged_in_user.id,
+                            credat = DateTime.Now,
+                            flag = 0
+                        };
+                        sn.serial_password.Add(p);
+                        sn.SaveChanges();
 
+                        this.curr_serial = this.GetSerial(this.curr_serial.id);
+                        this.FillForm(this.curr_serial);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
 
         private void btnPasswordRemove_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial.serial_password.AsEnumerable().Count() == 0)
+                return;
 
+            //serial_password serial_password = (serial_password)this.dgvPassword.Rows[this.dgvPassword.CurrentCell.RowIndex].Cells[this.col_password_serial_password.Name].Value;
+            string pass = (string)this.dgvPassword.Rows[this.dgvPassword.CurrentCell.RowIndex].Cells[this.col_password_password.Name].Value;
+            int id = (int)this.dgvPassword.Rows[this.dgvPassword.CurrentCell.RowIndex].Cells[this.col_password_id.Name].Value;
+
+            if (MessageAlert.Show("ลบรหัสผ่าน '" + pass + "' , ทำต่อหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        serial_password pwd_to_remove = sn.serial_password.Where(s => s.flag == 0).Where(s => s.id == id).FirstOrDefault();
+                        if (pwd_to_remove != null)
+                        {
+                            sn.serial_password.Remove(pwd_to_remove);
+                            sn.SaveChanges();
+                        }
+
+                        this.curr_serial = this.GetSerial(this.curr_serial.id);
+                        this.FillForm(this.curr_serial);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
         /**************/
 
@@ -725,12 +863,78 @@ namespace SN_Net.Subform
         /* MA start */
         private void btnEditMA_Click(object sender, EventArgs e)
         {
+            DateTime? date_from = this.curr_serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0 ? this.curr_serial.ma.Where(m => m.flag == 0).First().start_date : null;
+            DateTime? date_to = this.curr_serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0 ? this.curr_serial.ma.Where(m => m.flag == 0).First().end_date : null;
+            string email = this.curr_serial.ma.Where(m => m.flag == 0).AsEnumerable().Count() > 0 ? this.curr_serial.ma.Where(m => m.flag == 0).First().email : string.Empty;
 
+            DialogMaCloud dma = new DialogMaCloud(date_from, date_to, email);
+            if(dma.ShowDialog() == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        ma ma = sn.ma.Where(m => m.flag == 0).Where(m => m.serial_id == this.curr_serial.id).FirstOrDefault();
+                        if (ma != null) // update
+                        {
+                            ma.start_date = dma.date_from;
+                            ma.end_date = dma.date_to;
+                            ma.email = dma.email;
+                            ma.chgby_id = this.main_form.loged_in_user.id;
+                            ma.chgdat = DateTime.Now;
+                            sn.SaveChanges();
+                        }
+                        else // add
+                        {
+                            ma tmp_ma = new ma
+                            {
+                                serial_id = this.curr_serial.id,
+                                start_date = dma.date_from,
+                                end_date = dma.date_to,
+                                email = dma.email,
+                                creby_id = this.main_form.loged_in_user.id,
+                                credat = DateTime.Now,
+                                flag = 0
+                            };
+                            sn.ma.Add(tmp_ma);
+                            sn.SaveChanges();
+                        }
+
+                        this.curr_serial = this.GetSerial(this.curr_serial.id);
+                        this.FillForm(this.curr_serial);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
 
         private void btnDeleteMA_Click(object sender, EventArgs e)
         {
+            if(MessageAlert.Show("ลบรายละเอียดการให้บริการ MA, ทำต่อหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        ma ma_to_remove = sn.ma.Where(m => m.flag == 0).Where(m => m.serial_id == this.curr_serial.id).FirstOrDefault();
+                        if(ma_to_remove != null)
+                        {
+                            sn.ma.Remove(ma_to_remove);
+                            sn.SaveChanges();
+                        }
 
+                        this.curr_serial = this.GetSerial(this.curr_serial.id);
+                        this.FillForm(this.curr_serial);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
         /*************/
 
@@ -738,12 +942,78 @@ namespace SN_Net.Subform
         /* CLOUD start */
         private void btnEditCloud_Click(object sender, EventArgs e)
         {
+            DateTime? date_from = this.curr_serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0 ? this.curr_serial.cloud_srv.Where(c => c.flag == 0).First().start_date : null;
+            DateTime? date_to = this.curr_serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0 ? this.curr_serial.cloud_srv.Where(c => c.flag == 0).First().end_date : null;
+            string email = this.curr_serial.cloud_srv.Where(c => c.flag == 0).AsEnumerable().Count() > 0 ? this.curr_serial.cloud_srv.Where(c => c.flag == 0).First().email : string.Empty;
 
+            DialogMaCloud dma = new DialogMaCloud(date_from, date_to, email);
+            if (dma.ShowDialog() == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        cloud_srv cl = sn.cloud_srv.Where(c => c.flag == 0).Where(c => c.serial_id == this.curr_serial.id).FirstOrDefault();
+                        if (cl != null) // update
+                        {
+                            cl.start_date = dma.date_from;
+                            cl.end_date = dma.date_to;
+                            cl.email = dma.email;
+                            cl.chgby_id = this.main_form.loged_in_user.id;
+                            cl.chgdat = DateTime.Now;
+                            sn.SaveChanges();
+                        }
+                        else // add
+                        {
+                            cloud_srv tmp_cl = new cloud_srv
+                            {
+                                serial_id = this.curr_serial.id,
+                                start_date = dma.date_from,
+                                end_date = dma.date_to,
+                                email = dma.email,
+                                creby_id = this.main_form.loged_in_user.id,
+                                credat = DateTime.Now,
+                                flag = 0
+                            };
+                            sn.cloud_srv.Add(tmp_cl);
+                            sn.SaveChanges();
+                        }
+
+                        this.curr_serial = this.GetSerial(this.curr_serial.id);
+                        this.FillForm(this.curr_serial);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
 
         private void btnDeleteCloud_Click(object sender, EventArgs e)
         {
+            if (MessageAlert.Show("ลบรายละเอียดการให้บริการ Cloud, ทำต่อหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        cloud_srv cl_to_remove = sn.cloud_srv.Where(m => m.flag == 0).Where(m => m.serial_id == this.curr_serial.id).FirstOrDefault();
+                        if (cl_to_remove != null)
+                        {
+                            sn.cloud_srv.Remove(cl_to_remove);
+                            sn.SaveChanges();
+                        }
 
+                        this.curr_serial = this.GetSerial(this.curr_serial.id);
+                        this.FillForm(this.curr_serial);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
         /*************/
 
