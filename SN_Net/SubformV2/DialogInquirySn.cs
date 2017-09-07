@@ -148,13 +148,13 @@ namespace SN_Net.Subform
                     switch (sort_by)
                     {
                         case SORT_BY.SERNUM:
-                            return sn.serial.Where(s => s.flag == 0).OrderBy(s => s.sernum).Select(s => new SerialId { id = s.id, value = s.sernum }).ToList();
+                            return sn.serial.Where(s => s.flag == 0).OrderBy(s => s.sernum).Select(s => new SerialId { id = s.id }).ToList();
                         case SORT_BY.CONTACT:
-                            return sn.serial.Where(s => s.flag == 0).OrderBy(s => s.contact).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, value = s.contact + ";" + s.sernum }).ToList();
+                            return sn.serial.Where(s => s.flag == 0).OrderBy(s => s.contact).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).ToList();
                         case SORT_BY.COMPNAM:
                             return sn.serial.Where(s => s.flag == 0).OrderBy(s => s.compnam).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, value = s.compnam + ";" + s.sernum }).ToList();
                         case SORT_BY.DEALER:
-                            return sn.serial.Include("dealer").Where(s => s.flag == 0).OrderBy(s => s.dealer.dealercod).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, value = s.dealer.dealercod + ";" + s.sernum }).ToList();
+                            return sn.serial.Include("dealer").Where(s => s.flag == 0).OrderBy(s => s.dealer_id.HasValue ? s.dealer.dealercod : "").ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, value = s.dealer.dealercod + ";" + s.sernum }).ToList();
                         case SORT_BY.OLDNUM:
                             return sn.serial.Where(s => s.flag == 0).OrderBy(s => s.oldnum).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, value = s.oldnum + ";" + s.sernum }).ToList();
                         case SORT_BY.BUSITYP:
@@ -201,7 +201,7 @@ namespace SN_Net.Subform
                     case SORT_BY.COMPNAM:
                         return ser.OrderBy(s => s.compnam).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.DEALER:
-                        return ser.OrderBy(s => s.dealer.dealercod).ThenBy(s => s.sernum).ToList();
+                        return ser.OrderBy(s => s.dealer_id.HasValue ? s.dealer.dealercod : "").ThenBy(s => s.sernum).ToList();
                     case SORT_BY.OLDNUM:
                         return ser.OrderBy(s => s.oldnum).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.BUSITYP:
@@ -233,6 +233,8 @@ namespace SN_Net.Subform
 
                 this.ShowLoadingBox();
                 ((XDatagrid)sender).Enabled = false;
+                this.btnOK.Enabled = false;
+                this.btnCancel.Enabled = false;
                 int focused_id = (int)((XDatagrid)sender).Rows[((XDatagrid)sender).FirstDisplayedScrollingRowIndex].Cells[this.col_id.Name].Value;
 
                 BackgroundWorker wrk = new BackgroundWorker();
@@ -258,6 +260,8 @@ namespace SN_Net.Subform
                     this.HideLoadingBox();
                     ((XDatagrid)sender).FirstDisplayedScrollingRowIndex = ((XDatagrid)sender).Rows.Cast<DataGridViewRow>().Where(r => (int)r.Cells[this.col_id.Name].Value == focused_id).First().Index;
                     ((XDatagrid)sender).Enabled = true;
+                    this.btnOK.Enabled = true;
+                    this.btnCancel.Enabled = true;
                     ((XDatagrid)sender).Focus();
                 };
                 wrk.RunWorkerAsync();
@@ -272,6 +276,8 @@ namespace SN_Net.Subform
 
                 this.ShowLoadingBox();
                 ((XDatagrid)sender).Enabled = false;
+                this.btnOK.Enabled = false;
+                this.btnCancel.Enabled = false;
                 int focused_id = (int)((XDatagrid)sender).Rows[((XDatagrid)sender).FirstDisplayedScrollingRowIndex].Cells[this.col_id.Name].Value;
 
                 BackgroundWorker wrk = new BackgroundWorker();
@@ -297,6 +303,8 @@ namespace SN_Net.Subform
                     this.HideLoadingBox();
                     ((XDatagrid)sender).FirstDisplayedScrollingRowIndex = ((XDatagrid)sender).Rows.Cast<DataGridViewRow>().Where(r => (int)r.Cells[this.col_id.Name].Value == focused_id).First().Index;
                     ((XDatagrid)sender).Enabled = true;
+                    this.btnOK.Enabled = true;
+                    this.btnCancel.Enabled = true;
                     ((XDatagrid)sender).Focus();
                 };
                 wrk.RunWorkerAsync();
@@ -327,6 +335,52 @@ namespace SN_Net.Subform
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void dgv_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if(e.RowIndex == -1)
+            {
+                int col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_sernum.Name).First().Index;
+                switch (this.sort_by)
+                {
+                    case SORT_BY.SERNUM:
+                        break;
+                    case SORT_BY.CONTACT:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_contact.Name).First().Index;
+                        break;
+                    case SORT_BY.COMPNAM:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_compnam.Name).First().Index;
+                        break;
+                    case SORT_BY.DEALER:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_dealer.Name).First().Index;
+                        break;
+                    case SORT_BY.OLDNUM:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_oldcod.Name).First().Index;
+                        break;
+                    case SORT_BY.BUSITYP:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_busityp.Name).First().Index;
+                        break;
+                    case SORT_BY.AREA:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_area.Name).First().Index;
+                        break;
+                    default:
+                        col_index = ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_sernum.Name).First().Index;
+                        break;
+                }
+
+                if(e.ColumnIndex == col_index)
+                {
+                    using (SolidBrush brush = new SolidBrush(Color.DarkOliveGreen))
+                    {
+                        e.CellStyle.BackColor = Color.YellowGreen;
+                        e.CellStyle.SelectionBackColor = Color.YellowGreen;
+                        e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                        e.Graphics.FillPolygon(brush, new Point[] { new Point(e.CellBounds.X + e.CellBounds.Width - 18, e.CellBounds.Y + 18), new Point(e.CellBounds.X + e.CellBounds.Width - 10, e.CellBounds.Y + 18), new Point(e.CellBounds.X + e.CellBounds.Width - 14, e.CellBounds.Y + 10) });
+                        e.Handled = true;
+                    }
+                }
+            }
         }
     }
 

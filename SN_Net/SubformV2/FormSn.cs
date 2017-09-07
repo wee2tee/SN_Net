@@ -23,6 +23,7 @@ namespace SN_Net.Subform
         private BindingList<serialPasswordVM> password_list;
         private BindingList<problemVM> problem_list;
         private Control focused_control;
+        private DialogInquirySn.SORT_BY sort_by;
 
         public FormSn()
         {
@@ -37,6 +38,8 @@ namespace SN_Net.Subform
 
         private void SnWindow2_Load(object sender, EventArgs e)
         {
+            this.sort_by = DialogInquirySn.SORT_BY.SERNUM;
+
             this.BackColor = ColorResource.BACKGROUND_COLOR_BEIGE;
             this.SetVerextSelection();
 
@@ -629,7 +632,34 @@ namespace SN_Net.Subform
 
         private void toolStripInquiryAll_Click(object sender, EventArgs e)
         {
-            DialogInquirySn inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM);
+            DialogInquirySn inq;
+            switch (this.sort_by)
+            {
+                case DialogInquirySn.SORT_BY.SERNUM:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM);
+                    break;
+                case DialogInquirySn.SORT_BY.CONTACT:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.CONTACT);
+                    break;
+                case DialogInquirySn.SORT_BY.COMPNAM:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.COMPNAM);
+                    break;
+                case DialogInquirySn.SORT_BY.DEALER:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.DEALER);
+                    break;
+                case DialogInquirySn.SORT_BY.OLDNUM:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.OLDNUM);
+                    break;
+                case DialogInquirySn.SORT_BY.BUSITYP:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.BUSITYP);
+                    break;
+                case DialogInquirySn.SORT_BY.AREA:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.AREA);
+                    break;
+                default:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM);
+                    break;
+            }
 
             if (inq.ShowDialog() == DialogResult.OK)
             {
@@ -647,9 +677,36 @@ namespace SN_Net.Subform
 
         private void toolStripInquiryRest_Click(object sender, EventArgs e)
         {
-            DialogInquirySn inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM, this.curr_serial);
+            DialogInquirySn inq;
+            switch (this.sort_by)
+            {
+                case DialogInquirySn.SORT_BY.SERNUM:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM, this.curr_serial);
+                    break;
+                case DialogInquirySn.SORT_BY.CONTACT:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.CONTACT, this.curr_serial);
+                    break;
+                case DialogInquirySn.SORT_BY.COMPNAM:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.COMPNAM, this.curr_serial);
+                    break;
+                case DialogInquirySn.SORT_BY.DEALER:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.DEALER, this.curr_serial);
+                    break;
+                case DialogInquirySn.SORT_BY.OLDNUM:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.OLDNUM, this.curr_serial);
+                    break;
+                case DialogInquirySn.SORT_BY.BUSITYP:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.BUSITYP, this.curr_serial);
+                    break;
+                case DialogInquirySn.SORT_BY.AREA:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.AREA, this.curr_serial);
+                    break;
+                default:
+                    inq = new DialogInquirySn(DialogInquirySn.SORT_BY.SERNUM, this.curr_serial);
+                    break;
+            }
 
-            if(inq.ShowDialog() == DialogResult.OK)
+            if (inq.ShowDialog() == DialogResult.OK)
             {
                 var ser = this.GetSerial(inq.selected_serial.id);
                 if(ser == null)
@@ -701,15 +758,23 @@ namespace SN_Net.Subform
 
         private void toolStripSearchSN_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "S/N", "");
+            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "S/N", this.curr_serial.sernum);
             if(search.ShowDialog() == DialogResult.OK)
             {
+                this.sort_by = DialogInquirySn.SORT_BY.SERNUM;
+
                 using (snEntities sn = DBX.DataSet())
                 {
                     var sn_result = sn.serial.Where(s => s.flag == 0)
                                 .Where(s => s.sernum.CompareTo(search.keyword) >= 0)
                                 .OrderBy(s => s.sernum)
                                 .FirstOrDefault();
+
+                    if(sn_result == null)
+                    {
+                        MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        return;
+                    }
 
                     if(sn_result.sernum.CompareTo(search.keyword) != 0)
                     {
@@ -727,22 +792,155 @@ namespace SN_Net.Subform
 
         private void toolStripSearchContact_Click(object sender, EventArgs e)
         {
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Contact", this.curr_serial.contact);
+            if (search.ShowDialog() == DialogResult.OK)
+            {
+                this.sort_by = DialogInquirySn.SORT_BY.CONTACT;
 
+                using (snEntities sn = DBX.DataSet())
+                {
+                    var sn_result = sn.serial.OrderBy(s => s.contact).Where(s => s.flag == 0)
+                                .Where(s => s.contact.CompareTo(search.keyword) >= 0)
+                                .OrderBy(s => s.contact)
+                                .FirstOrDefault();
+
+                    if (sn_result == null)
+                    {
+                        MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        return;
+                    }
+
+                    if (sn_result.contact.ToLower().CompareTo(search.keyword.ToLower()) != 0)
+                    {
+                        if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                        {
+                            return;
+                        }
+                    }
+
+                    this.curr_serial = this.GetSerial(sn_result.id);
+                    this.FillForm(this.curr_serial);
+                }
+            }
         }
 
         private void toolStripSearchCompany_Click(object sender, EventArgs e)
         {
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Comp. Name", this.curr_serial.compnam);
+            if (search.ShowDialog() == DialogResult.OK)
+            {
+                this.sort_by = DialogInquirySn.SORT_BY.COMPNAM;
 
+                using (snEntities sn = DBX.DataSet())
+                {
+                    var sn_result = sn.serial.Where(s => s.flag == 0)
+                                .Where(s => s.compnam.CompareTo(search.keyword) >= 0)
+                                .OrderBy(s => s.compnam)
+                                .FirstOrDefault();
+
+                    if (sn_result == null)
+                    {
+                        MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        return;
+                    }
+
+                    if (sn_result.compnam.ToLower().CompareTo(search.keyword.ToLower()) != 0)
+                    {
+                        if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                        {
+                            return;
+                        }
+                    }
+
+                    this.curr_serial = this.GetSerial(sn_result.id);
+                    this.FillForm(this.curr_serial);
+                }
+            }
         }
 
         private void toolStripSearchDealer_Click(object sender, EventArgs e)
         {
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Dealer", this.curr_serial.dealer.dealercod);
+            if (search.ShowDialog() == DialogResult.OK)
+            {
+                this.sort_by = DialogInquirySn.SORT_BY.DEALER;
 
+                serial sn_result = null;
+                List<int> sn_ids = new List<int>();
+                int[] deal_ids;
+                using (snEntities sn = DBX.DataSet())
+                {
+
+                    Console.WriteLine(" ==> begin find : " + DateTime.Now);
+                    deal_ids = sn.dealer/*.Include("serial")*/.Where(d => d.flag == 0)
+                                .Where(d => d.dealercod.CompareTo(search.keyword) >= 0)
+                                .OrderBy(d => d.dealercod)
+                                .Select(d => d.id)
+                                .ToArray();
+                }
+                //foreach (var id in deal_ids)
+                //{
+                //    using (snEntities sn = DBX.DataSet())
+                //    {
+                //        var ser = sn.serial.Where(s => s.flag == 0)
+                //                .Where(s => s.dealer_id == id)
+                //                .Select(s => s.id)
+                //                .ToList();
+                //        ser.ForEach(s => sn_ids.Add(s));
+                //    }
+                //}
+                Console.WriteLine(" ==> find success : " + DateTime.Now);
+
+                /**********************************************************************************************/
+
+                //sn_result = sn_list.FirstOrDefault();
+
+                //if (sn_result == null)
+                //{
+                //    MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                //    return;
+                //}
+
+                //if (sn_result.dealer.dealercod.CompareTo(search.keyword) > 0)
+                //{
+                //    if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                //    {
+                //        return;
+                //    }
+                //}
+
+                //this.curr_serial = this.GetSerial(sn_result.id);
+                //this.FillForm(this.curr_serial);
+
+            }
         }
 
         private void toolStripSearchOldnum_Click(object sender, EventArgs e)
         {
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Old S/N", this.curr_serial.oldnum);
+            if (search.ShowDialog() == DialogResult.OK)
+            {
+                this.sort_by = DialogInquirySn.SORT_BY.OLDNUM;
 
+                using (snEntities sn = DBX.DataSet())
+                {
+                    var sn_result = sn.serial.Where(s => s.flag == 0)
+                                .Where(s => s.dealer.dealercod.ToLower().CompareTo(search.keyword.ToLower()) >= 0)
+                                .OrderBy(s => s.dealer.dealercod)
+                                .FirstOrDefault();
+
+                    if (sn_result.dealer.dealercod.ToLower().CompareTo(search.keyword.ToLower()) != 0)
+                    {
+                        if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                        {
+                            return;
+                        }
+                    }
+
+                    this.curr_serial = this.GetSerial(sn_result.id);
+                    this.FillForm(this.curr_serial);
+                }
+            }
         }
 
         private void toolStripSearchBusityp_Click(object sender, EventArgs e)

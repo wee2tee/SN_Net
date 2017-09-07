@@ -102,7 +102,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.YellowGreen;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.GreenYellow;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -168,6 +168,7 @@
             this.dgv.StandardTab = true;
             this.dgv.TabIndex = 0;
             this.dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellDoubleClick);
+            this.dgv.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgv_CellPainting);
             this.dgv.CurrentCellChanged += new System.EventHandler(this.dgv_CurrentCellChanged);
             // 
             // col_id
@@ -210,7 +211,7 @@
             this.col_compnam.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.col_compnam.DataPropertyName = "compnam";
             this.col_compnam.HeaderText = "COMPNAM";
-            this.col_compnam.MinimumWidth = 200;
+            this.col_compnam.MinimumWidth = 250;
             this.col_compnam.Name = "col_compnam";
             this.col_compnam.ReadOnly = true;
             // 
@@ -248,6 +249,7 @@
             this.col_telnum.DataPropertyName = "telnum";
             this.col_telnum.FillWeight = 80F;
             this.col_telnum.HeaderText = "TELNUM";
+            this.col_telnum.MinimumWidth = 220;
             this.col_telnum.Name = "col_telnum";
             this.col_telnum.ReadOnly = true;
             // 
@@ -266,6 +268,7 @@
             this.col_busides.DataPropertyName = "busides";
             this.col_busides.FillWeight = 80F;
             this.col_busides.HeaderText = "BUSIDES";
+            this.col_busides.MinimumWidth = 220;
             this.col_busides.Name = "col_busides";
             this.col_busides.ReadOnly = true;
             // 
