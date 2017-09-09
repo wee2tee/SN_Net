@@ -39,6 +39,7 @@ namespace SN_Net.Subform
         private void SnWindow2_Load(object sender, EventArgs e)
         {
             this.sort_by = DialogInquirySn.SORT_BY.SERNUM;
+            this.ResetFormState(FORM_MODE.READ);
 
             this.BackColor = ColorResource.BACKGROUND_COLOR_BEIGE;
             this.SetVerextSelection();
@@ -802,6 +803,7 @@ namespace SN_Net.Subform
                     var sn_result = sn.serial.OrderBy(s => s.contact).Where(s => s.flag == 0)
                                 .Where(s => s.contact.CompareTo(search.keyword) >= 0)
                                 .OrderBy(s => s.contact)
+                                .ThenBy(s => s.sernum)
                                 .FirstOrDefault();
 
                     if (sn_result == null)
@@ -836,6 +838,7 @@ namespace SN_Net.Subform
                     var sn_result = sn.serial.Where(s => s.flag == 0)
                                 .Where(s => s.compnam.CompareTo(search.keyword) >= 0)
                                 .OrderBy(s => s.compnam)
+                                .ThenBy(s => s.sernum)
                                 .FirstOrDefault();
 
                     if (sn_result == null)
@@ -864,60 +867,32 @@ namespace SN_Net.Subform
             if (search.ShowDialog() == DialogResult.OK)
             {
                 this.sort_by = DialogInquirySn.SORT_BY.DEALER;
+                
+                List<SerialId> ids = DialogInquirySn.GetSerialIdList(DialogInquirySn.SORT_BY.DEALER, DialogInquirySn.INQUIRY_FILTER.ALL);
+                ids = ids.Where(s => s.dealercod != null).Where(s => s.dealercod.CompareTo(search.keyword) >= 0).ToList();
 
-                serial sn_result = null;
-                List<int> sn_ids = new List<int>();
-                int[] deal_ids;
-                using (snEntities sn = DBX.DataSet())
+                if (ids.Count == 0)
                 {
-
-                    Console.WriteLine(" ==> begin find : " + DateTime.Now);
-                    deal_ids = sn.dealer/*.Include("serial")*/.Where(d => d.flag == 0)
-                                .Where(d => d.dealercod.CompareTo(search.keyword) >= 0)
-                                .OrderBy(d => d.dealercod)
-                                .Select(d => d.id)
-                                .ToArray();
+                    MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
                 }
-                //foreach (var id in deal_ids)
-                //{
-                //    using (snEntities sn = DBX.DataSet())
-                //    {
-                //        var ser = sn.serial.Where(s => s.flag == 0)
-                //                .Where(s => s.dealer_id == id)
-                //                .Select(s => s.id)
-                //                .ToList();
-                //        ser.ForEach(s => sn_ids.Add(s));
-                //    }
-                //}
-                Console.WriteLine(" ==> find success : " + DateTime.Now);
 
-                /**********************************************************************************************/
+                if(ids.First().dealercod.CompareTo(search.keyword) > 0)
+                {
+                    if(MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                    {
+                        return;
+                    }
+                }
 
-                //sn_result = sn_list.FirstOrDefault();
-
-                //if (sn_result == null)
-                //{
-                //    MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
-                //    return;
-                //}
-
-                //if (sn_result.dealer.dealercod.CompareTo(search.keyword) > 0)
-                //{
-                //    if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
-                //    {
-                //        return;
-                //    }
-                //}
-
-                //this.curr_serial = this.GetSerial(sn_result.id);
-                //this.FillForm(this.curr_serial);
-
+                this.curr_serial = this.GetSerial(ids.First().id);
+                this.FillForm(this.curr_serial);
             }
         }
 
         private void toolStripSearchOldnum_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Old S/N", this.curr_serial.oldnum);
+            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "Old S/N", this.curr_serial.oldnum);
             if (search.ShowDialog() == DialogResult.OK)
             {
                 this.sort_by = DialogInquirySn.SORT_BY.OLDNUM;
@@ -925,11 +900,18 @@ namespace SN_Net.Subform
                 using (snEntities sn = DBX.DataSet())
                 {
                     var sn_result = sn.serial.Where(s => s.flag == 0)
-                                .Where(s => s.dealer.dealercod.ToLower().CompareTo(search.keyword.ToLower()) >= 0)
-                                .OrderBy(s => s.dealer.dealercod)
+                                .Where(s => s.oldnum.CompareTo(search.keyword) >= 0)
+                                .OrderBy(s => s.oldnum)
+                                .ThenBy(s => s.sernum)
                                 .FirstOrDefault();
 
-                    if (sn_result.dealer.dealercod.ToLower().CompareTo(search.keyword.ToLower()) != 0)
+                    if (sn_result == null)
+                    {
+                        MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        return;
+                    }
+
+                    if (sn_result.oldnum.CompareTo(search.keyword) != 0)
                     {
                         if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
                         {
@@ -945,12 +927,12 @@ namespace SN_Net.Subform
 
         private void toolStripSearchBusityp_Click(object sender, EventArgs e)
         {
-
+            this.sort_by = DialogInquirySn.SORT_BY.BUSITYP;
         }
 
         private void toolStripSearchArea_Click(object sender, EventArgs e)
         {
-
+            this.sort_by = DialogInquirySn.SORT_BY.AREA;
         }
 
         private void toolStripReload_Click(object sender, EventArgs e)
