@@ -41,7 +41,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="dealercod" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="dealercod" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="prenam" Type="varchar" MaxLength="30" />
           <Property Name="compnam" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="addr01" Type="varchar" MaxLength="50" />
@@ -54,6 +54,7 @@
           <Property Name="position" Type="varchar" MaxLength="50" />
           <Property Name="busides" Type="varchar" MaxLength="40" />
           <Property Name="area_id" Type="int" />
+          <Property Name="area" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="remark" Type="varchar" MaxLength="50" />
           <Property Name="creby_id" Type="int" />
           <Property Name="credat" Type="datetime" Precision="0" Nullable="false" />
@@ -67,7 +68,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tabtyp" Type="varchar" MaxLength="4" />
-          <Property Name="typcod" Type="varchar" MaxLength="10" />
+          <Property Name="typcod" Type="char" MaxLength="10" />
           <Property Name="abbreviate_en" Type="varchar" MaxLength="20" />
           <Property Name="abbreviate_th" Type="varchar" MaxLength="20" />
           <Property Name="typdes_en" Type="varchar" MaxLength="50" />
@@ -128,7 +129,7 @@
           <Property Name="sernum" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="oldnum" Type="char" MaxLength="20" />
           <Property Name="version" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="contact" Type="varchar" MaxLength="100" />
+          <Property Name="contact" Type="char" MaxLength="100" />
           <Property Name="position" Type="varchar" MaxLength="50" />
           <Property Name="prenam" Type="varchar" MaxLength="30" />
           <Property Name="compnam" Type="varchar" MaxLength="100" />
@@ -147,9 +148,12 @@
           <Property Name="refnum" Type="varchar" MaxLength="12" />
           <Property Name="remark" Type="varchar" MaxLength="50" />
           <Property Name="dealer_id" Type="int" />
+          <Property Name="dealercod" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="verextdat" Type="date" />
           <Property Name="area_id" Type="int" />
+          <Property Name="area" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="busityp_id" Type="int" />
+          <Property Name="busityp" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="howknown_id" Type="int" />
           <Property Name="verext_id" Type="int" />
           <Property Name="creby_id" Type="int" />
@@ -726,6 +730,7 @@
           <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="busides" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="area_id" Type="Int32" />
+          <Property Name="area" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="creby_id" Type="Int32" />
           <Property Name="credat" Type="DateTime" Nullable="false" />
@@ -840,9 +845,12 @@
           <Property Name="refnum" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="dealer_id" Type="Int32" />
+          <Property Name="dealercod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="verextdat" Type="DateTime" />
           <Property Name="area_id" Type="Int32" />
+          <Property Name="area" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="busityp_id" Type="Int32" />
+          <Property Name="busityp" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="howknown_id" Type="Int32" />
           <Property Name="verext_id" Type="Int32" />
           <Property Name="creby_id" Type="Int32" />
@@ -1446,6 +1454,7 @@
                 <ScalarProperty Name="position" ColumnName="position" />
                 <ScalarProperty Name="busides" ColumnName="busides" />
                 <ScalarProperty Name="area_id" ColumnName="area_id" />
+                <ScalarProperty Name="area" ColumnName="area" />
                 <ScalarProperty Name="remark" ColumnName="remark" />
                 <ScalarProperty Name="creby_id" ColumnName="creby_id" />
                 <ScalarProperty Name="credat" ColumnName="credat" />
@@ -1544,9 +1553,12 @@
                 <ScalarProperty Name="refnum" ColumnName="refnum" />
                 <ScalarProperty Name="remark" ColumnName="remark" />
                 <ScalarProperty Name="dealer_id" ColumnName="dealer_id" />
+                <ScalarProperty Name="dealercod" ColumnName="dealercod" />
                 <ScalarProperty Name="verextdat" ColumnName="verextdat" />
                 <ScalarProperty Name="area_id" ColumnName="area_id" />
+                <ScalarProperty Name="area" ColumnName="area" />
                 <ScalarProperty Name="busityp_id" ColumnName="busityp_id" />
+                <ScalarProperty Name="busityp" ColumnName="busityp" />
                 <ScalarProperty Name="howknown_id" ColumnName="howknown_id" />
                 <ScalarProperty Name="verext_id" ColumnName="verext_id" />
                 <ScalarProperty Name="creby_id" ColumnName="creby_id" />

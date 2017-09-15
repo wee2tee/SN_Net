@@ -46,9 +46,12 @@ namespace SN_Net.Model
         public string refnum { get; set; }
         public string remark { get; set; }
         public Nullable<int> dealer_id { get; set; }
+        public string dealercod { get; set; }
         public Nullable<System.DateTime> verextdat { get; set; }
         public Nullable<int> area_id { get; set; }
+        public string area { get; set; }
         public Nullable<int> busityp_id { get; set; }
+        public string busityp { get; set; }
         public Nullable<int> howknown_id { get; set; }
         public Nullable<int> verext_id { get; set; }
         public Nullable<int> creby_id { get; set; }

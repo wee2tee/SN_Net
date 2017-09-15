@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SN_Net.Subform;
 
 namespace SN_Net.Model
 {
@@ -28,51 +29,54 @@ namespace SN_Net.Model
         public string upfree { get { return this.serial.upfree; } }
         public string refnum { get { return this.serial.refnum; } }
         public string remark { get { return this.serial.remark; } }
-        public string area
-        {
-            get
-            {
-                using (snEntities sn = DBX.DataSet())
-                {
-                    if (!this.serial.area_id.HasValue)
-                        return string.Empty;
+        //public string area
+        //{
+        //    get
+        //    {
+        //        using (snEntities sn = DBX.DataSet())
+        //        {
+        //            if (!this.serial.area_id.HasValue)
+        //                return string.Empty;
 
-                    var area = sn.istab.Where(i => i.flag == 0).Where(i => i.id == this.serial.area_id.Value).FirstOrDefault();
-                    return area != null ? area.typcod : string.Empty;
-                }
-            }
-        }
-        public string dealer
-        {
-            get
-            {
-                using (snEntities sn = DBX.DataSet())
-                {
-                    if (!this.serial.dealer_id.HasValue)
-                        return string.Empty;
+        //            var area = sn.istab.Where(i => i.flag == 0).Where(i => i.id == this.serial.area_id.Value).FirstOrDefault();
+        //            return area != null ? area.typcod : string.Empty;
+        //        }
+        //    }
+        //}
+        public string area { get { return this.serial.area; } }
+        //public string dealer
+        //{
+        //    get
+        //    {
+        //        using (snEntities sn = DBX.DataSet())
+        //        {
+        //            if (!this.serial.dealer_id.HasValue)
+        //                return string.Empty;
 
-                    var dealer = sn.dealer.Where(d => d.flag == 0).Where(d => d.id == this.serial.dealer_id.Value).FirstOrDefault();
-                    return dealer != null ? dealer.dealercod : string.Empty;
-                }
-            }
-        }
+        //            var dealer = sn.dealer.Where(d => d.flag == 0).Where(d => d.id == this.serial.dealer_id.Value).FirstOrDefault();
+        //            return dealer != null ? dealer.dealercod : string.Empty;
+        //        }
+        //    }
+        //}
+        public string dealer { get { return this.serial.dealercod; } }
         public Nullable<System.DateTime> verextdat { get { return this.serial.verextdat; } }
         public string telnum { get { return this.serial.telnum; } }
         public string faxnum { get { return this.serial.faxnum; } }
-        public string busityp
-        {
-            get
-            {
-                using (snEntities sn = DBX.DataSet())
-                {
-                    if (!this.serial.busityp_id.HasValue)
-                        return string.Empty;
+        //public string busityp
+        //{
+        //    get
+        //    {
+        //        using (snEntities sn = DBX.DataSet())
+        //        {
+        //            if (!this.serial.busityp_id.HasValue)
+        //                return string.Empty;
 
-                    var busityp = sn.istab.Where(i => i.flag == 0).Where(i => i.id == this.serial.busityp_id.Value).FirstOrDefault();
-                    return busityp != null ? busityp.typcod : string.Empty;
-                }
-            }
-        }
+        //            var busityp = sn.istab.Where(i => i.flag == 0).Where(i => i.id == this.serial.busityp_id.Value).FirstOrDefault();
+        //            return busityp != null ? busityp.typcod : string.Empty;
+        //        }
+        //    }
+        //}
+        public string busityp { get { return this.serial.busityp; } }
         public string howknown
         {
             get
@@ -163,6 +167,37 @@ namespace SN_Net.Model
         public string name { get { return this.problem.name; } }
     }
 
+    public class istabVM
+    {
+        public istab istab { get; set; }
+        public int id { get { return this.istab.id; } }
+        public string tabtyp { get { return this.istab.tabtyp; } }
+        public string typcod { get { return this.istab.typcod; } }
+        public string abbr_en { get { return this.istab.abbreviate_en; } }
+        public string abbr_th { get { return this.istab.abbreviate_th; } }
+        public string typdes_en { get { return this.istab.typdes_en; } }
+        public string typdes_th { get { return this.istab.typdes_th; } }
+        public string use_pattern { get { return this.istab.use_pattern ? "Y" : "N"; } }
+    }
+
+    public class dealerVM
+    {
+        public dealer dealer { get; set; }
+        public int id { get { return this.dealer.id; } }
+        public string dealercod { get { return this.dealer.dealercod; } }
+        public string compnam { get { return this.dealer.compnam; } }
+        public string addr01 { get { return this.dealer.addr01; } }
+        public string addr02 { get { return this.dealer.addr02; } }
+        public string addr03 { get { return this.dealer.addr03; } }
+        public string zipcod { get { return this.dealer.zipcod; } }
+        public string telnum { get { return this.dealer.telnum; } }
+        public string faxnum { get { return this.dealer.faxnum; } }
+        public string contact { get { return this.dealer.contact; } }
+        public string position { get { return this.dealer.position; } }
+        public string busides { get { return this.dealer.busides; } }
+        public string area { get { return this.dealer.area; } }
+    }
+
     public static class DataHelper
     {
         public static serialVM ToViewModel(this serial serial)
@@ -237,6 +272,50 @@ namespace SN_Net.Model
             return p;
         }
 
+        public static istabVM ToViewModel(this istab istab)
+        {
+            if (istab == null)
+                return null;
+
+            istabVM i = new istabVM
+            {
+                istab = istab
+            };
+            return i;
+        }
+
+        public static List<istabVM> ToViewModel(this IEnumerable<istab> istabs)
+        {
+            List<istabVM> i = new List<istabVM>();
+            foreach (var item in istabs)
+            {
+                i.Add(item.ToViewModel());
+            }
+            return i;
+        }
+
+        public static dealerVM ToViewModel(this dealer dealer)
+        {
+            if (dealer == null)
+                return null;
+
+            dealerVM d = new dealerVM
+            {
+                dealer = dealer
+            };
+            return d;
+        }
+
+        public static List<dealerVM> ToViewModel(this IEnumerable<dealer> dealers)
+        {
+            List<dealerVM> d = new List<dealerVM>();
+            foreach (var item in dealers)
+            {
+                d.Add(item.ToViewModel());
+            }
+            return d;
+        }
+
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)
         {
             return new serial
@@ -274,6 +353,25 @@ namespace SN_Net.Model
                 chgdat = null,
                 flag = 0
             };
+        }
+
+        public static string GetTabtypString(this TABTYP tabtyp)
+        {
+            switch (tabtyp)
+            {
+                case TABTYP.AREA:
+                    return istabDbf.TABTYP_AREA;
+                case TABTYP.BUSITYP:
+                    return istabDbf.TABTYP_BUSITYP;
+                case TABTYP.HOWKNOWN:
+                    return istabDbf.TABTYP_HOWKNOW;
+                case TABTYP.PROBCOD:
+                    return istabDbf.TABTYP_PROBCOD;
+                case TABTYP.VEREXT:
+                    return istabDbf.TABTYP_VEREXT;
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

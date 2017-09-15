@@ -35,6 +35,7 @@ namespace SN_Net.Model
         public string position { get; set; }
         public string busides { get; set; }
         public Nullable<int> area_id { get; set; }
+        public string area { get; set; }
         public string remark { get; set; }
         public Nullable<int> creby_id { get; set; }
         public System.DateTime credat { get; set; }

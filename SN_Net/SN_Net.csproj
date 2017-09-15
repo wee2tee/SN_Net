@@ -274,6 +274,24 @@
     <Compile Include="Model\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubformV2\DialogInlineSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogInlineSearch.Designer.cs">
+      <DependentUpon>DialogInlineSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogInquiryDealer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogInquiryDealer.Designer.cs">
+      <DependentUpon>DialogInquiryDealer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogInquiryIstab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogInquiryIstab.Designer.cs">
+      <DependentUpon>DialogInquiryIstab.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogPasswordSn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -721,6 +739,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubformV2\DialogInlineSearch.resx">
+      <DependentUpon>DialogInlineSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogInquiryDealer.resx">
+      <DependentUpon>DialogInquiryDealer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogInquiryIstab.resx">
+      <DependentUpon>DialogInquiryIstab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogPasswordSn.resx">
       <DependentUpon>DialogPasswordSn.cs</DependentUpon>
     </EmbeddedResource>

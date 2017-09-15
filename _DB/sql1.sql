@@ -1,0 +1,1 @@
+Select serial.id as id, serial.sernum as sernum, serial.dealer_id as dealer_id, dealer.dealercod as dealercod, serial.flag as flag From serial Left Join dealer On serial.dealer_id = dealer.id Having flag = 0

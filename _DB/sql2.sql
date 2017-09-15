@@ -1,0 +1,1 @@
+Select serial.id as id, serial.dealer_id as dealer_id, dealer.dealercod as dealercod, serial.sernum as sernum, serial.compnam as compnam, serial.flag as flag From dealer Right Join serial On dealer.id = serial.dealer_id Having flag = 0 Order By dealercod ASC

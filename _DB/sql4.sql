@@ -1,0 +1,1 @@
+Select * From (Select id, dealer_id, sernum, compnam From serial Where flag = 0 Order By sernum) A Left Join dealer B On B.id = A.dealer_id Order By B.dealercod ASC, A.sernum ASC

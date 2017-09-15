@@ -153,7 +153,7 @@ namespace SN_Net.Subform
             {
                 this.mskSernum._Text = serial.sernum;
                 this.txtVersion._Text = serial.version;
-                this.brArea._Text = serial.istab != null ? serial.istab.typcod : string.Empty;
+                this.brArea._Text = serial.area; //serial.istab != null ? serial.istab.typcod : string.Empty;
                 this.lblArea.Text = serial.istab != null ? serial.istab.typdes_th : string.Empty;
                 this.mskRefSn._Text = serial.refnum;
                 this.txtPrenam._Text = serial.prenam;
@@ -171,9 +171,9 @@ namespace SN_Net.Subform
 
                 this.txtRemark._Text = serial.remark;
                 this.txtBusides._Text = serial.busides;
-                this.brBusityp._Text = serial.istab1 != null ? serial.istab1.typcod : string.Empty;
+                this.brBusityp._Text = serial.busityp; //serial.istab1 != null ? serial.istab1.typcod : string.Empty;
                 this.lblBusityp.Text = serial.istab1 != null ? serial.istab1.typdes_th : string.Empty;
-                this.brDealer._Text = serial.dealer != null ? serial.dealer.dealercod : string.Empty;
+                this.brDealer._Text = serial.dealercod; //serial.dealer != null ? serial.dealer.dealercod : string.Empty;
                 this.lblDealer.Text = serial.dealer != null ? serial.dealer.compnam : string.Empty;
                 this.brHowknown._Text = serial.istab2 != null ? serial.istab2.typcod : string.Empty;
                 this.lblHowknown.Text = serial.istab2 != null ? serial.istab2.typdes_th : string.Empty;
@@ -272,7 +272,6 @@ namespace SN_Net.Subform
         private void KeepFocusedControl(object sender, EventArgs e)
         {
             this.focused_control = (Control)sender;
-            //Console.WriteLine(" == >> focused control : " + this.focused_control.Name);
         }
 
         private serial GetSerial(int id)
@@ -393,6 +392,7 @@ namespace SN_Net.Subform
             if(this.form_mode == FORM_MODE.READ_ITEM)
             {
                 this.ResetFormState(FORM_MODE.READ);
+                this.dgvProblem.Refresh();
                 return;
             }
 
@@ -498,21 +498,39 @@ namespace SN_Net.Subform
         {
             using (snEntities sn = DBX.DataSet())
             {
-                this.curr_serial = sn.serial
-                                    .Include("istab")
-                                    .Include("istab1")
-                                    .Include("istab2")
-                                    .Include("istab3")
-                                    .Include("dealer")
-                                    .Include("users")
-                                    .Include("users1")
-                                    .Include("cloud_srv")
-                                    .Include("ma")
-                                    .Include("problem")
-                                    .Include("serial_password")
-                                    .Where(s => s.flag == 0)
-                                    .OrderBy(s => s.sernum).FirstOrDefault();
+                SerialId sid = null;
+                switch (this.sort_by)
+                {
+                    case DialogInquirySn.SORT_BY.SERNUM:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.CONTACT:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.contact).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.COMPNAM:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.compnam).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.DEALER:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.dealercod).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.OLDNUM:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.oldnum).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.BUSITYP:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.busityp).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.AREA:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.area).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    default:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                }
 
+                if (sid == null)
+                    return;
+
+                this.curr_serial = this.GetSerial(sid.id);
                 this.FillForm(this.curr_serial);
             }
         }
@@ -521,26 +539,49 @@ namespace SN_Net.Subform
         {
             using (snEntities sn = DBX.DataSet())
             {
-                var sr = sn.serial
-                        .Include("istab")
-                        .Include("istab1")
-                        .Include("istab2")
-                        .Include("istab3")
-                        .Include("dealer")
-                        .Include("users")
-                        .Include("users1")
-                        .Include("cloud_srv")
-                        .Include("ma")
-                        .Include("problem")
-                        .Include("serial_password")
-                        .Where(s => s.flag == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0)
-                        .OrderByDescending(s => s.sernum).FirstOrDefault();
-
-                if(sr != null)
+                if(this.curr_serial == null)
                 {
-                    this.curr_serial = sr;
-                    this.FillForm(this.curr_serial);
+                    this.btnFirst.PerformClick();
+                    return;
                 }
+
+                SerialId sid = null;
+                switch (this.sort_by)
+                {
+                    case DialogInquirySn.SORT_BY.SERNUM:
+                        sid = sn.serial.Where(s => s.flag == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0).OrderByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.CONTACT:
+                        sid = sn.serial.Where(s => s.flag == 0 && ((s.contact.CompareTo(this.curr_serial.contact) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0) || (s.contact.CompareTo(this.curr_serial.contact) < 0))).OrderByDescending(s => s.contact).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, contact = s.contact, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.COMPNAM:
+                        sid = sn.serial.Where(s => s.flag == 0 && ((s.compnam.CompareTo(this.curr_serial.compnam) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0) || (s.compnam.CompareTo(this.curr_serial.compnam) < 0))).OrderByDescending(s => s.compnam).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, compnam = s.compnam, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.DEALER:
+                        sid = sn.serial.Where(s => s.flag == 0 && ((s.dealercod.CompareTo(this.curr_serial.dealercod) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0) || (s.dealercod.CompareTo(this.curr_serial.dealercod) < 0))).OrderByDescending(s => s.dealercod).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, dealercod = s.dealercod, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.OLDNUM:
+                        sid = sn.serial.Where(s => s.flag == 0 && ((s.oldnum.CompareTo(this.curr_serial.oldnum) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0) || (s.oldnum.CompareTo(this.curr_serial.oldnum) < 0))).OrderByDescending(s => s.oldnum).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, oldnum = s.oldnum, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.BUSITYP:
+                        sid = sn.serial.Where(s => s.flag == 0 && ((s.busityp.CompareTo(this.curr_serial.busityp) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0) || (s.busityp.CompareTo(this.curr_serial.busityp) < 0))).OrderByDescending(s => s.busityp).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, busityp = s.busityp, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.AREA:
+                        sid = sn.serial.Where(s => s.flag == 0 && ((s.area.CompareTo(this.curr_serial.area) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0) || (s.area.CompareTo(this.curr_serial.area) < 0))).OrderByDescending(s => s.area).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, area = s.area, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                    default:
+                        sid = sn.serial.Where(s => s.flag == 0 && s.sernum.CompareTo(this.curr_serial.sernum) < 0).OrderByDescending(s => s.sernum).Select(s => new SerialId { id = s.id, sernum = s.sernum }).FirstOrDefault();
+                        break;
+                }
+
+                if (sid == null)
+                {
+                    this.btnFirst.PerformClick();
+                    return;
+                }
+
+                this.curr_serial = this.GetSerial(sid.id);
+                this.FillForm(this.curr_serial);
             }
         }
 
@@ -548,25 +589,56 @@ namespace SN_Net.Subform
         {
             using (snEntities sn = DBX.DataSet())
             {
-                var sr = sn.serial
-                        .Include("istab")
-                        .Include("istab1")
-                        .Include("istab2")
-                        .Include("istab3")
-                        .Include("dealer")
-                        .Include("users")
-                        .Include("users1")
-                        .Include("cloud_srv")
-                        .Include("ma")
-                        .Include("problem")
-                        .Include("serial_password")
-                        .Where(s => s.flag == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0)
-                        .OrderBy(s => s.sernum).FirstOrDefault();
-
-                if(sr != null)
+                try
                 {
-                    this.curr_serial = sr;
+                    if (this.curr_serial == null)
+                    {
+                        this.btnLast.PerformClick();
+                        return;
+                    }
+
+                    SerialId sid = null;
+                    string sql = string.Empty;
+                    switch (this.sort_by)
+                    {
+                        case DialogInquirySn.SORT_BY.SERNUM:
+                            sid = sn.serial.Where(s => s.flag == 0).Where(s => s.sernum.CompareTo(this.curr_serial.sernum) > 0).OrderBy(s => s.sernum).Take(1).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                            break;
+                        case DialogInquirySn.SORT_BY.CONTACT:
+                            sid = sn.serial.Where(s => s.flag == 0 && ((s.contact.CompareTo(this.curr_serial.contact) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0) || (s.contact.CompareTo(this.curr_serial.contact) > 0))).OrderBy(s => s.contact).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, contact = s.contact, sernum = s.sernum }).FirstOrDefault();
+                            break;
+                        case DialogInquirySn.SORT_BY.COMPNAM:
+                            sid = sn.serial.Where(s => s.flag == 0 && ((s.compnam.CompareTo(this.curr_serial.compnam) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0) || (s.compnam.CompareTo(this.curr_serial.compnam) > 0))).OrderBy(s => s.compnam).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, compnam = s.compnam, sernum = s.sernum }).FirstOrDefault();
+                            break;
+                        case DialogInquirySn.SORT_BY.DEALER:
+                            sid = sn.serial.Where(s => s.flag == 0 && ((s.dealercod.CompareTo(this.curr_serial.dealercod) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0) || (s.dealercod.CompareTo(this.curr_serial.dealercod) > 0))).OrderBy(s => s.dealercod).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, dealercod = s.dealercod, sernum = s.sernum }).FirstOrDefault();
+                            break;
+                        case DialogInquirySn.SORT_BY.OLDNUM:
+                            sid = sn.serial.Where(s => s.flag == 0 && ((s.oldnum.CompareTo(this.curr_serial.oldnum) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0) || (s.oldnum.CompareTo(this.curr_serial.oldnum) > 0))).OrderBy(s => s.oldnum).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, oldnum = s.oldnum, sernum = s.sernum }).FirstOrDefault();
+                            break;
+                        case DialogInquirySn.SORT_BY.BUSITYP:
+                            sid = sn.serial.Where(s => s.flag == 0 && ((s.busityp.CompareTo(this.curr_serial.busityp) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0) || (s.busityp.CompareTo(this.curr_serial.busityp) > 0))).OrderBy(s => s.busityp).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, busityp = s.busityp, sernum = s.sernum }).FirstOrDefault();
+                            break;
+                        case DialogInquirySn.SORT_BY.AREA:
+                            sid = sn.serial.Where(s => s.flag == 0 && ((s.area.CompareTo(this.curr_serial.area) == 0 && s.sernum.CompareTo(this.curr_serial.sernum) > 0) || (s.area.CompareTo(this.curr_serial.area) > 0))).OrderBy(s => s.area).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, area = s.area, sernum = s.sernum }).FirstOrDefault();
+                            break;
+                        default:
+                            sid = sn.serial.Where(s => s.flag == 0).Where(s => s.sernum.CompareTo(this.curr_serial.sernum) > 0).OrderBy(s => s.sernum).Take(1).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                            break;
+                    }
+
+                    if (sid == null)
+                    {
+                        this.btnLast.PerformClick();
+                        return;
+                    }
+
+                    this.curr_serial = this.GetSerial(sid.id);
                     this.FillForm(this.curr_serial);
+                }
+                catch (Exception ex)
+                {
+
                 }
             }
         }
@@ -575,21 +647,39 @@ namespace SN_Net.Subform
         {
             using (snEntities sn = DBX.DataSet())
             {
-                this.curr_serial = sn.serial
-                                    .Include("istab")
-                                    .Include("istab1")
-                                    .Include("istab2")
-                                    .Include("istab3")
-                                    .Include("dealer")
-                                    .Include("users")
-                                    .Include("users1")
-                                    .Include("cloud_srv")
-                                    .Include("ma")
-                                    .Include("problem")
-                                    .Include("serial_password")
-                                    .Where(s => s.flag == 0)
-                                    .OrderByDescending(s => s.sernum).FirstOrDefault();
+                SerialId sid = null;
+                switch (this.sort_by)
+                {
+                    case DialogInquirySn.SORT_BY.SERNUM:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.CONTACT:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.contact).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.COMPNAM:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.compnam).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.DEALER:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.dealercod).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.OLDNUM:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.oldnum).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.BUSITYP:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.busityp).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    case DialogInquirySn.SORT_BY.AREA:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.area).ThenByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                    default:
+                        sid = sn.serial.Where(s => s.flag == 0).OrderByDescending(s => s.sernum).Select(s => new SerialId { id = s.id }).FirstOrDefault();
+                        break;
+                }
 
+                if (sid == null)
+                    return;
+
+                this.curr_serial = this.GetSerial(sid.id);
                 this.FillForm(this.curr_serial);
             }
         }
@@ -599,6 +689,7 @@ namespace SN_Net.Subform
             this.tabControl1.SelectedTab = this.tabPage2;
             this.dgvProblem.Focus();
             this.ResetFormState(FORM_MODE.READ_ITEM);
+            this.dgvProblem.Refresh();
         }
 
         private void toolStripImport_Click(object sender, EventArgs e)
@@ -863,12 +954,13 @@ namespace SN_Net.Subform
 
         private void toolStripSearchDealer_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Dealer", this.curr_serial.dealer.dealercod);
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Dealer Code", this.curr_serial.ToViewModel().dealer);
             if (search.ShowDialog() == DialogResult.OK)
             {
                 this.sort_by = DialogInquirySn.SORT_BY.DEALER;
                 
                 List<SerialId> ids = DialogInquirySn.GetSerialIdList(DialogInquirySn.SORT_BY.DEALER, DialogInquirySn.INQUIRY_FILTER.ALL);
+                
                 ids = ids.Where(s => s.dealercod != null).Where(s => s.dealercod.CompareTo(search.keyword) >= 0).ToList();
 
                 if (ids.Count == 0)
@@ -927,17 +1019,83 @@ namespace SN_Net.Subform
 
         private void toolStripSearchBusityp_Click(object sender, EventArgs e)
         {
-            this.sort_by = DialogInquirySn.SORT_BY.BUSITYP;
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Business Type", this.curr_serial.ToViewModel().busityp);
+            if (search.ShowDialog() == DialogResult.OK)
+            {
+                this.sort_by = DialogInquirySn.SORT_BY.BUSITYP;
+
+                List<SerialId> ids = DialogInquirySn.GetSerialIdList(DialogInquirySn.SORT_BY.BUSITYP, DialogInquirySn.INQUIRY_FILTER.ALL);
+                ids = ids.Where(s => s.busityp != null).Where(s => s.busityp.CompareTo(search.keyword) >= 0).ToList();
+
+                if (ids.Count == 0)
+                {
+                    MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+
+                if (ids.First().busityp.CompareTo(search.keyword) > 0)
+                {
+                    if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                    {
+                        return;
+                    }
+                }
+
+                this.curr_serial = this.GetSerial(ids.First().id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripSearchArea_Click(object sender, EventArgs e)
         {
-            this.sort_by = DialogInquirySn.SORT_BY.AREA;
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Area", this.curr_serial.ToViewModel().area);
+            if (search.ShowDialog() == DialogResult.OK)
+            {
+                this.sort_by = DialogInquirySn.SORT_BY.AREA;
+
+                List<SerialId> ids = DialogInquirySn.GetSerialIdList(DialogInquirySn.SORT_BY.AREA, DialogInquirySn.INQUIRY_FILTER.ALL);
+                ids = ids.Where(s => s.area != null).Where(s => s.area.CompareTo(search.keyword) >= 0).ToList();
+
+                if (ids.Count == 0)
+                {
+                    MessageAlert.Show("ค้นหาไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+
+                if (ids.First().area.CompareTo(search.keyword) > 0)
+                {
+                    if (MessageAlert.Show("ค้นหาไม่พบ, ต้องการข้อมูลถัดไปหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                    {
+                        return;
+                    }
+                }
+
+                this.curr_serial = this.GetSerial(ids.First().id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripReload_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+            {
+                this.btnLast.PerformClick();
+                return;
+            }
 
+            if(this.curr_serial != null)
+            {
+                var ser = this.GetSerial(this.curr_serial.id);
+                if(ser != null)
+                {
+                    this.curr_serial = ser;
+                    this.FillForm(this.curr_serial);
+                }
+                else
+                {
+                    this.btnNext.PerformClick();
+                }
+            }
         }
 
         /* Exclusive for admin. start */
@@ -1387,6 +1545,75 @@ namespace SN_Net.Subform
         private void brHowknown__Leave(object sender, EventArgs e)
         {
 
+        }
+
+        private void brArea__ButtonClick(object sender, EventArgs e)
+        {
+            DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.AREA, this.tmp_serial.istab);
+            Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
+            inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
+            if(inq.ShowDialog() == DialogResult.OK)
+            {
+                ((XBrowseBox)sender)._Text = inq.selected_istab.typcod;
+                this.lblArea.Text = inq.selected_istab.typdes_th;
+                this.tmp_serial.area_id = inq.selected_istab.id;
+                this.tmp_serial.istab = inq.selected_istab;
+            }
+        }
+
+        private void brBusityp__ButtonClick(object sender, EventArgs e)
+        {
+            DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.BUSITYP, this.tmp_serial.istab1);
+            Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
+            inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
+            if (inq.ShowDialog() == DialogResult.OK)
+            {
+                ((XBrowseBox)sender)._Text = inq.selected_istab.typcod;
+                this.lblBusityp.Text = inq.selected_istab.typdes_th;
+                this.tmp_serial.busityp_id = inq.selected_istab.id;
+                this.tmp_serial.istab1 = inq.selected_istab;
+            }
+        }
+
+        private void brDealer__ButtonClick(object sender, EventArgs e)
+        {
+            DialogInquiryDealer inq = new DialogInquiryDealer(this.tmp_serial.dealer);
+            Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
+            inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
+            if (inq.ShowDialog() == DialogResult.OK)
+            {
+                ((XBrowseBox)sender)._Text = inq.selected_dealer.dealercod;
+                this.lblDealer.Text = inq.selected_dealer.compnam;
+                this.tmp_serial.dealer_id = inq.selected_dealer.id;
+                this.tmp_serial.dealer = inq.selected_dealer;
+            }
+        }
+
+        private void brHowknown__ButtonClick(object sender, EventArgs e)
+        {
+            DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.HOWKNOWN, this.tmp_serial.istab2);
+            Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
+            inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
+            if (inq.ShowDialog() == DialogResult.OK)
+            {
+                ((XBrowseBox)sender)._Text = inq.selected_istab.typcod;
+                this.lblHowknown.Text = inq.selected_istab.typdes_th;
+                this.tmp_serial.howknown_id = inq.selected_istab.id;
+                this.tmp_serial.istab2 = inq.selected_istab;
+            }
+        }
+
+        private void dgvProblem_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if(this.form_mode == FORM_MODE.READ_ITEM || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                if(e.RowIndex == -1)
+                {
+                    e.CellStyle.BackColor = Color.FromArgb(255, 192, 255);
+                    e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                    e.Handled = true;
+                }
+            }
         }
     }
 }

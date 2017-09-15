@@ -11,6 +11,7 @@ using SN_Net.MiscClass;
 using CC;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Globalization;
 
 namespace SN_Net.Subform
 {
@@ -77,6 +78,10 @@ namespace SN_Net.Subform
         private void DialogInquirySn_Load(object sender, EventArgs e)
         {
             this.serial_id_list = GetSerialIdList(this.sort_by, this.inquiry_filter);
+
+            /****************************/
+            //this.xDatagrid1.DataSource = this.serial_id_list;
+            /****************************/
 
             if(this.inquiry_filter == INQUIRY_FILTER.ALL)
             {
@@ -151,28 +156,36 @@ namespace SN_Net.Subform
                     switch (sort_by)
                     {
                         case SORT_BY.SERNUM:
-                            ids = sn.Database.SqlQuery<SerialId>("Select id, sernum, flag From serial Order By sernum ASC").ToList<SerialId>();
-                            return ids.Where(s => s.flag == 0).ToList();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select id, sernum From serial Where flag=0 Order By sernum ASC").ToList<SerialId>();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.sernum).Select(s => new SerialId { id = s.id, sernum = s.sernum }).ToList();
+                            return ids;
                         case SORT_BY.CONTACT:
-                            ids = sn.Database.SqlQuery<SerialId>("Select id, contact, sernum, flag From serial Order By contact ASC, sernum ASC").ToList<SerialId>();
-                            return ids.Where(s => s.flag == 0).ToList();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select id From serial Where flag=0 Order By flag ASC, contact ASC, sernum ASC").ToList<SerialId>(); // Order By contact ASC, sernum ASC
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.contact).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, contact = s.contact, sernum = s.sernum }).ToList();
+                            return ids;
                         case SORT_BY.COMPNAM:
-                            ids = sn.Database.SqlQuery<SerialId>("Select id, compnam, sernum, flag From serial Order By compnam ASC, sernum ASC").ToList<SerialId>();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select id, compnam, sernum From serial Where flag=0 Order By compnam ASC, sernum ASC").ToList<SerialId>();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.compnam).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, compnam = s.compnam, sernum = s.sernum }).ToList();
                             return ids.Where(s => s.flag == 0).ToList();
                         case SORT_BY.DEALER:
-                            ids = sn.Database.SqlQuery<SerialId>("Select serial.id as id, dealer.dealercod as dealercod, serial.sernum as sernum, serial.flag as flag From serial Left Join dealer On serial.dealer_id = dealer.id Order By dealercod ASC, sernum ASC").ToList<SerialId>();
-                            return ids.Where(s => s.flag == 0).ToList();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select serial.id as id, dealer.dealercod as dealercod, serial.sernum as sernum From serial Left Join dealer On serial.dealer_id = dealer.id And serial.flag = 0 Order By dealercod ASC, sernum ASC").Select(s => new SerialId { id = s.id, dealercod = s.dealercod != null ? s.dealercod : "", sernum = s.sernum }).ToList();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.dealercod).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, dealercod = s.dealercod, sernum = s.sernum }).ToList();
+                            return ids;
                         case SORT_BY.OLDNUM:
-                            ids = sn.Database.SqlQuery<SerialId>("Select id, oldnum, sernum, flag From serial Order By oldnum ASC, sernum ASC").ToList<SerialId>();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select id, oldnum, sernum From serial Where flag=0 Order By oldnum ASC, sernum ASC").ToList<SerialId>();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.oldnum).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, oldnum = s.oldnum, sernum = s.sernum }).ToList();
                             return ids.Where(s => s.flag == 0).ToList();
                         case SORT_BY.BUSITYP:
-                            ids = sn.Database.SqlQuery<SerialId>("Select serial.id as id, istab.typcod as busityp, serial.sernum as sernum, serial.flag as flag From serial Left Join istab On serial.busityp_id = istab.id Order By busityp ASC, sernum ASC").ToList<SerialId>();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select serial.id as id, istab.typcod as busityp, serial.sernum as sernum From serial Left Join istab On serial.busityp_id = istab.id And serial.flag = 0 Order By busityp ASC, sernum ASC").Select(s => new SerialId { id = s.id, busityp = s.busityp != null ? s.busityp : "", sernum = s.sernum }).ToList();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.busityp).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, busityp = s.busityp, sernum = s.sernum }).ToList();
                             return ids.Where(s => s.flag == 0).ToList();
                         case SORT_BY.AREA:
-                            ids = sn.Database.SqlQuery<SerialId>("Select serial.id as id, istab.typcod as area, serial.sernum as sernum, serial.flag as flag From serial Left Join istab On serial.area_id = istab.id Order By area ASC, sernum ASC").ToList<SerialId>();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select serial.id as id, istab.typcod as area, serial.sernum as sernum From serial Left Join istab On serial.area_id = istab.id And serial.flag = 0 Order By area ASC, sernum ASC").Select(s => new SerialId { id = s.id, area = s.area != null ? s.area : "", sernum = s.sernum }).ToList();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.area).ThenBy(s => s.sernum).Select(s => new SerialId { id = s.id, area = s.area, sernum = s.sernum }).ToList();
                             return ids.Where(s => s.flag == 0).ToList();
                         default:
-                            ids = sn.Database.SqlQuery<SerialId>("Select id, sernum, flag From serial Order By sernum ASC").ToList<SerialId>();
+                            //ids = sn.Database.SqlQuery<SerialId>("Select id, sernum From serial Where flag=0 Order By sernum ASC").ToList<SerialId>();
+                            ids = sn.serial.Where(s => s.flag == 0).OrderBy(s => s.sernum).Select(s => new SerialId { id = s.id, sernum = s.sernum }).ToList();
                             return ids;
                     }
                 }
@@ -202,25 +215,33 @@ namespace SN_Net.Subform
             using (snEntities sn = DBX.DataSet())
             {
                 var ser = sn.serial.Include("dealer").Include("istab").Include("istab1").Where(s => ids.Contains(s.id)).ToList();
-
+                
                 switch (this.sort_by)
                 {
                     case SORT_BY.SERNUM:
-                        return ser.OrderBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Where id IN(" + String.Join(",", ids) + ") Order By sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.sernum).ToList();
                     case SORT_BY.CONTACT:
-                        return ser.OrderBy(s => s.contact).ThenBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Where id IN(" + String.Join(",", ids) + ") Order By contact ASC, sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.contact).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.COMPNAM:
-                        return ser.OrderBy(s => s.compnam).ThenBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Where id IN(" + String.Join(",", ids) + ") Order By compnam ASC, sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.compnam).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.DEALER:
-                        return ser.OrderBy(s => s.dealer_id.HasValue ? s.dealer.dealercod : "").ThenBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Left Join dealer On serial.dealer_id = dealer.id Where serial.id IN(" + String.Join(",", ids) + ") Order By dealer.dealercod ASC, serial.sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.dealercod).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.OLDNUM:
-                        return ser.OrderBy(s => s.oldnum).ThenBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Where id IN(" + String.Join(",", ids) + ") Order By oldnum ASC, sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.oldnum).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.BUSITYP:
-                        return ser.OrderBy(s => s.istab1.typcod).ThenBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Left Join istab On serial.busityp_id = istab.id Where serial.id IN(" + String.Join(",", ids) + ") Order By istab.typcod ASC, serial.sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.busityp).ThenBy(s => s.sernum).ToList();
                     case SORT_BY.AREA:
-                        return ser.OrderBy(s => s.istab.typcod).ThenBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Left Join istab On serial.area_id = istab.id Where serial.id IN(" + String.Join(",", ids) + ") Order By istab.typcod ASC, serial.sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.area).ThenBy(s => s.sernum).ToList();
                     default:
-                        return ser.OrderBy(s => s.sernum).ToList();
+                        //return sn.Database.SqlQuery<serial>("Select * From serial Where id IN(" + String.Join(",", ids) + ") Order By sernum ASC").ToList();
+                        return sn.serial.Where(s => ids.Contains(s.id)).OrderBy(s => s.sernum).ToList();
                 }
             }
         }
