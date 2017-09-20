@@ -92,6 +92,9 @@ namespace SN_Net.Subform
                         int[] ids = this.serial_id_list.GetRange(0, 200).Select(s => s.id).ToArray<int>();
                         this.serial_list = new BindingList<serialVM>(this.GetRestSerial(ids).ToViewModel());
                         this.dgv.DataSource = this.serial_list;
+
+                        if(this.dgv.Rows.Count > 0)
+                            this.selected_serial = (serial)this.dgv.Rows[0].Cells[this.col_serial.Name].Value;
                     }
                     catch (Exception ex)
                     {
@@ -137,6 +140,9 @@ namespace SN_Net.Subform
                         this.serial_list = new BindingList<serialVM>(this.GetRestSerial(ids).ToViewModel());
                     }
                     this.dgv.DataSource = this.serial_list;
+
+                    if (this.dgv.Rows.Count > 0)
+                        this.selected_serial = (serial)this.dgv.Rows[0].Cells[this.col_serial.Name].Value;
                 }
                 catch (Exception ex)
                 {
@@ -341,6 +347,12 @@ namespace SN_Net.Subform
                 };
                 wrk.RunWorkerAsync();
             }
+        }
+
+        private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (((XDatagrid)sender).Rows.Count > 0)
+                this.btnOK.Enabled = true;
         }
 
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

@@ -71,7 +71,6 @@
             this.Load += new System.EventHandler(this.XTextEdit_Load);
             this.TabStopChanged += new System.EventHandler(this.XTextEdit_TabStopChanged);
             this.Enter += new System.EventHandler(this.XTextEdit_Enter);
-            this.Resize += new System.EventHandler(this.XTextEdit_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -34,12 +34,20 @@ namespace SN_Net.Subform
             this.istab_list = new BindingList<istabVM>(GetIstab(this.tabtyp).OrderBy(s => s.typcod).ToViewModel());
             this.dgv.DataSource = this.istab_list;
 
-            if(selected_istab != null)
+            if(selected_istab != null) // has initial selected istab
             {
                 var focused_row = this.dgv.Rows.Cast<DataGridViewRow>().Where(r => (int)r.Cells[this.col_id.Name].Value == selected_istab.id).FirstOrDefault();
 
                 if (focused_row != null)
                     focused_row.Cells[this.col_typcod.Name].Selected = true;
+            }
+            else
+            {
+                //if(this.dgv.Rows.Count > 0)
+                //{
+                //    this.selected_istab = (istab)this.dgv.Rows[0].Cells[this.col_istab.Name].Value;
+                //}
+                this.selected_istab = this.istab_list.First().istab;
             }
 
             this.ActiveControl = this.dgv;

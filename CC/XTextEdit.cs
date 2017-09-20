@@ -306,14 +306,6 @@ namespace CC
             }
         }
 
-        private void XTextEdit_Resize(object sender, EventArgs e)
-        {
-            //if (this._ReadOnly)
-            //{
-            //    this.Refresh();
-            //}
-        }
-
         private void textBox1_TextAlignChanged(object sender, EventArgs e)
         {
             this.label1.TextAlign = ((TextBox)sender).TextAlign == HorizontalAlignment.Center ? ContentAlignment.TopCenter : (((TextBox)sender).TextAlign == HorizontalAlignment.Right ? ContentAlignment.TopRight : ContentAlignment.TopLeft);

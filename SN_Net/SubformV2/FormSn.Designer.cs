@@ -28,15 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSn));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSn));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnStop = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnFirst = new System.Windows.Forms.ToolStripButton();
+            this.btnPrev = new System.Windows.Forms.ToolStripButton();
+            this.btnNext = new System.Windows.Forms.ToolStripButton();
+            this.btnLast = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnImport = new System.Windows.Forms.ToolStripButton();
+            this.btnGenSn = new System.Windows.Forms.ToolStripButton();
+            this.btnUpgrade = new System.Windows.Forms.ToolStripButton();
+            this.btnBook = new System.Windows.Forms.ToolStripButton();
+            this.btnSet2 = new System.Windows.Forms.ToolStripButton();
+            this.btnSearch = new System.Windows.Forms.ToolStripSplitButton();
+            this.btnInquiryAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnInquiryRest = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnInquiryMA = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnInquiryCloud = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSearchSN = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSearchContact = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSearchCompany = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSearchDealer = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSearchOldnum = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSearchBusityp = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSearchArea = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnReload = new System.Windows.Forms.ToolStripButton();
             this.btnUPNewRwt = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -123,13 +152,14 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.inlineProbdesc = new CC.XTextEditWithMaskedLabel();
+            this.inlineProbcod = new CC.XBrowseBox();
+            this.inlineName = new CC.XTextEdit();
+            this.inlineDate = new CC.XDatePicker();
             this.dgvProblem = new CC.XDatagrid();
-            this.col_problem_problem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_probcod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_probdesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDeleteProblem = new System.Windows.Forms.Button();
+            this.btnEditProblem = new System.Windows.Forms.Button();
+            this.btnAddProblem = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -139,43 +169,20 @@
             this.txtContact2 = new CC.XTextEdit();
             this.txtExpdat2 = new CC.XTextEdit();
             this.lblArea = new System.Windows.Forms.Label();
+            this.btnSupportViewNote = new System.Windows.Forms.Button();
+            this.btnSupportNote = new System.Windows.Forms.Button();
             this.mskRefSn = new CC.XTextEditMasked();
             this.mskSernum = new CC.XTextEditMasked();
             this.txtCompnam = new CC.XTextEdit();
             this.txtPrenam = new CC.XTextEdit();
             this.txtVersion = new CC.XTextEdit();
             this.brArea = new CC.XBrowseBox();
-            this.btnSupportViewNote = new System.Windows.Forms.Button();
-            this.btnSupportNote = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnStop = new System.Windows.Forms.ToolStripButton();
-            this.btnSave = new System.Windows.Forms.ToolStripButton();
-            this.btnFirst = new System.Windows.Forms.ToolStripButton();
-            this.btnPrev = new System.Windows.Forms.ToolStripButton();
-            this.btnNext = new System.Windows.Forms.ToolStripButton();
-            this.btnLast = new System.Windows.Forms.ToolStripButton();
-            this.btnItem = new System.Windows.Forms.ToolStripButton();
-            this.btnImport = new System.Windows.Forms.ToolStripButton();
-            this.btnGenSn = new System.Windows.Forms.ToolStripButton();
-            this.btnUpgrade = new System.Windows.Forms.ToolStripButton();
-            this.btnBook = new System.Windows.Forms.ToolStripButton();
-            this.btnSet2 = new System.Windows.Forms.ToolStripButton();
-            this.btnSearch = new System.Windows.Forms.ToolStripSplitButton();
-            this.btnInquiryAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnInquiryRest = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnInquiryMA = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnInquiryCloud = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSearchSN = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearchContact = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearchCompany = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearchDealer = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearchOldnum = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearchBusityp = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSearchArea = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnReload = new System.Windows.Forms.ToolStripButton();
+            this.col_problem_problem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_probcod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_probdesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -221,25 +228,317 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btnAdd
+            // 
+            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdd.Image = global::SN_Net.Properties.Resources.add;
+            this.btnAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(36, 40);
+            this.btnAdd.Text = "Add <Alt+A>";
+            this.btnAdd.Click += new System.EventHandler(this.toolStripAdd_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnEdit.Image = global::SN_Net.Properties.Resources.edit;
+            this.btnEdit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(36, 40);
+            this.btnEdit.Text = "Edit <Alt+E>";
+            this.btnEdit.Click += new System.EventHandler(this.toolStripEdit_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDelete.Image = global::SN_Net.Properties.Resources.trash;
+            this.btnDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(36, 40);
+            this.btnDelete.Text = "Delete <Alt+D>";
+            this.btnDelete.Click += new System.EventHandler(this.toolStripDelete_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStop.Image = global::SN_Net.Properties.Resources.stop;
+            this.btnStop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStop.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(36, 40);
+            this.btnStop.Text = "Cancel Add/Edit <ESC>";
+            this.btnStop.Click += new System.EventHandler(this.toolStripStop_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSave.Image = global::SN_Net.Properties.Resources.save;
+            this.btnSave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSave.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(36, 40);
+            this.btnSave.Text = "Save <F9>";
+            this.btnSave.Click += new System.EventHandler(this.toolStripSave_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 43);
+            // 
+            // btnFirst
+            // 
+            this.btnFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFirst.Image = global::SN_Net.Properties.Resources.first;
+            this.btnFirst.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFirst.Name = "btnFirst";
+            this.btnFirst.Size = new System.Drawing.Size(36, 40);
+            this.btnFirst.Text = "First record <Ctrl+Home>";
+            this.btnFirst.Click += new System.EventHandler(this.toolStripFirst_Click);
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPrev.Image = global::SN_Net.Properties.Resources.previous;
+            this.btnPrev.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(36, 40);
+            this.btnPrev.Text = "Previous record <Page Up>";
+            this.btnPrev.Click += new System.EventHandler(this.toolStripPrevious_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNext.Image = global::SN_Net.Properties.Resources.next;
+            this.btnNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(36, 40);
+            this.btnNext.Text = "Next record <Page Down>";
+            this.btnNext.Click += new System.EventHandler(this.toolStripNext_Click);
+            // 
+            // btnLast
+            // 
+            this.btnLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLast.Image = global::SN_Net.Properties.Resources.last;
+            this.btnLast.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnLast.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLast.Name = "btnLast";
+            this.btnLast.Size = new System.Drawing.Size(36, 40);
+            this.btnLast.Text = "Last record <Ctrl+End>";
+            this.btnLast.Click += new System.EventHandler(this.toolStripLast_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 43);
             // 
+            // btnItem
+            // 
+            this.btnItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnItem.Image = global::SN_Net.Properties.Resources.item;
+            this.btnItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnItem.Margin = new System.Windows.Forms.Padding(2, 1, 1, 2);
+            this.btnItem.Name = "btnItem";
+            this.btnItem.Size = new System.Drawing.Size(36, 40);
+            this.btnItem.Text = "Entrance to item <F8>";
+            this.btnItem.Click += new System.EventHandler(this.toolStripItem_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 43);
             // 
+            // btnImport
+            // 
+            this.btnImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnImport.Image = global::SN_Net.Properties.Resources.import_data;
+            this.btnImport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnImport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(36, 40);
+            this.btnImport.Text = "Import data";
+            this.btnImport.Click += new System.EventHandler(this.toolStripImport_Click);
+            // 
+            // btnGenSn
+            // 
+            this.btnGenSn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnGenSn.Image = ((System.Drawing.Image)(resources.GetObject("btnGenSn.Image")));
+            this.btnGenSn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnGenSn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGenSn.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
+            this.btnGenSn.Name = "btnGenSn";
+            this.btnGenSn.Size = new System.Drawing.Size(36, 40);
+            this.btnGenSn.Text = "Generate S/N";
+            this.btnGenSn.Click += new System.EventHandler(this.toolStripGenSN_Click);
+            // 
+            // btnUpgrade
+            // 
+            this.btnUpgrade.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnUpgrade.Image = ((System.Drawing.Image)(resources.GetObject("btnUpgrade.Image")));
+            this.btnUpgrade.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnUpgrade.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnUpgrade.Name = "btnUpgrade";
+            this.btnUpgrade.Size = new System.Drawing.Size(36, 40);
+            this.btnUpgrade.Text = "Upgrade Program";
+            this.btnUpgrade.Click += new System.EventHandler(this.toolStripUpgrade_Click);
+            // 
+            // btnBook
+            // 
+            this.btnBook.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBook.Image = ((System.Drawing.Image)(resources.GetObject("btnBook.Image")));
+            this.btnBook.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnBook.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBook.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
+            this.btnBook.Name = "btnBook";
+            this.btnBook.Size = new System.Drawing.Size(36, 40);
+            this.btnBook.Text = "Sell book";
+            this.btnBook.Click += new System.EventHandler(this.toolStripBook_Click);
+            // 
+            // btnSet2
+            // 
+            this.btnSet2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSet2.Image = global::SN_Net.Properties.Resources.set2;
+            this.btnSet2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSet2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSet2.Name = "btnSet2";
+            this.btnSet2.Size = new System.Drawing.Size(36, 40);
+            this.btnSet2.Text = "Sell Program #2";
+            this.btnSet2.Click += new System.EventHandler(this.toolStripSet2_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnInquiryAll,
+            this.btnInquiryRest,
+            this.btnInquiryMA,
+            this.btnInquiryCloud,
+            this.toolStripSeparator3,
+            this.btnSearchSN,
+            this.btnSearchContact,
+            this.btnSearchCompany,
+            this.btnSearchDealer,
+            this.btnSearchOldnum,
+            this.btnSearchBusityp,
+            this.btnSearchArea});
+            this.btnSearch.Image = global::SN_Net.Properties.Resources.search;
+            this.btnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(1, 1, 2, 2);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(48, 40);
+            this.btnSearch.Text = "Search by S/N <Alt+S>";
+            this.btnSearch.ButtonClick += new System.EventHandler(this.toolStripSearch_ButtonClick);
+            // 
+            // btnInquiryAll
+            // 
+            this.btnInquiryAll.Name = "btnInquiryAll";
+            this.btnInquiryAll.Size = new System.Drawing.Size(313, 22);
+            this.btnInquiryAll.Text = "Inquiry All <Ctrl+L>";
+            this.btnInquiryAll.Click += new System.EventHandler(this.toolStripInquiryAll_Click);
+            // 
+            // btnInquiryRest
+            // 
+            this.btnInquiryRest.Name = "btnInquiryRest";
+            this.btnInquiryRest.Size = new System.Drawing.Size(313, 22);
+            this.btnInquiryRest.Text = "Inquiry Rest <Alt+L>";
+            this.btnInquiryRest.Click += new System.EventHandler(this.toolStripInquiryRest_Click);
+            // 
+            // btnInquiryMA
+            // 
+            this.btnInquiryMA.Name = "btnInquiryMA";
+            this.btnInquiryMA.Size = new System.Drawing.Size(313, 22);
+            this.btnInquiryMA.Text = "Inquiry All for MA. Customer <Ctrl+Alt+M>";
+            this.btnInquiryMA.Click += new System.EventHandler(this.toolStripInquiryMA_Click);
+            // 
+            // btnInquiryCloud
+            // 
+            this.btnInquiryCloud.Name = "btnInquiryCloud";
+            this.btnInquiryCloud.Size = new System.Drawing.Size(313, 22);
+            this.btnInquiryCloud.Text = "Inquiry All for Cloud Customer <Ctrl+Alt+C>";
+            this.btnInquiryCloud.Click += new System.EventHandler(this.toolStripInquiryCloud_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(310, 6);
+            // 
+            // btnSearchSN
+            // 
+            this.btnSearchSN.Name = "btnSearchSN";
+            this.btnSearchSN.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchSN.Text = "Search Serial No. <Alt+S>";
+            this.btnSearchSN.Click += new System.EventHandler(this.toolStripSearchSN_Click);
+            // 
+            // btnSearchContact
+            // 
+            this.btnSearchContact.Name = "btnSearchContact";
+            this.btnSearchContact.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchContact.Text = "Search Contact <Alt+2>";
+            this.btnSearchContact.Click += new System.EventHandler(this.toolStripSearchContact_Click);
+            // 
+            // btnSearchCompany
+            // 
+            this.btnSearchCompany.Name = "btnSearchCompany";
+            this.btnSearchCompany.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchCompany.Text = "Search Company <Alt+3>";
+            this.btnSearchCompany.Click += new System.EventHandler(this.toolStripSearchCompany_Click);
+            // 
+            // btnSearchDealer
+            // 
+            this.btnSearchDealer.Name = "btnSearchDealer";
+            this.btnSearchDealer.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchDealer.Text = "Search Dealer Code <Alt+4>";
+            this.btnSearchDealer.Click += new System.EventHandler(this.toolStripSearchDealer_Click);
+            // 
+            // btnSearchOldnum
+            // 
+            this.btnSearchOldnum.Name = "btnSearchOldnum";
+            this.btnSearchOldnum.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchOldnum.Text = "Search Old Serial <Alt+5>";
+            this.btnSearchOldnum.Click += new System.EventHandler(this.toolStripSearchOldnum_Click);
+            // 
+            // btnSearchBusityp
+            // 
+            this.btnSearchBusityp.Name = "btnSearchBusityp";
+            this.btnSearchBusityp.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchBusityp.Text = "Search Business Type Code <Alt+6>";
+            this.btnSearchBusityp.Click += new System.EventHandler(this.toolStripSearchBusityp_Click);
+            // 
+            // btnSearchArea
+            // 
+            this.btnSearchArea.Name = "btnSearchArea";
+            this.btnSearchArea.Size = new System.Drawing.Size(313, 22);
+            this.btnSearchArea.Text = "Search Area <Alt+7>";
+            this.btnSearchArea.Click += new System.EventHandler(this.toolStripSearchArea_Click);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 43);
+            // 
+            // btnReload
+            // 
+            this.btnReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnReload.Image = global::SN_Net.Properties.Resources.refresh;
+            this.btnReload.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnReload.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(36, 40);
+            this.btnReload.Text = "Reload current data <Ctrl + F5>";
+            this.btnReload.Click += new System.EventHandler(this.toolStripReload_Click);
             // 
             // btnUPNewRwt
             // 
@@ -453,9 +752,9 @@
             // lblHowknown
             // 
             this.lblHowknown.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblHowknown.Location = new System.Drawing.Point(202, 219);
+            this.lblHowknown.Location = new System.Drawing.Point(208, 219);
             this.lblHowknown.Name = "lblHowknown";
-            this.lblHowknown.Size = new System.Drawing.Size(256, 16);
+            this.lblHowknown.Size = new System.Drawing.Size(364, 16);
             this.lblHowknown.TabIndex = 163;
             this.lblHowknown.Text = "howknown_desc";
             // 
@@ -471,9 +770,9 @@
             // lblBusityp
             // 
             this.lblBusityp.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblBusityp.Location = new System.Drawing.Point(202, 74);
+            this.lblBusityp.Location = new System.Drawing.Point(208, 74);
             this.lblBusityp.Name = "lblBusityp";
-            this.lblBusityp.Size = new System.Drawing.Size(218, 16);
+            this.lblBusityp.Size = new System.Drawing.Size(212, 16);
             this.lblBusityp.TabIndex = 163;
             this.lblBusityp.Text = "busityp_desc";
             // 
@@ -716,6 +1015,7 @@
             this.dlVerext.TabIndex = 25;
             this.dlVerext.TabStop = false;
             this.dlVerext._SelectedItemChanged += new System.EventHandler(this.dlVerext__SelectedItemChanged);
+            this.dlVerext._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.dlVerext.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // dtVerextDat
@@ -731,6 +1031,7 @@
             this.dtVerextDat.Size = new System.Drawing.Size(101, 23);
             this.dtVerextDat.TabIndex = 26;
             this.dtVerextDat._SelectedDateChanged += new System.EventHandler(this.dtVerextDat__SelectedDateChanged);
+            this.dtVerextDat._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.dtVerextDat.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // dtManual
@@ -746,6 +1047,7 @@
             this.dtManual.Size = new System.Drawing.Size(101, 23);
             this.dtManual.TabIndex = 24;
             this.dtManual._SelectedDateChanged += new System.EventHandler(this.dtManual__SelectedDateChanged);
+            this.dtManual._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.dtManual.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // dtExpdat
@@ -761,6 +1063,7 @@
             this.dtExpdat.Size = new System.Drawing.Size(101, 23);
             this.dtExpdat.TabIndex = 22;
             this.dtExpdat._SelectedDateChanged += new System.EventHandler(this.dtExpdat__SelectedDateChanged);
+            this.dtExpdat._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.dtExpdat.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // dtPurdat
@@ -776,6 +1079,7 @@
             this.dtPurdat.Size = new System.Drawing.Size(101, 23);
             this.dtPurdat.TabIndex = 21;
             this.dtPurdat._SelectedDateChanged += new System.EventHandler(this.dtPurdat__SelectedDateChanged);
+            this.dtPurdat._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.dtPurdat.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtUpfree
@@ -795,6 +1099,7 @@
             this.txtUpfree.Size = new System.Drawing.Size(19, 23);
             this.txtUpfree.TabIndex = 23;
             this.txtUpfree._TextChanged += new System.EventHandler(this.txtUpfree__TextChanged);
+            this.txtUpfree._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtUpfree.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // brDealer
@@ -816,6 +1121,7 @@
             this.brDealer.TabIndex = 19;
             this.brDealer._ButtonClick += new System.EventHandler(this.brDealer__ButtonClick);
             this.brDealer._Leave += new System.EventHandler(this.brDealer__Leave);
+            this.brDealer._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.brDealer.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // brHowknown
@@ -833,10 +1139,11 @@
             this.brHowknown.Location = new System.Drawing.Point(105, 216);
             this.brHowknown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.brHowknown.Name = "brHowknown";
-            this.brHowknown.Size = new System.Drawing.Size(94, 23);
+            this.brHowknown.Size = new System.Drawing.Size(101, 23);
             this.brHowknown.TabIndex = 20;
             this.brHowknown._ButtonClick += new System.EventHandler(this.brHowknown__ButtonClick);
             this.brHowknown._Leave += new System.EventHandler(this.brHowknown__Leave);
+            this.brHowknown._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.brHowknown.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // brBusityp
@@ -854,10 +1161,11 @@
             this.brBusityp.Location = new System.Drawing.Point(105, 71);
             this.brBusityp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.brBusityp.Name = "brBusityp";
-            this.brBusityp.Size = new System.Drawing.Size(94, 23);
+            this.brBusityp.Size = new System.Drawing.Size(101, 23);
             this.brBusityp.TabIndex = 18;
             this.brBusityp._ButtonClick += new System.EventHandler(this.brBusityp__ButtonClick);
             this.brBusityp._Leave += new System.EventHandler(this.brBusityp__Leave);
+            this.brBusityp._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.brBusityp.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // lblMAExpireWarning
@@ -931,6 +1239,7 @@
             this.txtBusides.Size = new System.Drawing.Size(443, 23);
             this.txtBusides.TabIndex = 17;
             this.txtBusides._TextChanged += new System.EventHandler(this.txtBusides__TextChanged);
+            this.txtBusides._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtBusides.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtRemark
@@ -950,6 +1259,7 @@
             this.txtRemark.Size = new System.Drawing.Size(443, 23);
             this.txtRemark.TabIndex = 16;
             this.txtRemark._TextChanged += new System.EventHandler(this.txtRemark__TextChanged);
+            this.txtRemark._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtRemark.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // label26
@@ -1082,6 +1392,7 @@
             this.mskOldSn.Size = new System.Drawing.Size(121, 23);
             this.mskOldSn.TabIndex = 15;
             this.mskOldSn._TextChanged += new System.EventHandler(this.mskOldSn__TextChanged);
+            this.mskOldSn._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.mskOldSn.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtZipcod
@@ -1101,6 +1412,7 @@
             this.txtZipcod.Size = new System.Drawing.Size(67, 23);
             this.txtZipcod.TabIndex = 10;
             this.txtZipcod._TextChanged += new System.EventHandler(this.txtZipcod__TextChanged);
+            this.txtZipcod._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtZipcod.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // btnPasswordRemove
@@ -1199,6 +1511,7 @@
             this.txtAddr03.Size = new System.Drawing.Size(290, 23);
             this.txtAddr03.TabIndex = 9;
             this.txtAddr03._TextChanged += new System.EventHandler(this.txtAddr03__TextChanged);
+            this.txtAddr03._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtAddr03.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtPosition
@@ -1218,6 +1531,7 @@
             this.txtPosition.Size = new System.Drawing.Size(443, 23);
             this.txtPosition.TabIndex = 14;
             this.txtPosition._TextChanged += new System.EventHandler(this.txtPosition__TextChanged);
+            this.txtPosition._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtPosition.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtContact
@@ -1237,6 +1551,7 @@
             this.txtContact.Size = new System.Drawing.Size(443, 23);
             this.txtContact.TabIndex = 13;
             this.txtContact._TextChanged += new System.EventHandler(this.txtContact__TextChanged);
+            this.txtContact._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtContact.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtFaxnum
@@ -1256,6 +1571,7 @@
             this.txtFaxnum.Size = new System.Drawing.Size(443, 23);
             this.txtFaxnum.TabIndex = 12;
             this.txtFaxnum._TextChanged += new System.EventHandler(this.txtFaxnum__TextChanged);
+            this.txtFaxnum._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtFaxnum.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtTelnum
@@ -1275,6 +1591,7 @@
             this.txtTelnum.Size = new System.Drawing.Size(443, 23);
             this.txtTelnum.TabIndex = 11;
             this.txtTelnum._TextChanged += new System.EventHandler(this.txtTelnum__TextChanged);
+            this.txtTelnum._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtTelnum.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtAddr02
@@ -1294,6 +1611,7 @@
             this.txtAddr02.Size = new System.Drawing.Size(443, 23);
             this.txtAddr02.TabIndex = 8;
             this.txtAddr02._TextChanged += new System.EventHandler(this.txtAddr02__TextChanged);
+            this.txtAddr02._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtAddr02.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtAddr01
@@ -1313,6 +1631,7 @@
             this.txtAddr01.Size = new System.Drawing.Size(443, 23);
             this.txtAddr01.TabIndex = 7;
             this.txtAddr01._TextChanged += new System.EventHandler(this.txtAddr01__TextChanged);
+            this.txtAddr01._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtAddr01.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // label31
@@ -1419,11 +1738,84 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.inlineProbdesc);
+            this.panel1.Controls.Add(this.inlineProbcod);
+            this.panel1.Controls.Add(this.inlineName);
+            this.panel1.Controls.Add(this.inlineDate);
             this.panel1.Controls.Add(this.dgvProblem);
+            this.panel1.Controls.Add(this.btnDeleteProblem);
+            this.panel1.Controls.Add(this.btnEditProblem);
+            this.panel1.Controls.Add(this.btnAddProblem);
             this.panel1.Location = new System.Drawing.Point(4, 32);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(906, 461);
             this.panel1.TabIndex = 27;
+            // 
+            // inlineProbdesc
+            // 
+            this.inlineProbdesc._MaxLength = 100;
+            this.inlineProbdesc._ReadOnly = false;
+            this.inlineProbdesc.BackColor = System.Drawing.Color.White;
+            this.inlineProbdesc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineProbdesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineProbdesc.Location = new System.Drawing.Point(338, 44);
+            this.inlineProbdesc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineProbdesc.Name = "inlineProbdesc";
+            this.inlineProbdesc.Size = new System.Drawing.Size(565, 23);
+            this.inlineProbdesc.TabIndex = 32;
+            this.inlineProbdesc._TextChanged += new System.EventHandler(this.inlineProbdesc__TextChanged);
+            // 
+            // inlineProbcod
+            // 
+            this.inlineProbcod._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineProbcod._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.inlineProbcod._ReadOnly = false;
+            this.inlineProbcod._Text = "";
+            this.inlineProbcod._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.inlineProbcod._UseImage = true;
+            this.inlineProbcod.BackColor = System.Drawing.Color.White;
+            this.inlineProbcod.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineProbcod.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.inlineProbcod.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineProbcod.Location = new System.Drawing.Point(274, 44);
+            this.inlineProbcod.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineProbcod.Name = "inlineProbcod";
+            this.inlineProbcod.Size = new System.Drawing.Size(58, 23);
+            this.inlineProbcod.TabIndex = 29;
+            this.inlineProbcod._ButtonClick += new System.EventHandler(this.inlineProbcod__ButtonClick);
+            this.inlineProbcod._Leave += new System.EventHandler(this.inlineProbcod__Leave);
+            // 
+            // inlineName
+            // 
+            this.inlineName._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineName._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.inlineName._MaxLength = 32767;
+            this.inlineName._ReadOnly = false;
+            this.inlineName._Text = "";
+            this.inlineName._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.inlineName.BackColor = System.Drawing.Color.White;
+            this.inlineName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineName.Location = new System.Drawing.Point(104, 44);
+            this.inlineName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineName.Name = "inlineName";
+            this.inlineName.Size = new System.Drawing.Size(168, 23);
+            this.inlineName.TabIndex = 28;
+            this.inlineName._TextChanged += new System.EventHandler(this.inlineName__TextChanged);
+            // 
+            // inlineDate
+            // 
+            this.inlineDate._ReadOnly = false;
+            this.inlineDate._SelectedDate = null;
+            this.inlineDate.BackColor = System.Drawing.Color.White;
+            this.inlineDate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineDate.Location = new System.Drawing.Point(2, 44);
+            this.inlineDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineDate.Name = "inlineDate";
+            this.inlineDate.Size = new System.Drawing.Size(100, 23);
+            this.inlineDate.TabIndex = 27;
+            this.inlineDate._SelectedDateChanged += new System.EventHandler(this.inlineDate__SelectedDateChanged);
             // 
             // dgvProblem
             // 
@@ -1475,58 +1867,37 @@
             this.dgvProblem.StandardTab = true;
             this.dgvProblem.TabIndex = 26;
             this.dgvProblem.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvProblem_CellPainting);
+            this.dgvProblem.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvProblem_MouseClick);
             // 
-            // col_problem_problem
+            // btnDeleteProblem
             // 
-            this.col_problem_problem.DataPropertyName = "problem";
-            this.col_problem_problem.HeaderText = "Problem";
-            this.col_problem_problem.Name = "col_problem_problem";
-            this.col_problem_problem.ReadOnly = true;
-            this.col_problem_problem.Visible = false;
+            this.btnDeleteProblem.Location = new System.Drawing.Point(789, 72);
+            this.btnDeleteProblem.Name = "btnDeleteProblem";
+            this.btnDeleteProblem.Size = new System.Drawing.Size(104, 23);
+            this.btnDeleteProblem.TabIndex = 31;
+            this.btnDeleteProblem.Text = "delete problem";
+            this.btnDeleteProblem.UseVisualStyleBackColor = true;
+            this.btnDeleteProblem.Click += new System.EventHandler(this.btnDeleteProblem_Click);
             // 
-            // col_problem_id
+            // btnEditProblem
             // 
-            this.col_problem_id.DataPropertyName = "id";
-            this.col_problem_id.HeaderText = "ID";
-            this.col_problem_id.Name = "col_problem_id";
-            this.col_problem_id.ReadOnly = true;
-            this.col_problem_id.Visible = false;
+            this.btnEditProblem.Location = new System.Drawing.Point(789, 43);
+            this.btnEditProblem.Name = "btnEditProblem";
+            this.btnEditProblem.Size = new System.Drawing.Size(104, 23);
+            this.btnEditProblem.TabIndex = 31;
+            this.btnEditProblem.Text = "edit problem";
+            this.btnEditProblem.UseVisualStyleBackColor = true;
+            this.btnEditProblem.Click += new System.EventHandler(this.btnEditProblem_Click);
             // 
-            // col_problem_date
+            // btnAddProblem
             // 
-            this.col_problem_date.DataPropertyName = "date";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle2;
-            this.col_problem_date.HeaderText = "DATE";
-            this.col_problem_date.MinimumWidth = 100;
-            this.col_problem_date.Name = "col_problem_date";
-            this.col_problem_date.ReadOnly = true;
-            // 
-            // col_problem_name
-            // 
-            this.col_problem_name.DataPropertyName = "name";
-            this.col_problem_name.HeaderText = "NAME";
-            this.col_problem_name.MinimumWidth = 170;
-            this.col_problem_name.Name = "col_problem_name";
-            this.col_problem_name.ReadOnly = true;
-            this.col_problem_name.Width = 170;
-            // 
-            // col_problem_probcod
-            // 
-            this.col_problem_probcod.DataPropertyName = "probcod";
-            this.col_problem_probcod.HeaderText = "CO.";
-            this.col_problem_probcod.MinimumWidth = 50;
-            this.col_problem_probcod.Name = "col_problem_probcod";
-            this.col_problem_probcod.ReadOnly = true;
-            this.col_problem_probcod.Width = 50;
-            // 
-            // col_problem_probdesc
-            // 
-            this.col_problem_probdesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_problem_probdesc.DataPropertyName = "probdesc";
-            this.col_problem_probdesc.HeaderText = "DESC.";
-            this.col_problem_probdesc.Name = "col_problem_probdesc";
-            this.col_problem_probdesc.ReadOnly = true;
+            this.btnAddProblem.Location = new System.Drawing.Point(789, 14);
+            this.btnAddProblem.Name = "btnAddProblem";
+            this.btnAddProblem.Size = new System.Drawing.Size(104, 23);
+            this.btnAddProblem.TabIndex = 31;
+            this.btnAddProblem.Text = "add problem";
+            this.btnAddProblem.UseVisualStyleBackColor = true;
+            this.btnAddProblem.Click += new System.EventHandler(this.btnAddProblem_Click);
             // 
             // label9
             // 
@@ -1644,125 +2015,6 @@
             this.lblArea.TabIndex = 163;
             this.lblArea.Text = "area_desc";
             // 
-            // mskRefSn
-            // 
-            this.mskRefSn._Mask = ">A-AAA-AAAAAA";
-            this.mskRefSn._PromptChar = ' ';
-            this.mskRefSn._ReadOnly = true;
-            this.mskRefSn._SelectionLength = 0;
-            this.mskRefSn._SelectionStart = 0;
-            this.mskRefSn._Text = " -   -";
-            this.mskRefSn._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.mskRefSn.BackColor = System.Drawing.Color.White;
-            this.mskRefSn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mskRefSn.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskRefSn.Location = new System.Drawing.Point(693, 50);
-            this.mskRefSn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.mskRefSn.Name = "mskRefSn";
-            this.mskRefSn.Size = new System.Drawing.Size(121, 23);
-            this.mskRefSn.TabIndex = 4;
-            this.mskRefSn._TextChanged += new System.EventHandler(this.mskRefSn__TextChanged);
-            this.mskRefSn.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // mskSernum
-            // 
-            this.mskSernum._Mask = ">A-AAA-AAAAAA";
-            this.mskSernum._PromptChar = ' ';
-            this.mskSernum._ReadOnly = true;
-            this.mskSernum._SelectionLength = 0;
-            this.mskSernum._SelectionStart = 0;
-            this.mskSernum._Text = " -   -";
-            this.mskSernum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.mskSernum.BackColor = System.Drawing.Color.White;
-            this.mskSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mskSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskSernum.Location = new System.Drawing.Point(79, 54);
-            this.mskSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.mskSernum.Name = "mskSernum";
-            this.mskSernum.Size = new System.Drawing.Size(121, 23);
-            this.mskSernum.TabIndex = 1;
-            this.mskSernum._TextChanged += new System.EventHandler(this.mskSernum__TextChanged);
-            this.mskSernum._Leave += new System.EventHandler(this.mskSernum__Leave);
-            this.mskSernum.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // txtCompnam
-            // 
-            this.txtCompnam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCompnam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtCompnam._MaxLength = 32767;
-            this.txtCompnam._ReadOnly = true;
-            this.txtCompnam._Text = "";
-            this.txtCompnam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtCompnam.BackColor = System.Drawing.Color.White;
-            this.txtCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtCompnam.Location = new System.Drawing.Point(202, 85);
-            this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtCompnam.Name = "txtCompnam";
-            this.txtCompnam.Size = new System.Drawing.Size(366, 23);
-            this.txtCompnam.TabIndex = 6;
-            this.txtCompnam._TextChanged += new System.EventHandler(this.txtCompnam__TextChanged);
-            this.txtCompnam.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // txtPrenam
-            // 
-            this.txtPrenam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrenam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtPrenam._MaxLength = 32767;
-            this.txtPrenam._ReadOnly = true;
-            this.txtPrenam._Text = "";
-            this.txtPrenam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtPrenam.BackColor = System.Drawing.Color.White;
-            this.txtPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtPrenam.Location = new System.Drawing.Point(79, 85);
-            this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtPrenam.Name = "txtPrenam";
-            this.txtPrenam.Size = new System.Drawing.Size(121, 23);
-            this.txtPrenam.TabIndex = 5;
-            this.txtPrenam._TextChanged += new System.EventHandler(this.txtPrenam__TextChanged);
-            this.txtPrenam.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // txtVersion
-            // 
-            this.txtVersion._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVersion._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtVersion._MaxLength = 32767;
-            this.txtVersion._ReadOnly = true;
-            this.txtVersion._Text = "";
-            this.txtVersion._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtVersion.BackColor = System.Drawing.Color.White;
-            this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtVersion.Location = new System.Drawing.Point(265, 54);
-            this.txtVersion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(55, 23);
-            this.txtVersion.TabIndex = 2;
-            this.txtVersion._TextChanged += new System.EventHandler(this.txtVersion__TextChanged);
-            this.txtVersion.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // brArea
-            // 
-            this.brArea._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.brArea._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.brArea._ReadOnly = true;
-            this.brArea._Text = "";
-            this.brArea._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.brArea._UseImage = true;
-            this.brArea.BackColor = System.Drawing.Color.White;
-            this.brArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.brArea.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.brArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.brArea.Location = new System.Drawing.Point(374, 54);
-            this.brArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.brArea.Name = "brArea";
-            this.brArea.Size = new System.Drawing.Size(105, 23);
-            this.brArea.TabIndex = 3;
-            this.brArea._ButtonClick += new System.EventHandler(this.brArea__ButtonClick);
-            this.brArea._Leave += new System.EventHandler(this.brArea__Leave);
-            this.brArea.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
             // btnSupportViewNote
             // 
             this.btnSupportViewNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -1789,297 +2041,184 @@
             this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSupportNote.UseVisualStyleBackColor = true;
             // 
-            // btnAdd
+            // mskRefSn
             // 
-            this.btnAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAdd.Image = global::SN_Net.Properties.Resources.add;
-            this.btnAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(36, 40);
-            this.btnAdd.Text = "Add <Alt+A>";
-            this.btnAdd.Click += new System.EventHandler(this.toolStripAdd_Click);
+            this.mskRefSn._Mask = ">A-AAA-AAAAAA";
+            this.mskRefSn._PromptChar = ' ';
+            this.mskRefSn._ReadOnly = true;
+            this.mskRefSn._SelectionLength = 0;
+            this.mskRefSn._SelectionStart = 0;
+            this.mskRefSn._Text = " -   -";
+            this.mskRefSn._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.mskRefSn.BackColor = System.Drawing.Color.White;
+            this.mskRefSn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mskRefSn.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskRefSn.Location = new System.Drawing.Point(693, 50);
+            this.mskRefSn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.mskRefSn.Name = "mskRefSn";
+            this.mskRefSn.Size = new System.Drawing.Size(121, 23);
+            this.mskRefSn.TabIndex = 4;
+            this.mskRefSn._TextChanged += new System.EventHandler(this.mskRefSn__TextChanged);
+            this.mskRefSn._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.mskRefSn.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // btnEdit
+            // mskSernum
             // 
-            this.btnEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnEdit.Image = global::SN_Net.Properties.Resources.edit;
-            this.btnEdit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(36, 40);
-            this.btnEdit.Text = "Edit <Alt+E>";
-            this.btnEdit.Click += new System.EventHandler(this.toolStripEdit_Click);
+            this.mskSernum._Mask = ">A-AAA-AAAAAA";
+            this.mskSernum._PromptChar = ' ';
+            this.mskSernum._ReadOnly = true;
+            this.mskSernum._SelectionLength = 0;
+            this.mskSernum._SelectionStart = 0;
+            this.mskSernum._Text = " -   -";
+            this.mskSernum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.mskSernum.BackColor = System.Drawing.Color.White;
+            this.mskSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mskSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskSernum.Location = new System.Drawing.Point(79, 54);
+            this.mskSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.mskSernum.Name = "mskSernum";
+            this.mskSernum.Size = new System.Drawing.Size(121, 23);
+            this.mskSernum.TabIndex = 1;
+            this.mskSernum._TextChanged += new System.EventHandler(this.mskSernum__TextChanged);
+            this.mskSernum._Leave += new System.EventHandler(this.mskSernum__Leave);
+            this.mskSernum._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.mskSernum.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // btnDelete
+            // txtCompnam
             // 
-            this.btnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDelete.Image = global::SN_Net.Properties.Resources.trash;
-            this.btnDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(36, 40);
-            this.btnDelete.Text = "Delete <Alt+D>";
-            this.btnDelete.Click += new System.EventHandler(this.toolStripDelete_Click);
+            this.txtCompnam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCompnam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtCompnam._MaxLength = 32767;
+            this.txtCompnam._ReadOnly = true;
+            this.txtCompnam._Text = "";
+            this.txtCompnam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtCompnam.BackColor = System.Drawing.Color.White;
+            this.txtCompnam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCompnam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtCompnam.Location = new System.Drawing.Point(202, 85);
+            this.txtCompnam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtCompnam.Name = "txtCompnam";
+            this.txtCompnam.Size = new System.Drawing.Size(366, 23);
+            this.txtCompnam.TabIndex = 6;
+            this.txtCompnam._TextChanged += new System.EventHandler(this.txtCompnam__TextChanged);
+            this.txtCompnam._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.txtCompnam.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // btnStop
+            // txtPrenam
             // 
-            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStop.Image = global::SN_Net.Properties.Resources.stop;
-            this.btnStop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStop.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(36, 40);
-            this.btnStop.Text = "Cancel Add/Edit <ESC>";
-            this.btnStop.Click += new System.EventHandler(this.toolStripStop_Click);
+            this.txtPrenam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPrenam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtPrenam._MaxLength = 32767;
+            this.txtPrenam._ReadOnly = true;
+            this.txtPrenam._Text = "";
+            this.txtPrenam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPrenam.BackColor = System.Drawing.Color.White;
+            this.txtPrenam.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPrenam.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtPrenam.Location = new System.Drawing.Point(79, 85);
+            this.txtPrenam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPrenam.Name = "txtPrenam";
+            this.txtPrenam.Size = new System.Drawing.Size(121, 23);
+            this.txtPrenam.TabIndex = 5;
+            this.txtPrenam._TextChanged += new System.EventHandler(this.txtPrenam__TextChanged);
+            this.txtPrenam._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.txtPrenam.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // btnSave
+            // txtVersion
             // 
-            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSave.Image = global::SN_Net.Properties.Resources.save;
-            this.btnSave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSave.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(36, 40);
-            this.btnSave.Text = "Save <F9>";
-            this.btnSave.Click += new System.EventHandler(this.toolStripSave_Click);
+            this.txtVersion._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtVersion._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtVersion._MaxLength = 32767;
+            this.txtVersion._ReadOnly = true;
+            this.txtVersion._Text = "";
+            this.txtVersion._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtVersion.BackColor = System.Drawing.Color.White;
+            this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtVersion.Location = new System.Drawing.Point(265, 54);
+            this.txtVersion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(55, 23);
+            this.txtVersion.TabIndex = 2;
+            this.txtVersion._TextChanged += new System.EventHandler(this.txtVersion__TextChanged);
+            this.txtVersion._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.txtVersion.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // btnFirst
+            // brArea
             // 
-            this.btnFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFirst.Image = global::SN_Net.Properties.Resources.first;
-            this.btnFirst.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFirst.Name = "btnFirst";
-            this.btnFirst.Size = new System.Drawing.Size(36, 40);
-            this.btnFirst.Text = "First record <Ctrl+Home>";
-            this.btnFirst.Click += new System.EventHandler(this.toolStripFirst_Click);
+            this.brArea._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.brArea._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.brArea._ReadOnly = true;
+            this.brArea._Text = "";
+            this.brArea._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.brArea._UseImage = true;
+            this.brArea.BackColor = System.Drawing.Color.White;
+            this.brArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.brArea.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.brArea.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.brArea.Location = new System.Drawing.Point(374, 54);
+            this.brArea.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.brArea.Name = "brArea";
+            this.brArea.Size = new System.Drawing.Size(105, 23);
+            this.brArea.TabIndex = 3;
+            this.brArea._ButtonClick += new System.EventHandler(this.brArea__ButtonClick);
+            this.brArea._Leave += new System.EventHandler(this.brArea__Leave);
+            this.brArea._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.brArea.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // btnPrev
+            // col_problem_problem
             // 
-            this.btnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPrev.Image = global::SN_Net.Properties.Resources.previous;
-            this.btnPrev.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnPrev.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrev.Name = "btnPrev";
-            this.btnPrev.Size = new System.Drawing.Size(36, 40);
-            this.btnPrev.Text = "Previous record <Page Up>";
-            this.btnPrev.Click += new System.EventHandler(this.toolStripPrevious_Click);
+            this.col_problem_problem.DataPropertyName = "problem";
+            this.col_problem_problem.HeaderText = "Problem";
+            this.col_problem_problem.Name = "col_problem_problem";
+            this.col_problem_problem.ReadOnly = true;
+            this.col_problem_problem.Visible = false;
             // 
-            // btnNext
+            // col_problem_id
             // 
-            this.btnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNext.Image = global::SN_Net.Properties.Resources.next;
-            this.btnNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(36, 40);
-            this.btnNext.Text = "Next record <Page Down>";
-            this.btnNext.Click += new System.EventHandler(this.toolStripNext_Click);
+            this.col_problem_id.DataPropertyName = "id";
+            this.col_problem_id.HeaderText = "ID";
+            this.col_problem_id.MinimumWidth = 80;
+            this.col_problem_id.Name = "col_problem_id";
+            this.col_problem_id.ReadOnly = true;
+            this.col_problem_id.Visible = false;
+            this.col_problem_id.Width = 80;
             // 
-            // btnLast
+            // col_problem_date
             // 
-            this.btnLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLast.Image = global::SN_Net.Properties.Resources.last;
-            this.btnLast.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnLast.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLast.Name = "btnLast";
-            this.btnLast.Size = new System.Drawing.Size(36, 40);
-            this.btnLast.Text = "Last record <Ctrl+End>";
-            this.btnLast.Click += new System.EventHandler(this.toolStripLast_Click);
+            this.col_problem_date.DataPropertyName = "date";
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle2;
+            this.col_problem_date.HeaderText = "DATE";
+            this.col_problem_date.MinimumWidth = 100;
+            this.col_problem_date.Name = "col_problem_date";
+            this.col_problem_date.ReadOnly = true;
             // 
-            // btnItem
+            // col_problem_name
             // 
-            this.btnItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnItem.Image = global::SN_Net.Properties.Resources.item;
-            this.btnItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnItem.Margin = new System.Windows.Forms.Padding(2, 1, 1, 2);
-            this.btnItem.Name = "btnItem";
-            this.btnItem.Size = new System.Drawing.Size(36, 40);
-            this.btnItem.Text = "Entrance to item <F8>";
-            this.btnItem.Click += new System.EventHandler(this.toolStripItem_Click);
+            this.col_problem_name.DataPropertyName = "name";
+            this.col_problem_name.HeaderText = "NAME";
+            this.col_problem_name.MinimumWidth = 170;
+            this.col_problem_name.Name = "col_problem_name";
+            this.col_problem_name.ReadOnly = true;
+            this.col_problem_name.Width = 170;
             // 
-            // btnImport
+            // col_problem_probcod
             // 
-            this.btnImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnImport.Image = global::SN_Net.Properties.Resources.import_data;
-            this.btnImport.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnImport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(36, 40);
-            this.btnImport.Text = "Import data";
-            this.btnImport.Click += new System.EventHandler(this.toolStripImport_Click);
+            this.col_problem_probcod.DataPropertyName = "probcod";
+            this.col_problem_probcod.HeaderText = "CO.";
+            this.col_problem_probcod.MinimumWidth = 60;
+            this.col_problem_probcod.Name = "col_problem_probcod";
+            this.col_problem_probcod.ReadOnly = true;
+            this.col_problem_probcod.Width = 60;
             // 
-            // btnGenSn
+            // col_problem_probdesc
             // 
-            this.btnGenSn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnGenSn.Image = ((System.Drawing.Image)(resources.GetObject("btnGenSn.Image")));
-            this.btnGenSn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnGenSn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnGenSn.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
-            this.btnGenSn.Name = "btnGenSn";
-            this.btnGenSn.Size = new System.Drawing.Size(36, 40);
-            this.btnGenSn.Text = "Generate S/N";
-            this.btnGenSn.Click += new System.EventHandler(this.toolStripGenSN_Click);
-            // 
-            // btnUpgrade
-            // 
-            this.btnUpgrade.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnUpgrade.Image = ((System.Drawing.Image)(resources.GetObject("btnUpgrade.Image")));
-            this.btnUpgrade.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnUpgrade.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnUpgrade.Name = "btnUpgrade";
-            this.btnUpgrade.Size = new System.Drawing.Size(36, 40);
-            this.btnUpgrade.Text = "Upgrade Program";
-            this.btnUpgrade.Click += new System.EventHandler(this.toolStripUpgrade_Click);
-            // 
-            // btnBook
-            // 
-            this.btnBook.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBook.Image = ((System.Drawing.Image)(resources.GetObject("btnBook.Image")));
-            this.btnBook.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnBook.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnBook.Margin = new System.Windows.Forms.Padding(1, 1, 1, 2);
-            this.btnBook.Name = "btnBook";
-            this.btnBook.Size = new System.Drawing.Size(36, 40);
-            this.btnBook.Text = "Sell book";
-            this.btnBook.Click += new System.EventHandler(this.toolStripBook_Click);
-            // 
-            // btnSet2
-            // 
-            this.btnSet2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSet2.Image = global::SN_Net.Properties.Resources.set2;
-            this.btnSet2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSet2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSet2.Name = "btnSet2";
-            this.btnSet2.Size = new System.Drawing.Size(36, 40);
-            this.btnSet2.Text = "Sell Program #2";
-            this.btnSet2.Click += new System.EventHandler(this.toolStripSet2_Click);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnInquiryAll,
-            this.btnInquiryRest,
-            this.btnInquiryMA,
-            this.btnInquiryCloud,
-            this.toolStripSeparator3,
-            this.btnSearchSN,
-            this.btnSearchContact,
-            this.btnSearchCompany,
-            this.btnSearchDealer,
-            this.btnSearchOldnum,
-            this.btnSearchBusityp,
-            this.btnSearchArea});
-            this.btnSearch.Image = global::SN_Net.Properties.Resources.search;
-            this.btnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(1, 1, 2, 2);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(48, 40);
-            this.btnSearch.Text = "Search by S/N <Alt+S>";
-            this.btnSearch.ButtonClick += new System.EventHandler(this.toolStripSearch_ButtonClick);
-            // 
-            // btnInquiryAll
-            // 
-            this.btnInquiryAll.Name = "btnInquiryAll";
-            this.btnInquiryAll.Size = new System.Drawing.Size(313, 22);
-            this.btnInquiryAll.Text = "Inquiry All <Ctrl+L>";
-            this.btnInquiryAll.Click += new System.EventHandler(this.toolStripInquiryAll_Click);
-            // 
-            // btnInquiryRest
-            // 
-            this.btnInquiryRest.Name = "btnInquiryRest";
-            this.btnInquiryRest.Size = new System.Drawing.Size(313, 22);
-            this.btnInquiryRest.Text = "Inquiry Rest <Alt+L>";
-            this.btnInquiryRest.Click += new System.EventHandler(this.toolStripInquiryRest_Click);
-            // 
-            // btnInquiryMA
-            // 
-            this.btnInquiryMA.Name = "btnInquiryMA";
-            this.btnInquiryMA.Size = new System.Drawing.Size(313, 22);
-            this.btnInquiryMA.Text = "Inquiry All for MA. Customer <Ctrl+Alt+M>";
-            this.btnInquiryMA.Click += new System.EventHandler(this.toolStripInquiryMA_Click);
-            // 
-            // btnInquiryCloud
-            // 
-            this.btnInquiryCloud.Name = "btnInquiryCloud";
-            this.btnInquiryCloud.Size = new System.Drawing.Size(313, 22);
-            this.btnInquiryCloud.Text = "Inquiry All for Cloud Customer <Ctrl+Alt+C>";
-            this.btnInquiryCloud.Click += new System.EventHandler(this.toolStripInquiryCloud_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(310, 6);
-            // 
-            // btnSearchSN
-            // 
-            this.btnSearchSN.Name = "btnSearchSN";
-            this.btnSearchSN.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchSN.Text = "Search Serial No. <Alt+S>";
-            this.btnSearchSN.Click += new System.EventHandler(this.toolStripSearchSN_Click);
-            // 
-            // btnSearchContact
-            // 
-            this.btnSearchContact.Name = "btnSearchContact";
-            this.btnSearchContact.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchContact.Text = "Search Contact <Alt+2>";
-            this.btnSearchContact.Click += new System.EventHandler(this.toolStripSearchContact_Click);
-            // 
-            // btnSearchCompany
-            // 
-            this.btnSearchCompany.Name = "btnSearchCompany";
-            this.btnSearchCompany.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchCompany.Text = "Search Company <Alt+3>";
-            this.btnSearchCompany.Click += new System.EventHandler(this.toolStripSearchCompany_Click);
-            // 
-            // btnSearchDealer
-            // 
-            this.btnSearchDealer.Name = "btnSearchDealer";
-            this.btnSearchDealer.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchDealer.Text = "Search Dealer Code <Alt+4>";
-            this.btnSearchDealer.Click += new System.EventHandler(this.toolStripSearchDealer_Click);
-            // 
-            // btnSearchOldnum
-            // 
-            this.btnSearchOldnum.Name = "btnSearchOldnum";
-            this.btnSearchOldnum.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchOldnum.Text = "Search Old Serial <Alt+5>";
-            this.btnSearchOldnum.Click += new System.EventHandler(this.toolStripSearchOldnum_Click);
-            // 
-            // btnSearchBusityp
-            // 
-            this.btnSearchBusityp.Name = "btnSearchBusityp";
-            this.btnSearchBusityp.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchBusityp.Text = "Search Business Type Code <Alt+6>";
-            this.btnSearchBusityp.Click += new System.EventHandler(this.toolStripSearchBusityp_Click);
-            // 
-            // btnSearchArea
-            // 
-            this.btnSearchArea.Name = "btnSearchArea";
-            this.btnSearchArea.Size = new System.Drawing.Size(313, 22);
-            this.btnSearchArea.Text = "Search Area <Alt+7>";
-            this.btnSearchArea.Click += new System.EventHandler(this.toolStripSearchArea_Click);
-            // 
-            // btnReload
-            // 
-            this.btnReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnReload.Image = global::SN_Net.Properties.Resources.refresh;
-            this.btnReload.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnReload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnReload.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(36, 40);
-            this.btnReload.Text = "Reload current data <F5>";
-            this.btnReload.Click += new System.EventHandler(this.toolStripReload_Click);
+            this.col_problem_probdesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_problem_probdesc.DataPropertyName = "probdesc";
+            this.col_problem_probdesc.HeaderText = "DESC.";
+            this.col_problem_probdesc.Name = "col_problem_probdesc";
+            this.col_problem_probdesc.ReadOnly = true;
             // 
             // FormSn
             // 
@@ -2116,7 +2255,7 @@
             this.Name = "FormSn";
             this.ShowIcon = false;
             this.Text = "SnWindow2";
-            this.Load += new System.EventHandler(this.SnWindow2_Load);
+            this.Load += new System.EventHandler(this.FormSn_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -2270,12 +2409,6 @@
         private System.Windows.Forms.Label lblDealer;
         private System.Windows.Forms.Label lblBusityp;
         private System.Windows.Forms.Label lblArea;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_problem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_probcod;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_probdesc;
         private CC.XTextEdit txtMaEmail;
         private CC.XDatePicker dtMaTo;
         private CC.XDatePicker dtMaFrom;
@@ -2285,5 +2418,18 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_password_serial_password;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_password_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_password_password;
+        private CC.XBrowseBox inlineProbcod;
+        private CC.XTextEdit inlineName;
+        private CC.XDatePicker inlineDate;
+        private System.Windows.Forms.Button btnDeleteProblem;
+        private System.Windows.Forms.Button btnEditProblem;
+        private System.Windows.Forms.Button btnAddProblem;
+        private CC.XTextEditWithMaskedLabel inlineProbdesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_problem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_probcod;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_problem_probdesc;
     }
 }

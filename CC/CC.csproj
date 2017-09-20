@@ -133,6 +133,12 @@
     <Compile Include="XTextEditMasked.Designer.cs">
       <DependentUpon>XTextEditMasked.cs</DependentUpon>
     </Compile>
+    <Compile Include="XTextEditWithMaskedLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XTextEditWithMaskedLabel.Designer.cs">
+      <DependentUpon>XTextEditWithMaskedLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="_XPrintPreviewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="XTextEditMasked.resx">
       <DependentUpon>XTextEditMasked.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XTextEditWithMaskedLabel.resx">
+      <DependentUpon>XTextEditWithMaskedLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="_XPrintPreviewDialog.resx">
       <DependentUpon>_XPrintPreviewDialog.cs</DependentUpon>

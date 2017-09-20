@@ -777,5 +777,14 @@ namespace SN_Net.MiscClass
                 }
             }
         }
+
+        public static void SetInlineControlPosition(this Control inline_control, DataGridView dgv, int row_index, int column_index)
+        {
+            if (inline_control != null)
+            {
+                Rectangle rect = dgv.GetCellDisplayRectangle(column_index, row_index, true);
+                inline_control.SetBounds(rect.X, rect.Y + 1, rect.Width - 1, rect.Height - 3);
+            }
+        }
     }
 }

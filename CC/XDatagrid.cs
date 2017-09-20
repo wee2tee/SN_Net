@@ -12,6 +12,12 @@ namespace CC
 {
     public partial class XDatagrid : DataGridView
     {
+        public enum ROW_STATE
+        {
+            NORMAL,
+            DELETE
+        }
+
         private bool row_border_redline;
         public bool FocusedRowBorderRedLine {
             get {
@@ -147,6 +153,12 @@ namespace CC
             {
                 this.Refresh();
             }
+        }
+
+        protected override void OnDataBindingComplete(DataGridViewBindingCompleteEventArgs e)
+        {
+            base.OnDataBindingComplete(e);
+            this.Rows.Cast<DataGridViewRow>().ToList().ForEach(r => r.Tag = ROW_STATE.NORMAL);
         }
 
         private void ResetColor()
@@ -285,6 +297,20 @@ namespace CC
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
+
+            var deleting_row = this.Rows.Cast<DataGridViewRow>().Where(r => r.Tag != null && r.Tag.GetType() == typeof(ROW_STATE) && (ROW_STATE)r.Tag == ROW_STATE.DELETE).FirstOrDefault();
+
+            if(deleting_row != null)
+            {
+                Rectangle rect = this.GetRowDisplayRectangle(deleting_row.Index, true);
+                for (int i = rect.X; i < rect.X + rect.Width; i += 10)
+                {
+                    using (Pen p = new Pen(Color.Red))
+                    {
+                        pe.Graphics.DrawLine(p, new Point(i, rect.Y), new Point(i + 15, rect.Y + rect.Height - 2));
+                    }
+                }
+            }
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -327,5 +353,20 @@ namespace CC
         //        return;
         //    }
         //}
+    }
+
+    public static class XdatagridHelper
+    {
+        public static void DrawDeletingRowOverlay(this DataGridViewRow row)
+        {
+            row.Tag = XDatagrid.ROW_STATE.DELETE;
+            row.DataGridView.Refresh();
+        }
+
+        public static void ClearDeletingRowOverlay(this DataGridViewRow row)
+        {
+            row.Tag = XDatagrid.ROW_STATE.NORMAL;
+            row.DataGridView.Refresh();
+        }
     }
 }
