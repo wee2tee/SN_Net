@@ -27,11 +27,20 @@ namespace SN_Net.Subform
         private BindingList<istabVM> istab_list;
         public istab selected_istab;
 
-        public DialogInquiryIstab(TABTYP tabtyp, istab selected_istab = null)
+        public DialogInquiryIstab(TABTYP tabtyp, istab selected_istab = null, List<istab> exclude_istab = null)
         {
             InitializeComponent();
             this.tabtyp = tabtyp;
-            this.istab_list = new BindingList<istabVM>(GetIstab(this.tabtyp).OrderBy(s => s.typcod).ToViewModel());
+            if(exclude_istab == null)
+            {
+                this.istab_list = new BindingList<istabVM>(GetIstab(this.tabtyp).OrderBy(s => s.typcod).ToViewModel());
+            }
+            else
+            {
+                this.istab_list = new BindingList<istabVM>(GetIstab(this.tabtyp, exclude_istab).OrderBy(s => s.typcod).ToViewModel());
+                //exclude_istab.ForEach(x => this.istab_list.Remove(this.istab_list.Where(i => i.id == x.id).FirstOrDefault()));
+            }
+                
             this.dgv.DataSource = this.istab_list;
 
             if(selected_istab != null) // has initial selected istab
@@ -53,12 +62,15 @@ namespace SN_Net.Subform
             this.ActiveControl = this.dgv;
         }
 
-        public static List<istab> GetIstab(TABTYP tabtyp)
+        public static List<istab> GetIstab(TABTYP tabtyp, List<istab> exclude_istabs = null)
         {
             using (snEntities sn = DBX.DataSet())
             {
                 string tabtyp_str = tabtyp.GetTabtypString();
-                return sn.istab.Where(s => s.flag == 0 && s.tabtyp == tabtyp_str).ToList();
+                int[] arr_exclude_ids = exclude_istabs != null ? exclude_istabs.Select(x => x.id).ToArray() : new int[0];
+                var istabs = sn.istab.Where(s => s.flag == 0 && s.tabtyp == tabtyp_str && !(arr_exclude_ids.Contains(s.id))).ToList();
+
+                return istabs;
             }
         }
 

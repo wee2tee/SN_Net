@@ -41,6 +41,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(732, 18);
             this.label1.TabIndex = 0;
+            this.label1.UseMnemonic = false;
             this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
             // 
             // maskedTextBox1

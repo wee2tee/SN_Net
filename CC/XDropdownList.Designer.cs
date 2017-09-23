@@ -56,6 +56,7 @@
             this.label1.Size = new System.Drawing.Size(93, 22);
             this.label1.TabIndex = 1;
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.UseMnemonic = false;
             this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
             // 
             // XDropdownList

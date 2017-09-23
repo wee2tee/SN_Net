@@ -54,6 +54,7 @@
             this.lblTextPrefix.Size = new System.Drawing.Size(49, 18);
             this.lblTextPrefix.TabIndex = 2;
             this.lblTextPrefix.Text = "Label Prefix Text";
+            this.lblTextPrefix.UseMnemonic = false;
             this.lblTextPrefix.Visible = false;
             this.lblTextPrefix.TextChanged += new System.EventHandler(this.lblTextPrefix_TextChanged);
             this.lblTextPrefix.Click += new System.EventHandler(this.lblTextPrefix_Click);
@@ -67,6 +68,7 @@
             this.lblTextAll.Size = new System.Drawing.Size(605, 18);
             this.lblTextAll.TabIndex = 2;
             this.lblTextAll.Text = "Label All Text";
+            this.lblTextAll.UseMnemonic = false;
             this.lblTextAll.Visible = false;
             this.lblTextAll.DoubleClick += new System.EventHandler(this.lblTextAll_DoubleClick);
             // 

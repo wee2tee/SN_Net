@@ -157,6 +157,12 @@
             this.inlineName = new CC.XTextEdit();
             this.inlineDate = new CC.XDatePicker();
             this.dgvProblem = new CC.XDatagrid();
+            this.col_problem_problem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_probcod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_problem_probdesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnDeleteProblem = new System.Windows.Forms.Button();
             this.btnEditProblem = new System.Windows.Forms.Button();
             this.btnAddProblem = new System.Windows.Forms.Button();
@@ -177,12 +183,6 @@
             this.txtPrenam = new CC.XTextEdit();
             this.txtVersion = new CC.XTextEdit();
             this.brArea = new CC.XBrowseBox();
-            this.col_problem_problem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_probcod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_problem_probdesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1086,7 +1086,7 @@
             // 
             this.txtUpfree._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpfree._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtUpfree._MaxLength = 32767;
+            this.txtUpfree._MaxLength = 1;
             this.txtUpfree._ReadOnly = true;
             this.txtUpfree._Text = "";
             this.txtUpfree._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1226,7 +1226,7 @@
             // 
             this.txtBusides._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBusides._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtBusides._MaxLength = 32767;
+            this.txtBusides._MaxLength = 40;
             this.txtBusides._ReadOnly = true;
             this.txtBusides._Text = "";
             this.txtBusides._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1246,7 +1246,7 @@
             // 
             this.txtRemark._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRemark._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtRemark._MaxLength = 32767;
+            this.txtRemark._MaxLength = 50;
             this.txtRemark._ReadOnly = true;
             this.txtRemark._Text = "";
             this.txtRemark._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1498,7 +1498,7 @@
             // 
             this.txtAddr03._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr03._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtAddr03._MaxLength = 32767;
+            this.txtAddr03._MaxLength = 30;
             this.txtAddr03._ReadOnly = true;
             this.txtAddr03._Text = "";
             this.txtAddr03._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1518,7 +1518,7 @@
             // 
             this.txtPosition._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPosition._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtPosition._MaxLength = 32767;
+            this.txtPosition._MaxLength = 50;
             this.txtPosition._ReadOnly = true;
             this.txtPosition._Text = "";
             this.txtPosition._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1538,7 +1538,7 @@
             // 
             this.txtContact._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContact._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtContact._MaxLength = 32767;
+            this.txtContact._MaxLength = 100;
             this.txtContact._ReadOnly = true;
             this.txtContact._Text = "";
             this.txtContact._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1558,7 +1558,7 @@
             // 
             this.txtFaxnum._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFaxnum._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtFaxnum._MaxLength = 32767;
+            this.txtFaxnum._MaxLength = 40;
             this.txtFaxnum._ReadOnly = true;
             this.txtFaxnum._Text = "";
             this.txtFaxnum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1578,7 +1578,7 @@
             // 
             this.txtTelnum._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTelnum._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtTelnum._MaxLength = 32767;
+            this.txtTelnum._MaxLength = 40;
             this.txtTelnum._ReadOnly = true;
             this.txtTelnum._Text = "";
             this.txtTelnum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1598,7 +1598,7 @@
             // 
             this.txtAddr02._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr02._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtAddr02._MaxLength = 32767;
+            this.txtAddr02._MaxLength = 50;
             this.txtAddr02._ReadOnly = true;
             this.txtAddr02._Text = "";
             this.txtAddr02._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1618,7 +1618,7 @@
             // 
             this.txtAddr01._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr01._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtAddr01._MaxLength = 32767;
+            this.txtAddr01._MaxLength = 50;
             this.txtAddr01._ReadOnly = true;
             this.txtAddr01._Text = "";
             this.txtAddr01._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1754,8 +1754,8 @@
             // inlineProbdesc
             // 
             this.inlineProbdesc._MaxLength = 100;
-            this.inlineProbdesc._ReadOnly = false;
-            this.inlineProbdesc.BackColor = System.Drawing.Color.White;
+            this.inlineProbdesc._ReadOnly = true;
+            this.inlineProbdesc.BackColor = System.Drawing.SystemColors.Window;
             this.inlineProbdesc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineProbdesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.inlineProbdesc.Location = new System.Drawing.Point(338, 44);
@@ -1768,7 +1768,7 @@
             // inlineProbcod
             // 
             this.inlineProbcod._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineProbcod._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.inlineProbcod._CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.inlineProbcod._ReadOnly = false;
             this.inlineProbcod._Text = "";
             this.inlineProbcod._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1789,7 +1789,7 @@
             // 
             this.inlineName._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineName._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.inlineName._MaxLength = 32767;
+            this.inlineName._MaxLength = 50;
             this.inlineName._ReadOnly = false;
             this.inlineName._Text = "";
             this.inlineName._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -1867,7 +1867,63 @@
             this.dgvProblem.StandardTab = true;
             this.dgvProblem.TabIndex = 26;
             this.dgvProblem.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvProblem_CellPainting);
+            this.dgvProblem.CurrentCellChanged += new System.EventHandler(this.dgvProblem_CurrentCellChanged);
             this.dgvProblem.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvProblem_MouseClick);
+            this.dgvProblem.Resize += new System.EventHandler(this.dgvProblem_Resize);
+            // 
+            // col_problem_problem
+            // 
+            this.col_problem_problem.DataPropertyName = "problem";
+            this.col_problem_problem.HeaderText = "Problem";
+            this.col_problem_problem.Name = "col_problem_problem";
+            this.col_problem_problem.ReadOnly = true;
+            this.col_problem_problem.Visible = false;
+            // 
+            // col_problem_id
+            // 
+            this.col_problem_id.DataPropertyName = "id";
+            this.col_problem_id.HeaderText = "ID";
+            this.col_problem_id.MinimumWidth = 80;
+            this.col_problem_id.Name = "col_problem_id";
+            this.col_problem_id.ReadOnly = true;
+            this.col_problem_id.Visible = false;
+            this.col_problem_id.Width = 80;
+            // 
+            // col_problem_date
+            // 
+            this.col_problem_date.DataPropertyName = "date";
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle2;
+            this.col_problem_date.HeaderText = "DATE";
+            this.col_problem_date.MinimumWidth = 100;
+            this.col_problem_date.Name = "col_problem_date";
+            this.col_problem_date.ReadOnly = true;
+            // 
+            // col_problem_name
+            // 
+            this.col_problem_name.DataPropertyName = "name";
+            this.col_problem_name.HeaderText = "NAME";
+            this.col_problem_name.MinimumWidth = 170;
+            this.col_problem_name.Name = "col_problem_name";
+            this.col_problem_name.ReadOnly = true;
+            this.col_problem_name.Width = 170;
+            // 
+            // col_problem_probcod
+            // 
+            this.col_problem_probcod.DataPropertyName = "probcod";
+            this.col_problem_probcod.HeaderText = "CO.";
+            this.col_problem_probcod.MinimumWidth = 60;
+            this.col_problem_probcod.Name = "col_problem_probcod";
+            this.col_problem_probcod.ReadOnly = true;
+            this.col_problem_probcod.Width = 60;
+            // 
+            // col_problem_probdesc
+            // 
+            this.col_problem_probdesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_problem_probdesc.DataPropertyName = "probdesc";
+            this.col_problem_probdesc.HeaderText = "DESC.";
+            this.col_problem_probdesc.Name = "col_problem_probdesc";
+            this.col_problem_probdesc.ReadOnly = true;
             // 
             // btnDeleteProblem
             // 
@@ -2088,7 +2144,7 @@
             // 
             this.txtCompnam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCompnam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtCompnam._MaxLength = 32767;
+            this.txtCompnam._MaxLength = 100;
             this.txtCompnam._ReadOnly = true;
             this.txtCompnam._Text = "";
             this.txtCompnam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -2108,7 +2164,7 @@
             // 
             this.txtPrenam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPrenam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtPrenam._MaxLength = 32767;
+            this.txtPrenam._MaxLength = 30;
             this.txtPrenam._ReadOnly = true;
             this.txtPrenam._Text = "";
             this.txtPrenam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -2128,7 +2184,7 @@
             // 
             this.txtVersion._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtVersion._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtVersion._MaxLength = 32767;
+            this.txtVersion._MaxLength = 4;
             this.txtVersion._ReadOnly = true;
             this.txtVersion._Text = "";
             this.txtVersion._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
@@ -2166,60 +2222,6 @@
             this.brArea._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.brArea.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
-            // col_problem_problem
-            // 
-            this.col_problem_problem.DataPropertyName = "problem";
-            this.col_problem_problem.HeaderText = "Problem";
-            this.col_problem_problem.Name = "col_problem_problem";
-            this.col_problem_problem.ReadOnly = true;
-            this.col_problem_problem.Visible = false;
-            // 
-            // col_problem_id
-            // 
-            this.col_problem_id.DataPropertyName = "id";
-            this.col_problem_id.HeaderText = "ID";
-            this.col_problem_id.MinimumWidth = 80;
-            this.col_problem_id.Name = "col_problem_id";
-            this.col_problem_id.ReadOnly = true;
-            this.col_problem_id.Visible = false;
-            this.col_problem_id.Width = 80;
-            // 
-            // col_problem_date
-            // 
-            this.col_problem_date.DataPropertyName = "date";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle2;
-            this.col_problem_date.HeaderText = "DATE";
-            this.col_problem_date.MinimumWidth = 100;
-            this.col_problem_date.Name = "col_problem_date";
-            this.col_problem_date.ReadOnly = true;
-            // 
-            // col_problem_name
-            // 
-            this.col_problem_name.DataPropertyName = "name";
-            this.col_problem_name.HeaderText = "NAME";
-            this.col_problem_name.MinimumWidth = 170;
-            this.col_problem_name.Name = "col_problem_name";
-            this.col_problem_name.ReadOnly = true;
-            this.col_problem_name.Width = 170;
-            // 
-            // col_problem_probcod
-            // 
-            this.col_problem_probcod.DataPropertyName = "probcod";
-            this.col_problem_probcod.HeaderText = "CO.";
-            this.col_problem_probcod.MinimumWidth = 60;
-            this.col_problem_probcod.Name = "col_problem_probcod";
-            this.col_problem_probcod.ReadOnly = true;
-            this.col_problem_probcod.Width = 60;
-            // 
-            // col_problem_probdesc
-            // 
-            this.col_problem_probdesc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_problem_probdesc.DataPropertyName = "probdesc";
-            this.col_problem_probdesc.HeaderText = "DESC.";
-            this.col_problem_probdesc.Name = "col_problem_probdesc";
-            this.col_problem_probdesc.ReadOnly = true;
-            // 
             // FormSn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -2254,7 +2256,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormSn";
             this.ShowIcon = false;
-            this.Text = "SnWindow2";
+            this.Text = "Serial Number";
             this.Load += new System.EventHandler(this.FormSn_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

@@ -38,6 +38,7 @@
             // label1
             // 
             this.label1.Size = new System.Drawing.Size(92, 18);
+            this.label1.UseMnemonic = false;
             // 
             // XNumTextEdit
             // 

@@ -72,6 +72,7 @@
             this.label1.Size = new System.Drawing.Size(79, 16);
             this.label1.TabIndex = 4;
             this.label1.Text = "  /  /    ";
+            this.label1.UseMnemonic = false;
             this.label1.Visible = false;
             this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
             // 

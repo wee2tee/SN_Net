@@ -69,6 +69,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(742, 20);
             this.label1.TabIndex = 57;
+            this.label1.UseMnemonic = false;
             this.label1.Visible = false;
             this.label1.DoubleClick += new System.EventHandler(this.label1_DoubleClick);
             // 

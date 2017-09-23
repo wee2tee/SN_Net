@@ -75,7 +75,7 @@ namespace CC
             this.txtTextEditable.Text = string.Empty;
             this.lblTextPrefix.Text = string.Empty;
             this.lblTextAll.Text = string.Empty;
-            //this._ReadOnly = true;
+            this._ReadOnly = false;
         }
 
         private void XTextEditWithMaskedLabel_Load(object sender, EventArgs e)
@@ -93,6 +93,7 @@ namespace CC
             {
                 this.txtTextEditable.BackColor = AppResource.EditableControlBackColor;
                 this.txtTextEditable.Focus();
+                this.txtTextEditable.SelectionStart = this.txtTextEditable.Text.Length;
             }
         }
 

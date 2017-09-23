@@ -292,6 +292,12 @@
     <Compile Include="SubformV2\DialogInquiryIstab.Designer.cs">
       <DependentUpon>DialogInquiryIstab.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubformV2\DialogLostRenew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogLostRenew.Designer.cs">
+      <DependentUpon>DialogLostRenew.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogPasswordSn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -747,6 +753,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogInquiryIstab.resx">
       <DependentUpon>DialogInquiryIstab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogLostRenew.resx">
+      <DependentUpon>DialogLostRenew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogPasswordSn.resx">
       <DependentUpon>DialogPasswordSn.cs</DependentUpon>

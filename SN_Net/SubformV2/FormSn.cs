@@ -25,6 +25,7 @@ namespace SN_Net.Subform
         private BindingList<problemVM> problem_list;
         private Control focused_control;
         private DialogInquirySn.SORT_BY sort_by;
+        private bool problem_im_only = false;
 
         public FormSn()
         {
@@ -138,6 +139,7 @@ namespace SN_Net.Subform
             this.btnAddProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ_ITEM }, this.form_mode);
             this.btnEditProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ_ITEM }, this.form_mode);
             this.btnDeleteProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ_ITEM }, this.form_mode);
+            this.dgvProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ, FORM_MODE.READ_ITEM }, this.form_mode);
         }
 
         private void FillForm(serial serial_to_fill = null)
@@ -229,7 +231,15 @@ namespace SN_Net.Subform
                 this.dgvPassword.DataSource = this.password_list;
 
                 this.problem_list = null;
-                this.problem_list = new BindingList<problemVM>(serial.problem.OrderBy(p => p.date).ThenBy(p => p.time).ToViewModel());
+                if (this.problem_im_only)
+                {
+                    this.problem_list = new BindingList<problemVM>(serial.problem.Where(p => p.flag == 0).OrderBy(p => p.date).ThenBy(p => p.time).ToViewModel().Where(p => p.probcod == "IM").ToList());
+                }
+                else
+                {
+                    this.problem_list = new BindingList<problemVM>(serial.problem.Where(p => p.flag == 0).OrderBy(p => p.date).ThenBy(p => p.time).ToViewModel());
+                }
+                
                 this.dgvProblem.DataSource = this.problem_list;
 
                 /* Set Toolstrip Button State in Case No Data*/
@@ -294,6 +304,78 @@ namespace SN_Net.Subform
             }
         }
 
+        private string GetMachineCode(string probDesc) // Get Machine Code (string) in probdesc
+        {
+            int dash_1st = 0;
+            int dash_2nd = 0;
+            int dash_3rd = 0;
+            int start = 0;
+            int end = probDesc.Length;
+            int count = 0;
+            int at = 0;
+            int loop_cnt = 0;
+            while ((start <= end) && (at > -1))
+            {
+                loop_cnt++;
+                if (loop_cnt <= 3)
+                {
+                    count = end - start;
+                    at = probDesc.IndexOf("-", start, count);
+                    if (at == -1) break;
+                    if (loop_cnt == 1)
+                    {
+                        dash_1st = at;
+                    }
+                    else if (loop_cnt == 2)
+                    {
+                        dash_2nd = at;
+                    }
+                    else if (loop_cnt == 3)
+                    {
+                        dash_3rd = at;
+                    }
+
+                    start = at + 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (dash_1st == 8)
+            {
+                if (dash_2nd > 0)
+                {
+                    // tryparse to int for stage 1 (2 digit after the second dash)
+                    int parse1;
+                    int parse1_len = (probDesc.Length >= dash_2nd + 3 ? 2 : (probDesc.Length == dash_2nd + 2 ? 1 : 0));
+                    bool parse1_result = Int32.TryParse(probDesc.Substring(dash_2nd + 1, parse1_len), out parse1);
+
+                    if (parse1_result == true)
+                    {
+                        return probDesc.Substring(0, dash_2nd + parse1_len + 1);
+                    }
+                    else
+                    {
+                        if (dash_3rd > 0)
+                        {
+                            // tryparse to int for stage 2 (2 digit after the third dash)
+                            int parse2;
+                            int parse2_len = (probDesc.Length >= dash_3rd + 3 ? 2 : (probDesc.Length == dash_3rd + 2 ? 1 : 0));
+                            bool parse2_result = Int32.TryParse(probDesc.Substring(dash_3rd + 1, parse2_len), out parse2);
+                            if (parse2_result == true)
+                            {
+                                return probDesc.Substring(0, dash_3rd + parse2_len + 1);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // return empty string if not match for "Machine Code"
+            return "";
+        }
+
         private void KeepFocusedControl(object sender, EventArgs e)
         {
             this.focused_control = (Control)sender;
@@ -320,6 +402,15 @@ namespace SN_Net.Subform
                             .FirstOrDefault();
 
                 return serial;
+            }
+        }
+
+        private problem GetProblem(int id)
+        {
+            using (snEntities sn = DBX.DataSet())
+            {
+                var prob = sn.problem.Where(s => s.flag == 0 && s.id == id).FirstOrDefault();
+                return prob;
             }
         }
 
@@ -371,16 +462,46 @@ namespace SN_Net.Subform
                 return;
 
             this.tmp_problem = (problem)row.Cells[this.col_problem_problem.Name].Value;
-            //using (snEntities sn = DBX.DataSet())
-            //{
-            //    this.tmp_problem.istab = sn.istab.Find(this.tmp_problem.probcod_id);
-            //}
 
             this.SetInlineControlBound(row);
             this.inlineDate._SelectedDate = this.tmp_problem.date;
             this.inlineName._Text = this.tmp_problem.name;
             this.inlineProbcod._Text = this.tmp_problem.ToViewModel().probcod;
-            this.inlineProbdesc.SetText(this.tmp_problem.probdesc);
+            this.inlineProbcod._ReadOnly = false;
+            
+            if(this.form_mode == FORM_MODE.ADD_ITEM)
+            {
+
+            }
+
+            if(this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                istab prob = null;
+                using (snEntities sn = DBX.DataSet())
+                {
+                    prob = sn.istab.Where(i => i.flag == 0 && i.id == this.tmp_problem.probcod_id).FirstOrDefault();
+                }
+
+                if(this.main_form.loged_in_user.level == (int)USER_LEVEL.ADMIN)
+                {
+                    this.inlineProbdesc.SetText(this.tmp_problem.probdesc);
+                    //this.inlineProbdesc._ReadOnly = false;
+                }
+                else
+                {
+                    if(prob != null && prob.typcod == "RG")
+                    {
+                        string machine_code = this.GetMachineCode(this.tmp_problem.probdesc);
+                        this.inlineProbdesc.SetText(this.tmp_problem.probdesc, machine_code);
+                        this.inlineProbcod._ReadOnly = true;
+                    }
+                    else
+                    {
+                        this.inlineProbdesc.SetText(this.tmp_problem.probdesc);
+                        //this.inlineProbdesc._ReadOnly = false;
+                    }
+                }
+            }
         }
 
         private void SetInlineControlBound(DataGridViewRow row)
@@ -501,14 +622,23 @@ namespace SN_Net.Subform
 
             if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
             {
-                var adding_row = ((BindingList<problemVM>)this.dgvProblem.DataSource).Where(i => i.id == -1).FirstOrDefault();
-                this.ResetFormState(FORM_MODE.READ_ITEM);
-                if(adding_row != null)
+                if(this.form_mode == FORM_MODE.ADD_ITEM)
                 {
-                    ((BindingList<problemVM>)this.dgvProblem.DataSource).Remove(adding_row);
+                    this.ResetFormState(FORM_MODE.READ_ITEM);
+                    var adding_row = ((BindingList<problemVM>)this.dgvProblem.DataSource).Where(i => i.id == -1).FirstOrDefault();
+                    if (adding_row != null)
+                    {
+                        ((BindingList<problemVM>)this.dgvProblem.DataSource).Remove(adding_row);
+                    }
+                    this.HideInlineForm();
                 }
-
-                this.HideInlineForm();
+                if (this.form_mode == FORM_MODE.EDIT_ITEM)
+                {
+                    this.ResetFormState(FORM_MODE.READ_ITEM);
+                    var prob = this.GetProblem(this.tmp_problem.id);
+                    ((BindingList<problemVM>)this.dgvProblem.DataSource)[((BindingList<problemVM>)this.dgvProblem.DataSource).IndexOf(((BindingList<problemVM>)this.dgvProblem.DataSource).Where(p => p.id == this.tmp_problem.id).First())] = prob.ToViewModel();
+                    this.HideInlineForm();
+                }
             }
         }
 
@@ -647,7 +777,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("==> " + ex.Message);
+                            MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                         }
                     }
                     else // Edit problem
@@ -672,6 +802,9 @@ namespace SN_Net.Subform
                             sn.problem.Add(this.tmp_problem);
                             sn.SaveChanges();
                         }
+
+                        this.HideInlineForm();
+                        this.ResetFormState(FORM_MODE.READ_ITEM);
                     }
                 }
             }
@@ -1301,12 +1434,27 @@ namespace SN_Net.Subform
         /* Exclusive for admin. start */
         private void chkIMOnly_CheckedChanged(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            if (this.curr_serial.problem.Count == 0)
+                return;
+
+            this.problem_im_only = ((CheckBox)sender).Checked;
+            this.FillForm(this.curr_serial);
         }
 
         private void btnLostRenew_Click(object sender, EventArgs e)
         {
-
+            if (this.curr_serial == null)
+                return;
+            DialogLostRenew renew = new DialogLostRenew(this.main_form, this.curr_serial);
+            if(renew.ShowDialog() == DialogResult.OK)
+            {
+                MessageAlert.Show("ok");
+                this.GetSerial(this.curr_serial.id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void btnCD_Click(object sender, EventArgs e)
@@ -1578,6 +1726,30 @@ namespace SN_Net.Subform
             {
                 this.mskSernum.Focus();
                 MessageAlert.Show("กรุณาป้อน S/N ให้ถูกต้อง", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+            }
+            else
+            {
+                string str = this.tmp_serial.sernum.Substring(2, 2);
+                if(str == "10")
+                {
+                    this.txtVersion._Text = "1.0";
+                    return;
+                }
+                if(str == "15")
+                {
+                    this.txtVersion._Text = "1.5";
+                    return;
+                }
+                if(str.Substring(0, 1) == "2")
+                {
+                    this.txtVersion._Text = "2.0";
+                    return;
+                }
+                if(str.Substring(0, 1) == "3")
+                {
+                    this.txtVersion._Text = "2.5";
+                    return;
+                }
             }
         }
 
@@ -2199,7 +2371,11 @@ namespace SN_Net.Subform
             {
                 var prob = sn.istab.Where(i => i.flag == 0 && i.id == this.tmp_problem.probcod_id).FirstOrDefault();
 
-                DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.PROBCOD, prob);
+                List<istab> exclude_istab = null;
+                if (this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
+                    exclude_istab = new List<istab> { sn.istab.Where(i => i.flag == 0 && i.typcod == "RG").FirstOrDefault() };
+
+                DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.PROBCOD, prob, exclude_istab);
                 Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
                 inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
                 if (inq.ShowDialog() == DialogResult.OK)
@@ -2223,7 +2399,12 @@ namespace SN_Net.Subform
             {
                 using (snEntities sn = DBX.DataSet())
                 {
-                    var prob = sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_PROBCOD && i.typcod == str).FirstOrDefault();
+                    List<istab> exclude_istab = null;
+                    if (this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
+                        exclude_istab = new List<istab> { sn.istab.Where(i => i.flag == 0 && i.typcod == "RG").FirstOrDefault() };
+
+                    var prob = DialogInquiryIstab.GetIstab(TABTYP.PROBCOD, exclude_istab).Where(i => i.typcod == str).FirstOrDefault();
+
                     if(prob != null)
                     {
                         if (this.tmp_problem != null)
@@ -2242,6 +2423,30 @@ namespace SN_Net.Subform
         {
             if (this.tmp_problem != null)
                 this.tmp_problem.probdesc = ((XTextEditWithMaskedLabel)sender)._TextAll;
+        }
+
+        private void dgvProblem_Resize(object sender, EventArgs e)
+        {
+            if (((XDatagrid)sender).CurrentCell != null && this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+                this.SetInlineControlBound(((XDatagrid)sender).Rows[((XDatagrid)sender).CurrentCell.RowIndex]);
+        }
+
+        private void dgvProblem_CurrentCellChanged(object sender, EventArgs e)
+        {
+            if (this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                if (((XDatagrid)sender).CurrentCell == null || this.tmp_problem == null)
+                    return;
+
+                if((int)((XDatagrid)sender).Rows[((XDatagrid)sender).CurrentCell.RowIndex].Cells[this.col_problem_id.Name].Value != this.tmp_problem.id)
+                {
+                    this.btnSave.PerformClick();
+                }
+            }
+            if(this.form_mode == FORM_MODE.ADD_ITEM)
+            {
+                this.btnStop.PerformClick();
+            }
         }
     }
 }
