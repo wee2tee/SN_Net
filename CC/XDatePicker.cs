@@ -22,14 +22,12 @@ namespace CC
             }
             set
             {
-                //this.selected_date = value;
-
-                this.txtDate.Text = value.HasValue ? value.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) : "  /  /    ";
-                this.label1.Text = value.HasValue ? value.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) : "  /  /    ";
-
-                if (this.is_read_only)
+                
+                this.selected_date = value;
+                this.SetText(value);
+                if(this._SelectedDateChanged != null)
                 {
-                    this.Refresh();
+                    this._SelectedDateChanged(this, new EventArgs());
                 }
             }
         }
@@ -60,9 +58,6 @@ namespace CC
             }
             set
             {
-                string str_date = this.selected_date.HasValue ? this.selected_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) : "  /  /    ";
-                this.txtDate.Text = str_date;
-                this.label1.Text = str_date;
                 this.is_read_only = value;
                 this.btnShowCalendar.Enabled = !value;
                 this.txtDate.Visible = !value;
@@ -109,33 +104,54 @@ namespace CC
 
         private void btnShowCalendar_Click(object sender, EventArgs e)
         {
-            var y = this.selected_date;
-
             if(this.calendar == null)
             {
                 Point pnt = this.btnShowCalendar.PointToScreen(Point.Empty);
                 this.calendar = new CalendarDialog(this);
                 this.calendar.SetBounds(pnt.X, pnt.Y + this.btnShowCalendar.Height - 1, this.calendar.Width, this.calendar.Height);
-                //this.calendar.FormClosed += delegate
-                //{
-                //    tmp_date = this.calendar.selected_date;
-                //};
                 this.calendar.Disposed += delegate
                 {
-                    //this.txtDate.Text = this.calendar.selected_date != null ? this.selected_date.Value.ToString("dd/MM/yyyy", CultureInfo.CurrentCulture) : "";
-                    //this._SelectedDate = this.calendar.selected_date;
                     this.calendar = null;
                     this.txtDate.Focus();
-                    var x = this.selected_date;
                 };
                 this.calendar.Show();
             }
         }
 
+        private void SetText(DateTime? date)
+        {
+            if (!date.HasValue)
+            {
+                this.txtDate.Text = "  /  /    ";
+                return;
+            }
+
+            DateTime d;
+            if (DateTime.TryParse(this.txtDate.Text, CultureInfo.GetCultureInfo("th-TH"), DateTimeStyles.None, out d))
+            {
+                if(d.ToString("yyyy-MM-dd", CultureInfo.GetCultureInfo("th-TH")) == date.Value.ToString("yyyy-MM-dd", CultureInfo.GetCultureInfo("th-TH")))
+                {
+                    if(this.txtDate.Text.Trim().Length < 10) // if txtDate is show only 2 digits year change it to 4 digits
+                    {
+                        this.txtDate.Text = date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
+                    }
+                    return;
+                }
+                else
+                {
+                    this.txtDate.Text = date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
+                }
+            }
+            else
+            {
+                this.txtDate.Text = date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
+            }
+
+            
+        }
+
         public void SetDate(DateTime? date)
         {
-            //this.selected_date = date;
-            //this.txtDate.Text = this._SelectedDate.HasValue ? this._SelectedDate.Value.ToString("dd/MM/yyyy", CultureInfo.CurrentCulture.DateTimeFormat) : "  /  /    ";
             this._SelectedDate = date;
         }
 
@@ -167,34 +183,46 @@ namespace CC
                     this._GotFocus(this, e_obj);
                 }
             };
-
-            this.txtDate.Leave/*LostFocus*/ += delegate(object sender_obj, EventArgs e_obj)
-            {
-                this.SetDate(this._SelectedDate);
-                this.txtDate.BackColor = Color.White;
-                this.BackColor = Color.White;
-                this.focused = false;
-
-                if(this._Leave != null)
-                {
-                    this._Leave(this, e_obj);
-                }
-            };
         }
 
         private void txtDate_TextChanged(object sender, EventArgs e)
         {
+            this.label1.Text = ((MaskedTextBox)sender).Text;
             DateTime d;
             if (DateTime.TryParse(((MaskedTextBox)sender).Text, CultureInfo.GetCultureInfo("th-TH"), DateTimeStyles.None, out d))
             {
                 this.selected_date = d;
-                this.label1.Text = ((MaskedTextBox)sender).Text;
-                if (this._SelectedDateChanged != null)
-                    this._SelectedDateChanged(this, e);
             }
             else
             {
                 this.selected_date = null;
+            }
+
+            if (this._SelectedDateChanged != null)
+            {
+                this._SelectedDateChanged(this, e);
+            }
+        }
+
+        private void txtDate_Leave(object sender, EventArgs e)
+        {
+            DateTime d;
+            if (DateTime.TryParse(((MaskedTextBox)sender).Text, CultureInfo.GetCultureInfo("th-TH"), DateTimeStyles.None, out d))
+            {
+                this._SelectedDate = d;
+            }
+            else
+            {
+                this._SelectedDate = null;
+            }
+
+            this.txtDate.BackColor = Color.White;
+            this.BackColor = Color.White;
+            this.focused = false;
+
+            if (this._Leave != null)
+            {
+                this._Leave(this, e);
             }
         }
 

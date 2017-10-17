@@ -61,6 +61,7 @@
             this.txtDate.ValidatingType = typeof(System.DateTime);
             this.txtDate.TextChanged += new System.EventHandler(this.txtDate_TextChanged);
             this.txtDate.VisibleChanged += new System.EventHandler(this.txtDate_VisibleChanged);
+            this.txtDate.Leave += new System.EventHandler(this.txtDate_Leave);
             // 
             // label1
             // 

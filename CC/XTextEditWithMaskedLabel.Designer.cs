@@ -38,9 +38,9 @@
             this.txtTextEditable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTextEditable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtTextEditable.Location = new System.Drawing.Point(96, 2);
+            this.txtTextEditable.Location = new System.Drawing.Point(2, 2);
             this.txtTextEditable.Name = "txtTextEditable";
-            this.txtTextEditable.Size = new System.Drawing.Size(149, 16);
+            this.txtTextEditable.Size = new System.Drawing.Size(243, 16);
             this.txtTextEditable.TabIndex = 1;
             this.txtTextEditable.Text = "TextBox";
             this.txtTextEditable.BackColorChanged += new System.EventHandler(this.txtTextEditable_BackColorChanged);
@@ -51,7 +51,7 @@
             // 
             this.lblTextPrefix.Location = new System.Drawing.Point(2, 2);
             this.lblTextPrefix.Name = "lblTextPrefix";
-            this.lblTextPrefix.Size = new System.Drawing.Size(49, 18);
+            this.lblTextPrefix.Size = new System.Drawing.Size(0, 18);
             this.lblTextPrefix.TabIndex = 2;
             this.lblTextPrefix.Text = "Label Prefix Text";
             this.lblTextPrefix.UseMnemonic = false;

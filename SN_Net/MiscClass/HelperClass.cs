@@ -13,6 +13,7 @@ using System.Reflection;
 using SN_Net.ViewModels;
 using CC;
 using System.ComponentModel;
+using SN_Net.Model;
 
 namespace SN_Net.MiscClass
 {
@@ -702,6 +703,12 @@ namespace SN_Net.MiscClass
 
                     return;
                 }
+                if (comp is TextBox)
+                {
+                    ((TextBox)comp).ReadOnly = false; ;
+                    if (accessibility_by_scacclv != null && accessibility_by_scacclv == "N")
+                        ((TextBox)comp).ReadOnly = true;
+                }
             }
             else
             {
@@ -757,6 +764,10 @@ namespace SN_Net.MiscClass
                 {
                     ((XTextEditMasked)comp)._ReadOnly = true; return;
                 }
+                if (comp is TextBox)
+                {
+                    ((TextBox)comp).ReadOnly = true; return;
+                }
             }
         }
 
@@ -778,6 +789,24 @@ namespace SN_Net.MiscClass
             }
         }
 
+        public static void SetControlVisibilityByUserLevel(this Component comp, users current_user, USER_LEVEL[] user_level_to_visible)
+        {
+            if(user_level_to_visible.Where(l => (int)l == current_user.level).Count() > 0)
+            {
+                if(comp is Control)
+                {
+                    ((Control)comp).Visible = true; return;
+                }
+            }
+            else
+            {
+                if(comp is Control)
+                {
+                    ((Control)comp).Visible = false; return;
+                }
+            }
+        }
+
         public static void SetInlineControlPosition(this Control inline_control, DataGridView dgv, int row_index, int column_index)
         {
             if (inline_control != null)
@@ -785,6 +814,56 @@ namespace SN_Net.MiscClass
                 Rectangle rect = dgv.GetCellDisplayRectangle(column_index, row_index, true);
                 inline_control.SetBounds(rect.X, rect.Y + 1, rect.Width - 1, rect.Height - 3);
             }
+        }
+
+        public static string FillLeadingZero(this int source_string, int total_digit)
+        {
+            string result = string.Empty;
+
+            for (int i = 0; i < total_digit - source_string.ToString().Length; i++)
+            {
+                result += "0";
+            }
+
+            return result + source_string.ToString();
+        }
+
+        public static IEnumerable<String> SplitInParts(this String s, int partLength)
+        {
+            if (s == null)
+                throw new ArgumentNullException("s");
+            if (partLength <= 0)
+                throw new ArgumentException("Part length has to be positive.", "partLength");
+
+            for (var i = 0; i < s.Length; i += partLength)
+                yield return s.Substring(i, Math.Min(partLength, s.Length - i));
+        }
+
+
+        public static string ToBytesString(this string str)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+            string bytes_str = string.Empty;
+            foreach (var b in bytes)
+            {
+                bytes_str += ((int)b).FillLeadingZero(4);
+                //Console.WriteLine(" -- > " + (int)b);
+            }
+
+            return bytes_str;
+        }
+
+        public static string ExtractBytesString(this string bytes_string)
+        {
+            IEnumerable<string> str = bytes_string.SplitInParts(4);
+
+            List<byte> b = new List<byte>();
+            foreach (var s in str)
+            {
+                b.Add((byte)Convert.ToInt32(s));
+            }
+
+            return Encoding.UTF8.GetString(b.ToArray());
         }
     }
 }

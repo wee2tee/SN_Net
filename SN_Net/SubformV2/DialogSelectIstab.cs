@@ -21,13 +21,13 @@ namespace SN_Net.Subform
         VEREXT
     }
 
-    public partial class DialogInquiryIstab : Form
+    public partial class DialogSelectIstab : Form
     {
         private TABTYP tabtyp;
         private BindingList<istabVM> istab_list;
         public istab selected_istab;
 
-        public DialogInquiryIstab(TABTYP tabtyp, istab selected_istab = null, List<istab> exclude_istab = null)
+        public DialogSelectIstab(TABTYP tabtyp, istab selected_istab = null, List<istab> exclude_istab = null)
         {
             InitializeComponent();
             this.tabtyp = tabtyp;

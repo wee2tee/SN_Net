@@ -143,6 +143,9 @@ namespace CC
 
         private void maskedTextBox1_ReadOnlyChanged(object sender, EventArgs e)
         {
+            this.TabStop = (this._ReadOnly ? false : true);
+            this.maskedTextBox1.TabStop = (this._ReadOnly ? false : true);
+
             if (this._ReadOnly)
             {
                 ((MaskedTextBox)sender).Visible = false;
@@ -171,7 +174,7 @@ namespace CC
             if (this._ReadOnly)
             {
                 this.BackColor = Color.White;
-                SendKeys.Send("{TAB}");
+                this.Parent.SelectNextControl(this, true, true, true, true);
             }
             else
             {

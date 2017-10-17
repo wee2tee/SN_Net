@@ -45,7 +45,7 @@
             // 
             this.chkNewRwt.AutoSize = true;
             this.chkNewRwt.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkNewRwt.Location = new System.Drawing.Point(202, 82);
+            this.chkNewRwt.Location = new System.Drawing.Point(179, 77);
             this.chkNewRwt.Name = "chkNewRwt";
             this.chkNewRwt.Size = new System.Drawing.Size(148, 20);
             this.chkNewRwt.TabIndex = 3;
@@ -57,7 +57,7 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnCancel.Location = new System.Drawing.Point(217, 172);
+            this.btnCancel.Location = new System.Drawing.Point(199, 167);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 7;
@@ -68,7 +68,7 @@
             // 
             this.btnOK.Enabled = false;
             this.btnOK.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnOK.Location = new System.Drawing.Point(131, 172);
+            this.btnOK.Location = new System.Drawing.Point(113, 167);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 30);
             this.btnOK.TabIndex = 6;
@@ -80,7 +80,7 @@
             // 
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtVersion.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtVersion.Location = new System.Drawing.Point(146, 79);
+            this.txtVersion.Location = new System.Drawing.Point(123, 74);
             this.txtVersion.MaxLength = 4;
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.Size = new System.Drawing.Size(40, 23);
@@ -92,7 +92,7 @@
             this.mskNewSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mskNewSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.mskNewSernum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mskNewSernum.Location = new System.Drawing.Point(146, 50);
+            this.mskNewSernum.Location = new System.Drawing.Point(123, 45);
             this.mskNewSernum.Mask = ">A-AAA-AAAAAA";
             this.mskNewSernum.Name = "mskNewSernum";
             this.mskNewSernum.PromptChar = ' ';
@@ -106,7 +106,7 @@
             this.mskLostSernum.Enabled = false;
             this.mskLostSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.mskLostSernum.InsertKeyMode = System.Windows.Forms.InsertKeyMode.Overwrite;
-            this.mskLostSernum.Location = new System.Drawing.Point(146, 21);
+            this.mskLostSernum.Location = new System.Drawing.Point(123, 16);
             this.mskLostSernum.Mask = ">A-AAA-AAAAAA";
             this.mskLostSernum.Name = "mskLostSernum";
             this.mskLostSernum.PromptChar = ' ';
@@ -117,7 +117,7 @@
             // 
             this.chkCDTraining.AutoSize = true;
             this.chkCDTraining.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkCDTraining.Location = new System.Drawing.Point(202, 134);
+            this.chkCDTraining.Location = new System.Drawing.Point(179, 129);
             this.chkCDTraining.Name = "chkCDTraining";
             this.chkCDTraining.Size = new System.Drawing.Size(169, 20);
             this.chkCDTraining.TabIndex = 5;
@@ -129,7 +129,7 @@
             // 
             this.chkNewRwtJob.AutoSize = true;
             this.chkNewRwtJob.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.chkNewRwtJob.Location = new System.Drawing.Point(202, 108);
+            this.chkNewRwtJob.Location = new System.Drawing.Point(179, 103);
             this.chkNewRwtJob.Name = "chkNewRwtJob";
             this.chkNewRwtJob.Size = new System.Drawing.Size(183, 20);
             this.chkNewRwtJob.TabIndex = 4;
@@ -141,7 +141,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(78, 81);
+            this.label3.Location = new System.Drawing.Point(55, 76);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 16);
             this.label3.TabIndex = 12;
@@ -151,7 +151,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(55, 51);
+            this.label2.Location = new System.Drawing.Point(32, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 16);
             this.label2.TabIndex = 10;
@@ -161,7 +161,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(71, 22);
+            this.label1.Location = new System.Drawing.Point(48, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 8;
@@ -171,7 +171,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 219);
+            this.ClientSize = new System.Drawing.Size(387, 214);
             this.Controls.Add(this.chkNewRwt);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -186,6 +186,8 @@
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DialogLostRenew";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

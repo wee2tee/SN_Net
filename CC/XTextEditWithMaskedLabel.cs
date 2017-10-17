@@ -61,6 +61,15 @@ namespace CC
             }
         }
 
+        private bool focused;
+        public bool _Focused
+        {
+            get
+            {
+                return this.focused;
+            }
+        }
+
         public event EventHandler _TextChanged;
         public event EventHandler _DoubleClicked;
 
@@ -80,14 +89,28 @@ namespace CC
 
         private void XTextEditWithMaskedLabel_Load(object sender, EventArgs e)
         {
-
+            //this.txtTextEditable.GotFocus += TxtTextEditable_GotFocus;
         }
+
+        //private void TxtTextEditable_GotFocus(object sender, EventArgs e)
+        //{
+        //    this.focused = true;
+        //    Console.WriteLine(" ==> GotFocus");
+        //}
+
+        //private void txtTextEditable_Leave(object sender, EventArgs e)
+        //{
+        //    this.focused = false;
+        //    Console.WriteLine(" ==> Leave");
+        //}
 
         private void XTextEditWithMaskedLabel_Enter(object sender, EventArgs e)
         {
+            this.focused = true;
             if (this._ReadOnly)
             {
                 this.txtTextEditable.BackColor = Color.White;
+                this.Parent.SelectNextControl(this, true, true, true, true);
             }
             else
             {
@@ -174,6 +197,7 @@ namespace CC
 
         private void XTextEditWithMaskedLabel_Leave(object sender, EventArgs e)
         {
+            this.focused = false;
             this.txtTextEditable.BackColor = Color.White;
         }
 

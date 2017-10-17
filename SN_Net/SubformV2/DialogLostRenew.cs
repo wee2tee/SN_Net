@@ -134,7 +134,6 @@ namespace SN_Net.Subform
                     int probcod_id = sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_PROBCOD && i.typcod.Trim() == "UG").First().id;
                     string verext_string = this.is_new_report ? "-NewRwt" : (this.is_new_report_job ? "-NewRwtJob" : string.Empty);
 
-
                     if (!this.is_new_report && !this.is_new_report_job)
                     {
                         serial_to_update.verext_id = ver_normal;
@@ -178,7 +177,7 @@ namespace SN_Net.Subform
                         branch = losted_serial.branch,
                         manual = losted_serial.manual,
                         upfree = losted_serial.upfree,
-                        refnum = this.new_sernum,
+                        refnum = losted_serial.refnum,
                         remark = losted_serial.remark,
                         dealer_id = losted_serial.dealer_id,
                         dealercod = losted_serial.dealercod,
@@ -213,6 +212,18 @@ namespace SN_Net.Subform
                     };
                     sn.problem.Add(keep_log);
 
+                    //Console.WriteLine(" ==> losted serial : " + this.losted_serial.sernum);
+
+                    List<serial> ref_sn = sn.serial.Where(s => s.flag == 0 && s.refnum == this.losted_serial.sernum).ToList();
+                    //Console.WriteLine(" ==> ref s/n count : " + ref_sn.Count);
+                    foreach (var item in ref_sn)
+                    {
+                        item.refnum = this.new_sernum;
+                        item.chgby_id = this.main_form.loged_in_user.id;
+                        item.chgdat = DateTime.Now;
+                        //sn.SaveChanges();
+                    }
+
                     sn.SaveChanges();
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -220,6 +231,7 @@ namespace SN_Net.Subform
                 catch (Exception ex)
                 {
                     MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    return;
                 }
             }
         }

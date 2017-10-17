@@ -103,6 +103,42 @@ namespace CC
             }
         }
 
+        public int _SelectionStart
+        {
+            get
+            {
+                return this.textBox1.SelectionStart;
+            }
+            set
+            {
+                this.textBox1.SelectionStart = value;
+            }
+        }
+
+        public int _SelectionLength
+        {
+            get
+            {
+                return this.textBox1.SelectionLength;
+            }
+            set
+            {
+                this.textBox1.SelectionLength = value;
+            }
+        }
+
+        public char _PasswordChar
+        {
+            get
+            {
+                return this.textBox1.PasswordChar;
+            }
+            set
+            {
+                this.textBox1.PasswordChar = value;
+            }
+        }
+
         private bool focused;
         public bool _Focused
         {
@@ -326,7 +362,7 @@ namespace CC
         {
             if (this._ReadOnly)
             {
-                SendKeys.Send("{TAB}");
+                this.Parent.SelectNextControl(this, true, true, true, true);
             }
         }
     }

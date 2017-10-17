@@ -43,14 +43,14 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dealercod" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="prenam" Type="varchar" MaxLength="30" />
-          <Property Name="compnam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="compnam" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="addr01" Type="varchar" MaxLength="50" />
           <Property Name="addr02" Type="varchar" MaxLength="50" />
           <Property Name="addr03" Type="varchar" MaxLength="30" />
           <Property Name="zipcod" Type="varchar" MaxLength="5" />
           <Property Name="telnum" Type="varchar" MaxLength="40" />
           <Property Name="faxnum" Type="varchar" MaxLength="40" />
-          <Property Name="contact" Type="varchar" MaxLength="100" />
+          <Property Name="contact" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="position" Type="varchar" MaxLength="50" />
           <Property Name="busides" Type="varchar" MaxLength="40" />
           <Property Name="area_id" Type="int" />
@@ -127,12 +127,12 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sernum" Type="char" MaxLength="20" Nullable="false" />
-          <Property Name="oldnum" Type="char" MaxLength="20" />
+          <Property Name="oldnum" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="version" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="contact" Type="char" MaxLength="100" />
+          <Property Name="contact" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="position" Type="varchar" MaxLength="50" />
           <Property Name="prenam" Type="varchar" MaxLength="30" />
-          <Property Name="compnam" Type="varchar" MaxLength="100" />
+          <Property Name="compnam" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="addr01" Type="varchar" MaxLength="50" />
           <Property Name="addr02" Type="varchar" MaxLength="50" />
           <Property Name="addr03" Type="varchar" MaxLength="30" />
@@ -145,7 +145,7 @@
           <Property Name="branch" Type="varchar" MaxLength="1" />
           <Property Name="manual" Type="date" />
           <Property Name="upfree" Type="varchar" MaxLength="1" />
-          <Property Name="refnum" Type="varchar" MaxLength="12" />
+          <Property Name="refnum" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="remark" Type="varchar" MaxLength="50" />
           <Property Name="dealer_id" Type="int" />
           <Property Name="dealercod" Type="char" MaxLength="20" Nullable="false" />
@@ -185,15 +185,27 @@
           <Property Name="name" Type="char" MaxLength="20" />
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="level" Type="int" Nullable="false" />
-          <Property Name="usergroup" Type="varchar" MaxLength="10" />
+          <Property Name="usergroup_id" Type="int" />
           <Property Name="status" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="allowed_web_login" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="training_expert" Type="char" MaxLength="1" />
+          <Property Name="training_expert" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="max_absent" Type="int" Nullable="false" />
-          <Property Name="create_at" Type="timestamp" Precision="0" />
-          <Property Name="last_use" Type="timestamp" Precision="0" />
+          <Property Name="create_at" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="last_use" Type="datetime" Precision="0" />
           <Property Name="rec_by" Type="varchar" MaxLength="20" />
         </EntityType>
+        <Association Name="fk_users_istab1">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="usergroup_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk-cloud_srv-chgby_id">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="cloud_srv" Type="Self.cloud_srv" Multiplicity="*" />
@@ -553,6 +565,10 @@
           <EntitySet Name="serial" EntityType="Self.serial" Schema="sn" store:Type="Tables" />
           <EntitySet Name="serial_password" EntityType="Self.serial_password" Schema="sn" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="sn" store:Type="Tables" />
+          <AssociationSet Name="fk_users_istab1" Association="Self.fk_users_istab1">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
           <AssociationSet Name="fk-cloud_srv-chgby_id" Association="Self.fk-cloud_srv-chgby_id">
             <End Role="users" EntitySet="users" />
             <End Role="cloud_srv" EntitySet="cloud_srv" />
@@ -726,7 +742,7 @@
           <Property Name="zipcod" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="telnum" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="faxnum" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="busides" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="area_id" Type="Int32" />
@@ -761,8 +777,9 @@
           <Property Name="chgdat" Type="DateTime" />
           <Property Name="flag" Type="Int32" Nullable="false" />
           <NavigationProperty Name="dealer" Relationship="Self.fk_dealer_area_id" FromRole="istab" ToRole="dealer" />
-          <NavigationProperty Name="users" Relationship="Self.fk_istab_chgby_id" FromRole="istab" ToRole="users" />
-          <NavigationProperty Name="users1" Relationship="Self.fk_istab_creby_id" FromRole="istab" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="Self.fk_users_istab1" FromRole="istab" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.fk_istab_chgby_id" FromRole="istab" ToRole="users" />
+          <NavigationProperty Name="users2" Relationship="Self.fk_istab_creby_id" FromRole="istab" ToRole="users" />
           <NavigationProperty Name="problem" Relationship="Self.fk_problem_probcod_id" FromRole="istab" ToRole="problem" />
           <NavigationProperty Name="serial" Relationship="Self.fk_serial_area_id" FromRole="istab" ToRole="serial" />
           <NavigationProperty Name="serial1" Relationship="Self.fk_serial_busityp_id" FromRole="istab" ToRole="serial" />
@@ -824,12 +841,12 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sernum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="oldnum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="oldnum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="version" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="prenam" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="compnam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="compnam" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="addr01" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="addr02" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="addr03" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -842,7 +859,7 @@
           <Property Name="branch" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="manual" Type="DateTime" />
           <Property Name="upfree" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="refnum" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="refnum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="dealer_id" Type="Int32" />
           <Property Name="dealercod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
@@ -896,12 +913,12 @@
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="level" Type="Int32" Nullable="false" />
-          <Property Name="usergroup" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="usergroup_id" Type="Int32" />
           <Property Name="status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="allowed_web_login" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="training_expert" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="training_expert" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="max_absent" Type="Int32" Nullable="false" />
-          <Property Name="create_at" Type="DateTime" />
+          <Property Name="create_at" Type="DateTime" Nullable="false" />
           <Property Name="last_use" Type="DateTime" />
           <Property Name="rec_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="cloud_srv" Relationship="Self.fk_cloud_srv_chgby_id" FromRole="users" ToRole="cloud_srv" />
@@ -910,8 +927,9 @@
           <NavigationProperty Name="d_msg1" Relationship="Self.fk_d_msg_creby_id" FromRole="users" ToRole="d_msg" />
           <NavigationProperty Name="dealer" Relationship="Self.fk_dealer_chgby_id" FromRole="users" ToRole="dealer" />
           <NavigationProperty Name="dealer1" Relationship="Self.fk_dealer_creby_id" FromRole="users" ToRole="dealer" />
-          <NavigationProperty Name="istab" Relationship="Self.fk_istab_chgby_id" FromRole="users" ToRole="istab" />
-          <NavigationProperty Name="istab1" Relationship="Self.fk_istab_creby_id" FromRole="users" ToRole="istab" />
+          <NavigationProperty Name="istab" Relationship="Self.fk_users_istab1" FromRole="users" ToRole="istab" />
+          <NavigationProperty Name="istab1" Relationship="Self.fk_istab_chgby_id" FromRole="users" ToRole="istab" />
+          <NavigationProperty Name="istab2" Relationship="Self.fk_istab_creby_id" FromRole="users" ToRole="istab" />
           <NavigationProperty Name="ma" Relationship="Self.fk_ma_chgby_id" FromRole="users" ToRole="ma" />
           <NavigationProperty Name="ma1" Relationship="Self.fk_ma_creby_id" FromRole="users" ToRole="ma" />
           <NavigationProperty Name="mac_allowed" Relationship="Self.fk_mac_allowed_creby_id" FromRole="users" ToRole="mac_allowed" />
@@ -1039,6 +1057,18 @@
             </Principal>
             <Dependent Role="serial">
               <PropertyRef Name="dealer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users_istab1">
+          <End Role="istab" Type="Self.istab" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="istab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="usergroup_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1321,6 +1351,10 @@
             <End Role="dealer" EntitySet="dealer" />
             <End Role="serial" EntitySet="serial" />
           </AssociationSet>
+          <AssociationSet Name="fk_users_istab1" Association="Self.fk_users_istab1">
+            <End Role="istab" EntitySet="istab" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
           <AssociationSet Name="fk_istab_chgby_id" Association="Self.fk_istab_chgby_id">
             <End Role="users" EntitySet="users" />
             <End Role="istab" EntitySet="istab" />
@@ -1592,7 +1626,7 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="level" ColumnName="level" />
-                <ScalarProperty Name="usergroup" ColumnName="usergroup" />
+                <ScalarProperty Name="usergroup_id" ColumnName="usergroup_id" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="allowed_web_login" ColumnName="allowed_web_login" />
                 <ScalarProperty Name="training_expert" ColumnName="training_expert" />

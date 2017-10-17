@@ -17,8 +17,8 @@ namespace SN_Net.Subform
     public partial class FormSn : Form
     {
         private MainForm main_form;
-        private FORM_MODE form_mode;
-        private serial curr_serial;
+        public FORM_MODE form_mode;
+        public serial curr_serial;
         private serial tmp_serial;
         private problem tmp_problem;
         private BindingList<serialPasswordVM> password_list;
@@ -52,9 +52,23 @@ namespace SN_Net.Subform
             this.problem_list = new BindingList<problemVM>();
             this.dgvProblem.DataSource = this.problem_list;
 
-            this.ActiveControl = this.toolStrip1;
             this.btnLast.PerformClick();
             this.HideInlineForm();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!(this.form_mode == FORM_MODE.READ || this.form_mode == FORM_MODE.READ_ITEM))
+            {
+                if (MessageAlert.Show("ข้อมูลที่กำลังเพิ่ม/แก้ไข จะไม่ถูกบันทึก, ทำต่อหรือไม่", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            this.main_form.form_sn = null;
+            base.OnClosing(e);
         }
 
         private void ResetFormState(FORM_MODE form_mode)
@@ -92,6 +106,7 @@ namespace SN_Net.Subform
             this.btnReload.SetControlState(new FORM_MODE[] { FORM_MODE.READ }, this.form_mode);
 
             /* Control */
+            //this.btnDbInfo.SetControlState(new FORM_MODE[] { FORM_MODE.READ, FORM_MODE.READ_ITEM }, this.form_mode);
             this.mskSernum.SetControlState(new FORM_MODE[] { FORM_MODE.ADD }, this.form_mode);
             this.txtVersion.SetControlState(new FORM_MODE[] { FORM_MODE.ADD, FORM_MODE.EDIT }, this.form_mode);
             this.brArea.SetControlState(new FORM_MODE[] { FORM_MODE.ADD, FORM_MODE.EDIT }, this.form_mode);
@@ -140,9 +155,19 @@ namespace SN_Net.Subform
             this.btnEditProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ_ITEM }, this.form_mode);
             this.btnDeleteProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ_ITEM }, this.form_mode);
             this.dgvProblem.SetControlState(new FORM_MODE[] { FORM_MODE.READ, FORM_MODE.READ_ITEM }, this.form_mode);
+
+            /** extended button **/
+            this.btnSupportNote.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.SUPPORT });
+            this.btnSupportViewNote.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.SUPPORT });
+            this.btnCD.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
+            this.btnUP.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
+            this.chkIMOnly.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
+            this.btnLostRenew.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
+            this.btnUPNewRwt.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
+            this.btnUPNewRwtJob.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
         }
 
-        private void FillForm(serial serial_to_fill = null)
+        public void FillForm(serial serial_to_fill = null)
         {
             serial serial;
             if (serial_to_fill == null)
@@ -381,7 +406,7 @@ namespace SN_Net.Subform
             this.focused_control = (Control)sender;
         }
 
-        private serial GetSerial(int id)
+        public serial GetSerial(int id)
         {
             using (snEntities sn = DBX.DataSet())
             {
@@ -468,10 +493,11 @@ namespace SN_Net.Subform
             this.inlineName._Text = this.tmp_problem.name;
             this.inlineProbcod._Text = this.tmp_problem.ToViewModel().probcod;
             this.inlineProbcod._ReadOnly = false;
+            //this.inlineProbdesc.SetText("", "");
             
             if(this.form_mode == FORM_MODE.ADD_ITEM)
             {
-
+                this.inlineProbdesc.SetText("", "");
             }
 
             if(this.form_mode == FORM_MODE.EDIT_ITEM)
@@ -485,7 +511,6 @@ namespace SN_Net.Subform
                 if(this.main_form.loged_in_user.level == (int)USER_LEVEL.ADMIN)
                 {
                     this.inlineProbdesc.SetText(this.tmp_problem.probdesc);
-                    //this.inlineProbdesc._ReadOnly = false;
                 }
                 else
                 {
@@ -498,7 +523,6 @@ namespace SN_Net.Subform
                     else
                     {
                         this.inlineProbdesc.SetText(this.tmp_problem.probdesc);
-                        //this.inlineProbdesc._ReadOnly = false;
                     }
                 }
             }
@@ -521,6 +545,8 @@ namespace SN_Net.Subform
 
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
+
             using (snEntities sn = DBX.DataSet())
             {
                 this.tmp_serial = sn.CreateTmpSerial(this.main_form);
@@ -560,6 +586,7 @@ namespace SN_Net.Subform
 
         private void toolStripEdit_Click(object sender, EventArgs e)
         {
+            this.tabControl1.SelectedTab = this.tabPage1;
             this.tmp_serial = this.GetSerial(this.curr_serial.id);
 
             if (this.tmp_serial != null)
@@ -591,13 +618,21 @@ namespace SN_Net.Subform
                     }
                     else
                     {
+                        var deleted_time = DateTime.Now;
+
                         sn_to_delete.flag = sn_to_delete.id;
                         sn_to_delete.chgby_id = this.main_form.loged_in_user.id;
-                        sn_to_delete.chgdat = DateTime.Now;
+                        sn_to_delete.chgdat = deleted_time;
+
+                        sn.problem.Where(p => p.flag == 0 && p.serial_id == sn_to_delete.id).ToList().ForEach(p => { p.flag = p.id; p.chgby_id = this.main_form.loged_in_user.id; p.chgdat = deleted_time; });
+
+                        sn.ma.Where(m => m.flag == 0 && m.serial_id == sn_to_delete.id).ToList().ForEach(m => { m.flag = m.id; m.chgby_id = this.main_form.loged_in_user.id; m.chgdat = deleted_time; });
+
+                        sn.cloud_srv.Where(c => c.flag == 0 && c.serial_id == sn_to_delete.id).ToList().ForEach(c => { c.flag = c.id; c.chgby_id = this.main_form.loged_in_user.id; c.chgdat = deleted_time; });
+
                         sn.SaveChanges();
 
-                        var prev_sn = sn.serial.Where(s => s.flag == 0 && s.sernum.CompareTo(sn_to_delete.sernum) < 0).OrderByDescending(s => s.sernum).FirstOrDefault();
-                        this.FillForm(prev_sn);
+                        this.btnNext.PerformClick();
                     }
 
                 }
@@ -761,6 +796,22 @@ namespace SN_Net.Subform
                         SendKeys.Send("{F6}");
                         return;
                     }
+                    else
+                    {
+                        if(prob.typcod == "RG" && this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
+                        {
+                            this.inlineProbcod.Focus();
+                            SendKeys.Send("{F6}");
+                            return;
+                        }
+                    }
+
+                    if(prob.use_pattern == true && this.tmp_problem.probdesc.Contains("?"))
+                    {
+                        MessageAlert.Show("Description is not complete yet (still contain \"?\")");
+                        this.inlineProbdesc.Focus();
+                        return;
+                    }
 
                     if(this.tmp_problem.id == -1) // Add problem
                     {
@@ -797,8 +848,9 @@ namespace SN_Net.Subform
                         }
                         else // otherwise will add new
                         {
+                            this.tmp_problem.creby_id = this.main_form.loged_in_user.id;
                             this.tmp_problem.credat = DateTime.Now;
-                            this.tmp_problem.time = DateTime.Now.ToString("HH:mm", CultureInfo.GetCultureInfo("th-TH"));
+                            //this.tmp_problem.time = DateTime.Now.ToString("HH:mm", CultureInfo.GetCultureInfo("th-TH"));
                             sn.problem.Add(this.tmp_problem);
                             sn.SaveChanges();
                         }
@@ -1002,35 +1054,66 @@ namespace SN_Net.Subform
 
         private void toolStripItem_Click(object sender, EventArgs e)
         {
-            this.tabControl1.SelectedTab = this.tabPage2;
+            //this.tabControl1.SelectedTab = this.tabPage2;
             this.dgvProblem.Focus();
+            this.tabControl1.SelectedTab = this.tabPage2;
             this.ResetFormState(FORM_MODE.READ_ITEM);
             this.dgvProblem.Refresh();
         }
 
         private void toolStripImport_Click(object sender, EventArgs e)
         {
-
+            DialogImportRegisterData reg = new DialogImportRegisterData(this.main_form);
+            reg.Show();
         }
 
         private void toolStripGenSN_Click(object sender, EventArgs e)
         {
-
+            DialogGenSn gen = new DialogGenSn(this.main_form);
+            if(gen.ShowDialog() == DialogResult.OK)
+            {
+                this.curr_serial = this.GetSerial(gen.serial_generated.id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripUpgrade_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            DialogUpgradeProgram ug = new DialogUpgradeProgram(this.main_form, this.curr_serial);
+            if(ug.ShowDialog() == DialogResult.OK)
+            {
+                this.curr_serial = this.GetSerial(ug.serial_upgraded.id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripBook_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            DialogSellBook book = new DialogSellBook(this.main_form, this.curr_serial);
+            if(book.ShowDialog() == DialogResult.OK)
+            {
+                this.curr_serial = this.GetSerial(this.curr_serial.id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripSet2_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            DialogSellSet2 set2 = new DialogSellSet2(this.main_form, this.curr_serial);
+            if(set2.ShowDialog() == DialogResult.OK)
+            {
+                this.curr_serial = this.GetSerial(set2.serial_set2.id);
+                this.FillForm(this.curr_serial);
+            }
         }
 
         private void toolStripSearch_ButtonClick(object sender, EventArgs e)
@@ -1431,6 +1514,27 @@ namespace SN_Net.Subform
             }
         }
 
+        private void btnSwithToRefnum_Click(object sender, EventArgs e)
+        {
+            if (this.curr_serial == null || this.curr_serial.refnum.Replace("-", "").Trim().Length == 0)
+                return;
+
+            using (snEntities sn = DBX.DataSet())
+            {
+                var ref_serial = sn.serial.Where(s => s.flag == 0 && s.sernum.Trim() == this.curr_serial.refnum.Trim()).FirstOrDefault();
+                if(ref_serial != null)
+                {
+                    this.curr_serial = this.GetSerial(ref_serial.id);
+                    this.FillForm(this.curr_serial);
+                }
+                else
+                {
+                    MessageAlert.Show("ค้นหา Ref. S/N " + this.curr_serial.refnum + " ไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    return;
+                }
+            }
+        }
+
         /* Exclusive for admin. start */
         private void chkIMOnly_CheckedChanged(object sender, EventArgs e)
         {
@@ -1451,30 +1555,118 @@ namespace SN_Net.Subform
             DialogLostRenew renew = new DialogLostRenew(this.main_form, this.curr_serial);
             if(renew.ShowDialog() == DialogResult.OK)
             {
-                MessageAlert.Show("ok");
-                this.GetSerial(this.curr_serial.id);
-                this.FillForm(this.curr_serial);
+                this.btnReload.PerformClick();
             }
         }
 
         private void btnCD_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            if(MessageAlert.Show("Generate \"CD training date\"", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        var serial_to_update = sn.serial.Where(s => s.flag == 0 && s.id == this.curr_serial.id).FirstOrDefault();
+                        if (serial_to_update != null)
+                        {
+
+                            serial_to_update.expdat = DateTime.Now;
+                            serial_to_update.chgby_id = this.main_form.loged_in_user.id;
+                            serial_to_update.chgdat = DateTime.Now;
+                            sn.SaveChanges();
+
+                            this.curr_serial = this.GetSerial(this.curr_serial.id);
+                            this.FillForm(this.curr_serial);
+                        }
+                        else
+                        {
+                            MessageAlert.Show("ค้นหา S/N " + this.curr_serial.sernum + " ไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    }
+                }
+            }
         }
 
         private void btnUP_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            if (MessageAlert.Show("Generate \"Update\" line", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    try
+                    {
+                        var probcod = sn.istab.Where(p => p.flag == 0 && p.tabtyp == istabDbf.TABTYP_PROBCOD && p.typcod.Trim() == "UP").FirstOrDefault();
+                        var ser = sn.serial.Where(s => s.flag == 0 && s.id == this.curr_serial.id).FirstOrDefault();
+                        if (ser != null)
+                        {
+                            problem prob = new problem
+                            {
+                                probdesc = "",
+                                date = DateTime.Now,
+                                time = DateTime.Now.ToString("HH:mm", CultureInfo.GetCultureInfo("th-TH")),
+                                name = this.main_form.loged_in_user.name,
+                                serial_id = ser.id,
+                                probcod_id = probcod != null ? (int?)probcod.id : null,
+                                creby_id = this.main_form.loged_in_user.id,
+                                credat = DateTime.Now,
+                                chgby_id = null,
+                                chgdat = null,
+                                flag = 0
+                            };
+                            sn.problem.Add(prob);
+                            sn.SaveChanges();
+                            this.curr_serial = this.GetSerial(this.curr_serial.id);
+                            this.FillForm(this.curr_serial);
+                        }
+                        else
+                        {
+                            MessageAlert.Show("ค้นหา S/N " + this.curr_serial.sernum + " ไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        return;
+                    }
+                }
+            }
         }
 
         private void btnUPNewRwt_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            DialogUpNewRwt up = new DialogUpNewRwt(this.main_form, this.curr_serial, DialogUpNewRwt.UPTYPE.NEWRWT);
+            if(up.ShowDialog() == DialogResult.OK)
+            {
+                this.btnReload.PerformClick();
+            }
         }
 
         private void btnUPNewRwtJob_Click(object sender, EventArgs e)
         {
+            if (this.curr_serial == null)
+                return;
 
+            DialogUpNewRwt up = new DialogUpNewRwt(this.main_form, this.curr_serial, DialogUpNewRwt.UPTYPE.NEWRWT_JOB);
+            if (up.ShowDialog() == DialogResult.OK)
+            {
+                this.btnReload.PerformClick();
+            }
         }
         /**************/
 
@@ -1709,6 +1901,7 @@ namespace SN_Net.Subform
             {
                 e.Cancel = true;
                 this.focused_control.Focus();
+                return;
             }
         }
 
@@ -1722,6 +1915,9 @@ namespace SN_Net.Subform
 
         private void mskSernum__Leave(object sender, EventArgs e)
         {
+            if (this.tmp_serial == null)
+                return;
+
             if(ValidateSN.Check(this.tmp_serial.sernum) == false)
             {
                 this.mskSernum.Focus();
@@ -1883,6 +2079,8 @@ namespace SN_Net.Subform
         {
             if (this.tmp_serial != null)
                 this.tmp_serial.verextdat = ((XDatePicker)sender)._SelectedDate;
+
+            //Console.WriteLine(" ==> tmp_serial.verextdat : " + this.tmp_serial.verextdat);
         }
 
         private void brArea__Leave(object sender, EventArgs e)
@@ -2021,7 +2219,7 @@ namespace SN_Net.Subform
 
         private void brArea__ButtonClick(object sender, EventArgs e)
         {
-            DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.AREA, this.tmp_serial.istab);
+            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.AREA, this.tmp_serial.istab);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if(inq.ShowDialog() == DialogResult.OK)
@@ -2036,7 +2234,7 @@ namespace SN_Net.Subform
 
         private void brBusityp__ButtonClick(object sender, EventArgs e)
         {
-            DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.BUSITYP, this.tmp_serial.istab1);
+            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.BUSITYP, this.tmp_serial.istab1);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if (inq.ShowDialog() == DialogResult.OK)
@@ -2051,7 +2249,7 @@ namespace SN_Net.Subform
 
         private void brDealer__ButtonClick(object sender, EventArgs e)
         {
-            DialogInquiryDealer inq = new DialogInquiryDealer(this.tmp_serial.dealer);
+            DialogSelectDealer inq = new DialogSelectDealer(this.tmp_serial.dealer);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if (inq.ShowDialog() == DialogResult.OK)
@@ -2066,7 +2264,7 @@ namespace SN_Net.Subform
 
         private void brHowknown__ButtonClick(object sender, EventArgs e)
         {
-            DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.HOWKNOWN, this.tmp_serial.istab2);
+            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.HOWKNOWN, this.tmp_serial.istab2);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if (inq.ShowDialog() == DialogResult.OK)
@@ -2097,6 +2295,18 @@ namespace SN_Net.Subform
             {
                 if (this.form_mode == FORM_MODE.ADD || this.form_mode == FORM_MODE.EDIT || this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
                 {
+                    if (this.dtVerextDat._Focused)
+                    {
+                        this.btnSave.PerformClick();
+                        return true;
+                    }
+
+                    if (this.inlineProbdesc._Focused)
+                    {
+                        this.btnSave.PerformClick();
+                        return true;
+                    }
+
                     SendKeys.Send("{TAB}");
                     return true;
                 }
@@ -2108,6 +2318,24 @@ namespace SN_Net.Subform
                 return true;
             }
 
+            if (keyData == Keys.F3)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage1;
+                    return true;
+                }
+            }
+
+            if (keyData == Keys.F4)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage2;
+                    return true;
+                }
+            }
+
             if (keyData == Keys.F9)
             {
                 this.btnSave.PerformClick();
@@ -2116,20 +2344,44 @@ namespace SN_Net.Subform
 
             if (keyData == (Keys.Alt | Keys.A))
             {
-                this.btnAdd.PerformClick();
-                return true;
+                if(this.form_mode == FORM_MODE.READ)
+                {
+                    this.btnAdd.PerformClick();
+                    return true;
+                }
+                if(this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    this.btnAddProblem.PerformClick();
+                    return true;
+                }
             }
 
             if (keyData == (Keys.Alt | Keys.E))
             {
-                this.btnEdit.PerformClick();
-                return true;
+                if(this.form_mode == FORM_MODE.READ)
+                {
+                    this.btnEdit.PerformClick();
+                    return true;
+                }
+                if(this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    this.btnEditProblem.PerformClick();
+                    return true;
+                }
             }
 
             if (keyData == (Keys.Alt | Keys.D))
             {
-                this.btnDelete.PerformClick();
-                return true;
+                if(this.form_mode == FORM_MODE.READ)
+                {
+                    this.btnDelete.PerformClick();
+                    return true;
+                }
+                if(this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    this.btnDeleteProblem.PerformClick();
+                    return true;
+                }
             }
 
             if (keyData == (Keys.Control | Keys.Home))
@@ -2140,14 +2392,20 @@ namespace SN_Net.Subform
 
             if (keyData == Keys.PageUp)
             {
-                this.btnPrev.PerformClick();
-                return true;
+                if(this.form_mode == FORM_MODE.READ)
+                {
+                    this.btnPrev.PerformClick();
+                    return true;
+                }
             }
 
             if (keyData == Keys.PageDown)
             {
-                this.btnNext.PerformClick();
-                return true;
+                if(this.form_mode == FORM_MODE.READ)
+                {
+                    this.btnNext.PerformClick();
+                    return true;
+                }
             }
 
             if (keyData == (Keys.Control | Keys.End))
@@ -2234,6 +2492,100 @@ namespace SN_Net.Subform
                 return true;
             }
 
+            if(keyData == Keys.Tab)
+            {
+                if (this.form_mode == FORM_MODE.READ)
+                {
+                    if (this.curr_serial != null)
+                    {
+                        using (snEntities sn = DBX.DataSet())
+                        {
+                            var ser = sn.serial.Include("users").Include("users1").Where(s => s.flag == 0 && s.id == this.curr_serial.id).FirstOrDefault();
+                            var total_row = sn.serial.Where(s => s.flag == 0).Select(s => s.id).AsEnumerable().Count();
+                            string expression = string.Empty;
+                            switch (this.sort_by)
+                            {
+                                case DialogInquirySn.SORT_BY.SERNUM:
+                                    expression = "Sernum";
+                                    break;
+                                case DialogInquirySn.SORT_BY.CONTACT:
+                                    expression = "Contact+Sernum";
+                                    break;
+                                case DialogInquirySn.SORT_BY.COMPNAM:
+                                    expression = "Compnam+Sernum";
+                                    break;
+                                case DialogInquirySn.SORT_BY.DEALER:
+                                    expression = "Dealercod+Sernum";
+                                    break;
+                                case DialogInquirySn.SORT_BY.OLDNUM:
+                                    expression = "Oldnum+Sernum";
+                                    break;
+                                case DialogInquirySn.SORT_BY.BUSITYP:
+                                    expression = "Busityp+Sernum";
+                                    break;
+                                case DialogInquirySn.SORT_BY.AREA:
+                                    expression = "Area+Sernum";
+                                    break;
+                                default:
+                                    expression = "Sernum";
+                                    break;
+                            }
+
+                            if (ser != null)
+                            {
+                                DbInfo info = new DbInfo
+                                {
+                                    DbName = sn.Database.Connection.Database,
+                                    TbName = "Serial",
+                                    Expression = expression,
+                                    CreBy = ser.creby_id.HasValue ? ser.users1.username : string.Empty,
+                                    CreDat = ser.credat,
+                                    ChgBy = ser.chgby_id.HasValue ? ser.users.username : string.Empty,
+                                    ChgDat = ser.chgdat,
+                                    RecId = ser.id,
+                                    TotalRec = total_row
+                                };
+                                DialogDataInfo d_info = new DialogDataInfo(info);
+                                d_info.ShowDialog();
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                if (this.form_mode == FORM_MODE.READ_ITEM)
+                {
+                    if (this.dgvProblem.CurrentCell != null)
+                    {
+                        var id = (int)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Cells[this.col_problem_id.Name].Value;
+                        using (snEntities sn = DBX.DataSet())
+                        {
+                            var problem = sn.problem.Include("users").Include("users1").Where(p => p.flag == 0 && p.id == id).FirstOrDefault();
+                            var total_row = sn.problem.Where(p => p.flag == 0).Select(p => p.id).AsEnumerable().Count();
+
+                            if (problem != null)
+                            {
+                                DbInfo info = new DbInfo
+                                {
+                                    DbName = sn.Database.Connection.Database,
+                                    TbName = "Problem",
+                                    Expression = "Serial_id+Date+Time",
+                                    CreBy = problem.creby_id.HasValue ? problem.users1.username : string.Empty,
+                                    CreDat = problem.credat,
+                                    ChgBy = problem.chgby_id.HasValue ? problem.users.username : string.Empty,
+                                    ChgDat = problem.chgdat,
+                                    RecId = problem.id,
+                                    TotalRec = total_row
+                                };
+                                DialogDataInfo d_info = new DialogDataInfo(info);
+                                d_info.ShowDialog();
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -2245,7 +2597,8 @@ namespace SN_Net.Subform
             if(e.Button == MouseButtons.Right)
             {
                 this.btnItem.PerformClick();
-                ((XDatagrid)sender).Rows[row_index].Cells[this.col_problem_probcod.Name].Selected = true;
+                if (row_index > -1)
+                    ((XDatagrid)sender).Rows[row_index].Cells[this.col_problem_probcod.Name].Selected = true;
 
                 ContextMenu cm = new ContextMenu();
                 MenuItem m_add = new MenuItem("เพิ่ม <Alt + A>");
@@ -2268,7 +2621,29 @@ namespace SN_Net.Subform
                 {
                     this.btnDeleteProblem.PerformClick();
                 };
-                m_delete.Enabled = row_index == -1 ? false : true;
+                if (row_index == -1)
+                {
+                    m_delete.Enabled = false;
+                }
+                else
+                {
+                    if (row_index > -1 && this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
+                    {
+                        if ((string)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Cells[this.col_problem_probcod.Name].Value == "RG")
+                        {
+                            m_delete.Enabled = false;
+                        }
+                        else
+                        {
+                            m_delete.Enabled = true;
+                        }
+                    }
+                    else
+                    {
+                        m_delete.Enabled = true;
+                    }
+                }
+                
                 cm.MenuItems.Add(m_delete);
 
                 cm.Show(((XDatagrid)sender), new Point(e.X, e.Y));
@@ -2305,8 +2680,8 @@ namespace SN_Net.Subform
             {
                 row.Cells[this.col_problem_probcod.Name].Selected = true;
                 this.ResetFormState(FORM_MODE.ADD_ITEM);
-                this.ShowInlineForm(row);
                 this.inlineDate.Focus();
+                this.ShowInlineForm(row);
             }
         }
 
@@ -2317,14 +2692,22 @@ namespace SN_Net.Subform
 
             var row = this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex];
             this.ResetFormState(FORM_MODE.EDIT_ITEM);
-            this.ShowInlineForm(row);
             this.inlineDate.Focus();
+            this.ShowInlineForm(row);
         }
 
         private void btnDeleteProblem_Click(object sender, EventArgs e)
         {
             if (this.dgvProblem.CurrentCell == null)
                 return;
+
+            if(this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
+            {
+                if((string)this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].Cells[this.col_problem_probcod.Name].Value == "RG")
+                {
+                    return;
+                }
+            }
 
             this.dgvProblem.Rows[this.dgvProblem.CurrentCell.RowIndex].DrawDeletingRowOverlay();
 
@@ -2367,6 +2750,9 @@ namespace SN_Net.Subform
 
         private void inlineProbcod__ButtonClick(object sender, EventArgs e)
         {
+            if (this.tmp_problem == null)
+                return;
+
             using (snEntities sn = DBX.DataSet())
             {
                 var prob = sn.istab.Where(i => i.flag == 0 && i.id == this.tmp_problem.probcod_id).FirstOrDefault();
@@ -2375,11 +2761,25 @@ namespace SN_Net.Subform
                 if (this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
                     exclude_istab = new List<istab> { sn.istab.Where(i => i.flag == 0 && i.typcod == "RG").FirstOrDefault() };
 
-                DialogInquiryIstab inq = new DialogInquiryIstab(TABTYP.PROBCOD, prob, exclude_istab);
+                DialogSelectIstab inq = new DialogSelectIstab(TABTYP.PROBCOD, prob, exclude_istab);
                 Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
                 inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
                 if (inq.ShowDialog() == DialogResult.OK)
                 {
+                    if(inq.selected_istab.use_pattern == true)
+                    {
+                        if(this.tmp_problem.probdesc.Trim().Length > 0)
+                        {
+                            if(MessageAlert.Show("Problem Description will be replaced by description pattern, are you want to continue?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                            {
+                                ((XBrowseBox)sender).Focus();
+                                return;
+                            }
+                        }
+
+                        this.inlineProbdesc.SetText(inq.selected_istab.typdes_th, "");
+                    }
+
                     ((XBrowseBox)sender)._Text = inq.selected_istab.typcod;
                     if (this.tmp_problem != null)
                         this.tmp_problem.probcod_id = inq.selected_istab.id;
@@ -2389,6 +2789,9 @@ namespace SN_Net.Subform
 
         private void inlineProbcod__Leave(object sender, EventArgs e)
         {
+            if (this.tmp_problem == null)
+                return;
+
             var str = ((XBrowseBox)sender)._Text;
             if (str.Length == 0)
             {
@@ -2403,10 +2806,24 @@ namespace SN_Net.Subform
                     if (this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
                         exclude_istab = new List<istab> { sn.istab.Where(i => i.flag == 0 && i.typcod == "RG").FirstOrDefault() };
 
-                    var prob = DialogInquiryIstab.GetIstab(TABTYP.PROBCOD, exclude_istab).Where(i => i.typcod == str).FirstOrDefault();
+                    var prob = DialogSelectIstab.GetIstab(TABTYP.PROBCOD, exclude_istab).Where(i => i.typcod == str).FirstOrDefault();
 
                     if(prob != null)
                     {
+                        if(prob.use_pattern == true)
+                        {
+                            if (this.tmp_problem.probdesc.Trim().Length > 0)
+                            {
+                                if (MessageAlert.Show("Problem Description will be replaced by description pattern, are you want to continue?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
+                                {
+                                    ((XBrowseBox)sender).Focus();
+                                    return;
+                                }
+                            }
+
+                            this.inlineProbdesc.SetText(prob.typdes_th, "");
+                        }
+
                         if (this.tmp_problem != null)
                             this.tmp_problem.probcod_id = prob.id;
                     }
@@ -2447,6 +2864,34 @@ namespace SN_Net.Subform
             {
                 this.btnStop.PerformClick();
             }
+        }
+
+        private void dgvProblem_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.form_mode == FORM_MODE.READ || this.form_mode == FORM_MODE.READ_ITEM)
+            {
+                this.btnItem.PerformClick();
+
+                int row_index = ((XDatagrid)sender).HitTest(e.X, e.Y).RowIndex;
+                if (row_index == -1)
+                {
+                    this.btnAddProblem.PerformClick();
+                }
+                else
+                {
+                    this.btnEditProblem.PerformClick();
+                }
+            }
+        }
+
+        private void btnSupportNote_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSupportViewNote_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

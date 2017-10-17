@@ -6,6 +6,92 @@ using SN_Net.Subform;
 
 namespace SN_Net.Model
 {
+    public class macallowedVM
+    {
+        public mac_allowed mac_allowed { get; set; }
+        public int id { get { return this.mac_allowed.id; } }
+        public string mac_address { get { return this.mac_allowed.mac_address; } }
+        public string creby
+        {
+            get
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    var u = sn.users.Find(this.mac_allowed.creby_id);
+                    return u != null ? u.username : string.Empty;
+                }
+            }
+        }
+        public DateTime credat { get { return this.mac_allowed.credat; } }
+    }
+
+    public class usersVM
+    {
+        public users users { get; set; }
+        public int id { get { return this.users.id; } }
+        public string username { get { return this.users.username; } }
+        public string userpassword { get { return this.users.userpassword; } }
+        public string name { get { return this.users.name; } }
+        public string email { get { return this.users.email; } }
+        public string level
+        {
+            get
+            {
+                switch (this.users.level)
+                {
+                    case 0:
+                        return "Support";
+                    case 1:
+                        return "Sales";
+                    case 2:
+                        return "Account";
+                    case 8:
+                        return "Supervisor";
+                    case 9:
+                        return "Admin";
+                    default:
+                        return "";
+                }
+            }
+        }
+        public string usergroup // กลุ่มหยุดงานวันเสาร์
+        {
+            get
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    if (this.users.usergroup_id.HasValue)
+                    {
+                        var usrgrp = sn.istab.Where(i => i.flag == 0 && i.id == this.users.usergroup_id.Value).FirstOrDefault();
+                        return usrgrp != null ? usrgrp.abbreviate_th : string.Empty;
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+            }
+        }
+        public string status
+        {
+            get
+            {
+                switch (this.users.status)
+                {
+                    case "N":
+                        return "ปกติ";
+                    case "X":
+                        return "ห้ามใช้";
+                    default:
+                        return "";
+                }
+            }
+        }
+        public string allowed_web_login { get { return this.users.allowed_web_login; } }
+        public string training_expert { get { return this.users.training_expert; } }
+        public int max_absent { get { return this.users.max_absent; } }
+    }
+
     public class serialVM
     {
         public serial serial { get; set; }
@@ -198,8 +284,123 @@ namespace SN_Net.Model
         public string area { get { return this.dealer.area; } }
     }
 
+    public class d_msgVM
+    {
+        public d_msg d_msg { get; set; }
+        public int id { get { return this.d_msg.id; } }
+        public DateTime? date { get { return this.d_msg.date; } }
+        public string name { get { return this.d_msg.name; } }
+        public string description { get { return this.d_msg.description; } }
+    }
+
+    public class serialItemVM
+    {
+        public serial serial { get; set; }
+        public int id { get { return this.serial.id; } }
+        public string sernum { get { return this.serial.sernum; } }
+        public DateTime? purdat { get { return this.serial.purdat; } }
+        public string compnam { get { return this.serial.compnam; } }
+        public string area { get { return this.serial.area; } }
+    }
+
+    public class importSerial
+    {
+        public string id { get; set; }
+        public string sn { get; set; }
+        public string comp_prenam { get; set; }
+        public string comp_name { get; set; }
+        public string comp_addr1 { get; set; }
+        public string comp_addr2 { get; set; }
+        public string comp_addr3 { get; set; }
+        public string comp_zipcod { get; set; }
+        public string comp_email { get; set; }
+        public string comp_tel { get; set; }
+        public string comp_fax { get; set; }
+        public string comp_bus_type { get; set; }
+        public string comp_bus_desc { get; set; }
+        public string comp_prod_type { get; set; }
+        public string purchase_from { get; set; }
+        public string purchase_from_desc { get; set; }
+        public string cont_name { get; set; }
+        public string cont_position { get; set; }
+        public string cont_email { get; set; }
+        public string cont_tel { get; set; }
+        public string reg_time { get; set; }
+        public string recorded { get; set; }
+        public string rec_time { get; set; }
+        public string exported { get; set; }
+        public string exported_file { get; set; }
+        public string reserve2 { get; set; }
+    }
+
+    public class importSerialVM
+    {
+        public importSerial importSerial { get; set; }
+        public string id { get { return this.importSerial.id; } }
+        public string sn { get { return this.importSerial.sn; } }
+        public string compname
+        {
+            get
+            {
+                return this.importSerial.comp_prenam.Trim().Length > 0 ? this.importSerial.comp_prenam + " " + this.importSerial.comp_name : this.importSerial.comp_name;
+            }
+        }
+        public bool recorded { get; set; }
+    }
+
+    public class registerDataResult
+    {
+        public int result { get; set; }
+        public List<importSerial> register_data { get; set; }
+    }
+
     public static class DataHelper
     {
+        public static macallowedVM ToViewModel(this mac_allowed mac)
+        {
+            if (mac == null)
+                return null;
+
+            macallowedVM m = new macallowedVM
+            {
+                mac_allowed = mac
+            };
+            return m;
+        }
+
+        public static List<macallowedVM> ToViewModel(this IEnumerable<mac_allowed> macs)
+        {
+            List<macallowedVM> m = new List<macallowedVM>();
+            foreach (var item in macs)
+            {
+                m.Add(item.ToViewModel());
+            }
+
+            return m;
+        }
+
+        public static usersVM ToViewModel(this users users)
+        {
+            if (users == null)
+                return null;
+
+            usersVM u = new usersVM
+            {
+                users = users
+            };
+            return u;
+        }
+
+        public static List<usersVM> ToViewModel(this IEnumerable<users> users)
+        {
+            List<usersVM> u = new List<usersVM>();
+            foreach (var item in users)
+            {
+                u.Add(item.ToViewModel());
+            }
+            return u;
+        }
+
         public static serialVM ToViewModel(this serial serial)
         {
             if (serial == null)
@@ -314,6 +515,73 @@ namespace SN_Net.Model
                 d.Add(item.ToViewModel());
             }
             return d;
+        }
+
+        public static d_msgVM ToViewModel(this d_msg d_msg)
+        {
+            if (d_msg == null)
+                return null;
+
+            d_msgVM d = new d_msgVM
+            {
+                d_msg = d_msg
+            };
+            return d;
+        }
+
+        public static List<d_msgVM> ToViewModel(this IEnumerable<d_msg> d_msgs)
+        {
+            List<d_msgVM> d = new List<d_msgVM>();
+            foreach (var item in d_msgs)
+            {
+                d.Add(item.ToViewModel());
+            }
+            return d;
+        }
+
+        public static serialItemVM ToSerialItemVM(this serial serial)
+        {
+            if (serial == null)
+                return null;
+
+            serialItemVM s = new serialItemVM
+            {
+                serial = serial
+            };
+            return s;
+        }
+
+        public static List<serialItemVM> ToSerialItemVM(this IEnumerable<serial> serials)
+        {
+            List<serialItemVM> s = new List<serialItemVM>();
+            foreach (var item in serials)
+            {
+                s.Add(item.ToSerialItemVM());
+            }
+            return s;
+        }
+
+        public static importSerialVM ToViewModel(this importSerial im)
+        {
+            if (im == null)
+                return null;
+
+            importSerialVM i = new importSerialVM
+            {
+                importSerial = im
+            };
+            return i;
+        }
+
+        public static List<importSerialVM> ToViewModel(this IEnumerable<importSerial> ims)
+        {
+            List<importSerialVM> i = new List<importSerialVM>();
+            foreach (var item in ims)
+            {
+                i.Add(item.ToViewModel());
+            }
+
+            return i;
         }
 
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)

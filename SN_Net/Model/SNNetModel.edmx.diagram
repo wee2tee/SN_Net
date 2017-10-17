@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="129a2de72a8344279c0515f919027946" Name="Diagram1">
-        <EntityTypeShape EntityType="snModel.cloud_srv" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+      <Diagram DiagramId="e0443e16500e481c9e719c9f112c173a" Name="Diagram1">
+        <EntityTypeShape EntityType="snModel.cloud_srv" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.d_msg" Width="1.5" PointX="6" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.dealer" Width="1.5" PointX="5.25" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.dealer" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.istab" Width="1.5" PointX="3" PointY="28.625" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.ma" Width="1.5" PointX="10.75" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.mac_allowed" Width="1.5" PointX="3" PointY="34.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.problem" Width="1.5" PointX="10.75" PointY="23.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.serial" Width="1.5" PointX="8.5" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="snModel.serial_password" Width="1.5" PointX="13.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.mac_allowed" Width="1.5" PointX="3" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.problem" Width="1.5" PointX="10.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.serial" Width="1.5" PointX="8.5" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="snModel.serial_password" Width="1.5" PointX="13.75" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="snModel.users" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
         <AssociationConnector Association="snModel.fk_cloud_srv_chgby_id" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_cloud_srv_creby_id" ManuallyRouted="false" />
@@ -25,6 +25,7 @@
         <AssociationConnector Association="snModel.fk_dealer_chgby_id" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_dealer_creby_id" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_serial_dealer_id" ManuallyRouted="false" />
+        <AssociationConnector Association="snModel.fk_users_istab1" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_istab_chgby_id" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_istab_creby_id" ManuallyRouted="false" />
         <AssociationConnector Association="snModel.fk_problem_probcod_id" ManuallyRouted="false" />

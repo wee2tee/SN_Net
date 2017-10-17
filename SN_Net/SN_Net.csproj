@@ -274,6 +274,30 @@
     <Compile Include="Model\ViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubformV2\DialogChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogChangePassword.Designer.cs">
+      <DependentUpon>DialogChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogDataInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogDataInfo.Designer.cs">
+      <DependentUpon>DialogDataInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogGenSn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogGenSn.Designer.cs">
+      <DependentUpon>DialogGenSn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogImportRegisterData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogImportRegisterData.Designer.cs">
+      <DependentUpon>DialogImportRegisterData.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogInlineSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -286,11 +310,41 @@
     <Compile Include="SubformV2\DialogInquiryDealer.Designer.cs">
       <DependentUpon>DialogInquiryDealer.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubformV2\DialogInquiryIstab.cs">
+    <Compile Include="SubformV2\DialogMacAddressAllowed.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubformV2\DialogInquiryIstab.Designer.cs">
-      <DependentUpon>DialogInquiryIstab.cs</DependentUpon>
+    <Compile Include="SubformV2\DialogMacAddressAllowed.Designer.cs">
+      <DependentUpon>DialogMacAddressAllowed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogPreference.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogPreference.Designer.cs">
+      <DependentUpon>DialogPreference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogPrintDealerLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogPrintDealerLabel.Designer.cs">
+      <DependentUpon>DialogPrintDealerLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSearchCondition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSearchCondition.Designer.cs">
+      <DependentUpon>DialogSearchCondition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSelectDealer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSelectDealer.Designer.cs">
+      <DependentUpon>DialogSelectDealer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSelectIstab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSelectIstab.Designer.cs">
+      <DependentUpon>DialogSelectIstab.cs</DependentUpon>
     </Compile>
     <Compile Include="SubformV2\DialogLostRenew.cs">
       <SubType>Form</SubType>
@@ -303,6 +357,54 @@
     </Compile>
     <Compile Include="SubformV2\DialogPasswordSn.Designer.cs">
       <DependentUpon>DialogPasswordSn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSellBook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSellBook.Designer.cs">
+      <DependentUpon>DialogSellBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSellSet2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSellSet2.Designer.cs">
+      <DependentUpon>DialogSellSet2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogSimplePrintOutput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSimplePrintOutput.Designer.cs">
+      <DependentUpon>DialogSimplePrintOutput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogUpgradeProgram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogUpgradeProgram.Designer.cs">
+      <DependentUpon>DialogUpgradeProgram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogUpNewRwt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogUpNewRwt.Designer.cs">
+      <DependentUpon>DialogUpNewRwt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\FormDealer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\FormDealer.Designer.cs">
+      <DependentUpon>FormDealer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\FormIstab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\FormIstab.Designer.cs">
+      <DependentUpon>FormIstab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\FormUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\FormUsers.Designer.cs">
+      <DependentUpon>FormUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Subform\ApiMainUrlFirstSetting.cs">
       <SubType>Form</SubType>
@@ -745,20 +847,71 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubformV2\DialogChangePassword.resx">
+      <DependentUpon>DialogChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogDataInfo.resx">
+      <DependentUpon>DialogDataInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogGenSn.resx">
+      <DependentUpon>DialogGenSn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogImportRegisterData.resx">
+      <DependentUpon>DialogImportRegisterData.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogInlineSearch.resx">
       <DependentUpon>DialogInlineSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogInquiryDealer.resx">
       <DependentUpon>DialogInquiryDealer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubformV2\DialogInquiryIstab.resx">
-      <DependentUpon>DialogInquiryIstab.cs</DependentUpon>
+    <EmbeddedResource Include="SubformV2\DialogMacAddressAllowed.resx">
+      <DependentUpon>DialogMacAddressAllowed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogPreference.resx">
+      <DependentUpon>DialogPreference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogPrintDealerLabel.resx">
+      <DependentUpon>DialogPrintDealerLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSearchCondition.resx">
+      <DependentUpon>DialogSearchCondition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSelectDealer.resx">
+      <DependentUpon>DialogSelectDealer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSelectIstab.resx">
+      <DependentUpon>DialogSelectIstab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogLostRenew.resx">
       <DependentUpon>DialogLostRenew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogPasswordSn.resx">
       <DependentUpon>DialogPasswordSn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSellBook.resx">
+      <DependentUpon>DialogSellBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSellSet2.resx">
+      <DependentUpon>DialogSellSet2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSimplePrintOutput.resx">
+      <DependentUpon>DialogSimplePrintOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogUpgradeProgram.resx">
+      <DependentUpon>DialogUpgradeProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogUpNewRwt.resx">
+      <DependentUpon>DialogUpNewRwt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\FormDealer.resx">
+      <DependentUpon>FormDealer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\FormIstab.resx">
+      <DependentUpon>FormIstab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\FormUsers.resx">
+      <DependentUpon>FormUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subform\ApiMainUrlFirstSetting.resx">
       <DependentUpon>ApiMainUrlFirstSetting.cs</DependentUpon>
@@ -1072,6 +1225,9 @@
       <DependentUpon>SNNetModel.edmx</DependentUpon>
       <LastGenOutput>SNNetModel.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\key_32.png" />
+    <None Include="Resources\check2_16.png" />
+    <None Include="Resources\lightning.png" />
     <None Include="Resources\loading1.gif" />
     <None Include="Resources\Holiday.png" />
     <None Include="Resources\menu.png" />

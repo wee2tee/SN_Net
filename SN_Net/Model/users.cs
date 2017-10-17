@@ -23,8 +23,8 @@ namespace SN_Net.Model
             this.d_msg1 = new HashSet<d_msg>();
             this.dealer = new HashSet<dealer>();
             this.dealer1 = new HashSet<dealer>();
-            this.istab = new HashSet<istab>();
             this.istab1 = new HashSet<istab>();
+            this.istab2 = new HashSet<istab>();
             this.ma = new HashSet<ma>();
             this.ma1 = new HashSet<ma>();
             this.mac_allowed = new HashSet<mac_allowed>();
@@ -42,12 +42,12 @@ namespace SN_Net.Model
         public string name { get; set; }
         public string email { get; set; }
         public int level { get; set; }
-        public string usergroup { get; set; }
+        public Nullable<int> usergroup_id { get; set; }
         public string status { get; set; }
         public string allowed_web_login { get; set; }
         public string training_expert { get; set; }
         public int max_absent { get; set; }
-        public Nullable<System.DateTime> create_at { get; set; }
+        public System.DateTime create_at { get; set; }
         public Nullable<System.DateTime> last_use { get; set; }
         public string rec_by { get; set; }
     
@@ -63,10 +63,11 @@ namespace SN_Net.Model
         public virtual ICollection<dealer> dealer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dealer> dealer1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<istab> istab { get; set; }
+        public virtual istab istab { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<istab> istab1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<istab> istab2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ma> ma { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

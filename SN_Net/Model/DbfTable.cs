@@ -359,6 +359,7 @@ namespace SN_Net.Model
         public const string TABTYP_PROBCOD = "05";
         public const string TABTYP_AREA = "06";
         public const string TABTYP_VEREXT = "07";
+        public const string TABTYP_USERGROUP = "11";
     }
 
     public class serialDbf

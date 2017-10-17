@@ -15,6 +15,7 @@ using WebAPI;
 using WebAPI.ApiResult;
 using Newtonsoft.Json;
 using System.Reflection;
+using GetMac;
 
 namespace SN_Net
 {
@@ -30,6 +31,17 @@ namespace SN_Net
 
     public partial class MainForm : Form
     {
+        public FormUsers form_users;
+        public FormSn form_sn;
+        public FormDealer form_dealer;
+        public FormIstab form_area;
+        public FormIstab form_busityp;
+        public FormIstab form_howknown;
+        public FormIstab form_probcod;
+        public FormIstab form_verext;
+        public FormIstab form_usergroup;
+        public string mac_address = string.Empty;
+
         public SnWindow sn_wind;
         public DealerWindow dealer_wind;
         public SupportNoteWindow supportnote_wind;
@@ -60,7 +72,19 @@ namespace SN_Net
         {
             this.toolStripInfo.Text = " [ ที่เก็บโปรแกรม : " + AppDomain.CurrentDomain.BaseDirectory + " ]";
 
-            LoginForm login = new LoginForm();
+            /* Check Preference Value */
+            PreferenceValue pref = DialogPreference.GetPreference();
+            if (pref == null || (pref != null && DBX.TestConnection(pref) == false))
+            {
+                DialogPreference p = new DialogPreference(this);
+                if (p.ShowDialog() != DialogResult.OK)
+                {
+                    Application.Exit();
+                    return;
+                }
+            }
+
+            LoginForm login = new LoginForm(this);
             if (login.ShowDialog() == DialogResult.Cancel/* || login.loged_in == false*/)
             {
                 Application.Exit();
@@ -92,6 +116,7 @@ namespace SN_Net
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.mac_address = GetMac.GetMac.GetMACAddress().First().macAddress;
             this.lblTimeDuration.Visible = false;
             this.RePositionLabelDuration();
 
@@ -111,22 +136,22 @@ namespace SN_Net
 
         private void sNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.sn_wind == null)
-            {
-                this.sn_wind = new SnWindow(this);
-                this.sn_wind.G = this.G;
-                this.sn_wind.MdiParent = this;
-                this.sn_wind.WindowState = FormWindowState.Maximized;
-                this.sn_wind.Show();
-            }
-            else
-            {
-                this.sn_wind.Activate();
-                if (sn_wind.current_focused_control != null)
-                {
-                    sn_wind.current_focused_control.Focus();
-                }
-            }
+            //if (this.sn_wind == null)
+            //{
+            //    this.sn_wind = new SnWindow(this);
+            //    this.sn_wind.G = this.G;
+            //    this.sn_wind.MdiParent = this;
+            //    this.sn_wind.WindowState = FormWindowState.Maximized;
+            //    this.sn_wind.Show();
+            //}
+            //else
+            //{
+            //    this.sn_wind.Activate();
+            //    if (sn_wind.current_focused_control != null)
+            //    {
+            //        sn_wind.current_focused_control.Focus();
+            //    }
+            //}
         }
 
         private void dealerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,74 +171,98 @@ namespace SN_Net
 
         private void salesAreaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.area_wind == null)
+            //if (this.area_wind == null)
+            //{
+            //    this.area_wind = new IstabWindow(this, Istab.TABTYP.AREA);
+            //    this.area_wind.MdiParent = this;
+            //    this.area_wind.Show();
+            //}
+            //else
+            //{
+            //    this.area_wind.Activate();
+            //}
+
+            if (this.form_area == null)
             {
-                this.area_wind = new IstabWindow(this, Istab.TABTYP.AREA);
-                this.area_wind.MdiParent = this;
-                this.area_wind.Show();
+                this.form_area = new FormIstab(this, istabDbf.TABTYP_AREA);
+                this.form_area.MdiParent = this;
+                this.form_area.Show();
             }
             else
             {
-                this.area_wind.Activate();
+                this.form_area.Activate();
             }
         }
 
         private void versionExtensionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.verext_wind == null)
+            if (this.form_verext == null)
             {
-                this.verext_wind = new IstabWindow(this, Istab.TABTYP.VEREXT);
-                this.verext_wind.MdiParent = this;
-                this.verext_wind.Show();
+                this.form_verext = new FormIstab(this, istabDbf.TABTYP_VEREXT);
+                this.form_verext.MdiParent = this;
+                this.form_verext.Show();
             }
             else
             {
-                this.verext_wind.Activate();
+                this.form_verext.Activate();
             }
         }
 
         private void howToKnowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.howknown_wind == null)
+            if (this.form_howknown == null)
             {
-                this.howknown_wind = new IstabWindow(this, Istab.TABTYP.HOWKNOWN);
-                this.howknown_wind.MdiParent = this;
-                this.howknown_wind.Show();
+                this.form_howknown = new FormIstab(this, istabDbf.TABTYP_HOWKNOW);
+                this.form_howknown.MdiParent = this;
+                this.form_howknown.Show();
             }
             else
             {
-                this.howknown_wind.Activate();
+                this.form_howknown.Activate();
             }
         }
 
         private void businessTypeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.busityp_wind == null)
+            if (this.form_busityp == null)
             {
-                this.busityp_wind = new IstabWindow(this, Istab.TABTYP.BUSITYP);
-                this.busityp_wind.MdiParent = this;
-                this.busityp_wind.Show();
+                this.form_busityp = new FormIstab(this, istabDbf.TABTYP_BUSITYP);
+                this.form_busityp.MdiParent = this;
+                this.form_busityp.Show();
             }
             else
             {
-                this.busityp_wind.Activate();
+                this.form_busityp.Activate();
             }
         }
 
         private void problemCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.probcode_wind == null)
+            if (this.form_probcod == null)
             {
-                this.probcode_wind = new IstabWindow(this, Istab.TABTYP.PROBLEM_CODE);
-                this.probcode_wind.MdiParent = this;
-                this.probcode_wind.Show();
+                this.form_probcod = new FormIstab(this, istabDbf.TABTYP_PROBCOD, true);
+                this.form_probcod.MdiParent = this;
+                this.form_probcod.Show();
             }
             else
             {
-                this.probcode_wind.Activate();
+                this.form_probcod.Activate();
             }
         }
 
+        private void mnuIstabUserGroup_Click(object sender, EventArgs e)
+        {
+            if(this.form_usergroup == null)
+            {
+                this.form_usergroup = new FormIstab(this, istabDbf.TABTYP_USERGROUP, false);
+                this.form_usergroup.MdiParent = this;
+                this.form_usergroup.Show();
+            }
+            else
+            {
+                this.form_usergroup.Activate();
+            }
+        }
 
         private void leaveCauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -245,39 +294,59 @@ namespace SN_Net
 
         private void macAddressAllowedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CRUDResult res = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "macallowed/get_all");
+            //CRUDResult res = ApiActions.GET(PreferenceForm.API_MAIN_URL() + "macallowed/get_all");
 
-            if (res.result)
-            {
-                ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(res.data);
-                if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
-                {
-                    MacAddressList wind = new MacAddressList();
-                    wind.G = this.G;
-                    wind.mac_data = sr.macallowed;
+            //if (res.result)
+            //{
+            //    ServerResult sr = JsonConvert.DeserializeObject<ServerResult>(res.data);
+            //    if (sr.result == ServerResult.SERVER_RESULT_SUCCESS)
+            //    {
+            //        MacAddressList wind = new MacAddressList();
+            //        wind.G = this.G;
+            //        wind.mac_data = sr.macallowed;
 
-                    wind.ShowDialog();
-                }
-            }
-            else
-            {
-                MessageBox.Show(StringResource.CANNOT_CONNECT_TO_SERVER, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //        wind.ShowDialog();
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show(StringResource.CANNOT_CONNECT_TO_SERVER, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            DialogMacAddressAllowed m = new DialogMacAddressAllowed(this);
+            m.ShowDialog();
         }
 
         private void userInformationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UsersList wind = new UsersList(this);
-            wind.ShowDialog();
+            //UsersList wind = new UsersList(this);
+            //wind.ShowDialog();
+
+            if(this.form_users == null)
+            {
+                this.form_users = new FormUsers(this);
+                this.form_users.MdiParent = this;
+                this.form_users.Show();
+            }
+            else
+            {
+                this.form_users.Activate();
+            }
         }
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ChangePasswordForm wind = new ChangePasswordForm();
-            wind.G = this.G;
-            if (wind.ShowDialog() == DialogResult.OK)
+            //ChangePasswordForm wind = new ChangePasswordForm();
+            //wind.G = this.G;
+            //if (wind.ShowDialog() == DialogResult.OK)
+            //{
+            //    MessageAlert.Show("เปลี่ยนรหัสผ่านเรียบร้อย\nกรุณาออกจากระบบ และ ล็อกอินเข้าระบบใหม่อีกครั้ง", "Information", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+            //}
+
+            DialogChangePassword cpwd = new DialogChangePassword(this, this.loged_in_user);
+            if(cpwd.ShowDialog() == DialogResult.OK)
             {
-                MessageAlert.Show("เปลี่ยนรหัสผ่านเรียบร้อย\nกรุณาออกจากระบบ และ ล็อกอินเข้าระบบใหม่อีกครั้ง", "Information", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+                MessageAlert.Show("ท่านจะต้องปิดโปรแกรม และ ล็อกอินเข้าโปรแกรมใหม่อีกครั้ง", "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+                Application.Exit();
             }
         }
 
@@ -447,9 +516,39 @@ namespace SN_Net
 
         private void mnuSN2_Click(object sender, EventArgs e)
         {
-            FormSn s = new FormSn(this);
-            s.MdiParent = this;
-            s.Show();
+            if(this.form_sn == null)
+            {
+                this.form_sn = new FormSn(this);
+                this.form_sn.MdiParent = this;
+                this.form_sn.Show();
+                this.form_sn.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.form_sn.Activate();
+                this.form_sn.WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void mnuDealer2_Click(object sender, EventArgs e)
+        {
+            if(this.form_dealer == null)
+            {
+                this.form_dealer = new FormDealer(this);
+                this.form_dealer.MdiParent = this;
+                this.form_dealer.Show();
+            }
+            else
+            {
+                this.form_dealer.Activate();
+                this.form_dealer.WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void mnuPreference_Click(object sender, EventArgs e)
+        {
+            DialogPreference pf = new DialogPreference(this);
+            pf.ShowDialog();
         }
     }
 }

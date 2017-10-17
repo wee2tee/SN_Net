@@ -581,6 +581,7 @@
             this.btnSwithToRefnum.TabStop = false;
             this.btnSwithToRefnum.Text = "?";
             this.btnSwithToRefnum.UseVisualStyleBackColor = true;
+            this.btnSwithToRefnum.Click += new System.EventHandler(this.btnSwithToRefnum_Click);
             // 
             // label5
             // 
@@ -819,6 +820,8 @@
             this.txtCloudEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtCloudEmail._MaxLength = 32767;
             this.txtCloudEmail._ReadOnly = true;
+            this.txtCloudEmail._SelectionLength = 0;
+            this.txtCloudEmail._SelectionStart = 0;
             this.txtCloudEmail._Text = "";
             this.txtCloudEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtCloudEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -931,6 +934,8 @@
             this.txtMaEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtMaEmail._MaxLength = 32767;
             this.txtMaEmail._ReadOnly = true;
+            this.txtMaEmail._SelectionLength = 0;
+            this.txtMaEmail._SelectionStart = 0;
             this.txtMaEmail._Text = "";
             this.txtMaEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtMaEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1088,6 +1093,8 @@
             this.txtUpfree._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtUpfree._MaxLength = 1;
             this.txtUpfree._ReadOnly = true;
+            this.txtUpfree._SelectionLength = 0;
+            this.txtUpfree._SelectionStart = 0;
             this.txtUpfree._Text = "";
             this.txtUpfree._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtUpfree.BackColor = System.Drawing.Color.White;
@@ -1228,6 +1235,8 @@
             this.txtBusides._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtBusides._MaxLength = 40;
             this.txtBusides._ReadOnly = true;
+            this.txtBusides._SelectionLength = 0;
+            this.txtBusides._SelectionStart = 0;
             this.txtBusides._Text = "";
             this.txtBusides._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtBusides.BackColor = System.Drawing.Color.White;
@@ -1248,6 +1257,8 @@
             this.txtRemark._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtRemark._MaxLength = 50;
             this.txtRemark._ReadOnly = true;
+            this.txtRemark._SelectionLength = 0;
+            this.txtRemark._SelectionStart = 0;
             this.txtRemark._Text = "";
             this.txtRemark._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtRemark.BackColor = System.Drawing.Color.White;
@@ -1391,6 +1402,7 @@
             this.mskOldSn.Name = "mskOldSn";
             this.mskOldSn.Size = new System.Drawing.Size(121, 23);
             this.mskOldSn.TabIndex = 15;
+            this.mskOldSn.TabStop = false;
             this.mskOldSn._TextChanged += new System.EventHandler(this.mskOldSn__TextChanged);
             this.mskOldSn._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.mskOldSn.Enter += new System.EventHandler(this.KeepFocusedControl);
@@ -1401,6 +1413,8 @@
             this.txtZipcod._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtZipcod._MaxLength = 5;
             this.txtZipcod._ReadOnly = true;
+            this.txtZipcod._SelectionLength = 0;
+            this.txtZipcod._SelectionStart = 0;
             this.txtZipcod._Text = "";
             this.txtZipcod._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtZipcod.BackColor = System.Drawing.Color.White;
@@ -1500,6 +1514,8 @@
             this.txtAddr03._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtAddr03._MaxLength = 30;
             this.txtAddr03._ReadOnly = true;
+            this.txtAddr03._SelectionLength = 0;
+            this.txtAddr03._SelectionStart = 0;
             this.txtAddr03._Text = "";
             this.txtAddr03._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtAddr03.BackColor = System.Drawing.Color.White;
@@ -1520,6 +1536,8 @@
             this.txtPosition._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtPosition._MaxLength = 50;
             this.txtPosition._ReadOnly = true;
+            this.txtPosition._SelectionLength = 0;
+            this.txtPosition._SelectionStart = 0;
             this.txtPosition._Text = "";
             this.txtPosition._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPosition.BackColor = System.Drawing.Color.White;
@@ -1540,6 +1558,8 @@
             this.txtContact._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtContact._MaxLength = 100;
             this.txtContact._ReadOnly = true;
+            this.txtContact._SelectionLength = 0;
+            this.txtContact._SelectionStart = 0;
             this.txtContact._Text = "";
             this.txtContact._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtContact.BackColor = System.Drawing.Color.White;
@@ -1560,6 +1580,8 @@
             this.txtFaxnum._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtFaxnum._MaxLength = 40;
             this.txtFaxnum._ReadOnly = true;
+            this.txtFaxnum._SelectionLength = 0;
+            this.txtFaxnum._SelectionStart = 0;
             this.txtFaxnum._Text = "";
             this.txtFaxnum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtFaxnum.BackColor = System.Drawing.Color.White;
@@ -1580,6 +1602,8 @@
             this.txtTelnum._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtTelnum._MaxLength = 40;
             this.txtTelnum._ReadOnly = true;
+            this.txtTelnum._SelectionLength = 0;
+            this.txtTelnum._SelectionStart = 0;
             this.txtTelnum._Text = "";
             this.txtTelnum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtTelnum.BackColor = System.Drawing.Color.White;
@@ -1600,6 +1624,8 @@
             this.txtAddr02._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtAddr02._MaxLength = 50;
             this.txtAddr02._ReadOnly = true;
+            this.txtAddr02._SelectionLength = 0;
+            this.txtAddr02._SelectionStart = 0;
             this.txtAddr02._Text = "";
             this.txtAddr02._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtAddr02.BackColor = System.Drawing.Color.White;
@@ -1620,6 +1646,8 @@
             this.txtAddr01._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtAddr01._MaxLength = 50;
             this.txtAddr01._ReadOnly = true;
+            this.txtAddr01._SelectionLength = 0;
+            this.txtAddr01._SelectionStart = 0;
             this.txtAddr01._Text = "";
             this.txtAddr01._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtAddr01.BackColor = System.Drawing.Color.White;
@@ -1755,7 +1783,7 @@
             // 
             this.inlineProbdesc._MaxLength = 100;
             this.inlineProbdesc._ReadOnly = true;
-            this.inlineProbdesc.BackColor = System.Drawing.SystemColors.Window;
+            this.inlineProbdesc.BackColor = System.Drawing.Color.White;
             this.inlineProbdesc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineProbdesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.inlineProbdesc.Location = new System.Drawing.Point(338, 44);
@@ -1791,6 +1819,8 @@
             this.inlineName._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.inlineName._MaxLength = 50;
             this.inlineName._ReadOnly = false;
+            this.inlineName._SelectionLength = 0;
+            this.inlineName._SelectionStart = 0;
             this.inlineName._Text = "";
             this.inlineName._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.inlineName.BackColor = System.Drawing.Color.White;
@@ -1869,6 +1899,7 @@
             this.dgvProblem.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvProblem_CellPainting);
             this.dgvProblem.CurrentCellChanged += new System.EventHandler(this.dgvProblem_CurrentCellChanged);
             this.dgvProblem.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvProblem_MouseClick);
+            this.dgvProblem.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvProblem_MouseDoubleClick);
             this.dgvProblem.Resize += new System.EventHandler(this.dgvProblem_Resize);
             // 
             // col_problem_problem
@@ -2001,6 +2032,8 @@
             this.txtTelnum2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtTelnum2._MaxLength = 32767;
             this.txtTelnum2._ReadOnly = true;
+            this.txtTelnum2._SelectionLength = 0;
+            this.txtTelnum2._SelectionStart = 0;
             this.txtTelnum2._Text = "";
             this.txtTelnum2._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtTelnum2.BackColor = System.Drawing.Color.White;
@@ -2018,6 +2051,8 @@
             this.txtUpfree2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtUpfree2._MaxLength = 32767;
             this.txtUpfree2._ReadOnly = true;
+            this.txtUpfree2._SelectionLength = 0;
+            this.txtUpfree2._SelectionStart = 0;
             this.txtUpfree2._Text = "";
             this.txtUpfree2._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtUpfree2.BackColor = System.Drawing.Color.White;
@@ -2035,6 +2070,8 @@
             this.txtContact2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtContact2._MaxLength = 32767;
             this.txtContact2._ReadOnly = true;
+            this.txtContact2._SelectionLength = 0;
+            this.txtContact2._SelectionStart = 0;
             this.txtContact2._Text = "";
             this.txtContact2._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtContact2.BackColor = System.Drawing.Color.White;
@@ -2052,6 +2089,8 @@
             this.txtExpdat2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtExpdat2._MaxLength = 32767;
             this.txtExpdat2._ReadOnly = true;
+            this.txtExpdat2._SelectionLength = 0;
+            this.txtExpdat2._SelectionStart = 0;
             this.txtExpdat2._Text = "";
             this.txtExpdat2._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtExpdat2.BackColor = System.Drawing.Color.White;
@@ -2083,6 +2122,7 @@
             this.btnSupportViewNote.Text = "      View Note";
             this.btnSupportViewNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSupportViewNote.UseVisualStyleBackColor = true;
+            this.btnSupportViewNote.Click += new System.EventHandler(this.btnSupportViewNote_Click);
             // 
             // btnSupportNote
             // 
@@ -2096,6 +2136,7 @@
             this.btnSupportNote.Text = "       Note";
             this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSupportNote.UseVisualStyleBackColor = true;
+            this.btnSupportNote.Click += new System.EventHandler(this.btnSupportNote_Click);
             // 
             // mskRefSn
             // 
@@ -2114,6 +2155,7 @@
             this.mskRefSn.Name = "mskRefSn";
             this.mskRefSn.Size = new System.Drawing.Size(121, 23);
             this.mskRefSn.TabIndex = 4;
+            this.mskRefSn.TabStop = false;
             this.mskRefSn._TextChanged += new System.EventHandler(this.mskRefSn__TextChanged);
             this.mskRefSn._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.mskRefSn.Enter += new System.EventHandler(this.KeepFocusedControl);
@@ -2135,6 +2177,7 @@
             this.mskSernum.Name = "mskSernum";
             this.mskSernum.Size = new System.Drawing.Size(121, 23);
             this.mskSernum.TabIndex = 1;
+            this.mskSernum.TabStop = false;
             this.mskSernum._TextChanged += new System.EventHandler(this.mskSernum__TextChanged);
             this.mskSernum._Leave += new System.EventHandler(this.mskSernum__Leave);
             this.mskSernum._DoubleClicked += new System.EventHandler(this.PerformEdit);
@@ -2146,6 +2189,8 @@
             this.txtCompnam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtCompnam._MaxLength = 100;
             this.txtCompnam._ReadOnly = true;
+            this.txtCompnam._SelectionLength = 0;
+            this.txtCompnam._SelectionStart = 0;
             this.txtCompnam._Text = "";
             this.txtCompnam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtCompnam.BackColor = System.Drawing.Color.White;
@@ -2166,6 +2211,8 @@
             this.txtPrenam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtPrenam._MaxLength = 30;
             this.txtPrenam._ReadOnly = true;
+            this.txtPrenam._SelectionLength = 0;
+            this.txtPrenam._SelectionStart = 0;
             this.txtPrenam._Text = "";
             this.txtPrenam._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPrenam.BackColor = System.Drawing.Color.White;
@@ -2186,6 +2233,8 @@
             this.txtVersion._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.txtVersion._MaxLength = 4;
             this.txtVersion._ReadOnly = true;
+            this.txtVersion._SelectionLength = 0;
+            this.txtVersion._SelectionStart = 0;
             this.txtVersion._Text = "";
             this.txtVersion._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtVersion.BackColor = System.Drawing.Color.White;
@@ -2256,6 +2305,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormSn";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Serial Number";
             this.Load += new System.EventHandler(this.FormSn_Load);
             this.toolStrip1.ResumeLayout(false);

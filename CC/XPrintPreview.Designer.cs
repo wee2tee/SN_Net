@@ -254,6 +254,10 @@
             this.printPreviewControl1.Size = new System.Drawing.Size(888, 500);
             this.printPreviewControl1.TabIndex = 1;
             // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // XPrintPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);

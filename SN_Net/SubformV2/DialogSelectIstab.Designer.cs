@@ -1,6 +1,6 @@
 ﻿namespace SN_Net.Subform
 {
-    partial class DialogInquiryIstab
+    partial class DialogSelectIstab
     {
         /// <summary>
         /// Required designer variable.

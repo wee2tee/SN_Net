@@ -18,6 +18,7 @@ namespace SN_Net.Model
         public istab()
         {
             this.dealer = new HashSet<dealer>();
+            this.users = new HashSet<users>();
             this.problem = new HashSet<problem>();
             this.serial = new HashSet<serial>();
             this.serial1 = new HashSet<serial>();
@@ -41,8 +42,10 @@ namespace SN_Net.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dealer> dealer { get; set; }
-        public virtual users users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<users> users { get; set; }
         public virtual users users1 { get; set; }
+        public virtual users users2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<problem> problem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

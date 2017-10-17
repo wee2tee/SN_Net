@@ -53,36 +53,33 @@ namespace CC
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            if(this.print_authorize_state == PRINT_AUTHORIZE_STATE.DATA_NOT_FOUND)
-            {
-                MessageBox.Show("ข้อมูลที่ต้องการไม่มีอยู่ในระบบ, อาจมีผู้ใช้งานรายอื่นลบออกไปแล้ว", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
-            if(this.print_authorize_state == PRINT_AUTHORIZE_STATE.MUST_APPROVE_BEFORE_PRINT)
-            {
-                MessageBox.Show("ต้องรับรองรายการก่อนพิมพ์", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
-            if(this.print_authorize_state == PRINT_AUTHORIZE_STATE.MUST_UNAPPROVE_BEFORE_PRINT)
-            {
-                MessageBox.Show("รับรองรายการแล้ว ไม่สามารถพิมพ์ได้, ต้องไปยกเลิกการรับรองรายการก่อน", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
+            //if(this.print_authorize_state == PRINT_AUTHORIZE_STATE.DATA_NOT_FOUND)
+            //{
+            //    MessageBox.Show("ข้อมูลที่ต้องการไม่มีอยู่ในระบบ, อาจมีผู้ใช้งานรายอื่นลบออกไปแล้ว", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            //    return;
+            //}
+            //if(this.print_authorize_state == PRINT_AUTHORIZE_STATE.MUST_APPROVE_BEFORE_PRINT)
+            //{
+            //    MessageBox.Show("ต้องรับรองรายการก่อนพิมพ์", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            //    return;
+            //}
+            //if(this.print_authorize_state == PRINT_AUTHORIZE_STATE.MUST_UNAPPROVE_BEFORE_PRINT)
+            //{
+            //    MessageBox.Show("รับรองรายการแล้ว ไม่สามารถพิมพ์ได้, ต้องไปยกเลิกการรับรองรายการก่อน", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            //    return;
+            //}
+
 
             PrintDialog pd = new PrintDialog();
-            //pd.AllowSomePages = true;
             pd.Document = this.printPreviewControl1.Document;
-            if(pd.ShowDialog() == DialogResult.OK)
+            if (pd.ShowDialog() == DialogResult.OK)
             {
-                //pd.Document.PrinterSettings.FromPage = 2;
-                //pd.Document.PrinterSettings.ToPage = 2;
-                //pd.Document.PrinterSettings.PrintRange = PrintRange.SomePages;
-                if(_OnOutputToPrinter != null)
+                pd.Document.Print();
+                //MessageBox.Show("Print");
+                if (_OnOutputToPrinter != null)
                 {
                     this._OnOutputToPrinter(sender, e);
                 }
-
-                pd.Document.Print();
             }
         }
 

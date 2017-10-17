@@ -28,6 +28,7 @@ namespace SN_Net.Subform
         const int LOGIN_FAILED_USER_FORBIDDEN = 102;
         const int LOGIN_SUCCESS = 103;
 
+        private MainForm main_form;
         public Boolean loged_in = false;
         public GlobalVar G = new GlobalVar();
         private string system_path;
@@ -35,10 +36,13 @@ namespace SN_Net.Subform
         private Control current_focused_control;
         public users loged_in_user;
 
-        public LoginForm()
+        public LoginForm(MainForm main_form = null)
         {
+            this.main_form = main_form;
             InitializeComponent();
             EscapeKeyToCloseDialog.ActiveEscToClose(this);
+
+            this.ActiveControl = this.txtUser;
 
             //system_path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             //appdata_path = Path.Combine(system_path, "SN_Net\\");
@@ -82,27 +86,26 @@ namespace SN_Net.Subform
 
         private void LoginForm_Shown(object sender, EventArgs e)
         {
-            //if (File.Exists(this.appdata_path + "SN_pref.txt"))
-            if(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt")))
-            {
-                this.txtUser.Focus();
+            //if(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "SN_pref.txt")))
+            //{
+            //    this.txtUser.Focus();
 
-                List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
-                this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
-            }
-            else
-            {
-                ApiMainUrlFirstSetting wind = new ApiMainUrlFirstSetting();
-                if (wind.ShowDialog() == DialogResult.OK)
-                {
-                    List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
-                    this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
-                }
-                else
-                {
-                    this.Close();
-                }
-            }
+            //    List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
+            //    this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
+            //}
+            //else
+            //{
+            //    ApiMainUrlFirstSetting wind = new ApiMainUrlFirstSetting();
+            //    if (wind.ShowDialog() == DialogResult.OK)
+            //    {
+            //        List<ModelMacData> mac = GetMac.GetMac.GetMACAddress();
+            //        this.G.current_mac_address = mac.First<ModelMacData>().macAddress.Replace(":", "-");
+            //    }
+            //    else
+            //    {
+            //        this.Close();
+            //    }
+            //}
         }
 
         private void btnLoginSubmit_Click(object sender, EventArgs e)
@@ -110,18 +113,34 @@ namespace SN_Net.Subform
             //this.submitLogin();
             using (snEntities sn = DBX.DataSet())
             {
-                var user = sn.users.Where(u => u.status == "N" && u.username == this.txtUser.Text.Trim() && u.userpassword == this.txtUser.Text.Trim()).FirstOrDefault();
+                try
+                {
+                    var user = sn.users.Where(u => u.status == "N" && u.username == this.txtUser.Text.Trim()).FirstOrDefault();
 
-                if(user != null)
-                {
-                    this.loged_in_user = user;
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    if (user != null && user.userpassword.ExtractBytesString() == this.txtPassword.Text.Trim())
+                    {
+                        if (user.level < (int)USER_LEVEL.ADMIN)
+                        {
+                            if (DialogMacAddressAllowed.GetMacList().Where(m => m.mac_address.Trim() == this.main_form.mac_address).FirstOrDefault() == null)
+                            {
+                                MessageAlert.Show("คอมพิวเตอร์เครื่องนี้ยังไม่ได้รับอนุญาตให้เข้าระบบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                                return;
+                            }
+                        }
+
+                        this.loged_in_user = user;
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageAlert.Show("รหัสผู้ใช้/รหัสผ่าน ไม่ถูกต้อง", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        return;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageAlert.Show("รหัสผู้ใช้/รหัสผ่าน ไม่ถูกต้อง", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
-                    return;
+                    MessageAlert.Show(ex.InnerException.InnerException.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                 }
             }
         }
