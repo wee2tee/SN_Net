@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SN_Net.Subform;
+using System.Globalization;
+//using System.ComponentModel;
 
 namespace SN_Net.Model
 {
@@ -354,6 +356,110 @@ namespace SN_Net.Model
         public List<importSerial> register_data { get; set; }
     }
 
+    public class NoteProblem
+    {
+        public const string MAP_DRIVE = "{MAP_DRIVE}";
+        public const string INSTALL_UPDATE = "{INSTALL_UPDATE}";
+        public const string ERROR = "{ERROR}";
+        public const string FONTS = "{FONTS}";
+        public const string PRINT = "{PRINT}";
+        public const string STOCK = "{STOCK}";
+        public const string EDIT_FORM = "{EDIT_FORM}";
+        public const string REPORT_EXCEL = "{REPORT_EXCEL}";
+        public const string STATEMENT = "{STATEMENT}";
+        public const string ASSETS = "{ASSETS}";
+        public const string SECURE = "{SECURE}";
+        public const string YEAR_END = "{YEAR_END}";
+        public const string PERIOD = "{PERIOD}";
+        public const string MAIL_WAIT = "{MAIL_WAIT}";
+        public const string TRAINING = "{TRAINING}";
+        public const string TRANSFER_MKT = "{TRANSFER_MKT}";
+        public const string OTHER = "{OTHER}";
+    }
+
+    public class NoteReason
+    {
+        public const string CORRECT_DATA = "{CORRECT_DATA}";
+        public const string MEET_CUST = "{MEET_CUST}";
+        public const string OTHER = "{OTHER}";
+        public const string QT = "{QT}";
+        public const string TOILET = "{TOILET}";
+        public const string TRAINING_ASSIST = "{TRAINING_ASSIST}";
+        public const string TRAINING_TRAINER = "{TRAINING_TRAINER}";
+
+        public static string GetDesc(string reason_code)
+        {
+            switch (reason_code)
+            {
+                case CORRECT_DATA:
+                    return "แก้ไขข้อมูลให้ลูกค้า";
+                case MEET_CUST:
+                    return "ลูกค้ามาพบ";
+                case OTHER:
+                    return "อื่น ๆ";
+                case QT:
+                    return "ทำใบเสนอราคา";
+                case TOILET:
+                    return "เข้าห้องน้ำ";
+                case TRAINING_ASSIST:
+                    return "เข้าห้องอบรม(ผู้ช่วย)";
+                case TRAINING_TRAINER:
+                    return "เข้าห้องอบรม(วิทยากร)";
+                default:
+                    return string.Empty;
+            }
+        }
+    }
+
+    public class noteVM
+    {
+        public note note { get; set; }
+        //public int seq { get; set; }
+        public string start_time { get { return this.note.start_time; } }
+        public string end_time { get { return this.note.end_time; } }
+        public string duration {
+            get
+            {
+                return this.note.duration;
+                //try
+                //{
+                //    string[] arr_from = this.start_time.Split(':');
+                //    DateTime t_from = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(arr_from[0]), Convert.ToInt32(arr_from[1]), Convert.ToInt32(arr_from[2]));
+
+                //    string[] arr_to = this.end_time.Split(':');
+                //    DateTime t_to = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(arr_to[0]), Convert.ToInt32(arr_to[1]), Convert.ToInt32(arr_to[2]));
+
+                //    TimeSpan ts = t_to - t_from;
+                //    return ts.ToString("HH:mm:ss", CultureInfo.GetCultureInfo("th-TH")); /*this.note.duration;*/
+                //}
+                //catch (Exception)
+                //{
+                //    return "00:00:00";
+                //}
+            }
+        }
+        public string sernum { get { return this.note.sernum; } }
+        public string contact { get { return this.note.is_break == "N" ? this.note.contact : "** " + NoteReason.GetDesc(this.note.reason); } }
+        public bool is_mapdrive { get { return this.note.problem.Contains(NoteProblem.MAP_DRIVE) ? true : false; } }
+        public bool is_installupdate { get { return this.note.problem.Contains(NoteProblem.INSTALL_UPDATE) ? true : false; } }
+        public bool is_error { get { return this.note.problem.Contains(NoteProblem.ERROR) ? true : false; } }
+        public bool is_font { get { return this.note.problem.Contains(NoteProblem.FONTS) ? true : false; } }
+        public bool is_print { get { return this.note.problem.Contains(NoteProblem.PRINT) ? true : false; } }
+        public bool is_training { get { return this.note.problem.Contains(NoteProblem.TRAINING) ? true : false; } }
+        public bool is_stock { get { return this.note.problem.Contains(NoteProblem.STOCK) ? true : false; } }
+        public bool is_form { get { return this.note.problem.Contains(NoteProblem.EDIT_FORM) ? true : false; } }
+        public bool is_reportexcel { get { return this.note.problem.Contains(NoteProblem.REPORT_EXCEL) ? true : false; } }
+        public bool is_statement { get { return this.note.problem.Contains(NoteProblem.STATEMENT) ? true : false; } }
+        public bool is_asset { get { return this.note.problem.Contains(NoteProblem.ASSETS) ? true : false; } }
+        public bool is_secure { get { return this.note.problem.Contains(NoteProblem.SECURE) ? true : false; } }
+        public bool is_yearend { get { return this.note.problem.Contains(NoteProblem.YEAR_END) ? true : false; } }
+        public bool is_period { get { return this.note.problem.Contains(NoteProblem.PERIOD) ? true : false; } }
+        public bool is_mail { get { return this.note.problem.Contains(NoteProblem.MAIL_WAIT) ? true : false; } }
+        public bool is_transfer { get { return this.note.problem.Contains(NoteProblem.TRANSFER_MKT) ? true : false; } }
+        public bool is_other { get { return /*this.note.problem.Contains(NoteProblem.OTHER)*/ this.note.remark.Contains("{problem}") ? true : false; } }
+        public string remark { get { return this.note.remark.Replace("{problem}", ""); } }
+    }
+
     public static class DataHelper
     {
         public static macallowedVM ToViewModel(this mac_allowed mac)
@@ -582,6 +688,29 @@ namespace SN_Net.Model
             }
 
             return i;
+        }
+
+        public static noteVM ToViewModel(this note note)
+        {
+            if (note == null)
+                return null;
+
+            noteVM n = new noteVM
+            {
+                note = note,
+            };
+            return n;
+        }
+
+        public static List<noteVM> ToViewModel(this IEnumerable<note> notes)
+        {
+            List<noteVM> n = new List<noteVM>();
+            foreach (var item in notes)
+            {
+                n.Add(item.ToViewModel());
+            }
+
+            return n;
         }
 
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)

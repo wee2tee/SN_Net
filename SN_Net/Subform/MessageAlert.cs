@@ -12,7 +12,30 @@ namespace SN_Net.Subform
 {
     public partial class MessageAlert : Form
     {
-        
+        private int default_button
+        {
+            set
+            {
+                List<Button> buttons = new List<Button>
+                {
+                    this.btnOK,
+                    this.btnYes,
+                    this.btnRetry,
+                    this.btnCancel,
+                    this.btnNo,
+                };
+
+                try
+                {
+                    Button focused_btn = buttons.Where(b => b.Visible).ToList()[value];
+                    this.ActiveControl = focused_btn;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
+        }
 
         public MessageAlert()
         {
@@ -24,9 +47,10 @@ namespace SN_Net.Subform
             
         }
 
-        public static DialogResult Show(string message, string caption, MessageAlertButtons button, MessageAlertIcons icon)
+        public static DialogResult Show(string message, string caption, MessageAlertButtons button, MessageAlertIcons icon, int default_button = 0)
         {
             MessageAlert m = new MessageAlert();
+            m.default_button = default_button;
             m.lblMessage.Text = message;
             m.Text = caption;
             m.setIconImage(icon);
@@ -67,9 +91,10 @@ namespace SN_Net.Subform
             return m.ShowDialog();
         }
         
-        public static DialogResult Show(string message, string caption, MessageAlertButtons button)
+        public static DialogResult Show(string message, string caption, MessageAlertButtons button, int default_button = 0)
         {
             MessageAlert m = new MessageAlert();
+            m.default_button = default_button;
             m.lblMessage.Text = message;
             m.Text = caption;
             // Set lblMessage position,size , hide pictureBoxIcon
@@ -110,9 +135,10 @@ namespace SN_Net.Subform
             return m.ShowDialog();
         }
         
-        public static DialogResult Show(string message, string caption)
+        public static DialogResult Show(string message, string caption, int default_button = 0)
         {
             MessageAlert m = new MessageAlert();
+            m.default_button = default_button;
             m.lblMessage.Text = message;
             m.Text = caption;
             // Set lblMessage position,size , hide pictureBoxIcon
@@ -125,9 +151,10 @@ namespace SN_Net.Subform
             return m.ShowDialog();
         }
 
-        public static DialogResult Show(string message)
+        public static DialogResult Show(string message, int default_button = 0)
         {
             MessageAlert m = new MessageAlert();
+            m.default_button = default_button;
             m.lblMessage.Text = message;
             // Set form caption to blank
             m.Text = "";
@@ -195,14 +222,6 @@ namespace SN_Net.Subform
             this.btnRetry.Leave += new EventHandler(this.buttonLeaveFocusHandler);
             this.btnYes.Leave += new EventHandler(this.buttonLeaveFocusHandler);
 
-            if (this.btnNo.Visible)
-            {
-                this.btnNo.Focus();
-            }
-            if (this.btnCancel.Visible)
-            {
-                this.btnCancel.Focus();
-            }
         }
 
         private void buttonGotFocusHandler(object sender, EventArgs e)

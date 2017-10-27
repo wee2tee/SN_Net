@@ -40,6 +40,7 @@ namespace SN_Net
         public FormIstab form_probcod;
         public FormIstab form_verext;
         public FormIstab form_usergroup;
+        public FormNote form_note;
         public string mac_address = string.Empty;
 
         public SnWindow sn_wind;
@@ -73,8 +74,9 @@ namespace SN_Net
             this.toolStripInfo.Text = " [ ที่เก็บโปรแกรม : " + AppDomain.CurrentDomain.BaseDirectory + " ]";
 
             /* Check Preference Value */
-            PreferenceValue pref = DialogPreference.GetPreference();
-            if (pref == null || (pref != null && DBX.TestConnection(pref) == false))
+            PreferenceValue pref = DialogPreference.GetPreference(DialogPreference.PREF_TYPE.MAIN_SN_DATA);
+            PreferenceValue pref_note = DialogPreference.GetPreference(DialogPreference.PREF_TYPE.NOTE_DATA);
+            if ((pref == null || (pref != null && DBX.TestConnection(pref) == false)) || (pref_note == null || (pref_note != null && DBX.TestConnection(pref_note) == false)))
             {
                 DialogPreference p = new DialogPreference(this);
                 if (p.ShowDialog() != DialogResult.OK)
@@ -92,6 +94,7 @@ namespace SN_Net
             else
             {
                 this.loged_in_user = login.loged_in_user;
+                this.toolStripUserInfo.Text = this.loged_in_user.username;
                 //this.G = login.G;
                 //this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
                 //if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)

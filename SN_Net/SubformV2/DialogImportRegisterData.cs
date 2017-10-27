@@ -42,7 +42,7 @@ namespace SN_Net.Subform
                 BackgroundWorker wrk = new BackgroundWorker();
                 wrk.DoWork += delegate
                 {
-                    WebRequest req = WebRequest.Create("http://localhost/esg_test/get_registered_sn.php");
+                    WebRequest req = WebRequest.Create("http://www.esg.co.th/api/get_registered_sn.php");
                     string post_data = "validate_code=WeeTee&p_type=get_new_register_list";
                     byte[] byteArray = Encoding.UTF8.GetBytes(post_data);
                     req.Method = "POST";
@@ -79,7 +79,7 @@ namespace SN_Net.Subform
 
         private bool SendRecordedSign2Server(string server_db_record_id)
         {
-            WebRequest req = WebRequest.Create("http://localhost/esg_test/get_registered_sn.php");
+            WebRequest req = WebRequest.Create("http://www.esg.co.th/api/get_registered_sn.php");
             string post_data = "validate_code=WeeTee&p_type=record_complete&id=" + server_db_record_id;
             byte[] byteArray = Encoding.UTF8.GetBytes(post_data);
             req.Method = "POST";

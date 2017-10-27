@@ -176,7 +176,7 @@ namespace CC
                 {
                     this.BackColor = AppResource.EditableControlBackColor;
                     this._textBox.BackColor = AppResource.EditableControlBackColor;
-                    this._textBox.SelectionStart = this._textBox.Text.Length;
+                    this._textBox.SelectionStart = 0; // this._textBox.Text.Length;
                     this.focused = true;
                 }
 

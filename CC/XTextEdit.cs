@@ -91,6 +91,19 @@ namespace CC
             }
         }
 
+        public Color _ForeColor
+        {
+            get
+            {
+                return this.textBox1.ForeColor;
+            }
+            set
+            {
+                this.textBox1.ForeColor = value;
+                this.label1.ForeColor = value;
+            }
+        }
+
         public CharacterCasing _CharacterCasing
         {
             get
@@ -264,7 +277,7 @@ namespace CC
         {
             this.textBox1.Enter += delegate
             {
-                this.textBox1.SelectionStart = this.textBox1.Text.Length;
+                this.textBox1.SelectionStart = 0; // this.textBox1.Text.Length;
             };
 
             this.textBox1.GotFocus += delegate(object sender_obj, EventArgs e_obj)

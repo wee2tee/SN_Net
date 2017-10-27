@@ -812,7 +812,18 @@ namespace SN_Net.MiscClass
             if (inline_control != null)
             {
                 Rectangle rect = dgv.GetCellDisplayRectangle(column_index, row_index, true);
-                inline_control.SetBounds(rect.X, rect.Y + 1, rect.Width - 1, rect.Height - 3);
+
+                if(inline_control is CheckBox)
+                {
+                    var x = rect.X + Convert.ToInt32(Math.Floor((double)(rect.Width - inline_control.Width) / 2));
+                    var y = rect.Y + Convert.ToInt32(Math.Floor((double)(rect.Height - inline_control.Height) / 2));
+
+                    inline_control.SetBounds(x, y, inline_control.Width, inline_control.Height);
+                }
+                else
+                {
+                    inline_control.SetBounds(rect.X, rect.Y + 1, rect.Width - 1, rect.Height - 3);
+                }
             }
         }
 
@@ -865,5 +876,22 @@ namespace SN_Net.MiscClass
 
             return Encoding.UTF8.GetString(b.ToArray());
         }
+
+        public static TimeSpan GetDifTimeInDate(this string from_time, string to_time)
+        {
+            try
+            {
+                TimeSpan from = TimeSpan.ParseExact(from_time, @"hh\:mm\:ss", CultureInfo.GetCultureInfo("th-TH"));
+                TimeSpan to = TimeSpan.ParseExact(to_time, @"hh\:mm\:ss", CultureInfo.GetCultureInfo("th-TH"));
+                
+                return to - from;
+            }
+            catch (Exception)
+            {
+                return TimeSpan.ParseExact("00:00:00", @"hh\:mm\:ss", CultureInfo.InvariantCulture);
+            }
+        }
+
+        
     }
 }

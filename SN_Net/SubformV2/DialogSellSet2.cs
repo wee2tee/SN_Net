@@ -32,6 +32,8 @@ namespace SN_Net.Subform
         private void DialogSellSet2_Load(object sender, EventArgs e)
         {
             this.mskSernum1.Text = this.serial_set1.sernum;
+            this.brDealer._Text = this.serial_set1.dealercod;
+            this.lblDealer.Text = this.serial_set1.dealer != null ? this.serial_set1.dealer.compnam : string.Empty;
             this.ActiveControl = this.mskSernum2;
         }
 
@@ -142,6 +144,14 @@ namespace SN_Net.Subform
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (!this.dealer_id.HasValue)
+            {
+                this.brDealer.Focus();
+                MessageAlert.Show("Please select Dealer!", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                this.brDealer.PerformButtonClick();
+                return;
+            }
+
             using (snEntities sn = DBX.DataSet())
             {
                 try
@@ -172,20 +182,20 @@ namespace SN_Net.Subform
                         sernum = this.sernum_set2,
                         oldnum = string.Empty,
                         version = this.version,
-                        contact = string.Empty,
-                        position = string.Empty,
-                        prenam = string.Empty,
-                        compnam = string.Empty,
-                        addr01 = string.Empty,
-                        addr02 = string.Empty,
-                        addr03 = string.Empty,
-                        zipcod = string.Empty,
-                        telnum = string.Empty,
-                        faxnum = string.Empty,
-                        busides = string.Empty,
+                        contact = this.serial_set1.contact, // string.Empty,
+                        position = this.serial_set1.position, // string.Empty,
+                        prenam = this.serial_set1.prenam, // string.Empty,
+                        compnam = this.serial_set1.compnam, // string.Empty,
+                        addr01 = this.serial_set1.addr01, // string.Empty,
+                        addr02 = this.serial_set1.addr02, // string.Empty,
+                        addr03 = this.serial_set1.addr03, // string.Empty,
+                        zipcod = this.serial_set1.zipcod, // string.Empty,
+                        telnum = this.serial_set1.telnum, // string.Empty,
+                        faxnum = this.serial_set1.faxnum, // string.Empty,
+                        busides = this.serial_set1.busides, // string.Empty,
                         purdat = DateTime.Now,
-                        expdat = null,
-                        branch = string.Empty,
+                        expdat = DateTime.Now,
+                        branch = this.serial_set1.branch, // string.Empty,
                         manual = null,
                         upfree = string.Empty,
                         refnum = this.serial_set1.sernum,
@@ -193,11 +203,11 @@ namespace SN_Net.Subform
                         dealer_id = d != null ? (int?)d.id : null,
                         dealercod = d != null ? d.dealercod : string.Empty,
                         verextdat = null,
-                        area_id = null,
-                        area = string.Empty,
-                        busityp_id = null,
-                        busityp = string.Empty,
-                        howknown_id = null,
+                        area_id = this.serial_set1.area_id, // null,
+                        area = this.serial_set1.area, // string.Empty,
+                        busityp_id = this.serial_set1.busityp_id, // null,
+                        busityp = this.serial_set1.busityp, // string.Empty,
+                        howknown_id = this.serial_set1.howknown_id, // null,
                         verext_id = v != null ? (int?)v.id : null,
                         creby_id = this.main_form.loged_in_user.id,
                         credat = DateTime.Now,
@@ -222,6 +232,12 @@ namespace SN_Net.Subform
                         flag = 0
                     };
                     sn.problem.Add(prob);
+
+                    List<serial_password> passwords = sn.serial_password.Where(pw => pw.flag == 0 && pw.serial_id == this.serial_set1.id).ToList();
+                    foreach (var pwd in passwords)
+                    {
+                        sn.serial_password.Add(new serial_password { serial_id = serial_to_add.id, pass_word = pwd.pass_word, creby_id = this.main_form.loged_in_user.id, credat = DateTime.Now, flag = 0 });
+                    }
 
                     sn.SaveChanges();
 

@@ -26,6 +26,12 @@ namespace SN_Net.Subform
         private Control focused_control;
         private DialogInquirySn.SORT_BY sort_by;
         private bool problem_im_only = false;
+        private string search_key_sernum = string.Empty;
+        private string search_key_contact = string.Empty;
+        private string search_key_compnam = string.Empty;
+        private string search_key_dealer = string.Empty;
+        private string search_key_busityp = string.Empty;
+        private string search_key_area = string.Empty;
 
         public FormSn()
         {
@@ -121,7 +127,7 @@ namespace SN_Net.Subform
             this.btnUPNewRwt.SetControlState(new FORM_MODE[] { FORM_MODE.READ }, this.form_mode);
             this.btnUPNewRwtJob.SetControlState(new FORM_MODE[] { FORM_MODE.READ }, this.form_mode);
             this.btnSupportNote.SetControlState(new FORM_MODE[] { FORM_MODE.READ }, this.form_mode);
-            this.btnSupportViewNote.SetControlState(new FORM_MODE[] { FORM_MODE.READ }, this.form_mode);
+            //this.btnSupportViewNote.SetControlState(new FORM_MODE[] { FORM_MODE.READ }, this.form_mode);
 
             this.txtAddr01.SetControlState(new FORM_MODE[] { FORM_MODE.ADD, FORM_MODE.EDIT }, this.form_mode);
             this.txtAddr02.SetControlState(new FORM_MODE[] { FORM_MODE.ADD, FORM_MODE.EDIT }, this.form_mode);
@@ -158,10 +164,10 @@ namespace SN_Net.Subform
 
             /** extended button **/
             this.btnSupportNote.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.SUPPORT });
-            this.btnSupportViewNote.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.SUPPORT });
+            //this.btnSupportViewNote.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.SUPPORT });
             this.btnCD.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
             this.btnUP.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
-            this.chkIMOnly.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
+            this.chkIMOnly.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN, USER_LEVEL.SUPERVISOR, USER_LEVEL.ACCOUNT, USER_LEVEL.SALES, USER_LEVEL.SUPPORT });
             this.btnLostRenew.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
             this.btnUPNewRwt.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
             this.btnUPNewRwtJob.SetControlVisibilityByUserLevel(this.main_form.loged_in_user, new USER_LEVEL[] { USER_LEVEL.ADMIN });
@@ -184,10 +190,25 @@ namespace SN_Net.Subform
 
             try
             {
+                istab area = null;
+                istab busityp = null;
+                istab howknown = null;
+                dealer dealer = null;
+                using (snEntities sn = DBX.DataSet())
+                {
+                    area = !serial.area_id.HasValue ? null : sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_AREA && i.id == serial.area_id).FirstOrDefault();
+
+                    busityp = !serial.busityp_id.HasValue ? null : sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_BUSITYP && i.id == serial.busityp_id).FirstOrDefault();
+
+                    howknown = !serial.howknown_id.HasValue ? null : sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_HOWKNOW && i.id == serial.howknown_id).FirstOrDefault();
+
+                    dealer = !serial.dealer_id.HasValue ? null : sn.dealer.Where(i => i.flag == 0 && i.id == serial.dealer_id).FirstOrDefault();
+                }
+
                 this.mskSernum._Text = serial.sernum;
                 this.txtVersion._Text = serial.version;
-                this.brArea._Text = serial.area; //serial.istab != null ? serial.istab.typcod : string.Empty;
-                this.lblArea.Text = serial.istab != null ? serial.istab.typdes_th : string.Empty;
+                this.brArea._Text = area != null ? area.typcod : string.Empty;
+                this.lblArea.Text = area != null ? area.typdes_th : string.Empty;
                 this.mskRefSn._Text = serial.refnum;
                 this.txtPrenam._Text = serial.prenam;
                 this.txtCompnam._Text = serial.compnam;
@@ -204,12 +225,12 @@ namespace SN_Net.Subform
 
                 this.txtRemark._Text = serial.remark;
                 this.txtBusides._Text = serial.busides;
-                this.brBusityp._Text = serial.busityp; //serial.istab1 != null ? serial.istab1.typcod : string.Empty;
-                this.lblBusityp.Text = serial.istab1 != null ? serial.istab1.typdes_th : string.Empty;
-                this.brDealer._Text = serial.dealercod; //serial.dealer != null ? serial.dealer.dealercod : string.Empty;
-                this.lblDealer.Text = serial.dealer != null ? serial.dealer.compnam : string.Empty;
-                this.brHowknown._Text = serial.istab2 != null ? serial.istab2.typcod : string.Empty;
-                this.lblHowknown.Text = serial.istab2 != null ? serial.istab2.typdes_th : string.Empty;
+                this.brBusityp._Text = busityp != null ? busityp.typcod : string.Empty; //serial.busityp;
+                this.lblBusityp.Text = busityp != null ? busityp.typdes_th : string.Empty; //serial.istab1 != null ? serial.istab1.typdes_th : string.Empty;
+                this.brDealer._Text = dealer != null ? dealer.dealercod : string.Empty; //serial.dealercod;
+                this.lblDealer.Text = dealer != null ? dealer.compnam : string.Empty; //serial.dealer != null ? serial.dealer.compnam : string.Empty;
+                this.brHowknown._Text = howknown != null ? howknown.typcod : string.Empty; // serial.istab2 != null ? serial.istab2.typcod : string.Empty;
+                this.lblHowknown.Text = howknown != null ? howknown.typdes_th : string.Empty; //serial.istab2 != null ? serial.istab2.typdes_th : string.Empty;
                 this.dtPurdat._SelectedDate = serial.purdat;
                 this.dtExpdat._SelectedDate = serial.expdat;
                 this.txtUpfree._Text = serial.upfree;
@@ -258,11 +279,11 @@ namespace SN_Net.Subform
                 this.problem_list = null;
                 if (this.problem_im_only)
                 {
-                    this.problem_list = new BindingList<problemVM>(serial.problem.Where(p => p.flag == 0).OrderBy(p => p.date).ThenBy(p => p.time).ToViewModel().Where(p => p.probcod == "IM").ToList());
+                    this.problem_list = new BindingList<problemVM>(serial.problem.Where(p => p.flag == 0).OrderBy(p => p.date).ThenBy(p => p.time).ThenBy(p => p.id).ToViewModel().Where(p => p.probcod == "IM").ToList());
                 }
                 else
                 {
-                    this.problem_list = new BindingList<problemVM>(serial.problem.Where(p => p.flag == 0).OrderBy(p => p.date).ThenBy(p => p.time).ToViewModel());
+                    this.problem_list = new BindingList<problemVM>(serial.problem.Where(p => p.flag == 0).OrderBy(p => p.date).ThenBy(p => p.time).ThenBy(p => p.id).ToViewModel());
                 }
                 
                 this.dgvProblem.DataSource = this.problem_list;
@@ -284,16 +305,6 @@ namespace SN_Net.Subform
                         this.btnSet2.Enabled = false;
                     }
                 }
-
-                /* Set Problem Button State in Case No Problem Data */
-                //if(this.form_mode == FORM_MODE.READ_ITEM)
-                //{
-                //    if(serial.problem.Count == 0)
-                //    {
-                //        this.btnEditProblem.Enabled = false;
-                //        this.btnDeleteProblem.Enabled = false;
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -545,6 +556,7 @@ namespace SN_Net.Subform
 
         private void toolStripAdd_Click(object sender, EventArgs e)
         {
+            this.toolStrip1.Focus();
             this.tabControl1.SelectedTab = this.tabPage1;
 
             using (snEntities sn = DBX.DataSet())
@@ -552,10 +564,11 @@ namespace SN_Net.Subform
                 this.tmp_serial = sn.CreateTmpSerial(this.main_form);
                 if (this.curr_serial != null)
                 {
-                    this.tmp_serial.istab = this.curr_serial.istab;
+                    //this.tmp_serial.istab = this.curr_serial.istab;
                     this.tmp_serial.area_id = this.curr_serial.area_id;
                     this.tmp_serial.area = this.curr_serial.area;
 
+                    this.tmp_serial.sernum = this.curr_serial.sernum;
                     this.tmp_serial.prenam = this.curr_serial.prenam;
                     this.tmp_serial.compnam = this.curr_serial.compnam;
                     this.tmp_serial.addr01 = this.curr_serial.addr01;
@@ -568,10 +581,10 @@ namespace SN_Net.Subform
                     this.tmp_serial.position = this.curr_serial.position;
                     this.tmp_serial.remark = this.curr_serial.remark;
                     this.tmp_serial.busides = this.curr_serial.busides;
-                    this.tmp_serial.istab1 = this.curr_serial.istab1;
+                    //this.tmp_serial.istab1 = this.curr_serial.istab1;
                     this.tmp_serial.busityp_id = this.curr_serial.busityp_id;
                     this.tmp_serial.busityp = this.curr_serial.busityp;
-                    this.tmp_serial.dealer = this.curr_serial.dealer;
+                    //this.tmp_serial.dealer = this.curr_serial.dealer;
                     this.tmp_serial.dealer_id = this.curr_serial.dealer_id;
                     this.tmp_serial.dealercod = this.curr_serial.dealercod;
                     this.tmp_serial.howknown_id = this.curr_serial.howknown_id;
@@ -717,7 +730,7 @@ namespace SN_Net.Subform
                         }
                         catch (Exception ex)
                         {
-                            MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                            MessageAlert.Show(ex.InnerException.InnerException.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
                         }
                     }
 
@@ -798,7 +811,7 @@ namespace SN_Net.Subform
                     }
                     else
                     {
-                        if(prob.typcod == "RG" && this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
+                        if(this.form_mode == FORM_MODE.ADD_ITEM && prob.typcod == "RG" && this.main_form.loged_in_user.level < (int)USER_LEVEL.ADMIN)
                         {
                             this.inlineProbcod.Focus();
                             SendKeys.Send("{F6}");
@@ -838,7 +851,7 @@ namespace SN_Net.Subform
                         if(prob_to_update != null) // update existing
                         {
                             prob_to_update.date = this.tmp_problem.date;
-                            prob_to_update.time = DateTime.Now.ToString("HH:mm", CultureInfo.GetCultureInfo("th-TH"));
+                            //prob_to_update.time = DateTime.Now.ToString("HH:mm", CultureInfo.GetCultureInfo("th-TH"));
                             prob_to_update.name = this.tmp_problem.name;
                             prob_to_update.probcod_id = this.tmp_problem.probcod_id;
                             prob_to_update.probdesc = this.tmp_problem.probdesc;
@@ -1249,9 +1262,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchSN_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "S/N", this.curr_serial.sernum);
+            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "S/N", this.search_key_sernum);
             if(search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_sernum = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.SERNUM;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1283,9 +1297,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchContact_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Contact", this.curr_serial.contact);
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Contact", this.search_key_contact);
             if (search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_contact = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.CONTACT;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1318,9 +1333,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchCompany_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Comp. Name", this.curr_serial.compnam);
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Comp. Name", this.search_key_compnam);
             if (search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_compnam = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.COMPNAM;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1353,9 +1369,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchDealer_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Dealer Code", this.curr_serial.ToViewModel().dealer);
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Dealer Code", this.search_key_dealer);
             if (search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_dealer = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.DEALER;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1388,9 +1405,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchOldnum_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "Old S/N", this.curr_serial.oldnum);
+            DialogSimpleSearch search = new DialogSimpleSearch(true, null, "Old S/N", this.search_key_sernum);
             if (search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_sernum = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.OLDNUM;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1423,9 +1441,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchBusityp_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Business Type", this.curr_serial.ToViewModel().busityp);
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Business Type", this.search_key_busityp);
             if (search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_busityp = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.BUSITYP;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1458,9 +1477,10 @@ namespace SN_Net.Subform
 
         private void toolStripSearchArea_Click(object sender, EventArgs e)
         {
-            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Area", this.curr_serial.ToViewModel().area);
+            DialogSimpleSearch search = new DialogSimpleSearch(false, null, "Area", this.search_key_area);
             if (search.ShowDialog() == DialogResult.OK)
             {
+                this.search_key_area = search.keyword;
                 this.sort_by = DialogInquirySn.SORT_BY.AREA;
 
                 using (snEntities sn = DBX.DataSet())
@@ -1918,7 +1938,20 @@ namespace SN_Net.Subform
             if (this.tmp_serial == null)
                 return;
 
-            if(ValidateSN.Check(this.tmp_serial.sernum) == false)
+            if(this.form_mode == FORM_MODE.ADD)
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    if(sn.serial.Where(s => s.flag == 0 && s.sernum == ((XTextEditMasked)sender)._Text).FirstOrDefault() != null)
+                    {
+                        ((XTextEditMasked)sender).Focus();
+                        MessageAlert.Show("S/N นี้มีอยู่แล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        return;
+                    }
+                }
+            }
+
+            if (ValidateSN.Check(this.tmp_serial.sernum) == false)
             {
                 this.mskSernum.Focus();
                 MessageAlert.Show("กรุณาป้อน S/N ให้ถูกต้อง", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
@@ -2091,7 +2124,7 @@ namespace SN_Net.Subform
             string str = ((XBrowseBox)sender)._Text.Trim();
             if(str.Trim().Length == 0)
             {
-                this.tmp_serial.istab = null;
+                //this.tmp_serial.istab = null;
                 this.tmp_serial.area_id = null;
                 this.tmp_serial.area = string.Empty;
                 this.lblArea.Text = string.Empty;
@@ -2105,7 +2138,7 @@ namespace SN_Net.Subform
                     {
                         this.tmp_serial.area_id = area.id;
                         this.tmp_serial.area = area.typcod;
-                        this.tmp_serial.istab = area;
+                        //.tmp_serial.istab = area;
                         this.lblArea.Text = area.typdes_th;
                     }
                     else
@@ -2125,7 +2158,7 @@ namespace SN_Net.Subform
             string str = ((XBrowseBox)sender)._Text.Trim();
             if (str.Trim().Length == 0)
             {
-                this.tmp_serial.istab1 = null;
+                //this.tmp_serial.istab1 = null;
                 this.tmp_serial.busityp_id = null;
                 this.tmp_serial.busityp = string.Empty;
                 this.lblBusityp.Text = string.Empty;
@@ -2139,7 +2172,7 @@ namespace SN_Net.Subform
                     {
                         this.tmp_serial.busityp_id = busityp.id;
                         this.tmp_serial.busityp = busityp.typcod;
-                        this.tmp_serial.istab1 = busityp;
+                        //this.tmp_serial.istab1 = busityp;
                         this.lblBusityp.Text = busityp.typdes_th;
                     }
                     else
@@ -2159,7 +2192,7 @@ namespace SN_Net.Subform
             string str = ((XBrowseBox)sender)._Text.Trim();
             if(str.Trim().Length == 0)
             {
-                this.tmp_serial.dealer = null;
+                //this.tmp_serial.dealer = null;
                 this.tmp_serial.dealer_id = null;
                 this.tmp_serial.dealercod = string.Empty;
                 this.lblDealer.Text = string.Empty;
@@ -2171,7 +2204,7 @@ namespace SN_Net.Subform
                     var dealer = sn.dealer.Where(d => d.flag == 0 && d.dealercod == str).FirstOrDefault();
                     if(dealer != null)
                     {
-                        this.tmp_serial.dealer = dealer;
+                        //this.tmp_serial.dealer = dealer;
                         this.tmp_serial.dealer_id = dealer.id;
                         this.tmp_serial.dealercod = dealer.dealercod;
                         this.lblDealer.Text = dealer.compnam;
@@ -2193,7 +2226,7 @@ namespace SN_Net.Subform
             string str = ((XBrowseBox)sender)._Text.Trim();
             if (str.Trim().Length == 0)
             {
-                this.tmp_serial.istab2 = null;
+                //this.tmp_serial.istab2 = null;
                 this.tmp_serial.howknown_id = null;
                 this.lblHowknown.Text = string.Empty;
             }
@@ -2205,7 +2238,7 @@ namespace SN_Net.Subform
                     if (howhnown != null)
                     {
                         this.tmp_serial.howknown_id = howhnown.id;
-                        this.tmp_serial.istab2 = howhnown;
+                        //this.tmp_serial.istab2 = howhnown;
                         this.lblHowknown.Text = howhnown.typdes_th;
                     }
                     else
@@ -2219,7 +2252,13 @@ namespace SN_Net.Subform
 
         private void brArea__ButtonClick(object sender, EventArgs e)
         {
-            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.AREA, this.tmp_serial.istab);
+            istab area = null;
+            using (snEntities sn = DBX.DataSet())
+            {
+                area = sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_AREA && i.typcod.Trim() == ((XBrowseBox)sender)._Text.Trim()).FirstOrDefault();
+            }
+
+            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.AREA, area);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if(inq.ShowDialog() == DialogResult.OK)
@@ -2228,13 +2267,19 @@ namespace SN_Net.Subform
                 this.lblArea.Text = inq.selected_istab.typdes_th;
                 this.tmp_serial.area_id = inq.selected_istab.id;
                 this.tmp_serial.area = inq.selected_istab.typcod;
-                this.tmp_serial.istab = inq.selected_istab;
+                //this.tmp_serial.istab = inq.selected_istab;
             }
         }
 
         private void brBusityp__ButtonClick(object sender, EventArgs e)
         {
-            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.BUSITYP, this.tmp_serial.istab1);
+            istab busityp = null;
+            using (snEntities sn = DBX.DataSet())
+            {
+                busityp = sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_BUSITYP && i.typcod.Trim() == ((XBrowseBox)sender)._Text.Trim()).FirstOrDefault();
+            }
+
+            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.BUSITYP, busityp);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if (inq.ShowDialog() == DialogResult.OK)
@@ -2243,13 +2288,19 @@ namespace SN_Net.Subform
                 this.lblBusityp.Text = inq.selected_istab.typdes_th;
                 this.tmp_serial.busityp_id = inq.selected_istab.id;
                 this.tmp_serial.busityp = inq.selected_istab.typcod;
-                this.tmp_serial.istab1 = inq.selected_istab;
+                //this.tmp_serial.istab1 = inq.selected_istab;
             }
         }
 
         private void brDealer__ButtonClick(object sender, EventArgs e)
         {
-            DialogSelectDealer inq = new DialogSelectDealer(this.tmp_serial.dealer);
+            dealer dealer = null;
+            using (snEntities sn = DBX.DataSet())
+            {
+                dealer = sn.dealer.Where(d => d.flag == 0 && d.dealercod.Trim() == ((XBrowseBox)sender)._Text.Trim()).FirstOrDefault();
+            }
+
+            DialogSelectDealer inq = new DialogSelectDealer(dealer);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if (inq.ShowDialog() == DialogResult.OK)
@@ -2258,13 +2309,19 @@ namespace SN_Net.Subform
                 this.lblDealer.Text = inq.selected_dealer.compnam;
                 this.tmp_serial.dealer_id = inq.selected_dealer.id;
                 this.tmp_serial.dealercod = inq.selected_dealer.dealercod;
-                this.tmp_serial.dealer = inq.selected_dealer;
+                //this.tmp_serial.dealer = inq.selected_dealer;
             }
         }
 
         private void brHowknown__ButtonClick(object sender, EventArgs e)
         {
-            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.HOWKNOWN, this.tmp_serial.istab2);
+            istab howknown = null;
+            using (snEntities sn = DBX.DataSet())
+            {
+                howknown = sn.istab.Where(i => i.flag == 0 && i.tabtyp == istabDbf.TABTYP_HOWKNOW && i.typcod.Trim() == ((XBrowseBox)sender)._Text.Trim()).FirstOrDefault();
+            }
+
+            DialogSelectIstab inq = new DialogSelectIstab(TABTYP.HOWKNOWN, howknown);
             Point p = ((XBrowseBox)sender).PointToScreen(Point.Empty);
             inq.Location = new Point(p.X + ((XBrowseBox)sender).Width, p.Y);
             if (inq.ShowDialog() == DialogResult.OK)
@@ -2272,7 +2329,7 @@ namespace SN_Net.Subform
                 ((XBrowseBox)sender)._Text = inq.selected_istab.typcod;
                 this.lblHowknown.Text = inq.selected_istab.typdes_th;
                 this.tmp_serial.howknown_id = inq.selected_istab.id;
-                this.tmp_serial.istab2 = inq.selected_istab;
+                //this.tmp_serial.istab2 = inq.selected_istab;
             }
         }
 
@@ -2886,12 +2943,15 @@ namespace SN_Net.Subform
 
         private void btnSupportNote_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void btnSupportViewNote_Click(object sender, EventArgs e)
-        {
-
+            if(this.main_form.form_note == null)
+            {
+                this.main_form.form_note = new FormNote(this.main_form, DateTime.Now, this.main_form.loged_in_user);
+                this.main_form.form_note.Show();
+            }
+            else
+            {
+                this.main_form.form_note.Activate();
+            }
         }
     }
 }

@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Configuration;
-using System.Data.Entity.Core.EntityClient;
-using System.Data.SqlClient;
 using SN_Net.Subform;
 
 namespace SN_Net.Model
 {
-    public class DBX
+    class DBXNote
     {
         private string server_name;
         public string ServerName { get { return this.server_name; } }
@@ -22,16 +19,15 @@ namespace SN_Net.Model
         public int port_no;
         public int PortNo { get { return this.port_no; } }
 
-        public DBX()
+        public DBXNote()
         {
-            PreferenceValue pref = DialogPreference.GetPreference(DialogPreference.PREF_TYPE.MAIN_SN_DATA);
+            PreferenceValue pref = DialogPreference.GetPreference(DialogPreference.PREF_TYPE.NOTE_DATA);
 
-            this.server_name = pref != null ? pref.serverName : string.Empty; // "localhost";
-            this.db_name = pref != null ? pref.dbName : string.Empty; // "sn";
-            this.db_userid = pref != null ? pref.userId : string.Empty; // "root";
-            this.db_password = pref != null ? pref.passWord : string.Empty; // "12345";
+            this.server_name = pref != null ? pref.serverName : string.Empty; //"localhost";
+            this.db_name = pref != null ? pref.dbName : string.Empty; //"sn";
+            this.db_userid = pref != null ? pref.userId : string.Empty; //"root";
+            this.db_password = pref != null ? pref.passWord : string.Empty; //"12345";
 
-            //this.port_no = 3306;
             int port_num;
             if (pref != null && Int32.TryParse(pref.port, out port_num))
             {
@@ -43,7 +39,7 @@ namespace SN_Net.Model
             }
         }
 
-        private DBX(PreferenceValue pref)
+        private DBXNote(PreferenceValue pref)
         {
             this.server_name = pref != null ? pref.serverName : string.Empty; //"localhost";
             this.db_name = pref != null ? pref.dbName : string.Empty; //"sn";
@@ -61,24 +57,24 @@ namespace SN_Net.Model
             }
         }
 
-        public snEntities GetDBEntities()
+        public sn_noteEntities GetDBEntities()
         {
-            return new snEntities("metadata=res://*/Model.SNNetModel.csdl|res://*/Model.SNNetModel.ssdl|res://*/Model.SNNetModel.msl;provider=MySql.Data.MySqlClient;provider connection string=\"Data Source=" + this.server_name + ";Port=" + this.port_no.ToString() + ";Initial Catalog=" + this.db_name + ";Persist Security Info=True;User ID=" + this.db_userid + ";Password=" + this.db_password + ";charset=utf8\"");
+            return new sn_noteEntities("metadata=res://*/Model.NoteModel.csdl|res://*/Model.NoteModel.ssdl|res://*/Model.NoteModel.msl;provider=MySql.Data.MySqlClient;provider connection string=\"Data Source=" + this.server_name + ";Port=" + this.port_no.ToString() + ";Initial Catalog=" + this.db_name + ";Persist Security Info=True;User ID=" + this.db_userid + ";Password=" + this.db_password + ";charset=utf8\"");
         }
 
-        public static snEntities DataSet()
+        public static sn_noteEntities DataSet()
         {
-            DBX db_context = new DBX();
+            DBXNote db_context = new DBXNote();
             return db_context.GetDBEntities();
         }
 
         public static bool TestConnection(PreferenceValue pref)
         {
-            DBX db_context = new DBX(pref);
-            snEntities sn = db_context.GetDBEntities();
+            DBXNote db_context = new DBXNote(pref);
+            sn_noteEntities note = db_context.GetDBEntities();
             try
             {
-                if (sn.Database.Exists())
+                if (note.Database.Exists())
                 {
                     return true;
                 }

@@ -54,6 +54,12 @@
       <DependentUpon>ListDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
+    <Compile Include="XCheckBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XCheckBox.Designer.cs">
+      <DependentUpon>XCheckBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="XLoadingIcon.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\ListDialog.resx">
       <DependentUpon>ListDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XCheckBox.resx">
+      <DependentUpon>XCheckBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="XLoadingIcon.resx">
       <DependentUpon>XLoadingIcon.cs</DependentUpon>

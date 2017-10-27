@@ -134,6 +134,7 @@ namespace CC
             {
                 ((MaskedTextBox)sender).BackColor = AppResource.EditableControlBackColor;
                 this.BackColor = AppResource.EditableControlBackColor;
+                this.maskedTextBox1.SelectionStart = 0;
             }
             if (this._GotFocus != null)
             {
@@ -190,7 +191,7 @@ namespace CC
 
             if(this._Leave != null)
             {
-                this._Leave(sender, e);
+                this._Leave(this, e);
             }
         }
 

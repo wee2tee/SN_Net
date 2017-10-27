@@ -169,6 +169,14 @@ namespace SN_Net.Subform
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (!this.dealer_id.HasValue)
+            {
+                this.brDealer.Focus();
+                MessageAlert.Show("Please select Dealer!", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                this.brDealer.PerformButtonClick();
+                return;
+            }
+
             using (snEntities sn = DBX.DataSet())
             {
                 try

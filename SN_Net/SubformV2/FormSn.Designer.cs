@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSn));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
@@ -175,14 +175,13 @@
             this.txtContact2 = new CC.XTextEdit();
             this.txtExpdat2 = new CC.XTextEdit();
             this.lblArea = new System.Windows.Forms.Label();
-            this.btnSupportViewNote = new System.Windows.Forms.Button();
-            this.btnSupportNote = new System.Windows.Forms.Button();
             this.mskRefSn = new CC.XTextEditMasked();
             this.mskSernum = new CC.XTextEditMasked();
             this.txtCompnam = new CC.XTextEdit();
             this.txtPrenam = new CC.XTextEdit();
             this.txtVersion = new CC.XTextEdit();
             this.brArea = new CC.XBrowseBox();
+            this.btnSupportNote = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -224,7 +223,7 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(936, 43);
+            this.toolStrip1.Size = new System.Drawing.Size(996, 43);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -683,11 +682,11 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.tabControl1.Location = new System.Drawing.Point(6, 143);
+            this.tabControl1.Location = new System.Drawing.Point(6, 134);
             this.tabControl1.MinimumSize = new System.Drawing.Size(924, 525);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(924, 525);
+            this.tabControl1.Size = new System.Drawing.Size(984, 527);
             this.tabControl1.TabIndex = 98;
             this.tabControl1.TabStop = false;
             this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Deselecting);
@@ -700,7 +699,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(916, 499);
+            this.tabPage1.Size = new System.Drawing.Size(976, 501);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "รายละเอียด";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -757,7 +756,6 @@
             this.lblHowknown.Name = "lblHowknown";
             this.lblHowknown.Size = new System.Drawing.Size(364, 16);
             this.lblHowknown.TabIndex = 163;
-            this.lblHowknown.Text = "howknown_desc";
             // 
             // lblDealer
             // 
@@ -766,7 +764,6 @@
             this.lblDealer.Name = "lblDealer";
             this.lblDealer.Size = new System.Drawing.Size(275, 16);
             this.lblDealer.TabIndex = 163;
-            this.lblDealer.Text = "dealer_name";
             // 
             // lblBusityp
             // 
@@ -775,7 +772,6 @@
             this.lblBusityp.Name = "lblBusityp";
             this.lblBusityp.Size = new System.Drawing.Size(212, 16);
             this.lblBusityp.TabIndex = 163;
-            this.lblBusityp.Text = "busityp_desc";
             // 
             // btnDeleteCloud
             // 
@@ -818,7 +814,9 @@
             // 
             this.txtCloudEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCloudEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtCloudEmail._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtCloudEmail._MaxLength = 32767;
+            this.txtCloudEmail._PasswordChar = '\0';
             this.txtCloudEmail._ReadOnly = true;
             this.txtCloudEmail._SelectionLength = 0;
             this.txtCloudEmail._SelectionStart = 0;
@@ -932,7 +930,9 @@
             // 
             this.txtMaEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMaEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMaEmail._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtMaEmail._MaxLength = 32767;
+            this.txtMaEmail._PasswordChar = '\0';
             this.txtMaEmail._ReadOnly = true;
             this.txtMaEmail._SelectionLength = 0;
             this.txtMaEmail._SelectionStart = 0;
@@ -1091,7 +1091,9 @@
             // 
             this.txtUpfree._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpfree._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtUpfree._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtUpfree._MaxLength = 1;
+            this.txtUpfree._PasswordChar = '\0';
             this.txtUpfree._ReadOnly = true;
             this.txtUpfree._SelectionLength = 0;
             this.txtUpfree._SelectionStart = 0;
@@ -1233,7 +1235,9 @@
             // 
             this.txtBusides._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBusides._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtBusides._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtBusides._MaxLength = 40;
+            this.txtBusides._PasswordChar = '\0';
             this.txtBusides._ReadOnly = true;
             this.txtBusides._SelectionLength = 0;
             this.txtBusides._SelectionStart = 0;
@@ -1255,7 +1259,9 @@
             // 
             this.txtRemark._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRemark._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtRemark._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtRemark._MaxLength = 50;
+            this.txtRemark._PasswordChar = '\0';
             this.txtRemark._ReadOnly = true;
             this.txtRemark._SelectionLength = 0;
             this.txtRemark._SelectionStart = 0;
@@ -1411,7 +1417,9 @@
             // 
             this.txtZipcod._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtZipcod._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtZipcod._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtZipcod._MaxLength = 5;
+            this.txtZipcod._PasswordChar = '\0';
             this.txtZipcod._ReadOnly = true;
             this.txtZipcod._SelectionLength = 0;
             this.txtZipcod._SelectionStart = 0;
@@ -1512,7 +1520,9 @@
             // 
             this.txtAddr03._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr03._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtAddr03._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtAddr03._MaxLength = 30;
+            this.txtAddr03._PasswordChar = '\0';
             this.txtAddr03._ReadOnly = true;
             this.txtAddr03._SelectionLength = 0;
             this.txtAddr03._SelectionStart = 0;
@@ -1534,7 +1544,9 @@
             // 
             this.txtPosition._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPosition._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtPosition._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtPosition._MaxLength = 50;
+            this.txtPosition._PasswordChar = '\0';
             this.txtPosition._ReadOnly = true;
             this.txtPosition._SelectionLength = 0;
             this.txtPosition._SelectionStart = 0;
@@ -1556,7 +1568,9 @@
             // 
             this.txtContact._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContact._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtContact._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtContact._MaxLength = 100;
+            this.txtContact._PasswordChar = '\0';
             this.txtContact._ReadOnly = true;
             this.txtContact._SelectionLength = 0;
             this.txtContact._SelectionStart = 0;
@@ -1578,7 +1592,9 @@
             // 
             this.txtFaxnum._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtFaxnum._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtFaxnum._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtFaxnum._MaxLength = 40;
+            this.txtFaxnum._PasswordChar = '\0';
             this.txtFaxnum._ReadOnly = true;
             this.txtFaxnum._SelectionLength = 0;
             this.txtFaxnum._SelectionStart = 0;
@@ -1600,7 +1616,9 @@
             // 
             this.txtTelnum._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTelnum._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtTelnum._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtTelnum._MaxLength = 40;
+            this.txtTelnum._PasswordChar = '\0';
             this.txtTelnum._ReadOnly = true;
             this.txtTelnum._SelectionLength = 0;
             this.txtTelnum._SelectionStart = 0;
@@ -1622,7 +1640,9 @@
             // 
             this.txtAddr02._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr02._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtAddr02._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtAddr02._MaxLength = 50;
+            this.txtAddr02._PasswordChar = '\0';
             this.txtAddr02._ReadOnly = true;
             this.txtAddr02._SelectionLength = 0;
             this.txtAddr02._SelectionStart = 0;
@@ -1644,7 +1664,9 @@
             // 
             this.txtAddr01._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddr01._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtAddr01._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtAddr01._MaxLength = 50;
+            this.txtAddr01._PasswordChar = '\0';
             this.txtAddr01._ReadOnly = true;
             this.txtAddr01._SelectionLength = 0;
             this.txtAddr01._SelectionStart = 0;
@@ -1756,7 +1778,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(916, 499);
+            this.tabPage2.Size = new System.Drawing.Size(976, 501);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "ประวัติการติดต่อ <F8>";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1776,14 +1798,14 @@
             this.panel1.Controls.Add(this.btnAddProblem);
             this.panel1.Location = new System.Drawing.Point(4, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(906, 461);
+            this.panel1.Size = new System.Drawing.Size(966, 463);
             this.panel1.TabIndex = 27;
             // 
             // inlineProbdesc
             // 
             this.inlineProbdesc._MaxLength = 100;
             this.inlineProbdesc._ReadOnly = true;
-            this.inlineProbdesc.BackColor = System.Drawing.Color.White;
+            this.inlineProbdesc.BackColor = System.Drawing.SystemColors.Window;
             this.inlineProbdesc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineProbdesc.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.inlineProbdesc.Location = new System.Drawing.Point(338, 44);
@@ -1817,7 +1839,9 @@
             // 
             this.inlineName._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineName._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.inlineName._ForeColor = System.Drawing.SystemColors.WindowText;
             this.inlineName._MaxLength = 50;
+            this.inlineName._PasswordChar = '\0';
             this.inlineName._ReadOnly = false;
             this.inlineName._SelectionLength = 0;
             this.inlineName._SelectionStart = 0;
@@ -1855,14 +1879,14 @@
             this.dgvProblem.AllowUserToResizeColumns = false;
             this.dgvProblem.AllowUserToResizeRows = false;
             this.dgvProblem.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProblem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProblem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvProblem.ColumnHeadersHeight = 28;
             this.dgvProblem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvProblem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1872,14 +1896,14 @@
             this.col_problem_name,
             this.col_problem_probcod,
             this.col_problem_probdesc});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvProblem.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvProblem.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvProblem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProblem.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvProblem.EnableHeadersVisualStyles = false;
@@ -1893,7 +1917,7 @@
             this.dgvProblem.RowHeadersVisible = false;
             this.dgvProblem.RowTemplate.Height = 26;
             this.dgvProblem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProblem.Size = new System.Drawing.Size(906, 461);
+            this.dgvProblem.Size = new System.Drawing.Size(966, 463);
             this.dgvProblem.StandardTab = true;
             this.dgvProblem.TabIndex = 26;
             this.dgvProblem.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvProblem_CellPainting);
@@ -1923,8 +1947,8 @@
             // col_problem_date
             // 
             this.col_problem_date.DataPropertyName = "date";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Format = "dd/MM/yyyy";
+            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle5;
             this.col_problem_date.HeaderText = "DATE";
             this.col_problem_date.MinimumWidth = 100;
             this.col_problem_date.Name = "col_problem_date";
@@ -2030,7 +2054,9 @@
             // 
             this.txtTelnum2._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTelnum2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtTelnum2._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtTelnum2._MaxLength = 32767;
+            this.txtTelnum2._PasswordChar = '\0';
             this.txtTelnum2._ReadOnly = true;
             this.txtTelnum2._SelectionLength = 0;
             this.txtTelnum2._SelectionStart = 0;
@@ -2049,7 +2075,9 @@
             // 
             this.txtUpfree2._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUpfree2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtUpfree2._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtUpfree2._MaxLength = 32767;
+            this.txtUpfree2._PasswordChar = '\0';
             this.txtUpfree2._ReadOnly = true;
             this.txtUpfree2._SelectionLength = 0;
             this.txtUpfree2._SelectionStart = 0;
@@ -2068,7 +2096,9 @@
             // 
             this.txtContact2._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContact2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtContact2._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtContact2._MaxLength = 32767;
+            this.txtContact2._PasswordChar = '\0';
             this.txtContact2._ReadOnly = true;
             this.txtContact2._SelectionLength = 0;
             this.txtContact2._SelectionStart = 0;
@@ -2087,7 +2117,9 @@
             // 
             this.txtExpdat2._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtExpdat2._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtExpdat2._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtExpdat2._MaxLength = 32767;
+            this.txtExpdat2._PasswordChar = '\0';
             this.txtExpdat2._ReadOnly = true;
             this.txtExpdat2._SelectionLength = 0;
             this.txtExpdat2._SelectionStart = 0;
@@ -2108,35 +2140,6 @@
             this.lblArea.Name = "lblArea";
             this.lblArea.Size = new System.Drawing.Size(149, 16);
             this.lblArea.TabIndex = 163;
-            this.lblArea.Text = "area_desc";
-            // 
-            // btnSupportViewNote
-            // 
-            this.btnSupportViewNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSupportViewNote.Image = global::SN_Net.Properties.Resources.zoom;
-            this.btnSupportViewNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportViewNote.Location = new System.Drawing.Point(78, 112);
-            this.btnSupportViewNote.Name = "btnSupportViewNote";
-            this.btnSupportViewNote.Size = new System.Drawing.Size(83, 29);
-            this.btnSupportViewNote.TabIndex = 94;
-            this.btnSupportViewNote.Text = "      View Note";
-            this.btnSupportViewNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportViewNote.UseVisualStyleBackColor = true;
-            this.btnSupportViewNote.Click += new System.EventHandler(this.btnSupportViewNote_Click);
-            // 
-            // btnSupportNote
-            // 
-            this.btnSupportNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
-            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportNote.Location = new System.Drawing.Point(12, 112);
-            this.btnSupportNote.Name = "btnSupportNote";
-            this.btnSupportNote.Size = new System.Drawing.Size(65, 29);
-            this.btnSupportNote.TabIndex = 89;
-            this.btnSupportNote.Text = "       Note";
-            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportNote.UseVisualStyleBackColor = true;
-            this.btnSupportNote.Click += new System.EventHandler(this.btnSupportNote_Click);
             // 
             // mskRefSn
             // 
@@ -2187,7 +2190,9 @@
             // 
             this.txtCompnam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCompnam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtCompnam._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtCompnam._MaxLength = 100;
+            this.txtCompnam._PasswordChar = '\0';
             this.txtCompnam._ReadOnly = true;
             this.txtCompnam._SelectionLength = 0;
             this.txtCompnam._SelectionStart = 0;
@@ -2209,7 +2214,9 @@
             // 
             this.txtPrenam._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPrenam._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtPrenam._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtPrenam._MaxLength = 30;
+            this.txtPrenam._PasswordChar = '\0';
             this.txtPrenam._ReadOnly = true;
             this.txtPrenam._SelectionLength = 0;
             this.txtPrenam._SelectionStart = 0;
@@ -2231,7 +2238,9 @@
             // 
             this.txtVersion._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtVersion._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtVersion._ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtVersion._MaxLength = 4;
+            this.txtVersion._PasswordChar = '\0';
             this.txtVersion._ReadOnly = true;
             this.txtVersion._SelectionLength = 0;
             this.txtVersion._SelectionStart = 0;
@@ -2271,12 +2280,26 @@
             this.brArea._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.brArea.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
+            // btnSupportNote
+            // 
+            this.btnSupportNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
+            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.Location = new System.Drawing.Point(78, 109);
+            this.btnSupportNote.Name = "btnSupportNote";
+            this.btnSupportNote.Size = new System.Drawing.Size(65, 26);
+            this.btnSupportNote.TabIndex = 89;
+            this.btnSupportNote.Text = "       Note";
+            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.UseVisualStyleBackColor = true;
+            this.btnSupportNote.Click += new System.EventHandler(this.btnSupportNote_Click);
+            // 
             // FormSn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(936, 673);
+            this.ClientSize = new System.Drawing.Size(996, 666);
             this.Controls.Add(this.lblArea);
             this.Controls.Add(this.mskRefSn);
             this.Controls.Add(this.mskSernum);
@@ -2296,7 +2319,6 @@
             this.Controls.Add(this.btnCD);
             this.Controls.Add(this.btnUP);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnSupportViewNote);
             this.Controls.Add(this.btnSupportNote);
             this.Controls.Add(this.btnUPNewRwtJob);
             this.Controls.Add(this.toolStrip1);
@@ -2377,7 +2399,6 @@
         private System.Windows.Forms.Button btnCD;
         private System.Windows.Forms.Button btnUP;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnSupportViewNote;
         public System.Windows.Forms.Button btnSupportNote;
         private System.Windows.Forms.Button btnUPNewRwtJob;
         private CC.XTextEdit txtVersion;

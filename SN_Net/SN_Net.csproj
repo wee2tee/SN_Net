@@ -229,6 +229,7 @@
     </Compile>
     <Compile Include="Model\DbfTable.cs" />
     <Compile Include="Model\DBX.cs" />
+    <Compile Include="Model\DBXNote.cs" />
     <Compile Include="Model\dealer.cs">
       <DependentUpon>SNNetModel.tt</DependentUpon>
     </Compile>
@@ -243,6 +244,27 @@
     </Compile>
     <Compile Include="Model\mac_allowed.cs">
       <DependentUpon>SNNetModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\note.cs">
+      <DependentUpon>NoteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NoteModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NoteModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NoteModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NoteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NoteModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NoteModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\note_comment.cs">
+      <DependentUpon>NoteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\problem.cs">
       <DependentUpon>SNNetModel.tt</DependentUpon>
@@ -315,6 +337,18 @@
     </Compile>
     <Compile Include="SubformV2\DialogMacAddressAllowed.Designer.cs">
       <DependentUpon>DialogMacAddressAllowed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogNoteChangeScope.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogNoteChangeScope.Designer.cs">
+      <DependentUpon>DialogNoteChangeScope.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogNoteType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogNoteType.Designer.cs">
+      <DependentUpon>DialogNoteType.cs</DependentUpon>
     </Compile>
     <Compile Include="SubformV2\DialogPreference.cs">
       <SubType>Form</SubType>
@@ -399,6 +433,12 @@
     </Compile>
     <Compile Include="SubformV2\FormIstab.Designer.cs">
       <DependentUpon>FormIstab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\FormNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\FormNote.Designer.cs">
+      <DependentUpon>FormNote.cs</DependentUpon>
     </Compile>
     <Compile Include="SubformV2\FormUsers.cs">
       <SubType>Form</SubType>
@@ -868,6 +908,12 @@
     <EmbeddedResource Include="SubformV2\DialogMacAddressAllowed.resx">
       <DependentUpon>DialogMacAddressAllowed.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogNoteChangeScope.resx">
+      <DependentUpon>DialogNoteChangeScope.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogNoteType.resx">
+      <DependentUpon>DialogNoteType.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogPreference.resx">
       <DependentUpon>DialogPreference.cs</DependentUpon>
     </EmbeddedResource>
@@ -909,6 +955,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\FormIstab.resx">
       <DependentUpon>FormIstab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\FormNote.resx">
+      <DependentUpon>FormNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\FormUsers.resx">
       <DependentUpon>FormUsers.cs</DependentUpon>
@@ -1115,6 +1164,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SNNetModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Model\NoteModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NoteModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\NoteModel.edmx.diagram">
+      <DependentUpon>NoteModel.edmx</DependentUpon>
+    </None>
     <None Include="Model\SNNetModel.edmx.diagram">
       <DependentUpon>SNNetModel.edmx</DependentUpon>
     </None>
@@ -1214,6 +1270,16 @@
     <Content Include="eye-256.ico" />
     <Content Include="Icons\icon-eye.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Model\NoteModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NoteModel.edmx</DependentUpon>
+      <LastGenOutput>NoteModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\NoteModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NoteModel.edmx</DependentUpon>
+      <LastGenOutput>NoteModel.cs</LastGenOutput>
     </Content>
     <Content Include="Model\SNNetModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
