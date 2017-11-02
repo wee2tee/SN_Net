@@ -415,6 +415,7 @@ namespace SN_Net.Model
     {
         public note note { get; set; }
         //public int seq { get; set; }
+        public DateTime date { get { return this.note.date; } }
         public string start_time { get { return this.note.start_time; } }
         public string end_time { get { return this.note.end_time; } }
         public string duration {

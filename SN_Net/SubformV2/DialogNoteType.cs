@@ -37,12 +37,22 @@ namespace SN_Net.Subform
         {
             if(keyData == Keys.Escape)
             {
-                this.DialogResult = DialogResult.Cancel;
-                this.Close();
+                this.btnClose.PerformClick();
                 return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void btnClose_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawString("x", new Font("MS Sans Serif", 8f, FontStyle.Regular), new SolidBrush(Color.DimGray), new Point(e.ClipRectangle.X + 3, e.ClipRectangle.Y));
         }
     }
 }

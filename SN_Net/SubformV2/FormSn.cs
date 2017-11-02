@@ -2946,6 +2946,7 @@ namespace SN_Net.Subform
             if(this.main_form.form_note == null)
             {
                 this.main_form.form_note = new FormNote(this.main_form, DateTime.Now, this.main_form.loged_in_user);
+                this.main_form.form_note.MdiParent = this.main_form;
                 this.main_form.form_note.Show();
             }
             else

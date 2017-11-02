@@ -53,10 +53,9 @@
             this.mnuIstabUserGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.userInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUserInformation = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.macAddressAllowedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuMacAddressAllowed = new System.Windows.Forms.ToolStripMenuItem();
             this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPreference = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -67,14 +66,15 @@
             this.changeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripUserInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProcessing = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblTimeDuration = new System.Windows.Forms.Label();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mnuViewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -99,24 +99,24 @@
             this.mnuSN2,
             this.dealerToolStripMenuItem,
             this.mnuDealer2,
+            this.mnuImportData,
             this.toolStripSeparator5,
             this.calendarMenuItem,
             this.usersGroupMenuItem,
             this.supportStatMenuItem,
             this.LeaveSummaryMenuItem,
             this.SearchHistoryMenuItem,
+            this.mnuViewNote,
             this.toolStripSeparator2,
             this.tableToolStripMenuItem,
             this.toolStripSeparator1,
-            this.userManagementToolStripMenuItem,
-            this.macAddressAllowedToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.preferenceToolStripMenuItem,
             this.mnuPreference,
+            this.userManagementToolStripMenuItem,
+            this.mnuMacAddressAllowed,
+            this.preferenceToolStripMenuItem,
             this.toolStripSeparator4,
             this.exitToolStripMenuItem,
-            this.testToolStripMenuItem,
-            this.mnuImportData});
+            this.testToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
             this.modeToolStripMenuItem.Size = new System.Drawing.Size(36, 20);
             this.modeToolStripMenuItem.Text = "File";
@@ -126,7 +126,7 @@
             this.sNToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sNToolStripMenuItem.Name = "sNToolStripMenuItem";
             this.sNToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.sNToolStripMenuItem.Text = "S/N";
+            this.sNToolStripMenuItem.Text = "_S/N";
             this.sNToolStripMenuItem.Visible = false;
             this.sNToolStripMenuItem.Click += new System.EventHandler(this.sNToolStripMenuItem_Click);
             // 
@@ -142,7 +142,7 @@
             this.dealerToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dealerToolStripMenuItem.Name = "dealerToolStripMenuItem";
             this.dealerToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.dealerToolStripMenuItem.Text = "Dealer";
+            this.dealerToolStripMenuItem.Text = "_Dealer";
             this.dealerToolStripMenuItem.Visible = false;
             this.dealerToolStripMenuItem.Click += new System.EventHandler(this.dealerToolStripMenuItem_Click);
             // 
@@ -289,19 +289,19 @@
             // userManagementToolStripMenuItem
             // 
             this.userManagementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.userInformationToolStripMenuItem,
+            this.mnuUserInformation,
             this.changePasswordToolStripMenuItem});
             this.userManagementToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userManagementToolStripMenuItem.Name = "userManagementToolStripMenuItem";
             this.userManagementToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
             this.userManagementToolStripMenuItem.Text = "User management";
             // 
-            // userInformationToolStripMenuItem
+            // mnuUserInformation
             // 
-            this.userInformationToolStripMenuItem.Name = "userInformationToolStripMenuItem";
-            this.userInformationToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
-            this.userInformationToolStripMenuItem.Text = "User information";
-            this.userInformationToolStripMenuItem.Click += new System.EventHandler(this.userInformationToolStripMenuItem_Click);
+            this.mnuUserInformation.Name = "mnuUserInformation";
+            this.mnuUserInformation.Size = new System.Drawing.Size(178, 22);
+            this.mnuUserInformation.Text = "User information";
+            this.mnuUserInformation.Click += new System.EventHandler(this.userInformationToolStripMenuItem_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
@@ -310,25 +310,20 @@
             this.changePasswordToolStripMenuItem.Text = "Change password";
             this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
-            // macAddressAllowedToolStripMenuItem
+            // mnuMacAddressAllowed
             // 
-            this.macAddressAllowedToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.macAddressAllowedToolStripMenuItem.Name = "macAddressAllowedToolStripMenuItem";
-            this.macAddressAllowedToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.macAddressAllowedToolStripMenuItem.Text = "MAC address allowed";
-            this.macAddressAllowedToolStripMenuItem.Click += new System.EventHandler(this.macAddressAllowedToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(334, 6);
+            this.mnuMacAddressAllowed.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mnuMacAddressAllowed.Name = "mnuMacAddressAllowed";
+            this.mnuMacAddressAllowed.Size = new System.Drawing.Size(337, 22);
+            this.mnuMacAddressAllowed.Text = "MAC address allowed";
+            this.mnuMacAddressAllowed.Click += new System.EventHandler(this.macAddressAllowedToolStripMenuItem_Click);
             // 
             // preferenceToolStripMenuItem
             // 
             this.preferenceToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
             this.preferenceToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.preferenceToolStripMenuItem.Text = "Preference";
+            this.preferenceToolStripMenuItem.Text = "_Preference";
             this.preferenceToolStripMenuItem.Visible = false;
             this.preferenceToolStripMenuItem.Click += new System.EventHandler(this.preferenceToolStripMenuItem_Click);
             // 
@@ -407,12 +402,24 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 17);
+            this.toolStripStatusLabel1.Text = "รหัสผู้ใช้ :";
+            // 
             // toolStripUserInfo
             // 
             this.toolStripUserInfo.Name = "toolStripUserInfo";
             this.toolStripUserInfo.Size = new System.Drawing.Size(16, 17);
             this.toolStripUserInfo.Text = "...";
             this.toolStripUserInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel2.Text = " , ";
             // 
             // toolStripInfo
             // 
@@ -429,7 +436,7 @@
             this.toolStripProcessing.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.toolStripProcessing.Name = "toolStripProcessing";
             this.toolStripProcessing.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripProcessing.Size = new System.Drawing.Size(517, 17);
+            this.toolStripProcessing.Size = new System.Drawing.Size(532, 17);
             this.toolStripProcessing.Spring = true;
             this.toolStripProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripProcessing.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
@@ -439,7 +446,7 @@
             // lblVersion
             // 
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(532, 17);
+            this.lblVersion.Size = new System.Drawing.Size(1085, 17);
             this.lblVersion.Spring = true;
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -467,17 +474,12 @@
             this.lblTimeDuration.Text = "00:00:00";
             this.lblTimeDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // toolStripStatusLabel1
+            // mnuViewNote
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(50, 17);
-            this.toolStripStatusLabel1.Text = "รหัสผู้ใช้ :";
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(16, 17);
-            this.toolStripStatusLabel2.Text = " , ";
+            this.mnuViewNote.Name = "mnuViewNote";
+            this.mnuViewNote.Size = new System.Drawing.Size(337, 22);
+            this.mnuViewNote.Text = "ดูใบบันทึกการปฏิบัติงาน";
+            this.mnuViewNote.Click += new System.EventHandler(this.mnuViewNote_Click);
             // 
             // MainForm
             // 
@@ -516,8 +518,8 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem userManagementToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem macAddressAllowedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem userInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuMacAddressAllowed;
+        private System.Windows.Forms.ToolStripMenuItem mnuUserInformation;
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -527,7 +529,6 @@
         private System.Windows.Forms.ToolStripMenuItem businessTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem problemCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem salesAreaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem versionExtensionToolStripMenuItem;
         public System.Windows.Forms.MenuStrip menuStrip1;
@@ -556,6 +557,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuPreference;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripMenuItem mnuViewNote;
     }
 }
 

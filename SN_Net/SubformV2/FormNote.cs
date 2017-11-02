@@ -29,33 +29,73 @@ namespace SN_Net.Subform
         private note tmp_note;
         private TRNTYP trn_typ;
         private Timer timer;
+        private bool show_as_search_result = false;
+
+        public FormNote()
+        {
+            InitializeComponent();
+        }
 
         public FormNote(MainForm main_form, DateTime? note_date = null, users note_user = null)
+            : this()
         {
             this.main_form = main_form;
             this.curr_date = note_date;
             this.curr_user = note_user;
-            InitializeComponent();
+        }
+
+        public FormNote(IEnumerable<note> notes)
+            : this()
+        {
+            this.show_as_search_result = true;
+            this.note_list = new BindingList<noteVM>(notes.ToViewModel());
+            this.dgvNote.DataSource = this.note_list;
         }
 
         private void FormNote_Load(object sender, EventArgs e)
         {
-            this.HideInlineForm();
-            this.ResetFormState(FORM_MODE.READ_ITEM);
-            this.RefreshForm();
-            this.SetDropdownListItem();
+            if (!this.show_as_search_result)
+            {
+                this.HideInlineForm();
+                this.ResetFormState(FORM_MODE.READ_ITEM);
+                this.SetDropdownListItem();
+                this.note_list = new BindingList<noteVM>();
+                this.dgvNote.DataSource = this.note_list;
+            }
+            else
+            {
+                this.toolStrip1.Enabled = false;
+                this.toolStrip1.Visible = false;
+                this.panel3.Dock = DockStyle.Fill;
+                this.dgvNote.BringToFront();
+                this.Text = "ผลการค้นหา";
+                this.Height = 300;
+                this.MaximizeBox = false;
+                this.MinimizeBox = false;
+            }
+        }
+
+        private void FormNote_Shown(object sender, EventArgs e)
+        {
+            if (!this.show_as_search_result)
+            {
+                this.RefreshForm();
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if(this.timer != null)
+            if (!this.show_as_search_result)
             {
-                this.timer.Stop();
-                this.timer.Enabled = false;
-                this.timer.Dispose();
-                this.timer = null;
+                if (this.timer != null)
+                {
+                    this.timer.Stop();
+                    this.timer.Enabled = false;
+                    this.timer.Dispose();
+                    this.timer = null;
+                }
+                this.main_form.form_note = null;
             }
-            this.main_form.form_note = null;
             base.OnClosing(e);
         }
 
@@ -110,6 +150,8 @@ namespace SN_Net.Subform
         private void FillForm()
         {
             this.lblWorkingDate.Text = this.curr_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
+            this.lblUserName.Text = this.curr_user != null ? this.curr_user.username : string.Empty;
+            this.lblUserRealname.Text = this.curr_user != null ? this.curr_user.name : string.Empty;
             this.dgvNote.DataSource = this.note_list;
         }
 
@@ -211,7 +253,7 @@ namespace SN_Net.Subform
             this.inlineEnd.Text = note_vm.end_time;
             this.inlineDuration.Text = note_vm.duration;
             this.inlineSernum._Text = note_vm.sernum;
-            this.inlineContact._Text = note_vm.contact;
+            this.inlineContact._Text = this.tmp_note.is_break == "N" ? note_vm.contact : string.Empty;
             this.inlineMapdrive._Checked = note_vm.is_mapdrive ? true : false;
             this.inlineInstall._Checked = note_vm.is_installupdate ? true : false;
             this.inlineError._Checked = note_vm.is_error ? true : false;
@@ -428,8 +470,8 @@ namespace SN_Net.Subform
                 problem = string.Empty,
                 reason = string.Empty,
                 remark = string.Empty,
-                users_id = this.main_form.loged_in_user.id,
-                users_name = this.main_form.loged_in_user.username,
+                users_id = this.curr_user.id, //this.main_form.loged_in_user.id,
+                users_name = this.curr_user.username, // this.main_form.loged_in_user.username,
                 rec_by = this.main_form.loged_in_user.username
             }.ToViewModel();
 
@@ -586,36 +628,77 @@ namespace SN_Net.Subform
                     catch (Exception ex)
                     {
                         MessageAlert.Show(ex.InnerException.InnerException.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        return;
                     }
                 }
-
-                if (this.timer != null)
-                {
-                    this.timer.Stop();
-                    this.timer.Enabled = false;
-                    this.timer.Dispose();
-                    this.timer = null;
-                }
-                return;
             }
             
             if(this.form_mode == FORM_MODE.EDIT_ITEM)
             {
-
-                if (this.timer != null)
+                using (sn_noteEntities sn_note = DBXNote.DataSet())
                 {
-                    this.timer.Stop();
-                    this.timer.Enabled = false;
-                    this.timer.Dispose();
-                    this.timer = null;
+                    try
+                    {
+                        note note_to_update = sn_note.note.Find(this.tmp_note.id);
+                        if(note_to_update == null)
+                        {
+                            MessageAlert.Show("ค้นหารายการที่ต้องการแก้ไขไม่พบ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                            return;
+                        }
+
+                        note_to_update.sernum = this.tmp_note.sernum;
+                        note_to_update.contact = this.trn_typ == TRNTYP.TEL ? this.tmp_note.contact : string.Empty;
+                        note_to_update.start_time = this.tmp_note.start_time;
+                        note_to_update.end_time = this.tmp_note.end_time;
+                        note_to_update.duration = this.tmp_note.duration;
+                        note_to_update.problem = this.tmp_note.problem;
+                        note_to_update.remark = this.tmp_note.remark;
+                        note_to_update.is_break = this.tmp_note.is_break;
+                        note_to_update.reason = this.tmp_note.reason;
+                        note_to_update.file_path = this.tmp_note.file_path;
+                        note_to_update.rec_by = this.main_form.loged_in_user.username;
+
+                        sn_note.SaveChanges();
+                        this.HideInlineForm();
+                        this.ResetFormState(FORM_MODE.READ_ITEM);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageAlert.Show(ex.InnerException.InnerException.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                        return;
+                    }
                 }
-                return;
             }
+
+            this.lblCompnam.Text = string.Empty;
+            this.lblAddr.Text = string.Empty;
+            this.lblPassword.Text = string.Empty;
+            this.lblVersion.Text = string.Empty;
+            this.lblMA.Text = string.Empty;
+            this.lblCloud.Text = string.Empty;
+            this.dgvNote.Focus();
+            if (this.timer != null)
+            {
+                this.timer.Stop();
+                this.timer.Enabled = false;
+                this.timer.Dispose();
+                this.timer = null;
+            }
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            DialogSimpleSearch search = new DialogSimpleSearch(true, "ป้อนข้อมูลที่ต้องการค้นหา", "S/N", string.Empty);
+            if(search.ShowDialog() == DialogResult.OK)
+            {
+                using (sn_noteEntities sn_note = DBXNote.DataSet())
+                {
+                    var notes = sn_note.note.Where(n => n.users_name == this.curr_user.username && n.sernum.Trim() == search.keyword.Trim()).OrderBy(n => n.date).OrderBy(n => n.start_time).ToList();
+                    FormNote frm = new FormNote(notes);
+                    frm.ShowDialog();
+                }
+            }
         }
 
         private void btnWorkingDate_Click(object sender, EventArgs e)
@@ -629,11 +712,19 @@ namespace SN_Net.Subform
             }
         }
 
+        private void dgvNote_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (this.show_as_search_result)
+                ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_date.Name).First().Visible = true;
+        }
+
         private void dgvNote_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex == -1)
             {
+                bool is_problem_columns = false;
                 if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_seq.Name).First().Index
+                    || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_date.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_start.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_end.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_duration.Name).First().Index
@@ -645,9 +736,31 @@ namespace SN_Net.Subform
                 }
                 else
                 {
+                    e.CellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
                     e.CellStyle.Font = new Font(e.CellStyle.Font.Name, 6.75f);
+                    is_problem_columns = true;
                 }
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                if (is_problem_columns)
+                {
+                    using (Pen p = new Pen(Color.DarkGray))
+                    {
+                        e.Graphics.DrawLine(p, new Point(e.CellBounds.X + 1, e.CellBounds.Y + 38), new Point(e.CellBounds.X + e.CellBounds.Width, e.CellBounds.Y + 38));
+
+                        #region draw problem count
+                        int cnt = 0;
+                        Rectangle rect = new Rectangle(e.CellBounds.X, e.CellBounds.Y + 38, e.CellBounds.Width, e.CellBounds.Height - 38);
+                        using (Font fnt = new Font("tahoma", 9f, FontStyle.Bold))
+                        {
+                            using (SolidBrush b = new SolidBrush(Color.Sienna))
+                            {
+                                cnt = this.GetProblemCount(e.ColumnIndex);
+                                e.Graphics.DrawString(cnt.ToString(), fnt, b, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+                            }
+                        }
+                        #endregion draw problem count
+                    }
+                }
                 e.Handled = true;
             }
 
@@ -722,6 +835,79 @@ namespace SN_Net.Subform
             }
         }
 
+        private int GetProblemCount(int column_index)
+        {
+            if(this.dgvNote.Columns[column_index].Name == this.col_note_is_mapdrive.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_mapdrive).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_installupdate.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_installupdate).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_error.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_error).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_installfonts.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_font).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_print.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_print).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_training.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_training).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_stock.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_stock).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_form.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_form).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_reportexcel.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_reportexcel).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_statement.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_statement).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_assets.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_asset).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_secure.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_secure).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_yearend.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_yearend).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_period.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_period).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_mail.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_mail).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_transfer.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_transfer).AsEnumerable().Count();
+            }
+            if (this.dgvNote.Columns[column_index].Name == this.col_note_is_other.Name)
+            {
+                return ((BindingList<noteVM>)this.dgvNote.DataSource).Where(n => n.is_other).AsEnumerable().Count();
+            }
+            return 0;
+        }
+
         private void inlineStart_ValueChanged(object sender, EventArgs e)
         {
             if (this.tmp_note != null)
@@ -773,15 +959,9 @@ namespace SN_Net.Subform
                     this.lblVersion.Text = ser.version + " " + (ser.verext_id.HasValue ? ser.istab3.typdes_th : string.Empty);
                     this.lblPassword.Text = string.Join(" , ", ser.serial_password.Select(p => p.pass_word).ToArray());
                     var ma = ser.ma.ToList().Where(m => m.end_date.Value.CompareTo(DateTime.Now) > 0).OrderBy(m => m.end_date).FirstOrDefault();
-                    if (ma != null)
-                    {
-                        this.lblMA.Text = "Yes (exp. " + ma.end_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) + ")";
-                    }
+                    this.lblMA.Text = ma != null ? "Yes (exp. " + ma.end_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) + ")" : string.Empty;
                     var cloud = ser.cloud_srv.ToList().Where(c => c.end_date.Value.CompareTo(DateTime.Now) > 0).OrderBy(m => m.end_date).FirstOrDefault();
-                    if(cloud != null)
-                    {
-                        this.lblCloud.Text = "Yes (exp. " + cloud.end_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) + ")";
-                    }
+                    this.lblCloud.Text = cloud != null ? "Yes (exp. " + cloud.end_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")) + ")" : string.Empty;
                 }
             }
         }
@@ -798,7 +978,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.MAP_DRIVE;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.MAP_DRIVE) ? "" : NoteProblem.MAP_DRIVE;
                 }
                 else
                 {
@@ -813,7 +993,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.INSTALL_UPDATE;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.INSTALL_UPDATE) ? "" : NoteProblem.INSTALL_UPDATE;
                 }
                 else
                 {
@@ -828,7 +1008,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.ERROR;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.ERROR) ? "" : NoteProblem.ERROR;
                 }
                 else
                 {
@@ -843,7 +1023,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.FONTS;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.FONTS) ? "" : NoteProblem.FONTS;
                 }
                 else
                 {
@@ -858,7 +1038,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.PRINT;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.PRINT) ? "" : NoteProblem.PRINT;
                 }
                 else
                 {
@@ -873,7 +1053,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.TRAINING;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.TRAINING) ? "" : NoteProblem.TRAINING;
                 }
                 else
                 {
@@ -888,7 +1068,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.STOCK;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.STOCK) ? "" : NoteProblem.STOCK;
                 }
                 else
                 {
@@ -903,7 +1083,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.EDIT_FORM;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.EDIT_FORM) ? "" : NoteProblem.EDIT_FORM;
                 }
                 else
                 {
@@ -918,7 +1098,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.REPORT_EXCEL;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.REPORT_EXCEL) ? "" : NoteProblem.REPORT_EXCEL;
                 }
                 else
                 {
@@ -933,7 +1113,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.STATEMENT;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.STATEMENT) ? "" : NoteProblem.STATEMENT;
                 }
                 else
                 {
@@ -948,7 +1128,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.ASSETS;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.ASSETS) ? "" : NoteProblem.ASSETS;
                 }
                 else
                 {
@@ -963,7 +1143,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.SECURE;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.SECURE) ? "" : NoteProblem.SECURE;
                 }
                 else
                 {
@@ -978,7 +1158,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.YEAR_END;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.YEAR_END) ? "" : NoteProblem.YEAR_END;
                 }
                 else
                 {
@@ -993,7 +1173,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.PERIOD;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.PERIOD) ? "" : NoteProblem.PERIOD;
                 }
                 else
                 {
@@ -1008,7 +1188,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.MAIL_WAIT;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.MAIL_WAIT) ? "" : NoteProblem.MAIL_WAIT;
                 }
                 else
                 {
@@ -1023,7 +1203,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.TRANSFER_MKT;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.TRANSFER_MKT) ? "" : NoteProblem.TRANSFER_MKT;
                 }
                 else
                 {
@@ -1038,7 +1218,7 @@ namespace SN_Net.Subform
             {
                 if (((XCheckBox)sender)._Checked)
                 {
-                    this.tmp_note.problem += NoteProblem.OTHER;
+                    this.tmp_note.problem += this.tmp_note.problem.Contains(NoteProblem.OTHER) ? "" : NoteProblem.OTHER;
                     this.tmp_note.remark = "{problem}" + this.tmp_note.remark;
                 }
                 else
@@ -1081,23 +1261,41 @@ namespace SN_Net.Subform
                     ((XDatagrid)sender).Rows[row_index].Cells[this.col_note_start.Name].Selected = true;
                 }
 
-                ContextMenu cm = new ContextMenu();
-                MenuItem m_add = new MenuItem("Add <Alt+A>");
-                m_add.Click += delegate
+                if (!this.show_as_search_result)
                 {
-                    this.btnAdd.PerformClick();
-                };
-                cm.MenuItems.Add(m_add);
+                    ContextMenu cm = new ContextMenu();
+                    MenuItem m_add = new MenuItem("Add <Alt+A>");
+                    m_add.Click += delegate
+                    {
+                        this.btnAdd.PerformClick();
+                    };
+                    cm.MenuItems.Add(m_add);
 
-                MenuItem m_edit = new MenuItem("Edit <Alt+E>");
-                m_edit.Click += delegate
-                {
-                    this.btnEdit.PerformClick();
-                };
-                m_edit.Enabled = row_index > -1 ? true : false;
-                cm.MenuItems.Add(m_edit);
+                    MenuItem m_edit = new MenuItem("Edit <Alt+E>");
+                    m_edit.Click += delegate
+                    {
+                        this.btnEdit.PerformClick();
+                    };
+                    m_edit.Enabled = row_index > -1 ? true : false;
+                    cm.MenuItems.Add(m_edit);
 
-                cm.Show(((XDatagrid)sender), new Point(e.X, e.Y));
+                    cm.Show(((XDatagrid)sender), new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        private void dgvNote_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int row_index = ((XDatagrid)sender).HitTest(e.X, e.Y).RowIndex;
+            if(row_index == -1)
+            {
+                this.btnAdd.PerformClick();
+                return;
+            }
+            else
+            {
+                this.btnEdit.PerformClick();
+                return;
             }
         }
 
@@ -1157,8 +1355,15 @@ namespace SN_Net.Subform
 
             if (keyData == Keys.Escape)
             {
-                this.btnStop.PerformClick();
-                return true;
+                if (this.show_as_search_result)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    this.btnStop.PerformClick();
+                    return true;
+                }
             }
 
             if (keyData == Keys.F9)

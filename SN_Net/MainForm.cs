@@ -95,6 +95,11 @@ namespace SN_Net
             {
                 this.loged_in_user = login.loged_in_user;
                 this.toolStripUserInfo.Text = this.loged_in_user.username;
+                this.mnuImportData.Visible = this.loged_in_user.level >= (int)USER_LEVEL.ADMIN ? true : false;
+                this.mnuViewNote.Visible = this.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+                this.mnuUserInformation.Visible = this.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+                this.mnuMacAddressAllowed.Visible = this.loged_in_user.level >= (int)USER_LEVEL.ADMIN ? true : false;
+                this.mnuPreference.Visible = this.loged_in_user.level >= (int)USER_LEVEL.ADMIN ? true : false;
                 //this.G = login.G;
                 //this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
                 //if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)
@@ -552,6 +557,25 @@ namespace SN_Net
         {
             DialogPreference pf = new DialogPreference(this);
             pf.ShowDialog();
+        }
+
+        private void mnuViewNote_Click(object sender, EventArgs e)
+        {
+            if(this.form_note == null)
+            {
+                DialogNoteChangeScope scope = new DialogNoteChangeScope(this, null, DateTime.Now);
+                if(scope.ShowDialog() == DialogResult.OK)
+                {
+                    this.form_note = new FormNote(this, scope.selected_date, scope.selected_user);
+                    this.form_note.MdiParent = this;
+                    this.form_note.Show();
+                }
+            }
+            else
+            {
+                this.form_note.Activate();
+                this.form_note.WindowState = FormWindowState.Maximized;
+            }
         }
     }
 }

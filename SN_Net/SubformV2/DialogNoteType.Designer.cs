@@ -31,6 +31,7 @@
             this.btnBreak = new System.Windows.Forms.Button();
             this.btnTrain = new System.Windows.Forms.Button();
             this.btnTel = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnBreak
@@ -78,12 +79,24 @@
             this.btnTel.UseVisualStyleBackColor = true;
             this.btnTel.Click += new System.EventHandler(this.btnTel_Click);
             // 
+            // btnClose
+            // 
+            this.btnClose.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnClose.Location = new System.Drawing.Point(417, 1);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(16, 16);
+            this.btnClose.TabIndex = 3;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Paint += new System.Windows.Forms.PaintEventHandler(this.btnClose_Paint);
+            // 
             // DialogNoteType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 130);
             this.ControlBox = false;
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnTrain);
             this.Controls.Add(this.btnBreak);
             this.Controls.Add(this.btnTel);
@@ -107,5 +120,6 @@
         private System.Windows.Forms.Button btnTel;
         private System.Windows.Forms.Button btnBreak;
         private System.Windows.Forms.Button btnTrain;
+        private System.Windows.Forms.Button btnClose;
     }
 }
