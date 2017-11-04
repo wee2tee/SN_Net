@@ -43,6 +43,11 @@ namespace SN_Net.Subform
                 return true;
             }
 
+            if(keyData == Keys.Tab)
+            {
+                return true;
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
     }

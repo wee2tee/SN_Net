@@ -375,7 +375,7 @@ namespace CC
         {
             if (this._ReadOnly)
             {
-                this.Parent.SelectNextControl(this, true, true, true, true);
+                this.Parent.SelectNextControl(this, true, true, true, false);
             }
         }
     }

@@ -344,6 +344,12 @@
     <Compile Include="SubformV2\DialogNoteChangeScope.Designer.cs">
       <DependentUpon>DialogNoteChangeScope.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubformV2\DialogNoteComment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogNoteComment.Designer.cs">
+      <DependentUpon>DialogNoteComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogNoteType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -910,6 +916,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogNoteChangeScope.resx">
       <DependentUpon>DialogNoteChangeScope.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogNoteComment.resx">
+      <DependentUpon>DialogNoteComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogNoteType.resx">
       <DependentUpon>DialogNoteType.cs</DependentUpon>

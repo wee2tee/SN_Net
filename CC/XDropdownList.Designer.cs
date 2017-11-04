@@ -71,6 +71,7 @@
             this.Name = "XDropdownList";
             this.Size = new System.Drawing.Size(94, 23);
             this.Load += new System.EventHandler(this.XDropdownList_Load);
+            this.Enter += new System.EventHandler(this.XDropdownList_Enter);
             this.ResumeLayout(false);
 
         }

@@ -87,6 +87,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "XBrowseBox";
             this.Size = new System.Drawing.Size(118, 23);
+            this.Enter += new System.EventHandler(this.XBrowseBox_Enter);
             this.ResumeLayout(false);
             this.PerformLayout();
 

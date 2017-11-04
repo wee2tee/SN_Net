@@ -65,6 +65,7 @@ namespace SN_Net.Subform
             else
             {
                 this.toolStrip1.Enabled = false;
+                this.btnComment.Enabled = false;
                 this.toolStrip1.Visible = false;
                 this.panel3.Dock = DockStyle.Fill;
                 this.dgvNote.BringToFront();
@@ -300,6 +301,11 @@ namespace SN_Net.Subform
                     this.inlineTrainType._SelectedItem = this.inlineTrainType._Items.Cast<XDropdownListItem>().Where(i => i.Value == null).First();
                 }
             }
+
+            if((this.trn_typ == TRNTYP.TEL || this.trn_typ == TRNTYP.BREAK) && this.form_mode == FORM_MODE.ADD_ITEM)
+            {
+                this.lblTime.Visible = true;
+            }
         }
 
         private void SetInlineFormPosition(DataGridViewRow row)
@@ -489,6 +495,10 @@ namespace SN_Net.Subform
                 this.timer.Tick += delegate
                 {
                     this.inlineEnd.Text = DateTime.Now.ToString("HH:mm:ss", CultureInfo.GetCultureInfo("th-TH"));
+                    if(this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.BREAK && (DateTime.Now.ToString("HH:mm") == "12:00" || DateTime.Now.ToString("HH:mm") == "17:00"))
+                    {
+                        this.btnSave.PerformClick();
+                    }
                 };
                 this.timer.Enabled = true;
                 this.timer.Start();
@@ -549,6 +559,7 @@ namespace SN_Net.Subform
             this.lblPassword.Text = string.Empty;
             this.lblMA.Text = string.Empty;
             this.lblCloud.Text = string.Empty;
+            this.lblTime.Visible = false;
 
             this.HideInlineForm();
 
@@ -676,6 +687,7 @@ namespace SN_Net.Subform
             this.lblVersion.Text = string.Empty;
             this.lblMA.Text = string.Empty;
             this.lblCloud.Text = string.Empty;
+            this.lblTime.Visible = false;
             this.dgvNote.Focus();
             if (this.timer != null)
             {
@@ -694,7 +706,15 @@ namespace SN_Net.Subform
             {
                 using (sn_noteEntities sn_note = DBXNote.DataSet())
                 {
-                    var notes = sn_note.note.Where(n => n.users_name == this.curr_user.username && n.sernum.Trim() == search.keyword.Trim()).OrderBy(n => n.date).OrderBy(n => n.start_time).ToList();
+                    List<note> notes;
+                    if(this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR) // search in all user for supervisor/admin
+                    {
+                        notes = sn_note.note.Where(n => n.sernum.Trim() == search.keyword.Trim()).OrderByDescending(n => n.date).ThenByDescending(n => n.start_time).ToList();
+                    }
+                    else // search in current user for support/sales/account
+                    {
+                        notes = sn_note.note.Where(n => n.users_name == this.curr_user.username && n.sernum.Trim() == search.keyword.Trim()).OrderByDescending(n => n.date).ThenByDescending(n => n.start_time).ToList();
+                    }
                     FormNote frm = new FormNote(notes);
                     frm.ShowDialog();
                 }
@@ -926,7 +946,10 @@ namespace SN_Net.Subform
         private void inlineDuration_TextChanged(object sender, EventArgs e)
         {
             if (this.tmp_note != null)
+            {
                 this.tmp_note.duration = ((Label)sender).Text;
+                this.lblTime.Text = ((Label)sender).Text;
+            }
         }
 
         private void inlineSernum__Leave(object sender, EventArgs e)
@@ -1279,6 +1302,14 @@ namespace SN_Net.Subform
                     m_edit.Enabled = row_index > -1 ? true : false;
                     cm.MenuItems.Add(m_edit);
 
+                    MenuItem m_comment = new MenuItem("Comment/Complain <Alt+C>");
+                    m_comment.Click += delegate
+                    {
+                        this.btnComment.PerformClick();
+                    };
+                    m_comment.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+                    cm.MenuItems.Add(m_comment);
+
                     cm.Show(((XDatagrid)sender), new Point(e.X, e.Y));
                 }
             }
@@ -1297,6 +1328,17 @@ namespace SN_Net.Subform
                 this.btnEdit.PerformClick();
                 return;
             }
+        }
+
+        private void btnComment_Click(object sender, EventArgs e)
+        {
+            if (this.dgvNote.CurrentCell == null)
+                return;
+
+            note note = (note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[this.col_note_note.Name].Value;
+            DialogNoteComment comm = new DialogNoteComment(this.main_form, note);
+            comm.ShowDialog();
+
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -1381,6 +1423,12 @@ namespace SN_Net.Subform
             if (keyData == (Keys.Control | Keys.G))
             {
                 this.btnWorkingDate.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.C))
+            {
+                this.btnComment.PerformClick();
                 return true;
             }
 

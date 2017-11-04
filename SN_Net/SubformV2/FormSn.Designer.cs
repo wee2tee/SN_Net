@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSn));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
@@ -87,20 +87,37 @@
             this.btnDeleteCloud = new System.Windows.Forms.Button();
             this.btnEditCloud = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtCloudEmail = new CC.XTextEdit();
             this.label37 = new System.Windows.Forms.Label();
+            this.dtCloudTo = new CC.XDatePicker();
             this.label38 = new System.Windows.Forms.Label();
+            this.dtCloudFrom = new CC.XDatePicker();
             this.label39 = new System.Windows.Forms.Label();
             this.btnDeleteMA = new System.Windows.Forms.Button();
             this.btnEditMA = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.txtMaEmail = new CC.XTextEdit();
+            this.dtMaTo = new CC.XDatePicker();
+            this.dtMaFrom = new CC.XDatePicker();
             this.label35 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
+            this.dlVerext = new CC.XDropdownList();
+            this.dtVerextDat = new CC.XDatePicker();
+            this.dtManual = new CC.XDatePicker();
+            this.dtExpdat = new CC.XDatePicker();
+            this.dtPurdat = new CC.XDatePicker();
+            this.txtUpfree = new CC.XTextEdit();
+            this.brDealer = new CC.XBrowseBox();
+            this.brHowknown = new CC.XBrowseBox();
+            this.brBusityp = new CC.XBrowseBox();
             this.lblMAExpireWarning = new System.Windows.Forms.Label();
             this.lblCloudExpireWarning = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
+            this.txtBusides = new CC.XTextEdit();
+            this.txtRemark = new CC.XTextEdit();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -110,12 +127,21 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mskOldSn = new CC.XTextEditMasked();
+            this.txtZipcod = new CC.XNumTextEdit();
             this.btnPasswordRemove = new System.Windows.Forms.Button();
             this.btnPasswordAdd = new System.Windows.Forms.Button();
             this.dgvPassword = new System.Windows.Forms.DataGridView();
             this.col_password_serial_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_password_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_password_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtAddr03 = new CC.XTextEdit();
+            this.txtPosition = new CC.XTextEdit();
+            this.txtContact = new CC.XTextEdit();
+            this.txtFaxnum = new CC.XTextEdit();
+            this.txtTelnum = new CC.XTextEdit();
+            this.txtAddr02 = new CC.XTextEdit();
+            this.txtAddr01 = new CC.XTextEdit();
             this.label31 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -126,43 +152,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnDeleteProblem = new System.Windows.Forms.Button();
-            this.btnEditProblem = new System.Windows.Forms.Button();
-            this.btnAddProblem = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblArea = new System.Windows.Forms.Label();
-            this.btnSupportNote = new System.Windows.Forms.Button();
-            this.mskRefSn = new CC.XTextEditMasked();
-            this.mskSernum = new CC.XTextEditMasked();
-            this.txtCloudEmail = new CC.XTextEdit();
-            this.dtCloudTo = new CC.XDatePicker();
-            this.dtCloudFrom = new CC.XDatePicker();
-            this.txtMaEmail = new CC.XTextEdit();
-            this.dtMaTo = new CC.XDatePicker();
-            this.dtMaFrom = new CC.XDatePicker();
-            this.dlVerext = new CC.XDropdownList();
-            this.dtVerextDat = new CC.XDatePicker();
-            this.dtManual = new CC.XDatePicker();
-            this.dtExpdat = new CC.XDatePicker();
-            this.dtPurdat = new CC.XDatePicker();
-            this.txtUpfree = new CC.XTextEdit();
-            this.brDealer = new CC.XBrowseBox();
-            this.brHowknown = new CC.XBrowseBox();
-            this.brBusityp = new CC.XBrowseBox();
-            this.txtBusides = new CC.XTextEdit();
-            this.txtRemark = new CC.XTextEdit();
-            this.mskOldSn = new CC.XTextEditMasked();
-            this.txtZipcod = new CC.XNumTextEdit();
-            this.txtAddr03 = new CC.XTextEdit();
-            this.txtPosition = new CC.XTextEdit();
-            this.txtContact = new CC.XTextEdit();
-            this.txtFaxnum = new CC.XTextEdit();
-            this.txtTelnum = new CC.XTextEdit();
-            this.txtAddr02 = new CC.XTextEdit();
-            this.txtAddr01 = new CC.XTextEdit();
             this.inlineProbdesc = new CC.XTextEditWithMaskedLabel();
             this.inlineProbcod = new CC.XBrowseBox();
             this.inlineName = new CC.XTextEdit();
@@ -174,10 +163,21 @@
             this.col_problem_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_problem_probcod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_problem_probdesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDeleteProblem = new System.Windows.Forms.Button();
+            this.btnEditProblem = new System.Windows.Forms.Button();
+            this.btnAddProblem = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtTelnum2 = new CC.XTextEdit();
             this.txtUpfree2 = new CC.XTextEdit();
             this.txtContact2 = new CC.XTextEdit();
             this.txtExpdat2 = new CC.XTextEdit();
+            this.lblArea = new System.Windows.Forms.Label();
+            this.btnSupportNote = new System.Windows.Forms.Button();
+            this.mskRefSn = new CC.XTextEditMasked();
+            this.mskSernum = new CC.XTextEditMasked();
             this.txtCompnam = new CC.XTextEdit();
             this.txtPrenam = new CC.XTextEdit();
             this.txtVersion = new CC.XTextEdit();
@@ -810,6 +810,29 @@
             this.panel2.Size = new System.Drawing.Size(222, 81);
             this.panel2.TabIndex = 168;
             // 
+            // txtCloudEmail
+            // 
+            this.txtCloudEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCloudEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtCloudEmail._ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtCloudEmail._MaxLength = 32767;
+            this.txtCloudEmail._PasswordChar = '\0';
+            this.txtCloudEmail._ReadOnly = true;
+            this.txtCloudEmail._SelectionLength = 0;
+            this.txtCloudEmail._SelectionStart = 0;
+            this.txtCloudEmail._Text = "";
+            this.txtCloudEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtCloudEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCloudEmail.BackColor = System.Drawing.Color.White;
+            this.txtCloudEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCloudEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtCloudEmail.Location = new System.Drawing.Point(44, 53);
+            this.txtCloudEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtCloudEmail.Name = "txtCloudEmail";
+            this.txtCloudEmail.Size = new System.Drawing.Size(173, 23);
+            this.txtCloudEmail.TabIndex = 150;
+            // 
             // label37
             // 
             this.label37.AutoSize = true;
@@ -820,6 +843,19 @@
             this.label37.TabIndex = 144;
             this.label37.Text = "อีเมล์";
             // 
+            // dtCloudTo
+            // 
+            this.dtCloudTo._ReadOnly = true;
+            this.dtCloudTo._SelectedDate = null;
+            this.dtCloudTo.BackColor = System.Drawing.Color.White;
+            this.dtCloudTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtCloudTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtCloudTo.Location = new System.Drawing.Point(44, 28);
+            this.dtCloudTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtCloudTo.Name = "dtCloudTo";
+            this.dtCloudTo.Size = new System.Drawing.Size(103, 23);
+            this.dtCloudTo.TabIndex = 149;
+            // 
             // label38
             // 
             this.label38.AutoSize = true;
@@ -829,6 +865,19 @@
             this.label38.Size = new System.Drawing.Size(40, 16);
             this.label38.TabIndex = 143;
             this.label38.Text = "สิ้นสุด";
+            // 
+            // dtCloudFrom
+            // 
+            this.dtCloudFrom._ReadOnly = true;
+            this.dtCloudFrom._SelectedDate = null;
+            this.dtCloudFrom.BackColor = System.Drawing.Color.White;
+            this.dtCloudFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtCloudFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtCloudFrom.Location = new System.Drawing.Point(44, 3);
+            this.dtCloudFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtCloudFrom.Name = "dtCloudFrom";
+            this.dtCloudFrom.Size = new System.Drawing.Size(103, 23);
+            this.dtCloudFrom.TabIndex = 148;
             // 
             // label39
             // 
@@ -877,6 +926,55 @@
             this.panel4.Size = new System.Drawing.Size(222, 81);
             this.panel4.TabIndex = 165;
             // 
+            // txtMaEmail
+            // 
+            this.txtMaEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMaEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtMaEmail._ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtMaEmail._MaxLength = 32767;
+            this.txtMaEmail._PasswordChar = '\0';
+            this.txtMaEmail._ReadOnly = true;
+            this.txtMaEmail._SelectionLength = 0;
+            this.txtMaEmail._SelectionStart = 0;
+            this.txtMaEmail._Text = "";
+            this.txtMaEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtMaEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMaEmail.BackColor = System.Drawing.Color.White;
+            this.txtMaEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMaEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.txtMaEmail.Location = new System.Drawing.Point(44, 53);
+            this.txtMaEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMaEmail.Name = "txtMaEmail";
+            this.txtMaEmail.Size = new System.Drawing.Size(173, 23);
+            this.txtMaEmail.TabIndex = 147;
+            // 
+            // dtMaTo
+            // 
+            this.dtMaTo._ReadOnly = true;
+            this.dtMaTo._SelectedDate = null;
+            this.dtMaTo.BackColor = System.Drawing.Color.White;
+            this.dtMaTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtMaTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtMaTo.Location = new System.Drawing.Point(44, 28);
+            this.dtMaTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtMaTo.Name = "dtMaTo";
+            this.dtMaTo.Size = new System.Drawing.Size(103, 23);
+            this.dtMaTo.TabIndex = 146;
+            // 
+            // dtMaFrom
+            // 
+            this.dtMaFrom._ReadOnly = true;
+            this.dtMaFrom._SelectedDate = null;
+            this.dtMaFrom.BackColor = System.Drawing.Color.White;
+            this.dtMaFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dtMaFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtMaFrom.Location = new System.Drawing.Point(44, 3);
+            this.dtMaFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtMaFrom.Name = "dtMaFrom";
+            this.dtMaFrom.Size = new System.Drawing.Size(103, 23);
+            this.dtMaFrom.TabIndex = 145;
+            // 
             // label35
             // 
             this.label35.AutoSize = true;
@@ -906,602 +1004,6 @@
             this.label33.Size = new System.Drawing.Size(26, 16);
             this.label33.TabIndex = 142;
             this.label33.Text = "เริ่ม";
-            // 
-            // lblMAExpireWarning
-            // 
-            this.lblMAExpireWarning.AutoSize = true;
-            this.lblMAExpireWarning.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblMAExpireWarning.ForeColor = System.Drawing.Color.Red;
-            this.lblMAExpireWarning.Location = new System.Drawing.Point(418, 72);
-            this.lblMAExpireWarning.Name = "lblMAExpireWarning";
-            this.lblMAExpireWarning.Size = new System.Drawing.Size(187, 19);
-            this.lblMAExpireWarning.TabIndex = 160;
-            this.lblMAExpireWarning.Text = "** MA. ใกล้หมดอายุ **";
-            this.lblMAExpireWarning.Visible = false;
-            // 
-            // lblCloudExpireWarning
-            // 
-            this.lblCloudExpireWarning.AutoSize = true;
-            this.lblCloudExpireWarning.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblCloudExpireWarning.ForeColor = System.Drawing.Color.Red;
-            this.lblCloudExpireWarning.Location = new System.Drawing.Point(310, 156);
-            this.lblCloudExpireWarning.Name = "lblCloudExpireWarning";
-            this.lblCloudExpireWarning.Size = new System.Drawing.Size(295, 19);
-            this.lblCloudExpireWarning.TabIndex = 161;
-            this.lblCloudExpireWarning.Text = "** Express on Cloud ใกล้หมดอายุ **";
-            this.lblCloudExpireWarning.Visible = false;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label36.Location = new System.Drawing.Point(511, 113);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(160, 16);
-            this.label36.TabIndex = 159;
-            this.label36.Text = "บริการ Express on Cloud";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label32.Location = new System.Drawing.Point(595, 28);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(76, 16);
-            this.label32.TabIndex = 158;
-            this.label32.Text = "บริการ MA.";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label27.Location = new System.Drawing.Point(630, 219);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(34, 16);
-            this.label27.TabIndex = 157;
-            this.label27.Text = "Date";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label26.Location = new System.Drawing.Point(610, 195);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(55, 16);
-            this.label26.TabIndex = 156;
-            this.label26.Text = "Register";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label25.Location = new System.Drawing.Point(281, 244);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(75, 16);
-            this.label25.TabIndex = 155;
-            this.label25.Text = "CD Training";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label24.Location = new System.Drawing.Point(11, 244);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(90, 16);
-            this.label24.TabIndex = 154;
-            this.label24.Text = "Purchase Date";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label22.Location = new System.Drawing.Point(19, 219);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(82, 16);
-            this.label22.TabIndex = 153;
-            this.label22.Text = "How to know";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label20.Location = new System.Drawing.Point(7, 99);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(94, 16);
-            this.label20.TabIndex = 152;
-            this.label20.Text = "Purchase From";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label19.Location = new System.Drawing.Point(12, 74);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(89, 16);
-            this.label19.TabIndex = 151;
-            this.label19.Text = "Business Type";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label18.Location = new System.Drawing.Point(9, 49);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(92, 16);
-            this.label18.TabIndex = 150;
-            this.label18.Text = "Business Desc.";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label16.Location = new System.Drawing.Point(49, 24);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(52, 16);
-            this.label16.TabIndex = 149;
-            this.label16.Text = "Remark";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.mskOldSn);
-            this.groupBox1.Controls.Add(this.txtZipcod);
-            this.groupBox1.Controls.Add(this.btnPasswordRemove);
-            this.groupBox1.Controls.Add(this.btnPasswordAdd);
-            this.groupBox1.Controls.Add(this.dgvPassword);
-            this.groupBox1.Controls.Add(this.txtAddr03);
-            this.groupBox1.Controls.Add(this.txtPosition);
-            this.groupBox1.Controls.Add(this.txtContact);
-            this.groupBox1.Controls.Add(this.txtFaxnum);
-            this.groupBox1.Controls.Add(this.txtTelnum);
-            this.groupBox1.Controls.Add(this.txtAddr02);
-            this.groupBox1.Controls.Add(this.txtAddr01);
-            this.groupBox1.Controls.Add(this.label31);
-            this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label17);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Location = new System.Drawing.Point(8, 3);
-            this.groupBox1.MaximumSize = new System.Drawing.Size(1024, 207);
-            this.groupBox1.MinimumSize = new System.Drawing.Size(900, 207);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(900, 207);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            // 
-            // btnPasswordRemove
-            // 
-            this.btnPasswordRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPasswordRemove.Location = new System.Drawing.Point(802, 121);
-            this.btnPasswordRemove.Name = "btnPasswordRemove";
-            this.btnPasswordRemove.Size = new System.Drawing.Size(92, 23);
-            this.btnPasswordRemove.TabIndex = 99;
-            this.btnPasswordRemove.Text = "- Remove";
-            this.btnPasswordRemove.UseVisualStyleBackColor = true;
-            this.btnPasswordRemove.Click += new System.EventHandler(this.btnPasswordRemove_Click);
-            // 
-            // btnPasswordAdd
-            // 
-            this.btnPasswordAdd.Location = new System.Drawing.Point(629, 121);
-            this.btnPasswordAdd.Name = "btnPasswordAdd";
-            this.btnPasswordAdd.Size = new System.Drawing.Size(91, 23);
-            this.btnPasswordAdd.TabIndex = 98;
-            this.btnPasswordAdd.Text = "+ Add";
-            this.btnPasswordAdd.UseVisualStyleBackColor = true;
-            this.btnPasswordAdd.Click += new System.EventHandler(this.btnPasswordAdd_Click);
-            // 
-            // dgvPassword
-            // 
-            this.dgvPassword.AllowUserToAddRows = false;
-            this.dgvPassword.AllowUserToDeleteRows = false;
-            this.dgvPassword.AllowUserToResizeColumns = false;
-            this.dgvPassword.AllowUserToResizeRows = false;
-            this.dgvPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPassword.BackgroundColor = System.Drawing.Color.White;
-            this.dgvPassword.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.dgvPassword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPassword.ColumnHeadersVisible = false;
-            this.dgvPassword.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.col_password_serial_password,
-            this.col_password_id,
-            this.col_password_password});
-            this.dgvPassword.GridColor = System.Drawing.Color.White;
-            this.dgvPassword.Location = new System.Drawing.Point(630, 17);
-            this.dgvPassword.MultiSelect = false;
-            this.dgvPassword.Name = "dgvPassword";
-            this.dgvPassword.RowHeadersVisible = false;
-            this.dgvPassword.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
-            this.dgvPassword.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dgvPassword.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
-            this.dgvPassword.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.Red;
-            this.dgvPassword.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
-            this.dgvPassword.RowTemplate.Height = 25;
-            this.dgvPassword.RowTemplate.ReadOnly = true;
-            this.dgvPassword.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvPassword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPassword.Size = new System.Drawing.Size(263, 103);
-            this.dgvPassword.TabIndex = 97;
-            this.dgvPassword.TabStop = false;
-            // 
-            // col_password_serial_password
-            // 
-            this.col_password_serial_password.DataPropertyName = "serial_password";
-            this.col_password_serial_password.HeaderText = "Serial Password";
-            this.col_password_serial_password.Name = "col_password_serial_password";
-            this.col_password_serial_password.ReadOnly = true;
-            this.col_password_serial_password.Visible = false;
-            // 
-            // col_password_id
-            // 
-            this.col_password_id.DataPropertyName = "id";
-            this.col_password_id.HeaderText = "ID";
-            this.col_password_id.Name = "col_password_id";
-            this.col_password_id.ReadOnly = true;
-            this.col_password_id.Visible = false;
-            // 
-            // col_password_password
-            // 
-            this.col_password_password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_password_password.DataPropertyName = "password";
-            this.col_password_password.HeaderText = "Password";
-            this.col_password_password.Name = "col_password_password";
-            this.col_password_password.ReadOnly = true;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label31.Location = new System.Drawing.Point(566, 21);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(63, 16);
-            this.label31.TabIndex = 36;
-            this.label31.Text = "Password";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label15.Location = new System.Drawing.Point(565, 171);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(64, 16);
-            this.label15.TabIndex = 35;
-            this.label15.Text = "Old Serial";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(423, 71);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(58, 16);
-            this.label11.TabIndex = 34;
-            this.label11.Text = "Zip Code";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label17.Location = new System.Drawing.Point(69, 121);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(32, 16);
-            this.label17.TabIndex = 33;
-            this.label17.Text = "Fax.";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label14.Location = new System.Drawing.Point(49, 171);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(52, 16);
-            this.label14.TabIndex = 32;
-            this.label14.Text = "Position";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label13.Location = new System.Drawing.Point(50, 146);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 16);
-            this.label13.TabIndex = 31;
-            this.label13.Text = "Contact";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label12.Location = new System.Drawing.Point(71, 96);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(30, 16);
-            this.label12.TabIndex = 30;
-            this.label12.Text = "Tel.";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label10.Location = new System.Drawing.Point(47, 21);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 16);
-            this.label10.TabIndex = 29;
-            this.label10.Text = "Address";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.panel1);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.txtTelnum2);
-            this.tabPage2.Controls.Add(this.txtUpfree2);
-            this.tabPage2.Controls.Add(this.txtContact2);
-            this.tabPage2.Controls.Add(this.txtExpdat2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(976, 501);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "ประวัติการติดต่อ <F8>";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.inlineProbdesc);
-            this.panel1.Controls.Add(this.inlineProbcod);
-            this.panel1.Controls.Add(this.inlineName);
-            this.panel1.Controls.Add(this.inlineDate);
-            this.panel1.Controls.Add(this.dgvProblem);
-            this.panel1.Controls.Add(this.btnDeleteProblem);
-            this.panel1.Controls.Add(this.btnEditProblem);
-            this.panel1.Controls.Add(this.btnAddProblem);
-            this.panel1.Location = new System.Drawing.Point(4, 32);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(966, 463);
-            this.panel1.TabIndex = 27;
-            // 
-            // btnDeleteProblem
-            // 
-            this.btnDeleteProblem.Location = new System.Drawing.Point(789, 72);
-            this.btnDeleteProblem.Name = "btnDeleteProblem";
-            this.btnDeleteProblem.Size = new System.Drawing.Size(104, 23);
-            this.btnDeleteProblem.TabIndex = 31;
-            this.btnDeleteProblem.Text = "delete problem";
-            this.btnDeleteProblem.UseVisualStyleBackColor = true;
-            this.btnDeleteProblem.Click += new System.EventHandler(this.btnDeleteProblem_Click);
-            // 
-            // btnEditProblem
-            // 
-            this.btnEditProblem.Location = new System.Drawing.Point(789, 43);
-            this.btnEditProblem.Name = "btnEditProblem";
-            this.btnEditProblem.Size = new System.Drawing.Size(104, 23);
-            this.btnEditProblem.TabIndex = 31;
-            this.btnEditProblem.Text = "edit problem";
-            this.btnEditProblem.UseVisualStyleBackColor = true;
-            this.btnEditProblem.Click += new System.EventHandler(this.btnEditProblem_Click);
-            // 
-            // btnAddProblem
-            // 
-            this.btnAddProblem.Location = new System.Drawing.Point(789, 14);
-            this.btnAddProblem.Name = "btnAddProblem";
-            this.btnAddProblem.Size = new System.Drawing.Size(104, 23);
-            this.btnAddProblem.TabIndex = 31;
-            this.btnAddProblem.Text = "add problem";
-            this.btnAddProblem.UseVisualStyleBackColor = true;
-            this.btnAddProblem.Click += new System.EventHandler(this.btnAddProblem_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label9.Location = new System.Drawing.Point(728, 8);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 16);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "Reg.";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label8.Location = new System.Drawing.Point(509, 8);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(51, 16);
-            this.label8.TabIndex = 23;
-            this.label8.Text = "Contact";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label7.Location = new System.Drawing.Point(178, 8);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(30, 16);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Tel.";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label6.Location = new System.Drawing.Point(4, 8);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 16);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "CD Training";
-            // 
-            // lblArea
-            // 
-            this.lblArea.Location = new System.Drawing.Point(481, 58);
-            this.lblArea.Name = "lblArea";
-            this.lblArea.Size = new System.Drawing.Size(149, 16);
-            this.lblArea.TabIndex = 163;
-            // 
-            // btnSupportNote
-            // 
-            this.btnSupportNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
-            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportNote.Location = new System.Drawing.Point(584, 80);
-            this.btnSupportNote.Name = "btnSupportNote";
-            this.btnSupportNote.Size = new System.Drawing.Size(68, 26);
-            this.btnSupportNote.TabIndex = 89;
-            this.btnSupportNote.Text = "       Note";
-            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSupportNote.UseVisualStyleBackColor = true;
-            this.btnSupportNote.Click += new System.EventHandler(this.btnSupportNote_Click);
-            // 
-            // mskRefSn
-            // 
-            this.mskRefSn._Mask = ">A-AAA-AAAAAA";
-            this.mskRefSn._PromptChar = ' ';
-            this.mskRefSn._ReadOnly = true;
-            this.mskRefSn._SelectionLength = 0;
-            this.mskRefSn._SelectionStart = 0;
-            this.mskRefSn._Text = " -   -";
-            this.mskRefSn._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.mskRefSn.BackColor = System.Drawing.Color.White;
-            this.mskRefSn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mskRefSn.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskRefSn.Location = new System.Drawing.Point(693, 50);
-            this.mskRefSn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.mskRefSn.Name = "mskRefSn";
-            this.mskRefSn.Size = new System.Drawing.Size(121, 23);
-            this.mskRefSn.TabIndex = 4;
-            this.mskRefSn.TabStop = false;
-            this.mskRefSn._TextChanged += new System.EventHandler(this.mskRefSn__TextChanged);
-            this.mskRefSn._DoubleClicked += new System.EventHandler(this.PerformEdit);
-            this.mskRefSn.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // mskSernum
-            // 
-            this.mskSernum._Mask = ">A-AAA-AAAAAA";
-            this.mskSernum._PromptChar = ' ';
-            this.mskSernum._ReadOnly = true;
-            this.mskSernum._SelectionLength = 0;
-            this.mskSernum._SelectionStart = 0;
-            this.mskSernum._Text = " -   -";
-            this.mskSernum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.mskSernum.BackColor = System.Drawing.Color.White;
-            this.mskSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mskSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.mskSernum.Location = new System.Drawing.Point(79, 54);
-            this.mskSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.mskSernum.Name = "mskSernum";
-            this.mskSernum.Size = new System.Drawing.Size(121, 23);
-            this.mskSernum.TabIndex = 1;
-            this.mskSernum.TabStop = false;
-            this.mskSernum._TextChanged += new System.EventHandler(this.mskSernum__TextChanged);
-            this.mskSernum._Leave += new System.EventHandler(this.mskSernum__Leave);
-            this.mskSernum._DoubleClicked += new System.EventHandler(this.PerformEdit);
-            this.mskSernum.Enter += new System.EventHandler(this.KeepFocusedControl);
-            // 
-            // txtCloudEmail
-            // 
-            this.txtCloudEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCloudEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtCloudEmail._ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtCloudEmail._MaxLength = 32767;
-            this.txtCloudEmail._PasswordChar = '\0';
-            this.txtCloudEmail._ReadOnly = true;
-            this.txtCloudEmail._SelectionLength = 0;
-            this.txtCloudEmail._SelectionStart = 0;
-            this.txtCloudEmail._Text = "";
-            this.txtCloudEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtCloudEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCloudEmail.BackColor = System.Drawing.Color.White;
-            this.txtCloudEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCloudEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtCloudEmail.Location = new System.Drawing.Point(44, 53);
-            this.txtCloudEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtCloudEmail.Name = "txtCloudEmail";
-            this.txtCloudEmail.Size = new System.Drawing.Size(173, 23);
-            this.txtCloudEmail.TabIndex = 146;
-            // 
-            // dtCloudTo
-            // 
-            this.dtCloudTo._ReadOnly = true;
-            this.dtCloudTo._SelectedDate = null;
-            this.dtCloudTo.BackColor = System.Drawing.Color.White;
-            this.dtCloudTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtCloudTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtCloudTo.Location = new System.Drawing.Point(44, 28);
-            this.dtCloudTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtCloudTo.Name = "dtCloudTo";
-            this.dtCloudTo.Size = new System.Drawing.Size(103, 23);
-            this.dtCloudTo.TabIndex = 145;
-            // 
-            // dtCloudFrom
-            // 
-            this.dtCloudFrom._ReadOnly = true;
-            this.dtCloudFrom._SelectedDate = null;
-            this.dtCloudFrom.BackColor = System.Drawing.Color.White;
-            this.dtCloudFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtCloudFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtCloudFrom.Location = new System.Drawing.Point(44, 3);
-            this.dtCloudFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtCloudFrom.Name = "dtCloudFrom";
-            this.dtCloudFrom.Size = new System.Drawing.Size(103, 23);
-            this.dtCloudFrom.TabIndex = 145;
-            // 
-            // txtMaEmail
-            // 
-            this.txtMaEmail._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMaEmail._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtMaEmail._ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtMaEmail._MaxLength = 32767;
-            this.txtMaEmail._PasswordChar = '\0';
-            this.txtMaEmail._ReadOnly = true;
-            this.txtMaEmail._SelectionLength = 0;
-            this.txtMaEmail._SelectionStart = 0;
-            this.txtMaEmail._Text = "";
-            this.txtMaEmail._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtMaEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMaEmail.BackColor = System.Drawing.Color.White;
-            this.txtMaEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMaEmail.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.txtMaEmail.Location = new System.Drawing.Point(44, 53);
-            this.txtMaEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtMaEmail.Name = "txtMaEmail";
-            this.txtMaEmail.Size = new System.Drawing.Size(173, 23);
-            this.txtMaEmail.TabIndex = 146;
-            // 
-            // dtMaTo
-            // 
-            this.dtMaTo._ReadOnly = true;
-            this.dtMaTo._SelectedDate = null;
-            this.dtMaTo.BackColor = System.Drawing.Color.White;
-            this.dtMaTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtMaTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtMaTo.Location = new System.Drawing.Point(44, 28);
-            this.dtMaTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtMaTo.Name = "dtMaTo";
-            this.dtMaTo.Size = new System.Drawing.Size(103, 23);
-            this.dtMaTo.TabIndex = 145;
-            // 
-            // dtMaFrom
-            // 
-            this.dtMaFrom._ReadOnly = true;
-            this.dtMaFrom._SelectedDate = null;
-            this.dtMaFrom.BackColor = System.Drawing.Color.White;
-            this.dtMaFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dtMaFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtMaFrom.Location = new System.Drawing.Point(44, 3);
-            this.dtMaFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtMaFrom.Name = "dtMaFrom";
-            this.dtMaFrom.Size = new System.Drawing.Size(103, 23);
-            this.dtMaFrom.TabIndex = 145;
             // 
             // dlVerext
             // 
@@ -1675,6 +1177,60 @@
             this.brBusityp._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.brBusityp.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
+            // lblMAExpireWarning
+            // 
+            this.lblMAExpireWarning.AutoSize = true;
+            this.lblMAExpireWarning.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblMAExpireWarning.ForeColor = System.Drawing.Color.Red;
+            this.lblMAExpireWarning.Location = new System.Drawing.Point(418, 72);
+            this.lblMAExpireWarning.Name = "lblMAExpireWarning";
+            this.lblMAExpireWarning.Size = new System.Drawing.Size(187, 19);
+            this.lblMAExpireWarning.TabIndex = 160;
+            this.lblMAExpireWarning.Text = "** MA. ใกล้หมดอายุ **";
+            this.lblMAExpireWarning.Visible = false;
+            // 
+            // lblCloudExpireWarning
+            // 
+            this.lblCloudExpireWarning.AutoSize = true;
+            this.lblCloudExpireWarning.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblCloudExpireWarning.ForeColor = System.Drawing.Color.Red;
+            this.lblCloudExpireWarning.Location = new System.Drawing.Point(310, 156);
+            this.lblCloudExpireWarning.Name = "lblCloudExpireWarning";
+            this.lblCloudExpireWarning.Size = new System.Drawing.Size(295, 19);
+            this.lblCloudExpireWarning.TabIndex = 161;
+            this.lblCloudExpireWarning.Text = "** Express on Cloud ใกล้หมดอายุ **";
+            this.lblCloudExpireWarning.Visible = false;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label36.Location = new System.Drawing.Point(511, 113);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(160, 16);
+            this.label36.TabIndex = 159;
+            this.label36.Text = "บริการ Express on Cloud";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label32.Location = new System.Drawing.Point(595, 28);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(76, 16);
+            this.label32.TabIndex = 158;
+            this.label32.Text = "บริการ MA.";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label27.Location = new System.Drawing.Point(630, 219);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(34, 16);
+            this.label27.TabIndex = 157;
+            this.label27.Text = "Date";
+            // 
             // txtBusides
             // 
             this.txtBusides._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1723,6 +1279,118 @@
             this.txtRemark._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtRemark.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label26.Location = new System.Drawing.Point(610, 195);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(55, 16);
+            this.label26.TabIndex = 156;
+            this.label26.Text = "Register";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label25.Location = new System.Drawing.Point(281, 244);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(75, 16);
+            this.label25.TabIndex = 155;
+            this.label25.Text = "CD Training";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label24.Location = new System.Drawing.Point(11, 244);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(90, 16);
+            this.label24.TabIndex = 154;
+            this.label24.Text = "Purchase Date";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label22.Location = new System.Drawing.Point(19, 219);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(82, 16);
+            this.label22.TabIndex = 153;
+            this.label22.Text = "How to know";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label20.Location = new System.Drawing.Point(7, 99);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(94, 16);
+            this.label20.TabIndex = 152;
+            this.label20.Text = "Purchase From";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label19.Location = new System.Drawing.Point(12, 74);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(89, 16);
+            this.label19.TabIndex = 151;
+            this.label19.Text = "Business Type";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label18.Location = new System.Drawing.Point(9, 49);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(92, 16);
+            this.label18.TabIndex = 150;
+            this.label18.Text = "Business Desc.";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label16.Location = new System.Drawing.Point(49, 24);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(52, 16);
+            this.label16.TabIndex = 149;
+            this.label16.Text = "Remark";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.mskOldSn);
+            this.groupBox1.Controls.Add(this.txtZipcod);
+            this.groupBox1.Controls.Add(this.btnPasswordRemove);
+            this.groupBox1.Controls.Add(this.btnPasswordAdd);
+            this.groupBox1.Controls.Add(this.dgvPassword);
+            this.groupBox1.Controls.Add(this.txtAddr03);
+            this.groupBox1.Controls.Add(this.txtPosition);
+            this.groupBox1.Controls.Add(this.txtContact);
+            this.groupBox1.Controls.Add(this.txtFaxnum);
+            this.groupBox1.Controls.Add(this.txtTelnum);
+            this.groupBox1.Controls.Add(this.txtAddr02);
+            this.groupBox1.Controls.Add(this.txtAddr01);
+            this.groupBox1.Controls.Add(this.label31);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Location = new System.Drawing.Point(8, 3);
+            this.groupBox1.MaximumSize = new System.Drawing.Size(1024, 207);
+            this.groupBox1.MinimumSize = new System.Drawing.Size(900, 207);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(900, 207);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            // 
             // mskOldSn
             // 
             this.mskOldSn._Mask = ">A-AAA-AAAAAA";
@@ -1768,6 +1436,85 @@
             this.txtZipcod._TextChanged += new System.EventHandler(this.txtZipcod__TextChanged);
             this.txtZipcod._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtZipcod.Enter += new System.EventHandler(this.KeepFocusedControl);
+            // 
+            // btnPasswordRemove
+            // 
+            this.btnPasswordRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPasswordRemove.Location = new System.Drawing.Point(802, 121);
+            this.btnPasswordRemove.Name = "btnPasswordRemove";
+            this.btnPasswordRemove.Size = new System.Drawing.Size(92, 23);
+            this.btnPasswordRemove.TabIndex = 99;
+            this.btnPasswordRemove.Text = "- Remove";
+            this.btnPasswordRemove.UseVisualStyleBackColor = true;
+            this.btnPasswordRemove.Click += new System.EventHandler(this.btnPasswordRemove_Click);
+            // 
+            // btnPasswordAdd
+            // 
+            this.btnPasswordAdd.Location = new System.Drawing.Point(629, 121);
+            this.btnPasswordAdd.Name = "btnPasswordAdd";
+            this.btnPasswordAdd.Size = new System.Drawing.Size(91, 23);
+            this.btnPasswordAdd.TabIndex = 98;
+            this.btnPasswordAdd.Text = "+ Add";
+            this.btnPasswordAdd.UseVisualStyleBackColor = true;
+            this.btnPasswordAdd.Click += new System.EventHandler(this.btnPasswordAdd_Click);
+            // 
+            // dgvPassword
+            // 
+            this.dgvPassword.AllowUserToAddRows = false;
+            this.dgvPassword.AllowUserToDeleteRows = false;
+            this.dgvPassword.AllowUserToResizeColumns = false;
+            this.dgvPassword.AllowUserToResizeRows = false;
+            this.dgvPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPassword.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPassword.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvPassword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPassword.ColumnHeadersVisible = false;
+            this.dgvPassword.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_password_serial_password,
+            this.col_password_id,
+            this.col_password_password});
+            this.dgvPassword.GridColor = System.Drawing.Color.White;
+            this.dgvPassword.Location = new System.Drawing.Point(630, 17);
+            this.dgvPassword.MultiSelect = false;
+            this.dgvPassword.Name = "dgvPassword";
+            this.dgvPassword.RowHeadersVisible = false;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dgvPassword.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Red;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.Red;
+            this.dgvPassword.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvPassword.RowTemplate.Height = 25;
+            this.dgvPassword.RowTemplate.ReadOnly = true;
+            this.dgvPassword.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPassword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPassword.Size = new System.Drawing.Size(263, 103);
+            this.dgvPassword.TabIndex = 97;
+            this.dgvPassword.TabStop = false;
+            // 
+            // col_password_serial_password
+            // 
+            this.col_password_serial_password.DataPropertyName = "serial_password";
+            this.col_password_serial_password.HeaderText = "Serial Password";
+            this.col_password_serial_password.Name = "col_password_serial_password";
+            this.col_password_serial_password.ReadOnly = true;
+            this.col_password_serial_password.Visible = false;
+            // 
+            // col_password_id
+            // 
+            this.col_password_id.DataPropertyName = "id";
+            this.col_password_id.HeaderText = "ID";
+            this.col_password_id.Name = "col_password_id";
+            this.col_password_id.ReadOnly = true;
+            this.col_password_id.Visible = false;
+            // 
+            // col_password_password
+            // 
+            this.col_password_password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_password_password.DataPropertyName = "password";
+            this.col_password_password.HeaderText = "Password";
+            this.col_password_password.Name = "col_password_password";
+            this.col_password_password.ReadOnly = true;
             // 
             // txtAddr03
             // 
@@ -1937,6 +1684,123 @@
             this.txtAddr01._DoubleClicked += new System.EventHandler(this.PerformEdit);
             this.txtAddr01.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label31.Location = new System.Drawing.Point(566, 21);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(63, 16);
+            this.label31.TabIndex = 36;
+            this.label31.Text = "Password";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label15.Location = new System.Drawing.Point(565, 171);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(64, 16);
+            this.label15.TabIndex = 35;
+            this.label15.Text = "Old Serial";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label11.Location = new System.Drawing.Point(423, 71);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(58, 16);
+            this.label11.TabIndex = 34;
+            this.label11.Text = "Zip Code";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label17.Location = new System.Drawing.Point(69, 121);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(32, 16);
+            this.label17.TabIndex = 33;
+            this.label17.Text = "Fax.";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label14.Location = new System.Drawing.Point(49, 171);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(52, 16);
+            this.label14.TabIndex = 32;
+            this.label14.Text = "Position";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label13.Location = new System.Drawing.Point(50, 146);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(51, 16);
+            this.label13.TabIndex = 31;
+            this.label13.Text = "Contact";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label12.Location = new System.Drawing.Point(71, 96);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(30, 16);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "Tel.";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label10.Location = new System.Drawing.Point(47, 21);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 16);
+            this.label10.TabIndex = 29;
+            this.label10.Text = "Address";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panel1);
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.txtTelnum2);
+            this.tabPage2.Controls.Add(this.txtUpfree2);
+            this.tabPage2.Controls.Add(this.txtContact2);
+            this.tabPage2.Controls.Add(this.txtExpdat2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(976, 501);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "ประวัติการติดต่อ <F8>";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.inlineProbdesc);
+            this.panel1.Controls.Add(this.inlineProbcod);
+            this.panel1.Controls.Add(this.inlineName);
+            this.panel1.Controls.Add(this.inlineDate);
+            this.panel1.Controls.Add(this.dgvProblem);
+            this.panel1.Controls.Add(this.btnDeleteProblem);
+            this.panel1.Controls.Add(this.btnEditProblem);
+            this.panel1.Controls.Add(this.btnAddProblem);
+            this.panel1.Location = new System.Drawing.Point(4, 32);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(966, 463);
+            this.panel1.TabIndex = 27;
+            // 
             // inlineProbdesc
             // 
             this.inlineProbdesc._MaxLength = 100;
@@ -2015,14 +1879,14 @@
             this.dgvProblem.AllowUserToResizeColumns = false;
             this.dgvProblem.AllowUserToResizeRows = false;
             this.dgvProblem.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProblem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProblem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvProblem.ColumnHeadersHeight = 28;
             this.dgvProblem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvProblem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -2032,14 +1896,14 @@
             this.col_problem_name,
             this.col_problem_probcod,
             this.col_problem_probdesc});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvProblem.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvProblem.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvProblem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProblem.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvProblem.EnableHeadersVisualStyles = false;
@@ -2083,8 +1947,8 @@
             // col_problem_date
             // 
             this.col_problem_date.DataPropertyName = "date";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Format = "dd/MM/yyyy";
+            this.col_problem_date.DefaultCellStyle = dataGridViewCellStyle5;
             this.col_problem_date.HeaderText = "DATE";
             this.col_problem_date.MinimumWidth = 100;
             this.col_problem_date.Name = "col_problem_date";
@@ -2116,6 +1980,76 @@
             this.col_problem_probdesc.Name = "col_problem_probdesc";
             this.col_problem_probdesc.ReadOnly = true;
             // 
+            // btnDeleteProblem
+            // 
+            this.btnDeleteProblem.Location = new System.Drawing.Point(789, 72);
+            this.btnDeleteProblem.Name = "btnDeleteProblem";
+            this.btnDeleteProblem.Size = new System.Drawing.Size(104, 23);
+            this.btnDeleteProblem.TabIndex = 31;
+            this.btnDeleteProblem.Text = "delete problem";
+            this.btnDeleteProblem.UseVisualStyleBackColor = true;
+            this.btnDeleteProblem.Click += new System.EventHandler(this.btnDeleteProblem_Click);
+            // 
+            // btnEditProblem
+            // 
+            this.btnEditProblem.Location = new System.Drawing.Point(789, 43);
+            this.btnEditProblem.Name = "btnEditProblem";
+            this.btnEditProblem.Size = new System.Drawing.Size(104, 23);
+            this.btnEditProblem.TabIndex = 31;
+            this.btnEditProblem.Text = "edit problem";
+            this.btnEditProblem.UseVisualStyleBackColor = true;
+            this.btnEditProblem.Click += new System.EventHandler(this.btnEditProblem_Click);
+            // 
+            // btnAddProblem
+            // 
+            this.btnAddProblem.Location = new System.Drawing.Point(789, 14);
+            this.btnAddProblem.Name = "btnAddProblem";
+            this.btnAddProblem.Size = new System.Drawing.Size(104, 23);
+            this.btnAddProblem.TabIndex = 31;
+            this.btnAddProblem.Text = "add problem";
+            this.btnAddProblem.UseVisualStyleBackColor = true;
+            this.btnAddProblem.Click += new System.EventHandler(this.btnAddProblem_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label9.Location = new System.Drawing.Point(728, 8);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 16);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Reg.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label8.Location = new System.Drawing.Point(509, 8);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(51, 16);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "Contact";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label7.Location = new System.Drawing.Point(178, 8);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(30, 16);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Tel.";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label6.Location = new System.Drawing.Point(4, 8);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 16);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "CD Training";
+            // 
             // txtTelnum2
             // 
             this.txtTelnum2._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -2136,7 +2070,6 @@
             this.txtTelnum2.Name = "txtTelnum2";
             this.txtTelnum2.Size = new System.Drawing.Size(292, 23);
             this.txtTelnum2.TabIndex = 25;
-            this.txtTelnum2.TabStop = false;
             // 
             // txtUpfree2
             // 
@@ -2158,7 +2091,6 @@
             this.txtUpfree2.Name = "txtUpfree2";
             this.txtUpfree2.Size = new System.Drawing.Size(20, 23);
             this.txtUpfree2.TabIndex = 25;
-            this.txtUpfree2.TabStop = false;
             // 
             // txtContact2
             // 
@@ -2180,7 +2112,6 @@
             this.txtContact2.Name = "txtContact2";
             this.txtContact2.Size = new System.Drawing.Size(160, 23);
             this.txtContact2.TabIndex = 25;
-            this.txtContact2.TabStop = false;
             // 
             // txtExpdat2
             // 
@@ -2202,7 +2133,72 @@
             this.txtExpdat2.Name = "txtExpdat2";
             this.txtExpdat2.Size = new System.Drawing.Size(90, 23);
             this.txtExpdat2.TabIndex = 25;
-            this.txtExpdat2.TabStop = false;
+            // 
+            // lblArea
+            // 
+            this.lblArea.Location = new System.Drawing.Point(481, 58);
+            this.lblArea.Name = "lblArea";
+            this.lblArea.Size = new System.Drawing.Size(149, 16);
+            this.lblArea.TabIndex = 163;
+            // 
+            // btnSupportNote
+            // 
+            this.btnSupportNote.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnSupportNote.Image = global::SN_Net.Properties.Resources.note_go;
+            this.btnSupportNote.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.Location = new System.Drawing.Point(584, 80);
+            this.btnSupportNote.Name = "btnSupportNote";
+            this.btnSupportNote.Size = new System.Drawing.Size(68, 26);
+            this.btnSupportNote.TabIndex = 89;
+            this.btnSupportNote.Text = "       Note";
+            this.btnSupportNote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSupportNote.UseVisualStyleBackColor = true;
+            this.btnSupportNote.Click += new System.EventHandler(this.btnSupportNote_Click);
+            // 
+            // mskRefSn
+            // 
+            this.mskRefSn._Mask = ">A-AAA-AAAAAA";
+            this.mskRefSn._PromptChar = ' ';
+            this.mskRefSn._ReadOnly = true;
+            this.mskRefSn._SelectionLength = 0;
+            this.mskRefSn._SelectionStart = 0;
+            this.mskRefSn._Text = " -   -";
+            this.mskRefSn._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.mskRefSn.BackColor = System.Drawing.Color.White;
+            this.mskRefSn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mskRefSn.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskRefSn.Location = new System.Drawing.Point(693, 50);
+            this.mskRefSn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.mskRefSn.Name = "mskRefSn";
+            this.mskRefSn.Size = new System.Drawing.Size(121, 23);
+            this.mskRefSn.TabIndex = 4;
+            this.mskRefSn.TabStop = false;
+            this.mskRefSn._TextChanged += new System.EventHandler(this.mskRefSn__TextChanged);
+            this.mskRefSn._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.mskRefSn.Enter += new System.EventHandler(this.KeepFocusedControl);
+            // 
+            // mskSernum
+            // 
+            this.mskSernum._Mask = ">A-AAA-AAAAAA";
+            this.mskSernum._PromptChar = ' ';
+            this.mskSernum._ReadOnly = true;
+            this.mskSernum._SelectionLength = 0;
+            this.mskSernum._SelectionStart = 0;
+            this.mskSernum._Text = " -   -";
+            this.mskSernum._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.mskSernum.BackColor = System.Drawing.Color.White;
+            this.mskSernum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mskSernum.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.mskSernum.Location = new System.Drawing.Point(79, 54);
+            this.mskSernum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.mskSernum.Name = "mskSernum";
+            this.mskSernum.Size = new System.Drawing.Size(121, 23);
+            this.mskSernum.TabIndex = 1;
+            this.mskSernum.TabStop = false;
+            this.mskSernum._TextChanged += new System.EventHandler(this.mskSernum__TextChanged);
+            this.mskSernum._Leave += new System.EventHandler(this.mskSernum__Leave);
+            this.mskSernum._DoubleClicked += new System.EventHandler(this.PerformEdit);
+            this.mskSernum.Enter += new System.EventHandler(this.KeepFocusedControl);
             // 
             // txtCompnam
             // 

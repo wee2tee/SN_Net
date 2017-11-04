@@ -461,6 +461,14 @@ namespace SN_Net.Model
         public string remark { get { return this.note.remark.Replace("{problem}", ""); } }
     }
 
+    public class note_commentVM
+    {
+        // type 1 = comment, 2 = complain
+        public note_comment note_comment { get; set; }
+        public int id { get { return this.note_comment.id; } }
+        public string description { get { return this.note_comment.description; } }
+    }
+
     public static class DataHelper
     {
         public static macallowedVM ToViewModel(this mac_allowed mac)
@@ -707,6 +715,30 @@ namespace SN_Net.Model
         {
             List<noteVM> n = new List<noteVM>();
             foreach (var item in notes)
+            {
+                n.Add(item.ToViewModel());
+            }
+
+            return n;
+        }
+
+        public static note_commentVM ToViewModel(this note_comment nc)
+        {
+            if (nc == null)
+                return null;
+
+            note_commentVM n = new note_commentVM
+            {
+                note_comment = nc
+            };
+
+            return n;
+        }
+
+        public static List<note_commentVM> ToViewModel(this IEnumerable<note_comment> nc)
+        {
+            List<note_commentVM> n = new List<note_commentVM>();
+            foreach (var item in nc)
             {
                 n.Add(item.ToViewModel());
             }

@@ -80,14 +80,18 @@ namespace CC
             InitializeComponent();
         }
 
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-            if (!this.read_only)
-            {
-                this.comboBox1.Focus();
-            }
-        }
+        //protected override void OnGotFocus(EventArgs e)
+        //{
+        //    if (this.read_only)
+        //    {
+        //        this.Parent.SelectNextControl(this, true, false, true, true);
+        //    }
+        //    else
+        //    {
+        //        base.OnGotFocus(e);
+        //        this.comboBox1.Focus();
+        //    }
+        //}
 
         //protected override void OnPaint(PaintEventArgs e)
         //{
@@ -189,6 +193,19 @@ namespace CC
             if(this._DoubleClicked != null)
             {
                 this._DoubleClicked(this, e);
+            }
+        }
+
+        private void XDropdownList_Enter(object sender, EventArgs e)
+        {
+            if (this.read_only)
+            {
+                this.Parent.SelectNextControl(this, true, true, true, false);
+            }
+            else
+            {
+                base.OnGotFocus(e);
+                this.comboBox1.Focus();
             }
         }
     }

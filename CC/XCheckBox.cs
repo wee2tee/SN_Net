@@ -93,7 +93,7 @@ namespace CC
             {
                 this.BackColor = Color.White;
                 this.label1.BackColor = Color.White;
-                this.Parent.SelectNextControl(this, true, true, true, true);
+                this.Parent.SelectNextControl(this, true, false, true, false);
             }
             else
             {

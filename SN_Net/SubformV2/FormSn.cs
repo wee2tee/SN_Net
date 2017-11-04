@@ -687,6 +687,7 @@ namespace SN_Net.Subform
                     ((BindingList<problemVM>)this.dgvProblem.DataSource)[((BindingList<problemVM>)this.dgvProblem.DataSource).IndexOf(((BindingList<problemVM>)this.dgvProblem.DataSource).Where(p => p.id == this.tmp_problem.id).First())] = prob.ToViewModel();
                     this.HideInlineForm();
                 }
+                this.dgvProblem.Focus();
             }
         }
 

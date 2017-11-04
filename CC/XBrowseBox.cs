@@ -348,5 +348,13 @@ namespace CC
             if (this._DoubleClicked != null)
                 this._DoubleClicked(this, e);
         }
+
+        private void XBrowseBox_Enter(object sender, EventArgs e)
+        {
+            if (this._ReadOnly)
+            {
+                this.Parent.SelectNextControl(this, true, true, true, false);
+            }
+        }
     }
 }

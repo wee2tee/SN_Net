@@ -110,7 +110,7 @@ namespace CC
             if (this._ReadOnly)
             {
                 this.txtTextEditable.BackColor = Color.White;
-                this.Parent.SelectNextControl(this, true, true, true, true);
+                this.Parent.SelectNextControl(this, true, false, true, false);
             }
             else
             {
