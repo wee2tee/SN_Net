@@ -892,6 +892,19 @@ namespace SN_Net.MiscClass
             }
         }
 
-        
+        public static bool HasComment(this note note)
+        {
+            using (sn_noteEntities sn_note = DBXNote.DataSet())
+            {
+                if (sn_note.note_comment.Where(c => c.note_id == note.id).AsEnumerable().Count() > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

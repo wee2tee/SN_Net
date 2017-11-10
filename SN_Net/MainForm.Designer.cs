@@ -35,12 +35,15 @@
             this.mnuSN2 = new System.Windows.Forms.ToolStripMenuItem();
             this.dealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDealer2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuImportData = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.calendarMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCalendar = new System.Windows.Forms.ToolStripMenuItem();
             this.usersGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportStatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LeaveSummaryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SearchHistoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuViewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,16 +55,15 @@
             this.serviceCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuIstabUserGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuPreference = new System.Windows.Forms.ToolStripMenuItem();
             this.userManagementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUserInformation = new System.Windows.Forms.ToolStripMenuItem();
             this.changePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMacAddressAllowed = new System.Windows.Forms.ToolStripMenuItem();
             this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuPreference = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuImportData = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +76,6 @@
             this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblTimeDuration = new System.Windows.Forms.Label();
-            this.mnuViewNote = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +103,7 @@
             this.mnuImportData,
             this.toolStripSeparator5,
             this.calendarMenuItem,
+            this.mnuCalendar,
             this.usersGroupMenuItem,
             this.supportStatMenuItem,
             this.LeaveSummaryMenuItem,
@@ -153,6 +155,13 @@
             this.mnuDealer2.Text = "Dealer.";
             this.mnuDealer2.Click += new System.EventHandler(this.mnuDealer2_Click);
             // 
+            // mnuImportData
+            // 
+            this.mnuImportData.Name = "mnuImportData";
+            this.mnuImportData.Size = new System.Drawing.Size(337, 22);
+            this.mnuImportData.Text = "Import Old Data";
+            this.mnuImportData.Click += new System.EventHandler(this.mnuImportData_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -166,6 +175,13 @@
             this.calendarMenuItem.Text = "ปฏิทินวันหยุดประจำปี, วันลา, จองวันออกพบลูกค้า";
             this.calendarMenuItem.Visible = false;
             this.calendarMenuItem.Click += new System.EventHandler(this.calendarMenuItem_Click);
+            // 
+            // mnuCalendar
+            // 
+            this.mnuCalendar.Name = "mnuCalendar";
+            this.mnuCalendar.Size = new System.Drawing.Size(337, 22);
+            this.mnuCalendar.Text = "Calendar.";
+            this.mnuCalendar.Click += new System.EventHandler(this.mnuCalendar_Click);
             // 
             // usersGroupMenuItem
             // 
@@ -200,6 +216,13 @@
             this.SearchHistoryMenuItem.Text = "ประวัติการค้นหา S/N";
             this.SearchHistoryMenuItem.Visible = false;
             this.SearchHistoryMenuItem.Click += new System.EventHandler(this.SearchHistoryMenuItem_Click);
+            // 
+            // mnuViewNote
+            // 
+            this.mnuViewNote.Name = "mnuViewNote";
+            this.mnuViewNote.Size = new System.Drawing.Size(337, 22);
+            this.mnuViewNote.Text = "ดูใบบันทึกการปฏิบัติงาน";
+            this.mnuViewNote.Click += new System.EventHandler(this.mnuViewNote_Click);
             // 
             // toolStripSeparator2
             // 
@@ -286,6 +309,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(334, 6);
             // 
+            // mnuPreference
+            // 
+            this.mnuPreference.Name = "mnuPreference";
+            this.mnuPreference.Size = new System.Drawing.Size(337, 22);
+            this.mnuPreference.Text = "Preference.";
+            this.mnuPreference.Click += new System.EventHandler(this.mnuPreference_Click);
+            // 
             // userManagementToolStripMenuItem
             // 
             this.userManagementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -327,13 +357,6 @@
             this.preferenceToolStripMenuItem.Visible = false;
             this.preferenceToolStripMenuItem.Click += new System.EventHandler(this.preferenceToolStripMenuItem_Click);
             // 
-            // mnuPreference
-            // 
-            this.mnuPreference.Name = "mnuPreference";
-            this.mnuPreference.Size = new System.Drawing.Size(337, 22);
-            this.mnuPreference.Text = "Preference.";
-            this.mnuPreference.Click += new System.EventHandler(this.mnuPreference_Click);
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -355,13 +378,6 @@
             this.testToolStripMenuItem.Text = "Test";
             this.testToolStripMenuItem.Visible = false;
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
-            // 
-            // mnuImportData
-            // 
-            this.mnuImportData.Name = "mnuImportData";
-            this.mnuImportData.Size = new System.Drawing.Size(337, 22);
-            this.mnuImportData.Text = "Import Old Data";
-            this.mnuImportData.Click += new System.EventHandler(this.mnuImportData_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -474,13 +490,6 @@
             this.lblTimeDuration.Text = "00:00:00";
             this.lblTimeDuration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // mnuViewNote
-            // 
-            this.mnuViewNote.Name = "mnuViewNote";
-            this.mnuViewNote.Size = new System.Drawing.Size(337, 22);
-            this.mnuViewNote.Text = "ดูใบบันทึกการปฏิบัติงาน";
-            this.mnuViewNote.Click += new System.EventHandler(this.mnuViewNote_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -558,6 +567,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripMenuItem mnuViewNote;
+        private System.Windows.Forms.ToolStripMenuItem mnuCalendar;
     }
 }
 

@@ -100,7 +100,15 @@ namespace SN_Net.Subform
             base.OnClosing(e);
         }
 
-        public static List<note> GetNote(users user, DateTime? note_date)
+        public static note GetNote(int note_id)
+        {
+            using (sn_noteEntities sn_note = DBXNote.DataSet())
+            {
+                return sn_note.note.Include("note_comment").Where(n => n.id == note_id).FirstOrDefault();
+            }
+        }
+
+        public static List<note> GetNoteList(users user, DateTime? note_date)
         {
             if (user == null)
                 return null;
@@ -167,7 +175,7 @@ namespace SN_Net.Subform
                     this.note_list = null;
                     if(this.curr_user != null && this.curr_date.HasValue)
                     {
-                        this.note_list = new BindingList<noteVM>(GetNote(this.curr_user, this.curr_date).ToViewModel());
+                        this.note_list = new BindingList<noteVM>(GetNoteList(this.curr_user, this.curr_date).ToViewModel());
                     }
                     else
                     {
@@ -528,7 +536,14 @@ namespace SN_Net.Subform
             if (this.dgvNote.CurrentCell == null)
                 return;
 
-            note note = (note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[this.col_note_note.Name].Value;
+            note note = GetNote(((note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[this.col_note_note.Name].Value).id);
+            if(note == null)
+            {
+                MessageAlert.Show("รายการนี้ไม่มีอยู่ในระบบ!", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                this.RefreshForm();
+                return;
+            }
+
             if (note.is_break == "N")
             {
                 this.trn_typ = TRNTYP.TEL;
@@ -788,6 +803,7 @@ namespace SN_Net.Subform
             {
                 var countable_item = ((BindingList<noteVM>)((XDatagrid)sender).DataSource).ToList().Where(i => i.note.is_break == "N").ToList();
                 var curr_item_is_countable = countable_item.Where(i => i.note.id == ((note)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_note_note.Name].Value).id).FirstOrDefault();
+                bool has_comment = ((note)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_note_note.Name].Value).HasComment();
 
                 if (curr_item_is_countable == null)
                 {
@@ -795,6 +811,11 @@ namespace SN_Net.Subform
                     e.CellStyle.SelectionBackColor = Color.WhiteSmoke;
                     e.CellStyle.ForeColor = Color.Gray;
                     e.CellStyle.SelectionForeColor = Color.Gray;
+                }
+                else if (has_comment && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+                {
+                    e.CellStyle.BackColor = Color.MistyRose;
+                    e.CellStyle.SelectionBackColor = Color.MistyRose;
                 }
 
                 if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_seq.Name).First().Index)
@@ -811,6 +832,17 @@ namespace SN_Net.Subform
                         ((XDatagrid)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value = string.Empty;
                     }
                     e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                    if (has_comment && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+                    {
+                        using (SolidBrush red_brush = new SolidBrush(Color.Red))
+                        {
+                            using (Font big_fnt = new Font("tahoma", 16f, FontStyle.Bold))
+                            {
+                                e.Graphics.DrawString("!", big_fnt, red_brush, new Point(e.CellBounds.X, e.CellBounds.Y - 2));
+                            }
+                        }
+                    }
+
                     e.Handled = true;
                     return;
                 }
@@ -840,6 +872,7 @@ namespace SN_Net.Subform
                         {
                             e.Graphics.DrawString("\u2713", e.CellStyle.Font, b, new Point(e.CellBounds.X + 6, e.CellBounds.Y + 4));
                         }
+
                         e.Handled = true;
                         return;
                     }
@@ -1278,10 +1311,12 @@ namespace SN_Net.Subform
             if(e.Button == MouseButtons.Right)
             {
                 int row_index = ((XDatagrid)sender).HitTest(e.X, e.Y).RowIndex;
+                note n = null;
 
                 if(row_index > -1)
                 {
                     ((XDatagrid)sender).Rows[row_index].Cells[this.col_note_start.Name].Selected = true;
+                    n = (note)((XDatagrid)sender).Rows[row_index].Cells[this.col_note_note.Name].Value;
                 }
 
                 if (!this.show_as_search_result)
@@ -1307,7 +1342,7 @@ namespace SN_Net.Subform
                     {
                         this.btnComment.PerformClick();
                     };
-                    m_comment.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+                    m_comment.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? (n != null && n.is_break == "N" ? true : false) : false;
                     cm.MenuItems.Add(m_comment);
 
                     cm.Show(((XDatagrid)sender), new Point(e.X, e.Y));
@@ -1335,10 +1370,21 @@ namespace SN_Net.Subform
             if (this.dgvNote.CurrentCell == null)
                 return;
 
-            note note = (note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[this.col_note_note.Name].Value;
+            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+                return;
+
+            note note = GetNote(((note)this.dgvNote.Rows[this.dgvNote.CurrentCell.RowIndex].Cells[this.col_note_note.Name].Value).id);
+            if (note == null)
+            {
+                MessageAlert.Show("รายการนี้ไม่มีอยู่ในระบบ!", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                return;
+            }
+
+            if (note.is_break == "Y")
+                return;
+
             DialogNoteComment comm = new DialogNoteComment(this.main_form, note);
             comm.ShowDialog();
-
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -1433,6 +1479,24 @@ namespace SN_Net.Subform
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void inlineSernum__GotFocus(object sender, EventArgs e)
+        {
+            if(this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                var eng_lang = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Where(l => l.Culture.ToString().Equals("en-US")).FirstOrDefault();
+                InputLanguage.CurrentInputLanguage = eng_lang != null ? eng_lang : InputLanguage.CurrentInputLanguage;
+            }
+        }
+
+        private void inlineContact__GotFocus(object sender, EventArgs e)
+        {
+            if(this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                var tha_lang = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Where(l => l.Culture.ToString().Equals("th-TH")).FirstOrDefault();
+                InputLanguage.CurrentInputLanguage = tha_lang != null ? tha_lang : InputLanguage.CurrentInputLanguage;
+            }
         }
     }
 }

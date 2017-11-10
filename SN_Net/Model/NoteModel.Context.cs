@@ -19,19 +19,23 @@ namespace SN_Net.Model
             : base("name=sn_noteEntities")
         {
         }
-    
+
         public sn_noteEntities(string connection_string)
             : base(connection_string)
         {
 
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<event_calendar> event_calendar { get; set; }
         public virtual DbSet<note> note { get; set; }
+        public virtual DbSet<note_calendar> note_calendar { get; set; }
         public virtual DbSet<note_comment> note_comment { get; set; }
+        public virtual DbSet<note_istab> note_istab { get; set; }
+        public virtual DbSet<training_calendar> training_calendar { get; set; }
     }
 }

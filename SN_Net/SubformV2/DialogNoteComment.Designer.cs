@@ -28,18 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnCancel = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.inlineComment = new CC.XTextEdit();
             this.btnCommentAdd = new System.Windows.Forms.Button();
             this.dgvComment = new CC.XDatagrid();
-            this.col_comment_note_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_comment_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCommentSave = new System.Windows.Forms.Button();
             this.btnCommentStop = new System.Windows.Forms.Button();
             this.btnCommentDelete = new System.Windows.Forms.Button();
@@ -47,13 +45,25 @@
             this.inlineComplain = new CC.XTextEdit();
             this.btnComplainAdd = new System.Windows.Forms.Button();
             this.dgvComplain = new CC.XDatagrid();
-            this.col_complain_note_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_complain_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_complain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnComplainSave = new System.Windows.Forms.Button();
             this.btnComplainStop = new System.Windows.Forms.Button();
             this.btnComplainDelete = new System.Windows.Forms.Button();
             this.btnComplainEdit = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.brPath = new CC.XBrowseBox();
+            this.btnSavePath = new System.Windows.Forms.Button();
+            this.btnStopPath = new System.Windows.Forms.Button();
+            this.btnEditPath = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.col_complain_note_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_complain_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_complain_recby = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_complain = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_comment_note_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_comment_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_comment_recby = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,7 +76,7 @@
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(329, 239);
+            this.btnCancel.Location = new System.Drawing.Point(306, 306);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(101, 36);
             this.btnCancel.TabIndex = 6;
@@ -102,8 +112,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnComplainStop);
             this.splitContainer1.Panel2.Controls.Add(this.btnComplainDelete);
             this.splitContainer1.Panel2.Controls.Add(this.btnComplainEdit);
-            this.splitContainer1.Size = new System.Drawing.Size(752, 225);
-            this.splitContainer1.SplitterDistance = 109;
+            this.splitContainer1.Size = new System.Drawing.Size(706, 253);
+            this.splitContainer1.SplitterDistance = 122;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 7;
             // 
@@ -112,7 +122,7 @@
             this.inlineComment._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineComment._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.inlineComment._ForeColor = System.Drawing.SystemColors.WindowText;
-            this.inlineComment._MaxLength = 32767;
+            this.inlineComment._MaxLength = 255;
             this.inlineComment._PasswordChar = '\0';
             this.inlineComment._ReadOnly = false;
             this.inlineComment._SelectionLength = 0;
@@ -127,6 +137,7 @@
             this.inlineComment.Name = "inlineComment";
             this.inlineComment.Size = new System.Drawing.Size(142, 23);
             this.inlineComment.TabIndex = 2;
+            this.inlineComment._TextChanged += new System.EventHandler(this.inlineComment__TextChanged);
             // 
             // btnCommentAdd
             // 
@@ -134,7 +145,7 @@
             this.btnCommentAdd.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnCommentAdd.Image = global::SN_Net.Properties.Resources.plus1;
             this.btnCommentAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCommentAdd.Location = new System.Drawing.Point(698, 2);
+            this.btnCommentAdd.Location = new System.Drawing.Point(652, 2);
             this.btnCommentAdd.Name = "btnCommentAdd";
             this.btnCommentAdd.Size = new System.Drawing.Size(52, 25);
             this.btnCommentAdd.TabIndex = 1;
@@ -150,28 +161,29 @@
             this.dgvComment.AllowUserToDeleteRows = false;
             this.dgvComment.AllowUserToResizeColumns = false;
             this.dgvComment.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvComment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvComment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvComment.ColumnHeadersHeight = 28;
             this.dgvComment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvComment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_comment_note_comment,
             this.col_comment_id,
+            this.col_comment_recby,
             this.col_comment});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvComment.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComment.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvComment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvComment.EnableHeadersVisualStyles = false;
@@ -185,36 +197,13 @@
             this.dgvComment.RowHeadersVisible = false;
             this.dgvComment.RowTemplate.Height = 26;
             this.dgvComment.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvComment.Size = new System.Drawing.Size(752, 109);
+            this.dgvComment.Size = new System.Drawing.Size(706, 122);
             this.dgvComment.StandardTab = true;
             this.dgvComment.TabIndex = 0;
+            this.dgvComment.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComment_CellDoubleClick);
             this.dgvComment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvComment_CellPainting);
             this.dgvComment.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvComment_MouseClick);
             this.dgvComment.Resize += new System.EventHandler(this.dgv_Resize);
-            // 
-            // col_comment_note_comment
-            // 
-            this.col_comment_note_comment.DataPropertyName = "note_comment";
-            this.col_comment_note_comment.HeaderText = "Note Comment";
-            this.col_comment_note_comment.Name = "col_comment_note_comment";
-            this.col_comment_note_comment.ReadOnly = true;
-            this.col_comment_note_comment.Visible = false;
-            // 
-            // col_comment_id
-            // 
-            this.col_comment_id.DataPropertyName = "id";
-            this.col_comment_id.HeaderText = "ID";
-            this.col_comment_id.Name = "col_comment_id";
-            this.col_comment_id.ReadOnly = true;
-            this.col_comment_id.Visible = false;
-            // 
-            // col_comment
-            // 
-            this.col_comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_comment.DataPropertyName = "description";
-            this.col_comment.HeaderText = "Comment";
-            this.col_comment.Name = "col_comment";
-            this.col_comment.ReadOnly = true;
             // 
             // btnCommentSave
             // 
@@ -261,7 +250,7 @@
             this.inlineComplain._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.inlineComplain._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.inlineComplain._ForeColor = System.Drawing.SystemColors.WindowText;
-            this.inlineComplain._MaxLength = 32767;
+            this.inlineComplain._MaxLength = 255;
             this.inlineComplain._PasswordChar = '\0';
             this.inlineComplain._ReadOnly = false;
             this.inlineComplain._SelectionLength = 0;
@@ -276,6 +265,7 @@
             this.inlineComplain.Name = "inlineComplain";
             this.inlineComplain.Size = new System.Drawing.Size(142, 23);
             this.inlineComplain.TabIndex = 8;
+            this.inlineComplain._TextChanged += new System.EventHandler(this.inlineComplain__TextChanged);
             // 
             // btnComplainAdd
             // 
@@ -283,7 +273,7 @@
             this.btnComplainAdd.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnComplainAdd.Image = global::SN_Net.Properties.Resources.plus1;
             this.btnComplainAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnComplainAdd.Location = new System.Drawing.Point(698, 2);
+            this.btnComplainAdd.Location = new System.Drawing.Point(652, 2);
             this.btnComplainAdd.Name = "btnComplainAdd";
             this.btnComplainAdd.Size = new System.Drawing.Size(52, 25);
             this.btnComplainAdd.TabIndex = 7;
@@ -299,28 +289,29 @@
             this.dgvComplain.AllowUserToDeleteRows = false;
             this.dgvComplain.AllowUserToResizeColumns = false;
             this.dgvComplain.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvComplain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvComplain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvComplain.ColumnHeadersHeight = 28;
             this.dgvComplain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvComplain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_complain_note_comment,
             this.col_complain_id,
+            this.col_complain_recby,
             this.col_complain});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvComplain.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvComplain.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvComplain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvComplain.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvComplain.EnableHeadersVisualStyles = false;
@@ -334,36 +325,13 @@
             this.dgvComplain.RowHeadersVisible = false;
             this.dgvComplain.RowTemplate.Height = 26;
             this.dgvComplain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvComplain.Size = new System.Drawing.Size(752, 108);
+            this.dgvComplain.Size = new System.Drawing.Size(706, 123);
             this.dgvComplain.StandardTab = true;
             this.dgvComplain.TabIndex = 2;
+            this.dgvComplain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComplain_CellDoubleClick);
             this.dgvComplain.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvComplain_CellPainting);
             this.dgvComplain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvComplain_MouseClick);
             this.dgvComplain.Resize += new System.EventHandler(this.dgv_Resize);
-            // 
-            // col_complain_note_comment
-            // 
-            this.col_complain_note_comment.DataPropertyName = "note_comment";
-            this.col_complain_note_comment.HeaderText = "Note Comment";
-            this.col_complain_note_comment.Name = "col_complain_note_comment";
-            this.col_complain_note_comment.ReadOnly = true;
-            this.col_complain_note_comment.Visible = false;
-            // 
-            // col_complain_id
-            // 
-            this.col_complain_id.DataPropertyName = "id";
-            this.col_complain_id.HeaderText = "ID";
-            this.col_complain_id.Name = "col_complain_id";
-            this.col_complain_id.ReadOnly = true;
-            this.col_complain_id.Visible = false;
-            // 
-            // col_complain
-            // 
-            this.col_complain.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_complain.DataPropertyName = "description";
-            this.col_complain.HeaderText = "Complain";
-            this.col_complain.Name = "col_complain";
-            this.col_complain.ReadOnly = true;
             // 
             // btnComplainSave
             // 
@@ -405,12 +373,164 @@
             this.btnComplainEdit.UseVisualStyleBackColor = true;
             this.btnComplainEdit.Click += new System.EventHandler(this.btnComplainEdit_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 271);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 16);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Audio file path";
+            // 
+            // brPath
+            // 
+            this.brPath._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.brPath._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.brPath._ReadOnly = true;
+            this.brPath._Text = "";
+            this.brPath._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.brPath._UseImage = true;
+            this.brPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.brPath.BackColor = System.Drawing.Color.White;
+            this.brPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.brPath.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.brPath.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.brPath.Location = new System.Drawing.Point(101, 268);
+            this.brPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.brPath.Name = "brPath";
+            this.brPath.Size = new System.Drawing.Size(453, 23);
+            this.brPath.TabIndex = 11;
+            this.brPath._ButtonClick += new System.EventHandler(this.brPath__ButtonClick);
+            this.brPath._DoubleClicked += new System.EventHandler(this.brPath__DoubleClicked);
+            // 
+            // btnSavePath
+            // 
+            this.btnSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSavePath.Image = global::SN_Net.Properties.Resources.save_16;
+            this.btnSavePath.Location = new System.Drawing.Point(665, 267);
+            this.btnSavePath.Name = "btnSavePath";
+            this.btnSavePath.Size = new System.Drawing.Size(35, 25);
+            this.btnSavePath.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.btnSavePath, "Save Change");
+            this.btnSavePath.UseVisualStyleBackColor = true;
+            this.btnSavePath.Click += new System.EventHandler(this.btnSavePath_Click);
+            // 
+            // btnStopPath
+            // 
+            this.btnStopPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStopPath.Image = global::SN_Net.Properties.Resources.stop_16;
+            this.btnStopPath.Location = new System.Drawing.Point(628, 267);
+            this.btnStopPath.Name = "btnStopPath";
+            this.btnStopPath.Size = new System.Drawing.Size(35, 25);
+            this.btnStopPath.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.btnStopPath, "Discard Change");
+            this.btnStopPath.UseVisualStyleBackColor = true;
+            this.btnStopPath.Click += new System.EventHandler(this.btnStopPath_Click);
+            // 
+            // btnEditPath
+            // 
+            this.btnEditPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditPath.Image = global::SN_Net.Properties.Resources.edit_16;
+            this.btnEditPath.Location = new System.Drawing.Point(592, 267);
+            this.btnEditPath.Name = "btnEditPath";
+            this.btnEditPath.Size = new System.Drawing.Size(35, 25);
+            this.btnEditPath.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.btnEditPath, "Edit");
+            this.btnEditPath.UseVisualStyleBackColor = true;
+            this.btnEditPath.Click += new System.EventHandler(this.btnEditPath_Click);
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPlay.Image = global::SN_Net.Properties.Resources.play_media;
+            this.btnPlay.Location = new System.Drawing.Point(556, 267);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(35, 25);
+            this.btnPlay.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.btnPlay, "Play Audio File");
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            // 
+            // col_complain_note_comment
+            // 
+            this.col_complain_note_comment.DataPropertyName = "note_comment";
+            this.col_complain_note_comment.HeaderText = "Note Comment";
+            this.col_complain_note_comment.Name = "col_complain_note_comment";
+            this.col_complain_note_comment.ReadOnly = true;
+            this.col_complain_note_comment.Visible = false;
+            // 
+            // col_complain_id
+            // 
+            this.col_complain_id.DataPropertyName = "id";
+            this.col_complain_id.HeaderText = "ID";
+            this.col_complain_id.Name = "col_complain_id";
+            this.col_complain_id.ReadOnly = true;
+            this.col_complain_id.Visible = false;
+            // 
+            // col_complain_recby
+            // 
+            this.col_complain_recby.DataPropertyName = "recby";
+            this.col_complain_recby.HeaderText = "Rec. By";
+            this.col_complain_recby.MinimumWidth = 80;
+            this.col_complain_recby.Name = "col_complain_recby";
+            this.col_complain_recby.ReadOnly = true;
+            this.col_complain_recby.Width = 80;
+            // 
+            // col_complain
+            // 
+            this.col_complain.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_complain.DataPropertyName = "description";
+            this.col_complain.HeaderText = "Complain";
+            this.col_complain.Name = "col_complain";
+            this.col_complain.ReadOnly = true;
+            // 
+            // col_comment_note_comment
+            // 
+            this.col_comment_note_comment.DataPropertyName = "note_comment";
+            this.col_comment_note_comment.HeaderText = "Note Comment";
+            this.col_comment_note_comment.Name = "col_comment_note_comment";
+            this.col_comment_note_comment.ReadOnly = true;
+            this.col_comment_note_comment.Visible = false;
+            // 
+            // col_comment_id
+            // 
+            this.col_comment_id.DataPropertyName = "id";
+            this.col_comment_id.HeaderText = "ID";
+            this.col_comment_id.Name = "col_comment_id";
+            this.col_comment_id.ReadOnly = true;
+            this.col_comment_id.Visible = false;
+            // 
+            // col_comment_recby
+            // 
+            this.col_comment_recby.DataPropertyName = "recby";
+            this.col_comment_recby.HeaderText = "Rec. By";
+            this.col_comment_recby.MinimumWidth = 80;
+            this.col_comment_recby.Name = "col_comment_recby";
+            this.col_comment_recby.ReadOnly = true;
+            this.col_comment_recby.Width = 80;
+            // 
+            // col_comment
+            // 
+            this.col_comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_comment.DataPropertyName = "description";
+            this.col_comment.HeaderText = "Comment";
+            this.col_comment.Name = "col_comment";
+            this.col_comment.ReadOnly = true;
+            // 
             // DialogNoteComment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 287);
+            this.ClientSize = new System.Drawing.Size(712, 354);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSavePath);
+            this.Controls.Add(this.btnStopPath);
+            this.Controls.Add(this.brPath);
+            this.Controls.Add(this.btnPlay);
+            this.Controls.Add(this.btnEditPath);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnCancel);
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
@@ -430,6 +550,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvComment)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComplain)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -451,11 +572,20 @@
         private System.Windows.Forms.Button btnComplainAdd;
         private CC.XTextEdit inlineComment;
         private CC.XTextEdit inlineComplain;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnEditPath;
+        private CC.XBrowseBox brPath;
+        private System.Windows.Forms.Button btnStopPath;
+        private System.Windows.Forms.Button btnSavePath;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_comment_note_comment;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_comment_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_comment_recby;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_comment;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_complain_note_comment;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_complain_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_complain_recby;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_complain;
     }
 }

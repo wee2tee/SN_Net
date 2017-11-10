@@ -466,7 +466,51 @@ namespace SN_Net.Model
         // type 1 = comment, 2 = complain
         public note_comment note_comment { get; set; }
         public int id { get { return this.note_comment.id; } }
+        public string recby { get { return this.note_comment.rec_by; } }
         public string description { get { return this.note_comment.description; } }
+    }
+
+    public class event_calendarVM
+    {
+        public event_calendar event_calendar { get; set; }
+        public string realname { get { return this.event_calendar.realname; } }
+        //public string event_type { get { return this.event_calendar.event_type; } }
+        //public string event_code { get { return this.event_calendar.event_code; } }
+        public string type
+        {
+            get
+            {
+                using (sn_noteEntities sn_note = DBXNote.DataSet())
+                {
+                    var istab = sn_note.note_istab.Find(this.event_calendar.event_code_id);
+                    return istab != null ? istab.abbreviate_th : string.Empty;
+                }
+            }
+        }
+        public string description
+        {
+            get
+            {
+                if(this.event_calendar.event_type == CALENDAR_EVENT_TYPE.ABSENT)
+                {
+                    return this.event_calendar.from_time + " - " + this.event_calendar.to_time;
+                }
+                else if(this.event_calendar.event_type == CALENDAR_EVENT_TYPE.MEET_CUST)
+                {
+                    return this.event_calendar.customer;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+    }
+
+    public class CALENDAR_EVENT_TYPE
+    {
+        public const string ABSENT = "06";
+        public const string MEET_CUST = "07";
     }
 
     public static class DataHelper
@@ -744,6 +788,29 @@ namespace SN_Net.Model
             }
 
             return n;
+        }
+
+        public static event_calendarVM ToViewModel(this event_calendar ev)
+        {
+            if (ev == null)
+                return null;
+
+            event_calendarVM e = new event_calendarVM
+            {
+                event_calendar = ev
+            };
+
+            return e;
+        }
+
+        public static List<event_calendarVM> ToViewModel(this IEnumerable<event_calendar> ev)
+        {
+            List<event_calendarVM> e = new List<event_calendarVM>();
+            foreach (var item in ev)
+            {
+                e.Add(item.ToViewModel());
+            }
+            return e;
         }
 
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)

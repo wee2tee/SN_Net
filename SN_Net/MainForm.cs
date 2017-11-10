@@ -577,5 +577,11 @@ namespace SN_Net
                 this.form_note.WindowState = FormWindowState.Maximized;
             }
         }
+
+        private void mnuCalendar_Click(object sender, EventArgs e)
+        {
+            FormCalendar calendar = new FormCalendar(this);
+            calendar.Show();
+        }
     }
 }

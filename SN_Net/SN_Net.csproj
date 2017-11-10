@@ -168,6 +168,12 @@
     <Compile Include="MiscClass\CustomDateEvent2.Designer.cs">
       <DependentUpon>CustomDateEvent2.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiscClass\CustomDateEvent3.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MiscClass\CustomDateEvent3.Designer.cs">
+      <DependentUpon>CustomDateEvent3.cs</DependentUpon>
+    </Compile>
     <Compile Include="MiscClass\CustomDateTimePicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -236,6 +242,9 @@
     <Compile Include="Model\d_msg.cs">
       <DependentUpon>SNNetModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\event_calendar.cs">
+      <DependentUpon>NoteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\istab.cs">
       <DependentUpon>SNNetModel.tt</DependentUpon>
     </Compile>
@@ -263,7 +272,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NoteModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\note_calendar.cs">
+      <DependentUpon>NoteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\note_comment.cs">
+      <DependentUpon>NoteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\note_istab.cs">
       <DependentUpon>NoteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\problem.cs">
@@ -289,6 +304,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SNNetModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\training_calendar.cs">
+      <DependentUpon>NoteModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\users.cs">
       <DependentUpon>SNNetModel.tt</DependentUpon>
@@ -427,6 +445,12 @@
     </Compile>
     <Compile Include="SubformV2\DialogUpNewRwt.Designer.cs">
       <DependentUpon>DialogUpNewRwt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\FormCalendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\FormCalendar.Designer.cs">
+      <DependentUpon>FormCalendar.cs</DependentUpon>
     </Compile>
     <Compile Include="SubformV2\FormDealer.cs">
       <SubType>Form</SubType>
@@ -864,6 +888,9 @@
     <EmbeddedResource Include="MiscClass\CustomDateEvent2.resx">
       <DependentUpon>CustomDateEvent2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MiscClass\CustomDateEvent3.resx">
+      <DependentUpon>CustomDateEvent3.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MiscClass\CustomDateTimePicker.resx">
       <DependentUpon>CustomDateTimePicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -958,6 +985,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogUpNewRwt.resx">
       <DependentUpon>DialogUpNewRwt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\FormCalendar.resx">
+      <DependentUpon>FormCalendar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\FormDealer.resx">
       <DependentUpon>FormDealer.cs</DependentUpon>
@@ -1300,6 +1330,9 @@
       <DependentUpon>SNNetModel.edmx</DependentUpon>
       <LastGenOutput>SNNetModel.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\save_16.png" />
+    <None Include="Resources\stop_16.png" />
+    <None Include="Resources\edit_16.png" />
     <None Include="Resources\key_32.png" />
     <None Include="Resources\check2_16.png" />
     <None Include="Resources\lightning.png" />
