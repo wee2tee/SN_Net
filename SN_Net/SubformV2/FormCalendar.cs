@@ -124,6 +124,7 @@ namespace SN_Net.Subform
                 {
                     for (int j = 0; j < this.tableLayoutPanel1.ColumnCount; j++)
                     {
+
                         // remove existing control
                         if (this.tableLayoutPanel1.GetControlFromPosition(j, i) != null)
                             this.tableLayoutPanel1.Controls.Remove(this.tableLayoutPanel1.GetControlFromPosition(j, i));
@@ -140,10 +141,14 @@ namespace SN_Net.Subform
                         var event_list = event_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).ToList();
                         var note = note_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).FirstOrDefault();
                         var training_list = training_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).ToList();
-                        CustomDateEvent3 de = new CustomDateEvent3(this.main_form, curr_date, event_list, note, training_list);
+                        //de = new CustomDateEvent3(this.main_form, curr_date, event_list, note, training_list);
 
+
+                        CustomDateEvent3 de = new CustomDateEvent3(this.main_form, curr_date, first_date, event_list, note, training_list);
                         this.tableLayoutPanel1.Controls.Add(de, j, i);
                         increase_date++;
+
+
                     }
                 }
 
@@ -257,6 +262,29 @@ namespace SN_Net.Subform
                 {
                     de.RefreshData();
                     de.RefreshView();
+                }
+            }
+        }
+
+        private void btnKeptIstab_Click(object sender, EventArgs e)
+        {
+            using (sn_noteEntities sn_note = DBXNote.DataSet())
+            {
+                try
+                {
+                    var event_cal = sn_note.event_calendar.ToList();
+                    var istab = sn_note.note_istab.Where(i => i.tabtyp == CALENDAR_EVENT_TYPE.ABSENT || i.tabtyp == CALENDAR_EVENT_TYPE.MEET_CUST).ToList();
+                    foreach (var ev in event_cal)
+                    {
+                        var istab_event = istab.Where(i => i.typcod == ev.event_code).FirstOrDefault();
+                        ev.event_code_id = istab_event != null ? (int?)istab_event.id : null;
+                    }
+                    sn_note.SaveChanges();
+                    MessageAlert.Show("Rec. event_code_id completed.");
+                }
+                catch (Exception ex)
+                {
+                    MessageAlert.Show(ex.Message);
                 }
             }
         }

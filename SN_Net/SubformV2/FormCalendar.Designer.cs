@@ -49,6 +49,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnKeptIstab = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +57,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnKeptIstab,
             this.btnRangeLeave,
             this.btnUserGroup,
             this.btnYearlyHoliday,
@@ -194,6 +196,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 43);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -313,6 +316,17 @@
             this.label1.Text = "อาทิตย์";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnKeptIstab
+            // 
+            this.btnKeptIstab.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnKeptIstab.Image = global::SN_Net.Properties.Resources.reset_32;
+            this.btnKeptIstab.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnKeptIstab.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnKeptIstab.Name = "btnKeptIstab";
+            this.btnKeptIstab.Size = new System.Drawing.Size(36, 40);
+            this.btnKeptIstab.Text = "toolStripButton1";
+            this.btnKeptIstab.Click += new System.EventHandler(this.btnKeptIstab_Click);
+            // 
             // FormCalendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -358,5 +372,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripButton btnKeptIstab;
     }
 }

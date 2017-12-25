@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SN_Net.Model;
+using SN_Net.Subform;
 using CC;
 using System.Globalization;
 
@@ -14,36 +15,68 @@ namespace SN_Net.MiscClass
 {
     public partial class CustomDateEvent3 : UserControl
     {
-        public enum NOTE_CALENDAR_TYPE : int
-        {
-            WEEKDAY = 0,
-            HOLIDAY = 1
-        }
+        
 
         private MainForm main_form;
         private DateTime curr_date;
+        private DateTime first_date_of_month; // use to check for current month
         private BindingList<event_calendarVM> event_list;
         private note_calendar note_cal;
-        private List<training_calendar> training_list;
+        private List<training_calendarVM> training_list;
 
-        public CustomDateEvent3(MainForm main_form, DateTime curr_date, List<event_calendar> event_cal, note_calendar note_cal, List<training_calendar> training_cal)
+        public CustomDateEvent3(MainForm main_form, DateTime curr_date, DateTime first_date_of_month, List<event_calendar> event_cal, note_calendar note_cal, List<training_calendar> training_cal)
         {
             this.main_form = main_form;
-            this.curr_date = curr_date;
-            this.event_list = new BindingList<event_calendarVM>(event_cal.ToViewModel());
-            this.note_cal = note_cal;
-            this.training_list = training_cal;
-
             InitializeComponent();
+            this.RefreshView(curr_date, first_date_of_month, event_cal, note_cal, training_cal);
         }
 
         private void CustomDateEvent3_Load(object sender, EventArgs e)
         {
-            this.lblDay.Text = this.curr_date.ToString("d", CultureInfo.GetCultureInfo("th-TH"));
+            
+        }
+
+        public void RefreshView(DateTime curr_date, DateTime first_date_of_month, List<event_calendar> event_cal, note_calendar note_cal, List<training_calendar> training_cal)
+        {
+            this.curr_date = curr_date;
+            this.first_date_of_month = first_date_of_month;
+            this.event_list = new BindingList<event_calendarVM>(event_cal.ToViewModel().OrderBy(ev => ev.users.level).ThenBy(ev => ev.event_calendar.id).ToList());
+            //this.lblDay.BackColor = this.curr_date.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("th-TH")) == DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("th-TH")) ? Color.Green : Color.MediumSlateBlue;
+            int seq = 0;
+            foreach (var ev in this.event_list)
+            {
+                if (ev.users.level < (int)USER_LEVEL.SUPERVISOR && (ev.event_calendar.status == (int)CALENDAR_EVENT_STATUS.WAIT || ev.event_calendar.status == (int)CALENDAR_EVENT_STATUS.CONFIRMED))
+                {
+                    ev.seq = ++seq;
+                }
+                else
+                {
+                    ev.seq = null;
+                }
+            }
+            this.note_cal = note_cal;
+            this.training_list = training_cal.ToViewModel();
+            this.lblBottomText.Text = training_list.Count > 0 ? string.Join(",", training_list.Select(t => t.name).ToArray()) : string.Empty;
+            if (this.lblBottomText.Text.Trim().Length == 0)
+            {
+                this.lblBottomText.SetBounds(this.lblBottomText.Bounds.X, this.lblBottomText.Bounds.Y + 14, this.lblBottomText.Bounds.Width, this.lblBottomText.Bounds.Height);
+                this.lblBottomText.Height = 0;
+                this.lblBottomText.BackColor = Color.Green;
+            }
+
+            this.lblDay.Text = this.curr_date.Day.ToString();
             this.lblMonthYear.Text = this.curr_date.ToString("MMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
             this.lblNoteDescription.Text = this.note_cal != null ? this.note_cal.description : string.Empty;
+            if (this.note_cal != null && this.note_cal.type == (int)CALENDAR_NOTE_TYPE.WEEKDAY && this.note_cal.description.Trim().Length > 0)
+            {
+                this.lblNoteDescription.TextAlign = ContentAlignment.TopLeft;
+                this.lblNoteDescription.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+                this.lblNoteDescription.SetBounds(0, this.lblBottomText.Bounds.Y - 14, this.lblNoteDescription.Width, 14);
+                this.lblNoteDescription.Font = new Font("tahoma", 8.25f, FontStyle.Regular);
+                this.dgv.Height -= this.lblBottomText.Height;
+            }
 
-            if (this.note_cal != null && this.note_cal.type == (int)NOTE_CALENDAR_TYPE.HOLIDAY)
+            if (this.note_cal != null && this.note_cal.type == (int)CALENDAR_NOTE_TYPE.HOLIDAY)
             {
                 this.lblNoteDescription.BringToFront();
                 this.dgv.SendToBack();
@@ -55,7 +88,83 @@ namespace SN_Net.MiscClass
             }
 
             this.dgv.DataSource = this.event_list;
-            this.lblBottomText.Text = training_list.Count > 0 ? string.Join(",", training_list.Select(t => t.trainer).ToArray()) : string.Empty;
+
+            this.btnHoliday.Text = this.note_cal != null ? this.note_cal.group_weekend : string.Empty;
+            this.btnMaid.Text = this.note_cal != null ? this.note_cal.group_maid : string.Empty;
+
+            this.btnHoliday.Visible = this.note_cal != null && this.note_cal.group_weekend != null && this.note_cal.group_weekend.Trim().Length > 0 ? true : false;
+            this.btnMaid.Visible = this.note_cal != null && this.note_cal.group_maid != null && this.note_cal.group_maid.Trim().Length > 0 ? true : false;
+            if(this.curr_date.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("th-TH")) == DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("th-TH")))
+            {
+                this.lblDay.BackColor = Color.Green;
+            }
+            else
+            {
+                this.lblDay.BackColor = this.curr_date.Month.ToString() + this.curr_date.Year.ToString() == this.first_date_of_month.Month.ToString() + this.first_date_of_month.Year.ToString() ? Color.MediumSlateBlue : Color.LightGray;
+            }
+        }
+
+        private void dgv_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if(e.RowIndex > -1)
+            {
+                if (((users)((DataGridView)sender).Rows[e.RowIndex].Cells[this.col_users.Name].Value).level >= (int)USER_LEVEL.SUPERVISOR)
+                {
+                    e.CellStyle.BackColor = Color.Bisque;
+                    e.CellStyle.SelectionBackColor = Color.Bisque;
+                }
+                else if (((event_calendar)((DataGridView)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.WAIT)
+                {
+                    e.CellStyle.BackColor = Color.Lavender;
+                    e.CellStyle.SelectionBackColor = Color.Lavender;
+                }
+                else if (((event_calendar)((DataGridView)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.CANCELED)
+                {
+                    e.CellStyle.BackColor = Color.MistyRose;
+                    e.CellStyle.SelectionBackColor = Color.MistyRose;
+                }
+
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                e.Handled = true;
+            }
+        }
+
+        private void dgv_Enter(object sender, EventArgs e)
+        {
+            ((DataGridView)sender).DefaultCellStyle.SelectionForeColor = Color.Red;
+        }
+
+        private void dgv_Leave(object sender, EventArgs e)
+        {
+            ((DataGridView)sender).DefaultCellStyle.SelectionForeColor = Color.Black;
+        }
+
+        private void CustomDateEvent3_Enter(object sender, EventArgs e)
+        {
+            //this.BackColor = Color.Black;
+        }
+
+        private void CustomDateEvent3_Leave(object sender, EventArgs e)
+        {
+            //this.BackColor = Color.White;
+        }
+
+        private void btnHoliday_Click(object sender, EventArgs e)
+        {
+            using (snEntities db = DBX.DataSet())
+            {
+                var users = db.users.Include("istab").Where(u => u.istab.typcod == this.note_cal.group_weekend).Select(u => u.name).ToArray<string>();
+                MessageAlert.Show(string.Join(", ", users));
+            }
+        }
+
+        private void btnMaid_Click(object sender, EventArgs e)
+        {
+            using (snEntities db = DBX.DataSet())
+            {
+                var users = db.users.Include("istab").Where(u => u.istab.typcod == this.note_cal.group_maid).Select(u => u.name).ToArray<string>();
+                MessageAlert.Show(string.Join(", ", users));
+            }
         }
     }
 }

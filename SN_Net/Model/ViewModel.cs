@@ -473,6 +473,17 @@ namespace SN_Net.Model
     public class event_calendarVM
     {
         public event_calendar event_calendar { get; set; }
+        public users users
+        {
+            get
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    return sn.users.Where(u => u.username == this.event_calendar.users_name).FirstOrDefault();
+                }
+            }
+        }
+        public int? seq { get; set; }
         public string realname { get { return this.event_calendar.realname; } }
         //public string event_type { get { return this.event_calendar.event_type; } }
         //public string event_code { get { return this.event_calendar.event_code; } }
@@ -507,10 +518,40 @@ namespace SN_Net.Model
         }
     }
 
+    public class training_calendarVM
+    {
+        public training_calendar training_calendar { get; set; }
+        public string trainer { get { return this.training_calendar.trainer; } }
+        public string name
+        {
+            get
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    users u = sn.users.Where(us => us.username.Trim() == this.training_calendar.trainer.Trim()).FirstOrDefault();
+                    return u != null ? u.name : string.Empty;
+                }
+            }
+        }
+    }
+
     public class CALENDAR_EVENT_TYPE
     {
         public const string ABSENT = "06";
         public const string MEET_CUST = "07";
+    }
+
+    public enum CALENDAR_EVENT_STATUS : int
+    {
+        WAIT = 0,
+        CONFIRMED = 1,
+        CANCELED = 2
+    }
+
+    public enum CALENDAR_NOTE_TYPE : int
+    {
+        WEEKDAY = 0,
+        HOLIDAY = 1
     }
 
     public static class DataHelper
@@ -811,6 +852,28 @@ namespace SN_Net.Model
                 e.Add(item.ToViewModel());
             }
             return e;
+        }
+
+        public static training_calendarVM ToViewModel(this training_calendar tr)
+        {
+            if (tr == null)
+                return null;
+
+            training_calendarVM t = new training_calendarVM
+            {
+                training_calendar = tr
+            };
+            return t;
+        }
+
+        public static List<training_calendarVM> ToViewModel(this IEnumerable<training_calendar> tr)
+        {
+            List<training_calendarVM> t = new List<training_calendarVM>();
+            foreach (var item in tr)
+            {
+                t.Add(item.ToViewModel());
+            }
+            return t;
         }
 
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)
