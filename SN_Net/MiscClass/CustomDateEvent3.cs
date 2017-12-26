@@ -41,7 +41,7 @@ namespace SN_Net.MiscClass
             this.curr_date = curr_date;
             this.first_date_of_month = first_date_of_month;
             this.event_list = new BindingList<event_calendarVM>(event_cal.ToViewModel().OrderBy(ev => ev.users.level).ThenBy(ev => ev.event_calendar.id).ToList());
-            //this.lblDay.BackColor = this.curr_date.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("th-TH")) == DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("th-TH")) ? Color.Green : Color.MediumSlateBlue;
+            
             int seq = 0;
             foreach (var ev in this.event_list)
             {
@@ -57,6 +57,7 @@ namespace SN_Net.MiscClass
             this.note_cal = note_cal;
             this.training_list = training_cal.ToViewModel();
             this.lblBottomText.Text = training_list.Count > 0 ? string.Join(",", training_list.Select(t => t.name).ToArray()) : string.Empty;
+            this.toolTip1.SetToolTip(this.lblBottomText, this.lblBottomText.Text);
             if (this.lblBottomText.Text.Trim().Length == 0)
             {
                 this.lblBottomText.SetBounds(this.lblBottomText.Bounds.X, this.lblBottomText.Bounds.Y + 14, this.lblBottomText.Bounds.Width, this.lblBottomText.Bounds.Height);
@@ -165,6 +166,22 @@ namespace SN_Net.MiscClass
                 var users = db.users.Include("istab").Where(u => u.istab.typcod == this.note_cal.group_maid).Select(u => u.name).ToArray<string>();
                 MessageAlert.Show(string.Join(", ", users));
             }
+        }
+
+        private void btnTrainer_Click(object sender, EventArgs e)
+        {
+            DialogTrainer t = new DialogTrainer(this.main_form, this.curr_date);
+            t.ShowDialog();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDetail_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

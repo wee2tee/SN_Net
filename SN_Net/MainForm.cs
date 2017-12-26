@@ -41,6 +41,7 @@ namespace SN_Net
         public FormIstab form_verext;
         public FormIstab form_usergroup;
         public FormNote form_note;
+        public FormCalendar form_calendar;
         public string mac_address = string.Empty;
 
         public SnWindow sn_wind;
@@ -580,8 +581,17 @@ namespace SN_Net
 
         private void mnuCalendar_Click(object sender, EventArgs e)
         {
-            FormCalendar calendar = new FormCalendar(this);
-            calendar.Show();
+            if(this.form_calendar == null)
+            {
+                this.form_calendar = new FormCalendar(this);
+                this.form_calendar.MdiParent = this;
+                this.form_calendar.Show();
+            }
+            else
+            {
+                this.form_calendar.Activate();
+                this.form_calendar.WindowState = FormWindowState.Maximized;
+            }
         }
     }
 }

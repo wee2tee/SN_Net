@@ -906,5 +906,16 @@ namespace SN_Net.MiscClass
                 }
             }
         }
+
+        public static DateTime GetFirstDateOfMonth(this DateTime curr_date)
+        {
+            return curr_date.AddDays((curr_date.Day * -1) + 1);
+        }
+
+        public static DateTime GetLastDateOfMonth(this DateTime curr_date)
+        {
+            //var first_date_curr_month = curr_date.AddDays((curr_date.Day * -1) + 1);
+            return curr_date.AddDays((curr_date.Day * -1) + 1).AddMonths(1).AddDays(-1);
+        }
     }
 }

@@ -153,8 +153,9 @@
             this.btnTrainer.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnTrainer.Name = "btnTrainer";
             this.btnTrainer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnTrainer.Size = new System.Drawing.Size(136, 24);
+            this.btnTrainer.Size = new System.Drawing.Size(152, 24);
             this.btnTrainer.Text = "วิทยากรอบรม";
+            this.btnTrainer.Click += new System.EventHandler(this.btnTrainer_Click);
             // 
             // btnAdd
             // 
@@ -163,8 +164,9 @@
             this.btnAdd.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnAdd.Size = new System.Drawing.Size(136, 24);
+            this.btnAdd.Size = new System.Drawing.Size(152, 24);
             this.btnAdd.Text = "เพิ่มรายการ";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnDetail
             // 
@@ -173,8 +175,9 @@
             this.btnDetail.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnDetail.Name = "btnDetail";
             this.btnDetail.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnDetail.Size = new System.Drawing.Size(136, 24);
+            this.btnDetail.Size = new System.Drawing.Size(152, 24);
             this.btnDetail.Text = "ดูรายละเอียด";
+            this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
             // 
             // dgv
             // 

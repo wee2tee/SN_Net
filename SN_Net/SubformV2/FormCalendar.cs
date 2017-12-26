@@ -147,8 +147,6 @@ namespace SN_Net.Subform
                         CustomDateEvent3 de = new CustomDateEvent3(this.main_form, curr_date, first_date, event_list, note, training_list);
                         this.tableLayoutPanel1.Controls.Add(de, j, i);
                         increase_date++;
-
-
                     }
                 }
 
@@ -236,7 +234,8 @@ namespace SN_Net.Subform
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            this.main_form.calendar_wind = null;
+            //this.main_form.calendar_wind = null;
+            this.main_form.form_calendar = null;
             base.OnClosing(e);
         }
 

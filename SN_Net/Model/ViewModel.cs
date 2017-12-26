@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SN_Net.Subform;
 using System.Globalization;
+using SN_Net.MiscClass;
 //using System.ComponentModel;
 
 namespace SN_Net.Model
@@ -521,6 +522,8 @@ namespace SN_Net.Model
     public class training_calendarVM
     {
         public training_calendar training_calendar { get; set; }
+        public DateTime date { get { return this.training_calendar.date; } }
+        public string course_type { get { return this.training_calendar.course_type == 1 ? "Basic" : "Advanced"; } }
         public string trainer { get { return this.training_calendar.trainer; } }
         public string name
         {
@@ -531,6 +534,66 @@ namespace SN_Net.Model
                     users u = sn.users.Where(us => us.username.Trim() == this.training_calendar.trainer.Trim()).FirstOrDefault();
                     return u != null ? u.name : string.Empty;
                 }
+            }
+        }
+        public string code_name { get { return this.training_calendar.trainer + " : " + this.name; } }
+        public string status { get { return this.training_calendar.status == 1 ? "วิทยากร" : "ผู้ช่วย"; } }
+        public string term { get { return this.training_calendar.term == 1 ? "เช้า" : "บ่าย"; } }
+        public string remark { get { return this.training_calendar.remark; } }
+        //public string rec_by { get { return this.training_calendar.rec_by; } }
+    }
+    
+    public class trainer_monthly_statVM
+    {
+        public users user { get; set; }
+        public DateTime first_date_of_month { get; set; }
+        public DateTime last_date_of_month { get; set; }
+        public string code_name { get { return this.user.username + " : " + this.user.name; } }
+        public List<DateTime> train_dates
+        {
+            get
+            {
+                using (sn_noteEntities note = DBXNote.DataSet())
+                {
+                    var dates = note.training_calendar.Where(t =>
+                        t.trainer == user.username &&
+                        t.status == 1 /*1 = Trainer*/ &&
+                        /*t.date.ToString("MM-yyyy", CultureInfo.GetCultureInfo("th-TH")) == curr_date.ToString("MM-yyyy", CultureInfo.GetCultureInfo("th-TH"))*/
+                        t.date.CompareTo(this.first_date_of_month) >= 0 &&
+                        t.date.CompareTo(this.last_date_of_month) <= 0).Select(t => t.date).ToList();
+                    return dates;
+                }
+            }
+        }
+        public List<DateTime> assist_dates
+        {
+            get
+            {
+                using (sn_noteEntities note = DBXNote.DataSet())
+                {
+                    var dates = note.training_calendar.Where(t =>
+                        t.trainer == user.username &&
+                        t.status == 2 /*2 = Assist*/ &&
+                        t.date.CompareTo(this.first_date_of_month) >= 0 &&
+                        t.date.CompareTo(this.last_date_of_month) <= 0).Select(t => t.date).ToList();
+                    return dates;
+                }
+            }
+        }
+        public string train_dates_str
+        {
+            get
+            {
+                var d = this.train_dates.Select(t => t.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"))).ToArray<string>();
+                return string.Join(", ", d);
+            }
+        }
+        public string assist_dates_str
+        {
+            get
+            {
+                var d = this.assist_dates.Select(t => t.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"))).ToArray<string>();
+                return string.Join(", ", d);
             }
         }
     }
@@ -872,6 +935,31 @@ namespace SN_Net.Model
             foreach (var item in tr)
             {
                 t.Add(item.ToViewModel());
+            }
+            return t;
+        }
+
+        public static trainer_monthly_statVM ToViewModelTrainerStat(this users user, DateTime any_date_of_month)
+        {
+            if (user == null)
+                return null;
+
+            trainer_monthly_statVM t = new trainer_monthly_statVM
+            {
+                user = user,
+                first_date_of_month = any_date_of_month.GetFirstDateOfMonth(),
+                last_date_of_month = any_date_of_month.GetLastDateOfMonth() 
+            };
+            return t;
+        }
+
+        public static List<trainer_monthly_statVM> ToViewModelTrainerStat(this IEnumerable<users> user, DateTime any_date_in_month)
+        {
+            List<trainer_monthly_statVM> t = new List<trainer_monthly_statVM>();
+
+            foreach (var item in user)
+            {
+                t.Add(item.ToViewModelTrainerStat(any_date_in_month));
             }
             return t;
         }

@@ -434,6 +434,12 @@
     <Compile Include="SubformV2\DialogSimplePrintOutput.Designer.cs">
       <DependentUpon>DialogSimplePrintOutput.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubformV2\DialogTrainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogTrainer.Designer.cs">
+      <DependentUpon>DialogTrainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogUpgradeProgram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -979,6 +985,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogSimplePrintOutput.resx">
       <DependentUpon>DialogSimplePrintOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogTrainer.resx">
+      <DependentUpon>DialogTrainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogUpgradeProgram.resx">
       <DependentUpon>DialogUpgradeProgram.cs</DependentUpon>
