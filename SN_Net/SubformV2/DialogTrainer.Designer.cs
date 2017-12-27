@@ -35,9 +35,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dtDate = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.inlineRemark = new CC.XTextEdit();
+            this.inlineTerm = new CC.XDropdownList();
+            this.inlineStatus = new CC.XDropdownList();
+            this.inlineTrainer = new CC.XDropdownList();
+            this.inlineCourseType = new CC.XDropdownList();
             this.dgvTrainer = new CC.XDatagrid();
             this.col_training_calendar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +51,12 @@
             this.col_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_term = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgvStat = new CC.XDatagrid();
             this.col_stat_user = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_stat_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,20 +67,12 @@
             this.col_stat_assist_dates = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_stat_train_dates_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_stat_assist_dates_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inlineCourseType = new CC.XDropdownList();
-            this.inlineTrainer = new CC.XDropdownList();
-            this.inlineStatus = new CC.XDropdownList();
-            this.inlineTerm = new CC.XDropdownList();
-            this.inlineRemark = new CC.XTextEdit();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
+            this.dtDate = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainer)).BeginInit();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStat)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,6 +90,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(657, 352);
             this.tabControl1.TabIndex = 122;
+            this.tabControl1.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Deselecting);
             // 
             // tabPage1
             // 
@@ -112,41 +113,83 @@
             this.tabPage1.Text = "วิทยากร และ ผู้ช่วยในวันนี้ <F8>";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // inlineRemark
             // 
-            this.tabPage2.Controls.Add(this.dgvStat);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage2.Size = new System.Drawing.Size(649, 323);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "สถิติรายบุคคลในเดือนนี้ <F7>";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.inlineRemark._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineRemark._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.inlineRemark._ForeColor = System.Drawing.SystemColors.WindowText;
+            this.inlineRemark._MaxLength = 40;
+            this.inlineRemark._PasswordChar = '\0';
+            this.inlineRemark._ReadOnly = false;
+            this.inlineRemark._SelectionLength = 0;
+            this.inlineRemark._SelectionStart = 0;
+            this.inlineRemark._Text = "";
+            this.inlineRemark._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.inlineRemark.BackColor = System.Drawing.Color.White;
+            this.inlineRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineRemark.Location = new System.Drawing.Point(411, 54);
+            this.inlineRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineRemark.Name = "inlineRemark";
+            this.inlineRemark.Size = new System.Drawing.Size(232, 23);
+            this.inlineRemark.TabIndex = 124;
+            this.inlineRemark._TextChanged += new System.EventHandler(this.inlineRemark__TextChanged);
             // 
-            // dtDate
+            // inlineTerm
             // 
-            this.dtDate.Checked = false;
-            this.dtDate.CustomFormat = "dddd, dd/MM/yyyy";
-            this.dtDate.Enabled = false;
-            this.dtDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dtDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtDate.Location = new System.Drawing.Point(55, 19);
-            this.dtDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtDate.Name = "dtDate";
-            this.dtDate.Size = new System.Drawing.Size(194, 23);
-            this.dtDate.TabIndex = 121;
-            this.dtDate.Value = new System.DateTime(2015, 10, 9, 16, 11, 0, 0);
+            this.inlineTerm._ReadOnly = false;
+            this.inlineTerm._SelectedItem = null;
+            this.inlineTerm._Text = "";
+            this.inlineTerm.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineTerm.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineTerm.Location = new System.Drawing.Point(333, 54);
+            this.inlineTerm.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineTerm.Name = "inlineTerm";
+            this.inlineTerm.Size = new System.Drawing.Size(76, 23);
+            this.inlineTerm.TabIndex = 123;
+            this.inlineTerm._SelectedItemChanged += new System.EventHandler(this.inlineTerm__SelectedItemChanged);
             // 
-            // label1
+            // inlineStatus
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(18, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 16);
-            this.label1.TabIndex = 120;
-            this.label1.Text = "วันที่";
+            this.inlineStatus._ReadOnly = false;
+            this.inlineStatus._SelectedItem = null;
+            this.inlineStatus._Text = "";
+            this.inlineStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineStatus.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineStatus.Location = new System.Drawing.Point(250, 54);
+            this.inlineStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineStatus.Name = "inlineStatus";
+            this.inlineStatus.Size = new System.Drawing.Size(81, 23);
+            this.inlineStatus.TabIndex = 122;
+            this.inlineStatus._SelectedItemChanged += new System.EventHandler(this.inlineStatus__SelectedItemChanged);
+            // 
+            // inlineTrainer
+            // 
+            this.inlineTrainer._ReadOnly = false;
+            this.inlineTrainer._SelectedItem = null;
+            this.inlineTrainer._Text = "";
+            this.inlineTrainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineTrainer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineTrainer.Location = new System.Drawing.Point(141, 54);
+            this.inlineTrainer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineTrainer.Name = "inlineTrainer";
+            this.inlineTrainer.Size = new System.Drawing.Size(107, 23);
+            this.inlineTrainer.TabIndex = 121;
+            this.inlineTrainer._SelectedItemChanged += new System.EventHandler(this.inlineTrainer__SelectedItemChanged);
+            // 
+            // inlineCourseType
+            // 
+            this.inlineCourseType._ReadOnly = false;
+            this.inlineCourseType._SelectedItem = null;
+            this.inlineCourseType._Text = "";
+            this.inlineCourseType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineCourseType.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineCourseType.Location = new System.Drawing.Point(49, 54);
+            this.inlineCourseType.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineCourseType.Name = "inlineCourseType";
+            this.inlineCourseType.Size = new System.Drawing.Size(90, 23);
+            this.inlineCourseType.TabIndex = 120;
+            this.inlineCourseType._SelectedItemChanged += new System.EventHandler(this.inlineCourseType__SelectedItemChanged);
             // 
             // dgvTrainer
             // 
@@ -202,6 +245,8 @@
             this.dgvTrainer.TabIndex = 119;
             this.dgvTrainer.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvTrainer_CellPainting);
             this.dgvTrainer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvTrainer_MouseClick);
+            this.dgvTrainer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvTrainer_MouseDoubleClick);
+            this.dgvTrainer.Resize += new System.EventHandler(this.dgvTrainer_Resize);
             // 
             // col_training_calendar
             // 
@@ -286,6 +331,73 @@
             this.col_remark.HeaderText = "หมายเหตุ";
             this.col_remark.Name = "col_remark";
             this.col_remark.ReadOnly = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Location = new System.Drawing.Point(11, 285);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(42, 23);
+            this.btnDelete.TabIndex = 125;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancel.Location = new System.Drawing.Point(11, 256);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(42, 23);
+            this.btnCancel.TabIndex = 125;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSave.Location = new System.Drawing.Point(11, 227);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(42, 23);
+            this.btnSave.TabIndex = 125;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEdit.Location = new System.Drawing.Point(11, 198);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(42, 23);
+            this.btnEdit.TabIndex = 125;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAdd.Location = new System.Drawing.Point(11, 169);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(42, 23);
+            this.btnAdd.TabIndex = 125;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dgvStat);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabPage2.Size = new System.Drawing.Size(649, 323);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "สถิติรายบุคคลในเดือนนี้ <F7>";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dgvStat
             // 
@@ -415,133 +527,29 @@
             this.col_stat_assist_dates_str.Name = "col_stat_assist_dates_str";
             this.col_stat_assist_dates_str.ReadOnly = true;
             // 
-            // inlineCourseType
+            // dtDate
             // 
-            this.inlineCourseType._ReadOnly = false;
-            this.inlineCourseType._SelectedItem = null;
-            this.inlineCourseType._Text = "";
-            this.inlineCourseType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineCourseType.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.inlineCourseType.Location = new System.Drawing.Point(49, 54);
-            this.inlineCourseType.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.inlineCourseType.Name = "inlineCourseType";
-            this.inlineCourseType.Size = new System.Drawing.Size(90, 23);
-            this.inlineCourseType.TabIndex = 120;
+            this.dtDate.Checked = false;
+            this.dtDate.CustomFormat = "dddd, dd/MM/yyyy";
+            this.dtDate.Enabled = false;
+            this.dtDate.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.dtDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtDate.Location = new System.Drawing.Point(55, 19);
+            this.dtDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtDate.Name = "dtDate";
+            this.dtDate.Size = new System.Drawing.Size(194, 23);
+            this.dtDate.TabIndex = 121;
+            this.dtDate.Value = new System.DateTime(2015, 10, 9, 16, 11, 0, 0);
             // 
-            // inlineTrainer
+            // label1
             // 
-            this.inlineTrainer._ReadOnly = false;
-            this.inlineTrainer._SelectedItem = null;
-            this.inlineTrainer._Text = "";
-            this.inlineTrainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineTrainer.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.inlineTrainer.Location = new System.Drawing.Point(141, 54);
-            this.inlineTrainer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.inlineTrainer.Name = "inlineTrainer";
-            this.inlineTrainer.Size = new System.Drawing.Size(107, 23);
-            this.inlineTrainer.TabIndex = 121;
-            // 
-            // inlineStatus
-            // 
-            this.inlineStatus._ReadOnly = false;
-            this.inlineStatus._SelectedItem = null;
-            this.inlineStatus._Text = "";
-            this.inlineStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineStatus.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.inlineStatus.Location = new System.Drawing.Point(250, 54);
-            this.inlineStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.inlineStatus.Name = "inlineStatus";
-            this.inlineStatus.Size = new System.Drawing.Size(81, 23);
-            this.inlineStatus.TabIndex = 122;
-            // 
-            // inlineTerm
-            // 
-            this.inlineTerm._ReadOnly = false;
-            this.inlineTerm._SelectedItem = null;
-            this.inlineTerm._Text = "";
-            this.inlineTerm.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineTerm.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.inlineTerm.Location = new System.Drawing.Point(333, 54);
-            this.inlineTerm.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.inlineTerm.Name = "inlineTerm";
-            this.inlineTerm.Size = new System.Drawing.Size(76, 23);
-            this.inlineTerm.TabIndex = 123;
-            // 
-            // inlineRemark
-            // 
-            this.inlineRemark._BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineRemark._CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.inlineRemark._ForeColor = System.Drawing.SystemColors.WindowText;
-            this.inlineRemark._MaxLength = 32767;
-            this.inlineRemark._PasswordChar = '\0';
-            this.inlineRemark._ReadOnly = false;
-            this.inlineRemark._SelectionLength = 0;
-            this.inlineRemark._SelectionStart = 0;
-            this.inlineRemark._Text = "";
-            this.inlineRemark._TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.inlineRemark.BackColor = System.Drawing.Color.White;
-            this.inlineRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineRemark.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.inlineRemark.Location = new System.Drawing.Point(411, 54);
-            this.inlineRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.inlineRemark.Name = "inlineRemark";
-            this.inlineRemark.Size = new System.Drawing.Size(232, 23);
-            this.inlineRemark.TabIndex = 124;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAdd.Location = new System.Drawing.Point(11, 169);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(42, 23);
-            this.btnAdd.TabIndex = 125;
-            this.btnAdd.Text = "Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Location = new System.Drawing.Point(11, 227);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(42, 23);
-            this.btnSave.TabIndex = 125;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.Location = new System.Drawing.Point(11, 256);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(42, 23);
-            this.btnCancel.TabIndex = 125;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDelete.Location = new System.Drawing.Point(11, 285);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(42, 23);
-            this.btnDelete.TabIndex = 125;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEdit.Location = new System.Drawing.Point(11, 198);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(42, 23);
-            this.btnEdit.TabIndex = 125;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label1.Location = new System.Drawing.Point(18, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(31, 16);
+            this.label1.TabIndex = 120;
+            this.label1.Text = "วันที่";
             // 
             // DialogTrainer
             // 
@@ -552,6 +560,7 @@
             this.Controls.Add(this.dtDate);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "DialogTrainer";
             this.ShowIcon = false;
@@ -560,8 +569,8 @@
             this.Load += new System.EventHandler(this.DialogTrainer_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainer)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStat)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
