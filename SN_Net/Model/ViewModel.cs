@@ -519,6 +519,59 @@ namespace SN_Net.Model
         }
     }
 
+    public class event_calendarVMFull
+    {
+        public event_calendar event_calendar { get; set; }
+        public users users
+        {
+            get
+            {
+                using (snEntities sn = DBX.DataSet())
+                {
+                    return sn.users.Where(u => u.username == this.event_calendar.users_name).FirstOrDefault();
+                }
+            }
+        }
+        public int? seq { get; set; }
+        public string code_name { get { return (this.users != null ? users.username : "  ") + " : " + this.event_calendar.realname; } }
+        public string reason
+        {
+            get
+            {
+                using (sn_noteEntities sn_note = DBXNote.DataSet())
+                {
+                    var istab = sn_note.note_istab.Find(this.event_calendar.event_code_id);
+                    return istab != null ? istab.typdes_th : string.Empty;
+                }
+            }
+        }
+        public string time_from { get { return this.event_calendar.from_time; } }
+        public string time_to { get { return this.event_calendar.to_time; } }
+        public string status { get { return Enum.GetValues(typeof(CALENDAR_EVENT_STATUS)).Cast<CALENDAR_EVENT_STATUS>().Where(ev => (int)ev == this.event_calendar.status).FirstOrDefault().ToString(); } }
+        public string remark { get { return this.event_calendar.customer; } }
+        public string med_cert
+        {
+            get
+            {
+                switch (this.event_calendar.med_cert)
+                {
+                    case CALENDAR_EVENT_MEDCERT.NOT_ASSIGN:
+                        return string.Empty;
+
+                    case CALENDAR_EVENT_MEDCERT.NOT_HAVE_MEDCERT:
+                        return "ไม่มีเอกสาร";
+
+                    case CALENDAR_EVENT_MEDCERT.HAVE_MEDCERT:
+                        return "มีใบรับรองแพทย์";
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+        public string fine { get { return this.event_calendar.fine > 0 ? string.Format("{0:0.00}", this.event_calendar.fine) : string.Empty; } }
+    }
+
     public class training_calendarVM
     {
         public training_calendar training_calendar { get; set; }
@@ -602,6 +655,13 @@ namespace SN_Net.Model
     {
         public const string ABSENT = "06";
         public const string MEET_CUST = "07";
+    }
+
+    public class CALENDAR_EVENT_MEDCERT
+    {
+        public const string NOT_ASSIGN = "X";
+        public const string HAVE_MEDCERT = "Y";
+        public const string NOT_HAVE_MEDCERT = "N";
     }
 
     public enum CALENDAR_EVENT_STATUS : int
@@ -917,6 +977,28 @@ namespace SN_Net.Model
             return e;
         }
 
+        public static event_calendarVMFull ToViewModelFull(this event_calendar ev)
+        {
+            if (ev == null)
+                return null;
+
+            event_calendarVMFull e = new event_calendarVMFull
+            {
+                event_calendar = ev
+            };
+
+            return e;
+        }
+
+        public static List<event_calendarVMFull> ToViewModelFull(this IEnumerable<event_calendar> ev)
+        {
+            List<event_calendarVMFull> e = new List<event_calendarVMFull>();
+            foreach (var item in ev)
+            {
+                e.Add(item.ToViewModelFull());
+            }
+            return e;
+        }
         public static training_calendarVM ToViewModel(this training_calendar tr)
         {
             if (tr == null)
