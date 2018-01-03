@@ -709,6 +709,18 @@ namespace SN_Net.MiscClass
                     if (accessibility_by_scacclv != null && accessibility_by_scacclv == "N")
                         ((TextBox)comp).ReadOnly = true;
                 }
+                if (comp is NumericUpDown)
+                {
+                    ((NumericUpDown)comp).Enabled = true;
+                    if (accessibility_by_scacclv != null && accessibility_by_scacclv == "N")
+                        ((NumericUpDown)comp).ReadOnly = true;
+                }
+                if (comp is RadioButton)
+                {
+                    ((RadioButton)comp).Enabled = true;
+                    if (accessibility_by_scacclv != null && accessibility_by_scacclv == "N")
+                        ((RadioButton)comp).Enabled = false;
+                }
             }
             else
             {
@@ -767,6 +779,14 @@ namespace SN_Net.MiscClass
                 if (comp is TextBox)
                 {
                     ((TextBox)comp).ReadOnly = true; return;
+                }
+                if (comp is NumericUpDown)
+                {
+                    ((NumericUpDown)comp).Enabled = false; return;
+                }
+                if (comp is RadioButton)
+                {
+                    ((RadioButton)comp).Enabled = false; return;
                 }
             }
         }

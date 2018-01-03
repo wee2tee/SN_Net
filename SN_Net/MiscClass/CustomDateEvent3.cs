@@ -19,7 +19,7 @@ namespace SN_Net.MiscClass
         public DateTime curr_date;
         private DateTime first_date_of_month; // use to check for current month
         private BindingList<event_calendarVM> event_list;
-        private note_calendar note_cal;
+        public note_calendar note_cal;
         private List<training_calendarVM> training_list;
 
         public CustomDateEvent3(MainForm main_form, DateTime curr_date, DateTime first_date_of_month, List<event_calendar> event_cal, note_calendar note_cal, List<training_calendar> training_cal)
