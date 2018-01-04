@@ -138,7 +138,7 @@ namespace SN_Net.Subform
 
                         //CustomDateEvent2 de = new CustomDateEvent2(this.main_form, this, first_date.AddDays(increase_date), this.month, absent_list, absent_cause, trainer, note, users_list, max_leave);
                         var curr_date = first_date.AddDays(increase_date);
-                        var event_list = event_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).ToList();
+                        var event_list = event_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).OrderBy(c => c.ToViewModel().users.level).ThenBy(c => c.id).ToList();
                         var note = note_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).FirstOrDefault();
                         var training_list = training_cal.Where(c => c.date.CompareTo(curr_date) >= 0 && c.date.CompareTo(curr_date) <= 0).ToList();
                         //de = new CustomDateEvent3(this.main_form, curr_date, event_list, note, training_list);
