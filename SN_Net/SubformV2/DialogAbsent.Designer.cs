@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnEdit = new System.Windows.Forms.ToolStripButton();
             this.btnStop = new System.Windows.Forms.ToolStripButton();
@@ -51,15 +52,20 @@
             this.btnAddItem = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnCopyItem = new System.Windows.Forms.Button();
             this.inlineFine = new System.Windows.Forms.NumericUpDown();
+            this.btnCopyItem = new System.Windows.Forms.Button();
             this.inlineRemark = new CC.XTextEdit();
             this.inlineTo = new CC.XTimePicker();
             this.inlineFrom = new CC.XTimePicker();
             this.inlineMedCert = new CC.XDropdownList();
             this.inlineStatus = new CC.XDropdownList();
+            this.inlineCodeName = new CC.XDropdownList();
             this.inlineReason = new CC.XDropdownList();
             this.dgv = new CC.XDatagrid();
+            this.dlGroupMaid = new CC.XDropdownList();
+            this.dlGroupHoliday = new CC.XDropdownList();
+            this.txtRemark = new CC.XTextEdit();
+            this.txtHoliday = new CC.XTextEdit();
             this.col_event_calendar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_users = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,11 +77,6 @@
             this.col_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_med_cert = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_fine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dlGroupMaid = new CC.XDropdownList();
-            this.dlGroupHoliday = new CC.XDropdownList();
-            this.txtRemark = new CC.XTextEdit();
-            this.txtHoliday = new CC.XTextEdit();
-            this.inlineCodeName = new CC.XDropdownList();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLeaveCount)).BeginInit();
@@ -327,16 +328,6 @@
             this.tabPage1.Text = "พนักงานที่ลางาน / ออกพบลูกค้า <F8>";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnCopyItem
-            // 
-            this.btnCopyItem.Location = new System.Drawing.Point(8, 79);
-            this.btnCopyItem.Name = "btnCopyItem";
-            this.btnCopyItem.Size = new System.Drawing.Size(44, 23);
-            this.btnCopyItem.TabIndex = 1;
-            this.btnCopyItem.Text = "Copy";
-            this.btnCopyItem.UseVisualStyleBackColor = true;
-            this.btnCopyItem.Click += new System.EventHandler(this.btnCopyItem_Click);
-            // 
             // inlineFine
             // 
             this.inlineFine.Location = new System.Drawing.Point(742, 32);
@@ -349,7 +340,19 @@
             this.inlineFine.Size = new System.Drawing.Size(75, 23);
             this.inlineFine.TabIndex = 15;
             this.inlineFine.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.inlineFine.ThousandsSeparator = true;
             this.inlineFine.ValueChanged += new System.EventHandler(this.inlineFine_ValueChanged);
+            this.inlineFine.KeyUp += new System.Windows.Forms.KeyEventHandler(this.inlineFine_KeyUp);
+            // 
+            // btnCopyItem
+            // 
+            this.btnCopyItem.Location = new System.Drawing.Point(8, 79);
+            this.btnCopyItem.Name = "btnCopyItem";
+            this.btnCopyItem.Size = new System.Drawing.Size(44, 23);
+            this.btnCopyItem.TabIndex = 1;
+            this.btnCopyItem.Text = "Copy";
+            this.btnCopyItem.UseVisualStyleBackColor = true;
+            this.btnCopyItem.Click += new System.EventHandler(this.btnCopyItem_Click);
             // 
             // inlineRemark
             // 
@@ -423,6 +426,20 @@
             this.inlineStatus.TabIndex = 12;
             this.inlineStatus._SelectedItemChanged += new System.EventHandler(this.inlineStatus__SelectedItemChanged);
             // 
+            // inlineCodeName
+            // 
+            this.inlineCodeName._ReadOnly = false;
+            this.inlineCodeName._SelectedItem = null;
+            this.inlineCodeName._Text = "";
+            this.inlineCodeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inlineCodeName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.inlineCodeName.Location = new System.Drawing.Point(52, 32);
+            this.inlineCodeName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inlineCodeName.Name = "inlineCodeName";
+            this.inlineCodeName.Size = new System.Drawing.Size(106, 23);
+            this.inlineCodeName.TabIndex = 8;
+            this.inlineCodeName._SelectedItemChanged += new System.EventHandler(this.inlineCodeName__SelectedItemChanged);
+            // 
             // inlineReason
             // 
             this.inlineReason._ReadOnly = false;
@@ -444,14 +461,14 @@
             this.dgv.AllowUserToDeleteRows = false;
             this.dgv.AllowUserToResizeColumns = false;
             this.dgv.AllowUserToResizeRows = false;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv.ColumnHeadersHeight = 28;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -466,14 +483,14 @@
             this.col_remark,
             this.col_med_cert,
             this.col_fine});
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgv.EnableHeadersVisualStyles = false;
@@ -489,107 +506,10 @@
             this.dgv.Size = new System.Drawing.Size(820, 267);
             this.dgv.StandardTab = true;
             this.dgv.TabIndex = 0;
+            this.dgv.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgv_CellPainting);
             this.dgv.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_MouseClick);
             this.dgv.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgv_MouseDoubleClick);
             this.dgv.Resize += new System.EventHandler(this.dgv_Resize);
-            // 
-            // col_event_calendar
-            // 
-            this.col_event_calendar.DataPropertyName = "event_calendar";
-            this.col_event_calendar.HeaderText = "Event Calendar";
-            this.col_event_calendar.Name = "col_event_calendar";
-            this.col_event_calendar.ReadOnly = true;
-            this.col_event_calendar.Visible = false;
-            // 
-            // col_users
-            // 
-            this.col_users.DataPropertyName = "users";
-            this.col_users.HeaderText = "Users";
-            this.col_users.Name = "col_users";
-            this.col_users.ReadOnly = true;
-            this.col_users.Visible = false;
-            // 
-            // col_seq
-            // 
-            this.col_seq.DataPropertyName = "seq";
-            this.col_seq.HeaderText = "ลำดับ";
-            this.col_seq.MinimumWidth = 45;
-            this.col_seq.Name = "col_seq";
-            this.col_seq.ReadOnly = true;
-            this.col_seq.Width = 45;
-            // 
-            // col_code_name
-            // 
-            this.col_code_name.DataPropertyName = "code_name";
-            this.col_code_name.HeaderText = "รหัส / ชื่อ";
-            this.col_code_name.MinimumWidth = 110;
-            this.col_code_name.Name = "col_code_name";
-            this.col_code_name.ReadOnly = true;
-            this.col_code_name.Width = 110;
-            // 
-            // col_reason
-            // 
-            this.col_reason.DataPropertyName = "reason";
-            this.col_reason.HeaderText = "เหตุผล";
-            this.col_reason.MinimumWidth = 110;
-            this.col_reason.Name = "col_reason";
-            this.col_reason.ReadOnly = true;
-            this.col_reason.Width = 110;
-            // 
-            // col_time_from
-            // 
-            this.col_time_from.DataPropertyName = "time_from";
-            this.col_time_from.HeaderText = "จาก";
-            this.col_time_from.MinimumWidth = 55;
-            this.col_time_from.Name = "col_time_from";
-            this.col_time_from.ReadOnly = true;
-            this.col_time_from.Width = 55;
-            // 
-            // col_time_to
-            // 
-            this.col_time_to.DataPropertyName = "time_to";
-            this.col_time_to.HeaderText = "ถึง";
-            this.col_time_to.MinimumWidth = 55;
-            this.col_time_to.Name = "col_time_to";
-            this.col_time_to.ReadOnly = true;
-            this.col_time_to.Width = 55;
-            // 
-            // col_status
-            // 
-            this.col_status.DataPropertyName = "status";
-            this.col_status.HeaderText = "สถานะ";
-            this.col_status.MinimumWidth = 80;
-            this.col_status.Name = "col_status";
-            this.col_status.ReadOnly = true;
-            this.col_status.Width = 80;
-            // 
-            // col_remark
-            // 
-            this.col_remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_remark.DataPropertyName = "remark";
-            this.col_remark.HeaderText = "หมายเหตุ/ชื่อลูกค้า";
-            this.col_remark.Name = "col_remark";
-            this.col_remark.ReadOnly = true;
-            // 
-            // col_med_cert
-            // 
-            this.col_med_cert.DataPropertyName = "med_cert";
-            this.col_med_cert.HeaderText = "เอกสารอ้างอิง";
-            this.col_med_cert.MinimumWidth = 110;
-            this.col_med_cert.Name = "col_med_cert";
-            this.col_med_cert.ReadOnly = true;
-            this.col_med_cert.Width = 110;
-            // 
-            // col_fine
-            // 
-            this.col_fine.DataPropertyName = "fine";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.col_fine.DefaultCellStyle = dataGridViewCellStyle23;
-            this.col_fine.HeaderText = "หักค่าคอมฯ";
-            this.col_fine.MinimumWidth = 80;
-            this.col_fine.Name = "col_fine";
-            this.col_fine.ReadOnly = true;
-            this.col_fine.Width = 80;
             // 
             // dlGroupMaid
             // 
@@ -667,19 +587,109 @@
             this.txtHoliday._TextChanged += new System.EventHandler(this.txtHoliday__TextChanged);
             this.txtHoliday._DoubleClicked += new System.EventHandler(this.PerformEdit);
             // 
-            // inlineCodeName
+            // col_event_calendar
             // 
-            this.inlineCodeName._ReadOnly = false;
-            this.inlineCodeName._SelectedItem = null;
-            this.inlineCodeName._Text = "";
-            this.inlineCodeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.inlineCodeName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.inlineCodeName.Location = new System.Drawing.Point(52, 32);
-            this.inlineCodeName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.inlineCodeName.Name = "inlineCodeName";
-            this.inlineCodeName.Size = new System.Drawing.Size(106, 23);
-            this.inlineCodeName.TabIndex = 8;
-            this.inlineCodeName._SelectedItemChanged += new System.EventHandler(this.inlineCodeName__SelectedItemChanged);
+            this.col_event_calendar.DataPropertyName = "event_calendar";
+            this.col_event_calendar.HeaderText = "Event Calendar";
+            this.col_event_calendar.Name = "col_event_calendar";
+            this.col_event_calendar.ReadOnly = true;
+            this.col_event_calendar.Visible = false;
+            // 
+            // col_users
+            // 
+            this.col_users.DataPropertyName = "users";
+            this.col_users.HeaderText = "Users";
+            this.col_users.Name = "col_users";
+            this.col_users.ReadOnly = true;
+            this.col_users.Visible = false;
+            // 
+            // col_seq
+            // 
+            this.col_seq.DataPropertyName = "seq";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.col_seq.DefaultCellStyle = dataGridViewCellStyle2;
+            this.col_seq.HeaderText = "ลำดับ";
+            this.col_seq.MinimumWidth = 45;
+            this.col_seq.Name = "col_seq";
+            this.col_seq.ReadOnly = true;
+            this.col_seq.Width = 45;
+            // 
+            // col_code_name
+            // 
+            this.col_code_name.DataPropertyName = "code_name";
+            this.col_code_name.HeaderText = "รหัส / ชื่อ";
+            this.col_code_name.MinimumWidth = 110;
+            this.col_code_name.Name = "col_code_name";
+            this.col_code_name.ReadOnly = true;
+            this.col_code_name.Width = 110;
+            // 
+            // col_reason
+            // 
+            this.col_reason.DataPropertyName = "reason";
+            this.col_reason.HeaderText = "เหตุผล";
+            this.col_reason.MinimumWidth = 110;
+            this.col_reason.Name = "col_reason";
+            this.col_reason.ReadOnly = true;
+            this.col_reason.Width = 110;
+            // 
+            // col_time_from
+            // 
+            this.col_time_from.DataPropertyName = "time_from";
+            this.col_time_from.HeaderText = "จาก";
+            this.col_time_from.MinimumWidth = 55;
+            this.col_time_from.Name = "col_time_from";
+            this.col_time_from.ReadOnly = true;
+            this.col_time_from.Width = 55;
+            // 
+            // col_time_to
+            // 
+            this.col_time_to.DataPropertyName = "time_to";
+            this.col_time_to.HeaderText = "ถึง";
+            this.col_time_to.MinimumWidth = 55;
+            this.col_time_to.Name = "col_time_to";
+            this.col_time_to.ReadOnly = true;
+            this.col_time_to.Width = 55;
+            // 
+            // col_status
+            // 
+            this.col_status.DataPropertyName = "status";
+            this.col_status.HeaderText = "สถานะ";
+            this.col_status.MinimumWidth = 80;
+            this.col_status.Name = "col_status";
+            this.col_status.ReadOnly = true;
+            this.col_status.Width = 80;
+            // 
+            // col_remark
+            // 
+            this.col_remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_remark.DataPropertyName = "remark";
+            this.col_remark.HeaderText = "หมายเหตุ/ชื่อลูกค้า";
+            this.col_remark.Name = "col_remark";
+            this.col_remark.ReadOnly = true;
+            // 
+            // col_med_cert
+            // 
+            this.col_med_cert.DataPropertyName = "med_cert";
+            this.col_med_cert.HeaderText = "เอกสารอ้างอิง";
+            this.col_med_cert.MinimumWidth = 110;
+            this.col_med_cert.Name = "col_med_cert";
+            this.col_med_cert.ReadOnly = true;
+            this.col_med_cert.Width = 110;
+            // 
+            // col_fine
+            // 
+            this.col_fine.DataPropertyName = "fine";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.col_fine.DefaultCellStyle = dataGridViewCellStyle3;
+            this.col_fine.HeaderText = "หักค่าคอมฯ";
+            this.col_fine.MinimumWidth = 80;
+            this.col_fine.Name = "col_fine";
+            this.col_fine.ReadOnly = true;
+            this.col_fine.Width = 80;
             // 
             // DialogAbsent
             // 
@@ -736,17 +746,6 @@
         private System.Windows.Forms.Button btnDeleteItem;
         private System.Windows.Forms.Button btnEditItem;
         private System.Windows.Forms.Button btnAddItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_event_calendar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_users;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_seq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_code_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_reason;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_time_from;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_time_to;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_remark;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_med_cert;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_fine;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnCopyItem;
@@ -758,5 +757,16 @@
         private CC.XTimePicker inlineTo;
         private CC.XTimePicker inlineFrom;
         private CC.XDropdownList inlineCodeName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_event_calendar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_users;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_seq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_code_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_reason;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_time_from;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_time_to;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_remark;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_med_cert;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_fine;
     }
 }

@@ -285,6 +285,9 @@ namespace SN_Net.Subform
         {
             if (this.dgvTrainer.CurrentCell == null)
                 return;
+
+            this.dgvTrainer.Rows[this.dgvTrainer.CurrentCell.RowIndex].DrawDeletingRowOverlay();
+
             if(MessageAlert.Show("ลบรายการที่เลือก, ทำต่อหรือไม่", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
             {
                 using (sn_noteEntities note = DBXNote.DataSet())
@@ -302,8 +305,13 @@ namespace SN_Net.Subform
                     else
                     {
                         MessageAlert.Show("ค้นหารายการที่ต้องการลบไม่พบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                        this.dgvTrainer.Rows[this.dgvTrainer.CurrentCell.RowIndex].ClearDeletingRowOverlay();
                     }
                 }
+            }
+            else
+            {
+                this.dgvTrainer.Rows[this.dgvTrainer.CurrentCell.RowIndex].ClearDeletingRowOverlay();
             }
         }
 

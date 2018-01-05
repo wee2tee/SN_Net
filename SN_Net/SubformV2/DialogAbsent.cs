@@ -76,17 +76,17 @@ namespace SN_Net.Subform
         {
             this.dlGroupHoliday._Items.Add(new XDropdownListItem { Text = string.Empty, Value = string.Empty });
             this.dlGroupMaid._Items.Add(new XDropdownListItem { Text = string.Empty, Value = string.Empty });
-            this.inlineCodeName._Items.Add(new XDropdownListItem { Text = string.Empty, Value = null });
+            this.inlineCodeName._Items.Add(new XDropdownListItem { Text = string.Empty, Value = new InlineAbsentUser { id = null, username = null, name = null } });
             using (snEntities sn = DBX.DataSet())
             {
                 sn.istab.Where(i => i.tabtyp == istabDbf.TABTYP_USERGROUP).OrderBy(i => i.typcod).ToList().ForEach(i => { this.dlGroupHoliday._Items.Add(new XDropdownListItem { Text = i.typdes_th, Value = i.typcod }); this.dlGroupMaid._Items.Add(new XDropdownListItem { Text = i.typdes_th, Value = i.typcod }); });
-                sn.users.OrderBy(u => u.username).ToList().ForEach(u => this.inlineCodeName._Items.Add(new XDropdownListItem { Text = u.username + " : " + u.name, Value = u.username }));
+                sn.users.OrderBy(u => u.username).ToList().ForEach(u => this.inlineCodeName._Items.Add(new XDropdownListItem { Text = u.username + " : " + u.name, Value = new InlineAbsentUser { id = u.id, username = u.username, name = u.name } }));
             }
 
-            this.inlineReason._Items.Add(new XDropdownListItem { Text = string.Empty, Value = new string[] { null, null } });
+            this.inlineReason._Items.Add(new XDropdownListItem { Text = string.Empty, Value = new InlineAbsentReason { id = null, tabtyp = null, typcod = null } });
             using (sn_noteEntities note = DBXNote.DataSet())
             {
-                note.note_istab.Where(i => i.tabtyp == CALENDAR_EVENT_TYPE.ABSENT || i.tabtyp == CALENDAR_EVENT_TYPE.MEET_CUST).OrderBy(i => i.tabtyp).ThenBy(i => i.typcod).ToList().ForEach(i => this.inlineReason._Items.Add(new XDropdownListItem { Text = i.typdes_th, Value = new string[] { i.tabtyp, i.typcod } }));
+                note.note_istab.Where(i => i.tabtyp == CALENDAR_EVENT_TYPE.ABSENT || i.tabtyp == CALENDAR_EVENT_TYPE.MEET_CUST).OrderBy(i => i.tabtyp).ThenBy(i => i.typcod).ToList().ForEach(i => this.inlineReason._Items.Add(new XDropdownListItem { Text = i.typdes_th, Value = new InlineAbsentReason { id = i.id, tabtyp = i.tabtyp, typcod = i.typcod } }));
             }
             Enum.GetValues(typeof(CALENDAR_EVENT_STATUS)).Cast<CALENDAR_EVENT_STATUS>().ToList().ForEach(i => this.inlineStatus._Items.Add(new XDropdownListItem { Text = i.ToString(), Value = (int)i }));
             this.inlineMedCert._Items.Add(new XDropdownListItem { Text = "N/A (ไม่ระบุ)", Value = CALENDAR_EVENT_MEDCERT.NOT_ASSIGN });
@@ -147,12 +147,12 @@ namespace SN_Net.Subform
 
             int col_index = this.dgv.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_code_name.Name).FirstOrDefault().Index;
             this.inlineCodeName.SetInlineControlPosition(this.dgv, this.dgv.CurrentCell.RowIndex, col_index);
-            var selected_user = this.inlineCodeName._Items.Cast<XDropdownListItem>().Where(i => (string)i.Value == this.tmp_event_calendar.users_name).FirstOrDefault();
+            var selected_user = this.inlineCodeName._Items.Cast<XDropdownListItem>().Where(i => ((InlineAbsentUser)i.Value).username == this.tmp_event_calendar.users_name).FirstOrDefault();
             this.inlineCodeName._SelectedItem = selected_user != null ? selected_user : this.inlineCodeName._Items.Cast<XDropdownListItem>().First();
 
             col_index = this.dgv.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_reason.Name).FirstOrDefault().Index;
             this.inlineReason.SetInlineControlPosition(this.dgv, this.dgv.CurrentCell.RowIndex, col_index);
-            var selected_reason = this.inlineReason._Items.Cast<XDropdownListItem>().Where(i => (string[])i.Value == new string[] { this.tmp_event_calendar.event_type, this.tmp_event_calendar.event_code }).FirstOrDefault();
+            var selected_reason = this.inlineReason._Items.Cast<XDropdownListItem>().Where(i => ((InlineAbsentReason)i.Value).id == this.tmp_event_calendar.event_code_id).FirstOrDefault();
             this.inlineReason._SelectedItem = selected_reason != null ? selected_reason : this.inlineReason._Items.Cast<XDropdownListItem>().First();
 
             col_index = this.dgv.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_time_from.Name).FirstOrDefault().Index;
@@ -179,6 +179,7 @@ namespace SN_Net.Subform
 
             col_index = this.dgv.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_fine.Name).FirstOrDefault().Index;
             this.inlineFine.SetInlineControlPosition(this.dgv, this.dgv.CurrentCell.RowIndex, col_index);
+            this.inlineFine.Value = Convert.ToDecimal(this.tmp_event_calendar.fine);
         }
 
         private void RemoveInlineForm()
@@ -237,23 +238,20 @@ namespace SN_Net.Subform
             if (this.form_mode == FORM_MODE.READ_ITEM)
             {
                 this.ResetFormState(FORM_MODE.READ);
+                this.GetData();
+                this.FillForm();
                 return;
             }
 
             if (this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
             {
                 this.RemoveInlineForm();
-                //((BindingList<event_calendarVMFull>)this.dgv.DataSource).Remove(((BindingList<event_calendarVMFull>)this.dgv.DataSource).Where(i => i.event_calendar.id == -1).FirstOrDefault());
                 this.GetData();
                 this.FillForm();
                 this.ResetFormState(FORM_MODE.READ_ITEM);
+                this.dgv.Focus();
                 return;
             }
-
-            //if (this.form_mode == FORM_MODE.EDIT_ITEM)
-            //{
-                
-            //}
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -293,18 +291,115 @@ namespace SN_Net.Subform
 
             if (this.form_mode == FORM_MODE.ADD_ITEM)
             {
+                var validate = this.ValidateDataBeforeSave();
+                if (!validate.passed)
+                {
+                    MessageAlert.Show(validate.message, "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    if (validate.invalid_control_data != null)
+                    {
+                        validate.invalid_control_data.Focus();
+                        SendKeys.Send("{F6}");
+                        return;
+                    }
+                }
 
+                try
+                {
+                    using (sn_noteEntities note = DBXNote.DataSet())
+                    {
+                        note.event_calendar.Add(this.tmp_event_calendar);
+                        note.SaveChanges();
+                        this.RemoveInlineForm();
+                        this.ResetFormState(FORM_MODE.READ_ITEM);
+                        this.btnAddItem.PerformClick();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
+                return;
             }
 
             if (this.form_mode == FORM_MODE.EDIT_ITEM)
             {
+                var validate = this.ValidateDataBeforeSave();
+                if (!validate.passed)
+                {
+                    MessageAlert.Show(validate.message, "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                    if (validate.invalid_control_data != null)
+                    {
+                        validate.invalid_control_data.Focus();
+                        SendKeys.Send("{F6}");
+                        return;
+                    }
+                }
 
+                try
+                {
+                    using (sn_noteEntities note = DBXNote.DataSet())
+                    {
+                        var ev = note.event_calendar.Find(this.tmp_event_calendar.id);
+                        if(ev != null) // update existing
+                        {
+                            ev.date = this.tmp_event_calendar.date;
+                            ev.users_name = this.tmp_event_calendar.users_name;
+                            ev.realname = this.tmp_event_calendar.realname;
+                            ev.customer = this.tmp_event_calendar.customer;
+                            ev.event_code = this.tmp_event_calendar.event_code;
+                            ev.event_code_id = this.tmp_event_calendar.event_code_id;
+                            ev.event_type = this.tmp_event_calendar.event_type;
+                            ev.from_time = this.tmp_event_calendar.from_time;
+                            ev.to_time = this.tmp_event_calendar.to_time;
+                            ev.fine = this.tmp_event_calendar.fine;
+                            ev.med_cert = this.tmp_event_calendar.med_cert;
+                            ev.status = this.tmp_event_calendar.status;
+                            ev.rec_by = this.main_form.loged_in_user.username;
+                        }
+                        else // add new
+                        {
+                            note.event_calendar.Add(this.tmp_event_calendar);
+                        }
+                        note.SaveChanges();
+                        this.RemoveInlineForm();
+                        this.ResetFormState(FORM_MODE.READ_ITEM);
+                        this.GetData();
+                        this.FillForm();
+                        this.dgv.Rows.Cast<DataGridViewRow>().Where(r => ((event_calendar)r.Cells[this.col_event_calendar.Name].Value).id == ev.id).FirstOrDefault().Cells[this.col_code_name.Name].Selected = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                }
+                return;
             }
+        }
+
+        private ValidateDataResult ValidateDataBeforeSave()
+        {
+            if(this.form_mode == FORM_MODE.ADD_ITEM || this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                if (this.tmp_event_calendar == null)
+                    return new ValidateDataResult { passed = false, invalid_control_data = null, message = "Unknow Error" };
+
+                if (this.tmp_event_calendar.from_time == "00:00")
+                    return new ValidateDataResult { passed = false, invalid_control_data = this.inlineFrom, message = "กรุณาระบุเวลาจาก" };
+                if (this.tmp_event_calendar.to_time == "00:00")
+                    return new ValidateDataResult { passed = false, invalid_control_data = this.inlineTo, message = "กรุณาระบุเวลาถึง" };
+                if (this.tmp_event_calendar.users_name == null)
+                    return new ValidateDataResult { passed = false, invalid_control_data = this.inlineCodeName, message = "กรุณาระบุรหัสพนักงาน" };
+                if (this.tmp_event_calendar.event_code_id == null)
+                    return new ValidateDataResult { passed = false, invalid_control_data = this.inlineReason, message = "กรุณาระบุเหตุผล" };
+            }
+
+            return new ValidateDataResult { passed = true, invalid_control_data = null, message = string.Empty };
         }
 
         private void btnItem_Click(object sender, EventArgs e)
         {
             this.ResetFormState(FORM_MODE.READ_ITEM);
+            this.dgv.Focus();
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
@@ -331,16 +426,55 @@ namespace SN_Net.Subform
 
             this.ResetFormState(FORM_MODE.ADD_ITEM);
             this.ShowInlineForm();
+            this.inlineCodeName.Focus();
         }
 
         private void btnEditItem_Click(object sender, EventArgs e)
         {
-
+            this.ResetFormState(FORM_MODE.EDIT_ITEM);
+            this.ShowInlineForm();
+            this.inlineCodeName.Focus();
         }
 
         private void btnDeleteItem_Click(object sender, EventArgs e)
         {
+            if (this.dgv.CurrentCell == null)
+                return;
 
+            this.dgv.Rows[this.dgv.CurrentCell.RowIndex].DrawDeletingRowOverlay();
+
+            if(MessageAlert.Show("ลบรายการที่เลือก, ทำต่อหรือไม่", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+            {
+                try
+                {
+                    using (sn_noteEntities note = DBXNote.DataSet())
+                    {
+                        var event_to_delete = note.event_calendar.Find(((event_calendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Cells[this.col_event_calendar.Name].Value).id);
+                        if(event_to_delete != null)
+                        {
+                            note.event_calendar.Remove(event_to_delete);
+                            note.SaveChanges();
+                            this.GetData();
+                            this.FillForm();
+                        }
+                        else
+                        {
+                            MessageAlert.Show("ข้อมูลที่ต้องการลบไม่มีอยู่ในระบบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                            this.dgv.Rows[this.dgv.CurrentCell.RowIndex].ClearDeletingRowOverlay();
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageAlert.Show(ex.Message, "Error", MessageAlertButtons.OK, MessageAlertIcons.ERROR);
+                    this.dgv.Rows[this.dgv.CurrentCell.RowIndex].ClearDeletingRowOverlay();
+                }
+            }
+            else
+            {
+                this.dgv.Rows[this.dgv.CurrentCell.RowIndex].ClearDeletingRowOverlay();
+            }
         }
 
         private void btnCopyItem_Click(object sender, EventArgs e)
@@ -397,7 +531,17 @@ namespace SN_Net.Subform
 
         private void dgv_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            this.ResetFormState(FORM_MODE.READ_ITEM);
+            
+            int row_index = ((XDatagrid)sender).HitTest(e.X, e.Y).RowIndex;
+            if(row_index > -1)
+            {
+                this.btnEditItem.PerformClick();
+            }
+            else
+            {
+                //this.btnAddItem.PerformClick();
+            }
         }
 
         private void dgv_Resize(object sender, EventArgs e)
@@ -485,42 +629,63 @@ namespace SN_Net.Subform
 
         private void inlineCodeName__SelectedItemChanged(object sender, EventArgs e)
         {
-
+            if (this.tmp_event_calendar != null)
+            {
+                this.tmp_event_calendar.users_name = ((InlineAbsentUser)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value).username;
+                this.tmp_event_calendar.realname = ((InlineAbsentUser)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value).name;
+            }
         }
 
         private void inlineReason__SelectedItemChanged(object sender, EventArgs e)
         {
-
+            if(this.tmp_event_calendar != null)
+            {
+                this.tmp_event_calendar.event_code_id = ((InlineAbsentReason)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value).id;
+                this.tmp_event_calendar.event_type = ((InlineAbsentReason)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value).tabtyp;
+                this.tmp_event_calendar.event_code = ((InlineAbsentReason)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value).typcod;
+            }
         }
 
         private void inlineFrom_ValueChanged(object sender, EventArgs e)
         {
-
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.from_time = ((XTimePicker)sender).Text;
         }
 
         private void inlineTo_ValueChanged(object sender, EventArgs e)
         {
-
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.to_time = ((XTimePicker)sender).Text;
         }
 
         private void inlineStatus__SelectedItemChanged(object sender, EventArgs e)
         {
-
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.status = (int)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value;
         }
 
         private void inlineRemark__TextChanged(object sender, EventArgs e)
         {
-
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.customer = ((XTextEdit)sender)._Text;
         }
 
         private void inlineMedCert__SelectedItemChanged(object sender, EventArgs e)
         {
-
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.med_cert = (string)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value;
         }
 
         private void inlineFine_ValueChanged(object sender, EventArgs e)
         {
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.fine = Convert.ToInt32(((NumericUpDown)sender).Value);
+        }
 
+        private void inlineFine_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (this.tmp_event_calendar != null)
+                this.tmp_event_calendar.fine = Convert.ToInt32(((NumericUpDown)sender).Value);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -546,6 +711,12 @@ namespace SN_Net.Subform
             if (keyData == Keys.Escape)
             {
                 this.btnStop.PerformClick();
+                return true;
+            }
+
+            if (keyData == Keys.F8)
+            {
+                this.btnItem.PerformClick();
                 return true;
             }
 
@@ -598,5 +769,62 @@ namespace SN_Net.Subform
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void dgv_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if(e.RowIndex > -1)
+            {
+                int user_level = ((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).ToViewModel().users.level;
+                if(user_level >= (int)USER_LEVEL.SUPERVISOR)
+                {
+                    e.CellStyle.BackColor = Color.Bisque;
+                    e.CellStyle.SelectionBackColor = Color.Bisque;
+                    e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                    e.Handled = true;
+                }
+                else
+                {
+                    if(((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.WAIT)
+                    {
+                        e.CellStyle.BackColor = Color.Lavender;
+                        e.CellStyle.SelectionBackColor = Color.Lavender;
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                        e.Handled = true;
+                    }
+                    else if (((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.CANCELED)
+                    {
+                        e.CellStyle.BackColor = Color.MistyRose;
+                        e.CellStyle.SelectionBackColor = Color.MistyRose;
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_seq.Name].Value = e.RowIndex + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    public class InlineAbsentReason
+    {
+        public int? id { get; set; }
+        public string tabtyp { get; set; }
+        public string typcod { get; set; }
+    }
+
+    public class InlineAbsentUser
+    {
+        public int? id { get; set; }
+        public string username { get; set; }
+        public string name { get; set; }
+    }
+
+    public class ValidateDataResult
+    {
+        public bool passed { get; set; }
+        public Control invalid_control_data { get; set; }
+        public string message { get; set; }
     }
 }
