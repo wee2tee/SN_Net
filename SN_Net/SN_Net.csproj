@@ -398,6 +398,12 @@
     <Compile Include="SubformV2\DialogSearchCondition.Designer.cs">
       <DependentUpon>DialogSearchCondition.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubformV2\DialogSelectYear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogSelectYear.Designer.cs">
+      <DependentUpon>DialogSelectYear.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogSelectDealer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -457,6 +463,12 @@
     </Compile>
     <Compile Include="SubformV2\DialogUpNewRwt.Designer.cs">
       <DependentUpon>DialogUpNewRwt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\DialogYearlyHoliday.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogYearlyHoliday.Designer.cs">
+      <DependentUpon>DialogYearlyHoliday.cs</DependentUpon>
     </Compile>
     <Compile Include="SubformV2\FormCalendar.cs">
       <SubType>Form</SubType>
@@ -974,6 +986,9 @@
     <EmbeddedResource Include="SubformV2\DialogSearchCondition.resx">
       <DependentUpon>DialogSearchCondition.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogSelectYear.resx">
+      <DependentUpon>DialogSelectYear.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogSelectDealer.resx">
       <DependentUpon>DialogSelectDealer.cs</DependentUpon>
     </EmbeddedResource>
@@ -1003,6 +1018,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogUpNewRwt.resx">
       <DependentUpon>DialogUpNewRwt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogYearlyHoliday.resx">
+      <DependentUpon>DialogYearlyHoliday.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\FormCalendar.resx">
       <DependentUpon>FormCalendar.cs</DependentUpon>

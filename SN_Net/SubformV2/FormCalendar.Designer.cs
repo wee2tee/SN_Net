@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCalendar));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnKeptIstab = new System.Windows.Forms.ToolStripButton();
             this.btnRangeLeave = new System.Windows.Forms.ToolStripButton();
-            this.btnUserGroup = new System.Windows.Forms.ToolStripButton();
             this.btnYearlyHoliday = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrevMonth = new System.Windows.Forms.ToolStripButton();
@@ -49,7 +49,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnKeptIstab = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +58,6 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnKeptIstab,
             this.btnRangeLeave,
-            this.btnUserGroup,
             this.btnYearlyHoliday,
             this.toolStripSeparator1,
             this.btnPrevMonth,
@@ -75,6 +73,18 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btnKeptIstab
+            // 
+            this.btnKeptIstab.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnKeptIstab.Image = global::SN_Net.Properties.Resources.reset_32;
+            this.btnKeptIstab.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnKeptIstab.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnKeptIstab.Name = "btnKeptIstab";
+            this.btnKeptIstab.Size = new System.Drawing.Size(36, 40);
+            this.btnKeptIstab.Text = "toolStripButton1";
+            this.btnKeptIstab.Visible = false;
+            this.btnKeptIstab.Click += new System.EventHandler(this.btnKeptIstab_Click);
+            // 
             // btnRangeLeave
             // 
             this.btnRangeLeave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -84,16 +94,7 @@
             this.btnRangeLeave.Name = "btnRangeLeave";
             this.btnRangeLeave.Size = new System.Drawing.Size(36, 40);
             this.btnRangeLeave.Text = "ลางานเป็นช่วง";
-            // 
-            // btnUserGroup
-            // 
-            this.btnUserGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnUserGroup.Image = global::SN_Net.Properties.Resources.users_group;
-            this.btnUserGroup.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnUserGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnUserGroup.Name = "btnUserGroup";
-            this.btnUserGroup.Size = new System.Drawing.Size(36, 40);
-            this.btnUserGroup.Text = "จัดกลุ่มพนักงาน";
+            this.btnRangeLeave.Click += new System.EventHandler(this.btnRangeLeave_Click_1);
             // 
             // btnYearlyHoliday
             // 
@@ -106,6 +107,7 @@
             this.btnYearlyHoliday.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.btnYearlyHoliday.Size = new System.Drawing.Size(38, 40);
             this.btnYearlyHoliday.Text = "สรุปวันหยุดประจำปี";
+            this.btnYearlyHoliday.Click += new System.EventHandler(this.btnYearlyHoliday_Click_1);
             // 
             // toolStripSeparator1
             // 
@@ -123,6 +125,7 @@
             this.btnPrevMonth.Name = "btnPrevMonth";
             this.btnPrevMonth.Size = new System.Drawing.Size(36, 40);
             this.btnPrevMonth.Text = "เดือนก่อน";
+            this.btnPrevMonth.Click += new System.EventHandler(this.btnPrevMonth_Click);
             // 
             // btnCurrentMonth
             // 
@@ -133,6 +136,7 @@
             this.btnCurrentMonth.Name = "btnCurrentMonth";
             this.btnCurrentMonth.Size = new System.Drawing.Size(78, 40);
             this.btnCurrentMonth.Text = "เดือนปัจจุบัน";
+            this.btnCurrentMonth.Click += new System.EventHandler(this.btnCurrentMonth_Click_1);
             // 
             // btnNextMonth
             // 
@@ -144,6 +148,7 @@
             this.btnNextMonth.Name = "btnNextMonth";
             this.btnNextMonth.Size = new System.Drawing.Size(36, 40);
             this.btnNextMonth.Text = "เดือนถัดไป";
+            this.btnNextMonth.Click += new System.EventHandler(this.btnNextMonth_Click);
             // 
             // toolStripSeparator2
             // 
@@ -157,6 +162,7 @@
             this.cbMonth.Margin = new System.Windows.Forms.Padding(3, 0, 1, 0);
             this.cbMonth.Name = "cbMonth";
             this.cbMonth.Size = new System.Drawing.Size(121, 43);
+            this.cbMonth.SelectedIndexChanged += new System.EventHandler(this.cbMonth_SelectedIndexChanged);
             // 
             // cbYear
             // 
@@ -164,6 +170,7 @@
             this.cbYear.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbYear.Name = "cbYear";
             this.cbYear.Size = new System.Drawing.Size(75, 43);
+            this.cbYear.SelectedIndexChanged += new System.EventHandler(this.cbYear_SelectedIndexChanged);
             // 
             // btnGo
             // 
@@ -316,17 +323,6 @@
             this.label1.Text = "อาทิตย์";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btnKeptIstab
-            // 
-            this.btnKeptIstab.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnKeptIstab.Image = global::SN_Net.Properties.Resources.reset_32;
-            this.btnKeptIstab.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnKeptIstab.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnKeptIstab.Name = "btnKeptIstab";
-            this.btnKeptIstab.Size = new System.Drawing.Size(36, 40);
-            this.btnKeptIstab.Text = "toolStripButton1";
-            this.btnKeptIstab.Click += new System.EventHandler(this.btnKeptIstab_Click);
-            // 
             // FormCalendar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -354,7 +350,6 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnRangeLeave;
-        private System.Windows.Forms.ToolStripButton btnUserGroup;
         private System.Windows.Forms.ToolStripButton btnYearlyHoliday;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnPrevMonth;

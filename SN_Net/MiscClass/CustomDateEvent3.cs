@@ -246,7 +246,8 @@ namespace SN_Net.MiscClass
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
+            DialogAbsent abs = new DialogAbsent(this.main_form, this, true);
+            abs.ShowDialog();
         }
 
         private void btnDetail_Click(object sender, EventArgs e)

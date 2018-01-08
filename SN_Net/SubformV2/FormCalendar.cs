@@ -16,8 +16,16 @@ namespace SN_Net.Subform
     public partial class FormCalendar : Form
     {
         private MainForm main_form;
-        private int year;
-        private int month;
+        //private int year = DateTime.Now.Year;
+        //private int month = DateTime.Now.Month;
+        //private DateTime first_date_of_month
+        //{
+        //    get
+        //    {
+        //        return DateTime.Parse(this.year.ToString() + "-" + this.month.ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
+        //    }
+        //}
+        private DateTime first_date_of_month;
         public DateTime current_date = DateTime.Now;
         private enum MONTH : int
         {
@@ -43,8 +51,9 @@ namespace SN_Net.Subform
 
         private void FormCalendar_Load(object sender, EventArgs e)
         {
-            this.year = DateTime.Now.Year;
-            this.month = DateTime.Now.Month;
+            //this.year = DateTime.Now.Year;
+            //this.month = DateTime.Now.Month;
+            this.first_date_of_month = DateTime.Parse(DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
 
             foreach (var month in Enum.GetValues(typeof(MONTH)))
             {
@@ -58,7 +67,6 @@ namespace SN_Net.Subform
             this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == DateTime.Now.Year).First());
 
             this.btnRangeLeave.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
-            this.btnUserGroup.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             this.btnGo.PerformClick();
         }
 
@@ -66,22 +74,22 @@ namespace SN_Net.Subform
         {
             if (((ToolStripComboBox)sender).Items == null)
                 return;
-            this.month = ((ToolStripComboBox)sender).SelectedIndex + 1;
+            this.first_date_of_month = DateTime.Parse(this.first_date_of_month.Year.ToString() + "-" + (((ToolStripComboBox)sender).SelectedIndex + 1).ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
         }
 
         private void cbYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (((ToolStripComboBox)sender).Items == null)
                 return;
-            this.year = Convert.ToInt32(((ToolStripComboBox)sender).Text);
+            this.first_date_of_month = DateTime.Parse(((ToolStripComboBox)sender).Text + "-" + this.first_date_of_month.Month.ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
         }
 
         private void btnGo_Click(object sender, EventArgs e)
         {
             this.tableLayoutPanel1.Visible = false;
 
-            DateTime first_date = DateTime.Parse(this.year.ToString() + "-" + this.month.ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
-            int days_in_month = DateTime.DaysInMonth((this.year), this.month);
+            DateTime first_date = DateTime.Parse(this.first_date_of_month.Year.ToString() + "-" + this.first_date_of_month.Month.ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
+            int days_in_month = DateTime.DaysInMonth((this.first_date_of_month.Year), this.first_date_of_month.Month);
             DateTime last_date = first_date.AddDays(days_in_month - 1);
             int first_day_of_week = first_date.GetDayIntOfWeek();
 
@@ -156,37 +164,18 @@ namespace SN_Net.Subform
 
         private void btnPrevMonth_Click(object sender, EventArgs e)
         {
-            if (this.month == 1)
-            {
-                if (this.year - 1 < this.cbYear.Items.Cast<int>().Min())
-                    return;
-
-
-                this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == this.year - 1).First());
-                this.cbMonth.SelectedIndex = 11; // set to december
-            }
-            else
-            {
-                this.cbMonth.SelectedIndex = this.cbMonth.SelectedIndex - 1;
-            }
+            this.first_date_of_month = this.first_date_of_month.AddMonths(-1);
+            this.cbMonth.SelectedIndex = this.first_date_of_month.Month - 1;
+            this.cbYear.Text = this.first_date_of_month.Year.ToString();
 
             this.btnGo.PerformClick();
         }
 
         private void btnNextMonth_Click(object sender, EventArgs e)
         {
-            if (this.month == 12)
-            {
-                if (this.year + 1 > this.cbYear.Items.Cast<int>().Max())
-                    return;
-
-                this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == this.year + 1).First());
-                this.cbMonth.SelectedIndex = 0; // set to January
-            }
-            else
-            {
-                this.cbMonth.SelectedIndex = this.cbMonth.SelectedIndex + 1;
-            }
+            this.first_date_of_month = this.first_date_of_month.AddMonths(1);
+            this.cbMonth.SelectedIndex = this.first_date_of_month.Month - 1;
+            this.cbYear.Text = this.first_date_of_month.Year.ToString();
 
             this.btnGo.PerformClick();
         }
@@ -195,6 +184,7 @@ namespace SN_Net.Subform
         {
             this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == DateTime.Now.Year + 543).First());
             this.cbMonth.SelectedIndex = DateTime.Now.Month - 1;
+
             this.btnGo.PerformClick();
         }
 
@@ -210,7 +200,7 @@ namespace SN_Net.Subform
                 //Console.WriteLine(" .. >> wind.dtDateStart.Value.Month : " + wind.dtDateStart.Value.Month);
                 //Console.WriteLine(" .. >>> this.month : " + this.month);
 
-                if ((wind.dtDateStart.Value.Year == (this.year - 543) && wind.dtDateStart.Value.Month == this.month) || (wind.dtDateEnd.Value.Year == (this.year - 543) && wind.dtDateEnd.Value.Month == this.month))
+                if ((wind.dtDateStart.Value.Year == (this.first_date_of_month.Year - 543) && wind.dtDateStart.Value.Month == this.first_date_of_month.Month) || (wind.dtDateEnd.Value.Year == (this.first_date_of_month.Year - 543) && wind.dtDateEnd.Value.Month == this.first_date_of_month.Month))
                 {
                     //this.LoadCalendar(this.curr_month, this.curr_year);
                     this.btnGo.PerformClick();
@@ -286,6 +276,28 @@ namespace SN_Net.Subform
                     MessageAlert.Show(ex.Message);
                 }
             }
+        }
+
+        private void btnCurrentMonth_Click_1(object sender, EventArgs e)
+        {
+            this.first_date_of_month = DateTime.Parse(DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-1", CultureInfo.GetCultureInfo("en-US"));
+            this.cbMonth.SelectedIndex = this.first_date_of_month.Month - 1;
+            this.cbYear.Text = this.first_date_of_month.Year.ToString();
+            this.btnGo.PerformClick();
+        }
+
+        private void btnYearlyHoliday_Click_1(object sender, EventArgs e)
+        {
+            DialogSelectYear sel = new DialogSelectYear();
+            if(sel.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(sel.selected_year.ToString());
+            }
+        }
+
+        private void btnRangeLeave_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

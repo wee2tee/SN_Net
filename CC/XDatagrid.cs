@@ -300,7 +300,7 @@ namespace CC
 
             var deleting_row = this.Rows.Cast<DataGridViewRow>().Where(r => r.Tag != null && r.Tag.GetType() == typeof(ROW_STATE) && (ROW_STATE)r.Tag == ROW_STATE.DELETE).FirstOrDefault();
 
-            if(deleting_row != null)
+            if (deleting_row != null)
             {
                 Rectangle rect = this.GetRowDisplayRectangle(deleting_row.Index, true);
                 for (int i = rect.X; i < rect.X + rect.Width; i += 10)

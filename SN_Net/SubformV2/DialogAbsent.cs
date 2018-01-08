@@ -47,6 +47,11 @@ namespace SN_Net.Subform
             this.GetData();
             this.FillForm();
             
+            if(this.perform_add == true)
+            {
+                this.ResetFormState(FORM_MODE.READ_ITEM);
+                this.btnAddItem.PerformClick();
+            }
         }
 
         private void ResetFormState(FORM_MODE form_mode)
@@ -279,6 +284,7 @@ namespace SN_Net.Subform
                             note.SaveChanges();
                         }
 
+                        this.custom_date_event.RefreshView();
                         this.ResetFormState(FORM_MODE.READ);
                     }
                 }
@@ -310,7 +316,10 @@ namespace SN_Net.Subform
                         note.event_calendar.Add(this.tmp_event_calendar);
                         note.SaveChanges();
                         this.RemoveInlineForm();
+                        this.custom_date_event.RefreshView();
                         this.ResetFormState(FORM_MODE.READ_ITEM);
+                        this.GetData();
+                        this.FillForm();
                         this.btnAddItem.PerformClick();
                     }
                 }
@@ -362,6 +371,7 @@ namespace SN_Net.Subform
                         }
                         note.SaveChanges();
                         this.RemoveInlineForm();
+                        this.custom_date_event.RefreshView();
                         this.ResetFormState(FORM_MODE.READ_ITEM);
                         this.GetData();
                         this.FillForm();
@@ -454,6 +464,7 @@ namespace SN_Net.Subform
                         {
                             note.event_calendar.Remove(event_to_delete);
                             note.SaveChanges();
+                            this.custom_date_event.RefreshView();
                             this.GetData();
                             this.FillForm();
                         }
@@ -534,13 +545,14 @@ namespace SN_Net.Subform
             this.ResetFormState(FORM_MODE.READ_ITEM);
             
             int row_index = ((XDatagrid)sender).HitTest(e.X, e.Y).RowIndex;
+            Console.WriteLine(" ==> " + row_index);
             if(row_index > -1)
             {
                 this.btnEditItem.PerformClick();
             }
-            else
+            if(row_index == -1)
             {
-                //this.btnAddItem.PerformClick();
+                this.btnAddItem.PerformClick();
             }
         }
 
@@ -774,35 +786,53 @@ namespace SN_Net.Subform
         {
             if(e.RowIndex > -1)
             {
-                int user_level = ((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).ToViewModel().users.level;
-                if(user_level >= (int)USER_LEVEL.SUPERVISOR)
+                try
                 {
-                    e.CellStyle.BackColor = Color.Bisque;
-                    e.CellStyle.SelectionBackColor = Color.Bisque;
+                    int user_level = ((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).ToViewModel().users.level;
+                    if (user_level >= (int)USER_LEVEL.SUPERVISOR)
+                    {
+                        e.CellStyle.BackColor = Color.Bisque;
+                        e.CellStyle.SelectionBackColor = Color.Bisque;
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                        e.Handled = true;
+                    }
+                    else if (user_level < (int)USER_LEVEL.SUPERVISOR)
+                    {
+                        if (((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.WAIT)
+                        {
+                            e.CellStyle.BackColor = Color.Lavender;
+                            e.CellStyle.SelectionBackColor = Color.Lavender;
+                            e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                            e.Handled = true;
+                        }
+                        else if (((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.CANCELED)
+                        {
+                            e.CellStyle.BackColor = Color.MistyRose;
+                            e.CellStyle.SelectionBackColor = Color.MistyRose;
+                            e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                            if(((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).id > -1)
+                            {
+                                ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_seq.Name].Value = e.RowIndex + 1;
+                                e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                                e.Handled = true;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
                     e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
                     e.Handled = true;
                 }
-                else
-                {
-                    if(((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.WAIT)
-                    {
-                        e.CellStyle.BackColor = Color.Lavender;
-                        e.CellStyle.SelectionBackColor = Color.Lavender;
-                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
-                        e.Handled = true;
-                    }
-                    else if (((event_calendar)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_event_calendar.Name].Value).status == (int)CALENDAR_EVENT_STATUS.CANCELED)
-                    {
-                        e.CellStyle.BackColor = Color.MistyRose;
-                        e.CellStyle.SelectionBackColor = Color.MistyRose;
-                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
-                        e.Handled = true;
-                    }
-                    else
-                    {
-                        ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_seq.Name].Value = e.RowIndex + 1;
-                    }
-                }
+            }
+            else
+            {
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                e.Handled = true;
             }
         }
     }
