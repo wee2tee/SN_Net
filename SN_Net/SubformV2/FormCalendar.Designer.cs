@@ -94,6 +94,7 @@
             this.btnRangeLeave.Name = "btnRangeLeave";
             this.btnRangeLeave.Size = new System.Drawing.Size(36, 40);
             this.btnRangeLeave.Text = "ลางานเป็นช่วง";
+            this.btnRangeLeave.Visible = false;
             this.btnRangeLeave.Click += new System.EventHandler(this.btnRangeLeave_Click_1);
             // 
             // btnYearlyHoliday

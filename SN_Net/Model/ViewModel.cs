@@ -651,6 +651,14 @@ namespace SN_Net.Model
         }
     }
 
+    public class YearlyHolidayVM
+    {
+        public note_calendar note_calendar { get; set; }
+        public string day { get { return this.note_calendar.date.ToString("dddd"); } }
+        public DateTime date { get { return this.note_calendar.date; } }
+        public string description { get { return this.note_calendar.description; } }
+    }
+
     public class CALENDAR_EVENT_TYPE
     {
         public const string ABSENT = "06";
@@ -1044,6 +1052,29 @@ namespace SN_Net.Model
                 t.Add(item.ToViewModelTrainerStat(any_date_in_month));
             }
             return t;
+        }
+
+        public static YearlyHolidayVM ToViewModelYearlyHoliday(this note_calendar note)
+        {
+            if (note == null)
+                return null;
+
+            YearlyHolidayVM y = new YearlyHolidayVM
+            {
+                note_calendar = note
+            };
+            return y;
+        }
+
+        public static List<YearlyHolidayVM> ToViewModelYearlyHoliday(this IEnumerable<note_calendar> notes)
+        {
+            List<YearlyHolidayVM> y = new List<Model.YearlyHolidayVM>();
+            foreach (var item in notes)
+            {
+                y.Add(item.ToViewModelYearlyHoliday());
+            }
+
+            return y;
         }
 
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)

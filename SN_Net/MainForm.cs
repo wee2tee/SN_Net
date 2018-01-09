@@ -42,6 +42,7 @@ namespace SN_Net
         public FormIstab form_usergroup;
         public FormNote form_note;
         public FormCalendar form_calendar;
+        //public FormAbsentReport form_summary_absent;
         public string mac_address = string.Empty;
 
         public SnWindow sn_wind;
@@ -592,6 +593,11 @@ namespace SN_Net
                 this.form_calendar.Activate();
                 this.form_calendar.WindowState = FormWindowState.Maximized;
             }
+        }
+
+        private void mnuAbsentReport_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

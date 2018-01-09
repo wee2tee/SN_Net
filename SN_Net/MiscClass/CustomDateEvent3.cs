@@ -65,6 +65,7 @@ namespace SN_Net.MiscClass
             this.lblDay.Text = this.curr_date.Day.ToString();
             this.lblMonthYear.Text = this.curr_date.ToString("MMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
             this.lblNoteDescription.Text = this.note_cal != null ? this.note_cal.description : string.Empty;
+            this.toolTip1.SetToolTip(this.lblNoteDescription, this.lblNoteDescription.Text);
             if (this.note_cal != null && this.note_cal.type == (int)CALENDAR_NOTE_TYPE.WEEKDAY && this.note_cal.description.Trim().Length > 0)
             {
                 this.lblNoteDescription.TextAlign = ContentAlignment.TopLeft;

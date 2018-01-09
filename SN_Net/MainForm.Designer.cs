@@ -39,6 +39,7 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.calendarMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCalendar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAbsentReport = new System.Windows.Forms.ToolStripMenuItem();
             this.usersGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportStatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LeaveSummaryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,6 +105,7 @@
             this.toolStripSeparator5,
             this.calendarMenuItem,
             this.mnuCalendar,
+            this.mnuAbsentReport,
             this.usersGroupMenuItem,
             this.supportStatMenuItem,
             this.LeaveSummaryMenuItem,
@@ -182,6 +184,13 @@
             this.mnuCalendar.Size = new System.Drawing.Size(337, 22);
             this.mnuCalendar.Text = "Calendar.";
             this.mnuCalendar.Click += new System.EventHandler(this.mnuCalendar_Click);
+            // 
+            // mnuAbsentReport
+            // 
+            this.mnuAbsentReport.Name = "mnuAbsentReport";
+            this.mnuAbsentReport.Size = new System.Drawing.Size(337, 22);
+            this.mnuAbsentReport.Text = "สรุปวันลา และ ออกพบลูกค้า.";
+            this.mnuAbsentReport.Click += new System.EventHandler(this.mnuAbsentReport_Click);
             // 
             // usersGroupMenuItem
             // 
@@ -568,6 +577,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripMenuItem mnuViewNote;
         private System.Windows.Forms.ToolStripMenuItem mnuCalendar;
+        private System.Windows.Forms.ToolStripMenuItem mnuAbsentReport;
     }
 }
 

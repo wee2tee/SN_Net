@@ -66,7 +66,7 @@ namespace SN_Net.Subform
             }
             this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == DateTime.Now.Year).First());
 
-            this.btnRangeLeave.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            //this.btnRangeLeave.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             this.btnGo.PerformClick();
         }
 
@@ -291,7 +291,9 @@ namespace SN_Net.Subform
             DialogSelectYear sel = new DialogSelectYear();
             if(sel.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(sel.selected_year.ToString());
+                //MessageBox.Show(sel.selected_year.ToString());
+                DialogYearlyHoliday hol = new DialogYearlyHoliday(this.main_form, sel.selected_year);
+                hol.ShowDialog();
             }
         }
 
