@@ -41,6 +41,13 @@ namespace SN_Net.MiscClass
 
         private void FillForm(DateTime curr_date, DateTime first_date_of_month, BindingList<event_calendarVM> event_cal, note_calendar note_cal, List<training_calendarVM> training_cal)
         {
+            this.lblDay.Text = this.curr_date.Day.ToString();
+            this.lblMonthYear.Text = this.curr_date.ToString("MMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
+            if(this.curr_date.ToString("yyyyMM") != this.first_date_of_month.ToString("yyyyMM") || this.curr_date.IsLastSaturday() || this.curr_date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                this.btnDropDownMenu.Visible = false;
+            }
+
             int seq = 0;
             foreach (var ev in this.event_list)
             {
@@ -62,8 +69,6 @@ namespace SN_Net.MiscClass
                 this.lblBottomText.BackColor = Color.Green;
             }
 
-            this.lblDay.Text = this.curr_date.Day.ToString();
-            this.lblMonthYear.Text = this.curr_date.ToString("MMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
             this.lblNoteDescription.Text = this.note_cal != null ? this.note_cal.description : string.Empty;
             this.toolTip1.SetToolTip(this.lblNoteDescription, this.lblNoteDescription.Text);
             if (this.note_cal != null && this.note_cal.type == (int)CALENDAR_NOTE_TYPE.WEEKDAY && this.note_cal.description.Trim().Length > 0)
@@ -99,7 +104,7 @@ namespace SN_Net.MiscClass
             }
             else
             {
-                this.lblDay.BackColor = this.curr_date.Month.ToString() + this.curr_date.Year.ToString() == this.first_date_of_month.Month.ToString() + this.first_date_of_month.Year.ToString() ? Color.MediumSlateBlue : Color.LightGray;
+                this.lblDay.BackColor = (this.curr_date.ToString("yyyyMM") == this.first_date_of_month.ToString("yyyyMM") && !this.curr_date.IsLastSaturday() && this.curr_date.DayOfWeek != DayOfWeek.Sunday) ? Color.MediumSlateBlue : Color.LightGray;
             }
         }
 

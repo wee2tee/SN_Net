@@ -320,6 +320,12 @@
     <Compile Include="SubformV2\DialogAbsent.Designer.cs">
       <DependentUpon>DialogAbsent.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubformV2\DialogAbsentRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogAbsentRange.Designer.cs">
+      <DependentUpon>DialogAbsentRange.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogChangePassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -469,6 +475,12 @@
     </Compile>
     <Compile Include="SubformV2\DialogYearlyHoliday.Designer.cs">
       <DependentUpon>DialogYearlyHoliday.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubformV2\FormAbsentReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\FormAbsentReport.Designer.cs">
+      <DependentUpon>FormAbsentReport.cs</DependentUpon>
     </Compile>
     <Compile Include="SubformV2\FormCalendar.cs">
       <SubType>Form</SubType>
@@ -947,6 +959,9 @@
     <EmbeddedResource Include="SubformV2\DialogAbsent.resx">
       <DependentUpon>DialogAbsent.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogAbsentRange.resx">
+      <DependentUpon>DialogAbsentRange.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogChangePassword.resx">
       <DependentUpon>DialogChangePassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -1021,6 +1036,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogYearlyHoliday.resx">
       <DependentUpon>DialogYearlyHoliday.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\FormAbsentReport.resx">
+      <DependentUpon>FormAbsentReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\FormCalendar.resx">
       <DependentUpon>FormCalendar.cs</DependentUpon>

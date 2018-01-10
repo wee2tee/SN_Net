@@ -934,8 +934,26 @@ namespace SN_Net.MiscClass
 
         public static DateTime GetLastDateOfMonth(this DateTime curr_date)
         {
-            //var first_date_curr_month = curr_date.AddDays((curr_date.Day * -1) + 1);
             return curr_date.AddDays((curr_date.Day * -1) + 1).AddMonths(1).AddDays(-1);
+        }
+
+        public static bool IsLastSaturday(this DateTime curr_date)
+        {
+            if (curr_date.DayOfWeek != DayOfWeek.Saturday)
+                return false;
+
+            int curr_month = curr_date.Month;
+
+            int next7day_month = curr_date.AddDays(7).Month;
+
+            if (curr_month != next7day_month)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

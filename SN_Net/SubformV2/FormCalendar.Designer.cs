@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCalendar));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnKeptIstab = new System.Windows.Forms.ToolStripButton();
-            this.btnRangeLeave = new System.Windows.Forms.ToolStripButton();
+            this.btnAbsentRange = new System.Windows.Forms.ToolStripButton();
             this.btnYearlyHoliday = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrevMonth = new System.Windows.Forms.ToolStripButton();
@@ -57,7 +57,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnKeptIstab,
-            this.btnRangeLeave,
+            this.btnAbsentRange,
             this.btnYearlyHoliday,
             this.toolStripSeparator1,
             this.btnPrevMonth,
@@ -85,17 +85,16 @@
             this.btnKeptIstab.Visible = false;
             this.btnKeptIstab.Click += new System.EventHandler(this.btnKeptIstab_Click);
             // 
-            // btnRangeLeave
+            // btnAbsentRange
             // 
-            this.btnRangeLeave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRangeLeave.Image = global::SN_Net.Properties.Resources.calendar_range;
-            this.btnRangeLeave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnRangeLeave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRangeLeave.Name = "btnRangeLeave";
-            this.btnRangeLeave.Size = new System.Drawing.Size(36, 40);
-            this.btnRangeLeave.Text = "ลางานเป็นช่วง";
-            this.btnRangeLeave.Visible = false;
-            this.btnRangeLeave.Click += new System.EventHandler(this.btnRangeLeave_Click_1);
+            this.btnAbsentRange.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAbsentRange.Image = global::SN_Net.Properties.Resources.calendar_range;
+            this.btnAbsentRange.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnAbsentRange.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAbsentRange.Name = "btnAbsentRange";
+            this.btnAbsentRange.Size = new System.Drawing.Size(36, 40);
+            this.btnAbsentRange.Text = "ลางานเป็นช่วง";
+            this.btnAbsentRange.Click += new System.EventHandler(this.btnAbsentRange_Click);
             // 
             // btnYearlyHoliday
             // 
@@ -350,7 +349,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnRangeLeave;
+        private System.Windows.Forms.ToolStripButton btnAbsentRange;
         private System.Windows.Forms.ToolStripButton btnYearlyHoliday;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnPrevMonth;

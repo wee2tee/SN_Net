@@ -66,7 +66,7 @@ namespace SN_Net.Subform
             }
             this.cbYear.SelectedIndex = this.cbYear.Items.IndexOf(this.cbYear.Items.Cast<int>().Where(y => y == DateTime.Now.Year).First());
 
-            //this.btnRangeLeave.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            this.btnAbsentRange.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             this.btnGo.PerformClick();
         }
 
@@ -188,26 +188,6 @@ namespace SN_Net.Subform
             this.btnGo.PerformClick();
         }
 
-        private void btnRangeLeave_Click(object sender, EventArgs e)
-        {
-            LeaveRange wind = new LeaveRange(this.main_form);
-            if (wind.ShowDialog() == DialogResult.OK)
-            {
-                MessageAlert.Show("บันทึกข้อมูลเรียบร้อย", "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
-
-                //Console.WriteLine(" .. >> wind.dtDateStart.Value.Year : " + wind.dtDateStart.Value.Year);
-                //Console.WriteLine(" .. >>> this.year : " + this.year);
-                //Console.WriteLine(" .. >> wind.dtDateStart.Value.Month : " + wind.dtDateStart.Value.Month);
-                //Console.WriteLine(" .. >>> this.month : " + this.month);
-
-                if ((wind.dtDateStart.Value.Year == (this.first_date_of_month.Year - 543) && wind.dtDateStart.Value.Month == this.first_date_of_month.Month) || (wind.dtDateEnd.Value.Year == (this.first_date_of_month.Year - 543) && wind.dtDateEnd.Value.Month == this.first_date_of_month.Month))
-                {
-                    //this.LoadCalendar(this.curr_month, this.curr_year);
-                    this.btnGo.PerformClick();
-                }
-            }
-        }
-
         private void btnUserGroup_Click(object sender, EventArgs e)
         {
             if (this.main_form.usersgroup_wind == null)
@@ -297,9 +277,13 @@ namespace SN_Net.Subform
             }
         }
 
-        private void btnRangeLeave_Click_1(object sender, EventArgs e)
+        private void btnAbsentRange_Click(object sender, EventArgs e)
         {
+            DialogAbsentRange abs = new DialogAbsentRange(this.main_form);
+            if(abs.ShowDialog() == DialogResult.OK)
+            {
 
+            }
         }
     }
 }
