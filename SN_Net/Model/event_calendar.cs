@@ -27,6 +27,7 @@ namespace SN_Net.Model
         public Nullable<int> status { get; set; }
         public string med_cert { get; set; }
         public Nullable<int> fine { get; set; }
+        public string series { get; set; }
         public string rec_by { get; set; }
     
         public virtual note_istab note_istab { get; set; }

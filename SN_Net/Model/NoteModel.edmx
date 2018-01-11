@@ -22,6 +22,7 @@
           <Property Name="status" Type="int" />
           <Property Name="med_cert" Type="varchar" MaxLength="1" />
           <Property Name="fine" Type="int" />
+          <Property Name="series" Type="varchar" MaxLength="25" />
           <Property Name="rec_by" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="note">
@@ -161,6 +162,7 @@
           <Property Name="status" Type="Int32" />
           <Property Name="med_cert" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="fine" Type="Int32" />
+          <Property Name="series" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="rec_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="note_istab" Relationship="Self.fk_event_calendar_note_istab1" FromRole="event_calendar" ToRole="note_istab" />
         </EntityType>
@@ -304,6 +306,7 @@
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="med_cert" ColumnName="med_cert" />
                 <ScalarProperty Name="fine" ColumnName="fine" />
+                <ScalarProperty Name="series" ColumnName="series" />
                 <ScalarProperty Name="rec_by" ColumnName="rec_by" />
               </MappingFragment>
             </EntityTypeMapping>

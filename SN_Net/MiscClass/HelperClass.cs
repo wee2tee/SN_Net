@@ -955,5 +955,10 @@ namespace SN_Net.MiscClass
                 return false;
             }
         }
+
+        public static int GetUnixTimeStamp(this DateTime date)
+        {
+            return Convert.ToInt32(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+        }
     }
 }

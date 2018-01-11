@@ -16,15 +16,17 @@ namespace SN_Net.MiscClass
     public partial class CustomDateEvent3 : UserControl
     {
         private MainForm main_form;
+        private FormCalendar calendar;
         public DateTime curr_date;
         private DateTime first_date_of_month; // use to check for current month
         private BindingList<event_calendarVM> event_list;
         public note_calendar note_cal;
         private List<training_calendarVM> training_list;
 
-        public CustomDateEvent3(MainForm main_form, DateTime curr_date, DateTime first_date_of_month, List<event_calendar> event_cal, note_calendar note_cal, List<training_calendar> training_cal)
+        public CustomDateEvent3(MainForm main_form, FormCalendar calendar, DateTime curr_date, DateTime first_date_of_month, List<event_calendar> event_cal, note_calendar note_cal, List<training_calendar> training_cal)
         {
             this.main_form = main_form;
+            this.calendar = calendar;
             this.curr_date = curr_date;
             this.first_date_of_month = first_date_of_month;
             this.event_list = new BindingList<event_calendarVM>(event_cal.ToViewModel());
@@ -252,14 +254,96 @@ namespace SN_Net.MiscClass
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            DialogAbsent abs = new DialogAbsent(this.main_form, this, true);
+            DialogAbsent abs = new DialogAbsent(this.main_form, this.calendar, this, DialogAbsent.PERFORM_ACTION.ADD);
             abs.ShowDialog();
         }
 
         private void btnDetail_Click(object sender, EventArgs e)
         {
-            DialogAbsent abs = new DialogAbsent(this.main_form, this);
+            DialogAbsent abs = new DialogAbsent(this.main_form, this.calendar, this);
             abs.ShowDialog();
+        }
+
+        private void dgv_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+                return;
+
+            if(e.Button == MouseButtons.Right)
+            {
+                ((DataGridView)sender).Focus();
+
+                int row_index = ((DataGridView)sender).HitTest(e.X, e.Y).RowIndex;
+                if (row_index > -1)
+                    ((DataGridView)sender).Rows[row_index].Cells[this.col_realname.Name].Selected = true;
+
+                ContextMenu cm = new ContextMenu();
+                MenuItem mnu_add = new MenuItem("เพิ่ม");
+                mnu_add.Click += delegate
+                {
+                    this.btnAdd.PerformClick();
+                };
+                cm.MenuItems.Add(mnu_add);
+
+                MenuItem mnu_edit = new MenuItem("แก้ไข");
+                mnu_edit.Click += delegate
+                {
+                    var event_to_edit = (event_calendar)((DataGridView)sender).Rows[row_index].Cells[this.col_event_calendar.Name].Value;
+                    DialogAbsent abs = new DialogAbsent(this.main_form, this.calendar, this, DialogAbsent.PERFORM_ACTION.EDIT, event_to_edit);
+                    abs.ShowDialog();
+                };
+                mnu_edit.Enabled = row_index > -1 ? true : false;
+                cm.MenuItems.Add(mnu_edit);
+
+                MenuItem mnu_delete = new MenuItem("ลบ");
+                mnu_delete.Click += delegate
+                {
+                    if(MessageAlert.Show("ลบรายการที่เลือก, ทำต่อหรือไม่", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.OK)
+                    {
+                        using (sn_noteEntities note = DBXNote.DataSet())
+                        {
+                            var event_to_delete = note.event_calendar.Find(((event_calendar)((DataGridView)sender).Rows[row_index].Cells[this.col_event_calendar.Name].Value).id);
+
+                            if (event_to_delete == null)
+                            {
+                                MessageAlert.Show("ค้นหารายการที่ต้องการลบไม่พบ, อาจมีผู้อื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                                return;
+                            }
+
+                            if (event_to_delete.series != null)
+                            {
+                                DialogConfirmDeleteAbsentRange conf = new DialogConfirmDeleteAbsentRange();
+                                if(conf.ShowDialog() == DialogResult.OK)
+                                {
+                                    if(conf.delete_method == DialogConfirmDeleteAbsentRange.DELETE_METHOD.ALL)
+                                    {
+                                        var events = note.event_calendar.Where(n => n.series == event_to_delete.series).ToList();
+                                        events.ForEach(ev => { note.event_calendar.Remove(ev); });
+                                        note.SaveChanges();
+                                        this.calendar.RefreshViewDates(events.Select(ev => ev.date).ToList());
+                                    }
+                                    if(conf.delete_method == DialogConfirmDeleteAbsentRange.DELETE_METHOD.ONE)
+                                    {
+                                        note.event_calendar.Remove(event_to_delete);
+                                        note.SaveChanges();
+                                        this.RefreshView();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                note.event_calendar.Remove(event_to_delete);
+                                note.SaveChanges();
+                                this.RefreshView();
+                            }
+                        }
+                    }
+                };
+                mnu_delete.Enabled = row_index > -1 ? true : false;
+                cm.MenuItems.Add(mnu_delete);
+
+                cm.Show(((DataGridView)sender), new Point(e.X, e.Y));
+            }
         }
     }
 }

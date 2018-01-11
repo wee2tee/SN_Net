@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a50f5925c3b1487ca7d1fafdbc6070a9" Name="Diagram1">
+      <Diagram DiagramId="cf6606b9746543ea9c1b74bc1dc75d61" Name="Diagram1">
         <EntityTypeShape EntityType="sn_noteModel.event_calendar" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="sn_noteModel.note" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="sn_noteModel.note_calendar" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sn_noteModel.note_calendar" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="sn_noteModel.note_comment" Width="1.5" PointX="8" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sn_noteModel.note_istab" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="sn_noteModel.training_calendar" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sn_noteModel.note_istab" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sn_noteModel.training_calendar" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <AssociationConnector Association="sn_noteModel.fk_event_calendar_note_istab1" ManuallyRouted="false" />
         <AssociationConnector Association="sn_noteModel.fk_note_comment_note_id" ManuallyRouted="false" />
       </Diagram>

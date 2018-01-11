@@ -124,6 +124,7 @@ namespace SN_Net.Subform
                 }
 
                 DateTime d = this.dtFrom.Value;
+                string series = ((InlineAbsentUser)((XDropdownListItem)this.cbUser.SelectedItem).Value).username + "-" + DateTime.Now.GetUnixTimeStamp().ToString();
                 do
                 {
                     if (d.DayOfWeek == DayOfWeek.Sunday)
@@ -162,11 +163,14 @@ namespace SN_Net.Subform
                         users_name = ((InlineAbsentUser)((XDropdownListItem)this.cbUser.SelectedItem).Value).username,
                         rec_by = this.main_form.loged_in_user.username,
                         status = (int)((XDropdownListItem)this.cbStatus.SelectedItem).Value,
+                        series = series
                     });
                     d = d.AddDays(1);
                 } while (d.Date.CompareTo(this.dtTo.Value.Date) <= 0);
 
-                Console.WriteLine(" => it's all ok");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+                //Console.WriteLine(" => it's all ok");
             }
         }
     }

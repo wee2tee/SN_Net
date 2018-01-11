@@ -152,7 +152,7 @@ namespace SN_Net.Subform
                         //de = new CustomDateEvent3(this.main_form, curr_date, event_list, note, training_list);
 
 
-                        CustomDateEvent3 de = new CustomDateEvent3(this.main_form, curr_date, first_date, event_list, note, training_list);
+                        CustomDateEvent3 de = new CustomDateEvent3(this.main_form, this, curr_date, first_date, event_list, note, training_list);
                         this.tableLayoutPanel1.Controls.Add(de, j, i);
                         increase_date++;
                     }
@@ -219,18 +219,33 @@ namespace SN_Net.Subform
             //}
         }
 
-        public void RefreshAtDate(DateTime date)
+        //public void RefreshAtDate(DateTime date)
+        //{
+        //    foreach (var ct in this.tableLayoutPanel1.Controls)
+        //    {
+        //        if (ct.GetType() != typeof(CustomDateEvent2))
+        //            continue;
+
+        //        CustomDateEvent2 de = ct as CustomDateEvent2;
+        //        if (de.date.HasValue && de.date.Value == date)
+        //        {
+        //            de.RefreshData();
+        //            de.RefreshView();
+        //        }
+        //    }
+        //}
+
+        public void RefreshViewDates(List<DateTime> dates)
         {
             foreach (var ct in this.tableLayoutPanel1.Controls)
             {
-                if (ct.GetType() != typeof(CustomDateEvent2))
+                if (ct.GetType() != typeof(CustomDateEvent3))
                     continue;
 
-                CustomDateEvent2 de = ct as CustomDateEvent2;
-                if (de.date.HasValue && de.date.Value == date)
+                if(dates.Where(d => d.Date == ((CustomDateEvent3)ct).curr_date.Date).Count() > 0 &&
+                    ((CustomDateEvent3)ct).curr_date.ToString("MMyyyy") == this.first_date_of_month.ToString("MMyyyy"))
                 {
-                    de.RefreshData();
-                    de.RefreshView();
+                    ((CustomDateEvent3)ct).RefreshView();
                 }
             }
         }
@@ -282,7 +297,12 @@ namespace SN_Net.Subform
             DialogAbsentRange abs = new DialogAbsentRange(this.main_form);
             if(abs.ShowDialog() == DialogResult.OK)
             {
-
+                using (sn_noteEntities note = DBXNote.DataSet())
+                {
+                    abs.event_list.ForEach(ev => { note.event_calendar.Add(ev); });
+                    note.SaveChanges();
+                    this.RefreshViewDates(abs.event_list.Select(ev => ev.date).ToList());
+                }
             }
         }
     }

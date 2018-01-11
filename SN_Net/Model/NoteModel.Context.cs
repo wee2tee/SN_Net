@@ -19,13 +19,13 @@ namespace SN_Net.Model
             : base("name=sn_noteEntities")
         {
         }
-
+    
         public sn_noteEntities(string connection_string)
             : base(connection_string)
         {
 
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

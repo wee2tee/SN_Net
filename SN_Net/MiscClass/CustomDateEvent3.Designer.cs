@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.lblBottomText = new System.Windows.Forms.Label();
             this.lblNoteDescription = new System.Windows.Forms.Label();
@@ -105,10 +105,10 @@
             this.btnMaid,
             this.btnDropDownMenu});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(256, 9);
+            this.toolStrip1.Location = new System.Drawing.Point(287, 9);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip1.Size = new System.Drawing.Size(130, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(99, 25);
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -153,7 +153,7 @@
             this.btnTrainer.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnTrainer.Name = "btnTrainer";
             this.btnTrainer.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnTrainer.Size = new System.Drawing.Size(152, 24);
+            this.btnTrainer.Size = new System.Drawing.Size(136, 24);
             this.btnTrainer.Text = "วิทยากรอบรม";
             this.btnTrainer.Click += new System.EventHandler(this.btnTrainer_Click);
             // 
@@ -164,7 +164,7 @@
             this.btnAdd.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnAdd.Size = new System.Drawing.Size(152, 24);
+            this.btnAdd.Size = new System.Drawing.Size(136, 24);
             this.btnAdd.Text = "เพิ่มรายการ";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -175,7 +175,7 @@
             this.btnDetail.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.btnDetail.Name = "btnDetail";
             this.btnDetail.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.btnDetail.Size = new System.Drawing.Size(152, 24);
+            this.btnDetail.Size = new System.Drawing.Size(136, 24);
             this.btnDetail.Text = "ดูรายละเอียด";
             this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
             // 
@@ -200,14 +200,14 @@
             this.col_realname,
             this.col_type,
             this.col_description});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv.GridColor = System.Drawing.Color.White;
             this.dgv.Location = new System.Drawing.Point(0, 35);
             this.dgv.MultiSelect = false;
@@ -223,6 +223,7 @@
             this.dgv.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgv_CellPainting);
             this.dgv.Enter += new System.EventHandler(this.dgv_Enter);
             this.dgv.Leave += new System.EventHandler(this.dgv_Leave);
+            this.dgv.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_MouseClick);
             // 
             // col_event_calendar
             // 
@@ -235,10 +236,10 @@
             // col_seq
             // 
             this.col_seq.DataPropertyName = "seq";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.NullValue = null;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.col_seq.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.col_seq.DefaultCellStyle = dataGridViewCellStyle1;
             this.col_seq.HeaderText = "Seq";
             this.col_seq.MinimumWidth = 15;
             this.col_seq.Name = "col_seq";

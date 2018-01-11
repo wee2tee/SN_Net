@@ -17,20 +17,32 @@ namespace SN_Net.Subform
 {
     public partial class DialogAbsent : Form
     {
+        public enum PERFORM_ACTION
+        {
+            ADD,
+            EDIT,
+            NONE
+        }
+
         private MainForm main_form;
+        private FormCalendar calendar;
         private CustomDateEvent3 custom_date_event;
-        private bool perform_add;
+        private PERFORM_ACTION perform_action;
+        private event_calendar perform_edit_item;
         private note_calendar curr_note;
         private BindingList<event_calendarVMFull> curr_event_list;
         private FORM_MODE form_mode;
         private note_calendar tmp_note_calendar;
         private event_calendar tmp_event_calendar;
 
-        public DialogAbsent(MainForm main_form, CustomDateEvent3 custom_date_event, bool perform_add = false)
+
+        public DialogAbsent(MainForm main_form, FormCalendar calendar, CustomDateEvent3 custom_date_event, PERFORM_ACTION perform_action = PERFORM_ACTION.NONE, event_calendar perform_edit_item = null)
         {
             this.main_form = main_form;
+            this.calendar = calendar;
             this.custom_date_event = custom_date_event;
-            this.perform_add = perform_add;
+            this.perform_action = perform_action;
+            this.perform_edit_item = perform_edit_item;
             InitializeComponent();
         }
 
@@ -40,17 +52,23 @@ namespace SN_Net.Subform
             this.RemoveInlineForm();
 
             this.groupBox1.Text = this.custom_date_event.curr_date.ToString("วันdddd ที่ dd MMMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
-            if (this.perform_add)
-                this.btnAddItem.PerformClick();
 
             this.SetDropdownListItem();
             this.GetData();
             this.FillForm();
             
-            if(this.perform_add == true)
+            if(this.perform_action == PERFORM_ACTION.ADD)
             {
                 this.ResetFormState(FORM_MODE.READ_ITEM);
                 this.btnAddItem.PerformClick();
+            }
+            if(this.perform_action == PERFORM_ACTION.EDIT && this.perform_edit_item != null)
+            {
+                this.ResetFormState(FORM_MODE.READ_ITEM);
+                var editing_row = this.dgv.Rows.Cast<DataGridViewRow>().Where(r => ((event_calendar)r.Cells[this.col_event_calendar.Name].Value).id == this.perform_edit_item.id).FirstOrDefault();
+                if (editing_row != null)
+                    editing_row.Cells[this.col_code_name.Name].Selected = true;
+                this.btnEditItem.PerformClick();
             }
         }
 
@@ -460,20 +478,52 @@ namespace SN_Net.Subform
                     using (sn_noteEntities note = DBXNote.DataSet())
                     {
                         var event_to_delete = note.event_calendar.Find(((event_calendar)this.dgv.Rows[this.dgv.CurrentCell.RowIndex].Cells[this.col_event_calendar.Name].Value).id);
-                        if(event_to_delete != null)
+                        if (event_to_delete != null)
                         {
-                            note.event_calendar.Remove(event_to_delete);
-                            note.SaveChanges();
-                            this.custom_date_event.RefreshView();
-                            this.GetData();
-                            this.FillForm();
+                            if (event_to_delete.series != null)
+                            {
+                                DialogConfirmDeleteAbsentRange conf = new DialogConfirmDeleteAbsentRange();
+                                if (conf.ShowDialog() == DialogResult.OK)
+                                {
+                                    if (conf.delete_method == DialogConfirmDeleteAbsentRange.DELETE_METHOD.ALL)
+                                    {
+                                        var notes_to_delete = note.event_calendar.Where(n => n.series == event_to_delete.series).ToList();
+                                        notes_to_delete.ForEach(n => { note.event_calendar.Remove(n); });
+                                        note.SaveChanges();
+
+                                        this.GetData();
+                                        this.FillForm();
+                                        this.calendar.RefreshViewDates(notes_to_delete.Select(n => n.date).ToList());
+
+                                    }
+                                    if (conf.delete_method == DialogConfirmDeleteAbsentRange.DELETE_METHOD.ONE)
+                                    {
+                                        note.event_calendar.Remove(event_to_delete);
+                                        note.SaveChanges();
+                                        this.custom_date_event.RefreshView();
+                                        this.GetData();
+                                        this.FillForm();
+                                    }
+                                }
+                                else
+                                {
+                                    this.dgv.Rows[this.dgv.CurrentCell.RowIndex].ClearDeletingRowOverlay();
+                                }
+                            }
+                            else
+                            {
+                                note.event_calendar.Remove(event_to_delete);
+                                note.SaveChanges();
+                                this.custom_date_event.RefreshView();
+                                this.GetData();
+                                this.FillForm();
+                            }
                         }
                         else
                         {
                             MessageAlert.Show("ข้อมูลที่ต้องการลบไม่มีอยู่ในระบบ, อาจมีผู้ใช้รายอื่นลบออกไปแล้ว", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
                             this.dgv.Rows[this.dgv.CurrentCell.RowIndex].ClearDeletingRowOverlay();
                         }
-
                     }
                 }
                 catch (Exception ex)

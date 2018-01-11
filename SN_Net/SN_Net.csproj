@@ -332,6 +332,12 @@
     <Compile Include="SubformV2\DialogChangePassword.Designer.cs">
       <DependentUpon>DialogChangePassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubformV2\DialogConfirmDeleteAbsentRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubformV2\DialogConfirmDeleteAbsentRange.Designer.cs">
+      <DependentUpon>DialogConfirmDeleteAbsentRange.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubformV2\DialogDataInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -964,6 +970,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogChangePassword.resx">
       <DependentUpon>DialogChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubformV2\DialogConfirmDeleteAbsentRange.resx">
+      <DependentUpon>DialogConfirmDeleteAbsentRange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubformV2\DialogDataInfo.resx">
       <DependentUpon>DialogDataInfo.cs</DependentUpon>

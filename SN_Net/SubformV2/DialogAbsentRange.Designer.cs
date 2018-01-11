@@ -177,6 +177,11 @@
             // numFine
             // 
             this.numFine.Location = new System.Drawing.Point(133, 39);
+            this.numFine.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
             this.numFine.Name = "numFine";
             this.numFine.Size = new System.Drawing.Size(120, 23);
             this.numFine.TabIndex = 7;
