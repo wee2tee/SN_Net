@@ -142,7 +142,7 @@
             this.txtRemark.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtRemark.Name = "txtRemark";
             this.txtRemark.Size = new System.Drawing.Size(332, 23);
-            this.txtRemark.TabIndex = 4;
+            this.txtRemark.TabIndex = 6;
             // 
             // ckDeductCom
             // 
@@ -151,7 +151,7 @@
             this.ckDeductCom.Name = "ckDeductCom";
             this.ckDeductCom.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.ckDeductCom.Size = new System.Drawing.Size(91, 20);
-            this.ckDeductCom.TabIndex = 6;
+            this.ckDeductCom.TabIndex = 7;
             this.ckDeductCom.Text = "หักค่าคอมฯ";
             this.ckDeductCom.UseVisualStyleBackColor = true;
             this.ckDeductCom.CheckedChanged += new System.EventHandler(this.ckDeductCom_CheckedChanged);
@@ -184,7 +184,7 @@
             0});
             this.numFine.Name = "numFine";
             this.numFine.Size = new System.Drawing.Size(120, 23);
-            this.numFine.TabIndex = 7;
+            this.numFine.TabIndex = 14;
             // 
             // label10
             // 
@@ -219,7 +219,7 @@
             this.ckSaturday.Location = new System.Drawing.Point(411, 13);
             this.ckSaturday.Name = "ckSaturday";
             this.ckSaturday.Size = new System.Drawing.Size(51, 20);
-            this.ckSaturday.TabIndex = 6;
+            this.ckSaturday.TabIndex = 13;
             this.ckSaturday.Text = "เสาร์";
             this.ckSaturday.UseVisualStyleBackColor = true;
             // 
@@ -229,7 +229,7 @@
             this.ckFriday.Location = new System.Drawing.Point(351, 13);
             this.ckFriday.Name = "ckFriday";
             this.ckFriday.Size = new System.Drawing.Size(49, 20);
-            this.ckFriday.TabIndex = 6;
+            this.ckFriday.TabIndex = 12;
             this.ckFriday.Text = "ศุกร์";
             this.ckFriday.UseVisualStyleBackColor = true;
             // 
@@ -239,7 +239,7 @@
             this.ckThursday.Location = new System.Drawing.Point(275, 13);
             this.ckThursday.Name = "ckThursday";
             this.ckThursday.Size = new System.Drawing.Size(66, 20);
-            this.ckThursday.TabIndex = 6;
+            this.ckThursday.TabIndex = 11;
             this.ckThursday.Text = "พฤหัสฯ";
             this.ckThursday.UseVisualStyleBackColor = true;
             // 
@@ -249,7 +249,7 @@
             this.ckWednesday.Location = new System.Drawing.Point(213, 13);
             this.ckWednesday.Name = "ckWednesday";
             this.ckWednesday.Size = new System.Drawing.Size(43, 20);
-            this.ckWednesday.TabIndex = 6;
+            this.ckWednesday.TabIndex = 10;
             this.ckWednesday.Text = "พุธ";
             this.ckWednesday.UseVisualStyleBackColor = true;
             // 
@@ -259,7 +259,7 @@
             this.ckTuesday.Location = new System.Drawing.Point(143, 13);
             this.ckTuesday.Name = "ckTuesday";
             this.ckTuesday.Size = new System.Drawing.Size(61, 20);
-            this.ckTuesday.TabIndex = 6;
+            this.ckTuesday.TabIndex = 9;
             this.ckTuesday.Text = "อังคาร";
             this.ckTuesday.UseVisualStyleBackColor = true;
             // 
@@ -269,7 +269,7 @@
             this.ckMonday.Location = new System.Drawing.Point(77, 13);
             this.ckMonday.Name = "ckMonday";
             this.ckMonday.Size = new System.Drawing.Size(57, 20);
-            this.ckMonday.TabIndex = 6;
+            this.ckMonday.TabIndex = 8;
             this.ckMonday.Text = "จันทร์";
             this.ckMonday.UseVisualStyleBackColor = true;
             // 
@@ -280,7 +280,7 @@
             this.dtFrom.Location = new System.Drawing.Point(87, 74);
             this.dtFrom.Name = "dtFrom";
             this.dtFrom.Size = new System.Drawing.Size(178, 23);
-            this.dtFrom.TabIndex = 8;
+            this.dtFrom.TabIndex = 2;
             // 
             // dtTo
             // 
@@ -289,7 +289,7 @@
             this.dtTo.Location = new System.Drawing.Point(298, 74);
             this.dtTo.Name = "dtTo";
             this.dtTo.Size = new System.Drawing.Size(178, 23);
-            this.dtTo.TabIndex = 8;
+            this.dtTo.TabIndex = 3;
             // 
             // btnOK
             // 
@@ -297,7 +297,7 @@
             this.btnOK.Location = new System.Drawing.Point(169, 297);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 28);
-            this.btnOK.TabIndex = 9;
+            this.btnOK.TabIndex = 15;
             this.btnOK.Text = "ตกลง";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -309,7 +309,7 @@
             this.btnCancel.Location = new System.Drawing.Point(250, 297);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 28);
-            this.btnCancel.TabIndex = 9;
+            this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "ยกเลิก";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -319,7 +319,8 @@
             this.cbUser.Location = new System.Drawing.Point(87, 16);
             this.cbUser.Name = "cbUser";
             this.cbUser.Size = new System.Drawing.Size(178, 24);
-            this.cbUser.TabIndex = 10;
+            this.cbUser.TabIndex = 0;
+            this.cbUser.Leave += new System.EventHandler(this.cbUser_Leave);
             // 
             // cbReason
             // 
@@ -328,7 +329,7 @@
             this.cbReason.Location = new System.Drawing.Point(87, 45);
             this.cbReason.Name = "cbReason";
             this.cbReason.Size = new System.Drawing.Size(178, 24);
-            this.cbReason.TabIndex = 11;
+            this.cbReason.TabIndex = 1;
             // 
             // cbMedcert
             // 
@@ -337,7 +338,7 @@
             this.cbMedcert.Location = new System.Drawing.Point(87, 103);
             this.cbMedcert.Name = "cbMedcert";
             this.cbMedcert.Size = new System.Drawing.Size(121, 24);
-            this.cbMedcert.TabIndex = 12;
+            this.cbMedcert.TabIndex = 4;
             // 
             // cbStatus
             // 
@@ -346,7 +347,7 @@
             this.cbStatus.Location = new System.Drawing.Point(87, 132);
             this.cbStatus.Name = "cbStatus";
             this.cbStatus.Size = new System.Drawing.Size(121, 24);
-            this.cbStatus.TabIndex = 12;
+            this.cbStatus.TabIndex = 5;
             // 
             // DialogAbsentRange
             // 

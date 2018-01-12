@@ -43,6 +43,9 @@ namespace SN_Net.MiscClass
 
         private void FillForm(DateTime curr_date, DateTime first_date_of_month, BindingList<event_calendarVM> event_cal, note_calendar note_cal, List<training_calendarVM> training_cal)
         {
+            this.btnDropDownMenu.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR || (this.main_form.loged_in_user.training_expert == "Y") ? true : false;
+            this.btnAdd.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            this.btnDetail.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             this.lblDay.Text = this.curr_date.Day.ToString();
             this.lblMonthYear.Text = this.curr_date.ToString("MMM yyyy", CultureInfo.GetCultureInfo("th-TH"));
             if(this.curr_date.ToString("yyyyMM") != this.first_date_of_month.ToString("yyyyMM") || this.curr_date.IsLastSaturday() || this.curr_date.DayOfWeek == DayOfWeek.Sunday)

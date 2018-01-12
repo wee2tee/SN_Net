@@ -30,6 +30,7 @@ namespace SN_Net.Subform
 
             this.cbMedcert.SelectedItem = this.cbMedcert.Items.Cast<XDropdownListItem>().First();
             this.cbStatus.SelectedItem = this.cbStatus.Items.Cast<XDropdownListItem>().Where(i => (int)i.Value == (int)CALENDAR_EVENT_STATUS.CONFIRMED).FirstOrDefault();
+            this.ActiveControl = this.cbUser;
         }
 
         private void SetDropdownItem()
@@ -144,8 +145,6 @@ namespace SN_Net.Subform
                         d = d.AddDays(1);
                         continue;
                     }
-                        
-                    //Console.WriteLine(" ==> " + d.ToString("dddd dd MMMM yyyy", CultureInfo.GetCultureInfo("th-TH")));
 
                     this.event_list.Add(new event_calendar
                     {
@@ -170,7 +169,64 @@ namespace SN_Net.Subform
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-                //Console.WriteLine(" => it's all ok");
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if(keyData == Keys.Enter)
+            {
+                if(this.btnOK.Focused || this.btnCancel.Focused || (this.ActiveControl is ComboBox && ((ComboBox)this.ActiveControl).DroppedDown))
+                {
+                    return false;
+                }
+                else
+                {
+                    SendKeys.Send("{TAB}");
+                    return true;
+                }
+            }
+
+            if(keyData == Keys.Escape)
+            {
+                if (this.ActiveControl is ComboBox && ((ComboBox)this.ActiveControl).DroppedDown)
+                    return false;
+
+                this.btnCancel.PerformClick();
+                return true;
+            }
+
+            if(keyData == Keys.F6)
+            {
+                if(this.ActiveControl is ComboBox)
+                {
+                    SendKeys.Send("{F4}");
+                    return true;
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void cbUser_Leave(object sender, EventArgs e)
+        {
+            if(((ComboBox)sender).Text.Trim().Length == 0)
+            {
+                ((ComboBox)sender).Focus();
+                SendKeys.Send("{F6}");
+            }
+            else
+            {
+                var selected_item = ((ComboBox)sender).Items.Cast<XDropdownListItem>().Where(i => i.Text.StartsWith(((ComboBox)sender).Text)).FirstOrDefault();
+                if (selected_item != null)
+                {
+                    ((ComboBox)sender).SelectedItem = selected_item;
+                }
+                else
+                {
+                    ((ComboBox)sender).Focus();
+                    SendKeys.Send("{F6}");
+                }
             }
         }
     }
