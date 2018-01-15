@@ -145,6 +145,14 @@ namespace SN_Net.Subform
                         d = d.AddDays(1);
                         continue;
                     }
+                    using (snEntities sn = DBX.DataSet())
+                    {
+                        if (d.Date.IsGroupHolidayFor(sn.users.Find(((InlineAbsentUser)((XDropdownListItem)this.cbUser.SelectedItem).Value).id)))
+                        {
+                            d = d.AddDays(1);
+                            continue;
+                        }
+                    }
 
                     this.event_list.Add(new event_calendar
                     {

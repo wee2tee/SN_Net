@@ -956,6 +956,35 @@ namespace SN_Net.MiscClass
             }
         }
 
+        public static bool IsGroupHolidayFor(this DateTime curr_dat, users user)
+        {
+            if (user == null)
+                return false;
+
+            using (snEntities sn = DBX.DataSet())
+            {
+                istab user_group = sn.istab.Where(i => i.tabtyp == istabDbf.TABTYP_USERGROUP && i.id == user.usergroup_id).FirstOrDefault();
+                if (user_group == null)
+                    return false;
+
+                using (sn_noteEntities note = DBXNote.DataSet())
+                {
+                    var note_cal = note.note_calendar.Where(n => n.date.CompareTo(curr_dat) == 0).FirstOrDefault();
+                    if (note_cal == null)
+                        return false;
+
+                    if(user_group.typcod.Trim().Length > 0 && note_cal.group_weekend != null && user_group.typcod.Trim() == note_cal.group_weekend.Trim())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
         public static int GetUnixTimeStamp(this DateTime date)
         {
             return Convert.ToInt32(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
