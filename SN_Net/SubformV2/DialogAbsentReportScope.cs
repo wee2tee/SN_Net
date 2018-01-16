@@ -38,6 +38,9 @@ namespace SN_Net.Subform
         private void cbUserFrom_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.user_from = (users)((XDropdownListItem)((ComboBox)sender).SelectedItem).Value;
+
+            /** uncomment this if want to use user range **/
+            this.cbUserTo.SelectedItem = this.cbUserTo.Items.Cast<XDropdownListItem>().Where(i => ((users)i.Value).id == this.user_from.id).FirstOrDefault();
         }
 
         private void cbUserTo_SelectedIndexChanged(object sender, EventArgs e)
@@ -95,12 +98,12 @@ namespace SN_Net.Subform
 
         private void dtDateFrom_ValueChanged(object sender, EventArgs e)
         {
-            this.date_from = ((DateTimePicker)sender).Value;
+            this.date_from = ((DateTimePicker)sender).Value.Date;
         }
 
         private void dtDateTo_ValueChanged(object sender, EventArgs e)
         {
-            this.date_to = ((DateTimePicker)sender).Value;
+            this.date_to = ((DateTimePicker)sender).Value.Date;
         }
 
         private void btnOK_Click(object sender, EventArgs e)

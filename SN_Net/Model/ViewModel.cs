@@ -659,6 +659,46 @@ namespace SN_Net.Model
         public string description { get { return this.note_calendar.description; } }
     }
 
+    public class AbsentCauseVM
+    {
+        public note_istab istab { get; set; }
+        public bool selected { get; set; }
+        public string description { get { return this.istab.typdes_th; } }
+        public string stat { get; set; }
+    }
+
+    public class AbsentPersonStatVM
+    {
+        private event_calendarVMFull event_vm_full { get { return this.event_calendar.ToViewModelFull(); } }
+        public event_calendar event_calendar { get; set; }
+        public int? seq { get; set; }
+        public DateTime date { get { return this.event_calendar.date; } }
+        public string user_name { get { return this.event_calendar.users_name; } }
+        public string reason { get { return this.event_vm_full.reason; } }
+        public string time_from { get { return this.event_calendar.from_time.Substring(0, 5); } }
+        public string time_to { get { return this.event_calendar.to_time.Substring(0, 5); } }
+        public string duration
+        {
+            get
+            {
+                var from = TimeSpan.Parse(this.time_from);
+                var to = TimeSpan.Parse(this.time_to);
+
+                TimeSpan duration = to.Subtract(from);
+                if(from.CompareTo(TimeSpan.Parse("12:00")) < 0 && to.CompareTo(TimeSpan.Parse("13:00")) > 0)
+                {
+                    duration = duration.Subtract(TimeSpan.Parse("01:00"));
+                }
+
+                return duration.ToString(@"hh\:mm");
+            }
+        }
+        public string status { get { return this.event_vm_full.status; } } //return Enum.GetValues(typeof(CALENDAR_EVENT_STATUS)).Cast<CALENDAR_EVENT_STATUS>().Where(st => (int)st == this.event_calender.status).FirstOrDefault().ToString(); } }
+        public string customer { get { return this.event_calendar.customer; } }
+        public string medcert { get { return this.event_vm_full.med_cert; } }
+        public string fine { get { return this.event_vm_full.fine; } }
+    }
+
     public class CALENDAR_EVENT_TYPE
     {
         public const string ABSENT = "06";
@@ -1075,6 +1115,57 @@ namespace SN_Net.Model
             }
 
             return y;
+        }
+
+        public static AbsentCauseVM ToAbsentCauseVM(this note_istab istab)
+        {
+            if (istab == null)
+                return null;
+
+            AbsentCauseVM a = new AbsentCauseVM
+            {
+                istab = istab,
+                selected = true,
+                stat = string.Empty
+            };
+
+            return a;
+        }
+
+        public static List<AbsentCauseVM> ToAbsentCauseVM(this IEnumerable<note_istab> istab)
+        {
+            List<AbsentCauseVM> a = new List<Model.AbsentCauseVM>();
+            foreach (var item in istab)
+            {
+                a.Add(item.ToAbsentCauseVM());
+            }
+
+            return a;
+        }
+
+        public static AbsentPersonStatVM ToAbsentPersonStatVM(this event_calendar event_cal)
+        {
+            if (event_cal == null)
+                return null;
+
+            AbsentPersonStatVM a = new AbsentPersonStatVM
+            {
+                event_calendar = event_cal,
+                seq = null
+            };
+            return a;
+        }
+
+        public static List<AbsentPersonStatVM> ToAbsentPersonStatVM(this IEnumerable<event_calendar> event_cal)
+        {
+            List<AbsentPersonStatVM> a = new List<AbsentPersonStatVM>();
+
+            foreach (var item in event_cal)
+            {
+                a.Add(item.ToAbsentPersonStatVM());
+            }
+
+            return a;
         }
 
         public static serial CreateTmpSerial(this snEntities sn, MainForm main_form)

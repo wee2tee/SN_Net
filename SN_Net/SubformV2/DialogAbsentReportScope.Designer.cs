@@ -45,9 +45,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(26, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 16);
+            this.label1.Size = new System.Drawing.Size(53, 16);
             this.label1.TabIndex = 0;
-            this.label1.Text = "พนักงาน จาก";
+            this.label1.Text = "พนักงาน";
             // 
             // label2
             // 
@@ -57,6 +57,7 @@
             this.label2.Size = new System.Drawing.Size(22, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "ถึง";
+            this.label2.Visible = false;
             // 
             // label3
             // 
@@ -93,6 +94,7 @@
             this.cbUserTo.Name = "cbUserTo";
             this.cbUserTo.Size = new System.Drawing.Size(144, 24);
             this.cbUserTo.TabIndex = 1;
+            this.cbUserTo.Visible = false;
             this.cbUserTo.SelectedIndexChanged += new System.EventHandler(this.cbUserTo_SelectedIndexChanged);
             this.cbUserTo.Leave += new System.EventHandler(this.cbUserTo_Leave);
             // 
