@@ -989,5 +989,21 @@ namespace SN_Net.MiscClass
         {
             return Convert.ToInt32(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
         }
+
+        public static string GetTimeSpanString(this TimeSpan ts)
+        {
+            string str = string.Empty;
+            int days = ts.TotalHours / 8 >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours / 8)) : 0;
+            int hrs = Math.Floor(ts.TotalHours) - (days * 8) >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours) - (days * 8)) : 0;
+            int mins = ts.TotalMinutes - (days * 8 * 60) - (hrs * 60) >= 1 ? Convert.ToInt32(ts.TotalMinutes - (days * 8 * 60) - (hrs * 60)) : 0; // Convert.ToInt32(Math.Floor(ts.TotalMinutes - (ts.TotalHours * 60)));
+
+            str += (days > 0 ? days.ToString() + " วัน  " : "") + (hrs > 0 ? hrs.ToString() + " ชั่วโมง  " : "") + (mins > 0 ? mins.ToString() + " นาที" : "");
+            return str;
+        }
+
+        public static int GetTotalDays(this TimeSpan ts)
+        {
+            return ts.TotalHours / 8 >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours / 8)) : 0;
+        }
     }
 }

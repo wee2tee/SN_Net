@@ -322,14 +322,16 @@ namespace CC
             {
                 if(this.CurrentCell.RowIndex > 0)
                 {
-                    this.Rows[this.CurrentCell.RowIndex - 1].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
+                    //this.Rows[this.CurrentCell.RowIndex - 1].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
+                    this.Rows[this.CurrentCell.RowIndex - 1].Cells[this.FirstDisplayedScrollingColumnIndex].Selected = true;
                 }
             }
             if(e.Delta < 0) // scroll down
             {
                 if (this.CurrentCell.RowIndex < this.Rows.Count - 1)
                 {
-                    this.Rows[this.CurrentCell.RowIndex + 1].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
+                    //this.Rows[this.CurrentCell.RowIndex + 1].Cells[this.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).First().Name].Selected = true;
+                    this.Rows[this.CurrentCell.RowIndex + 1].Cells[this.FirstDisplayedScrollingColumnIndex].Selected = true;
                 }
             }
 

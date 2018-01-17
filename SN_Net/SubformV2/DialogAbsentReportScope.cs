@@ -19,8 +19,12 @@ namespace SN_Net.Subform
         public DateTime? date_from = null;
         public DateTime? date_to = null;
 
-        public DialogAbsentReportScope()
+        public DialogAbsentReportScope(users selected_user = null, DateTime? selected_date_from = null, DateTime? selected_date_to = null)
         {
+            this.user_from = selected_user;
+            this.user_to = selected_user;
+            this.date_from = selected_date_from;
+            this.date_to = selected_date_to;
             InitializeComponent();
         }
 
@@ -29,10 +33,20 @@ namespace SN_Net.Subform
             using (snEntities sn = DBX.DataSet())
             {
                 sn.users.OrderBy(u => u.username).ToList().ForEach(u => { this.cbUserFrom.Items.Add(new XDropdownListItem { Text = u.username + " : " + u.name, Value = u }); { this.cbUserTo.Items.Add(new XDropdownListItem { Text = u.username + " : " + u.name, Value = u }); } });
+                if(this.user_from != null)
+                {
+                    var u1 =this.cbUserFrom.Items.Cast<XDropdownListItem>().Where(i => ((users)i.Value).id == this.user_from.id).FirstOrDefault();
+                    if (u1 != null)
+                        this.cbUserFrom.SelectedItem = u1;
+
+                    var u2 = this.cbUserTo.Items.Cast<XDropdownListItem>().Where(i => ((users)i.Value).id == this.user_to.id).FirstOrDefault();
+                    if (u2 != null)
+                        this.cbUserFrom.SelectedItem = u2;
+                }
             }
 
-            this.dtDateFrom.Value = DateTime.Now;
-            this.dtDateTo.Value = DateTime.Now;
+            this.dtDateFrom.Value = this.date_from.HasValue ? this.date_from.Value : DateTime.Now;
+            this.dtDateTo.Value = this.date_to.HasValue ? this.date_to.Value : DateTime.Now;
         }
 
         private void cbUserFrom_SelectedIndexChanged(object sender, EventArgs e)

@@ -690,7 +690,7 @@ namespace SN_Net.Model
                     duration = duration.Subtract(TimeSpan.Parse("01:00"));
                 }
 
-                return duration.ToString(@"hh\:mm");
+                return duration.GetTimeSpanString();  //.ToString(@"hh\:mm");
             }
         }
         public string status { get { return this.event_vm_full.status; } } //return Enum.GetValues(typeof(CALENDAR_EVENT_STATUS)).Cast<CALENDAR_EVENT_STATUS>().Where(st => (int)st == this.event_calender.status).FirstOrDefault().ToString(); } }
