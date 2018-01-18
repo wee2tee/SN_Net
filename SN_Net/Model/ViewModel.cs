@@ -662,6 +662,7 @@ namespace SN_Net.Model
     public class AbsentCauseVM
     {
         public note_istab istab { get; set; }
+        public bool enabled { get; set; }
         public bool selected { get; set; }
         public string description { get { return this.istab.typdes_th; } }
         public string stat { get; set; }

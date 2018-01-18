@@ -20,6 +20,7 @@ namespace SN_Net.Subform
         private DateTime? date_from = null;
         private DateTime? date_to = null;
 
+        private List<event_calendar> person_events;
         private BindingList<AbsentCauseVM> cause1_list;
         private BindingList<AbsentCauseVM> cause2_list;
         private BindingList<AbsentPersonStatVM> absent_person_list;
@@ -54,25 +55,39 @@ namespace SN_Net.Subform
                     this.date_from = scope.date_from;
                     this.date_to = scope.date_to;
 
+                    this.dtYearAbsentFrom.Value = DateTime.Now; //DateTime.Parse(this.date_to.Value.ToString("yyyy", CultureInfo.GetCultureInfo("en-US")) + "-01-01", CultureInfo.GetCultureInfo("en-US"));
+                    this.dtYearAbsentTo.Value = DateTime.Now; //DateTime.Parse(this.date_to.Value.ToString("yyyy", CultureInfo.GetCultureInfo("en-US")) + "-12-31", CultureInfo.GetCultureInfo("en-US"));
+
                     this.GetData();
                     this.FillForm();
+                    this.ShowAbsentSummaryData();
                 }
             }
             
         }
 
-        private void GetData()
+        private void GetData(/*List<note_istab> accepted_causes = null*/)
         {
             using (sn_noteEntities note = DBXNote.DataSet())
             {
-                var person_absent = note.event_calendar.Where(ev => ev.users_name.Trim() == this.users_from.username.Trim() && ev.date.CompareTo(this.date_from.Value) >= 0 && ev.date.CompareTo(this.date_to.Value) <= 0).OrderBy(ev => ev.date).ThenBy(ev => ev.from_time).ToAbsentPersonStatVM();
+                this.person_events = note.event_calendar.Where(ev => ev.users_name.Trim() == this.users_from.username.Trim() && ev.date.CompareTo(this.date_from.Value) >= 0 && ev.date.CompareTo(this.date_to.Value) <= 0).OrderBy(ev => ev.date).ThenBy(ev => ev.from_time).ToList();
+                List<AbsentPersonStatVM> person_absent = this.person_events.ToAbsentPersonStatVM();
+                //if (accepted_causes == null)
+                //{
+                //    person_absent = this.person_events.ToAbsentPersonStatVM();
+                //}
+                //else
+                //{
+                //    int?[] causes_ids = accepted_causes.Select(a => (int?)a.id).ToArray();
+                //    person_absent = this.person_events.Where(ev => causes_ids.Contains(ev.event_code_id)).OrderBy(ev => ev.date).ThenBy(ev => ev.from_time).ToAbsentPersonStatVM();
+                //}
+
                 var p_seq = 0;
                 person_absent.ForEach(ev => { p_seq++; ev.seq = p_seq; });
                 this.absent_person_list = new BindingList<AbsentPersonStatVM>(person_absent);
                 
 
-                var all_absent = note.event_calendar.Where(ev => ev.date.CompareTo(this.date_from.Value) >= 0 && ev.date.CompareTo(this.date_to.Value) <= 0).ToList();
-                this.absent_summary_list = new BindingList<AbsentPersonStatVM>(all_absent.ToAbsentPersonStatVM());
+                
 
                 DateTime first_date_of_year = DateTime.Parse(this.date_to.Value.ToString("yyyy", CultureInfo.GetCultureInfo("en-US")) + "-01-01", CultureInfo.GetCultureInfo("en-US"));
                 DateTime last_date_of_year = DateTime.Parse(this.date_to.Value.ToString("yyyy", CultureInfo.GetCultureInfo("en-US")) + "-12-31", CultureInfo.GetCultureInfo("en-US"));
@@ -83,6 +98,13 @@ namespace SN_Net.Subform
                                 ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED &&
                                 ev.date.CompareTo(first_date_of_year.Date) >= 0 && ev.date.CompareTo(last_date_of_year.Date) <= 0).Select(ev => new EventCalYearlyTimeSpan { event_calendar = ev }).ToList();
                 year_abs.ForEach(ev => { this.yearly_absent = this.yearly_absent.Add(ev.time_span); });
+
+                this.yearly_cust = TimeSpan.Parse("00:00");
+                var year_cust = note.event_calendar.Where(ev => ev.users_name.Trim() == this.users_from.username.Trim() &&
+                                ev.event_type == CALENDAR_EVENT_TYPE.MEET_CUST &&
+                                ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED &&
+                                ev.date.CompareTo(first_date_of_year.Date) >= 0 && ev.date.CompareTo(last_date_of_year.Date) <= 0).Select(ev => new EventCalYearlyTimeSpan { event_calendar = ev }).ToList();
+                year_cust.ForEach(ev => { this.yearly_cust = this.yearly_cust.Add(ev.time_span); });
             }
         }
 
@@ -121,8 +143,7 @@ namespace SN_Net.Subform
             this.lblYearAbsent.Text = this.yearly_absent.GetTimeSpanString() + " (Max. " + this.users_from.max_absent.ToString() + " วัน)";
             this.lblYearAbsent.ForeColor = this.yearly_absent.GetTotalDays() > this.users_from.max_absent ? Color.Red : Color.Black;
 
-            this.dtYearAbsentFrom.Value = DateTime.Now;
-            this.dtYearAbsentTo.Value = DateTime.Now;
+            this.lblYearCust.Text = this.yearly_cust.GetTimeSpanString();
 
             this.dgvDetail.DataSource = this.absent_person_list;
             this.dgvSum.DataSource = this.absent_summary_list;
@@ -147,6 +168,7 @@ namespace SN_Net.Subform
                         ts = ts.Add(day_prd);
                     });
                     i.stat = ts.GetTimeSpanString();
+                    i.enabled = this.person_events.Where(pe => pe.event_code_id == i.istab.id).Count() > 0 ? true : false;
                 });
                 this.cause1_list = new BindingList<AbsentCauseVM>(list1);
                 
@@ -166,6 +188,7 @@ namespace SN_Net.Subform
                         ts = ts.Add(day_prd);
                     });
                     i.stat = ts.GetTimeSpanString();
+                    i.enabled = this.person_events.Where(pe => pe.event_code_id == i.istab.id).Count() > 0 ? true : false;
                 });
                 this.cause2_list = new BindingList<AbsentCauseVM>(list2);
                 this.dgvCust.DataSource = this.cause2_list;
@@ -204,11 +227,7 @@ namespace SN_Net.Subform
 
             int cause_id = ((note_istab)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c1_istab.Name].Value).id;
 
-            if(this.absent_person_list.Where(i => i.event_calendar.event_code_id == cause_id && i.event_calendar.status == (int)CALENDAR_EVENT_STATUS.CONFIRMED).Count() > 0) // person absent list has this cause
-            {
-                ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c1_selected.Name].Value = true;
-            }
-            else
+            if((bool)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c1_enabled.Name].Value != true) // person absent list has no this cause
             {
                 ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c1_selected.Name].Value = false;
                 e.CellStyle.BackColor = Color.LightGray;
@@ -228,11 +247,7 @@ namespace SN_Net.Subform
 
             int cause_id = ((note_istab)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c2_istab.Name].Value).id;
 
-            if (this.absent_person_list.Where(i => i.event_calendar.event_code_id == cause_id && i.event_calendar.status == (int)CALENDAR_EVENT_STATUS.CONFIRMED).Count() > 0) // person absent list has this cause
-            {
-                ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c2_selected.Name].Value = true;
-            }
-            else
+            if ((bool)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c2_enabled.Name].Value != true) // person absent list has no this cause
             {
                 ((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c2_selected.Name].Value = false;
                 e.CellStyle.BackColor = Color.LightGray;
@@ -280,16 +295,79 @@ namespace SN_Net.Subform
 
             if(e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_c1_selected.Name).FirstOrDefault().Index)
             {
-                
+                note_istab cause = (note_istab)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c1_istab.Name].Value;
+                if(this.person_events.Where(pe => pe.event_code_id == cause.id).Count() > 0)
+                {
+                    bool selected = ((BindingList<AbsentCauseVM>)((XDatagrid)sender).DataSource)[e.RowIndex].selected;
+                    ((BindingList<AbsentCauseVM>)((XDatagrid)sender).DataSource)[e.RowIndex].selected = !selected;
+                    this.ApplySelectionChange();
+                }
             }
+        }
+
+        private void dgvCust_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+
+            if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_c2_selected.Name).FirstOrDefault().Index)
+            {
+                note_istab cause = (note_istab)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_c2_istab.Name].Value;
+                if (this.person_events.Where(pe => pe.event_code_id == cause.id).Count() > 0)
+                {
+                    bool selected = ((BindingList<AbsentCauseVM>)((XDatagrid)sender).DataSource)[e.RowIndex].selected;
+                    ((BindingList<AbsentCauseVM>)((XDatagrid)sender).DataSource)[e.RowIndex].selected = !selected;
+                    this.ApplySelectionChange();
+                }
+            }
+        }
+
+        private void ApplySelectionChange()
+        {
+            List<note_istab> abs = this.dgvAbsent.Rows.Cast<DataGridViewRow>().Where(r => (bool)r.Cells[this.col_c1_selected.Name].Value == true).ToList().Select(r => (note_istab)r.Cells[this.col_c1_istab.Name].Value).ToList();
+            List<note_istab> cus = this.dgvCust.Rows.Cast<DataGridViewRow>().Where(r => (bool)r.Cells[this.col_c2_selected.Name].Value == true).ToList().Select(r => (note_istab)r.Cells[this.col_c2_istab.Name].Value).ToList();
+
+            int?[] all_selected_cause_id = abs.Concat(cus).Select(a => (int?)a.id).ToArray();
+            this.absent_person_list = new BindingList<AbsentPersonStatVM>(this.person_events.Where(pe => all_selected_cause_id.Contains(pe.event_code_id)).ToAbsentPersonStatVM());
+            this.dgvDetail.DataSource = this.absent_person_list;
         }
 
         private void btnOKYearAbsent_Click(object sender, EventArgs e)
         {
-            TimeSpan ts = TimeSpan.Parse("17:13");
-            Console.WriteLine(" === > " + ts.GetTimeSpanString());
-            //Console.WriteLine(" => total hours : " + ts.TotalHours);
-            //Console.WriteLine(" => total minutes : " + ts.TotalMinutes);
+            this.ShowAbsentSummaryData();
+        }
+
+        private void ShowAbsentSummaryData()
+        {
+            using (sn_noteEntities note = DBXNote.DataSet())
+            {
+                var all_absent = note.event_calendar
+                                .Where(ev => ev.date.CompareTo(this.dtYearAbsentFrom.Value.Date) >= 0 &&
+                                ev.date.CompareTo(this.dtYearAbsentTo.Value.Date) <= 0 && ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED &&
+                                ev.event_type == CALENDAR_EVENT_TYPE.ABSENT).ToList();
+                this.absent_summary_list = new BindingList<AbsentPersonStatVM>(all_absent.ToAbsentPersonStatVM());
+                this.dgvSum.DataSource = this.absent_summary_list;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
