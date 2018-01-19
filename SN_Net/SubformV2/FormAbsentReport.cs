@@ -24,7 +24,7 @@ namespace SN_Net.Subform
         private BindingList<AbsentCauseVM> cause1_list;
         private BindingList<AbsentCauseVM> cause2_list;
         private BindingList<AbsentPersonStatVM> absent_person_list;
-        private BindingList<AbsentPersonStatVM> absent_summary_list;
+        private BindingList<SummaryAbsent> absent_summary_list;
         private TimeSpan yearly_absent;
         private TimeSpan yearly_cust;
 
@@ -345,29 +345,39 @@ namespace SN_Net.Subform
                                 .Where(ev => ev.date.CompareTo(this.dtYearAbsentFrom.Value.Date) >= 0 &&
                                 ev.date.CompareTo(this.dtYearAbsentTo.Value.Date) <= 0 && ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED &&
                                 ev.event_type == CALENDAR_EVENT_TYPE.ABSENT).ToList();
-                this.absent_summary_list = new BindingList<AbsentPersonStatVM>(all_absent.ToAbsentPersonStatVM());
+                int seq = 0;
+                var grouped_absent = all_absent.OrderBy(a => a.users_name).GroupBy(a => a.users_name).Select(a => new SummaryAbsent { seq = ++seq, user_name = a.First().users_name, name = a.First().realname, fine = (int)a.Sum(i => i.fine), remark = string.Empty, tot_absent = string.Empty, tot_absent_comm = string.Empty }).ToList();
+                this.absent_summary_list = new BindingList<SummaryAbsent>(grouped_absent);
                 this.dgvSum.DataSource = this.absent_summary_list;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAllAbsent_Click(object sender, EventArgs e)
         {
-
+            ((BindingList<AbsentCauseVM>)this.dgvAbsent.DataSource).ToList().ForEach(i => i.selected = true);
+            this.dgvAbsent.Refresh();
+            this.ApplySelectionChange();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnNoneAbsent_Click(object sender, EventArgs e)
         {
-
+            ((BindingList<AbsentCauseVM>)this.dgvAbsent.DataSource).ToList().ForEach(i => i.selected = false);
+            this.dgvAbsent.Refresh();
+            this.ApplySelectionChange();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnAllCust_Click(object sender, EventArgs e)
         {
-
+            ((BindingList<AbsentCauseVM>)this.dgvCust.DataSource).ToList().ForEach(i => i.selected = true);
+            this.dgvCust.Refresh();
+            this.ApplySelectionChange();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnNoneCust_Click(object sender, EventArgs e)
         {
-
+            ((BindingList<AbsentCauseVM>)this.dgvCust.DataSource).ToList().ForEach(i => i.selected = false);
+            this.dgvCust.Refresh();
+            this.ApplySelectionChange();
         }
     }
 
@@ -387,5 +397,16 @@ namespace SN_Net.Subform
                 return ts;
             }
         }
+    }
+
+    public class SummaryAbsent
+    {
+        public int seq { get; set; }
+        public string user_name { get; set; }
+        public string name { get; set; }
+        public string tot_absent { get; set; }
+        public string tot_absent_comm { get; set; }
+        public int fine { get; set; }
+        public string remark { get; set; }
     }
 }
