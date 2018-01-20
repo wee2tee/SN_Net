@@ -1001,6 +1001,18 @@ namespace SN_Net.MiscClass
             return str;
         }
 
+        public static TimeSpan GetDayTimeSpan(this TimeSpan start_time, TimeSpan end_time)
+        {
+            TimeSpan ts = end_time.Subtract(start_time);
+
+            if(start_time.CompareTo(TimeSpan.Parse("12:00")) < 0 && end_time.CompareTo(TimeSpan.Parse("13:00")) > 0)
+            {
+                ts = ts.Subtract(TimeSpan.Parse("01:00"));
+            }
+
+            return ts;
+        }
+
         public static int GetTotalDays(this TimeSpan ts)
         {
             return ts.TotalHours / 8 >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours / 8)) : 0;

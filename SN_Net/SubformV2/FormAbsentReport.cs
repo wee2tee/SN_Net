@@ -346,7 +346,36 @@ namespace SN_Net.Subform
                                 ev.date.CompareTo(this.dtYearAbsentTo.Value.Date) <= 0 && ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED &&
                                 ev.event_type == CALENDAR_EVENT_TYPE.ABSENT).ToList();
                 int seq = 0;
-                var grouped_absent = all_absent.OrderBy(a => a.users_name).GroupBy(a => a.users_name).Select(a => new SummaryAbsent { seq = ++seq, user_name = a.First().users_name, name = a.First().realname, fine = (int)a.Sum(i => i.fine), remark = string.Empty, tot_absent = string.Empty, tot_absent_comm = string.Empty }).ToList();
+                var grouped_absent = all_absent.OrderBy(a => a.users_name).GroupBy(a => a.users_name).Select(a => new SummaryAbsent {
+                                    seq = ++seq,
+                                    user_name = a.First().users_name,
+                                    name = a.First().realname,
+                                    fine = (int)a.Sum(i => i.fine),
+                                    remark = string.Empty,
+                                    tot_absent = string.Empty,
+                                    tot_absent_comm = string.Empty }).ToList();
+                grouped_absent.ForEach(g =>
+                {
+                    TimeSpan ts_real = TimeSpan.Parse("00:00");
+                    TimeSpan ts_comm = TimeSpan.Parse("00:00");
+                    all_absent.Where(a => a.users_name == g.user_name).ToList().ForEach(a =>
+                    {
+                        ts_real = ts_real.Add(TimeSpan.Parse(a.from_time).GetDayTimeSpan(TimeSpan.Parse(a.to_time)));
+                        if(a.med_cert == CALENDAR_EVENT_MEDCERT.HAVE_MEDCERT)
+                        {
+                            TimeSpan t = TimeSpan.Parse(a.from_time).GetDayTimeSpan(TimeSpan.Parse(a.to_time));
+                            double m = t.TotalMinutes / 2;
+                            TimeSpan s = new TimeSpan()
+                            ts_comm = ts_comm.Add();
+                        }
+                        else
+                        {
+                            ts_comm = ts_comm.Add(TimeSpan.Parse(a.from_time).GetDayTimeSpan(TimeSpan.Parse(a.to_time)));
+                        }
+                    });
+                    g.tot_absent = ts_real.GetTimeSpanString();
+                    g.tot_absent_comm = ts_comm.GetTimeSpanString();
+                });
                 this.absent_summary_list = new BindingList<SummaryAbsent>(grouped_absent);
                 this.dgvSum.DataSource = this.absent_summary_list;
             }

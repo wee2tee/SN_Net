@@ -114,6 +114,7 @@ namespace SN_Net.Subform
             Enum.GetValues(typeof(CALENDAR_EVENT_STATUS)).Cast<CALENDAR_EVENT_STATUS>().ToList().ForEach(i => this.inlineStatus._Items.Add(new XDropdownListItem { Text = i.ToString(), Value = (int)i }));
             this.inlineMedCert._Items.Add(new XDropdownListItem { Text = "N/A (ไม่ระบุ)", Value = CALENDAR_EVENT_MEDCERT.NOT_ASSIGN });
             this.inlineMedCert._Items.Add(new XDropdownListItem { Text = "ไม่มีเอกสาร", Value = CALENDAR_EVENT_MEDCERT.NOT_HAVE_MEDCERT });
+            this.inlineMedCert._Items.Add(new XDropdownListItem { Text = "มีเอกสารอื่น ๆ", Value = CALENDAR_EVENT_MEDCERT.OTHER_DOCUMENT });
             this.inlineMedCert._Items.Add(new XDropdownListItem { Text = "มีใบรับรองแพทย์", Value = CALENDAR_EVENT_MEDCERT.HAVE_MEDCERT });
         }
 

@@ -561,6 +561,9 @@ namespace SN_Net.Model
                     case CALENDAR_EVENT_MEDCERT.NOT_HAVE_MEDCERT:
                         return "ไม่มีเอกสาร";
 
+                    case CALENDAR_EVENT_MEDCERT.OTHER_DOCUMENT:
+                        return "มีเอกสารอื่น ๆ";
+
                     case CALENDAR_EVENT_MEDCERT.HAVE_MEDCERT:
                         return "มีใบรับรองแพทย์";
 
@@ -711,6 +714,7 @@ namespace SN_Net.Model
         public const string NOT_ASSIGN = "X";
         public const string HAVE_MEDCERT = "Y";
         public const string NOT_HAVE_MEDCERT = "N";
+        public const string OTHER_DOCUMENT = "O";
     }
 
     public enum CALENDAR_EVENT_STATUS : int
