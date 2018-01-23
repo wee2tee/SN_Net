@@ -47,6 +47,18 @@ namespace CC
             }
         }
 
+        public bool _DroppedDown
+        {
+            get
+            {
+                return this.comboBox1.DroppedDown;
+            }
+            set
+            {
+                this.comboBox1.DroppedDown = value;
+            }
+        }
+
         public XDropdownListItem _SelectedItem
         {
             get
