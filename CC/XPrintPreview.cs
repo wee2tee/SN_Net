@@ -25,14 +25,28 @@ namespace CC
         public event EventHandler _OnOutputToPrinter;
         
         
-        public XPrintPreview(PrintDocument document, int total_page, PRINT_AUTHORIZE_STATE print_authorize_state = PRINT_AUTHORIZE_STATE.READY_TO_PRINT)
+        public XPrintPreview()
         {
             InitializeComponent();
-            this.printDialog1.Document = document;
+        }
+
+        public XPrintPreview(PrintDocument document, int total_page, PRINT_AUTHORIZE_STATE print_authorize_state = PRINT_AUTHORIZE_STATE.READY_TO_PRINT)
+            : this()
+        {
+            //this.printDialog1.Document = document_for_printer;
             this.printPreviewControl1.Document = document;
             this.total_page = total_page;
             this.print_authorize_state = print_authorize_state;
             //this.total_page = GetTotalPageCount(document);
+        }
+
+        public XPrintPreview(PrintDocument document, PrintDocument document_for_printer, int total_page, PRINT_AUTHORIZE_STATE print_authorize_state = PRINT_AUTHORIZE_STATE.READY_TO_PRINT)
+            : this()
+        {
+            this.printDialog1.Document = document_for_printer;
+            this.printPreviewControl1.Document = document;
+            this.total_page = total_page;
+            this.print_authorize_state = print_authorize_state;
         }
 
         private void FormPrintPreview_Load(object sender, EventArgs e)
@@ -70,17 +84,27 @@ namespace CC
             //}
 
 
-            PrintDialog pd = new PrintDialog();
-            pd.Document = this.printPreviewControl1.Document;
-            if (pd.ShowDialog() == DialogResult.OK)
+
+            if (this.printDialog1.ShowDialog() == DialogResult.OK)
             {
-                pd.Document.Print();
-                //MessageBox.Show("Print");
+                this.printDialog1.Document.Print();
                 if (_OnOutputToPrinter != null)
                 {
                     this._OnOutputToPrinter(sender, e);
                 }
             }
+
+
+            //PrintDialog pd = new PrintDialog();
+            //pd.Document = this.printDialog1.Document;
+            //if (pd.ShowDialog() == DialogResult.OK)
+            //{
+            //    pd.Document.Print();
+            //    if (_OnOutputToPrinter != null)
+            //    {
+            //        this._OnOutputToPrinter(sender, e);
+            //    }
+            //}
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)

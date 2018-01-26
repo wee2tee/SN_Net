@@ -16,10 +16,17 @@ namespace SN_Net.Subform
 {
     public partial class FormAbsentReport : Form
     {
+        /* for person absent */
         private users users_from = null;
         private users users_to = null;
         private DateTime? date_from = null;
         private DateTime? date_to = null;
+
+        /* for summary absent */
+        private users year_users_from = null;
+        private users year_users_to = null;
+        private DateTime? year_date_from = null;
+        private DateTime? year_date_to = null;
 
         private List<event_calendar> person_events;
         private BindingList<AbsentCauseVM> cause1_list;
@@ -30,9 +37,11 @@ namespace SN_Net.Subform
         private TimeSpan yearly_cust;
         private FORM_MODE form_mode;
         private event_calendar tmp_event_cal;
+        private MainForm main_form;
 
-        public FormAbsentReport()
+        public FormAbsentReport(MainForm main_form)
         {
+            this.main_form = main_form;
             InitializeComponent();
         }
 
@@ -70,7 +79,7 @@ namespace SN_Net.Subform
 
                     this.GetData();
                     this.FillForm();
-                    this.ShowAbsentSummaryData();
+                    //this.ShowAbsentSummaryData();
                 }
             }
             
@@ -120,6 +129,7 @@ namespace SN_Net.Subform
 
         private void FillForm()
         {
+            this.grpPtd.Text = "สรุปในช่วงวันที่ (" + this.date_from.Value.ToString("dd/MM/yy", CultureInfo.GetCultureInfo("th-TH")) + " - " + this.date_to.Value.ToString("dd/MM/yy", CultureInfo.GetCultureInfo("th-TH")) + ")";
             this.grpYear.Text = "สะสมจากต้นปี (ปี " + this.date_to.Value.ToString("yyyy", CultureInfo.GetCultureInfo("th-TH")) + ")";
             this.lblUserFrom.Text = this.users_from.username + " : " + this.users_from.name;
             this.lblUserTo.Text = this.users_to.username + " : " + this.users_to.name;
@@ -158,6 +168,7 @@ namespace SN_Net.Subform
             this.dgvDetail.DataSource = this.absent_person_list;
             this.dgvSum.DataSource = this.absent_summary_list;
             this.SetCauseList();
+            this.SetDropDownUserItem();
             this.dgvDetail.Focus();
         }
 
@@ -203,6 +214,25 @@ namespace SN_Net.Subform
                 });
                 this.cause2_list = new BindingList<AbsentCauseVM>(list2);
                 this.dgvCust.DataSource = this.cause2_list;
+            }
+        }
+
+        private void SetDropDownUserItem()
+        {
+            using (snEntities sn = DBX.DataSet())
+            {
+                this.drYearAbsentUserFrom._Items.Add(new XDropdownListItem { Text = "", Value = null });
+                this.drYearAbsentUserTo._Items.Add(new XDropdownListItem { Text = "", Value = null });
+
+                var users = sn.users.OrderBy(u => u.username).ToList();
+                users.ForEach(u =>
+                {
+                    this.drYearAbsentUserFrom._Items.Add(new XDropdownListItem { Text = u.username + " : " + u.name, Value = u });
+                    this.drYearAbsentUserTo._Items.Add(new XDropdownListItem { Text = u.username + " : " + u.name, Value = u });
+                });
+
+                this.drYearAbsentUserFrom._SelectedItem = this.drYearAbsentUserFrom._Items.Cast<XDropdownListItem>().Where(i => i.Value == null).FirstOrDefault();
+                this.drYearAbsentUserTo._SelectedItem = this.drYearAbsentUserTo._Items.Cast<XDropdownListItem>().Where(i => i.Value == null).FirstOrDefault();
             }
         }
 
@@ -301,27 +331,39 @@ namespace SN_Net.Subform
 
         private void btnPrint1_Click(object sender, EventArgs e)
         {
+            if(this.absent_person_list.Count == 0)
+            {
+                MessageAlert.Show("ไม่มีข้อมูลตามขอบเขตที่ระบุ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                return;
+            }
+
             DialogPrintOutput p = new DialogPrintOutput();
             if(p.ShowDialog() == DialogResult.OK)
             {
                 if(p.output == PRINT_OUTPUT.SCREEN)
                 {
-                    //Console.WriteLine(" ==> Screen");
-                    PrintPreviewDialog pvd = new PrintPreviewDialog();
-                    pvd.Document = this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList());
-                    pvd.ShowDialog();
+                    int total_page = XPrintPreview.GetTotalPageCount(this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList()));
+                    using (PrintDocument pdoc = this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList(), total_page))
+                    {
+                        using (PrintDocument pdoc2 = this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList(), total_page))
+                        {
+                            XPrintPreview xp = new XPrintPreview(pdoc, pdoc2, total_page);
+                            xp.MdiParent = this.main_form;
+                            xp.Show();
+                        }
+                    }
                 }
 
                 if(p.output == PRINT_OUTPUT.PRINTER)
                 {
-                    //Console.WriteLine(" ==> Printer");
                     PrintDialog print_dialog = new PrintDialog();
-                    print_dialog.Document = this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList());
+                    int total_page = XPrintPreview.GetTotalPageCount(this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList()));
+                    print_dialog.Document = this.GetPrintPersonAbsentDocument(this.absent_person_list.ToList(), total_page);
                     print_dialog.AllowSelection = false;
                     print_dialog.AllowSomePages = false;
                     print_dialog.AllowPrintToFile = false;
                     print_dialog.AllowCurrentPage = false;
-                    print_dialog.UseEXDialog = true;
+                    print_dialog.UseEXDialog = false;
                     if (print_dialog.ShowDialog() == DialogResult.OK)
                     {
                         print_dialog.Document.Print();
@@ -332,47 +374,90 @@ namespace SN_Net.Subform
 
         private void btnPrint2_Click(object sender, EventArgs e)
         {
+            if(this.absent_summary_list == null)
+            {
+                MessageAlert.Show("กรุณากำหนดขอบเขตการแสดงข้อมูลสรุปวันลาก่อนสั่งพิมพ์รายงาน", "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+                if(this.form_mode == FORM_MODE.READ)
+                {
+                    this.tabControl1.SelectedTab = this.tabPage2;
+                }
+                return;
+            }
+
+            if (this.btnOKYearAbsent.Enabled)
+            {
+                MessageAlert.Show("ท่านยังไม่ได้คลิกปุ่ม \"ตกลง (แสดงข้อมูล)\", กรุณาคลิกปุ่มดังกล่าวก่อนสั่งพิมพ์รายงาน", "", MessageAlertButtons.OK, MessageAlertIcons.INFORMATION);
+                return;
+            }
+
+            if(this.absent_summary_list.Count == 0)
+            {
+                MessageAlert.Show("ไม่มีข้อมูลตามขอบเขตที่ระบุ", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                return;
+            }
+
             DialogPrintOutput p = new DialogPrintOutput();
             if (p.ShowDialog() == DialogResult.OK)
             {
                 if (p.output == PRINT_OUTPUT.SCREEN)
                 {
-                    //Console.WriteLine(" ==> Screen");
+                    int total_page = XPrintPreview.GetTotalPageCount(this.GetPrintSumAbsentDocument(this.absent_summary_list.ToList()));
+                    using (PrintDocument pdoc1 = this.GetPrintSumAbsentDocument(this.absent_summary_list.ToList(), total_page))
+                    {
+                        using (PrintDocument pdoc2 = this.GetPrintSumAbsentDocument(this.absent_summary_list.ToList(), total_page))
+                        {
+                            XPrintPreview xp = new XPrintPreview(pdoc1, pdoc2, total_page);
+                            xp.MdiParent = this.main_form;
+                            xp.Show();
+                        }
+                    }
                 }
 
                 if (p.output == PRINT_OUTPUT.PRINTER)
                 {
-                    //Console.WriteLine(" ==> Printer");
+                    PrintDialog print_dialog = new PrintDialog();
+                    int total_page = XPrintPreview.GetTotalPageCount(this.GetPrintSumAbsentDocument(this.absent_summary_list.ToList()));
+                    print_dialog.Document = this.GetPrintSumAbsentDocument(this.absent_summary_list.ToList(), total_page);
+                    print_dialog.AllowSelection = false;
+                    print_dialog.AllowSomePages = false;
+                    print_dialog.AllowPrintToFile = false;
+                    print_dialog.AllowCurrentPage = false;
+                    print_dialog.UseEXDialog = false;
+                    if (print_dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        print_dialog.Document.Print();
+                    }
                 }
             }
         }
 
-        private PrintDocument GetPrintPersonAbsentDocument(List<AbsentPersonStatVM> absents)
+        private PrintDocument GetPrintPersonAbsentDocument(List<AbsentPersonStatVM> absents, int? total_page =  null)
         {
             PrintDocument pd = new PrintDocument();
-            //PageSetupDialog page_setup = new PageSetupDialog();
-            //page_setup.Document = pd;
-            //page_setup.PageSettings.PaperSize = new PaperSize("A4", 825, 1165);
-            //page_setup.PageSettings.Landscape = true;
-            //page_setup.PageSettings.Margins = new Margins(0, 0, 10, 40);
-
-            pd.DefaultPageSettings.Margins = new Margins(20, 20, 40, 30);
+            pd.DefaultPageSettings.Margins = new Margins(20, 40, 40, 50);
             pd.DefaultPageSettings.Landscape = true;
             int item_count = 0;
             int page_count = 0;
+            DateTime print_time = DateTime.Now;
 
             pd.BeginPrint += delegate(object sender, PrintEventArgs e)
             {
                 page_count = 0;
                 item_count = 0;
+
             };
 
             pd.PrintPage += delegate(object sender, PrintPageEventArgs e)
             {
                 Font f = new Font("tahoma", 8f);
+                Font f_bold = new Font("tahoma", 8f, FontStyle.Bold);
                 Font f_title = new Font("tahoma", 10f, FontStyle.Bold);
                 SolidBrush b = new SolidBrush(Color.Black);
-                SolidBrush bg = new SolidBrush(Color.Lavender);
+                SolidBrush b_red = new SolidBrush(Color.Red);
+                SolidBrush b_blue = new SolidBrush(Color.Blue);
+                SolidBrush b_gray = new SolidBrush(Color.DimGray);
+                SolidBrush b_background = new SolidBrush(Color.Lavender);
+                SolidBrush b_whitesmoke = new SolidBrush(Color.WhiteSmoke);
                 Pen p = new Pen(new SolidBrush(Color.DarkGray));
                 StringFormat sf_left = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center, Trimming = StringTrimming.None, FormatFlags = StringFormatFlags.NoWrap };
                 StringFormat sf_center = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center, Trimming = StringTrimming.None, FormatFlags = StringFormatFlags.NoWrap };
@@ -381,82 +466,353 @@ namespace SN_Net.Subform
                 page_count++;
                 int x = e.MarginBounds.Left;
                 int y = e.MarginBounds.Top;
-                int line_gap = 6;
+                int line_gap = 10;
 
                 Rectangle rect = new Rectangle(e.MarginBounds.Left, y, 350, f_title.Height);
-                e.Graphics.DrawString("สรุปวันลา/ออกพบลูกค้า", f_title, b, rect);
+                e.Graphics.DrawString("รายละเอียดวันลา/ออกพบลูกค้า", f_title, b, rect, sf_left);
 
-                rect = new Rectangle(e.MarginBounds.Right - 50, y, 50, f.Height);
-                e.Graphics.DrawString("Page " + page_count.ToString(), f, b, rect);
+                rect = new Rectangle(e.MarginBounds.Right - 100, y, 100, f.Height);
+                e.Graphics.DrawString("หน้า : " + page_count.ToString() + (total_page.HasValue ? " / " + total_page.ToString() : ""), f, b, rect, sf_right);
                 y += f_title.Height + line_gap;
 
                 rect = new Rectangle(e.MarginBounds.Left, y, 80, f.Height);
-                e.Graphics.DrawString("รหัสพนักงาน", f, b, rect);
+                e.Graphics.DrawString("รหัสพนักงาน", f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 20;
-                e.Graphics.DrawString(":", f, b, rect);
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 100;
-                e.Graphics.DrawString(absents.First().user_name, f, b, rect);
+                e.Graphics.DrawString(absents.First().user_name, f, b, rect, sf_left);
                 y += f.Height + line_gap;
 
                 rect = new Rectangle(e.MarginBounds.Left, y, 80, f.Height);
-                e.Graphics.DrawString("วันที่ จาก", f, b, rect);
+                e.Graphics.DrawString("วันที่ จาก", f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 20;
-                e.Graphics.DrawString(":", f, b, rect);
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 150;
-                e.Graphics.DrawString(this.lblDateFrom.Text, f, b, rect);
+                e.Graphics.DrawString(this.lblDateFrom.Text, f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 30;
-                e.Graphics.DrawString("ถึง", f, b, rect);
+                e.Graphics.DrawString("ถึง", f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 10;
-                e.Graphics.DrawString(":", f, b, rect);
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
                 rect.X += rect.Width + 10;
                 rect.Width = 150;
-                e.Graphics.DrawString(this.lblDateTo.Text, f, b, rect);
+                e.Graphics.DrawString(this.lblDateTo.Text, f, b, rect, sf_left);
+
+                rect = new Rectangle(e.MarginBounds.Right - 250, y, 250, f.Height);
+                e.Graphics.DrawString("(วัน/เวลาที่พิมพ์ : " + print_time.ToString("dd/MM/yy HH:mm:ss", CultureInfo.GetCultureInfo("th-TH")) + ")", f, b, rect, sf_right);
                 y += f.Height + line_gap;
 
-                e.Graphics.FillRectangle(bg, new Rectangle(e.MarginBounds.X, y, e.MarginBounds.Width, f.Height + line_gap));
+                e.Graphics.FillRectangle(b_background, new Rectangle(e.MarginBounds.X, y, e.MarginBounds.Width, f.Height + line_gap));
                 e.Graphics.DrawLine(p, new Point(x, y), new Point(e.MarginBounds.Right, y));
                 
                 Rectangle rect_seq = new Rectangle(e.MarginBounds.X, y, 40, f.Height + line_gap);
                 Rectangle rect_user = new Rectangle(rect_seq.X + rect_seq.Width, y, 80, f.Height + line_gap);
                 Rectangle rect_date = new Rectangle(rect_user.X + rect_user.Width, y, 90, f.Height + line_gap);
+                Rectangle rect_from = new Rectangle(rect_date.X + rect_date.Width, y, 45, f.Height + line_gap);
+                Rectangle rect_to = new Rectangle(rect_from.X + rect_from.Width, y, 45, f.Height + line_gap);
+                Rectangle rect_duration = new Rectangle(rect_to.X + rect_to.Width, y, 120, f.Height + line_gap);
+                Rectangle rect_reason = new Rectangle(rect_duration.X + rect_duration.Width, y, 140, f.Height + line_gap);
+                Rectangle rect_status = new Rectangle(rect_reason.X + rect_reason.Width, y, 90, f.Height + line_gap);
+                Rectangle rect_customer = new Rectangle(rect_status.X + rect_status.Width, y, 250, f.Height + line_gap);
+                Rectangle rect_medcert = new Rectangle(rect_customer.X + rect_customer.Width, y, 100, f.Height + line_gap);
+                Rectangle rect_fine = new Rectangle(rect_medcert.X + rect_medcert.Width, y, e.MarginBounds.Width - (rect_seq.Width + rect_user.Width + rect_date.Width + rect_from.Width + rect_to.Width + rect_duration.Width + rect_reason.Width + rect_status.Width + rect_customer.Width + rect_medcert.Width), f.Height + line_gap);
                 e.Graphics.DrawRectangle(p, rect_seq);
                 e.Graphics.DrawRectangle(p, rect_user);
                 e.Graphics.DrawRectangle(p, rect_date);
+                e.Graphics.DrawRectangle(p, rect_from);
+                e.Graphics.DrawRectangle(p, rect_to);
+                e.Graphics.DrawRectangle(p, rect_duration);
+                e.Graphics.DrawRectangle(p, rect_reason);
+                e.Graphics.DrawRectangle(p, rect_status);
+                e.Graphics.DrawRectangle(p, rect_customer);
+                e.Graphics.DrawRectangle(p, rect_medcert);
+                e.Graphics.DrawRectangle(p, rect_fine);
                 e.Graphics.DrawString("ลำดับ", f, b, rect_seq, sf_center);
                 e.Graphics.DrawString("รหัสพนักงาน", f, b, rect_user, sf_center);
                 e.Graphics.DrawString("วันที่", f, b, rect_date, sf_center);
+                e.Graphics.DrawString("จาก", f, b, rect_from, sf_center);
+                e.Graphics.DrawString("ถึง", f, b, rect_to, sf_center);
+                e.Graphics.DrawString("รวมเวลา", f, b, rect_duration, sf_center);
+                e.Graphics.DrawString("เหตุผล", f, b, rect_reason, sf_center);
+                e.Graphics.DrawString("จาก", f, b, rect_from, sf_center);
+                e.Graphics.DrawString("ถึง", f, b, rect_to, sf_center);
+                e.Graphics.DrawString("รวมเวลา", f, b, rect_duration, sf_center);
+                e.Graphics.DrawString("เหตุผล", f, b, rect_reason, sf_center);
+                e.Graphics.DrawString("สถานะ", f, b, rect_status, sf_center);
+                e.Graphics.DrawString("ชื่อลูกค้า", f, b, rect_customer, sf_center);
+                e.Graphics.DrawString("เอกสาร", f, b, rect_medcert, sf_center);
+                e.Graphics.DrawString("หักค่าคอมฯ", f, b, rect_fine, sf_center);
                 y += f.Height + line_gap;
 
 
                 for (int i = item_count; i < absents.Count; i++)
                 {
-                    rect_seq.Y = y;
-                    rect_user.Y = y;
-                    rect_date.Y = y;
-
-                    e.Graphics.DrawRectangle(p, rect_seq);
-                    e.Graphics.DrawString((++i).ToString(), f, b, rect_seq, sf_right);
-
-                    e.Graphics.DrawRectangle(p, rect_user);
-                    e.Graphics.DrawString(absents[i].user_name, f, b, rect_user, sf_left);
-
-                    e.Graphics.DrawRectangle(p, rect_date);
-                    e.Graphics.DrawString(absents[i].date.ToString("ddd dd/MM/yy", CultureInfo.GetCultureInfo("th-TH")), f, b, rect_date, sf_left);
-                    y += f.Height + line_gap;
-
-                    item_count++;
-
                     if (y > e.MarginBounds.Bottom)
                     {
                         e.HasMorePages = true;
                         return;
                     }
+
+                    rect_seq.Y = y;
+                    rect_user.Y = y;
+                    rect_date.Y = y;
+                    rect_from.Y = y;
+                    rect_to.Y = y;
+                    rect_duration.Y = y;
+                    rect_reason.Y = y;
+                    rect_status.Y = y;
+                    rect_customer.Y = y;
+                    rect_medcert.Y = y;
+                    rect_fine.Y = y;
+
+                    if(i%2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_seq); }
+                    e.Graphics.DrawRectangle(p, rect_seq);
+                    e.Graphics.DrawString((i + 1).ToString(), f, b_gray, rect_seq, sf_right);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_user); }
+                    e.Graphics.DrawRectangle(p, rect_user);
+                    e.Graphics.DrawString(absents[i].user_name, f, b, rect_user, sf_center);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_date); }
+                    e.Graphics.DrawRectangle(p, rect_date);
+                    e.Graphics.DrawString(absents[i].date.ToString("ddd dd/MM/yy", CultureInfo.GetCultureInfo("th-TH")), f, b, rect_date, sf_left);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_from); }
+                    e.Graphics.DrawRectangle(p, rect_from);
+                    e.Graphics.DrawString(absents[i].time_from, f, b, rect_from, sf_center);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_to); }
+                    e.Graphics.DrawRectangle(p, rect_to);
+                    e.Graphics.DrawString(absents[i].time_to, f, b, rect_to, sf_center);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_duration); }
+                    e.Graphics.DrawRectangle(p, rect_duration);
+                    e.Graphics.DrawString(absents[i].duration, f, b, rect_duration, sf_left);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_reason); }
+                    e.Graphics.DrawRectangle(p, rect_reason);
+                    e.Graphics.DrawString(absents[i].reason, f, b, rect_reason, sf_left);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_status); }
+                    e.Graphics.DrawRectangle(p, rect_status);
+                    SolidBrush brush = absents[i].event_calendar.status.Value == (int)CALENDAR_EVENT_STATUS.CANCELED ? b_red : (absents[i].event_calendar.status.Value == (int)CALENDAR_EVENT_STATUS.WAIT ? b_blue : b);
+                    e.Graphics.DrawString(absents[i].status, f, brush, rect_status, sf_left);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_customer); }
+                    e.Graphics.DrawRectangle(p, rect_customer);
+                    e.Graphics.DrawString(absents[i].customer, f, b, rect_customer, sf_left);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_medcert); }
+                    e.Graphics.DrawRectangle(p, rect_medcert);
+                    e.Graphics.DrawString(absents[i].medcert, f, b, rect_medcert, sf_left);
+
+                    if (i % 2 != 0) { e.Graphics.FillRectangle(b_whitesmoke, rect_fine); }
+                    e.Graphics.DrawRectangle(p, rect_fine);
+                    e.Graphics.DrawString(absents[i].fine, f, b, rect_fine, sf_right);
+
+                    y += f.Height + line_gap;
+
+                    item_count++;
+                }
+
+                y += f.Height + line_gap;
+
+                Rectangle rect_bottom1 = new Rectangle(e.MarginBounds.Left, y, 300, f.Height + line_gap);
+                Rectangle rect_bottom2 = new Rectangle(e.MarginBounds.Left, rect_bottom1.Y + f.Height + line_gap, 70, f.Height + line_gap);
+                Rectangle rect_bottom3 = new Rectangle(rect_bottom2.X + rect_bottom2.Width, rect_bottom2.Y, 20, f.Height + line_gap);
+                Rectangle rect_bottom4 = new Rectangle(rect_bottom3.X + rect_bottom3.Width, rect_bottom2.Y, 210, f.Height + line_gap);
+                Rectangle rect_bottom5 = new Rectangle(rect_bottom2.X, rect_bottom4.Y + f.Height + line_gap, 70, f.Height + line_gap);
+                Rectangle rect_bottom6 = new Rectangle(rect_bottom3.X, rect_bottom5.Y, 20, f.Height + line_gap);
+                Rectangle rect_bottom7 = new Rectangle(rect_bottom4.X, rect_bottom5.Y, 210, f.Height + line_gap);
+
+                //Rectangle rect_sum = new Rectangle(rect_ptd.X + rect_ptd.Width + 100, y, 250, f.Height + line_gap);
+
+                if ((y + rect_bottom1.Height + rect_bottom2.Height + rect_bottom5.Height) > e.MarginBounds.Bottom)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+                else
+                {
+                    e.Graphics.DrawString(this.grpPtd.Text, f_bold, b, rect_bottom1, sf_left);
+                    e.Graphics.DrawString("ลางาน", f, b, rect_bottom2, sf_left);
+                    e.Graphics.DrawString(":", f, b, rect_bottom3, sf_center);
+                    e.Graphics.DrawString(this.lblPtdAbsent.Text, f, b, rect_bottom4, sf_left);
+                    e.Graphics.DrawString("ออกพบลูกค้า", f, b, rect_bottom5, sf_left);
+                    e.Graphics.DrawString(":", f, b, rect_bottom6, sf_center);
+                    e.Graphics.DrawString(this.lblPtdCust.Text, f, b, rect_bottom7, sf_left);
+
+                    rect_bottom1.X += rect_bottom1.Width;
+                    rect_bottom2.X += rect_bottom1.Width;
+                    rect_bottom3.X += rect_bottom1.Width;
+                    rect_bottom4.X += rect_bottom1.Width;
+                    rect_bottom5.X += rect_bottom1.Width;
+                    rect_bottom6.X += rect_bottom1.Width;
+                    rect_bottom7.X += rect_bottom1.Width;
+                    
+                    e.Graphics.DrawString(this.grpYear.Text, f_bold, b, rect_bottom1, sf_left);
+                    e.Graphics.DrawString("ลางาน", f, b, rect_bottom2, sf_left);
+                    e.Graphics.DrawString(":", f, b, rect_bottom3, sf_center);
+                    e.Graphics.DrawString(this.lblYearAbsent.Text, f, b, rect_bottom4, sf_left);
+                    e.Graphics.DrawString("ออกพบลูกค้า", f, b, rect_bottom5, sf_left);
+                    e.Graphics.DrawString(":", f, b, rect_bottom6, sf_center);
+                    e.Graphics.DrawString(this.lblYearCust.Text, f, b, rect_bottom7, sf_left);
+
+                }
+
+            };
+
+            return pd;
+        }
+
+        private PrintDocument GetPrintSumAbsentDocument(List<SummaryAbsent> absents, int? total_page = null)
+        {
+            PrintDocument pd = new PrintDocument();
+            pd.DefaultPageSettings.Margins = new Margins(20, 40, 40, 50);
+            pd.DefaultPageSettings.Landscape = false;
+            int item_count = 0;
+            int page_count = 0;
+            DateTime print_time = DateTime.Now;
+
+            pd.BeginPrint += delegate (object sender, PrintEventArgs e)
+            {
+                item_count = 0;
+                page_count = 0;
+            };
+
+            pd.PrintPage += delegate (object sender, PrintPageEventArgs e)
+            {
+                Font f = new Font("tahoma", 8f);
+                Font f_bold = new Font("tahoma", 8f, FontStyle.Bold);
+                Font f_title = new Font("tahoma", 10f, FontStyle.Bold);
+                SolidBrush b = new SolidBrush(Color.Black);
+                SolidBrush b_red = new SolidBrush(Color.Red);
+                SolidBrush b_blue = new SolidBrush(Color.Blue);
+                SolidBrush b_gray = new SolidBrush(Color.DimGray);
+                SolidBrush b_background = new SolidBrush(Color.Lavender);
+                SolidBrush b_whitesmoke = new SolidBrush(Color.WhiteSmoke);
+                Pen p = new Pen(new SolidBrush(Color.DarkGray));
+                StringFormat sf_left = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center, Trimming = StringTrimming.None, FormatFlags = StringFormatFlags.NoWrap };
+                StringFormat sf_center = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center, Trimming = StringTrimming.None, FormatFlags = StringFormatFlags.NoWrap };
+                StringFormat sf_right = new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center, Trimming = StringTrimming.None, FormatFlags = StringFormatFlags.NoWrap };
+
+                page_count++;
+                int x = e.MarginBounds.Left;
+                int y = e.MarginBounds.Top;
+                int line_gap = 10;
+
+                Rectangle rect = new Rectangle(e.MarginBounds.Left, y, 350, f_title.Height);
+                e.Graphics.DrawString("สรุปวันลา (สำหรับคิดค่าคอมฯ)", f_title, b, rect, sf_left);
+
+                rect = new Rectangle(e.MarginBounds.Right - 100, y, 100, f.Height);
+                e.Graphics.DrawString("หน้า : " + page_count.ToString() + (total_page.HasValue ? " / " + total_page.ToString() : ""), f, b, rect, sf_right);
+                y += f_title.Height + line_gap;
+
+                rect = new Rectangle(e.MarginBounds.Left, y, 100, f.Height);
+                e.Graphics.DrawString("รหัสพนักงาน จาก", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 20;
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 150;
+                e.Graphics.DrawString(((users)((XDropdownListItem)this.drYearAbsentUserFrom._SelectedItem).Value).username, f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 30;
+                e.Graphics.DrawString("ถึง", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 10;
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 150;
+                e.Graphics.DrawString(((users)((XDropdownListItem)this.drYearAbsentUserTo._SelectedItem).Value).username, f, b, rect, sf_left);
+                y += f.Height + line_gap;
+
+                rect = new Rectangle(e.MarginBounds.Left, y, 100, f.Height);
+                e.Graphics.DrawString("วันที่ จาก", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 20;
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 150;
+                e.Graphics.DrawString(this.dtYearAbsentFrom.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")), f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 30;
+                e.Graphics.DrawString("ถึง", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 10;
+                e.Graphics.DrawString(":", f, b, rect, sf_left);
+                rect.X += rect.Width + 10;
+                rect.Width = 150;
+                e.Graphics.DrawString(this.dtYearAbsentTo.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH")), f, b, rect, sf_left);
+
+                rect = new Rectangle(e.MarginBounds.Right - 250, y, 250, f.Height);
+                e.Graphics.DrawString("(วัน/เวลาที่พิมพ์ : " + print_time.ToString("dd/MM/yy HH:mm:ss", CultureInfo.GetCultureInfo("th-TH")) + ")", f, b, rect, sf_right);
+                y += f.Height + line_gap;
+
+                e.Graphics.FillRectangle(b_background, new Rectangle(e.MarginBounds.X, y, e.MarginBounds.Width, f.Height + line_gap));
+                e.Graphics.DrawLine(p, new Point(x, y), new Point(e.MarginBounds.Right, y));
+
+                Rectangle rect_seq = new Rectangle(e.MarginBounds.X, y, 40, f.Height + line_gap);
+                Rectangle rect_user = new Rectangle(rect_seq.X + rect_seq.Width, y, 80, f.Height + line_gap);
+                Rectangle rect_name = new Rectangle(rect_user.X + rect_user.Width, y, 110, f.Height + line_gap);
+                Rectangle rect_absent = new Rectangle(rect_name.X + rect_name.Width, y, 200, f.Height + line_gap);
+                Rectangle rect_absent_comm = new Rectangle(rect_absent.X + rect_absent.Width, y, 200, f.Height + line_gap);
+                Rectangle rect_fine = new Rectangle(rect_absent_comm.X + rect_absent_comm.Width, y, e.MarginBounds.Width - (rect_seq.Width + rect_user.Width + rect_name.Width + rect_absent.Width + rect_absent_comm.Width), f.Height + line_gap);
+                e.Graphics.DrawRectangle(p, rect_seq);
+                e.Graphics.DrawRectangle(p, rect_user);
+                e.Graphics.DrawRectangle(p, rect_name);
+                e.Graphics.DrawRectangle(p, rect_absent);
+                e.Graphics.DrawRectangle(p, rect_absent_comm);
+                e.Graphics.DrawRectangle(p, rect_fine);
+                e.Graphics.DrawRectangle(p, rect_fine);
+                e.Graphics.DrawString("ลำดับ", f, b, rect_seq, sf_center);
+                e.Graphics.DrawString("รหัสพนักงาน", f, b, rect_user, sf_center);
+                e.Graphics.DrawString("ชื่อ", f, b, rect_name, sf_center);
+                e.Graphics.DrawString("จำนวนวันลา (จริง)", f, b, rect_absent, sf_center);
+                e.Graphics.DrawString("จำนวนวันลา (คิดค่าคอมฯ)", f, b, rect_absent_comm, sf_center);
+                e.Graphics.DrawString("หักค่าคอมฯ (บาท)", f, b, rect_fine, sf_center);
+                y += f.Height + line_gap;
+
+                for (int i = item_count; i < absents.Count; i++)
+                {
+                    if(y > e.MarginBounds.Bottom)
+                    {
+                        e.HasMorePages = true;
+                        return;
+                    }
+
+                    rect_seq.Y = y;
+                    rect_user.Y = y;
+                    rect_name.Y = y;
+                    rect_absent.Y = y;
+                    rect_absent_comm.Y = y;
+                    rect_fine.Y = y;
+
+                    e.Graphics.DrawRectangle(p, rect_seq);
+                    e.Graphics.DrawString(absents[i].seq.ToString(), f, b_gray, rect_seq, sf_right);
+
+                    e.Graphics.DrawRectangle(p, rect_user);
+                    e.Graphics.DrawString(absents[i].user_name, f, b, rect_user, sf_center);
+
+                    e.Graphics.DrawRectangle(p, rect_name);
+                    e.Graphics.DrawString(absents[i].name, f, b, rect_name, sf_left);
+
+                    e.Graphics.DrawRectangle(p, rect_absent);
+                    e.Graphics.DrawString(absents[i].tot_absent, f, b, rect_absent, sf_center);
+
+                    e.Graphics.DrawRectangle(p, rect_absent_comm);
+                    e.Graphics.DrawString(absents[i].tot_absent_comm, f_bold, b, rect_absent_comm, sf_center);
+
+                    e.Graphics.DrawRectangle(p, rect_fine);
+                    e.Graphics.DrawString((absents[i].fine > 0 ? absents[i].fine.ToString() : ""), f, b, rect_fine, sf_right);
+
+                    y += f.Height + line_gap;
+                    item_count++;
                 }
             };
 
@@ -600,17 +956,33 @@ namespace SN_Net.Subform
         private void btnOKYearAbsent_Click(object sender, EventArgs e)
         {
             this.ShowAbsentSummaryData();
-            this.dtYearAbsentFrom.Focus();
+            //this.dtYearAbsentFrom.Focus();
         }
 
         private void ShowAbsentSummaryData()
         {
+            if(((XDropdownListItem)this.drYearAbsentUserFrom._SelectedItem).Value == null)
+            {
+                this.drYearAbsentUserFrom.Focus();
+                SendKeys.Send("{F6}");
+                return;
+            }
+            if (((XDropdownListItem)this.drYearAbsentUserTo._SelectedItem).Value == null)
+            {
+                this.drYearAbsentUserTo.Focus();
+                SendKeys.Send("{F6}");
+                return;
+            }
+
             using (sn_noteEntities note = DBXNote.DataSet())
             {
+                users user_from = (users)((XDropdownListItem)this.drYearAbsentUserFrom._SelectedItem).Value;
+                users user_to = (users)((XDropdownListItem)this.drYearAbsentUserTo._SelectedItem).Value;
+
                 var all_absent = note.event_calendar
-                                .Where(ev => ev.date.CompareTo(this.dtYearAbsentFrom.Value.Date) >= 0 &&
-                                ev.date.CompareTo(this.dtYearAbsentTo.Value.Date) <= 0 && ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED &&
-                                ev.event_type == CALENDAR_EVENT_TYPE.ABSENT).ToList();
+                                .Where(ev => ev.date.CompareTo(this.dtYearAbsentFrom.Value.Date) >= 0 && ev.date.CompareTo(this.dtYearAbsentTo.Value.Date) <= 0 &&
+                                ev.users_name.CompareTo(user_from.username) >= 0 && ev.users_name.CompareTo(user_to.username) <= 0 &&
+                                ev.status != (int)CALENDAR_EVENT_STATUS.CANCELED && ev.event_type == CALENDAR_EVENT_TYPE.ABSENT).ToList();
                 int seq = 0;
                 var grouped_absent = all_absent.OrderBy(a => a.users_name).GroupBy(a => a.users_name).Select(a => new SummaryAbsent {
                                     seq = ++seq,
@@ -644,6 +1016,13 @@ namespace SN_Net.Subform
                 });
                 this.absent_summary_list = new BindingList<SummaryAbsent>(grouped_absent);
                 this.dgvSum.DataSource = this.absent_summary_list;
+
+                this.dtYearAbsentFrom.Enabled = false;
+                this.dtYearAbsentTo.Enabled = false;
+                this.drYearAbsentUserFrom._ReadOnly = true;
+                this.drYearAbsentUserTo._ReadOnly = true;
+                this.btnEditScopeYearAbsent.Enabled = true;
+                this.btnOKYearAbsent.Enabled = false;
             }
         }
 
@@ -844,7 +1223,7 @@ namespace SN_Net.Subform
                     SendKeys.Send("{TAB}");
                     return true;
                 }
-                else if (this.tabControl1.SelectedTab == this.tabPage2 && (this.dtYearAbsentFrom.Focused || this.dtYearAbsentTo.Focused))
+                else if (this.tabControl1.SelectedTab == this.tabPage2 && (this.drYearAbsentUserFrom._Focused || this.drYearAbsentUserTo._Focused || this.dtYearAbsentFrom.Focused || this.dtYearAbsentTo.Focused))
                 {
                     SendKeys.Send("{TAB}");
                     return true;
@@ -861,6 +1240,23 @@ namespace SN_Net.Subform
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void btnEditScopeYearAbsent_Click(object sender, EventArgs e)
+        {
+            this.dtYearAbsentFrom.Enabled = true;
+            this.dtYearAbsentTo.Enabled = true;
+            this.drYearAbsentUserFrom._ReadOnly = false;
+            this.drYearAbsentUserTo._ReadOnly = false;
+            ((Button)sender).Enabled = false;
+            this.btnOKYearAbsent.Enabled = true;
+
+            this.drYearAbsentUserFrom.Focus();
+        }
+
+        private void btnPrint_ButtonClick(object sender, EventArgs e)
+        {
+            this.btnPrint1.PerformClick();
         }
     }
 

@@ -597,7 +597,7 @@ namespace SN_Net
 
         private void mnuAbsentReport_Click(object sender, EventArgs e)
         {
-            FormAbsentReport abs = new FormAbsentReport();
+            FormAbsentReport abs = new FormAbsentReport(this);
             abs.MdiParent = this;
             abs.Show();
         }

@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbsentReport));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle96 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle100 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle101 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle104 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle102 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle103 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle92 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle93 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle94 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle95 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle97 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle98 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle99 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnPrint = new System.Windows.Forms.ToolStripSplitButton();
             this.btnPrint1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,54 +71,36 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnNoneAbsent = new System.Windows.Forms.Button();
-            this.btnAllAbsent = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.btnNoneCust = new System.Windows.Forms.Button();
-            this.label22 = new System.Windows.Forms.Label();
-            this.btnAllCust = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.inlineFine = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dtYearAbsentTo = new System.Windows.Forms.DateTimePicker();
-            this.dtYearAbsentFrom = new System.Windows.Forms.DateTimePicker();
-            this.btnOKYearAbsent = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnEditItem = new System.Windows.Forms.Button();
-            this.btnSaveItem = new System.Windows.Forms.Button();
-            this.btnStopItem = new System.Windows.Forms.Button();
-            this.inlineMedcert = new CC.XDropdownList();
-            this.inlineCustomer = new CC.XTextEdit();
-            this.inlineStatus = new CC.XDropdownList();
-            this.inlineTo = new CC.XTimePicker();
-            this.inlineFrom = new CC.XTimePicker();
-            this.dgvDetail = new CC.XDatagrid();
-            this.dgvSum = new CC.XDatagrid();
-            this.col_c4_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_c4_user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_c4_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_c4_tot_absent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_c4_tot_absent_comm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_c4_fine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_c4_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvAbsent = new CC.XDatagrid();
             this.col_c1_istab = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c1_enabled = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c1_selected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.col_c1_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c1_stat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnNoneAbsent = new System.Windows.Forms.Button();
+            this.btnAllAbsent = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
             this.dgvCust = new CC.XDatagrid();
             this.col_c2_istab = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c2_enabled = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c2_selected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.col_c2_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c2_stat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnNoneCust = new System.Windows.Forms.Button();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnAllCust = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.inlineFine = new System.Windows.Forms.NumericUpDown();
+            this.inlineMedcert = new CC.XDropdownList();
+            this.inlineCustomer = new CC.XTextEdit();
+            this.inlineStatus = new CC.XDropdownList();
+            this.inlineTo = new CC.XTimePicker();
+            this.inlineFrom = new CC.XTimePicker();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dgvDetail = new CC.XDatagrid();
             this.col_c3_event_calendar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c3_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c3_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -131,6 +113,29 @@
             this.col_c3_customer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c3_medcert = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c3_fine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnStopItem = new System.Windows.Forms.Button();
+            this.btnSaveItem = new System.Windows.Forms.Button();
+            this.btnEditItem = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dtYearAbsentTo = new System.Windows.Forms.DateTimePicker();
+            this.dtYearAbsentFrom = new System.Windows.Forms.DateTimePicker();
+            this.btnOKYearAbsent = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dgvSum = new CC.XDatagrid();
+            this.col_c4_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_c4_user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_c4_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_c4_tot_absent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_c4_tot_absent_comm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_c4_fine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_c4_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.drYearAbsentUserFrom = new CC.XDropdownList();
+            this.drYearAbsentUserTo = new CC.XDropdownList();
+            this.btnEditScopeYearAbsent = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grpYear.SuspendLayout();
@@ -139,15 +144,15 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCust)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inlineFine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSum)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCust)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -177,6 +182,7 @@
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(48, 37);
             this.btnPrint.Text = "พิมพ์รายละเอียดวันลา / ออกพบลูกค้า <Alt + P>";
+            this.btnPrint.ButtonClick += new System.EventHandler(this.btnPrint_ButtonClick);
             // 
             // btnPrint1
             // 
@@ -200,7 +206,7 @@
             this.btnChangeScope.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnChangeScope.Name = "btnChangeScope";
             this.btnChangeScope.Size = new System.Drawing.Size(36, 37);
-            this.btnChangeScope.Text = "toolStripButton1";
+            this.btnChangeScope.Text = "เปลี่ยนขอบเขตของรายการ";
             this.btnChangeScope.Click += new System.EventHandler(this.btnChangeScope_Click);
             // 
             // panel1
@@ -488,6 +494,101 @@
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 6;
             // 
+            // dgvAbsent
+            // 
+            this.dgvAbsent.AllowSortByColumnHeaderClicked = false;
+            this.dgvAbsent.AllowUserToAddRows = false;
+            this.dgvAbsent.AllowUserToDeleteRows = false;
+            this.dgvAbsent.AllowUserToResizeColumns = false;
+            this.dgvAbsent.AllowUserToResizeRows = false;
+            this.dgvAbsent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAbsent.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvAbsent.ColumnHeadersHeight = 28;
+            this.dgvAbsent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvAbsent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_c1_istab,
+            this.col_c1_enabled,
+            this.col_c1_selected,
+            this.col_c1_description,
+            this.col_c1_stat});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAbsent.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvAbsent.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvAbsent.EnableHeadersVisualStyles = false;
+            this.dgvAbsent.FillEmptyRow = false;
+            this.dgvAbsent.FocusedRowBorderRedLine = true;
+            this.dgvAbsent.Location = new System.Drawing.Point(4, 27);
+            this.dgvAbsent.MultiSelect = false;
+            this.dgvAbsent.Name = "dgvAbsent";
+            this.dgvAbsent.ReadOnly = true;
+            this.dgvAbsent.RowHeadersVisible = false;
+            this.dgvAbsent.RowTemplate.Height = 26;
+            this.dgvAbsent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAbsent.Size = new System.Drawing.Size(314, 207);
+            this.dgvAbsent.StandardTab = true;
+            this.dgvAbsent.TabIndex = 2;
+            this.dgvAbsent.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAbsent_CellMouseClick);
+            this.dgvAbsent.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvAbsent_CellPainting);
+            // 
+            // col_c1_istab
+            // 
+            this.col_c1_istab.DataPropertyName = "istab";
+            this.col_c1_istab.HeaderText = "Istab";
+            this.col_c1_istab.Name = "col_c1_istab";
+            this.col_c1_istab.ReadOnly = true;
+            this.col_c1_istab.Visible = false;
+            // 
+            // col_c1_enabled
+            // 
+            this.col_c1_enabled.DataPropertyName = "enabled";
+            this.col_c1_enabled.HeaderText = "Enabled";
+            this.col_c1_enabled.Name = "col_c1_enabled";
+            this.col_c1_enabled.ReadOnly = true;
+            this.col_c1_enabled.Visible = false;
+            // 
+            // col_c1_selected
+            // 
+            this.col_c1_selected.DataPropertyName = "selected";
+            this.col_c1_selected.HeaderText = "";
+            this.col_c1_selected.MinimumWidth = 30;
+            this.col_c1_selected.Name = "col_c1_selected";
+            this.col_c1_selected.ReadOnly = true;
+            this.col_c1_selected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_c1_selected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_c1_selected.Width = 30;
+            // 
+            // col_c1_description
+            // 
+            this.col_c1_description.DataPropertyName = "description";
+            this.col_c1_description.HeaderText = "เหตุผล";
+            this.col_c1_description.MinimumWidth = 130;
+            this.col_c1_description.Name = "col_c1_description";
+            this.col_c1_description.ReadOnly = true;
+            this.col_c1_description.Width = 130;
+            // 
+            // col_c1_stat
+            // 
+            this.col_c1_stat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_c1_stat.DataPropertyName = "stat";
+            this.col_c1_stat.HeaderText = "จำนวนวัน";
+            this.col_c1_stat.Name = "col_c1_stat";
+            this.col_c1_stat.ReadOnly = true;
+            // 
             // btnNoneAbsent
             // 
             this.btnNoneAbsent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -521,6 +622,101 @@
             this.label21.Size = new System.Drawing.Size(46, 16);
             this.label21.TabIndex = 0;
             this.label21.Text = "ลางาน";
+            // 
+            // dgvCust
+            // 
+            this.dgvCust.AllowSortByColumnHeaderClicked = false;
+            this.dgvCust.AllowUserToAddRows = false;
+            this.dgvCust.AllowUserToDeleteRows = false;
+            this.dgvCust.AllowUserToResizeColumns = false;
+            this.dgvCust.AllowUserToResizeRows = false;
+            this.dgvCust.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCust.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCust.ColumnHeadersHeight = 28;
+            this.dgvCust.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvCust.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_c2_istab,
+            this.col_c2_enabled,
+            this.col_c2_selected,
+            this.col_c2_description,
+            this.col_c2_stat});
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCust.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCust.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvCust.EnableHeadersVisualStyles = false;
+            this.dgvCust.FillEmptyRow = false;
+            this.dgvCust.FocusedRowBorderRedLine = true;
+            this.dgvCust.Location = new System.Drawing.Point(3, 27);
+            this.dgvCust.MultiSelect = false;
+            this.dgvCust.Name = "dgvCust";
+            this.dgvCust.ReadOnly = true;
+            this.dgvCust.RowHeadersVisible = false;
+            this.dgvCust.RowTemplate.Height = 26;
+            this.dgvCust.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCust.Size = new System.Drawing.Size(314, 212);
+            this.dgvCust.StandardTab = true;
+            this.dgvCust.TabIndex = 2;
+            this.dgvCust.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCust_CellMouseClick);
+            this.dgvCust.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvCust_CellPainting);
+            // 
+            // col_c2_istab
+            // 
+            this.col_c2_istab.DataPropertyName = "istab";
+            this.col_c2_istab.HeaderText = "Istab";
+            this.col_c2_istab.Name = "col_c2_istab";
+            this.col_c2_istab.ReadOnly = true;
+            this.col_c2_istab.Visible = false;
+            // 
+            // col_c2_enabled
+            // 
+            this.col_c2_enabled.DataPropertyName = "enabled";
+            this.col_c2_enabled.HeaderText = "Enabled";
+            this.col_c2_enabled.Name = "col_c2_enabled";
+            this.col_c2_enabled.ReadOnly = true;
+            this.col_c2_enabled.Visible = false;
+            // 
+            // col_c2_selected
+            // 
+            this.col_c2_selected.DataPropertyName = "selected";
+            this.col_c2_selected.HeaderText = "";
+            this.col_c2_selected.MinimumWidth = 30;
+            this.col_c2_selected.Name = "col_c2_selected";
+            this.col_c2_selected.ReadOnly = true;
+            this.col_c2_selected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_c2_selected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_c2_selected.Width = 30;
+            // 
+            // col_c2_description
+            // 
+            this.col_c2_description.DataPropertyName = "description";
+            this.col_c2_description.HeaderText = "เหตุผล";
+            this.col_c2_description.MinimumWidth = 130;
+            this.col_c2_description.Name = "col_c2_description";
+            this.col_c2_description.ReadOnly = true;
+            this.col_c2_description.Width = 130;
+            // 
+            // col_c2_stat
+            // 
+            this.col_c2_stat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_c2_stat.DataPropertyName = "stat";
+            this.col_c2_stat.HeaderText = "จำนวนวัน";
+            this.col_c2_stat.Name = "col_c2_stat";
+            this.col_c2_stat.ReadOnly = true;
             // 
             // btnNoneCust
             // 
@@ -609,146 +805,6 @@
             this.inlineFine.ValueChanged += new System.EventHandler(this.inlineFine_ValueChanged);
             this.inlineFine.KeyUp += new System.Windows.Forms.KeyEventHandler(this.inlineFine_KeyUp);
             // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.Color.Beige;
-            this.label17.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label17.Location = new System.Drawing.Point(137, 426);
-            this.label17.Name = "label17";
-            this.label17.Padding = new System.Windows.Forms.Padding(10, 1, 10, 1);
-            this.label17.Size = new System.Drawing.Size(71, 15);
-            this.label17.TabIndex = 1;
-            this.label17.Text = "Saturday";
-            // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.MistyRose;
-            this.label12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label12.Location = new System.Drawing.Point(60, 426);
-            this.label12.Name = "label12";
-            this.label12.Padding = new System.Windows.Forms.Padding(10, 1, 10, 1);
-            this.label12.Size = new System.Drawing.Size(71, 15);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "Canceled";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Lavender;
-            this.label10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label10.Location = new System.Drawing.Point(5, 426);
-            this.label10.Name = "label10";
-            this.label10.Padding = new System.Windows.Forms.Padding(10, 1, 10, 1);
-            this.label10.Size = new System.Drawing.Size(49, 15);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Wait";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.dtYearAbsentTo);
-            this.tabPage2.Controls.Add(this.dtYearAbsentFrom);
-            this.tabPage2.Controls.Add(this.btnOKYearAbsent);
-            this.tabPage2.Controls.Add(this.panel2);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(926, 453);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "สรุปวันลารายบุคคล <F7>";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // dtYearAbsentTo
-            // 
-            this.dtYearAbsentTo.Location = new System.Drawing.Point(262, 14);
-            this.dtYearAbsentTo.Name = "dtYearAbsentTo";
-            this.dtYearAbsentTo.Size = new System.Drawing.Size(166, 23);
-            this.dtYearAbsentTo.TabIndex = 7;
-            // 
-            // dtYearAbsentFrom
-            // 
-            this.dtYearAbsentFrom.Location = new System.Drawing.Point(73, 14);
-            this.dtYearAbsentFrom.Name = "dtYearAbsentFrom";
-            this.dtYearAbsentFrom.Size = new System.Drawing.Size(166, 23);
-            this.dtYearAbsentFrom.TabIndex = 6;
-            // 
-            // btnOKYearAbsent
-            // 
-            this.btnOKYearAbsent.Location = new System.Drawing.Point(432, 13);
-            this.btnOKYearAbsent.Name = "btnOKYearAbsent";
-            this.btnOKYearAbsent.Size = new System.Drawing.Size(75, 25);
-            this.btnOKYearAbsent.TabIndex = 8;
-            this.btnOKYearAbsent.Text = "ตกลง";
-            this.btnOKYearAbsent.UseVisualStyleBackColor = true;
-            this.btnOKYearAbsent.Click += new System.EventHandler(this.btnOKYearAbsent_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.dgvSum);
-            this.panel2.Location = new System.Drawing.Point(3, 50);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(920, 399);
-            this.panel2.TabIndex = 2;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(245, 17);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(13, 16);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "-";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label9.Location = new System.Drawing.Point(18, 17);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(51, 16);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "ช่วงวันที่";
-            // 
-            // btnEditItem
-            // 
-            this.btnEditItem.Location = new System.Drawing.Point(8, 7);
-            this.btnEditItem.Name = "btnEditItem";
-            this.btnEditItem.Size = new System.Drawing.Size(56, 23);
-            this.btnEditItem.TabIndex = 15;
-            this.btnEditItem.Text = "Edit";
-            this.btnEditItem.UseVisualStyleBackColor = true;
-            this.btnEditItem.Click += new System.EventHandler(this.btnEditItem_Click);
-            // 
-            // btnSaveItem
-            // 
-            this.btnSaveItem.Location = new System.Drawing.Point(8, 36);
-            this.btnSaveItem.Name = "btnSaveItem";
-            this.btnSaveItem.Size = new System.Drawing.Size(56, 23);
-            this.btnSaveItem.TabIndex = 15;
-            this.btnSaveItem.Text = "Save";
-            this.btnSaveItem.UseVisualStyleBackColor = true;
-            this.btnSaveItem.Click += new System.EventHandler(this.btnSaveItem_Click);
-            // 
-            // btnStopItem
-            // 
-            this.btnStopItem.Location = new System.Drawing.Point(8, 65);
-            this.btnStopItem.Name = "btnStopItem";
-            this.btnStopItem.Size = new System.Drawing.Size(56, 23);
-            this.btnStopItem.TabIndex = 15;
-            this.btnStopItem.Text = "Stop";
-            this.btnStopItem.UseVisualStyleBackColor = true;
-            this.btnStopItem.Click += new System.EventHandler(this.btnStopItem_Click);
-            // 
             // inlineMedcert
             // 
             this.inlineMedcert._DroppedDown = false;
@@ -823,6 +879,45 @@
             this.inlineFrom.TabIndex = 9;
             this.inlineFrom.ValueChanged += new System.EventHandler(this.inlineFrom_ValueChanged);
             // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.Beige;
+            this.label17.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label17.Location = new System.Drawing.Point(137, 426);
+            this.label17.Name = "label17";
+            this.label17.Padding = new System.Windows.Forms.Padding(10, 1, 10, 1);
+            this.label17.Size = new System.Drawing.Size(71, 15);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "Saturday";
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.MistyRose;
+            this.label12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label12.Location = new System.Drawing.Point(60, 426);
+            this.label12.Name = "label12";
+            this.label12.Padding = new System.Windows.Forms.Padding(10, 1, 10, 1);
+            this.label12.Size = new System.Drawing.Size(71, 15);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Canceled";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Lavender;
+            this.label10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label10.Location = new System.Drawing.Point(5, 426);
+            this.label10.Name = "label10";
+            this.label10.Padding = new System.Windows.Forms.Padding(10, 1, 10, 1);
+            this.label10.Size = new System.Drawing.Size(49, 15);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Wait";
+            // 
             // dgvDetail
             // 
             this.dgvDetail.AllowSortByColumnHeaderClicked = false;
@@ -833,14 +928,14 @@
             this.dgvDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle96.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle96.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle96.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle96.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle96.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle96.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle96.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle96;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvDetail.ColumnHeadersHeight = 28;
             this.dgvDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -856,14 +951,14 @@
             this.col_c3_customer,
             this.col_c3_medcert,
             this.col_c3_fine});
-            dataGridViewCellStyle100.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle100.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle100.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle100.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle100.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle100.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle100.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDetail.DefaultCellStyle = dataGridViewCellStyle100;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvDetail.DefaultCellStyle = dataGridViewCellStyle9;
             this.dgvDetail.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvDetail.EnableHeadersVisualStyles = false;
             this.dgvDetail.FillEmptyRow = false;
@@ -882,315 +977,6 @@
             this.dgvDetail.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvDetail_CellPainting);
             this.dgvDetail.Resize += new System.EventHandler(this.dgvDetail_Resize);
             // 
-            // dgvSum
-            // 
-            this.dgvSum.AllowSortByColumnHeaderClicked = false;
-            this.dgvSum.AllowUserToAddRows = false;
-            this.dgvSum.AllowUserToDeleteRows = false;
-            this.dgvSum.AllowUserToResizeColumns = false;
-            this.dgvSum.AllowUserToResizeRows = false;
-            dataGridViewCellStyle101.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle101.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle101.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle101.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle101.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle101.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle101.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSum.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle101;
-            this.dgvSum.ColumnHeadersHeight = 28;
-            this.dgvSum.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvSum.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.col_c4_seq,
-            this.col_c4_user_name,
-            this.col_c4_name,
-            this.col_c4_tot_absent,
-            this.col_c4_tot_absent_comm,
-            this.col_c4_fine,
-            this.col_c4_remark});
-            dataGridViewCellStyle104.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle104.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle104.Font = new System.Drawing.Font("Tahoma", 9.75F);
-            dataGridViewCellStyle104.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle104.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle104.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle104.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSum.DefaultCellStyle = dataGridViewCellStyle104;
-            this.dgvSum.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSum.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvSum.EnableHeadersVisualStyles = false;
-            this.dgvSum.FillEmptyRow = false;
-            this.dgvSum.FocusedRowBorderRedLine = true;
-            this.dgvSum.Location = new System.Drawing.Point(0, 0);
-            this.dgvSum.MultiSelect = false;
-            this.dgvSum.Name = "dgvSum";
-            this.dgvSum.ReadOnly = true;
-            this.dgvSum.RowHeadersVisible = false;
-            this.dgvSum.RowTemplate.Height = 26;
-            this.dgvSum.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSum.Size = new System.Drawing.Size(920, 399);
-            this.dgvSum.StandardTab = true;
-            this.dgvSum.TabIndex = 1;
-            // 
-            // col_c4_seq
-            // 
-            this.col_c4_seq.DataPropertyName = "seq";
-            dataGridViewCellStyle102.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle102.ForeColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle102.SelectionForeColor = System.Drawing.Color.Gray;
-            this.col_c4_seq.DefaultCellStyle = dataGridViewCellStyle102;
-            this.col_c4_seq.HeaderText = "ลำดับ";
-            this.col_c4_seq.MinimumWidth = 40;
-            this.col_c4_seq.Name = "col_c4_seq";
-            this.col_c4_seq.ReadOnly = true;
-            this.col_c4_seq.Width = 40;
-            // 
-            // col_c4_user_name
-            // 
-            this.col_c4_user_name.DataPropertyName = "user_name";
-            this.col_c4_user_name.HeaderText = "รหัสพนักงาน";
-            this.col_c4_user_name.MinimumWidth = 120;
-            this.col_c4_user_name.Name = "col_c4_user_name";
-            this.col_c4_user_name.ReadOnly = true;
-            this.col_c4_user_name.Width = 120;
-            // 
-            // col_c4_name
-            // 
-            this.col_c4_name.DataPropertyName = "name";
-            this.col_c4_name.HeaderText = "ชื่อ";
-            this.col_c4_name.MinimumWidth = 130;
-            this.col_c4_name.Name = "col_c4_name";
-            this.col_c4_name.ReadOnly = true;
-            this.col_c4_name.Width = 130;
-            // 
-            // col_c4_tot_absent
-            // 
-            this.col_c4_tot_absent.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_c4_tot_absent.DataPropertyName = "tot_absent";
-            this.col_c4_tot_absent.HeaderText = "จำนวนวันลา(จริง)";
-            this.col_c4_tot_absent.MinimumWidth = 170;
-            this.col_c4_tot_absent.Name = "col_c4_tot_absent";
-            this.col_c4_tot_absent.ReadOnly = true;
-            // 
-            // col_c4_tot_absent_comm
-            // 
-            this.col_c4_tot_absent_comm.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_c4_tot_absent_comm.DataPropertyName = "tot_absent_comm";
-            this.col_c4_tot_absent_comm.HeaderText = "จำนวนวันลา(คิดค่าคอมฯ)";
-            this.col_c4_tot_absent_comm.MinimumWidth = 170;
-            this.col_c4_tot_absent_comm.Name = "col_c4_tot_absent_comm";
-            this.col_c4_tot_absent_comm.ReadOnly = true;
-            // 
-            // col_c4_fine
-            // 
-            this.col_c4_fine.DataPropertyName = "fine";
-            dataGridViewCellStyle103.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle103.Format = "N2";
-            dataGridViewCellStyle103.NullValue = null;
-            this.col_c4_fine.DefaultCellStyle = dataGridViewCellStyle103;
-            this.col_c4_fine.HeaderText = "หักค่าคอมฯ";
-            this.col_c4_fine.MinimumWidth = 100;
-            this.col_c4_fine.Name = "col_c4_fine";
-            this.col_c4_fine.ReadOnly = true;
-            // 
-            // col_c4_remark
-            // 
-            this.col_c4_remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_c4_remark.DataPropertyName = "remark";
-            this.col_c4_remark.HeaderText = "หมายเหตุ";
-            this.col_c4_remark.Name = "col_c4_remark";
-            this.col_c4_remark.ReadOnly = true;
-            this.col_c4_remark.Visible = false;
-            // 
-            // dgvAbsent
-            // 
-            this.dgvAbsent.AllowSortByColumnHeaderClicked = false;
-            this.dgvAbsent.AllowUserToAddRows = false;
-            this.dgvAbsent.AllowUserToDeleteRows = false;
-            this.dgvAbsent.AllowUserToResizeColumns = false;
-            this.dgvAbsent.AllowUserToResizeRows = false;
-            this.dgvAbsent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle92.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle92.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle92.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle92.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle92.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle92.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle92.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAbsent.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle92;
-            this.dgvAbsent.ColumnHeadersHeight = 28;
-            this.dgvAbsent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvAbsent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.col_c1_istab,
-            this.col_c1_enabled,
-            this.col_c1_selected,
-            this.col_c1_description,
-            this.col_c1_stat});
-            dataGridViewCellStyle93.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle93.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle93.Font = new System.Drawing.Font("Tahoma", 9.75F);
-            dataGridViewCellStyle93.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle93.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle93.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle93.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvAbsent.DefaultCellStyle = dataGridViewCellStyle93;
-            this.dgvAbsent.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvAbsent.EnableHeadersVisualStyles = false;
-            this.dgvAbsent.FillEmptyRow = false;
-            this.dgvAbsent.FocusedRowBorderRedLine = true;
-            this.dgvAbsent.Location = new System.Drawing.Point(4, 27);
-            this.dgvAbsent.MultiSelect = false;
-            this.dgvAbsent.Name = "dgvAbsent";
-            this.dgvAbsent.ReadOnly = true;
-            this.dgvAbsent.RowHeadersVisible = false;
-            this.dgvAbsent.RowTemplate.Height = 26;
-            this.dgvAbsent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAbsent.Size = new System.Drawing.Size(314, 207);
-            this.dgvAbsent.StandardTab = true;
-            this.dgvAbsent.TabIndex = 2;
-            this.dgvAbsent.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAbsent_CellMouseClick);
-            this.dgvAbsent.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvAbsent_CellPainting);
-            // 
-            // col_c1_istab
-            // 
-            this.col_c1_istab.DataPropertyName = "istab";
-            this.col_c1_istab.HeaderText = "Istab";
-            this.col_c1_istab.Name = "col_c1_istab";
-            this.col_c1_istab.ReadOnly = true;
-            this.col_c1_istab.Visible = false;
-            // 
-            // col_c1_enabled
-            // 
-            this.col_c1_enabled.DataPropertyName = "enabled";
-            this.col_c1_enabled.HeaderText = "Enabled";
-            this.col_c1_enabled.Name = "col_c1_enabled";
-            this.col_c1_enabled.ReadOnly = true;
-            this.col_c1_enabled.Visible = false;
-            // 
-            // col_c1_selected
-            // 
-            this.col_c1_selected.DataPropertyName = "selected";
-            this.col_c1_selected.HeaderText = "";
-            this.col_c1_selected.MinimumWidth = 30;
-            this.col_c1_selected.Name = "col_c1_selected";
-            this.col_c1_selected.ReadOnly = true;
-            this.col_c1_selected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_c1_selected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.col_c1_selected.Width = 30;
-            // 
-            // col_c1_description
-            // 
-            this.col_c1_description.DataPropertyName = "description";
-            this.col_c1_description.HeaderText = "เหตุผล";
-            this.col_c1_description.MinimumWidth = 130;
-            this.col_c1_description.Name = "col_c1_description";
-            this.col_c1_description.ReadOnly = true;
-            this.col_c1_description.Width = 130;
-            // 
-            // col_c1_stat
-            // 
-            this.col_c1_stat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_c1_stat.DataPropertyName = "stat";
-            this.col_c1_stat.HeaderText = "จำนวนวัน";
-            this.col_c1_stat.Name = "col_c1_stat";
-            this.col_c1_stat.ReadOnly = true;
-            // 
-            // dgvCust
-            // 
-            this.dgvCust.AllowSortByColumnHeaderClicked = false;
-            this.dgvCust.AllowUserToAddRows = false;
-            this.dgvCust.AllowUserToDeleteRows = false;
-            this.dgvCust.AllowUserToResizeColumns = false;
-            this.dgvCust.AllowUserToResizeRows = false;
-            this.dgvCust.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle94.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle94.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
-            dataGridViewCellStyle94.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle94.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle94.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle94.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle94.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCust.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle94;
-            this.dgvCust.ColumnHeadersHeight = 28;
-            this.dgvCust.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvCust.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.col_c2_istab,
-            this.col_c2_enabled,
-            this.col_c2_selected,
-            this.col_c2_description,
-            this.col_c2_stat});
-            dataGridViewCellStyle95.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle95.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle95.Font = new System.Drawing.Font("Tahoma", 9.75F);
-            dataGridViewCellStyle95.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle95.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle95.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle95.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCust.DefaultCellStyle = dataGridViewCellStyle95;
-            this.dgvCust.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvCust.EnableHeadersVisualStyles = false;
-            this.dgvCust.FillEmptyRow = false;
-            this.dgvCust.FocusedRowBorderRedLine = true;
-            this.dgvCust.Location = new System.Drawing.Point(3, 27);
-            this.dgvCust.MultiSelect = false;
-            this.dgvCust.Name = "dgvCust";
-            this.dgvCust.ReadOnly = true;
-            this.dgvCust.RowHeadersVisible = false;
-            this.dgvCust.RowTemplate.Height = 26;
-            this.dgvCust.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCust.Size = new System.Drawing.Size(314, 212);
-            this.dgvCust.StandardTab = true;
-            this.dgvCust.TabIndex = 2;
-            this.dgvCust.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCust_CellMouseClick);
-            this.dgvCust.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvCust_CellPainting);
-            // 
-            // col_c2_istab
-            // 
-            this.col_c2_istab.DataPropertyName = "istab";
-            this.col_c2_istab.HeaderText = "Istab";
-            this.col_c2_istab.Name = "col_c2_istab";
-            this.col_c2_istab.ReadOnly = true;
-            this.col_c2_istab.Visible = false;
-            // 
-            // col_c2_enabled
-            // 
-            this.col_c2_enabled.DataPropertyName = "enabled";
-            this.col_c2_enabled.HeaderText = "Enabled";
-            this.col_c2_enabled.Name = "col_c2_enabled";
-            this.col_c2_enabled.ReadOnly = true;
-            this.col_c2_enabled.Visible = false;
-            // 
-            // col_c2_selected
-            // 
-            this.col_c2_selected.DataPropertyName = "selected";
-            this.col_c2_selected.HeaderText = "";
-            this.col_c2_selected.MinimumWidth = 30;
-            this.col_c2_selected.Name = "col_c2_selected";
-            this.col_c2_selected.ReadOnly = true;
-            this.col_c2_selected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_c2_selected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.col_c2_selected.Width = 30;
-            // 
-            // col_c2_description
-            // 
-            this.col_c2_description.DataPropertyName = "description";
-            this.col_c2_description.HeaderText = "เหตุผล";
-            this.col_c2_description.MinimumWidth = 130;
-            this.col_c2_description.Name = "col_c2_description";
-            this.col_c2_description.ReadOnly = true;
-            this.col_c2_description.Width = 130;
-            // 
-            // col_c2_stat
-            // 
-            this.col_c2_stat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_c2_stat.DataPropertyName = "stat";
-            this.col_c2_stat.HeaderText = "จำนวนวัน";
-            this.col_c2_stat.Name = "col_c2_stat";
-            this.col_c2_stat.ReadOnly = true;
-            // 
             // col_c3_event_calendar
             // 
             this.col_c3_event_calendar.DataPropertyName = "event_calendar";
@@ -1202,10 +988,10 @@
             // col_c3_seq
             // 
             this.col_c3_seq.DataPropertyName = "seq";
-            dataGridViewCellStyle97.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle97.ForeColor = System.Drawing.Color.Gray;
-            dataGridViewCellStyle97.SelectionForeColor = System.Drawing.Color.Gray;
-            this.col_c3_seq.DefaultCellStyle = dataGridViewCellStyle97;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Gray;
+            this.col_c3_seq.DefaultCellStyle = dataGridViewCellStyle6;
             this.col_c3_seq.HeaderText = "ลำดับ";
             this.col_c3_seq.MinimumWidth = 40;
             this.col_c3_seq.Name = "col_c3_seq";
@@ -1215,8 +1001,8 @@
             // col_c3_date
             // 
             this.col_c3_date.DataPropertyName = "date";
-            dataGridViewCellStyle98.Format = "ddd  dd/MM/yyyy";
-            this.col_c3_date.DefaultCellStyle = dataGridViewCellStyle98;
+            dataGridViewCellStyle7.Format = "ddd  dd/MM/yyyy";
+            this.col_c3_date.DefaultCellStyle = dataGridViewCellStyle7;
             this.col_c3_date.HeaderText = "วันที่";
             this.col_c3_date.MinimumWidth = 110;
             this.col_c3_date.Name = "col_c3_date";
@@ -1297,14 +1083,305 @@
             // col_c3_fine
             // 
             this.col_c3_fine.DataPropertyName = "fine";
-            dataGridViewCellStyle99.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle99.Format = "N0";
-            dataGridViewCellStyle99.NullValue = null;
-            this.col_c3_fine.DefaultCellStyle = dataGridViewCellStyle99;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N0";
+            dataGridViewCellStyle8.NullValue = null;
+            this.col_c3_fine.DefaultCellStyle = dataGridViewCellStyle8;
             this.col_c3_fine.HeaderText = "หักค่าคอมฯ";
             this.col_c3_fine.MinimumWidth = 100;
             this.col_c3_fine.Name = "col_c3_fine";
             this.col_c3_fine.ReadOnly = true;
+            // 
+            // btnStopItem
+            // 
+            this.btnStopItem.Location = new System.Drawing.Point(8, 65);
+            this.btnStopItem.Name = "btnStopItem";
+            this.btnStopItem.Size = new System.Drawing.Size(56, 23);
+            this.btnStopItem.TabIndex = 15;
+            this.btnStopItem.Text = "Stop";
+            this.btnStopItem.UseVisualStyleBackColor = true;
+            this.btnStopItem.Click += new System.EventHandler(this.btnStopItem_Click);
+            // 
+            // btnSaveItem
+            // 
+            this.btnSaveItem.Location = new System.Drawing.Point(8, 36);
+            this.btnSaveItem.Name = "btnSaveItem";
+            this.btnSaveItem.Size = new System.Drawing.Size(56, 23);
+            this.btnSaveItem.TabIndex = 15;
+            this.btnSaveItem.Text = "Save";
+            this.btnSaveItem.UseVisualStyleBackColor = true;
+            this.btnSaveItem.Click += new System.EventHandler(this.btnSaveItem_Click);
+            // 
+            // btnEditItem
+            // 
+            this.btnEditItem.Location = new System.Drawing.Point(8, 7);
+            this.btnEditItem.Name = "btnEditItem";
+            this.btnEditItem.Size = new System.Drawing.Size(56, 23);
+            this.btnEditItem.TabIndex = 15;
+            this.btnEditItem.Text = "Edit";
+            this.btnEditItem.UseVisualStyleBackColor = true;
+            this.btnEditItem.Click += new System.EventHandler(this.btnEditItem_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.drYearAbsentUserTo);
+            this.tabPage2.Controls.Add(this.drYearAbsentUserFrom);
+            this.tabPage2.Controls.Add(this.dtYearAbsentTo);
+            this.tabPage2.Controls.Add(this.dtYearAbsentFrom);
+            this.tabPage2.Controls.Add(this.btnEditScopeYearAbsent);
+            this.tabPage2.Controls.Add(this.btnOKYearAbsent);
+            this.tabPage2.Controls.Add(this.panel2);
+            this.tabPage2.Controls.Add(this.label19);
+            this.tabPage2.Controls.Add(this.label11);
+            this.tabPage2.Controls.Add(this.label18);
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(926, 453);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "สรุปวันลารายบุคคล <F7>";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dtYearAbsentTo
+            // 
+            this.dtYearAbsentTo.Enabled = false;
+            this.dtYearAbsentTo.Location = new System.Drawing.Point(327, 37);
+            this.dtYearAbsentTo.Name = "dtYearAbsentTo";
+            this.dtYearAbsentTo.Size = new System.Drawing.Size(166, 23);
+            this.dtYearAbsentTo.TabIndex = 9;
+            // 
+            // dtYearAbsentFrom
+            // 
+            this.dtYearAbsentFrom.Enabled = false;
+            this.dtYearAbsentFrom.Location = new System.Drawing.Point(129, 37);
+            this.dtYearAbsentFrom.Name = "dtYearAbsentFrom";
+            this.dtYearAbsentFrom.Size = new System.Drawing.Size(166, 23);
+            this.dtYearAbsentFrom.TabIndex = 8;
+            // 
+            // btnOKYearAbsent
+            // 
+            this.btnOKYearAbsent.Enabled = false;
+            this.btnOKYearAbsent.Location = new System.Drawing.Point(604, 11);
+            this.btnOKYearAbsent.Name = "btnOKYearAbsent";
+            this.btnOKYearAbsent.Size = new System.Drawing.Size(99, 49);
+            this.btnOKYearAbsent.TabIndex = 10;
+            this.btnOKYearAbsent.Text = "ตกลง\r\n(แสดงข้อมูล)";
+            this.btnOKYearAbsent.UseVisualStyleBackColor = true;
+            this.btnOKYearAbsent.Click += new System.EventHandler(this.btnOKYearAbsent_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.dgvSum);
+            this.panel2.Location = new System.Drawing.Point(3, 66);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(920, 383);
+            this.panel2.TabIndex = 2;
+            // 
+            // dgvSum
+            // 
+            this.dgvSum.AllowSortByColumnHeaderClicked = false;
+            this.dgvSum.AllowUserToAddRows = false;
+            this.dgvSum.AllowUserToDeleteRows = false;
+            this.dgvSum.AllowUserToResizeColumns = false;
+            this.dgvSum.AllowUserToResizeRows = false;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(207)))), ((int)(((byte)(179)))));
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSum.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            this.dgvSum.ColumnHeadersHeight = 28;
+            this.dgvSum.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvSum.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_c4_seq,
+            this.col_c4_user_name,
+            this.col_c4_name,
+            this.col_c4_tot_absent,
+            this.col_c4_tot_absent_comm,
+            this.col_c4_fine,
+            this.col_c4_remark});
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 9.75F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSum.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dgvSum.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSum.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvSum.EnableHeadersVisualStyles = false;
+            this.dgvSum.FillEmptyRow = false;
+            this.dgvSum.FocusedRowBorderRedLine = true;
+            this.dgvSum.Location = new System.Drawing.Point(0, 0);
+            this.dgvSum.MultiSelect = false;
+            this.dgvSum.Name = "dgvSum";
+            this.dgvSum.ReadOnly = true;
+            this.dgvSum.RowHeadersVisible = false;
+            this.dgvSum.RowTemplate.Height = 26;
+            this.dgvSum.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSum.Size = new System.Drawing.Size(920, 383);
+            this.dgvSum.StandardTab = true;
+            this.dgvSum.TabIndex = 1;
+            // 
+            // col_c4_seq
+            // 
+            this.col_c4_seq.DataPropertyName = "seq";
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Gray;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Gray;
+            this.col_c4_seq.DefaultCellStyle = dataGridViewCellStyle11;
+            this.col_c4_seq.HeaderText = "ลำดับ";
+            this.col_c4_seq.MinimumWidth = 40;
+            this.col_c4_seq.Name = "col_c4_seq";
+            this.col_c4_seq.ReadOnly = true;
+            this.col_c4_seq.Width = 40;
+            // 
+            // col_c4_user_name
+            // 
+            this.col_c4_user_name.DataPropertyName = "user_name";
+            this.col_c4_user_name.HeaderText = "รหัสพนักงาน";
+            this.col_c4_user_name.MinimumWidth = 120;
+            this.col_c4_user_name.Name = "col_c4_user_name";
+            this.col_c4_user_name.ReadOnly = true;
+            this.col_c4_user_name.Width = 120;
+            // 
+            // col_c4_name
+            // 
+            this.col_c4_name.DataPropertyName = "name";
+            this.col_c4_name.HeaderText = "ชื่อ";
+            this.col_c4_name.MinimumWidth = 130;
+            this.col_c4_name.Name = "col_c4_name";
+            this.col_c4_name.ReadOnly = true;
+            this.col_c4_name.Width = 130;
+            // 
+            // col_c4_tot_absent
+            // 
+            this.col_c4_tot_absent.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_c4_tot_absent.DataPropertyName = "tot_absent";
+            this.col_c4_tot_absent.HeaderText = "จำนวนวันลา(จริง)";
+            this.col_c4_tot_absent.MinimumWidth = 170;
+            this.col_c4_tot_absent.Name = "col_c4_tot_absent";
+            this.col_c4_tot_absent.ReadOnly = true;
+            // 
+            // col_c4_tot_absent_comm
+            // 
+            this.col_c4_tot_absent_comm.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_c4_tot_absent_comm.DataPropertyName = "tot_absent_comm";
+            this.col_c4_tot_absent_comm.HeaderText = "จำนวนวันลา(คิดค่าคอมฯ)";
+            this.col_c4_tot_absent_comm.MinimumWidth = 170;
+            this.col_c4_tot_absent_comm.Name = "col_c4_tot_absent_comm";
+            this.col_c4_tot_absent_comm.ReadOnly = true;
+            // 
+            // col_c4_fine
+            // 
+            this.col_c4_fine.DataPropertyName = "fine";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle12.Format = "N2";
+            dataGridViewCellStyle12.NullValue = null;
+            this.col_c4_fine.DefaultCellStyle = dataGridViewCellStyle12;
+            this.col_c4_fine.HeaderText = "หักค่าคอมฯ";
+            this.col_c4_fine.MinimumWidth = 100;
+            this.col_c4_fine.Name = "col_c4_fine";
+            this.col_c4_fine.ReadOnly = true;
+            // 
+            // col_c4_remark
+            // 
+            this.col_c4_remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_c4_remark.DataPropertyName = "remark";
+            this.col_c4_remark.HeaderText = "หมายเหตุ";
+            this.col_c4_remark.Name = "col_c4_remark";
+            this.col_c4_remark.ReadOnly = true;
+            this.col_c4_remark.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label11.Location = new System.Drawing.Point(301, 40);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(22, 16);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "ถึง";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label9.Location = new System.Drawing.Point(18, 40);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(56, 16);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "วันที่ จาก";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label18.Location = new System.Drawing.Point(18, 15);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(100, 16);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "รหัสพนักงาน จาก";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label19.Location = new System.Drawing.Point(301, 15);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(22, 16);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "ถึง";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // drYearAbsentUserFrom
+            // 
+            this.drYearAbsentUserFrom._DroppedDown = false;
+            this.drYearAbsentUserFrom._ReadOnly = true;
+            this.drYearAbsentUserFrom._SelectedItem = null;
+            this.drYearAbsentUserFrom._Text = "";
+            this.drYearAbsentUserFrom.BackColor = System.Drawing.Color.White;
+            this.drYearAbsentUserFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drYearAbsentUserFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.drYearAbsentUserFrom.Location = new System.Drawing.Point(129, 11);
+            this.drYearAbsentUserFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.drYearAbsentUserFrom.Name = "drYearAbsentUserFrom";
+            this.drYearAbsentUserFrom.Size = new System.Drawing.Size(166, 23);
+            this.drYearAbsentUserFrom.TabIndex = 6;
+            this.drYearAbsentUserFrom.TabStop = false;
+            // 
+            // drYearAbsentUserTo
+            // 
+            this.drYearAbsentUserTo._DroppedDown = false;
+            this.drYearAbsentUserTo._ReadOnly = true;
+            this.drYearAbsentUserTo._SelectedItem = null;
+            this.drYearAbsentUserTo._Text = "";
+            this.drYearAbsentUserTo.BackColor = System.Drawing.Color.White;
+            this.drYearAbsentUserTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drYearAbsentUserTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.drYearAbsentUserTo.Location = new System.Drawing.Point(327, 11);
+            this.drYearAbsentUserTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.drYearAbsentUserTo.Name = "drYearAbsentUserTo";
+            this.drYearAbsentUserTo.Size = new System.Drawing.Size(166, 23);
+            this.drYearAbsentUserTo.TabIndex = 7;
+            this.drYearAbsentUserTo.TabStop = false;
+            // 
+            // btnEditScopeYearAbsent
+            // 
+            this.btnEditScopeYearAbsent.Location = new System.Drawing.Point(499, 11);
+            this.btnEditScopeYearAbsent.Name = "btnEditScopeYearAbsent";
+            this.btnEditScopeYearAbsent.Size = new System.Drawing.Size(99, 49);
+            this.btnEditScopeYearAbsent.TabIndex = 10;
+            this.btnEditScopeYearAbsent.Text = "เปลี่ยนขอบเขตของรายการ";
+            this.btnEditScopeYearAbsent.UseVisualStyleBackColor = true;
+            this.btnEditScopeYearAbsent.Click += new System.EventHandler(this.btnEditScopeYearAbsent_Click);
             // 
             // FormAbsentReport
             // 
@@ -1338,17 +1415,17 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCust)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inlineFine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSum)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAbsent)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCust)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1444,5 +1521,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_c3_customer;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_c3_medcert;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_c3_fine;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private CC.XDropdownList drYearAbsentUserTo;
+        private CC.XDropdownList drYearAbsentUserFrom;
+        private System.Windows.Forms.Button btnEditScopeYearAbsent;
     }
 }

@@ -254,10 +254,6 @@
             this.printPreviewControl1.Size = new System.Drawing.Size(888, 500);
             this.printPreviewControl1.TabIndex = 1;
             // 
-            // printDialog1
-            // 
-            this.printDialog1.UseEXDialog = true;
-            // 
             // XPrintPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -296,7 +292,6 @@
         private System.Windows.Forms.ToolStripTextBox txtPageNum;
         private System.Windows.Forms.ToolStripButton btnNext;
         private System.Windows.Forms.ToolStripButton btnLast;
-        private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnClose;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -305,5 +300,6 @@
         private System.Windows.Forms.ToolStripButton btnZoomFit;
         private System.Windows.Forms.ToolStripButton btnSplitNone;
         public System.Windows.Forms.ToolStripButton btnPrint;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }
