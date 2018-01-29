@@ -31,16 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSN2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dealerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDealer2 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuImportData = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.calendarMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCalendar = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbsentReport = new System.Windows.Forms.ToolStripMenuItem();
-            this.usersGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportStatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LeaveSummaryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SearchHistoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,16 +94,13 @@
             // modeToolStripMenuItem
             // 
             this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sNToolStripMenuItem,
             this.mnuSN2,
-            this.dealerToolStripMenuItem,
             this.mnuDealer2,
             this.mnuImportData,
             this.toolStripSeparator5,
             this.calendarMenuItem,
             this.mnuCalendar,
             this.mnuAbsentReport,
-            this.usersGroupMenuItem,
             this.supportStatMenuItem,
             this.LeaveSummaryMenuItem,
             this.SearchHistoryMenuItem,
@@ -125,30 +119,12 @@
             this.modeToolStripMenuItem.Size = new System.Drawing.Size(36, 20);
             this.modeToolStripMenuItem.Text = "File";
             // 
-            // sNToolStripMenuItem
-            // 
-            this.sNToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sNToolStripMenuItem.Name = "sNToolStripMenuItem";
-            this.sNToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.sNToolStripMenuItem.Text = "_S/N";
-            this.sNToolStripMenuItem.Visible = false;
-            this.sNToolStripMenuItem.Click += new System.EventHandler(this.sNToolStripMenuItem_Click);
-            // 
             // mnuSN2
             // 
             this.mnuSN2.Name = "mnuSN2";
             this.mnuSN2.Size = new System.Drawing.Size(337, 22);
             this.mnuSN2.Text = "S/N.";
             this.mnuSN2.Click += new System.EventHandler(this.mnuSN2_Click);
-            // 
-            // dealerToolStripMenuItem
-            // 
-            this.dealerToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dealerToolStripMenuItem.Name = "dealerToolStripMenuItem";
-            this.dealerToolStripMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.dealerToolStripMenuItem.Text = "_Dealer";
-            this.dealerToolStripMenuItem.Visible = false;
-            this.dealerToolStripMenuItem.Click += new System.EventHandler(this.dealerToolStripMenuItem_Click);
             // 
             // mnuDealer2
             // 
@@ -191,14 +167,6 @@
             this.mnuAbsentReport.Size = new System.Drawing.Size(337, 22);
             this.mnuAbsentReport.Text = "สรุปวันลา และ ออกพบลูกค้า.";
             this.mnuAbsentReport.Click += new System.EventHandler(this.mnuAbsentReport_Click);
-            // 
-            // usersGroupMenuItem
-            // 
-            this.usersGroupMenuItem.Name = "usersGroupMenuItem";
-            this.usersGroupMenuItem.Size = new System.Drawing.Size(337, 22);
-            this.usersGroupMenuItem.Text = "จัดกลุ่มพนักงาน";
-            this.usersGroupMenuItem.Visible = false;
-            this.usersGroupMenuItem.Click += new System.EventHandler(this.usersGroupMenuItem_Click);
             // 
             // supportStatMenuItem
             // 
@@ -340,7 +308,7 @@
             this.mnuUserInformation.Name = "mnuUserInformation";
             this.mnuUserInformation.Size = new System.Drawing.Size(178, 22);
             this.mnuUserInformation.Text = "User information";
-            this.mnuUserInformation.Click += new System.EventHandler(this.userInformationToolStripMenuItem_Click);
+            this.mnuUserInformation.Click += new System.EventHandler(this.mnuUserInformation_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
@@ -531,8 +499,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sNToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dealerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem userManagementToolStripMenuItem;
@@ -564,7 +530,6 @@
         private System.Windows.Forms.ToolStripMenuItem SearchHistoryMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serviceCaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem usersGroupMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel lblVersion;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem1;

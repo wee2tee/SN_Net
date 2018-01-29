@@ -24,7 +24,8 @@ namespace SN_Net.Subform
         private FORM_MODE form_mode;
         private MainForm main_form;
         private BindingList<noteVM> note_list;
-        private DateTime? curr_date;
+        private DateTime? date_from;
+        private DateTime? date_to;
         private users curr_user;
         private note tmp_note;
         private TRNTYP trn_typ;
@@ -36,11 +37,12 @@ namespace SN_Net.Subform
             InitializeComponent();
         }
 
-        public FormNote(MainForm main_form, DateTime? note_date = null, users note_user = null)
+        public FormNote(MainForm main_form, DateTime? date_from = null, DateTime? date_to = null, users note_user = null)
             : this()
         {
             this.main_form = main_form;
-            this.curr_date = note_date;
+            this.date_from = date_from;
+            this.date_to = date_to;
             this.curr_user = note_user;
         }
 
@@ -54,6 +56,11 @@ namespace SN_Net.Subform
 
         private void FormNote_Load(object sender, EventArgs e)
         {
+            this.label9.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            this.lblDateTo.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+                this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_date.Name).First().Visible = false;
+
             if (!this.show_as_search_result)
             {
                 this.HideInlineForm();
@@ -108,18 +115,19 @@ namespace SN_Net.Subform
             }
         }
 
-        public static List<note> GetNoteList(users user, DateTime? note_date)
+        public static List<note> GetNoteList(users user, DateTime? date_from, DateTime? date_to)
         {
             if (user == null)
                 return null;
 
             using (sn_noteEntities sn_note = DBXNote.DataSet())
             {
-                if (note_date.HasValue)
+                if (date_from.HasValue)
                 {
-                    // Only current date
-                    var d = new DateTime(note_date.Value.Year, note_date.Value.Month, note_date.Value.Day, 0, 0, 0);
-                    return sn_note.note.Where(n => n.users_name == user.username && n.date.CompareTo(d) == 0).OrderBy(n => n.date).ThenBy(n => n.start_time).ToList();
+                    // Range date
+                    var d_from = new DateTime(date_from.Value.Year, date_from.Value.Month, date_from.Value.Day, 0, 0, 0);
+                    var d_to = new DateTime(date_to.Value.Year, date_to.Value.Month, date_to.Value.Day, 0, 0, 0);
+                    return sn_note.note.Where(n => n.users_name == user.username && n.date.CompareTo(d_from) >= 0 && n.date.CompareTo(d_to) <=0).OrderBy(n => n.date).ThenBy(n => n.start_time).ToList();
                 }
                 else
                 {
@@ -158,7 +166,8 @@ namespace SN_Net.Subform
 
         private void FillForm()
         {
-            this.lblWorkingDate.Text = this.curr_date.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
+            this.lblDateFrom.Text = this.date_from.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
+            this.lblDateTo.Text = this.date_to.Value.ToString("dd/MM/yyyy", CultureInfo.GetCultureInfo("th-TH"));
             this.lblUserName.Text = this.curr_user != null ? this.curr_user.username : string.Empty;
             this.lblUserRealname.Text = this.curr_user != null ? this.curr_user.name : string.Empty;
             this.dgvNote.DataSource = this.note_list;
@@ -173,9 +182,9 @@ namespace SN_Net.Subform
                 wrk.DoWork += delegate
                 {
                     this.note_list = null;
-                    if(this.curr_user != null && this.curr_date.HasValue)
+                    if(this.curr_user != null && this.date_from.HasValue && this.date_to.HasValue)
                     {
-                        this.note_list = new BindingList<noteVM>(GetNoteList(this.curr_user, this.curr_date).ToViewModel());
+                        this.note_list = new BindingList<noteVM>(GetNoteList(this.curr_user, this.date_from, this.date_to).ToViewModel());
                     }
                     else
                     {
@@ -454,7 +463,7 @@ namespace SN_Net.Subform
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!this.curr_date.HasValue || (this.curr_date.Value.Date != DateTime.Now.Date))
+            if (!this.date_from.HasValue || (this.date_from.Value.Date != DateTime.Now.Date))
             {
                 //if (MessageAlert.Show("โปรแกรมจะกำหนดวันที่ของรายการเป็นวันที่ปัจจุบัน, ทำต่อหรือไม่?", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) != DialogResult.OK)
                 //    return;
@@ -473,7 +482,7 @@ namespace SN_Net.Subform
             noteVM n = new note
             {
                 id = -1,
-                date = this.curr_date.Value, //DateTime.Now.Date,
+                date = this.date_from.Value, //DateTime.Now.Date,
                 sernum = string.Empty,
                 contact = string.Empty,
                 start_time = DateTime.Now.ToString("HH:mm:ss", CultureInfo.GetCultureInfo("th-TH")),
@@ -738,11 +747,21 @@ namespace SN_Net.Subform
 
         private void btnWorkingDate_Click(object sender, EventArgs e)
         {
-            DialogNoteChangeScope scope = new DialogNoteChangeScope(this.main_form, this.curr_user, this.curr_date);
+            DialogNoteChangeScope scope;
+            if(this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+            {
+                scope = new DialogNoteChangeScope(this.main_form, this.curr_user, this.date_from, this.date_to, DialogNoteChangeScope.DATE_TYPE.RANGE);
+            }
+            else
+            {
+                scope = new DialogNoteChangeScope(this.main_form, this.curr_user, this.date_from, this.date_to, DialogNoteChangeScope.DATE_TYPE.SINGLE);
+            }
+
             if(scope.ShowDialog() == DialogResult.OK)
             {
                 this.curr_user = scope.selected_user;
-                this.curr_date = scope.selected_date;
+                this.date_from = scope.selected_date_from;
+                this.date_to = scope.selected_date_to;
                 this.RefreshForm();
             }
         }

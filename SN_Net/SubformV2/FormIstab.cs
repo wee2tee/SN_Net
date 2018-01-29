@@ -60,6 +60,7 @@ namespace SN_Net.Subform
             }
 
             this.btnReload.PerformClick();
+            this.ActiveControl = this.dgv;
         }
 
         public static List<istab> GetIstabList(string tabtyp)

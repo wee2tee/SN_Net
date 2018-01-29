@@ -42,7 +42,7 @@ namespace SN_Net
         public FormIstab form_usergroup;
         public FormNote form_note;
         public FormCalendar form_calendar;
-        //public FormAbsentReport form_summary_absent;
+        public FormAbsentReport form_absentreport;
         public string mac_address = string.Empty;
 
         public SnWindow sn_wind;
@@ -102,6 +102,7 @@ namespace SN_Net
                 this.mnuUserInformation.Visible = this.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
                 this.mnuMacAddressAllowed.Visible = this.loged_in_user.level >= (int)USER_LEVEL.ADMIN ? true : false;
                 this.mnuPreference.Visible = this.loged_in_user.level >= (int)USER_LEVEL.ADMIN ? true : false;
+                this.mnuIstabUserGroup.Enabled = this.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
                 //this.G = login.G;
                 //this.toolStripUserInfo.Text = "Login as : " + this.G.loged_in_user_name;
                 //if (this.G.loged_in_user_level < GlobalVar.USER_LEVEL_ADMIN)
@@ -142,41 +143,6 @@ namespace SN_Net
         private void MainForm_Resize(object sender, EventArgs e)
         {
             this.RePositionLabelDuration();
-        }
-
-        private void sNToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //if (this.sn_wind == null)
-            //{
-            //    this.sn_wind = new SnWindow(this);
-            //    this.sn_wind.G = this.G;
-            //    this.sn_wind.MdiParent = this;
-            //    this.sn_wind.WindowState = FormWindowState.Maximized;
-            //    this.sn_wind.Show();
-            //}
-            //else
-            //{
-            //    this.sn_wind.Activate();
-            //    if (sn_wind.current_focused_control != null)
-            //    {
-            //        sn_wind.current_focused_control.Focus();
-            //    }
-            //}
-        }
-
-        private void dealerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.dealer_wind == null)
-            {
-                this.dealer_wind = new DealerWindow(this);
-                this.dealer_wind.MdiParent = this;
-                this.dealer_wind.WindowState = FormWindowState.Maximized;
-                this.dealer_wind.Show();
-            }
-            else
-            {
-                this.dealer_wind.Activate();
-            }
         }
 
         private void salesAreaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -326,7 +292,7 @@ namespace SN_Net
             m.ShowDialog();
         }
 
-        private void userInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void mnuUserInformation_Click(object sender, EventArgs e)
         {
             //UsersList wind = new UsersList(this);
             //wind.ShowDialog();
@@ -421,21 +387,22 @@ namespace SN_Net
 
         private void supportStatMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.supportstat_wind == null)
-            {
-                LeaveRangeDialog dlg = new LeaveRangeDialog(this);
-                dlg.Text = "กำหนดขอบเขตการแสดงข้อมูลการปฏิบัติงาน(Support)";
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    SupportStatWindow wind = new SupportStatWindow(this, dlg.user_from, dlg.user_to, dlg.date_from, dlg.date_to);
-                    wind.MdiParent = this;
-                    wind.Show();
-                }
-            }
-            else
-            {
-                this.supportstat_wind.Activate();
-            }
+            //if (this.supportstat_wind == null)
+            //{
+            //    LeaveRangeDialog dlg = new LeaveRangeDialog(this);
+            //    dlg.Text = "กำหนดขอบเขตการแสดงข้อมูลการปฏิบัติงาน(Support)";
+            //    if (dlg.ShowDialog() == DialogResult.OK)
+            //    {
+            //        SupportStatWindow wind = new SupportStatWindow(this, dlg.user_from, dlg.user_to, dlg.date_from, dlg.date_to);
+            //        wind.MdiParent = this;
+            //        wind.Show();
+            //    }
+            //}
+            //else
+            //{
+            //    this.supportstat_wind.Activate();
+            //    this.supportstat_wind.WindowState = this.WindowState;
+            //}
         }
 
         private void leaveSummaryMenuItem_Click(object sender, EventArgs e)
@@ -453,6 +420,7 @@ namespace SN_Net
             else
             {
                 this.leave_wind.Activate();
+                this.leave_wind.WindowState = this.WindowState;
             }
         }
 
@@ -467,6 +435,7 @@ namespace SN_Net
             else
             {
                 this.searchhistory_wind.Activate();
+                this.searchhistory_wind.WindowState = this.WindowState;
             }
         }
 
@@ -481,6 +450,7 @@ namespace SN_Net
             else
             {
                 this.calendar_wind.Activate();
+                this.calendar_wind.WindowState = this.WindowState;
             }
         }
 
@@ -494,15 +464,16 @@ namespace SN_Net
 
         private void usersGroupMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.usersgroup_wind == null)
-            {
-                this.usersgroup_wind = new UsersGroupWindow(this);
-                this.usersgroup_wind.MdiParent = this;
-                this.usersgroup_wind.Show();
-            }
-            else{
-                this.usersgroup_wind.Activate();
-            }
+        //    if (this.usersgroup_wind == null)
+        //    {
+        //        this.usersgroup_wind = new UsersGroupWindow(this);
+        //        this.usersgroup_wind.MdiParent = this;
+        //        this.usersgroup_wind.Show();
+        //    }
+        //    else{
+        //        this.usersgroup_wind.Activate();
+        //        this.WindowState = this.WindowState;
+        //    }
         }
 
         private void changeLogToolStripMenuItem_Click(object sender, EventArgs e)
@@ -536,7 +507,7 @@ namespace SN_Net
             else
             {
                 this.form_sn.Activate();
-                this.form_sn.WindowState = FormWindowState.Maximized;
+                this.form_sn.WindowState = this.WindowState;
             }
         }
 
@@ -551,7 +522,7 @@ namespace SN_Net
             else
             {
                 this.form_dealer.Activate();
-                this.form_dealer.WindowState = FormWindowState.Maximized;
+                this.form_dealer.WindowState = this.WindowState;
             }
         }
 
@@ -565,10 +536,10 @@ namespace SN_Net
         {
             if(this.form_note == null)
             {
-                DialogNoteChangeScope scope = new DialogNoteChangeScope(this, null, DateTime.Now);
+                DialogNoteChangeScope scope = new DialogNoteChangeScope(this, null, DateTime.Now, DateTime.Now, DialogNoteChangeScope.DATE_TYPE.RANGE);
                 if(scope.ShowDialog() == DialogResult.OK)
                 {
-                    this.form_note = new FormNote(this, scope.selected_date, scope.selected_user);
+                    this.form_note = new FormNote(this, scope.selected_date_from, scope.selected_date_to, scope.selected_user);
                     this.form_note.MdiParent = this;
                     this.form_note.Show();
                 }
@@ -576,7 +547,7 @@ namespace SN_Net
             else
             {
                 this.form_note.Activate();
-                this.form_note.WindowState = FormWindowState.Maximized;
+                this.form_note.WindowState = this.WindowState;
             }
         }
 
@@ -591,15 +562,24 @@ namespace SN_Net
             else
             {
                 this.form_calendar.Activate();
-                this.form_calendar.WindowState = FormWindowState.Maximized;
+                this.form_calendar.WindowState = this.WindowState;
             }
         }
 
         private void mnuAbsentReport_Click(object sender, EventArgs e)
         {
-            FormAbsentReport abs = new FormAbsentReport(this);
-            abs.MdiParent = this;
-            abs.Show();
+            if(this.form_absentreport == null)
+            {
+                this.form_absentreport = new FormAbsentReport(this);
+                this.form_absentreport.MdiParent = this;
+                this.form_absentreport.Show();
+            }
+            else
+            {
+                this.form_absentreport.Activate();
+                this.form_absentreport.WindowState = this.WindowState; //FormWindowState.Maximized;
+            }
+            
         }
     }
 }
