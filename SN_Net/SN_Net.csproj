@@ -1411,6 +1411,7 @@
       <DependentUpon>SNNetModel.edmx</DependentUpon>
       <LastGenOutput>SNNetModel.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\restore_default_16.png" />
     <None Include="Resources\save_16.png" />
     <None Include="Resources\stop_16.png" />
     <None Include="Resources\edit_16.png" />

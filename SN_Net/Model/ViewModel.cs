@@ -415,7 +415,56 @@ namespace SN_Net.Model
     public class noteVM
     {
         public note note { get; set; }
-        //public int seq { get; set; }
+        public string seq { get; set; }
+        public bool has_comment
+        {
+            get
+            {
+                using (sn_noteEntities note = DBXNote.DataSet())
+                {
+                    if (note.note_comment.Where(n => n.type == (int)DialogNoteComment.NOTE_COMMENT_TYPE.COMMENT && n.note_id == this.note.id).FirstOrDefault() != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        public bool has_complain
+        {
+            get
+            {
+                using (sn_noteEntities note = DBXNote.DataSet())
+                {
+                    if (note.note_comment.Where(n => n.type == (int)DialogNoteComment.NOTE_COMMENT_TYPE.COMPLAIN && n.note_id == this.note.id).FirstOrDefault() != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        public string has_comment_complain
+        {
+            get
+            {
+                if (this.has_comment && this.has_complain)
+                    return "Both";
+                if (this.has_comment && !this.has_complain)
+                    return "Comment";
+                if (!this.has_comment && this.has_complain)
+                    return "Complain";
+
+                return string.Empty;
+            }
+        }
+        public string username { get { return this.note.users_name; } }
         public DateTime date { get { return this.note.date; } }
         public string start_time { get { return this.note.start_time; } }
         public string end_time { get { return this.note.end_time; } }
@@ -423,21 +472,6 @@ namespace SN_Net.Model
             get
             {
                 return this.note.duration;
-                //try
-                //{
-                //    string[] arr_from = this.start_time.Split(':');
-                //    DateTime t_from = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(arr_from[0]), Convert.ToInt32(arr_from[1]), Convert.ToInt32(arr_from[2]));
-
-                //    string[] arr_to = this.end_time.Split(':');
-                //    DateTime t_to = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Convert.ToInt32(arr_to[0]), Convert.ToInt32(arr_to[1]), Convert.ToInt32(arr_to[2]));
-
-                //    TimeSpan ts = t_to - t_from;
-                //    return ts.ToString("HH:mm:ss", CultureInfo.GetCultureInfo("th-TH")); /*this.note.duration;*/
-                //}
-                //catch (Exception)
-                //{
-                //    return "00:00:00";
-                //}
             }
         }
         public string sernum { get { return this.note.sernum; } }
@@ -505,7 +539,14 @@ namespace SN_Net.Model
             {
                 if(this.event_calendar.event_type == CALENDAR_EVENT_TYPE.ABSENT)
                 {
-                    return this.event_calendar.from_time + " - " + this.event_calendar.to_time;
+                    if(TimeSpan.Parse(this.event_calendar.from_time).GetDayTimeSpan(TimeSpan.Parse(this.event_calendar.to_time)).TotalHours != 8)
+                    {
+                        return TimeSpan.Parse(this.event_calendar.from_time).GetDayTimeSpan(TimeSpan.Parse(this.event_calendar.to_time)).GetTimeSpanShortString() + " (" + this.event_calendar.from_time + " - " + this.event_calendar.to_time + ")";
+                    }
+                    else
+                    {
+                        return TimeSpan.Parse(this.event_calendar.from_time).GetDayTimeSpan(TimeSpan.Parse(this.event_calendar.to_time)).GetTimeSpanShortString();
+                    }
                 }
                 else if(this.event_calendar.event_type == CALENDAR_EVENT_TYPE.MEET_CUST)
                 {
@@ -968,6 +1009,7 @@ namespace SN_Net.Model
             noteVM n = new noteVM
             {
                 note = note,
+                seq = ""
             };
             return n;
         }

@@ -30,6 +30,8 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -88,8 +90,38 @@
             this.lblUserName = new System.Windows.Forms.Label();
             this.lblUserRealname = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
+            this.lblDateTo = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblSumBreak = new System.Windows.Forms.Label();
+            this.lblSumTalk = new System.Windows.Forms.Label();
+            this.lblSumLine = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.chCondCommentOnly = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.panelCondition = new System.Windows.Forms.Panel();
+            this.btnApplyCond = new System.Windows.Forms.Button();
+            this.btnCancelCond = new System.Windows.Forms.Button();
+            this.btnEditCond = new System.Windows.Forms.Button();
+            this.btnRestoreCond = new System.Windows.Forms.Button();
+            this.dgvCondBreak = new System.Windows.Forms.DataGridView();
+            this.col_cond_break_selected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.col_cond_break_text = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_cond_break_value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCondTalk = new System.Windows.Forms.DataGridView();
+            this.col_cond_talk_selected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.col_cond_talk_text = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_cond_talk_value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_has_comment = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.col_note_has_complain = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.col_note_has_comment_complain = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_start = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_end = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -114,11 +146,14 @@
             this.col_note_is_transfer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_is_other = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_note_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblDateTo = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNote)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.panelCondition.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCondBreak)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCondTalk)).BeginInit();
             this.SuspendLayout();
             // 
             // panel3
@@ -153,9 +188,9 @@
             this.panel3.Controls.Add(this.inlineStart);
             this.panel3.Controls.Add(this.dgvNote);
             this.panel3.Controls.Add(this.btnComment);
-            this.panel3.Location = new System.Drawing.Point(3, 191);
+            this.panel3.Location = new System.Drawing.Point(3, 232);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1270, 454);
+            this.panel3.Size = new System.Drawing.Size(1400, 413);
             this.panel3.TabIndex = 1;
             // 
             // inlineDuration
@@ -529,6 +564,10 @@
             this.dgvNote.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_note_note,
             this.col_note_seq,
+            this.col_note_has_comment,
+            this.col_note_has_complain,
+            this.col_note_has_comment_complain,
+            this.col_note_username,
             this.col_note_date,
             this.col_note_start,
             this.col_note_end,
@@ -575,7 +614,7 @@
             this.dgvNote.RowHeadersVisible = false;
             this.dgvNote.RowTemplate.Height = 26;
             this.dgvNote.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvNote.Size = new System.Drawing.Size(1270, 454);
+            this.dgvNote.Size = new System.Drawing.Size(1400, 413);
             this.dgvNote.StandardTab = true;
             this.dgvNote.TabIndex = 2;
             this.dgvNote.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvNote_CellPainting);
@@ -610,7 +649,7 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1276, 43);
+            this.toolStrip1.Size = new System.Drawing.Size(1406, 43);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -703,7 +742,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label1.Location = new System.Drawing.Point(27, 82);
+            this.label1.Location = new System.Drawing.Point(27, 106);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 16);
             this.label1.TabIndex = 4;
@@ -713,7 +752,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(27, 108);
+            this.label2.Location = new System.Drawing.Point(27, 131);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 16);
             this.label2.TabIndex = 4;
@@ -723,7 +762,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label3.Location = new System.Drawing.Point(27, 161);
+            this.label3.Location = new System.Drawing.Point(27, 198);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(130, 16);
             this.label3.TabIndex = 4;
@@ -731,26 +770,24 @@
             // 
             // lblCompnam
             // 
-            this.lblCompnam.AutoSize = true;
-            this.lblCompnam.Location = new System.Drawing.Point(108, 82);
+            this.lblCompnam.Location = new System.Drawing.Point(96, 106);
             this.lblCompnam.Name = "lblCompnam";
-            this.lblCompnam.Size = new System.Drawing.Size(32, 16);
+            this.lblCompnam.Size = new System.Drawing.Size(285, 16);
             this.lblCompnam.TabIndex = 4;
             this.lblCompnam.Text = "      ";
             // 
             // lblAddr
             // 
-            this.lblAddr.AutoSize = true;
-            this.lblAddr.Location = new System.Drawing.Point(108, 108);
+            this.lblAddr.Location = new System.Drawing.Point(72, 131);
             this.lblAddr.Name = "lblAddr";
-            this.lblAddr.Size = new System.Drawing.Size(32, 16);
+            this.lblAddr.Size = new System.Drawing.Size(250, 37);
             this.lblAddr.TabIndex = 4;
             this.lblAddr.Text = "      ";
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(162, 161);
+            this.lblVersion.Location = new System.Drawing.Point(162, 198);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(32, 16);
             this.lblVersion.TabIndex = 4;
@@ -770,7 +807,7 @@
             // 
             this.lblDateFrom.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblDateFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDateFrom.Location = new System.Drawing.Point(108, 55);
+            this.lblDateFrom.Location = new System.Drawing.Point(121, 55);
             this.lblDateFrom.Name = "lblDateFrom";
             this.lblDateFrom.Size = new System.Drawing.Size(104, 19);
             this.lblDateFrom.TabIndex = 4;
@@ -780,7 +817,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(360, 161);
+            this.label5.Location = new System.Drawing.Point(360, 198);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(42, 16);
             this.label5.TabIndex = 4;
@@ -790,7 +827,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label6.Location = new System.Drawing.Point(582, 161);
+            this.label6.Location = new System.Drawing.Point(582, 198);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(52, 16);
             this.label6.TabIndex = 4;
@@ -799,7 +836,7 @@
             // lblMA
             // 
             this.lblMA.AutoSize = true;
-            this.lblMA.Location = new System.Drawing.Point(407, 161);
+            this.lblMA.Location = new System.Drawing.Point(407, 198);
             this.lblMA.Name = "lblMA";
             this.lblMA.Size = new System.Drawing.Size(32, 16);
             this.lblMA.TabIndex = 4;
@@ -808,7 +845,7 @@
             // lblCloud
             // 
             this.lblCloud.AutoSize = true;
-            this.lblCloud.Location = new System.Drawing.Point(640, 161);
+            this.lblCloud.Location = new System.Drawing.Point(640, 198);
             this.lblCloud.Name = "lblCloud";
             this.lblCloud.Size = new System.Drawing.Size(32, 16);
             this.lblCloud.TabIndex = 4;
@@ -818,7 +855,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label7.Location = new System.Drawing.Point(27, 134);
+            this.label7.Location = new System.Drawing.Point(27, 173);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(80, 16);
             this.label7.TabIndex = 4;
@@ -829,7 +866,7 @@
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblPassword.ForeColor = System.Drawing.Color.Red;
-            this.lblPassword.Location = new System.Drawing.Point(108, 134);
+            this.lblPassword.Location = new System.Drawing.Point(108, 173);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(0, 16);
             this.lblPassword.TabIndex = 4;
@@ -838,7 +875,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label8.Location = new System.Drawing.Point(343, 56);
+            this.label8.Location = new System.Drawing.Point(27, 81);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(92, 16);
             this.label8.TabIndex = 4;
@@ -848,19 +885,18 @@
             // 
             this.lblUserName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblUserName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblUserName.Location = new System.Drawing.Point(436, 55);
+            this.lblUserName.Location = new System.Drawing.Point(120, 80);
             this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(109, 19);
+            this.lblUserName.Size = new System.Drawing.Size(104, 19);
             this.lblUserName.TabIndex = 4;
             this.lblUserName.Text = "      ";
             // 
             // lblUserRealname
             // 
-            this.lblUserRealname.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblUserRealname.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblUserRealname.Location = new System.Drawing.Point(551, 55);
+            this.lblUserRealname.Location = new System.Drawing.Point(238, 80);
             this.lblUserRealname.Name = "lblUserRealname";
-            this.lblUserRealname.Size = new System.Drawing.Size(140, 19);
+            this.lblUserRealname.Size = new System.Drawing.Size(104, 19);
             this.lblUserRealname.TabIndex = 4;
             this.lblUserRealname.Text = "      ";
             // 
@@ -869,7 +905,7 @@
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.Font = new System.Drawing.Font("Tahoma", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.lblTime.ForeColor = System.Drawing.Color.Red;
-            this.lblTime.Location = new System.Drawing.Point(1024, 45);
+            this.lblTime.Location = new System.Drawing.Point(1154, 45);
             this.lblTime.Margin = new System.Windows.Forms.Padding(0);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(250, 59);
@@ -877,6 +913,341 @@
             this.lblTime.Text = "00:00:00";
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblTime.Visible = false;
+            // 
+            // lblDateTo
+            // 
+            this.lblDateTo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblDateTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblDateTo.Location = new System.Drawing.Point(238, 55);
+            this.lblDateTo.Name = "lblDateTo";
+            this.lblDateTo.Size = new System.Drawing.Size(104, 19);
+            this.lblDateTo.TabIndex = 4;
+            this.lblDateTo.Text = "      ";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label9.Location = new System.Drawing.Point(225, 56);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(14, 16);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "-";
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Location = new System.Drawing.Point(1114, 55);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(282, 137);
+            this.panel1.TabIndex = 6;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.lblSumBreak);
+            this.groupBox1.Controls.Add(this.lblSumTalk);
+            this.groupBox1.Controls.Add(this.lblSumLine);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.groupBox1.Location = new System.Drawing.Point(4, -1);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(272, 132);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "สรุปตามช่วงวันที่ ที่กำหนด";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label12.Location = new System.Drawing.Point(24, 89);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(80, 16);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "เวลาพักสาย :";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label11.Location = new System.Drawing.Point(27, 59);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 16);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "เวลารับสาย :";
+            // 
+            // lblSumBreak
+            // 
+            this.lblSumBreak.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblSumBreak.Location = new System.Drawing.Point(105, 89);
+            this.lblSumBreak.Name = "lblSumBreak";
+            this.lblSumBreak.Size = new System.Drawing.Size(163, 16);
+            this.lblSumBreak.TabIndex = 0;
+            this.lblSumBreak.Text = "x.xx:xx:xx";
+            this.lblSumBreak.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblSumTalk
+            // 
+            this.lblSumTalk.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblSumTalk.Location = new System.Drawing.Point(105, 59);
+            this.lblSumTalk.Name = "lblSumTalk";
+            this.lblSumTalk.Size = new System.Drawing.Size(163, 16);
+            this.lblSumTalk.TabIndex = 0;
+            this.lblSumTalk.Text = "x.xx:xx:xx";
+            this.lblSumTalk.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblSumLine
+            // 
+            this.lblSumLine.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.lblSumLine.Location = new System.Drawing.Point(105, 29);
+            this.lblSumLine.Name = "lblSumLine";
+            this.lblSumLine.Size = new System.Drawing.Size(163, 16);
+            this.lblSumLine.TabIndex = 0;
+            this.lblSumLine.Text = "0";
+            this.lblSumLine.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label10.Location = new System.Drawing.Point(7, 29);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(97, 16);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "จำนวนสายที่รับ :";
+            // 
+            // chCondCommentOnly
+            // 
+            this.chCondCommentOnly.AutoSize = true;
+            this.chCondCommentOnly.Enabled = false;
+            this.chCondCommentOnly.Location = new System.Drawing.Point(6, 111);
+            this.chCondCommentOnly.Name = "chCondCommentOnly";
+            this.chCondCommentOnly.Size = new System.Drawing.Size(234, 20);
+            this.chCondCommentOnly.TabIndex = 0;
+            this.chCondCommentOnly.Text = "เฉพาะรายการที่มี Comment/Complain";
+            this.chCondCommentOnly.UseVisualStyleBackColor = true;
+            this.chCondCommentOnly.CheckedChanged += new System.EventHandler(this.chCondCommentOnly_CheckedChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 6);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(69, 16);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "สายสนทนา";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(287, 6);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(47, 16);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "พักสาย";
+            // 
+            // panelCondition
+            // 
+            this.panelCondition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelCondition.BackColor = System.Drawing.Color.Gainsboro;
+            this.panelCondition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelCondition.Controls.Add(this.btnApplyCond);
+            this.panelCondition.Controls.Add(this.btnCancelCond);
+            this.panelCondition.Controls.Add(this.btnEditCond);
+            this.panelCondition.Controls.Add(this.btnRestoreCond);
+            this.panelCondition.Controls.Add(this.label14);
+            this.panelCondition.Controls.Add(this.chCondCommentOnly);
+            this.panelCondition.Controls.Add(this.label13);
+            this.panelCondition.Controls.Add(this.dgvCondBreak);
+            this.panelCondition.Controls.Add(this.dgvCondTalk);
+            this.panelCondition.Location = new System.Drawing.Point(576, 55);
+            this.panelCondition.Name = "panelCondition";
+            this.panelCondition.Size = new System.Drawing.Size(532, 137);
+            this.panelCondition.TabIndex = 10;
+            this.panelCondition.Visible = false;
+            // 
+            // btnApplyCond
+            // 
+            this.btnApplyCond.Enabled = false;
+            this.btnApplyCond.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnApplyCond.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApplyCond.Location = new System.Drawing.Point(359, 108);
+            this.btnApplyCond.Name = "btnApplyCond";
+            this.btnApplyCond.Size = new System.Drawing.Size(56, 24);
+            this.btnApplyCond.TabIndex = 3;
+            this.btnApplyCond.Text = "Apply";
+            this.btnApplyCond.UseVisualStyleBackColor = true;
+            this.btnApplyCond.Click += new System.EventHandler(this.btnApplyCond_Click);
+            // 
+            // btnCancelCond
+            // 
+            this.btnCancelCond.Enabled = false;
+            this.btnCancelCond.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnCancelCond.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelCond.Location = new System.Drawing.Point(301, 108);
+            this.btnCancelCond.Name = "btnCancelCond";
+            this.btnCancelCond.Size = new System.Drawing.Size(56, 24);
+            this.btnCancelCond.TabIndex = 3;
+            this.btnCancelCond.Text = "Cancel";
+            this.btnCancelCond.UseVisualStyleBackColor = true;
+            this.btnCancelCond.Click += new System.EventHandler(this.btnCancelCond_Click);
+            // 
+            // btnEditCond
+            // 
+            this.btnEditCond.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEditCond.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEditCond.Location = new System.Drawing.Point(243, 108);
+            this.btnEditCond.Name = "btnEditCond";
+            this.btnEditCond.Size = new System.Drawing.Size(56, 24);
+            this.btnEditCond.TabIndex = 3;
+            this.btnEditCond.Text = "Edit";
+            this.btnEditCond.UseVisualStyleBackColor = true;
+            this.btnEditCond.Click += new System.EventHandler(this.btnEditCond_Click);
+            // 
+            // btnRestoreCond
+            // 
+            this.btnRestoreCond.Enabled = false;
+            this.btnRestoreCond.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnRestoreCond.Image = global::SN_Net.Properties.Resources.restore_default_16;
+            this.btnRestoreCond.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRestoreCond.Location = new System.Drawing.Point(417, 108);
+            this.btnRestoreCond.Name = "btnRestoreCond";
+            this.btnRestoreCond.Size = new System.Drawing.Size(109, 24);
+            this.btnRestoreCond.TabIndex = 3;
+            this.btnRestoreCond.Text = "Restore Default";
+            this.btnRestoreCond.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRestoreCond.UseVisualStyleBackColor = true;
+            this.btnRestoreCond.Click += new System.EventHandler(this.btnRestoreCond_Click);
+            // 
+            // dgvCondBreak
+            // 
+            this.dgvCondBreak.AllowUserToAddRows = false;
+            this.dgvCondBreak.AllowUserToDeleteRows = false;
+            this.dgvCondBreak.AllowUserToResizeColumns = false;
+            this.dgvCondBreak.AllowUserToResizeRows = false;
+            this.dgvCondBreak.BackgroundColor = System.Drawing.Color.White;
+            this.dgvCondBreak.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvCondBreak.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCondBreak.ColumnHeadersVisible = false;
+            this.dgvCondBreak.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_cond_break_selected,
+            this.col_cond_break_text,
+            this.col_cond_break_value});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCondBreak.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvCondBreak.Enabled = false;
+            this.dgvCondBreak.Location = new System.Drawing.Point(337, 5);
+            this.dgvCondBreak.MultiSelect = false;
+            this.dgvCondBreak.Name = "dgvCondBreak";
+            this.dgvCondBreak.ReadOnly = true;
+            this.dgvCondBreak.RowHeadersVisible = false;
+            this.dgvCondBreak.RowTemplate.Height = 18;
+            this.dgvCondBreak.Size = new System.Drawing.Size(187, 100);
+            this.dgvCondBreak.TabIndex = 11;
+            this.dgvCondBreak.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCondition_CellContentClick);
+            this.dgvCondBreak.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvCondition_CellPainting);
+            // 
+            // col_cond_break_selected
+            // 
+            this.col_cond_break_selected.DataPropertyName = "selected";
+            this.col_cond_break_selected.HeaderText = "";
+            this.col_cond_break_selected.MinimumWidth = 22;
+            this.col_cond_break_selected.Name = "col_cond_break_selected";
+            this.col_cond_break_selected.ReadOnly = true;
+            this.col_cond_break_selected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_cond_break_selected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_cond_break_selected.Width = 22;
+            // 
+            // col_cond_break_text
+            // 
+            this.col_cond_break_text.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_cond_break_text.DataPropertyName = "text";
+            this.col_cond_break_text.HeaderText = "Text";
+            this.col_cond_break_text.Name = "col_cond_break_text";
+            this.col_cond_break_text.ReadOnly = true;
+            // 
+            // col_cond_break_value
+            // 
+            this.col_cond_break_value.DataPropertyName = "value";
+            this.col_cond_break_value.HeaderText = "Value";
+            this.col_cond_break_value.Name = "col_cond_break_value";
+            this.col_cond_break_value.ReadOnly = true;
+            this.col_cond_break_value.Visible = false;
+            // 
+            // dgvCondTalk
+            // 
+            this.dgvCondTalk.AllowUserToAddRows = false;
+            this.dgvCondTalk.AllowUserToDeleteRows = false;
+            this.dgvCondTalk.AllowUserToResizeColumns = false;
+            this.dgvCondTalk.AllowUserToResizeRows = false;
+            this.dgvCondTalk.BackgroundColor = System.Drawing.Color.White;
+            this.dgvCondTalk.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvCondTalk.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCondTalk.ColumnHeadersVisible = false;
+            this.dgvCondTalk.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_cond_talk_selected,
+            this.col_cond_talk_text,
+            this.col_cond_talk_value});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCondTalk.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvCondTalk.Enabled = false;
+            this.dgvCondTalk.Location = new System.Drawing.Point(81, 5);
+            this.dgvCondTalk.MultiSelect = false;
+            this.dgvCondTalk.Name = "dgvCondTalk";
+            this.dgvCondTalk.ReadOnly = true;
+            this.dgvCondTalk.RowHeadersVisible = false;
+            this.dgvCondTalk.RowTemplate.Height = 18;
+            this.dgvCondTalk.Size = new System.Drawing.Size(187, 100);
+            this.dgvCondTalk.TabIndex = 11;
+            this.dgvCondTalk.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCondition_CellContentClick);
+            this.dgvCondTalk.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvCondition_CellPainting);
+            // 
+            // col_cond_talk_selected
+            // 
+            this.col_cond_talk_selected.DataPropertyName = "selected";
+            this.col_cond_talk_selected.HeaderText = "";
+            this.col_cond_talk_selected.MinimumWidth = 22;
+            this.col_cond_talk_selected.Name = "col_cond_talk_selected";
+            this.col_cond_talk_selected.ReadOnly = true;
+            this.col_cond_talk_selected.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_cond_talk_selected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_cond_talk_selected.Width = 22;
+            // 
+            // col_cond_talk_text
+            // 
+            this.col_cond_talk_text.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_cond_talk_text.DataPropertyName = "text";
+            this.col_cond_talk_text.HeaderText = "Text";
+            this.col_cond_talk_text.Name = "col_cond_talk_text";
+            this.col_cond_talk_text.ReadOnly = true;
+            // 
+            // col_cond_talk_value
+            // 
+            this.col_cond_talk_value.DataPropertyName = "value";
+            this.col_cond_talk_value.HeaderText = "Value";
+            this.col_cond_talk_value.Name = "col_cond_talk_value";
+            this.col_cond_talk_value.ReadOnly = true;
+            this.col_cond_talk_value.Visible = false;
             // 
             // col_note_note
             // 
@@ -888,6 +1259,7 @@
             // 
             // col_note_seq
             // 
+            this.col_note_seq.DataPropertyName = "seq";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.col_note_seq.DefaultCellStyle = dataGridViewCellStyle2;
             this.col_note_seq.HeaderText = "ลำดับ";
@@ -895,6 +1267,48 @@
             this.col_note_seq.Name = "col_note_seq";
             this.col_note_seq.ReadOnly = true;
             this.col_note_seq.Width = 40;
+            // 
+            // col_note_has_comment
+            // 
+            this.col_note_has_comment.DataPropertyName = "has_comment";
+            this.col_note_has_comment.HeaderText = "Has comment";
+            this.col_note_has_comment.MinimumWidth = 22;
+            this.col_note_has_comment.Name = "col_note_has_comment";
+            this.col_note_has_comment.ReadOnly = true;
+            this.col_note_has_comment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_note_has_comment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_note_has_comment.Visible = false;
+            this.col_note_has_comment.Width = 22;
+            // 
+            // col_note_has_complain
+            // 
+            this.col_note_has_complain.DataPropertyName = "has_complain";
+            this.col_note_has_complain.HeaderText = "Has complain";
+            this.col_note_has_complain.MinimumWidth = 22;
+            this.col_note_has_complain.Name = "col_note_has_complain";
+            this.col_note_has_complain.ReadOnly = true;
+            this.col_note_has_complain.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_note_has_complain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_note_has_complain.Visible = false;
+            this.col_note_has_complain.Width = 22;
+            // 
+            // col_note_has_comment_complain
+            // 
+            this.col_note_has_comment_complain.DataPropertyName = "has_comment_complain";
+            this.col_note_has_comment_complain.HeaderText = "Comment / Complain";
+            this.col_note_has_comment_complain.MinimumWidth = 70;
+            this.col_note_has_comment_complain.Name = "col_note_has_comment_complain";
+            this.col_note_has_comment_complain.ReadOnly = true;
+            this.col_note_has_comment_complain.Width = 70;
+            // 
+            // col_note_username
+            // 
+            this.col_note_username.DataPropertyName = "username";
+            this.col_note_username.HeaderText = "รหัสพนักงาน";
+            this.col_note_username.MinimumWidth = 70;
+            this.col_note_username.Name = "col_note_username";
+            this.col_note_username.ReadOnly = true;
+            this.col_note_username.Width = 70;
             // 
             // col_note_date
             // 
@@ -1115,33 +1529,15 @@
             this.col_note_remark.Name = "col_note_remark";
             this.col_note_remark.ReadOnly = true;
             // 
-            // lblDateTo
-            // 
-            this.lblDateTo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblDateTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblDateTo.Location = new System.Drawing.Point(225, 55);
-            this.lblDateTo.Name = "lblDateTo";
-            this.lblDateTo.Size = new System.Drawing.Size(104, 19);
-            this.lblDateTo.TabIndex = 4;
-            this.lblDateTo.Text = "      ";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label9.Location = new System.Drawing.Point(212, 56);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(14, 16);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "-";
-            // 
             // FormNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1276, 669);
+            this.ClientSize = new System.Drawing.Size(1406, 669);
+            this.Controls.Add(this.panelCondition);
             this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.label6);
@@ -1166,6 +1562,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MinimumSize = new System.Drawing.Size(1190, 500);
             this.Name = "FormNote";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -1176,6 +1573,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvNote)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.panelCondition.ResumeLayout(false);
+            this.panelCondition.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCondBreak)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCondTalk)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1239,8 +1643,38 @@
         private System.Windows.Forms.Label lblUserRealname;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnComment;
+        private System.Windows.Forms.Label lblDateTo;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblSumBreak;
+        private System.Windows.Forms.Label lblSumTalk;
+        private System.Windows.Forms.Label lblSumLine;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox chCondCommentOnly;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Panel panelCondition;
+        private System.Windows.Forms.Button btnRestoreCond;
+        private System.Windows.Forms.DataGridView dgvCondTalk;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn col_cond_talk_selected;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_cond_talk_text;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_cond_talk_value;
+        private System.Windows.Forms.DataGridView dgvCondBreak;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn col_cond_break_selected;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_cond_break_text;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_cond_break_value;
+        private System.Windows.Forms.Button btnApplyCond;
+        private System.Windows.Forms.Button btnEditCond;
+        private System.Windows.Forms.Button btnCancelCond;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_note;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_seq;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn col_note_has_comment;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn col_note_has_complain;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_note_has_comment_complain;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_note_username;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_start;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_end;
@@ -1265,7 +1699,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_is_transfer;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_is_other;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_note_remark;
-        private System.Windows.Forms.Label lblDateTo;
-        private System.Windows.Forms.Label label9;
     }
 }

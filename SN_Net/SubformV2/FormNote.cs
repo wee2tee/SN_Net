@@ -31,6 +31,12 @@ namespace SN_Net.Subform
         private TRNTYP trn_typ;
         private Timer timer;
         private bool show_as_search_result = false;
+        private List<noteVM> countable_item = null;
+        private BindingList<NoteCondition> cond_talk;
+        private BindingList<NoteCondition> cond_break;
+        private BindingList<NoteCondition> cond_talk_tmp;
+        private BindingList<NoteCondition> cond_break_tmp;
+        private bool cond_comment_only;
 
         public FormNote()
         {
@@ -46,11 +52,18 @@ namespace SN_Net.Subform
             this.curr_user = note_user;
         }
 
-        public FormNote(IEnumerable<note> notes)
+        public FormNote(MainForm main_form, IEnumerable<note> notes)
             : this()
         {
+            this.main_form = main_form;
+            this.panel1.Visible = false;
             this.show_as_search_result = true;
             this.note_list = new BindingList<noteVM>(notes.ToViewModel());
+            this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_seq.Name).First().Visible = false;
+            this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_username.Name).First().Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
+            this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_has_comment_complain.Name).First().Visible = false;
+            //int seq = 0;
+            //this.note_list.ToList().ForEach(n => n.seq = (++seq).ToString());
             this.dgvNote.DataSource = this.note_list;
         }
 
@@ -58,8 +71,17 @@ namespace SN_Net.Subform
         {
             this.label9.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
             this.lblDateTo.Visible = this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR ? true : false;
-            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR && !show_as_search_result)
+            {
                 this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_date.Name).First().Visible = false;
+                this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_username.Name).First().Visible = false;
+                this.dgvNote.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_has_comment_complain.Name).First().Visible = false;
+            }
+
+            if(this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR && !show_as_search_result)
+            {
+                this.panelCondition.Visible = true;
+            }
 
             if (!this.show_as_search_result)
             {
@@ -104,6 +126,8 @@ namespace SN_Net.Subform
                 }
                 this.main_form.form_note = null;
             }
+
+            this.main_form.form_note = null;
             base.OnClosing(e);
         }
 
@@ -117,23 +141,27 @@ namespace SN_Net.Subform
 
         public static List<note> GetNoteList(users user, DateTime? date_from, DateTime? date_to)
         {
+            List<note> notes = null;
+
             if (user == null)
-                return null;
+                return notes;
 
             using (sn_noteEntities sn_note = DBXNote.DataSet())
             {
-                if (date_from.HasValue)
+                if (date_from.HasValue && date_to.HasValue)
                 {
                     // Range date
                     var d_from = new DateTime(date_from.Value.Year, date_from.Value.Month, date_from.Value.Day, 0, 0, 0);
                     var d_to = new DateTime(date_to.Value.Year, date_to.Value.Month, date_to.Value.Day, 0, 0, 0);
-                    return sn_note.note.Where(n => n.users_name == user.username && n.date.CompareTo(d_from) >= 0 && n.date.CompareTo(d_to) <=0).OrderBy(n => n.date).ThenBy(n => n.start_time).ToList();
+                    notes = sn_note.note.Where(n => n.users_name == user.username && n.date.CompareTo(d_from) >= 0 && n.date.CompareTo(d_to) <=0).OrderBy(n => n.date).ThenBy(n => n.start_time).ToList();
                 }
                 else
                 {
                     // All date
-                    return sn_note.note.Where(n => n.users_name == user.username).OrderBy(n => n.date).ThenBy(n => n.start_time).ToList();
+                    notes = sn_note.note.Where(n => n.users_name == user.username).OrderBy(n => n.date).ThenBy(n => n.start_time).ToList();
                 }
+
+                return notes;
             }
         }
 
@@ -149,6 +177,44 @@ namespace SN_Net.Subform
             this.inlineBreakType._Items.Add(new XDropdownListItem { Text = "ลูกค้ามาพบ", Value = NoteReason.MEET_CUST });
             this.inlineBreakType._Items.Add(new XDropdownListItem { Text = "แก้ไขข้อมูลให้ลูกค้า", Value = NoteReason.CORRECT_DATA });
             this.inlineBreakType._Items.Add(new XDropdownListItem { Text = "อื่น ๆ", Value = NoteReason.OTHER });
+
+            this.SetDefaultCondition();
+        }
+
+        private void SetDefaultCondition()
+        {
+            this.cond_talk = new BindingList<NoteCondition>();
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "N/A", value = "N/A" });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "Map Drive", value = NoteProblem.MAP_DRIVE });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "Install/Update", value = NoteProblem.INSTALL_UPDATE });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "Error", value = NoteProblem.ERROR });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "Font", value = NoteProblem.FONTS });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "Print", value = NoteProblem.PRINT });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "จองอบรม", value = NoteProblem.TRAINING });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "สินค้า", value = NoteProblem.STOCK });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "แก้ไขแบบฟอร์ม/รายงาน", value = NoteProblem.EDIT_FORM });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "รายงาน -> Excel", value = NoteProblem.REPORT_EXCEL });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "งบการเงิน", value = NoteProblem.STATEMENT });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "สินทรัพย์/ค่าเสื่อม", value = NoteProblem.ASSETS });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "ระบบความปลอดภัย", value = NoteProblem.SECURE });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "ปิดประมวลผลสิ้นปี", value = NoteProblem.YEAR_END });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "วันที่ไม่อยู่ในงวด", value = NoteProblem.PERIOD });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "Mail/รอสาย/หลุด", value = NoteProblem.MAIL_WAIT });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "โอนฝ่ายขาย", value = NoteProblem.TRANSFER_MKT });
+            this.cond_talk.Add(new NoteCondition { selected = true, text = "อื่น ๆ", value = NoteProblem.OTHER });
+            this.dgvCondTalk.DataSource = this.cond_talk;
+
+            this.cond_break = new BindingList<NoteCondition>();
+            this.cond_break.Add(new NoteCondition { selected = true, text = "แก้ไขข้อมูลให้ลูกค้า", value = NoteReason.CORRECT_DATA });
+            this.cond_break.Add(new NoteCondition { selected = true, text = "ลูกค้ามาพบ", value = NoteReason.MEET_CUST });
+            this.cond_break.Add(new NoteCondition { selected = true, text = "อื่น ๆ", value = NoteReason.OTHER });
+            this.cond_break.Add(new NoteCondition { selected = true, text = "ทำใบเสนอราคา", value = NoteReason.QT });
+            this.cond_break.Add(new NoteCondition { selected = true, text = "เข้าห้องน้ำ", value = NoteReason.TOILET });
+            this.cond_break.Add(new NoteCondition { selected = true, text = "เข้าห้องอบรม(ผู้ช่วย)", value = NoteReason.TRAINING_ASSIST });
+            this.cond_break.Add(new NoteCondition { selected = true, text = "เข้าห้องอบรม(วิทยากร)", value = NoteReason.TRAINING_TRAINER });
+            this.dgvCondBreak.DataSource = this.cond_break;
+
+            this.chCondCommentOnly.Checked = false;
         }
 
         private void ResetFormState(FORM_MODE form_mode)
@@ -171,6 +237,26 @@ namespace SN_Net.Subform
             this.lblUserName.Text = this.curr_user != null ? this.curr_user.username : string.Empty;
             this.lblUserRealname.Text = this.curr_user != null ? this.curr_user.name : string.Empty;
             this.dgvNote.DataSource = this.note_list;
+
+            this.FillSummaryText();
+        }
+
+        private void FillSummaryText()
+        {
+            this.lblSumLine.Text = this.note_list.Where(n => n.note.is_break == "N").Count().ToString();
+            TimeSpan ts = TimeSpan.Parse("00:00");
+            this.note_list.Where(n => n.note.is_break == "N").ToList().ForEach(n =>
+            {
+                ts = ts.Add(TimeSpan.Parse(n.duration));
+            });
+            this.lblSumTalk.Text = ts.GetTimeSpanHourBaseString();
+
+            ts = TimeSpan.Parse("00:00");
+            this.note_list.Where(n => n.note.is_break == "Y").ToList().ForEach(n =>
+            {
+                ts = ts.Add(TimeSpan.Parse(n.duration));
+            });
+            this.lblSumBreak.Text = ts.GetTimeSpanHourBaseString();
         }
 
         private void RefreshForm()
@@ -185,6 +271,57 @@ namespace SN_Net.Subform
                     if(this.curr_user != null && this.date_from.HasValue && this.date_to.HasValue)
                     {
                         this.note_list = new BindingList<noteVM>(GetNoteList(this.curr_user, this.date_from, this.date_to).ToViewModel());
+                        List<string> talks = this.cond_talk.Where(t => t.selected).Select(t => t.value).ToList();
+                        List<string> breaks = this.cond_break.Where(t => t.selected).Select(t => t.value).ToList();
+
+                        List<noteVM> notes = new List<noteVM>();
+                        this.note_list.ToList().ForEach(n =>
+                        {
+                            bool talk_in_spec = false;
+                            talks.ForEach(t =>
+                            {
+                                if(t == "N/A")
+                                {
+                                    if (n.note.problem.Trim().Length == 0)
+                                        talk_in_spec = true;
+                                }
+                                else
+                                {
+                                    if (n.note.problem.Contains(t))
+                                        talk_in_spec = true;
+                                }
+                                
+                            });
+
+                            bool break_in_spec = false;
+                            breaks.ForEach(b =>
+                            {
+                                if (n.note.reason.Contains(b))
+                                    break_in_spec = true;
+                            });
+
+                            if (talk_in_spec || break_in_spec)
+                            {
+                                if (this.cond_comment_only)
+                                {
+                                    if (n.has_comment || n.has_complain)
+                                        notes.Add(n);
+                                }
+                                else
+                                {
+                                    notes.Add(n);
+                                }
+                            }
+                        });
+
+                        this.note_list = new BindingList<noteVM>(notes);
+
+                        int seq = 0;
+                        this.note_list.ToList().ForEach(n =>
+                        {
+                            n.seq = n.note.is_break == "N" ? (++seq).ToString() : "";
+                        });
+                        this.countable_item = this.note_list.Where(n => n.note.is_break == "N").ToList();
                     }
                     else
                     {
@@ -321,14 +458,22 @@ namespace SN_Net.Subform
 
             if((this.trn_typ == TRNTYP.TEL || this.trn_typ == TRNTYP.BREAK) && this.form_mode == FORM_MODE.ADD_ITEM)
             {
-                this.lblTime.Visible = true;
+                this.lblTime.Visible = this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR ? true : false;
             }
         }
 
         private void SetInlineFormPosition(DataGridViewRow row)
         {
-            this.inlineStart.Enabled = this.form_mode == FORM_MODE.EDIT_ITEM || (this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.TRAIN) ? true : false;
-            this.inlineEnd.Enabled = this.form_mode == FORM_MODE.EDIT_ITEM || (this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.TRAIN) ? true : false;
+            if(this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+            {
+                this.inlineStart.Enabled = true;
+                this.inlineEnd.Enabled = true;
+            }
+            else
+            {
+                this.inlineStart.Enabled = this.form_mode == FORM_MODE.EDIT_ITEM || (this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.TRAIN) ? true : false;
+                this.inlineEnd.Enabled = this.form_mode == FORM_MODE.EDIT_ITEM || (this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.TRAIN) ? true : false;
+            }
 
             int col_index = row.DataGridView.Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_start.Name).First().Index;
             this.inlineStart.SetInlineControlPosition(row.DataGridView, row.Index, col_index);
@@ -505,38 +650,45 @@ namespace SN_Net.Subform
             this.ResetFormState(FORM_MODE.ADD_ITEM);
             this.ShowInlineForm(row);
 
-            if(this.trn_typ == TRNTYP.TEL || this.trn_typ == TRNTYP.BREAK)
+            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
             {
-                this.timer = new Timer();
-                this.timer.Interval = 1000;
-                this.timer.Tick += delegate
+                if (this.trn_typ == TRNTYP.TEL || this.trn_typ == TRNTYP.BREAK)
                 {
-                    this.inlineEnd.Text = DateTime.Now.ToString("HH:mm:ss", CultureInfo.GetCultureInfo("th-TH"));
-                    if(this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.BREAK && (DateTime.Now.ToString("HH:mm") == "12:00" || DateTime.Now.ToString("HH:mm") == "17:00"))
+                    this.timer = new Timer();
+                    this.timer.Interval = 1000;
+                    this.timer.Tick += delegate
                     {
-                        this.btnSave.PerformClick();
-                    }
-                };
-                this.timer.Enabled = true;
-                this.timer.Start();
-            }
+                        this.inlineEnd.Text = DateTime.Now.ToString("HH:mm:ss", CultureInfo.GetCultureInfo("th-TH"));
+                        if (this.form_mode == FORM_MODE.ADD_ITEM && this.trn_typ == TRNTYP.BREAK && (DateTime.Now.ToString("HH:mm") == "12:00" || DateTime.Now.ToString("HH:mm") == "17:00"))
+                        {
+                            this.btnSave.PerformClick();
+                        }
+                    };
+                    this.timer.Enabled = true;
+                    this.timer.Start();
+                }
 
-            if (this.trn_typ == TRNTYP.TEL)
-            {
-                this.inlineSernum.Focus();
-                return;
-            }
+                if (this.trn_typ == TRNTYP.TEL)
+                {
+                    this.inlineSernum.Focus();
+                    return;
+                }
 
-            if(this.trn_typ == TRNTYP.BREAK)
-            {
-                this.inlineBreakType.Focus();
-                return;
-            }
+                if (this.trn_typ == TRNTYP.BREAK)
+                {
+                    this.inlineBreakType.Focus();
+                    return;
+                }
 
-            if(this.trn_typ == TRNTYP.TRAIN)
+                if (this.trn_typ == TRNTYP.TRAIN)
+                {
+                    this.inlineStart.Focus();
+                    return;
+                }
+            }
+            else
             {
                 this.inlineStart.Focus();
-                return;
             }
         }
 
@@ -721,6 +873,7 @@ namespace SN_Net.Subform
                 this.timer = null;
             }
 
+            this.FillSummaryText();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -739,7 +892,7 @@ namespace SN_Net.Subform
                     {
                         notes = sn_note.note.Where(n => n.users_name == this.curr_user.username && n.sernum.Trim() == search.keyword.Trim()).OrderByDescending(n => n.date).ThenByDescending(n => n.start_time).ToList();
                     }
-                    FormNote frm = new FormNote(notes);
+                    FormNote frm = new FormNote(this.main_form, notes);
                     frm.ShowDialog();
                 }
             }
@@ -820,52 +973,45 @@ namespace SN_Net.Subform
 
             if(e.RowIndex > -1)
             {
-                var countable_item = ((BindingList<noteVM>)((XDatagrid)sender).DataSource).ToList().Where(i => i.note.is_break == "N").ToList();
-                var curr_item_is_countable = countable_item.Where(i => i.note.id == ((note)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_note_note.Name].Value).id).FirstOrDefault();
-                bool has_comment = ((note)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_note_note.Name].Value).HasComment();
-
-                if (curr_item_is_countable == null)
+                if (((string)((XDatagrid)sender).Rows[e.RowIndex].Cells[this.col_note_seq.Name].Value).Trim().Length == 0)
                 {
                     e.CellStyle.BackColor = Color.WhiteSmoke;
                     e.CellStyle.SelectionBackColor = Color.WhiteSmoke;
                     e.CellStyle.ForeColor = Color.Gray;
                     e.CellStyle.SelectionForeColor = Color.Gray;
                 }
-                else if (has_comment && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+                else if (this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
                 {
-                    e.CellStyle.BackColor = Color.MistyRose;
-                    e.CellStyle.SelectionBackColor = Color.MistyRose;
-                }
+                    if(e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_has_comment_complain.Name).First().Index)
+                    {
+                        bool has_comment = this.note_list[e.RowIndex].has_comment;
+                        bool has_complain = this.note_list[e.RowIndex].has_complain;
 
-                if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_seq.Name).First().Index)
-                {
-                    //((XDatagrid)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value = e.RowIndex + 1;
-                    
-                    if(curr_item_is_countable != null)
-                    {
-                        var seq = countable_item.IndexOf(curr_item_is_countable) + 1;
-                        ((XDatagrid)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value = seq.ToString();
-                    }
-                    else
-                    {
-                        ((XDatagrid)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value = string.Empty;
-                    }
-                    e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-                    if (has_comment && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
-                    {
-                        using (SolidBrush red_brush = new SolidBrush(Color.Red))
+                        if (has_comment && !has_complain && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
                         {
-                            using (Font big_fnt = new Font("tahoma", 16f, FontStyle.Bold))
-                            {
-                                e.Graphics.DrawString("!", big_fnt, red_brush, new Point(e.CellBounds.X, e.CellBounds.Y - 2));
-                            }
+                            e.CellStyle.BackColor = Color.Lavender;
+                            e.CellStyle.SelectionBackColor = Color.Lavender;
+                            e.CellStyle.ForeColor = Color.Blue;
+                            e.CellStyle.SelectionForeColor = Color.Blue;
+                        }
+                        else if (!has_comment && has_complain && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+                        {
+                            e.CellStyle.BackColor = Color.MistyRose;
+                            e.CellStyle.SelectionBackColor = Color.MistyRose;
+                            e.CellStyle.ForeColor = Color.Red;
+                            e.CellStyle.SelectionForeColor = Color.Red;
+                        }
+                        else if (has_comment && has_complain && this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+                        {
+                            e.CellStyle.BackColor = Color.MistyRose;
+                            e.CellStyle.SelectionBackColor = Color.MistyRose;
+                            e.CellStyle.ForeColor = Color.Blue;
+                            e.CellStyle.SelectionForeColor = Color.Blue;
                         }
                     }
-
-                    e.Handled = true;
-                    return;
                 }
-                else if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_is_mapdrive.Name).First().Index
+
+                if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_is_mapdrive.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_is_installupdate.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_is_error.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_is_installfonts.Name).First().Index
@@ -983,7 +1129,10 @@ namespace SN_Net.Subform
         private void inlineStart_ValueChanged(object sender, EventArgs e)
         {
             if (this.tmp_note != null)
+            {
                 this.tmp_note.start_time = ((XTimePicker)sender).Text;
+                this.inlineDuration.Text = (this.tmp_note.start_time.GetDifTimeInDate(this.tmp_note.end_time)).ToString(@"hh\:mm\:ss", CultureInfo.GetCultureInfo("th-TH"));
+            }
         }
 
         private void inlineEnd_ValueChanged(object sender, EventArgs e)
@@ -1517,5 +1666,91 @@ namespace SN_Net.Subform
                 InputLanguage.CurrentInputLanguage = tha_lang != null ? tha_lang : InputLanguage.CurrentInputLanguage;
             }
         }
+
+        private void btnRestoreCond_Click(object sender, EventArgs e)
+        {
+            if(this.form_mode != FORM_MODE.READ && this.form_mode != FORM_MODE.READ_ITEM)
+            {
+                MessageAlert.Show("Cannot change condition in add/edit mode", "", MessageAlertButtons.OK, MessageAlertIcons.STOP);
+                return;
+            }
+            this.SetDefaultCondition();
+        }
+
+        private void chCondCommentOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            this.cond_comment_only = ((CheckBox)sender).Checked;
+        }
+
+        private void dgvCondition_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ((BindingList<NoteCondition>)((DataGridView)sender).DataSource)[e.RowIndex].selected = !((BindingList<NoteCondition>)((DataGridView)sender).DataSource)[e.RowIndex].selected;
+            ((DataGridView)sender).Refresh();
+        }
+
+        private void dgvCondition_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            var selected = (bool)((DataGridView)sender).Rows[e.RowIndex].Cells[0].Value;
+
+            if (!selected)
+            {
+                e.CellStyle.BackColor = Color.WhiteSmoke;
+                e.CellStyle.SelectionBackColor = Color.WhiteSmoke;
+                e.CellStyle.ForeColor = Color.DimGray;
+                e.CellStyle.SelectionForeColor = Color.DimGray;
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                e.Handled = true;
+            }
+        }
+
+        private void btnEditCond_Click(object sender, EventArgs e)
+        {
+            this.cond_comment_only = this.chCondCommentOnly.Checked;
+            this.cond_break_tmp = new BindingList<NoteCondition>(this.cond_break.ToList().ConvertAll(c => new NoteCondition { selected = c.selected, text = c.text, value = c.value }));
+            this.cond_talk_tmp = new BindingList<NoteCondition>(this.cond_talk.ToList().ConvertAll(c => new NoteCondition { selected = c.selected, text = c.text, value = c.value }));
+            this.dgvCondBreak.Enabled = true;
+            this.dgvCondTalk.Enabled = true;
+            this.chCondCommentOnly.Enabled = true;
+            this.btnEditCond.Enabled = false;
+            this.btnCancelCond.Enabled = true;
+            this.btnApplyCond.Enabled = true;
+            this.btnRestoreCond.Enabled = true;
+        }
+
+        private void btnCancelCond_Click(object sender, EventArgs e)
+        {
+            this.chCondCommentOnly.Checked = this.cond_comment_only;
+            this.cond_break = new BindingList<NoteCondition>(this.cond_break_tmp.ToList().ConvertAll(c => new NoteCondition { selected = c.selected, text = c.text, value = c.value }));
+            this.dgvCondBreak.DataSource = this.cond_break;
+            this.cond_talk = new BindingList<NoteCondition>(this.cond_talk_tmp.ToList().ConvertAll(c => new NoteCondition { selected = c.selected, text = c.text, value = c.value }));
+            this.dgvCondTalk.DataSource = this.cond_talk;
+            this.dgvCondBreak.Enabled = false;
+            this.dgvCondTalk.Enabled = false;
+            this.chCondCommentOnly.Enabled = false;
+            this.btnEditCond.Enabled = true;
+            this.btnCancelCond.Enabled = false;
+            this.btnApplyCond.Enabled = false;
+            this.btnRestoreCond.Enabled = false;
+        }
+
+        private void btnApplyCond_Click(object sender, EventArgs e)
+        {
+            this.dgvCondBreak.Enabled = false;
+            this.dgvCondTalk.Enabled = false;
+            this.chCondCommentOnly.Enabled = false;
+            this.btnEditCond.Enabled = true;
+            this.btnCancelCond.Enabled = false;
+            this.btnApplyCond.Enabled = false;
+            this.btnRestoreCond.Enabled = false;
+
+            this.RefreshForm();
+        }
+    }
+
+    public class NoteCondition
+    {
+        public bool selected { get; set; }
+        public string text { get; set; }
+        public string value { get; set; }
     }
 }

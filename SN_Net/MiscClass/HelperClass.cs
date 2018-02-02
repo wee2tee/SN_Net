@@ -14,6 +14,7 @@ using SN_Net.ViewModels;
 using CC;
 using System.ComponentModel;
 using SN_Net.Model;
+using SN_Net.Subform;
 
 namespace SN_Net.MiscClass
 {
@@ -912,20 +913,35 @@ namespace SN_Net.MiscClass
             }
         }
 
-        public static bool HasComment(this note note)
-        {
-            using (sn_noteEntities sn_note = DBXNote.DataSet())
-            {
-                if (sn_note.note_comment.Where(c => c.note_id == note.id).AsEnumerable().Count() > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+        //public static bool HasComment(this note note)
+        //{
+        //    using (sn_noteEntities sn_note = DBXNote.DataSet())
+        //    {
+        //        if (sn_note.note_comment.Where(c => c.note_id == note.id && c.type == (int)DialogNoteComment.NOTE_COMMENT_TYPE.COMMENT).AsEnumerable().Count() > 0)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //}
+
+        //public static bool HasComplain(this note note)
+        //{
+        //    using (sn_noteEntities sn_note = DBXNote.DataSet())
+        //    {
+        //        if (sn_note.note_comment.Where(c => c.note_id == note.id && c.type == (int)DialogNoteComment.NOTE_COMMENT_TYPE.COMPLAIN).AsEnumerable().Count() > 0)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //}
 
         public static DateTime GetFirstDateOfMonth(this DateTime curr_date)
         {
@@ -995,9 +1011,54 @@ namespace SN_Net.MiscClass
             string str = string.Empty;
             int days = ts.TotalHours / 8 >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours / 8)) : 0;
             int hrs = Math.Floor(ts.TotalHours) - (days * 8) >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours) - (days * 8)) : 0;
-            int mins = ts.TotalMinutes - (days * 8 * 60) - (hrs * 60) >= 1 ? Convert.ToInt32(ts.TotalMinutes - (days * 8 * 60) - (hrs * 60)) : 0; // Convert.ToInt32(Math.Floor(ts.TotalMinutes - (ts.TotalHours * 60)));
+            int mins = ts.TotalMinutes - (days * 8 * 60) - (hrs * 60) >= 1 ? Convert.ToInt32(ts.TotalMinutes - (days * 8 * 60) - (hrs * 60)) : 0;
 
             str += (days > 0 ? days.ToString() + " วัน  " : "") + (hrs > 0 ? hrs.ToString() + " ชั่วโมง  " : "") + (mins > 0 ? mins.ToString() + " นาที" : "");
+            return str;
+        }
+
+        public static string GetTimeSpanShortString(this TimeSpan ts)
+        {
+            string str = string.Empty;
+            int days = ts.TotalHours / 8 >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours / 8)) : 0;
+            int hrs = Math.Floor(ts.TotalHours) - (days * 8) >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours) - (days * 8)) : 0;
+            int mins = ts.TotalMinutes - (days * 8 * 60) - (hrs * 60) >= 1 ? Convert.ToInt32(ts.TotalMinutes - (days * 8 * 60) - (hrs * 60)) : 0;
+
+            if(days == 1 && hrs == 0 && mins == 0)
+            {
+                str += "เต็มวัน";
+            }
+            else
+            {
+                str += (days > 0 ? days.ToString() + " วัน  " : "") + hrs.ToString() + (mins > 0 ? ":" + mins.ToString() : "") + " ชม.";
+            }
+            
+            return str;
+        }
+
+        public static string GetTimeSpanHourBaseString(this TimeSpan ts)
+        {
+            string str = string.Empty;
+            //int days = ts.TotalHours / 8 >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours / 8)) : 0;
+            //int hrs = Math.Floor(ts.TotalHours) - (days * 8) >= 1 ? Convert.ToInt32(Math.Floor(ts.TotalHours) - (days * 8)) : 0;
+            //int mins = ts.TotalMinutes - (days * 8 * 60) - (hrs * 60) >= 1 ? Convert.ToInt32(ts.TotalMinutes - (days * 8 * 60) - (hrs * 60)) : 0;
+            int hrs = Convert.ToInt32(Math.Floor(ts.TotalHours));
+            int mins = Convert.ToInt32(Math.Floor(ts.TotalMinutes - (hrs * 60)));
+            int secs = Convert.ToInt32(Math.Floor(ts.TotalSeconds - (hrs * 60 * 60) - (mins * 60)));
+
+            if (hrs > 0)
+            {
+                str += hrs.ToString() + " ชม. ";
+            }
+            if (mins > 0)
+            {
+                str += mins.ToString() + " นาที ";
+            }
+            if (secs > 0)
+            {
+                str += secs.ToString() + " วินาที";
+            }
+
             return str;
         }
 

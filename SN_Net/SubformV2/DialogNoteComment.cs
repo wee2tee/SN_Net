@@ -439,7 +439,7 @@ namespace SN_Net.Subform
         {
             if (e.RowIndex == -1)
             {
-                e.CellStyle.BackColor = Color.MistyRose;
+                e.CellStyle.BackColor = Color.LightBlue;
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
                 e.Handled = true;
             }
@@ -449,7 +449,7 @@ namespace SN_Net.Subform
         {
             if (e.RowIndex == -1)
             {
-                e.CellStyle.BackColor = Color.LightBlue;
+                e.CellStyle.BackColor = Color.MistyRose;
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
                 e.Handled = true;
             }
