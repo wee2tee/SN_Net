@@ -931,6 +931,8 @@ namespace SN_Net.Subform
             {
                 bool is_problem_columns = false;
                 if (e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_seq.Name).First().Index
+                    || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_has_comment_complain.Name).First().Index
+                    || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_username.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_date.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_start.Name).First().Index
                     || e.ColumnIndex == ((XDatagrid)sender).Columns.Cast<DataGridViewColumn>().Where(c => c.Name == this.col_note_end.Name).First().Index

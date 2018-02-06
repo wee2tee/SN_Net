@@ -117,8 +117,11 @@
             this.btnSaveItem = new System.Windows.Forms.Button();
             this.btnEditItem = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.drYearAbsentUserTo = new CC.XDropdownList();
+            this.drYearAbsentUserFrom = new CC.XDropdownList();
             this.dtYearAbsentTo = new System.Windows.Forms.DateTimePicker();
             this.dtYearAbsentFrom = new System.Windows.Forms.DateTimePicker();
+            this.btnEditScopeYearAbsent = new System.Windows.Forms.Button();
             this.btnOKYearAbsent = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvSum = new CC.XDatagrid();
@@ -129,13 +132,10 @@
             this.col_c4_tot_absent_comm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c4_fine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_c4_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.drYearAbsentUserFrom = new CC.XDropdownList();
-            this.drYearAbsentUserTo = new CC.XDropdownList();
-            this.btnEditScopeYearAbsent = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grpYear.SuspendLayout();
@@ -1142,6 +1142,38 @@
             this.tabPage2.Text = "สรุปวันลารายบุคคล <F7>";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // drYearAbsentUserTo
+            // 
+            this.drYearAbsentUserTo._DroppedDown = false;
+            this.drYearAbsentUserTo._ReadOnly = true;
+            this.drYearAbsentUserTo._SelectedItem = null;
+            this.drYearAbsentUserTo._Text = "";
+            this.drYearAbsentUserTo.BackColor = System.Drawing.Color.White;
+            this.drYearAbsentUserTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drYearAbsentUserTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.drYearAbsentUserTo.Location = new System.Drawing.Point(327, 11);
+            this.drYearAbsentUserTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.drYearAbsentUserTo.Name = "drYearAbsentUserTo";
+            this.drYearAbsentUserTo.Size = new System.Drawing.Size(166, 23);
+            this.drYearAbsentUserTo.TabIndex = 7;
+            this.drYearAbsentUserTo.TabStop = false;
+            // 
+            // drYearAbsentUserFrom
+            // 
+            this.drYearAbsentUserFrom._DroppedDown = false;
+            this.drYearAbsentUserFrom._ReadOnly = true;
+            this.drYearAbsentUserFrom._SelectedItem = null;
+            this.drYearAbsentUserFrom._Text = "";
+            this.drYearAbsentUserFrom.BackColor = System.Drawing.Color.White;
+            this.drYearAbsentUserFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drYearAbsentUserFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.drYearAbsentUserFrom.Location = new System.Drawing.Point(129, 11);
+            this.drYearAbsentUserFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.drYearAbsentUserFrom.Name = "drYearAbsentUserFrom";
+            this.drYearAbsentUserFrom.Size = new System.Drawing.Size(166, 23);
+            this.drYearAbsentUserFrom.TabIndex = 6;
+            this.drYearAbsentUserFrom.TabStop = false;
+            // 
             // dtYearAbsentTo
             // 
             this.dtYearAbsentTo.Enabled = false;
@@ -1157,6 +1189,16 @@
             this.dtYearAbsentFrom.Name = "dtYearAbsentFrom";
             this.dtYearAbsentFrom.Size = new System.Drawing.Size(166, 23);
             this.dtYearAbsentFrom.TabIndex = 8;
+            // 
+            // btnEditScopeYearAbsent
+            // 
+            this.btnEditScopeYearAbsent.Location = new System.Drawing.Point(499, 11);
+            this.btnEditScopeYearAbsent.Name = "btnEditScopeYearAbsent";
+            this.btnEditScopeYearAbsent.Size = new System.Drawing.Size(99, 49);
+            this.btnEditScopeYearAbsent.TabIndex = 10;
+            this.btnEditScopeYearAbsent.Text = "เปลี่ยนขอบเขตของรายการ";
+            this.btnEditScopeYearAbsent.UseVisualStyleBackColor = true;
+            this.btnEditScopeYearAbsent.Click += new System.EventHandler(this.btnEditScopeYearAbsent_Click);
             // 
             // btnOKYearAbsent
             // 
@@ -1299,37 +1341,6 @@
             this.col_c4_remark.ReadOnly = true;
             this.col_c4_remark.Visible = false;
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(301, 40);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(22, 16);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "ถึง";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label9.Location = new System.Drawing.Point(18, 40);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(56, 16);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "วันที่ จาก";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label18.Location = new System.Drawing.Point(18, 15);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(100, 16);
-            this.label18.TabIndex = 1;
-            this.label18.Text = "รหัสพนักงาน จาก";
-            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -1341,47 +1352,36 @@
             this.label19.Text = "ถึง";
             this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // drYearAbsentUserFrom
+            // label11
             // 
-            this.drYearAbsentUserFrom._DroppedDown = false;
-            this.drYearAbsentUserFrom._ReadOnly = true;
-            this.drYearAbsentUserFrom._SelectedItem = null;
-            this.drYearAbsentUserFrom._Text = "";
-            this.drYearAbsentUserFrom.BackColor = System.Drawing.Color.White;
-            this.drYearAbsentUserFrom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drYearAbsentUserFrom.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.drYearAbsentUserFrom.Location = new System.Drawing.Point(129, 11);
-            this.drYearAbsentUserFrom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.drYearAbsentUserFrom.Name = "drYearAbsentUserFrom";
-            this.drYearAbsentUserFrom.Size = new System.Drawing.Size(166, 23);
-            this.drYearAbsentUserFrom.TabIndex = 6;
-            this.drYearAbsentUserFrom.TabStop = false;
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label11.Location = new System.Drawing.Point(301, 40);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(22, 16);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "ถึง";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // drYearAbsentUserTo
+            // label18
             // 
-            this.drYearAbsentUserTo._DroppedDown = false;
-            this.drYearAbsentUserTo._ReadOnly = true;
-            this.drYearAbsentUserTo._SelectedItem = null;
-            this.drYearAbsentUserTo._Text = "";
-            this.drYearAbsentUserTo.BackColor = System.Drawing.Color.White;
-            this.drYearAbsentUserTo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drYearAbsentUserTo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.drYearAbsentUserTo.Location = new System.Drawing.Point(327, 11);
-            this.drYearAbsentUserTo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.drYearAbsentUserTo.Name = "drYearAbsentUserTo";
-            this.drYearAbsentUserTo.Size = new System.Drawing.Size(166, 23);
-            this.drYearAbsentUserTo.TabIndex = 7;
-            this.drYearAbsentUserTo.TabStop = false;
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label18.Location = new System.Drawing.Point(18, 15);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(100, 16);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "รหัสพนักงาน จาก";
             // 
-            // btnEditScopeYearAbsent
+            // label9
             // 
-            this.btnEditScopeYearAbsent.Location = new System.Drawing.Point(499, 11);
-            this.btnEditScopeYearAbsent.Name = "btnEditScopeYearAbsent";
-            this.btnEditScopeYearAbsent.Size = new System.Drawing.Size(99, 49);
-            this.btnEditScopeYearAbsent.TabIndex = 10;
-            this.btnEditScopeYearAbsent.Text = "เปลี่ยนขอบเขตของรายการ";
-            this.btnEditScopeYearAbsent.UseVisualStyleBackColor = true;
-            this.btnEditScopeYearAbsent.Click += new System.EventHandler(this.btnEditScopeYearAbsent_Click);
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label9.Location = new System.Drawing.Point(18, 40);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(56, 16);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "วันที่ จาก";
             // 
             // FormAbsentReport
             // 

@@ -14,13 +14,15 @@ namespace SN_Net.Subform
 {
     public partial class DialogAbsentReportScope : Form
     {
+        private MainForm main_form;
         public users user_from = null;
         public users user_to = null;
         public DateTime? date_from = null;
         public DateTime? date_to = null;
 
-        public DialogAbsentReportScope(users selected_user = null, DateTime? selected_date_from = null, DateTime? selected_date_to = null)
+        public DialogAbsentReportScope(MainForm main_form, users selected_user = null, DateTime? selected_date_from = null, DateTime? selected_date_to = null)
         {
+            this.main_form = main_form;
             this.user_from = selected_user;
             this.user_to = selected_user;
             this.date_from = selected_date_from;
@@ -45,15 +47,21 @@ namespace SN_Net.Subform
                 }
             }
 
-            this.dtDateFrom.Value = this.date_from.HasValue ? this.date_from.Value : DateTime.Now;
-            this.dtDateTo.Value = this.date_to.HasValue ? this.date_to.Value : DateTime.Now;
+            this.dtDateFrom._SelectedDate = this.date_from.HasValue ? this.date_from.Value : DateTime.Now;
+            this.dtDateTo._SelectedDate = this.date_to.HasValue ? this.date_to.Value : DateTime.Now;
+
+            if(this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+            {
+                this.cbUserFrom.SelectedItem = this.cbUserFrom.Items.Cast<XDropdownListItem>().Where(i => ((users)i.Value).id == this.main_form.loged_in_user.id).First();
+                this.cbUserFrom.Enabled = false;
+            }
         }
 
         private void cbUserFrom_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.user_from = (users)((XDropdownListItem)((ComboBox)sender).SelectedItem).Value;
 
-            /** uncomment this if want to use user range **/
+            /** comment this if want to use user range **/
             this.cbUserTo.SelectedItem = this.cbUserTo.Items.Cast<XDropdownListItem>().Where(i => ((users)i.Value).id == this.user_from.id).FirstOrDefault();
         }
 
@@ -67,7 +75,7 @@ namespace SN_Net.Subform
             string txt = ((ComboBox)sender).Text;
             if(txt.Trim().Length > 0)
             {
-                var selected_item = ((ComboBox)sender).Items.Cast<XDropdownListItem>().Where(i => i.Text.StartsWith(txt)).FirstOrDefault();
+                var selected_item = ((ComboBox)sender).Items.Cast<XDropdownListItem>().Where(i => i.Text.ToLower().StartsWith(txt.ToLower())).FirstOrDefault();
 
                 if (selected_item != null)
                 {
@@ -110,14 +118,18 @@ namespace SN_Net.Subform
             }
         }
 
-        private void dtDateFrom_ValueChanged(object sender, EventArgs e)
+        private void dtDateFrom_SelectedDateChanged(object sender, EventArgs e)
         {
-            this.date_from = ((DateTimePicker)sender).Value.Date;
+            this.date_from = ((XDatePicker)sender)._SelectedDate.HasValue ? (DateTime?)((XDatePicker)sender)._SelectedDate.Value.Date : null;
+
+            this.btnOK.Enabled = this.date_from.HasValue && this.date_to.HasValue ? true : false;
         }
 
-        private void dtDateTo_ValueChanged(object sender, EventArgs e)
+        private void dtDateTo_SelectedDateChanged(object sender, EventArgs e)
         {
-            this.date_to = ((DateTimePicker)sender).Value.Date;
+            this.date_to = ((XDatePicker)sender)._SelectedDate.HasValue ? (DateTime?)((XDatePicker)sender)._SelectedDate.Value.Date : null;
+
+            this.btnOK.Enabled = this.date_from.HasValue && this.date_to.HasValue ? true : false;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -155,6 +167,14 @@ namespace SN_Net.Subform
                 return true;
             }
 
+            if (keyData == Keys.Escape)
+            {
+                if (this.cbUserFrom.DroppedDown || this.cbUserTo.DroppedDown || this.dtDateFrom._IsCalendarShown || this.dtDateTo._IsCalendarShown)
+                    return false;
+
+                this.btnCancel.PerformClick();
+                return true;
+            }
             return base.ProcessCmdKey(ref msg, keyData);
         }
     }

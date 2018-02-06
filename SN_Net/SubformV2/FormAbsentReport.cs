@@ -55,13 +55,16 @@ namespace SN_Net.Subform
             this.inlineMedcert._Items.Add(new XDropdownListItem { Text = "มีเอกสารอื่น ๆ", Value = CALENDAR_EVENT_MEDCERT.OTHER_DOCUMENT });
             this.inlineMedcert._Items.Add(new XDropdownListItem { Text = "มีใบรับรองแพทย์", Value = CALENDAR_EVENT_MEDCERT.HAVE_MEDCERT });
             this.RemoveInlineForm();
+
+            if (this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+                this.tabPage2.Dispose();
         }
 
         private void FormAbsentReport_Shown(object sender, EventArgs e)
         {
             if(this.users_from == null || this.users_to == null || this.date_from == null || this.date_to == null)
             {
-                DialogAbsentReportScope scope = new DialogAbsentReportScope();
+                DialogAbsentReportScope scope = new DialogAbsentReportScope(this.main_form);
                 if(scope.ShowDialog() != DialogResult.OK)
                 {
                     this.Close();
@@ -83,6 +86,21 @@ namespace SN_Net.Subform
                 }
             }
             
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if(this.form_mode == FORM_MODE.EDIT_ITEM)
+            {
+                if(MessageAlert.Show("ข้อมูลที่กำลังแก้ไขจะไม่ถูกบันทึก, ทำต่อหรือไม่", "", MessageAlertButtons.OK_CANCEL, MessageAlertIcons.QUESTION) == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            this.main_form.form_absentreport = null;
+            base.OnClosing(e);
         }
 
         private void GetData(/*List<note_istab> accepted_causes = null*/)
@@ -821,7 +839,7 @@ namespace SN_Net.Subform
 
         private void btnChangeScope_Click(object sender, EventArgs e)
         {
-            DialogAbsentReportScope scope = new DialogAbsentReportScope(this.users_from, this.date_from, this.date_to);
+            DialogAbsentReportScope scope = new DialogAbsentReportScope(this.main_form, this.users_from, this.date_from, this.date_to);
             if (scope.ShowDialog() == DialogResult.OK)
             {
                 this.users_from = scope.user_from;
@@ -1068,7 +1086,8 @@ namespace SN_Net.Subform
                 return;
 
             ((XDatagrid)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
-            this.btnEditItem.PerformClick();
+            if (this.main_form.loged_in_user.level >= (int)USER_LEVEL.SUPERVISOR)
+                this.btnEditItem.PerformClick();
         }
 
         private void btnEditItem_Click(object sender, EventArgs e)
@@ -1137,6 +1156,13 @@ namespace SN_Net.Subform
 
         private void tabControl1_Deselecting(object sender, TabControlCancelEventArgs e)
         {
+            if(this.main_form.loged_in_user.level < (int)USER_LEVEL.SUPERVISOR)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+
             if(this.form_mode != FORM_MODE.READ)
             {
                 e.Cancel = true;
