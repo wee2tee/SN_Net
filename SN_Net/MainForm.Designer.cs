@@ -198,7 +198,7 @@
             // 
             this.mnuViewNote.Name = "mnuViewNote";
             this.mnuViewNote.Size = new System.Drawing.Size(337, 22);
-            this.mnuViewNote.Text = "ดูใบบันทึกการปฏิบัติงาน";
+            this.mnuViewNote.Text = "ดูใบบันทึกการปฏิบัติงาน.";
             this.mnuViewNote.Click += new System.EventHandler(this.mnuViewNote_Click);
             // 
             // toolStripSeparator2

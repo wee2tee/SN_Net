@@ -59,6 +59,18 @@ namespace CC
             }
         }
 
+        public ComboBoxStyle _DropDownStyle
+        {
+            get
+            {
+                return this.comboBox1.DropDownStyle;
+            }
+            set
+            {
+                this.comboBox1.DropDownStyle = value;
+            }
+        }
+
         public XDropdownListItem _SelectedItem
         {
             get

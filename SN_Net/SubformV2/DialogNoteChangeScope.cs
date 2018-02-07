@@ -77,7 +77,31 @@ namespace SN_Net.Subform
         {
             this.selected_user = (users)((XDropdownListItem)((XDropdownList)sender)._SelectedItem).Value;
 
-            this.btnOK.Enabled = this.selected_user != null && this.selected_date_from.HasValue ? true : false;
+            this.btnOK.Enabled = this.selected_user != null && this.selected_date_from.HasValue && this.selected_date_to.HasValue ? true : false;
+        }
+
+        private void drUser__Leave(object sender, EventArgs e)
+        {
+            string txt = ((XDropdownList)sender)._Text;
+
+            if(txt.Trim().Length == 0)
+            {
+                ((XDropdownList)sender).Focus();
+                SendKeys.Send("{F6}");
+                return;
+            }
+
+            var selected_item = ((XDropdownList)sender)._Items.Cast<XDropdownListItem>().Where(i => i.Text.ToLower().StartsWith(txt.ToLower())).FirstOrDefault();
+
+            if(selected_item != null)
+            {
+                ((XDropdownList)sender)._SelectedItem = selected_item;
+            }
+            else
+            {
+                ((XDropdownList)sender).Focus();
+                SendKeys.Send("{F6}");
+            }
         }
 
         private void dtDate__SelectedDateChanged(object sender, EventArgs e)
@@ -119,6 +143,11 @@ namespace SN_Net.Subform
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void dtDate__GotFocus(object sender, EventArgs e)
+        {
+            ((XDatePicker)sender).SelectAllText();
         }
     }
 }

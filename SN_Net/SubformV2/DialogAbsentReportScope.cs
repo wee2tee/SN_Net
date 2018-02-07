@@ -177,5 +177,10 @@ namespace SN_Net.Subform
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void dtDate__GotFocus(object sender, EventArgs e)
+        {
+            ((XDatePicker)sender).SelectAllText();
+        }
     }
 }

@@ -262,5 +262,11 @@ namespace CC
                 this.Parent.SelectNextControl(this, true, true, true, false);
             }
         }
+
+        public void SelectAllText()
+        {
+            this.txtDate.SelectionStart = 0;
+            this.txtDate.SelectionLength = this.txtDate.Text.Length;
+        }
     }
 }
