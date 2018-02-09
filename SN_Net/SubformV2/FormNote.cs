@@ -282,7 +282,7 @@ namespace SN_Net.Subform
                             {
                                 if(t == "N/A")
                                 {
-                                    if (n.note.problem.Trim().Length == 0)
+                                    if (n.note.problem.Trim().Length == 0 && n.note.is_break == "N")
                                         talk_in_spec = true;
                                 }
                                 else

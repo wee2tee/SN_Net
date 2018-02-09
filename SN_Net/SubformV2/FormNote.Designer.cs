@@ -30,10 +30,10 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel3 = new System.Windows.Forms.Panel();
             this.inlineDuration = new System.Windows.Forms.Label();
             this.inlineBreakType = new CC.XDropdownList();
@@ -61,6 +61,36 @@
             this.inlineEnd = new CC.XTimePicker();
             this.inlineStart = new CC.XTimePicker();
             this.dgvNote = new CC.XDatagrid();
+            this.col_note_note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_has_comment = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.col_note_has_complain = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.col_note_has_comment_complain = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_start = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_end = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_sernum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_contact = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_mapdrive = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_installupdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_error = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_installfonts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_print = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_training = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_form = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_reportexcel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_statement = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_assets = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_secure = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_yearend = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_period = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_mail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_transfer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_is_other = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_note_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnComment = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
@@ -116,36 +146,6 @@
             this.col_cond_talk_selected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.col_cond_talk_text = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_cond_talk_value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_has_comment = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.col_note_has_complain = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.col_note_has_comment_complain = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_end = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_sernum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_contact = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_mapdrive = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_installupdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_error = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_installfonts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_print = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_training = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_form = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_reportexcel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_statement = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_assets = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_secure = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_yearend = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_period = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_mail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_transfer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_is_other = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_note_remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNote)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -208,6 +208,7 @@
             // 
             // inlineBreakType
             // 
+            this.inlineBreakType._DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.inlineBreakType._DroppedDown = false;
             this.inlineBreakType._ReadOnly = false;
             this.inlineBreakType._SelectedItem = null;
@@ -236,6 +237,7 @@
             // 
             // inlineTrainType
             // 
+            this.inlineTrainType._DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.inlineTrainType._DroppedDown = false;
             this.inlineTrainType._ReadOnly = false;
             this.inlineTrainType._SelectedItem = null;
@@ -622,6 +624,286 @@
             this.dgvNote.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvNote_MouseClick);
             this.dgvNote.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvNote_MouseDoubleClick);
             this.dgvNote.Resize += new System.EventHandler(this.dgvNote_Resize);
+            // 
+            // col_note_note
+            // 
+            this.col_note_note.DataPropertyName = "note";
+            this.col_note_note.HeaderText = "Note";
+            this.col_note_note.Name = "col_note_note";
+            this.col_note_note.ReadOnly = true;
+            this.col_note_note.Visible = false;
+            // 
+            // col_note_seq
+            // 
+            this.col_note_seq.DataPropertyName = "seq";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.col_note_seq.DefaultCellStyle = dataGridViewCellStyle2;
+            this.col_note_seq.HeaderText = "ลำดับ";
+            this.col_note_seq.MinimumWidth = 40;
+            this.col_note_seq.Name = "col_note_seq";
+            this.col_note_seq.ReadOnly = true;
+            this.col_note_seq.Width = 40;
+            // 
+            // col_note_has_comment
+            // 
+            this.col_note_has_comment.DataPropertyName = "has_comment";
+            this.col_note_has_comment.HeaderText = "Has comment";
+            this.col_note_has_comment.MinimumWidth = 22;
+            this.col_note_has_comment.Name = "col_note_has_comment";
+            this.col_note_has_comment.ReadOnly = true;
+            this.col_note_has_comment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_note_has_comment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_note_has_comment.Visible = false;
+            this.col_note_has_comment.Width = 22;
+            // 
+            // col_note_has_complain
+            // 
+            this.col_note_has_complain.DataPropertyName = "has_complain";
+            this.col_note_has_complain.HeaderText = "Has complain";
+            this.col_note_has_complain.MinimumWidth = 22;
+            this.col_note_has_complain.Name = "col_note_has_complain";
+            this.col_note_has_complain.ReadOnly = true;
+            this.col_note_has_complain.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_note_has_complain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.col_note_has_complain.Visible = false;
+            this.col_note_has_complain.Width = 22;
+            // 
+            // col_note_has_comment_complain
+            // 
+            this.col_note_has_comment_complain.DataPropertyName = "has_comment_complain";
+            this.col_note_has_comment_complain.HeaderText = "Comment / Complain";
+            this.col_note_has_comment_complain.MinimumWidth = 70;
+            this.col_note_has_comment_complain.Name = "col_note_has_comment_complain";
+            this.col_note_has_comment_complain.ReadOnly = true;
+            this.col_note_has_comment_complain.Width = 70;
+            // 
+            // col_note_username
+            // 
+            this.col_note_username.DataPropertyName = "username";
+            this.col_note_username.HeaderText = "รหัสพนักงาน";
+            this.col_note_username.MinimumWidth = 70;
+            this.col_note_username.Name = "col_note_username";
+            this.col_note_username.ReadOnly = true;
+            this.col_note_username.Width = 70;
+            // 
+            // col_note_date
+            // 
+            this.col_note_date.DataPropertyName = "date";
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
+            this.col_note_date.DefaultCellStyle = dataGridViewCellStyle3;
+            this.col_note_date.HeaderText = "วันที่";
+            this.col_note_date.MinimumWidth = 80;
+            this.col_note_date.Name = "col_note_date";
+            this.col_note_date.ReadOnly = true;
+            this.col_note_date.Width = 80;
+            // 
+            // col_note_start
+            // 
+            this.col_note_start.DataPropertyName = "start_time";
+            this.col_note_start.HeaderText = "รับสาย";
+            this.col_note_start.MinimumWidth = 80;
+            this.col_note_start.Name = "col_note_start";
+            this.col_note_start.ReadOnly = true;
+            this.col_note_start.Width = 80;
+            // 
+            // col_note_end
+            // 
+            this.col_note_end.DataPropertyName = "end_time";
+            this.col_note_end.HeaderText = "วางสาย";
+            this.col_note_end.MinimumWidth = 80;
+            this.col_note_end.Name = "col_note_end";
+            this.col_note_end.ReadOnly = true;
+            this.col_note_end.Width = 80;
+            // 
+            // col_note_duration
+            // 
+            this.col_note_duration.DataPropertyName = "duration";
+            this.col_note_duration.HeaderText = "ระยะเวลา";
+            this.col_note_duration.MinimumWidth = 70;
+            this.col_note_duration.Name = "col_note_duration";
+            this.col_note_duration.ReadOnly = true;
+            this.col_note_duration.Width = 70;
+            // 
+            // col_note_sernum
+            // 
+            this.col_note_sernum.DataPropertyName = "sernum";
+            this.col_note_sernum.HeaderText = "S/N";
+            this.col_note_sernum.MinimumWidth = 100;
+            this.col_note_sernum.Name = "col_note_sernum";
+            this.col_note_sernum.ReadOnly = true;
+            // 
+            // col_note_contact
+            // 
+            this.col_note_contact.DataPropertyName = "contact";
+            this.col_note_contact.HeaderText = "ชื่อลูกค้า";
+            this.col_note_contact.MinimumWidth = 180;
+            this.col_note_contact.Name = "col_note_contact";
+            this.col_note_contact.ReadOnly = true;
+            this.col_note_contact.Width = 180;
+            // 
+            // col_note_is_mapdrive
+            // 
+            this.col_note_is_mapdrive.DataPropertyName = "is_mapdrive";
+            this.col_note_is_mapdrive.HeaderText = "Map Drive";
+            this.col_note_is_mapdrive.MinimumWidth = 35;
+            this.col_note_is_mapdrive.Name = "col_note_is_mapdrive";
+            this.col_note_is_mapdrive.ReadOnly = true;
+            this.col_note_is_mapdrive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_note_is_mapdrive.Width = 35;
+            // 
+            // col_note_is_installupdate
+            // 
+            this.col_note_is_installupdate.DataPropertyName = "is_installupdate";
+            this.col_note_is_installupdate.HeaderText = "Ins. / Up";
+            this.col_note_is_installupdate.MinimumWidth = 35;
+            this.col_note_is_installupdate.Name = "col_note_is_installupdate";
+            this.col_note_is_installupdate.ReadOnly = true;
+            this.col_note_is_installupdate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_note_is_installupdate.Width = 35;
+            // 
+            // col_note_is_error
+            // 
+            this.col_note_is_error.DataPropertyName = "is_error";
+            this.col_note_is_error.HeaderText = "Error";
+            this.col_note_is_error.MinimumWidth = 35;
+            this.col_note_is_error.Name = "col_note_is_error";
+            this.col_note_is_error.ReadOnly = true;
+            this.col_note_is_error.Width = 35;
+            // 
+            // col_note_is_installfonts
+            // 
+            this.col_note_is_installfonts.DataPropertyName = "is_font";
+            this.col_note_is_installfonts.HeaderText = "Ins. Fonts";
+            this.col_note_is_installfonts.MinimumWidth = 35;
+            this.col_note_is_installfonts.Name = "col_note_is_installfonts";
+            this.col_note_is_installfonts.ReadOnly = true;
+            this.col_note_is_installfonts.Width = 35;
+            // 
+            // col_note_is_print
+            // 
+            this.col_note_is_print.DataPropertyName = "is_print";
+            this.col_note_is_print.HeaderText = "Print";
+            this.col_note_is_print.MinimumWidth = 35;
+            this.col_note_is_print.Name = "col_note_is_print";
+            this.col_note_is_print.ReadOnly = true;
+            this.col_note_is_print.Width = 35;
+            // 
+            // col_note_is_training
+            // 
+            this.col_note_is_training.DataPropertyName = "is_training";
+            this.col_note_is_training.HeaderText = "อบรม";
+            this.col_note_is_training.MinimumWidth = 35;
+            this.col_note_is_training.Name = "col_note_is_training";
+            this.col_note_is_training.ReadOnly = true;
+            this.col_note_is_training.Width = 35;
+            // 
+            // col_note_is_stock
+            // 
+            this.col_note_is_stock.DataPropertyName = "is_stock";
+            this.col_note_is_stock.HeaderText = "สินค้า";
+            this.col_note_is_stock.MinimumWidth = 35;
+            this.col_note_is_stock.Name = "col_note_is_stock";
+            this.col_note_is_stock.ReadOnly = true;
+            this.col_note_is_stock.Width = 35;
+            // 
+            // col_note_is_form
+            // 
+            this.col_note_is_form.DataPropertyName = "is_form";
+            this.col_note_is_form.HeaderText = "Form Rep.";
+            this.col_note_is_form.MinimumWidth = 35;
+            this.col_note_is_form.Name = "col_note_is_form";
+            this.col_note_is_form.ReadOnly = true;
+            this.col_note_is_form.Width = 35;
+            // 
+            // col_note_is_reportexcel
+            // 
+            this.col_note_is_reportexcel.DataPropertyName = "is_reportexcel";
+            this.col_note_is_reportexcel.HeaderText = "Rep.> Excel";
+            this.col_note_is_reportexcel.MinimumWidth = 35;
+            this.col_note_is_reportexcel.Name = "col_note_is_reportexcel";
+            this.col_note_is_reportexcel.ReadOnly = true;
+            this.col_note_is_reportexcel.Width = 35;
+            // 
+            // col_note_is_statement
+            // 
+            this.col_note_is_statement.DataPropertyName = "is_statement";
+            this.col_note_is_statement.HeaderText = "สร้างงบฯ";
+            this.col_note_is_statement.MinimumWidth = 35;
+            this.col_note_is_statement.Name = "col_note_is_statement";
+            this.col_note_is_statement.ReadOnly = true;
+            this.col_note_is_statement.Width = 35;
+            // 
+            // col_note_is_assets
+            // 
+            this.col_note_is_assets.DataPropertyName = "is_asset";
+            this.col_note_is_assets.HeaderText = "ท/ส ค่าเสื่อม";
+            this.col_note_is_assets.MinimumWidth = 35;
+            this.col_note_is_assets.Name = "col_note_is_assets";
+            this.col_note_is_assets.ReadOnly = true;
+            this.col_note_is_assets.Width = 35;
+            // 
+            // col_note_is_secure
+            // 
+            this.col_note_is_secure.DataPropertyName = "is_secure";
+            this.col_note_is_secure.HeaderText = "Secure";
+            this.col_note_is_secure.MinimumWidth = 35;
+            this.col_note_is_secure.Name = "col_note_is_secure";
+            this.col_note_is_secure.ReadOnly = true;
+            this.col_note_is_secure.Width = 35;
+            // 
+            // col_note_is_yearend
+            // 
+            this.col_note_is_yearend.DataPropertyName = "is_yearend";
+            this.col_note_is_yearend.HeaderText = "Year End";
+            this.col_note_is_yearend.MinimumWidth = 35;
+            this.col_note_is_yearend.Name = "col_note_is_yearend";
+            this.col_note_is_yearend.ReadOnly = true;
+            this.col_note_is_yearend.Width = 35;
+            // 
+            // col_note_is_period
+            // 
+            this.col_note_is_period.DataPropertyName = "is_period";
+            this.col_note_is_period.HeaderText = "วันที่ไม่อยู่ในงวด";
+            this.col_note_is_period.MinimumWidth = 35;
+            this.col_note_is_period.Name = "col_note_is_period";
+            this.col_note_is_period.ReadOnly = true;
+            this.col_note_is_period.Width = 35;
+            // 
+            // col_note_is_mail
+            // 
+            this.col_note_is_mail.DataPropertyName = "is_mail";
+            this.col_note_is_mail.HeaderText = "Mail รอสาย/หลุด";
+            this.col_note_is_mail.MinimumWidth = 35;
+            this.col_note_is_mail.Name = "col_note_is_mail";
+            this.col_note_is_mail.ReadOnly = true;
+            this.col_note_is_mail.Width = 35;
+            // 
+            // col_note_is_transfer
+            // 
+            this.col_note_is_transfer.DataPropertyName = "is_transfer";
+            this.col_note_is_transfer.HeaderText = "โอนฝ่ายขาย";
+            this.col_note_is_transfer.MinimumWidth = 35;
+            this.col_note_is_transfer.Name = "col_note_is_transfer";
+            this.col_note_is_transfer.ReadOnly = true;
+            this.col_note_is_transfer.Width = 35;
+            // 
+            // col_note_is_other
+            // 
+            this.col_note_is_other.DataPropertyName = "is_other";
+            this.col_note_is_other.HeaderText = "อื่น ๆ";
+            this.col_note_is_other.MinimumWidth = 35;
+            this.col_note_is_other.Name = "col_note_is_other";
+            this.col_note_is_other.ReadOnly = true;
+            this.col_note_is_other.Width = 35;
+            // 
+            // col_note_remark
+            // 
+            this.col_note_remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.col_note_remark.DataPropertyName = "remark";
+            this.col_note_remark.HeaderText = "หมายเหตุ";
+            this.col_note_remark.MinimumWidth = 100;
+            this.col_note_remark.Name = "col_note_remark";
+            this.col_note_remark.ReadOnly = true;
             // 
             // btnComment
             // 
@@ -1248,286 +1530,6 @@
             this.col_cond_talk_value.Name = "col_cond_talk_value";
             this.col_cond_talk_value.ReadOnly = true;
             this.col_cond_talk_value.Visible = false;
-            // 
-            // col_note_note
-            // 
-            this.col_note_note.DataPropertyName = "note";
-            this.col_note_note.HeaderText = "Note";
-            this.col_note_note.Name = "col_note_note";
-            this.col_note_note.ReadOnly = true;
-            this.col_note_note.Visible = false;
-            // 
-            // col_note_seq
-            // 
-            this.col_note_seq.DataPropertyName = "seq";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.col_note_seq.DefaultCellStyle = dataGridViewCellStyle2;
-            this.col_note_seq.HeaderText = "ลำดับ";
-            this.col_note_seq.MinimumWidth = 40;
-            this.col_note_seq.Name = "col_note_seq";
-            this.col_note_seq.ReadOnly = true;
-            this.col_note_seq.Width = 40;
-            // 
-            // col_note_has_comment
-            // 
-            this.col_note_has_comment.DataPropertyName = "has_comment";
-            this.col_note_has_comment.HeaderText = "Has comment";
-            this.col_note_has_comment.MinimumWidth = 22;
-            this.col_note_has_comment.Name = "col_note_has_comment";
-            this.col_note_has_comment.ReadOnly = true;
-            this.col_note_has_comment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_note_has_comment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.col_note_has_comment.Visible = false;
-            this.col_note_has_comment.Width = 22;
-            // 
-            // col_note_has_complain
-            // 
-            this.col_note_has_complain.DataPropertyName = "has_complain";
-            this.col_note_has_complain.HeaderText = "Has complain";
-            this.col_note_has_complain.MinimumWidth = 22;
-            this.col_note_has_complain.Name = "col_note_has_complain";
-            this.col_note_has_complain.ReadOnly = true;
-            this.col_note_has_complain.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_note_has_complain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.col_note_has_complain.Visible = false;
-            this.col_note_has_complain.Width = 22;
-            // 
-            // col_note_has_comment_complain
-            // 
-            this.col_note_has_comment_complain.DataPropertyName = "has_comment_complain";
-            this.col_note_has_comment_complain.HeaderText = "Comment / Complain";
-            this.col_note_has_comment_complain.MinimumWidth = 70;
-            this.col_note_has_comment_complain.Name = "col_note_has_comment_complain";
-            this.col_note_has_comment_complain.ReadOnly = true;
-            this.col_note_has_comment_complain.Width = 70;
-            // 
-            // col_note_username
-            // 
-            this.col_note_username.DataPropertyName = "username";
-            this.col_note_username.HeaderText = "รหัสพนักงาน";
-            this.col_note_username.MinimumWidth = 70;
-            this.col_note_username.Name = "col_note_username";
-            this.col_note_username.ReadOnly = true;
-            this.col_note_username.Width = 70;
-            // 
-            // col_note_date
-            // 
-            this.col_note_date.DataPropertyName = "date";
-            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
-            this.col_note_date.DefaultCellStyle = dataGridViewCellStyle3;
-            this.col_note_date.HeaderText = "วันที่";
-            this.col_note_date.MinimumWidth = 80;
-            this.col_note_date.Name = "col_note_date";
-            this.col_note_date.ReadOnly = true;
-            this.col_note_date.Width = 80;
-            // 
-            // col_note_start
-            // 
-            this.col_note_start.DataPropertyName = "start_time";
-            this.col_note_start.HeaderText = "รับสาย";
-            this.col_note_start.MinimumWidth = 80;
-            this.col_note_start.Name = "col_note_start";
-            this.col_note_start.ReadOnly = true;
-            this.col_note_start.Width = 80;
-            // 
-            // col_note_end
-            // 
-            this.col_note_end.DataPropertyName = "end_time";
-            this.col_note_end.HeaderText = "วางสาย";
-            this.col_note_end.MinimumWidth = 80;
-            this.col_note_end.Name = "col_note_end";
-            this.col_note_end.ReadOnly = true;
-            this.col_note_end.Width = 80;
-            // 
-            // col_note_duration
-            // 
-            this.col_note_duration.DataPropertyName = "duration";
-            this.col_note_duration.HeaderText = "ระยะเวลา";
-            this.col_note_duration.MinimumWidth = 70;
-            this.col_note_duration.Name = "col_note_duration";
-            this.col_note_duration.ReadOnly = true;
-            this.col_note_duration.Width = 70;
-            // 
-            // col_note_sernum
-            // 
-            this.col_note_sernum.DataPropertyName = "sernum";
-            this.col_note_sernum.HeaderText = "S/N";
-            this.col_note_sernum.MinimumWidth = 100;
-            this.col_note_sernum.Name = "col_note_sernum";
-            this.col_note_sernum.ReadOnly = true;
-            // 
-            // col_note_contact
-            // 
-            this.col_note_contact.DataPropertyName = "contact";
-            this.col_note_contact.HeaderText = "ชื่อลูกค้า";
-            this.col_note_contact.MinimumWidth = 180;
-            this.col_note_contact.Name = "col_note_contact";
-            this.col_note_contact.ReadOnly = true;
-            this.col_note_contact.Width = 180;
-            // 
-            // col_note_is_mapdrive
-            // 
-            this.col_note_is_mapdrive.DataPropertyName = "is_mapdrive";
-            this.col_note_is_mapdrive.HeaderText = "Map Drive";
-            this.col_note_is_mapdrive.MinimumWidth = 35;
-            this.col_note_is_mapdrive.Name = "col_note_is_mapdrive";
-            this.col_note_is_mapdrive.ReadOnly = true;
-            this.col_note_is_mapdrive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_note_is_mapdrive.Width = 35;
-            // 
-            // col_note_is_installupdate
-            // 
-            this.col_note_is_installupdate.DataPropertyName = "is_installupdate";
-            this.col_note_is_installupdate.HeaderText = "Ins. / Up";
-            this.col_note_is_installupdate.MinimumWidth = 35;
-            this.col_note_is_installupdate.Name = "col_note_is_installupdate";
-            this.col_note_is_installupdate.ReadOnly = true;
-            this.col_note_is_installupdate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_note_is_installupdate.Width = 35;
-            // 
-            // col_note_is_error
-            // 
-            this.col_note_is_error.DataPropertyName = "is_error";
-            this.col_note_is_error.HeaderText = "Error";
-            this.col_note_is_error.MinimumWidth = 35;
-            this.col_note_is_error.Name = "col_note_is_error";
-            this.col_note_is_error.ReadOnly = true;
-            this.col_note_is_error.Width = 35;
-            // 
-            // col_note_is_installfonts
-            // 
-            this.col_note_is_installfonts.DataPropertyName = "is_font";
-            this.col_note_is_installfonts.HeaderText = "Ins. Fonts";
-            this.col_note_is_installfonts.MinimumWidth = 35;
-            this.col_note_is_installfonts.Name = "col_note_is_installfonts";
-            this.col_note_is_installfonts.ReadOnly = true;
-            this.col_note_is_installfonts.Width = 35;
-            // 
-            // col_note_is_print
-            // 
-            this.col_note_is_print.DataPropertyName = "is_print";
-            this.col_note_is_print.HeaderText = "Print";
-            this.col_note_is_print.MinimumWidth = 35;
-            this.col_note_is_print.Name = "col_note_is_print";
-            this.col_note_is_print.ReadOnly = true;
-            this.col_note_is_print.Width = 35;
-            // 
-            // col_note_is_training
-            // 
-            this.col_note_is_training.DataPropertyName = "is_training";
-            this.col_note_is_training.HeaderText = "อบรม";
-            this.col_note_is_training.MinimumWidth = 35;
-            this.col_note_is_training.Name = "col_note_is_training";
-            this.col_note_is_training.ReadOnly = true;
-            this.col_note_is_training.Width = 35;
-            // 
-            // col_note_is_stock
-            // 
-            this.col_note_is_stock.DataPropertyName = "is_stock";
-            this.col_note_is_stock.HeaderText = "สินค้า";
-            this.col_note_is_stock.MinimumWidth = 35;
-            this.col_note_is_stock.Name = "col_note_is_stock";
-            this.col_note_is_stock.ReadOnly = true;
-            this.col_note_is_stock.Width = 35;
-            // 
-            // col_note_is_form
-            // 
-            this.col_note_is_form.DataPropertyName = "is_form";
-            this.col_note_is_form.HeaderText = "Form Rep.";
-            this.col_note_is_form.MinimumWidth = 35;
-            this.col_note_is_form.Name = "col_note_is_form";
-            this.col_note_is_form.ReadOnly = true;
-            this.col_note_is_form.Width = 35;
-            // 
-            // col_note_is_reportexcel
-            // 
-            this.col_note_is_reportexcel.DataPropertyName = "is_reportexcel";
-            this.col_note_is_reportexcel.HeaderText = "Rep.> Excel";
-            this.col_note_is_reportexcel.MinimumWidth = 35;
-            this.col_note_is_reportexcel.Name = "col_note_is_reportexcel";
-            this.col_note_is_reportexcel.ReadOnly = true;
-            this.col_note_is_reportexcel.Width = 35;
-            // 
-            // col_note_is_statement
-            // 
-            this.col_note_is_statement.DataPropertyName = "is_statement";
-            this.col_note_is_statement.HeaderText = "สร้างงบฯ";
-            this.col_note_is_statement.MinimumWidth = 35;
-            this.col_note_is_statement.Name = "col_note_is_statement";
-            this.col_note_is_statement.ReadOnly = true;
-            this.col_note_is_statement.Width = 35;
-            // 
-            // col_note_is_assets
-            // 
-            this.col_note_is_assets.DataPropertyName = "is_asset";
-            this.col_note_is_assets.HeaderText = "ท/ส ค่าเสื่อม";
-            this.col_note_is_assets.MinimumWidth = 35;
-            this.col_note_is_assets.Name = "col_note_is_assets";
-            this.col_note_is_assets.ReadOnly = true;
-            this.col_note_is_assets.Width = 35;
-            // 
-            // col_note_is_secure
-            // 
-            this.col_note_is_secure.DataPropertyName = "is_secure";
-            this.col_note_is_secure.HeaderText = "Secure";
-            this.col_note_is_secure.MinimumWidth = 35;
-            this.col_note_is_secure.Name = "col_note_is_secure";
-            this.col_note_is_secure.ReadOnly = true;
-            this.col_note_is_secure.Width = 35;
-            // 
-            // col_note_is_yearend
-            // 
-            this.col_note_is_yearend.DataPropertyName = "is_yearend";
-            this.col_note_is_yearend.HeaderText = "Year End";
-            this.col_note_is_yearend.MinimumWidth = 35;
-            this.col_note_is_yearend.Name = "col_note_is_yearend";
-            this.col_note_is_yearend.ReadOnly = true;
-            this.col_note_is_yearend.Width = 35;
-            // 
-            // col_note_is_period
-            // 
-            this.col_note_is_period.DataPropertyName = "is_period";
-            this.col_note_is_period.HeaderText = "วันที่ไม่อยู่ในงวด";
-            this.col_note_is_period.MinimumWidth = 35;
-            this.col_note_is_period.Name = "col_note_is_period";
-            this.col_note_is_period.ReadOnly = true;
-            this.col_note_is_period.Width = 35;
-            // 
-            // col_note_is_mail
-            // 
-            this.col_note_is_mail.DataPropertyName = "is_mail";
-            this.col_note_is_mail.HeaderText = "Mail รอสาย/หลุด";
-            this.col_note_is_mail.MinimumWidth = 35;
-            this.col_note_is_mail.Name = "col_note_is_mail";
-            this.col_note_is_mail.ReadOnly = true;
-            this.col_note_is_mail.Width = 35;
-            // 
-            // col_note_is_transfer
-            // 
-            this.col_note_is_transfer.DataPropertyName = "is_transfer";
-            this.col_note_is_transfer.HeaderText = "โอนฝ่ายขาย";
-            this.col_note_is_transfer.MinimumWidth = 35;
-            this.col_note_is_transfer.Name = "col_note_is_transfer";
-            this.col_note_is_transfer.ReadOnly = true;
-            this.col_note_is_transfer.Width = 35;
-            // 
-            // col_note_is_other
-            // 
-            this.col_note_is_other.DataPropertyName = "is_other";
-            this.col_note_is_other.HeaderText = "อื่น ๆ";
-            this.col_note_is_other.MinimumWidth = 35;
-            this.col_note_is_other.Name = "col_note_is_other";
-            this.col_note_is_other.ReadOnly = true;
-            this.col_note_is_other.Width = 35;
-            // 
-            // col_note_remark
-            // 
-            this.col_note_remark.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.col_note_remark.DataPropertyName = "remark";
-            this.col_note_remark.HeaderText = "หมายเหตุ";
-            this.col_note_remark.MinimumWidth = 100;
-            this.col_note_remark.Name = "col_note_remark";
-            this.col_note_remark.ReadOnly = true;
             // 
             // FormNote
             // 

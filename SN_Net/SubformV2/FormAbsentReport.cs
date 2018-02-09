@@ -1265,6 +1265,18 @@ namespace SN_Net.Subform
                 }
             }
 
+            if (keyData == (Keys.Control | Keys.P))
+            {
+                this.btnPrint2.PerformClick();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.P))
+            {
+                this.btnPrint1.PerformClick();
+                return true;
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
